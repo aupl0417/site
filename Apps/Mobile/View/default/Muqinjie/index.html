@@ -1,0 +1,329 @@
+<include file="Public:header" />
+<link rel="stylesheet" href="../Public/muqinjie/css/style.css">
+		<div class="page-group">
+			<div class="page" id="page-muqinjie-index">
+				<!-- 标题栏 -->
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left back" href="/"></a>
+					<h1 class="title">母情节活动</h1>
+				</header>
+		
+				<!-- 工具栏 -->
+				<!-- 导航条 -->
+				<include file="Public:nav" />
+		
+				<!-- 这里是页面内容区 -->
+				<div class="content pull-to-refresh-content">
+					<!-- 默认的下拉刷新层 -->
+					<div class="pull-to-refresh-layer">
+						<div class="preloader"></div>
+						<div class="pull-to-refresh-arrow"></div>
+					</div>
+					<div class="bgimg"><img src="../Public/muqinjie/images/1.jpg"/></div>
+					<div class="bgimg"><img src="../Public/muqinjie/images/2.jpg"/></div>
+					<div class="bgimg"><img src="../Public/muqinjie/images/3.jpg"/></div>
+					<div class="bgimg"><img src="../Public/muqinjie/images/4.jpg"/></div>
+					<div class="bgimg"><img src="../Public/muqinjie/images/5.jpg"/></div>
+					<div class="bgimg"><img src="../Public/muqinjie/images/6.jpg"/></div>
+					<div class="bgimg"><img src="../Public/muqinjie/images/7.jpg"/></div>
+					<div class="bgimg"><img src="../Public/muqinjie/images/8.jpg"/></div>
+					<div class="bgimg"><img src="../Public/muqinjie/images/9.jpg"/></div>
+					<div class="bgimg"><img src="../Public/muqinjie/images/10.jpg"/></div>
+					<div class="bgimg"><img src="../Public/muqinjie/images/11.jpg"/></div>
+					<div class="bgimg"><img src="../Public/muqinjie/images/12.jpg"/></div>
+					
+					<div class="bgimg link">
+						<img src="../Public/muqinjie/images/13.jpg"/>
+						<a href="{$goods[0][goods][url]}">
+							<img class="link-button link-1" src="../Public/muqinjie/images/0.png"/>
+						</a>
+					</div>
+					<div class="bgimg"><img src="../Public/muqinjie/images/14.jpg"/></div>
+					<div class="bgimg"><img src="../Public/muqinjie/images/15.jpg"/></div>
+					<div class="bgimg"><img src="../Public/muqinjie/images/16.jpg"/></div>
+					<div class="bgimg"><img src="../Public/muqinjie/images/17.jpg"/></div>
+					<div class="bgimg"><img src="../Public/muqinjie/images/18.jpg"/></div>
+					<div class="bgimg"><img src="../Public/muqinjie/images/19.jpg"/></div>
+					<div class="bgimg"><img src="../Public/muqinjie/images/20.jpg"/></div>
+					<div class="bgimg"><img src="../Public/muqinjie/images/21.jpg"/></div>
+					<div class="bgimg link">
+						<img src="../Public/muqinjie/images/22.jpg"/>
+						<a href="{$goods[1][goods][url]}">
+							<img class="link-button link-2" src="../Public/muqinjie/images/0.png"/>
+						</a>
+					</div>
+					<div class="bgimg"><img src="../Public/muqinjie/images/23.jpg"/></div>
+					<div class="bgimg"><img src="../Public/muqinjie/images/24.jpg"/></div>
+					<div class="bgimg"><img src="../Public/muqinjie/images/25.jpg"/></div>
+					<div class="bgimg"><img src="../Public/muqinjie/images/26.jpg"/></div>
+					<div class="bgimg"><img src="../Public/muqinjie/images/27.jpg"/></div>
+					<div class="bgimg"><img src="../Public/muqinjie/images/28.jpg"/></div>
+					<div class="bgimg"><img src="../Public/muqinjie/images/29.jpg"/></div>
+					<div class="bgimg link">
+						<img src="../Public/muqinjie/images/30.jpg"/>
+						<a href="{$goods[2][goods][url]}">
+							<img class="link-button link-2" src="../Public/muqinjie/images/0.png"/>
+						</a>
+					</div>
+					<div class="bgimg"><img src="../Public/muqinjie/images/31.jpg"/></div>
+					<div class="bgimg"><img src="../Public/muqinjie/images/32.jpg"/></div>
+					<div class="bgimg"><img src="../Public/muqinjie/images/33.jpg"/></div>
+					<div class="bgimg"><img src="../Public/muqinjie/images/34.jpg"/></div>
+					<div class="bgimg"><img src="../Public/muqinjie/images/35.jpg"/></div>
+					<div class="bgimg"><img src="../Public/muqinjie/images/36.jpg"/></div>
+					<div class="bgimg"><img src="../Public/muqinjie/images/37.jpg"/></div>
+					<div class="bgimg"><img src="../Public/muqinjie/images/38.jpg"/></div>
+					<div class="bgimg link">
+						<img src="../Public/muqinjie/images/39.jpg"/>
+						<a href="{$goods[3][goods][url]}">
+							<img class="link-button link-2" src="../Public/muqinjie/images/0.png"/>
+						</a>
+					</div>
+					<div class="bgimg"><img src="../Public/muqinjie/images/40.jpg"/></div>
+					<div class="bgimg"><img src="../Public/muqinjie/images/41.jpg"/></div>
+					<div class="bgimg"><img src="../Public/muqinjie/images/42.jpg"/></div>
+					<!--护肤系列-->
+					<div class="red p5">
+						<h4><img src="../Public/muqinjie/images/47.jpg"/></h4>
+						<div class="bg-white shadow">
+							<div class="pt5"></div>
+							<div class="link-goods-l">
+								<div class="link-goods-r">
+									<div class="row bd-white pl5 pr5">
+										<volist name="goods" id="vo" offset="4" length='8'>
+										<div class="col-50 link-goods-item ">
+											<a href="{$vo.goods.url}" target="_blank">
+											<img class="lazyload" data-sizes="auto" data-src="{$vo.goods.images}" src="__PUBLIC__/images/nopic.png"  alt="{$vo.goods.goods_name}" width="100%">
+											<div class="goods_name">
+												{$vo.goods.goods_name|default='读取失败'}
+											</div>
+											<div class="goods_price row">
+												<div class="col-50">￥<span>{$vo.goods.price|default='0.00'}</span></div>
+												<div class="col-50 text-right"><img src="../Public/muqinjie/images/90.jpg"/></div>
+											</div>
+											</a>
+										</div>
+										</volist>
+									</div>
+								</div>
+							</div>
+							<div class="pt5"></div>
+						</div>
+					</div>
+					
+					<!--香氛彩妆系列-->
+					<div class="red p5">
+						<h4><img src="../Public/muqinjie/images/48.jpg"/></h4>
+						<div class="bg-white shadow">
+							<div class="pt5"></div>
+							<div class="link-goods-l">
+								<div class="link-goods-r">
+									<div class="row bd-white pl5 pr5">
+										<volist name="goods" id="vo" offset="12" length='8'>
+										<div class="col-50 link-goods-item ">
+											<a href="{$vo.goods.url}" target="_blank">
+											<img class="lazyload" data-sizes="auto" data-src="{$vo.goods.images}" src="__PUBLIC__/images/nopic.png"  alt="{$vo.goods.goods_name}" width="100%">
+											<div class="goods_name">
+												{$vo.goods.goods_name|default='读取失败'}
+											</div>
+											<div class="goods_price row">
+												<div class="col-50">￥<span>{$vo.goods.price|default='0.00'}</span></div>
+												<div class="col-50 text-right"><img src="../Public/muqinjie/images/90.jpg"/></div>
+											</div>
+											</a>
+										</div>
+										</volist>
+									</div>
+								</div>
+							</div>
+							<div class="pt5"></div>
+						</div>
+					</div>
+					<!--洗护系列-->
+					<div class="red p5">
+						<h4><img src="../Public/muqinjie/images/49.jpg"/></h4>
+						<div class="bg-white shadow">
+							<div class="pt5"></div>
+							<div class="link-goods-l">
+								<div class="link-goods-r">
+									<div class="row bd-white pl5 pr5">
+										<volist name="goods" id="vo" offset="20" length='4'>
+										<div class="col-50 link-goods-item ">
+											<a href="{$vo.goods.url}" target="_blank">
+											<img class="lazyload" data-sizes="auto" data-src="{$vo.goods.images}" src="__PUBLIC__/images/nopic.png"  alt="{$vo.goods.goods_name}" width="100%">
+											<div class="goods_name">
+												{$vo.goods.goods_name|default='读取失败'}
+											</div>
+											<div class="goods_price row">
+												<div class="col-50">￥<span>{$vo.goods.price|default='0.00'}</span></div>
+												<div class="col-50 text-right"><img src="../Public/muqinjie/images/90.jpg"/></div>
+											</div>
+											</a>
+										</div>
+										</volist>
+									</div>
+								</div>
+							</div>
+							<div class="pt5"></div>
+						</div>
+					</div>
+					<div class="bgimg"><img src="../Public/muqinjie/images/44.jpg"/></div>
+					<!--包包墨镜-->
+					<div class="green p5">
+						<h4><img src="../Public/muqinjie/images/46.jpg"/></h4>
+						<div class="bg-white shadow">
+							<div class="pt5"></div>
+								<div class="row bd-white pl5 pr5">
+									<volist name="goods" id="vo" offset="24" length='8'>
+									<div class="col-50 link-goods-item ">
+										<a href="{$vo.goods.url}" target="_blank">
+										<img class="lazyload" data-sizes="auto" data-src="{$vo.goods.images}" src="__PUBLIC__/images/nopic.png"  alt="{$vo.goods.goods_name}" width="100%">
+										<div class="goods_name">
+											{$vo.goods.goods_name|default='读取失败'}
+										</div>
+										<div class="goods_price row">
+											<div class="col-50">￥<span>{$vo.goods.price|default='0.00'}</span></div>
+											<div class="col-50 text-right"><img src="../Public/muqinjie/images/91.jpg"/></div>
+										</div>
+										</a>
+									</div>
+									</volist>
+								</div>
+							<div class="pt5"></div>
+						</div>
+					</div>
+					<!--服装-->
+					<div class="green p5">
+						<h4><img src="../Public/muqinjie/images/45.jpg"/></h4>
+						<div class="bg-white shadow">
+							<div class="pt5"></div>
+								<div class="row bd-white pl5 pr5">
+									<volist name="goods" id="vo" offset="32" length='12'>
+									<div class="col-50 link-goods-item ">
+										<a href="{$vo.goods.url}" target="_blank">
+										<img class="lazyload" data-sizes="auto" data-src="{$vo.goods.images}" src="__PUBLIC__/images/nopic.png"  alt="{$vo.goods.goods_name}" width="100%">
+										<div class="goods_name">
+											{$vo.goods.goods_name|default='读取失败'}
+										</div>
+										<div class="goods_price row">
+											<div class="col-50">￥<span>{$vo.goods.price|default='0.00'}</span></div>
+											<div class="col-50 text-right"><img src="../Public/muqinjie/images/91.jpg"/></div>
+										</div>
+										</a>
+									</div>
+									</volist>
+								</div>
+							<div class="pt5"></div>
+						</div>
+					</div>
+					<div class="bgimg"><img src="../Public/muqinjie/images/50.jpg"/></div>
+					<!--小家电-->
+					<div class="pink p5">
+						<h4><img src="../Public/muqinjie/images/51.jpg"/></h4>
+						<div class="bg-white shadow">
+							<div class="pt5"></div>
+								<div class="row bd-white pl5 pr5">
+									<volist name="goods" id="vo" offset="44" length='8'>
+									<div class="col-50 link-goods-item ">
+										<a href="{$vo.goods.url}" target="_blank">
+										<img class="lazyload" data-sizes="auto" data-src="{$vo.goods.images}" src="__PUBLIC__/images/nopic.png"  alt="{$vo.goods.goods_name}" width="100%">
+										<div class="goods_name">
+											{$vo.goods.goods_name|default='读取失败'}
+										</div>
+										<div class="goods_price row">
+											<div class="col-50">￥<span>{$vo.goods.price|default='0.00'}</span></div>
+											<div class="col-50 text-right"><img src="../Public/muqinjie/images/92.jpg"/></div>
+										</div>
+										</a>
+									</div>
+									</volist>
+								</div>
+							<div class="pt5"></div>
+						</div>
+					</div>
+					<!--健康器具-->
+					<div class="pink p5">
+						<h4><img src="../Public/muqinjie/images/52.jpg"/></h4>
+						<div class="bg-white shadow">
+							<div class="pt5"></div>
+								<div class="row bd-white pl5 pr5">
+									<volist name="goods" id="vo" offset="52" length='4'>
+									<div class="col-50 link-goods-item ">
+										<a href="{$vo.goods.url}" target="_blank">
+										<img class="lazyload" data-sizes="auto" data-src="{$vo.goods.images}" src="__PUBLIC__/images/nopic.png"  alt="{$vo.goods.goods_name}" width="100%">
+										<div class="goods_name">
+											{$vo.goods.goods_name|default='读取失败'}
+										</div>
+										<div class="goods_price row">
+											<div class="col-50">￥<span>{$vo.goods.price|default='0.00'}</span></div>
+											<div class="col-50 text-right"><img src="../Public/muqinjie/images/92.jpg"/></div>
+										</div>
+										</a>
+									</div>
+									</volist>
+								</div>
+							<div class="pt5"></div>
+						</div>
+					</div>
+					<!--食品-->
+					<div class="pink p5">
+						<h4><img src="../Public/muqinjie/images/53.jpg"/></h4>
+						<div class="bg-white shadow">
+							<div class="pt5"></div>
+								<div class="row bd-white pl5 pr5">
+									<volist name="goods" id="vo" offset="56" length='8'>
+									<div class="col-50 link-goods-item ">
+										<a href="{$vo.goods.url}" target="_blank">
+										<img class="lazyload" data-sizes="auto" data-src="{$vo.goods.images}" src="__PUBLIC__/images/nopic.png"  alt="{$vo.goods.goods_name}" width="100%">
+										<div class="goods_name">
+											{$vo.goods.goods_name|default='读取失败'}
+										</div>
+										<div class="goods_price row">
+											<div class="col-50">￥<span>{$vo.goods.price|default='0.00'}</span></div>
+											<div class="col-50 text-right"><img src="../Public/muqinjie/images/92.jpg"/></div>
+										</div>
+										</a>
+									</div>
+									</volist>
+								</div>
+							<div class="pt5"></div>
+						</div>
+					</div>
+					<!--茗茶-->
+					<div class="pink p5">
+						<h4><img src="../Public/muqinjie/images/54.jpg"/></h4>
+						<div class="bg-white shadow">
+							<div class="pt5"></div>
+								<div class="row bd-white pl5 pr5">
+									<volist name="goods" id="vo" offset="64" length='4'>
+									<div class="col-50 link-goods-item ">
+										<a href="{$vo.goods.url}" target="_blank">
+										<img class="lazyload" data-sizes="auto" data-src="{$vo.goods.images}" src="__PUBLIC__/images/nopic.png"  alt="{$vo.goods.goods_name}" width="100%">
+										<div class="goods_name">
+											{$vo.goods.goods_name|default='读取失败'}
+										</div>
+										<div class="goods_price row">
+											<div class="col-50">￥<span>{$vo.goods.price|default='0.00'}</span></div>
+											<div class="col-50 text-right"><img src="../Public/muqinjie/images/92.jpg"/></div>
+										</div>
+										</a>
+									</div>
+									</volist>
+								</div>
+							<div class="pt5"></div>
+						</div>
+					</div>
+					
+					<div class="bgimg link">
+						<img src="../Public/muqinjie/images/55.jpg"/>
+						<a class="top">
+							<img class="link-button link-3" src="../Public/muqinjie/images/0.png"/>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>	
+		
+
+<include file="Public:script" />
+<include file="Public:footer" />

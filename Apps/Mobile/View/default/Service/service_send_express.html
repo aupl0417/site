@@ -1,0 +1,137 @@
+<include file="Public:header" />
+		<div class="page-group">
+			<div id="page-service-send-express" class="page">
+				<!-- 标题栏 -->
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left back" data-no-cache="true"></a>
+					<h1 class="title">寄出商品</h1>
+				</header>
+				<nav class="bar bar-tab">
+					<div class="footer-btn footer-btn-default btn-submit">寄出商品</div>
+				</nav>
+				<!-- 浮动导航 -->
+				<include file="Public:fixed-menu" />
+				<!-- 这里是页面内容区 -->		
+				<div class="content">			
+					<form name="form-express-goods" id="form-express-goods" onsubmit="return false;">
+						<div class="list-block media-list">
+							<ul>
+								<li>
+									<a href="/Service/view/r_no/{$_GET.r_no}" class="item-content item-link" data-no-cache="true">
+										<div class="item-inner">
+											<div class="item-title-row">
+												<div class="item-title">售后编号</div>
+												<div class="item-after">{$_GET.r_no}</div>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<div class="item-link item-content open-popup select-company" data-popup=".popup-company">
+										<div class="item-media"><img alt="物流公司logo" src="../Public/images/nopic_100x33.gif" width="80" class="border-1px"></div>
+										<div class="item-inner">
+											<div class="item-title-row">
+												<div class="item-title">请选择快递公司</div>
+											</div>
+										</div>
+									</div>
+
+								</li>	
+								<li>
+									<div class="item-content">
+										<div class="item-inner">
+											<div class="item-title-row">
+												<div class="item-title" style="min-width:4rem">运单号</div>
+												<div class="item-input">												
+													<input type="text" id="express_code" name="express_code" placeholder="请输入快递单号" maxlength="30">
+												</div>											
+											</div>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class="item-content">
+										<div class="item-inner">
+											<div class="item-title-row">
+												<div class="item-title" style="min-width:4rem">留言备注</div>
+												<div class="item-input">
+													<textarea id="remark" name="remark" placeholder="请输入留言或备注，不超过200字" maxlength="200" rows="8"></textarea>
+												</div>
+											</div>
+										</div>
+									</div>
+								</li>
+
+							</ul>
+						</div>
+						<input type="hidden" name="r_no" id="r_no" value="{$_GET.r_no}" />
+						<input type="hidden" name="express_company_id" id="express_company_id" />
+					</form>				
+
+				</div><!--/content-->
+				
+			</div>
+	
+			<!--popup 快递-->
+			<div class="popup popup-company">			
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left close-popup"></a>
+					<h1 class="title">请选择快递公司</h1>
+				</header>			
+				
+				<div class="clearfix" style="height:2.2rem"></div>
+				<div class="buttons-tab">
+					<a href="#tab1" class="tab-link button active">
+						常用快递
+					</a>
+					<a href="#tab2" class="tab-link button">
+						其它快递
+					</a>
+				</div>			
+				
+				<div class="tabs img-block">
+					<div class="tab active" id="tab1">	
+						<div class="list-block media-list">
+							<ul>
+								<volist name="company.0.dlist" id="vo">
+								<li data-id="{$vo.id}">
+									<div class="item-link item-content">
+										<div class="item-media"><img class="lazyload border-1px" data-sizes="auto" data-src="{:myurl($vo['logo'],80,25)}" alt="物流公司logo" src="../Public/images/nopic_100x33.gif" width="80"></div>
+										<div class="item-inner">
+											<div class="item-title-row">
+												<div class="item-title">{$vo.company}</div>
+											</div>
+										</div>
+									</div>	
+								</li>	
+								</volist>
+							</ul>
+						</div>	
+						
+					</div><!--/tab1-->
+					
+					<div class="tab" id="tab2">	
+						<div class="list-block media-list">
+							<ul>
+								<volist name="company.1.dlist" id="vo">
+								<li data-id="{$vo.id}">
+									<div class="item-link item-content">
+										<div class="item-media"><img class="lazyload border-1px" data-sizes="auto" data-src="{:myurl($vo['logo'],80,25)}" alt="物流公司logo" src="../Public/images/nopic_100x33.gif" width="80"></div>
+										<div class="item-inner">
+											<div class="item-title-row">
+												<div class="item-title">{$vo.company}</div>
+											</div>
+										</div>
+									</div>	
+								</li>
+								</volist>
+							</ul>
+						</div>						
+					</div><!--/tab2-->
+				</div>
+			</div>
+		</div>	
+		
+
+<include file="Public:script" />
+<include file="Public:footer" />

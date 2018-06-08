@@ -1,0 +1,79 @@
+<form data-url="__URL__/express_area_edit_save" id="form_area" class="form-horizontal vform">
+			{:W('Widget/buildform',array(array(
+				'field'		=>array(		
+					array(
+						'formtype'		=>'text',
+						'label'			=>'首重/件',
+						'name'			=>'first_unit',
+						'is_need'		=>true,
+						'value'			=>$rs['first_unit'],
+						'right'			=>'<span class="input-group-addon">'.$rs['express']['unit'].'</span>',
+					),
+					array(
+						'formtype'		=>'text',
+						'label'			=>'首重/件费用',
+						'name'			=>'first_price',
+						'is_need'		=>true,
+						'value'			=>$rs['first_price'],
+						'right'			=>'<span class="input-group-addon">元</span>',
+					),
+					array(
+						'formtype'		=>'text',
+						'label'			=>'续重/件',
+						'name'			=>'next_unit',
+						'is_need'		=>true,
+						'value'			=>$rs['next_unit'],
+						'right'			=>'<span class="input-group-addon">'.$rs['express']['unit'].'</span>',
+					),
+					array(
+						'formtype'		=>'text',
+						'label'			=>'续重/件费用',
+						'name'			=>'next_price',
+						'is_need'		=>true,
+						'value'			=>$rs['next_price'],
+						'right'			=>'<span class="input-group-addon">元</span>',
+					),
+					array(
+						'formtype'		=>'checkbox',
+						'label'			=>'城市',
+						'name'			=>'city_ids',
+						'is_need'		=>true,
+						'field'			=>array('id','a_name'),
+						'level'			=>2,
+						'tpl'			=>'city',
+						'data'			=>get_category(array('table'=>'area','level'=>2,'field'=>'id,sid,a_name')),
+						'value'			=>$rs['city_ids'],
+						'disable_value'	=>$disable_value,
+					),
+					array(
+						'formtype'		=>'hidden',
+						'name'			=>'express_id',
+						'value'			=>$rs['express_id'],
+					),					
+					array(
+						'formtype'		=>'hidden',
+						'name'			=>'id',
+						'value'			=>$rs['id'],
+					),					
+
+				),
+			),$rs))}
+<div class="p20 text-center">
+	<button type="submit" class="btn btn-primary btn-150px"><i class="fa fa-check"></i> 提交</button>
+</div>			
+</form>			
+
+<script>
+iCheckClass();
+checkbox_select_all();
+checkform({
+	formid:'#form_area',
+},function(ret){
+	if(ret.status=='success'){
+		loadurl({tag:'#tab158',url:'__URL__/express_area/express_id/'+{$rs.express_id}});
+		$('#ajax-modal').modal('hide');
+	}else{
+		valert(ret);
+	}
+});
+</script>

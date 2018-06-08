@@ -1,0 +1,72 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			
+		</div>
+		<div class="r">
+			<div class="text" onclick="register()">注册</div>
+		</div>
+	</div>
+</header>
+<section>
+	<div class="login-header">
+
+	</div>
+	<form id="form-login" class="p10">
+		<div class="login-box">
+			<input name="username" id="username" placeholder="昵称/手机号码">
+
+			<input type="password" name="password" id="password" placeholder="登录密码">
+			
+			<div class="btn btn-danger btn-lg btn-block md20" onclick="login()">登录</div>
+			<div class="fl" onclick="register()">
+				还没有账号，去注册
+			</div>
+			<div class="fr" onclick="forgot_password()">
+				忘记密码
+			</div>	
+		</div>
+		<input type="hidden" name="apiurl" value="/Erp/check_login">
+	</form>
+</section>
+
+
+<script>
+	fixBar(1);
+	
+	function login(){
+		if($('.page.active #username').val()==''){
+			valert({msg:'请输入账号'});
+			$('.page.active #username').focus();
+			return false;
+		}
+		if($('.page.active #password').val()==''){
+			valert({msg:'请输入密码'});
+			$('.page.active #password').focus();
+			return false;
+		}
+		
+		var data=getFormJson('#form-login');
+		ajax_post({
+			url:'/Api/api',
+			data:data,
+		},function(ret){
+			if(ret.code==1) {
+				openWin({name:'ucenter',url:'/Seller/index',close:true,ref:true});
+			}else{
+				valert(ret);
+			}
+		});
+		
+	}
+	
+	function register(){
+		openWin({name:'register',url:'/Login/register',close:true});
+	}
+	function forgot_password(){
+		openWin({name:'forget',url:'/Login/forget',close:true,ref:true});
+	}
+</script>

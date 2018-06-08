@@ -1,0 +1,47 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			我的代理
+		</div>
+		<div class="r">
+			<div class="text" onclick="openWin({name:'agent_reward',url:'/Upgrade/agent_reward'})">提成明细</div>
+		</div>
+	</div>
+</header>
+<section>
+	<div class="load-body">数据加载中……</div>	
+</section>
+
+<script id="my_agent_list" type="text/html">
+    <% for (var i = 0; i < data.length; i ++) { %>
+		<div class="line-box-m hover" onclick="openWin({name:'agent_view',url:'/Upgrade/agent_view/u_no/<%=data[i].u_no%>'})">
+			<div class="title text-success"><%= data[i].city %></div>
+			<div class="md3"><%= data[i].level_name %></div>
+			<div class="text-gray"><%= data[i].upgrade_time %></div>
+		</div>
+    <% } %>
+
+</script>
+
+<script>
+	fixBar(1);
+	
+	ajax_post({
+		url:'/Api/api',
+		data:{apiurl:'/UserUpgrade/orders_list',is_openid:1,status:1,level:'3,4,5,6',no_sign:'status,level'},
+	},function(ret){
+		if(ret.code==1){			
+			var html = template('my_agent_list', {data:ret.data});
+			$('.page.active section').html(html);
+			hover('.page.active section');
+		}else if(ret.code==3){
+			$('.page.active section').html(no_data_text);
+		}
+	});
+	
+
+	
+</script>

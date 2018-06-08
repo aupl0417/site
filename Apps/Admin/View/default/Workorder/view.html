@@ -1,0 +1,114 @@
+<div class="p20 box">
+	<div class="row auth-text">
+		<div class="col-xs-7">
+			<div class="p10">
+				<div class="row">
+					<div class="col-xs-2">
+						<img src="{:myurl($data['ordedata_goods']['images'],160)}">
+					</div>
+					<div class="col-xs-5">
+						<div>工单号：<span class="ft16"><b>{$data.w_no}</b></span></div>
+						<div>创建时间：{$data.atime}</div>
+						<div>类型：{$data.type_name} {$data.type2_name}</div>
+						<div>状态：{$data.status_name}</div>
+						<div>标题：{$data.title}</div>
+						<if condition="$data['accessory'] neq ''">
+
+							<php> $acc = explode(',', $data['accessory']) </php>
+							<div>
+								<foreach name="acc" key="ko" item="vo">
+									<a class="mr20" target="_blank" href="{$vo}">附件{$ko+1}</a>
+								</foreach>
+							</div>
+						</if>
+					</div>
+				</div>
+							
+			</div>
+			
+
+		</div>
+
+		
+	</div>
+	<div class="ft18 strong p10 border-d md20">处理记录</div>
+	
+	<notempty name="logs">
+	<ul class="timeline">
+		<foreach name="logs" item="vo">
+		<li>
+			<i class="fa fa-clock-o"></i>
+			<span class="date">
+				{$vo.atime}
+			</span>
+			<div class="content">
+				<div class="row">
+					<div class="col-xs-2 text-center">
+						<if condition="$vo.user_face neq ''" >
+							<img src="{$vo.user_face}" class="img-circle">
+							<div>{$vo.user_nick}</div>
+						<elseif condition="$vo.work_face neq ''" />
+							<img src="{$vo.work_face}" class="img-circle">
+							<div>{$vo.work_nick}</div>
+						<else/>
+							<img src="{:myurl($vo['user']['face'],60)}" class="img-circle">
+							<div>{$vo.work_nick}{$vo.user_nick}</div>
+						</if>
+					</div>
+					<div class="col-xs-10">{$vo.content}</div>
+				</div>
+
+			</div>
+		</li>
+		</foreach>
+	</ul>
+	</notempty>
+
+	<form data-url="__URL__/logs_add" data-id="#form_{$data.id}" id="form_{$data.id}" class="form-horizontal vform">
+			{:W('Widget/buildform',array(array(
+				'field'		=>array(	
+					array(
+						'formtype'		=>'textarea',
+						'label'			=>'留言/回复',
+						'name'			=>'remark',
+					),
+					array(
+						'formtype'		=>'hidden',
+						'name'			=>'w_id',
+						'value'			=>$data['id'],
+					),
+
+					array(
+						'formtype'		=>'html',
+						'label'			=>' ',
+						'html'			=>'<button type="button" class="btn btn-primary btn-150px logs-add"><i class="fa fa-check"></i> 提交</button>'
+					),
+
+				),
+			)))}
+	
+	
+	</form>
+	
+</div>
+<div class="clearfix">
+	<div class="pull-right text-gray" onclick="$(this).closest('tr').toggleClass('hide');"><i class="fa fa-times-circle-o fa-2x"></i></div>	
+</div>
+
+<script>
+image_zoom();
+$('.logs-add').click(function(){
+	var d=$(this).closest('form').data();
+	ajax_post_form({
+		formid:d.id
+	},function(ret){
+		valert(ret);
+		if(ret.status=='success'){
+			var tag='#item-{$data.id}';
+			var url='__URL__/view/id/{$data.id}';
+			loadurl({tag:tag,url:url});
+		}
+	});
+
+});
+</script>

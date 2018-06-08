@@ -1,0 +1,606 @@
+<include file="Public:header" />
+<include file="nav" title="表单模板详情" />
+
+
+<div class="m20">	
+	<div class="block-flat">
+		<div class="block-header border-d">
+			<div class="actions">
+				<div class="btn btn-rad btn-trans btn-info btn-sm" data-type="vmodal" data-title="新建分组" data-url="__URL__/group_add/formtpl_id/{$rs.id}/table/{$rs.tables}" data-width="800px"><i class="fa fa-plus"></i>新建分组</div>
+				<div class="btn btn-rad btn-trans btn-danger btn-sm" data-type="vmodal" data-title="修改表单模板" data-url="__URL__/formtpl_edit/id/{$rs.id}" data-width="800px"><i class="fa fa-pencil"></i> 修改</div>
+			</div>		
+			<h4 class="md20">表单模板名称：{$rs.tpl_name}</h4>
+		</div>
+		<div class="content">		
+		
+			<form data-url="__URL__/formtpl_edit_save" id="formtpl_edit" class="form-horizontal vform">
+				<ul class="nav nav-tabs border-d">
+					<li class="active">
+						<a href="#vtab1" data-toggle="tab">基本信息</a>
+					</li>
+					<li>
+						<a href="#vtab2" data-toggle="tab">视图模型</a>
+					</li>
+					<li>
+						<a href="#vtab3" data-toggle="tab">关联模型</a>
+					</li>
+					<li>
+						<a href="#vtab4" data-toggle="tab">列表设置</a>
+					</li>
+					<li>
+						<a href="#vtab5" data-toggle="tab">创建模型文件</a>
+					</li>					
+					<li>
+						<a href="#vtab6" data-toggle="tab">创建控制器</a>
+					</li>					
+					<li>
+						<a href="#vtab7" data-toggle="tab">创建搜索表单</a>
+					</li>					
+				</ul>
+				<div class="tab-content tab-content-noborder">
+					<div class="tab-pane active" id="vtab1">
+						{:W('Widget/buildform',array(array(
+							'field'		=>array(				
+								array(
+									'formtype'		=>'text',
+									'label'			=>'模板名称',
+									'name'			=>'tpl_name',
+									'is_need'		=>true,
+								),
+								array(
+									'formtype'		=>'text',
+									'label'			=>'数据表',
+									'name'			=>'tables',
+									'is_need'		=>true,
+								),								
+								array(
+									'formtype'		=>'radio',
+									'label'			=>'实例化类型',
+									'name'			=>'action_type',
+									'data'			=>array(
+										array(0,'默认(M)'),
+										array(1,'视图模型(D)'),
+										array(2,'关联模型(D)')
+									),
+									'field'			=>array(0,1),
+									'is_need'		=>true,
+								),
+								array(
+									'formtype'		=>'textarea',
+									'label'			=>'读取字段',
+									'name'			=>'fields',
+									'tips'			=>'为空是表示取所有字段，建议填写以提高性能',
+								),
+								array(
+									'formtype'		=>'text',
+									'label'			=>'排序',
+									'name'			=>'order',
+									'tips'			=>'为空时，默认为 atime desc',
+								),								
+								array(
+									'formtype'		=>'text',
+									'label'			=>'分页记录数',
+									'name'			=>'pagesize',
+									'is_need'		=>true,
+								),
+								array(
+									'formtype'		=>'textarea',
+									'label'			=>'备注',
+									'name'			=>'remark',
+								),				
+								array(
+									'formtype'		=>'hidden',
+									'name'			=>'id',
+									'value'			=>$rs['id'],
+								),
+
+							),
+						),$rs))}
+					</div><!--/panel-->
+					
+					<div class="tab-pane" id="vtab2">
+						{:W('Widget/buildform',array(array(
+							'field'		=>array(				
+								array(
+									'formtype'		=>'textarea',
+									'label'			=>'视图模型',
+									'name'			=>'view_model',
+									'attr'			=>'rows="12"',
+								),
+							),
+						),$rs))}
+					</div><!--/panel-->					
+					<div class="tab-pane" id="vtab3">
+						{:W('Widget/buildform',array(array(
+							'field'		=>array(				
+								array(
+									'formtype'		=>'textarea',
+									'label'			=>'关联模型',
+									'name'			=>'relation_model',
+									'attr'			=>'rows="12"',
+								),
+							),
+						),$rs))}
+					</div><!--/panel-->	
+
+					<div class="tab-pane" id="vtab4">
+						<div class="md20">
+							<div class="list-fields_add btn btn-sm btn-rad btn-trans btn-info"><i class="fa fa-plus"></i> 添加列表字段</div>
+						</div>
+						<table>
+							<thead>
+								<th class="text-center" width="80">选择</th>
+								<th>名称</th>
+								<th>字段</th>
+								<th>处理函数</th>
+								<th>列属性</th>
+							</thead>
+							<tbody class="list-fields">
+								<volist name="list_fields" id="vo">
+								<tr>
+									<td class="text-center"><input type="checkbox" class="i-red-square" name="checked[]" value="{$key}" {:$vo['is_list']?'checked':''}></td>									
+									<td><input name="label[]" value="{$vo.label|htmlspecialchars}" class="form-control"></td>
+									<td><input name="field[]" value="{$vo.name}" class="form-control"></td>
+									<td><input name="function[]" value="{$vo.function|htmlspecialchars}" placeholder="使用函数格式输出字段值" class="form-control"></td>
+									<td><input name="attr[]" value="{$vo.attr|htmlspecialchars}" placeholder="设置标签属性，如CSS等" class="form-control"></td>
+								</tr>
+								</volist>
+							</tbody>
+						</table>
+					</div><!--/panel-->
+					
+					<div class="tab-pane" id="vtab5">
+						<div class="list-group">
+							<div class="list-group-item">
+								<div class="pull-right create-model" data-tplid="{$rs.id}" data-type="1">
+									<div class="btn btn-sm btn-rad btn-trans btn-info">创建</div>
+								</div>
+								<div class="ft18">创建验证模型 <span class="ft16 text-gray">{$rs.verify_model_file}</span></div>
+								<div class="ft12 text-gray">如果模型文件已存在将会直接覆盖，操作前请先检查确认！</div>
+							</div>
+							<div class="list-group-item">
+								<div class="pull-right create-model" data-tplid="{$rs.id}" data-type="2">
+									<div class="btn btn-sm btn-rad btn-trans btn-info">创建</div>
+								</div>
+								<div class="ft18">创建视图模型 <span class="ft16 text-gray">{$rs.view_model_file}</span></div>
+								<div class="ft12 text-gray">如果模型文件已存在将会直接覆盖，操作前请先检查确认！</div>
+							</div>
+							<div class="list-group-item">
+								<div class="pull-right create-model" data-tplid="{$rs.id}" data-type="3">
+									<div class="btn btn-sm btn-rad btn-trans btn-info">创建</div>
+								</div>
+								<div class="ft18">创建关联模型 <span class="ft16 text-gray">{$rs.relation_model_file}</span></div>
+								<div class="ft12 text-gray">如果模型文件已存在将会直接覆盖，操作前请先检查确认！</div>
+							</div>
+						</div>
+					</div><!--/panel-->
+					<div class="tab-pane" id="vtab6">
+						{:W('Widget/buildform',array(array(
+							'field'		=>array(				
+								array(
+									'formtype'		=>'text',
+									'label'			=>'控制器名称',
+									'name'			=>'controller_name',
+								),
+								array(
+									'formtype'		=>'text',
+									'label'			=>'控制器',
+									'name'			=>'controller',
+									'tips'			=>'只能用英文，如 admin ，会生成AdminController.class.php',
+								),
+								array(
+									'formtype'		=>'radio',
+									'label'			=>'类型',
+									'name'			=>'controller_type',
+									'field'			=>array(0,1),
+									'data'			=>array(array('Default','默认'),array('Category','适应分类较少'),array('CategoryMore','适应分类较多')),
+									'value'			=>'Default',
+								),
+								array(
+									'formtype'		=>'html',
+									'label'			=>' ',
+									'html'			=>'<button type="button" class="btn btn-sm btn-info btn-rad btn-trans btn-150px btn-controller">创建</button>',
+								),
+							),
+						),$rs))}						
+					</div>
+					
+					<div class="tab-pane" id="vtab7">
+						{:W('Widget/buildform',array(array(
+							'field'		=>array(				
+								array(
+									'formtype'		=>'text',
+									'label'			=>'搜索每行显示列数',
+									'name'			=>'search_col',
+								),
+							),
+						),$rs))}
+
+						<div id="vtab7-content"></div>
+					</div>
+
+				</div>
+				<div class="p20 text-center">
+					<button type="submit" class="btn btn-primary btn-150px"><i class="fa fa-check"></i> 提交</button>
+				</div>				
+				
+			</form>	
+			
+			
+			
+			
+		</div>
+		<div class="clearfix"></div>
+	</div>
+	<form id="formlist">	
+	<div class="sort-us">
+			<volist name="list" id="vo">
+				<div class="block-flat md20" id="{$vo.id}">
+					<div class="header">
+						<div class="actions">
+							<div class="btn btn-rad btn-trans btn-info btn-sm" data-type="vmodal" data-title="修改分组" data-url="__URL__/group_edit/id/{$vo.id}" data-width="800px"><i class="fa fa-pencil"></i>修改</div>
+							<div class="btn btn-rad btn-trans btn-danger btn-sm" data-type="delete" data-title="删除" data-msg="真的要删除吗？" data-class="text-center ft14" data-url="__URL__/group_delete/id/{$vo.id}" data-script="delCall(ret,'#{$vo.id}')" data-width="800px"><i class="fa fa-times"></i> 删除</div>
+						</div>
+						<h4>
+							 <div class="btn btn-trans btn-sm btn-rad btn-info" data-type="vmodal" data-title="新增表单项" data-url="__URL__/field_add/formtpl_id/{$vo.formtpl_id}/group_id/{$vo.id}" data-width="95%"><i class="fa fa-plus"></i> 新增表单项</div> {$vo['active']?'<div class="btn btn-xs btn-rad btn-trans btn-success">正常</div>':'<div class="btn btn-xs btn-rad btn-trans btn-default">锁定</div>'} {$vo.group_name} <span class="ml20 text-gray ft12">{$vo.remark}</span>
+						</h4>
+					</div>
+					<div class="block content admin-menu">
+					
+							<table>
+								<thead>
+									<tr>
+										<th width="100" class="text-center">ID</th>
+										<th width="100" class="text-center">选择</th>
+										<th width="10%" class="text-center">状态</th>
+										<th width="12%">标题</th>
+										<th width="10%">字段名</th>
+										<th width="">表单类型</th>
+										<th width="4%" class="text-center">必填</th>
+										<th width="4%" class="text-center">列表</th>
+										<th width="4%" class="text-center">搜索</th>
+										<th width="4%" class="text-center">验证</th>
+										<th width="12%" class="text-center">时间</th>
+										<th width="100" class="text-center">操作</th>
+									</tr>
+								</thead>
+								<tbody class="sort-ds">
+									<volist name="vo.tplfields" id="ds">
+									<tr id="{$ds.id}">
+										<td class="text-center">{$ds.id}</td>
+										<td class="text-center"><input type="checkbox" class="i-red-square" name="id[]" id="id[]" value="{$ds.id}"></td>
+										<td class="text-center">
+											<eq name="ds.active" value="1">
+												<div class="btn btn-xs btn-success btn-rad btn-trans">正常</div>
+											<else />
+												<div class="btn btn-xs btn-default btn-rad btn-trans">锁定</div>
+											</eq>
+										</td>
+										<td >
+											{$ds.label}
+										</td>
+										<td>
+											{$ds.name}
+										</td>
+										<td>
+											[{$ds.formtype}]{:get_key_by_list(array('table'=>'formtpl_type','field'=>'formtype,type_name','key_val'=>$ds['formtype'],'cache_name'=>'formtpl_type'))}
+										</td>
+										<td class="text-center">
+											{$ds['is_need']?'<i class="fa fa-check text-success"></i>':'-'}
+										</td>
+										<td class="text-center">
+											{$ds['is_list']?'<i class="fa fa-check text-success"></i>':'-'}
+										</td>
+										<td class="text-center">
+											{$ds['is_search']?'<i class="fa fa-check text-success"></i>':'-'}
+										</td>
+										<td class="text-center">
+											{$ds['is_verify']?'<i class="fa fa-check text-success"></i>':'-'}
+										</td>
+										<td class="text-center text-gray">{$vo.atime}</td>
+										<td class="text-center">
+											<button type="button" class="btn btn-rad btn-trans btn-info btn-sm" data-type="vmodal" data-title="修改表单项" data-url="__URL__/field_edit/id/{$ds.id}" data-width="90%" data-script="editCall(ret)"><i class="fa fa-pencil"></i>修改</button>
+
+										
+										
+										</td>
+									</tr>
+									</volist>
+								</tbody>						
+							</table>				
+
+						
+						
+					</div>
+				</div>
+			</volist>	
+	</div>
+	</form>
+	
+
+	<div class="clearfix h50px"></div>	
+</div>
+
+<!--fix bottom-->
+<div class="navbar-fixed-bottom border-t">
+	<div class="buttom-bar bg-white-50">
+		<div class="row">
+			<div class="col-xs-5">
+				<button type="button" class="btn btn-info btn-rad btn-trans select-all"><i class="fa fa-location-arrow"></i> 全选 / 反选</button>
+				<button type="button" class="btn btn-primary btn-rad btn-trans delete-select"><i class="fa fa-times"></i> 删除选中记录</button>
+				<button type="button" class="btn btn-info btn-rad btn-trans" data-type="vmodal" data-title="根据字段创建表单项" data-width="900px" data-url="__URL__/field_add_from_table/formtpl_id/{$rs.id}"><i class="fa fa-plus"></i> 根据字段创建表单项</button>
+			</div>
+			<div class="col-xs-2">
+				<div class="input-group">
+						<select id="tosid" name="tosid" class="form-control">
+							<volist name="list" id="vo">
+							<option value="{$vo.id}">{$vo.group_name}</option>
+							</volist>
+							
+						</select>					
+					<div class="input-group-btn">
+						<div class="btn btn-rad btn-trans btn-default sid-change">转移分组</div>
+					</div>
+				</div>			
+			</div>	
+			<div class="col-xs-1">
+				<select id="status_field" name="status_field" class="form-control">
+					<option value="active">状态</option>
+					<option value="is_need">必填</option>
+					<option value="is_list">列表</option>
+					<option value="is_search">搜索</option>
+					<option value="is_verify">验证</option>
+				</select>			
+			</div>				
+			<div class="col-xs-2">
+				<div class="input-group">				
+					<select id="tostatus" name="tostatus" class="form-control">
+						<option value="1">启用</option>
+						<option value="0">停用</option>
+					</select>					
+					<div class="input-group-btn">
+						<div class="btn btn-rad btn-trans btn-default status-change">设置</div>
+					</div>
+				</div>			
+			</div>			
+		</div>
+	</div>
+</div>	
+
+
+
+
+
+<include file="Public:copyright" />
+<include file="Public:js" />
+<script>
+$(document).ready(function(){
+	$('body .sort-us').sortable({
+		stop: function(event, ui) {
+			var data = $('.sort-us >div').map(function() { return $(this).attr("id"); }).get();
+			ajax_post({
+				data:{ids:data},
+				url:'__URL__/setsort',
+			});
+		}	
+	});
+	$('.sort-us .sort-ds').sortable({
+		stop: function(event, ui) {
+			var data = $('.sort-ds >tr').map(function() { return $(this).attr("id"); }).get();
+			ajax_post({
+				data:{ids:data},
+				url:'__URL__/setsort_field',
+			});		
+		}	
+	});
+	
+
+	
+	$('#vtab4 .list-fields').sortable({
+		stop: function(event, ui) {
+			$('.list-fields [type="checkbox"]').each(function(index){
+				$(this).val(index);				
+			});
+		}	
+	});
+	
+	$('.delete-select').click(function(){
+		if($('input[type="checkbox"]:checked').size()==0){
+			valert({status:'warning',msg:'请至少选择一项！'})
+			return false;
+		}else {
+			confirm_form({
+				formid:'#formlist',
+				furl:'__URL__/delete_field_select',
+				script:'callback(ret)',
+				title:'删除记录',
+				msg:'真的要删除吗？',
+				class:'text-center',
+				confirm:1
+			});
+		}
+	});	
+	
+	$('.sid-change').click(function(){
+		if($('input[type="checkbox"]:checked').size()==0){
+			valert({status:'warning',msg:'请至少选择一项！'})
+			return false;
+		}else if($('#tosid').val()==''){
+			valert({status:'warning',msg:'请选择一个分组'})
+			return false;			
+		}else {
+			confirm_form({
+				formid:'#formlist',
+				furl:'__URL__/group_change_select/tosid/'+$('#tosid').val(),
+				script:'activeCall(ret)',
+				title:'批量记录分组',
+				msg:'真的要批量记录分组吗？',
+				class:'text-center',
+				confirm:1
+			});
+		}
+	});	
+	
+	$('.status-change').click(function(){
+		if($('input[type="checkbox"]:checked').size()==0){
+			valert({status:'warning',msg:'请至少选择一项！'})
+			return false;
+		}else {
+			confirm_form({
+				formid:'#formlist',
+				furl:'__URL__/status_change_select/status_field/'+$('#status_field').val()+'/tostatus/'+$('#tostatus').val(),
+				script:'activeCall(ret)',
+				title:'批量设置状态',
+				msg:'真的要批量设置状态吗？',
+				class:'text-center',
+				confirm:1
+			});
+		}
+	});		
+
+	checkform({
+		formid:'#formtpl_edit',
+	},function(ret){
+		valert(ret);
+		if(ret.status=='success'){
+			setTimeout(function(){
+				ref();
+			},1000);
+		}
+	});	
+	
+	
+	$('.create-model').click(function(){
+		var d=$(this).data();
+		
+		vmodal({
+			title:'创建模型文件',
+			msg:'<h4>确定要根据设置生成模型文件吗？</h4>',
+			class:'text-center',
+			confirm:1,
+			footer:false
+		},function(){
+			$('.modal-ok').click(function(){
+				ajax_post({
+					url:'__URL__/create_model_file',
+					data:d,
+				},function(ret){
+					valert(ret);
+					if(ret.status=='success'){
+						$('#ajax-modal').modal('hide');
+					}
+				});			
+			});
+		});
+
+	});
+	
+	$('.btn-controller').click(function(){
+		var d={name:$('#controller_name').val(),controller:$('#controller').val(),type:$('[name="controller_type"]:checked').val(),formtpl_id:$('#id').val()};
+
+		if(d.name=='') {
+			valert({status:'warning',msg:'控制器标题不能为空！'});
+			return;
+		}
+		if(d.controller=='') {
+			valert({status:'warning',msg:'控制器不能为空！'});
+			return;
+		}
+
+		
+		vmodal({
+			title:'创建控制器',
+			msg:'<h4>确定要根据设置生成控制器文件吗？</h4><div class="text-gray">如果存在同名控制器，将会直接覆盖，操作前请先检查确认！</div>',
+			class:'text-center',
+			confirm:1,
+			footer:false
+		},function(){
+			$('.modal-ok').click(function(){
+				ajax_post({
+					url:'__URL__/create_controller',
+					data:d,
+				},function(ret){
+					valert(ret);
+					if(ret.status=='success'){
+						$('#ajax-modal').modal('hide');
+					}
+				});			
+			});
+		});
+
+	});	
+	
+	$('.list-fields_add').click(function(){
+		var size=$('.list-fields [type="checkbox"]').size();
+		var html='<tr id="'+size+'">'+
+				'	<td class="text-center"><input type="checkbox" class="i-red-square" name="checked[]" value="'+size+'"}></td>'+
+				'	<td><input name="label[]" value="" class="form-control"></td>'+
+				'	<td><input name="field[]" value="" class="form-control"></td>'+
+				'	<td><input name="function[]" value="" placeholder="使用函数格式输出字段值" class="form-control"></td>'+
+				'	<td><input name="attr[]" value="" placeholder="设置标签属性，如CSS等" class="form-control"></td>'+
+				'</tr>';
+		$('.list-fields').append(html);
+		iCheckClass('#'+size);
+	});
+	
+	loadurl({tag:'#vtab7-content',url:'__URL__/formtpl_search_fields/formtpl_id/{$_GET.id}'});
+});
+
+function delCall(ret,tag){
+	valert(ret);
+	if(ret.status=='success'){
+		$(tag).remove();
+		$('#ajax-modal').modal('hide');
+	}
+}
+
+function callback(ret){
+	valert({status:ret.status,msg:ret.msg});
+	if(ret.status=='success'){
+		$('input[type="checkbox"]:checked').each(function(){
+			$('#'+$(this).val()).remove();
+		});
+		$('#ajax-modal').modal('hide');
+	}
+}
+
+function activeCall(ret){
+	valert({status:ret.status,msg:ret.msg});
+	if(ret.status=='success'){
+		setTimeout(function(){
+			ref();
+		},500);
+	}
+}
+
+function edit_search_field(id){
+	var url='__URL__/search_field_edit/id/'+id;
+	vmodal({
+		title:'修改搜索字段',
+		url:url
+	});
+}
+
+function delete_search_field(id){
+	vmodal({
+		title:'删除搜索字段',
+		msg:'<h3>是否真的要删除</h3>',
+		class:'text-center',
+		confirm:1,
+	},function(){
+		$('.modal-ok').click(function(){
+			ajax_post({
+				url:'__URL__/search_field_delete',
+				data:{id:id},
+			},function(ret){
+				valert(ret);
+				if(ret.status=='success'){
+					$('#vtab7-content').find('#'+id).remove();
+					$('#ajax-modal').modal('hide');
+				}
+			});
+		});
+	});
+}
+</script>
+<include file="Public:footer" />

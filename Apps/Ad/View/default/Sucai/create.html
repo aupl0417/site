@@ -1,0 +1,69 @@
+<include file="Public:header" />
+<div class="container">
+
+    <include file="nav"/>
+    <div class="bor_der td_ptb20 bg_white solid_b">
+        <div class="fs14 solid_b mb10 lh50 clearfix">
+            <div class="fl  ml20">提交素材</div>
+        </div>
+        <div style="height:auto">
+            {:W('Common/Builder/form', [['data' => $keyList, 'run' => '/run/authRun']])}
+        </div>
+    </div>
+
+</div>
+<script>
+var bsize = $("#bsize").val();
+$("#bsize").change(function() {
+	var h = '素材背景图片 ';
+	var r = '<span class="text_red" aria-required="true">*</span>';
+	bsize = $(this).val();
+	if(bsize != '') {
+		$(".f-background_images label").html(h + r);
+	} else {
+		$(".f-background_images label").html(h);
+	}
+})
+
+$("#formadd .btn-submit").click(function() {
+    
+    var data = getFormJson('#formadd');
+    if(data.category_id == ''){
+        layerMsg('必须选择投放类目');
+        return false;
+    }
+    if(data.size == ''){
+        layerMsg('必须选择图片尺寸');
+        return false;
+    }
+    if(data.sucai_name == ''){
+        layerMsg('必须填写素材标题');
+        return false;
+    }
+    if (data.images == '') {
+        layerMsg('素材图片必须选择');
+        return false;
+    }
+    if(bsize != '' && data.background_images == '') {
+    	layerMsg('背景图片必须选择');
+        return false;
+    }
+    
+    var ac = '{:enCryptRestUri("/Ad/sucaiCreate")}';
+    checkform({
+        formid:"#formadd",
+        headers:{'Action':ac},
+    },function(ret) {
+        if(ret.code == 1) {
+            layerMsg(ret.msg,{skin:'my-layer-success'},function(){
+                gourl({url:'{:U("/Sucai/index")}'});
+            });
+        }else{
+            layerMsg(ret.msg);
+        }
+    });
+})
+
+</script>
+
+<include file="Public:footer" />

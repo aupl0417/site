@@ -1,0 +1,53 @@
+<style type="text/css">
+table th,table td{padding:5px;}
+</style>
+<h2 style="text-align:center">乐兑出货单</h2>
+<table width="100%" border="0">
+  <tr>
+    <td width="50%">订单编号:{$rs.s_no}</td>
+    <td>付款时间:{$rs.pay_time}</td>
+  </tr>
+  <tr>
+    <td>收货人姓名:{$rs.orders.linkname}</td>
+    <td>会员名:{$rs.user.nick}</td>
+  </tr>
+  <tr>
+    <td colspan="2">收货人地址:
+		{$rs.orders.province} {$rs.orders.city} {$rs.orders.district} {$rs.orders.town} {$rs.orders.street}<notempty name="rs.orders.postcode"> ({$rs.orders.postcode})</notempty>，{$rs.orders.mobile}<notempty name="rs.orders.tel"> / {$rs.orders.tel}</notempty>
+				
+	</td>
+  </tr>
+</table>
+
+<table width="100%" border="1"  cellpadding="0" cellspacing="0" style="margin-top:10px;margin-bottom10px;">
+	<tr>
+		<th width="8%">NO.</th>
+		<th width="10%">货号</th>
+		<th>货品名称</th>
+		<th width="8%">数量</th>
+		<th width="10%">单价</th>
+		<th width="10%">金额</th>
+	</tr>
+	<volist name="rs.orders_goods" id="goods">
+	<tr>
+		<td align="center">{$key+1}</td>
+		<td align="center">-</td>
+		<td>{$goods.goods_name}<br />属性：{$goods.attr_name}</td>
+		<td align="center">{$goods.num}</td>
+		<td align="center">{$goods.price}</td>
+		<td align="center">{$goods.total_price_edit}</td>
+	</tr>	
+	</volist>
+</table>
+
+<div style="margin:10px;text-align:right;font-size:20px;font-weight:bold;">
+	实付金额：￥{$rs.pay_price}
+</div>
+
+<notempty name="rs.remark">
+<div style="margin-bottom:20px;">
+买家留言：{$rs.remark|nl2br}
+</div>
+</notempty>
+
+<div>非常感谢您的惠顾！如需退换货，请保留此单并连同产品一并退回，我们会在第一时间给您处理，希望您对我们的服务感到满意。</div>

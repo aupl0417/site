@@ -1,0 +1,50 @@
+<include file="Public:header" />
+		<div class="page-group">
+			<div id="page-forget2" class="page">
+				<!-- 标题栏 -->
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left back" href="/"></a>
+					<h1 class="title">找回密码</h1>
+				</header>
+		
+				<!-- 这里是页面内容区 -->		
+				<div class="content">
+					<form onsubmit="return false" id="form-forget2">
+					<div class="list-block">
+						<ul>
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title label">设置新密码</div>
+										<div class="item-input">
+											<input type="password" id="password" name="password" placeholder="8-20位字母、数字及符号组合" maxlength="20" autocomplete="new-password">
+										</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title label">确认新密码</div>
+										<div class="item-input">
+											<input type="password" id="password2" name="password2" placeholder="再次填写密码" maxlength="20" autocomplete="new-password">
+											<input type="hidden" id="erp_uid" name="erp_uid" value={$data.erp_uid}>
+											<input type="hidden" id="signcode" name="signcode" value={$data.signcode}>
+										</div>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>		
+				
+					<div class="clearfix m5">
+						<div class="button button-big button-fill button-danger md2 btn-submit">确认修改</div>
+					</div>
+					</form>
+	
+				</div><!--content-->
+			</div>		
+		</div>	
+
+<include file="Public:script" />
+<include file="Public:footer" />

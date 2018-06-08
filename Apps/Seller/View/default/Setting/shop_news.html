@@ -1,0 +1,46 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body">
+	<include file="Public:nav" />
+	<div class="container mb30">
+		<include file="Public:side" />
+		<div class="w980 fl">
+			<div class="bor_der">
+				<include file="nav" />
+				{:W('Common/Builder/form', [['data' => $keyList, 'run' => '/run/authRun']])}
+				
+				<!-- 主体部分 -->
+			</div>
+		</div>
+	</div>
+</div>
+</block>
+<block name="css">
+<script type="text/javascript" src="/Public/Webuploader/js/webuploader.js"></script>
+<link rel="stylesheet" type="text/css" href="/Public/Webuploader/css/webuploader.css">
+</block>
+<block name="script">
+<script type="text/javascript">
+	$(document).ready(function(){
+		ACTION = '{$ACTION}';
+		checkform({
+			formid:"#formadd",
+			rules:{
+				remark:{
+					required:true,
+				},
+			},
+			messages:{
+				remark:{
+					required:'店铺公告不能为空',
+				},
+			},
+		},function(res) {
+			talert({status:res.code,msg:res.msg});
+			if(res.code == 1) {
+				setTimeout("ref()", 1000);
+			}
+		});
+	});
+</script>
+</block>

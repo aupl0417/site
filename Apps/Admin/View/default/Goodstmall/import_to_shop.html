@@ -1,0 +1,173 @@
+<form data-url="__URL__/import_to_shop_save" id="form_illegl_add" class="form-horizontal vform">
+
+			{:W('Widget/buildform',array(array(
+				'field'		=>array(
+					array(
+						'formtype'		=>'text',
+						'label'			=>'商品类目',
+						'name'			=>'select_city',
+						'is_need'		=>true,
+						'attr'			=>'readonly',
+						'placeholder'	=>'请选择到最后一级类目（即第三级）',
+						'right'			=>'<span class="input-group-addon" style="cursor: pointer;">请选择类目 <i class="fa fa-angle-down"></i></span>',
+					),				
+					array(
+						'formtype'		=>'radio',
+						'label'			=>'如果已导入过是否再次导入',
+						'name'			=>'redo',
+						'field'			=>array(0,1),
+						'data'			=>array(
+							array(0,'不再入导入'),
+							array(1,'再次导入')
+						),
+					),
+					array(
+						'formtype'		=>'radio',
+						'label'			=>'是否直接上架',
+						'name'			=>'status',
+						'field'			=>array(0,1),
+						'data'			=>array(
+							array(2,'仓库'),
+							array(1,'上架')
+						),
+						value			=>2,
+					),				
+					array(
+						'formtype'		=>'text',
+						'label'			=>'价格比例',
+						'name'			=>'ratio',
+						'value'			=>1.25,
+					),
+					array(
+						'formtype'		=>'text',
+						'label'			=>'价格后缀',
+						'name'			=>'price_end',
+						'value'			=>0.9,
+					),						
+					array(
+						'formtype'		=>'radio',
+						'label'			=>'要导入的店铺',
+						'name'			=>'shop_id',
+						'field'			=>array(0,1),
+						'data'			=>array(
+							array(243,'批发街'),
+							array(4500,'懒猫杂货铺'),
+							array(2600,'仁美电器'),
+							array(3687,'母婴优选'),
+						),
+						value			=>243,
+					),						
+					array(
+						'formtype'		=>'checkbox',
+						'label'			=>'批发街店内分类',
+						'name'			=>'shop_category_id',
+						'data'			=>get_category(['table'=>'shop_goods_category','field'=>'id,sid,category_name','sql'=>'status=1 and uid=692355','level'=>2]),
+						'field'			=>array('id','category_name'),
+						'level'			=>2,
+						'tpl'			=>'default',
+					),
+					array(
+						'formtype'		=>'checkbox',
+						'label'			=>'懒猫杂货铺店内分类',
+						'name'			=>'shop_category_id2',
+						'data'			=>get_category(['table'=>'shop_goods_category','field'=>'id,sid,category_name','sql'=>'status=1 and uid=798859','level'=>2]),
+						'field'			=>array('id','category_name'),
+						'level'			=>2,
+						'tpl'			=>'default',
+					),
+					array(
+						'formtype'		=>'checkbox',
+						'label'			=>'仁美电器店内分类',
+						'name'			=>'shop_category_id3',
+						'data'			=>get_category(['table'=>'shop_goods_category','field'=>'id,sid,category_name','sql'=>'status=1 and uid=695622','level'=>2]),
+						'field'			=>array('id','category_name'),
+						'level'			=>2,
+						'tpl'			=>'default',
+					),
+					array(
+						'formtype'		=>'checkbox',
+						'label'			=>'仁美电器店内分类',
+						'name'			=>'shop_category_id4',
+						'data'			=>get_category(['table'=>'shop_goods_category','field'=>'id,sid,category_name','sql'=>'status=1 and uid=690505','level'=>2]),
+						'field'			=>array('id','category_name'),
+						'level'			=>2,
+						'tpl'			=>'default',
+					),
+					array(
+						'formtype'		=>'textarea',
+						'label'			=>'导入ID',
+						'name'			=>'id',
+						'attr'			=>'readonly',
+					),
+					array(
+						'formtype'		=>'hidden',
+						'name'			=>'cid',
+					),
+
+				),
+			),$rs))}
+			
+	<div class="p20 text-center">
+		<button type="submit" class="btn btn-primary btn-150px"><i class="fa fa-check"></i> 提交</button>
+	</div>
+<!--token-->
+
+</form>			
+<script>
+var id=new Array();
+$('input[type="checkbox"]:checked').each(function(index){
+	id[index]=$(this).val();
+});
+$('#form_illegl_add #id').val(id.join(','));
+
+	$('.f-select_city .col-xs-7').append('<div class="city-box"><div class="city-load"></div><div class="clearfix"></div></div>');
+	
+	$('.f-select_city .input-group').click(function(){
+		$('.city-load').slideToggle();
+		if($('.city-load').html()=='') loadurl({tag:'.city-load',url:'__URL__/city'});
+	});
+
+$('.f-shop_category_id2').addClass('hide');
+$('.f-shop_category_id3').addClass('hide');
+$('.f-shop_category_id4').addClass('hide');
+
+$('input[name="shop_id"]').eq(0).on('ifChecked', function(event){
+	$('.f-shop_category_id2').addClass('hide');
+    $('.f-shop_category_id3').addClass('hide');
+    $('.f-shop_category_id4').addClass('hide');
+	$('.f-shop_category_id').removeClass('hide');
+});	
+
+$('input[name="shop_id"]').eq(1).on('ifChecked', function(event){
+	$('.f-shop_category_id2').removeClass('hide');
+    $('.f-shop_category_id3').addClass('hide');
+    $('.f-shop_category_id4').addClass('hide');
+	$('.f-shop_category_id').addClass('hide');
+});
+
+$('input[name="shop_id"]').eq(2).on('ifChecked', function(event){
+    $('.f-shop_category_id2').addClass('hide');
+    $('.f-shop_category_id4').addClass('hide');
+    $('.f-shop_category_id').addClass('hide');
+    $('.f-shop_category_id3').removeClass('hide');
+});
+
+$('input[name="shop_id"]').eq(3).on('ifChecked', function(event){
+    $('.f-shop_category_id2').addClass('hide');
+    $('.f-shop_category_id').addClass('hide');
+    $('.f-shop_category_id3').addClass('hide');
+    $('.f-shop_category_id4').removeClass('hide');
+});
+
+
+iCheckClass();
+checkform({
+	formid:'#form_illegl_add',
+},function(ret){
+	valert(ret);
+	if(ret.status=='success'){
+		ref();
+	}
+});
+
+</script>

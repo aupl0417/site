@@ -1,0 +1,270 @@
+<extend name="Seller@Public:base" />
+<block name="body">
+    <div class="centent_body">
+        <!-- to do your html codeing -->
+        <div class="revision_bg">
+            <div class="container ptb_size_lg clearfix">
+                <!-- 左侧导航 -->
+                <include file="Public:sideNav" />
+                <!-- 左侧导航结束 -->
+
+                <div class="revisionRight pd15" style="width: 1020px"><!-- 右侧内容 -->
+                    <div class="clearfix revisionOrderTab" data-url="">
+                        <a class="orderOption active" href="javascript:;">促销详情</a>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <h4>促销详情</h4>
+                            <table class="table table-bordered table-advance table-hover mb30">
+                                <tbody>
+                                <tr>
+                                    <th class="col-xs-4 text-right" style="vertical-align: middle;">促销类型</th>
+                                    <td class="col-xs-8" style="vertical-align: middle;">{$data.activity_name}</td>
+                                </tr>
+                                <tr>
+                                    <th class="col-xs-4 text-right" style="vertical-align: middle;">发布时间</th>
+                                    <td class="col-xs-8" style="vertical-align: middle;">{$data.atime}</td>
+                                </tr>
+                                <tr>
+                                    <th class="col-xs-4 text-right" style="vertical-align: middle;">促销开始时间</th>
+                                    <td class="col-xs-8" style="vertical-align: middle;">{$data.start_time}</td>
+                                </tr>
+                                <tr>
+                                    <th class="col-xs-4 text-right" style="vertical-align: middle;">促销结束时间</th>
+                                    <td class="col-xs-8" style="vertical-align: middle;">{$data.end_time}</td>
+                                </tr>
+                                <tr>
+                                    <th class="col-xs-2 text-right" style="vertical-align: middle;">
+                                        <switch name="data.type_id">
+                                            <case value="5">
+                                                0元购
+                                            </case>
+                                            <case value="6">
+                                                商品秒杀价
+                                            </case>
+                                            <default />
+                                            需消费金额
+                                        </switch>
+                                    </th>
+                                    <td class="col-xs-10" style="vertical-align: middle;">{$data.full_money}</td>
+                                </tr>
+                                <if condition="$data.type_id != 1 && $data.type_id != 7">
+                                    <tr>
+                                        <th class="col-xs-2 text-right" style="vertical-align: middle;">
+                                            <switch name="data.type_id">
+                                                <case value="2">礼品</case>
+                                                <case value="3">满减</case>
+                                                <case value="4">折扣</case>
+                                                <case value="5">参与商品</case>
+                                                <case value="6">参与商品</case>
+                                            </switch>
+                                        </th>
+                                        <td class="col-xs-10" style="vertical-align: middle;">
+                                            <switch name="data.type_id">
+                                                <case value="2">
+                                                    <ul id="images-list" class="images-select-box">
+                                                        <notempty name="data.goods">
+                                                            <volist name="data.goods" id="vo">
+                                                                <li data-path="{$vo.images}" class="text-center" style="width:80px;">
+                                                                    <div class="li-img-box"  style="width:60px;height:60px;">
+                                                                        <a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', ['id' => $vo['attr_list'][0]['id']])}">
+                                                                            <img src="{$vo.images}" width="60px">
+                                                                        </a>
+                                                                    </div>
+                                                                </li>
+                                                            </volist>
+                                                            <else />
+                                                            <span class="text_yellow">未赠送？那怎么做活动，赶紧找大唐程序员！</span>
+                                                        </notempty>
+                                                    </ul>
+                                                </case>
+                                                <case value="5">
+                                                    <ul id="images-list" class="images-select-box">
+                                                        <notempty name="data.goods">
+                                                            <volist name="data.goods" id="vo">
+                                                                <li data-path="{$vo.images}" class="text-center" style="width:80px;">
+                                                                    <div class="li-img-box"  style="width:60px;height:60px;">
+                                                                        <a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', ['id' => $vo['attr_list'][0]['id']])}">
+                                                                            <img src="{$vo.images}" width="60px">
+                                                                        </a>
+                                                                    </div>
+                                                                </li>
+                                                            </volist>
+                                                            <else />
+                                                            <span class="text_yellow">没商品？那怎么做活动，赶紧找大唐程序员！</span>
+                                                        </notempty>
+                                                    </ul>
+                                                </case>
+                                                <case value="6">
+                                                    <ul id="images-list" class="images-select-box">
+                                                        <notempty name="data.goods">
+                                                            <volist name="data.goods" id="vo">
+                                                                <li data-path="{$vo.images}" class="text-center" style="width:80px;">
+                                                                    <div class="li-img-box"  style="width:60px;height:60px;">
+                                                                        <a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', ['id' => $vo['attr_list'][0]['id']])}">
+                                                                            <img src="{$vo.images}" width="60px">
+                                                                        </a>
+                                                                    </div>
+                                                                </li>
+                                                            </volist>
+                                                            <else />
+                                                            <span class="text_yellow">没商品？那怎么做活动，赶紧找大唐程序员！</span>
+                                                        </notempty>
+                                                    </ul>
+                                                </case>
+                                                <default />
+                                                {$data.full_value}
+                                            </switch>
+                                        </td>
+                                    </tr>
+                                </if>
+                                <in name="data.type_id" value="5,6">
+                                    <tr>
+                                        <th class="col-xs-2 text-right" style="vertical-align: middle;">预售数量</th>
+                                        <td class="col-xs-10" style="vertical-align: middle;">
+                                            <eq name="data.sku_num" value="0">
+                                                未限制
+                                                <else />
+                                                {$data.sku_num}
+                                            </eq>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="col-xs-2 text-right" style="vertical-align: middle;">限购</th>
+                                        <td class="col-xs-10" style="vertical-align: middle;">
+                                            <eq name="data.max_num" value="0">
+                                                未限制
+                                                <else />
+                                                {$data.max_num}
+                                            </eq>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="col-xs-2 text-right" style="vertical-align: middle;">参与类型</th>
+                                        <td class="col-xs-10" style="vertical-align: middle;">
+                                            <if condition="$data.is_single eq 0">多件参与<else/>单件参与</if>
+
+                                        </td>
+                                    </tr>
+                                </in>
+                                <eq name="data.type_id" value="3">
+                                    <tr>
+                                        <th class="col-xs-2 text-right" style="vertical-align: middle;">最高可减</th>
+                                        <td class="col-xs-10" style="vertical-align: middle;">
+                                            {$data.highest}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="col-xs-2 text-right" style="vertical-align: middle;">是否累积</th>
+                                        <td class="col-xs-10" style="vertical-align: middle;">
+                                            {$data['is_accumulation'] == 1 ? '是' : '否'}
+                                        </td>
+                                    </tr>
+                                </eq>
+                                <tr>
+                                    <th class="col-xs-2 text-right" style="vertical-align: middle;">参与量</th>
+                                    <td class="col-xs-10" style="vertical-align: middle;">
+                                        {$data.sale_num}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="col-xs-2 text-right" style="vertical-align: middle;">交易量</th>
+                                    <td class="col-xs-10" style="vertical-align: middle;">
+                                        {$data.payment_num}
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-sm-7">
+                            <h4>参与记录</h4>
+                            <notempty name="data.participate.list">
+                                <table class="table table-bordered table-advance table-hover" style="margin-bottom:0;">
+                                    <tbody>
+                                    <tr>
+                                        <th class="col-xs-3 text-center" style="vertical-align: middle;">订单号</th>
+                                        <th class="col-xs-2 text-center" style="vertical-align: middle;">用户</th>
+                                        <th class="col-xs-1 text-center" style="vertical-align: middle;">
+                                            <switch name="data.type_id">
+                                                <case value="5">
+                                                    0元购
+                                                </case>
+                                                <case value="6">
+                                                    商品秒杀价
+                                                </case>
+                                                <default />
+                                                需消费金额
+                                            </switch>
+                                        </th>
+                                        <th class="col-xs-1 text-center" style="vertical-align: middle;">促销前金额</th>
+                                        <th class="col-xs-1 text-center" style="vertical-align: middle;">促销后金额</th>
+                                        <th class="col-xs-2 text-center" style="vertical-align: middle;">优惠信息</th>
+                                        <th class="col-xs-2 text-center" style="vertical-align: middle;">消费时间</th>
+                                    </tr>
+                                    <volist name="data.participate.list" id="vo">
+                                        <tr>
+                                            <td class="text-center" style="vertical-align: middle;">
+                                                <a class="text_blue" href="{:U('/orders/detail', ['id' => $vo['s_no']])}">{$vo.s_no}</a>
+                                            </td>
+                                            <td class="text-center" style="vertical-align: middle;">{:hiddenChineseStr($vo['nick'],0,1)}</td>
+                                            <td class="col-xs-1 text-center text_yellow" style="vertical-align: middle;">{$vo.full_money}</td>
+                                            <td class="col-xs-1 text-center text_yellow" style="vertical-align: middle;">{$vo.calc_before_money}</td>
+                                            <td class="col-xs-1 text-center text_yellow" style="vertical-align: middle;">
+                                                <switch name="data.type_id">
+                                                    <case value="4">
+                                                        {$vo['calc_after_money'] * 100} 唐宝
+                                                    </case>
+                                                    <default />
+                                                    {$vo.calc_after_money}
+                                                </switch>
+                                            </td>
+                                            <td class="col-xs-2 text-center" style="vertical-align: middle;">
+                                                <switch name="data.type_id">
+                                                    <case value="2">
+                                                        <notempty name="vo.goods">
+                                                            <volist name="vo.goods" id="goods">
+                                                                <li data-path="{$goods.images}" class="text-center fl mr10" style="width:40px;">
+                                                                    <a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', ['id' => $goods['attr_list'][0]['id']])}">
+                                                                        <img src="{$goods.images}" width="40px">
+                                                                    </a>
+                                                                </li>
+                                                            </volist>
+                                                            <else />
+                                                            <span class="text_yellow">未赠送？</span>
+                                                        </notempty>
+                                                    </case>
+                                                    <default />
+                                                    {$vo.remark}
+                                                </switch>
+                                            </td>
+                                            <td class="text-center" style="vertical-align: middle;">{$vo.atime}</td>
+                                        </tr>
+                                    </volist>
+                                    </tbody>
+                                </table>
+                                <else />
+                                {:W('Common/Builder/nors', array('param' => array('text' => '暂无用户参与')))}
+                            </notempty>
+                            <div class="page-box col-xs-12 text-center">
+                                {:page_html($data['pageinfo'])}
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <!-- my codeing over -_-   -->
+
+    </div>
+</block>
+
+<block name="css">
+
+</block>
+
+<block name="script">
+    <!-- to do your javascript codeing -->
+</block>

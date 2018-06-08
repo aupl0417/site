@@ -1,0 +1,172 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body mt10">
+    <include file="Public:nav_statistic" />
+    <div class="container">
+		<include file="Public:side_statistic" />
+
+        <div class="w960 fl">
+            <ol class="breadcrumb pd10 bor_der bor_r0 mt0 mb20">
+                <li><a href="/">数据统计</a> </li>
+                <li><a href="">实时统计</a></li>
+                <li><a href="">实时榜单</a></li>
+            </ol>
+            <div class="ptb10 solid_b mb35">
+                <span class="fs16">商品榜</span>
+                <span class="pull-right text_77 mt5 mr10">更新时间：{:date('Y-m-d H:i:s',time())}</span>
+            </div>
+
+
+            <form action="" method="post" class="clearfix h17">
+                <div class="pull-right">
+                    <input type="text" class="form-control fl" placeholder="请输入商品名称" name = "goods_name" style="width:190px;border-color:#c81623">
+                    <button class="btn btn_m btn-primary plr20">搜索</button>
+                </div>
+            </form>
+            <div class="tab-container tab_li_sty mt-10">
+                <ul class="nav nav-tabs solid_b">
+                    <li class="active"><a class="strong" href="#dsaffasd" data-toggle="tab">访客数TOP50</a></li>
+                    <li class=""><a href="#lkajfao" class="strong" data-toggle="tab">支付金额TOP50</a></li>
+                </ul>
+                <div class="tab-content pd0 mb0 bor_no">
+                    <div class="tab-pane active" id="dsaffasd">
+                       <table class="bg_white mt-1">
+                            <thead class="no-border">
+                                <tr class="bg_f1">
+                                    <th class="text-center">排名</th>
+                                    <th class="text-center" width="32%"> 商品信息</th>
+                                    <th class="text-center"> 访客数</th>
+                                    <th class="text-center"> 浏览量</th>
+                                    <th class="text-center"> 支付金额(元）</th>
+                                    <th class="text-center"> 支付买家数</th>
+                                    <th class="text-center"> 支付转化率</th>
+                                </tr>
+                            </thead>
+                            <tbody class="no-border-y text-center">
+								<volist name="visitTop" id="vo">
+                                <tr>
+                                    <td class="ptb15">{$vo.no}</td>
+                                    <td class="ptb15 text-left  ">
+                                        <a target="_blank" href="">
+                                            <img class="fl mr10" width="60" height="60" src="{$vo.goodsInfo.goods.images}" style="max-width: 945px;">
+                                            <div class="text_44 mb0 w210 h34 over">{$vo.goodsInfo.goods.goods_name}</div>
+                                            <h6 class="mb0 text_over text_yellow">￥ {$vo.goodsInfo.price}</h6>
+                                        </a>
+                                    </td>
+                                    <td class="ptb15">{$vo.uv}</td>
+                                    <td class="ptb15">{$vo.pv}</td>
+                                    <td class="ptb15">{$vo.money}</td>
+                                    <td class="ptb15">{$vo.buyer}</td>
+                                    <td class="ptb15">{$vo.buyerPercen}%</td>
+                                </tr>
+								</volist>
+                                
+                            </tbody>
+                         </table>
+                         <div class="text-right">
+                            <ul class="pagination">
+								
+                                <li class="prev <empty name="page1.prevPage">disabled</empty>"><a href="{:U('/statistic/realtimeList',array('p2'=>$_GET['p2'],'p1'=>$page1['prevPage']))}" <empty name="page1.prevPage">onclick="return false;"</empty>><span class="fa fa-angle-left"></span>&nbsp;上一页</a></li>
+								
+								<volist name="page1.page" id="vo">
+                                <li <if condition="$vo.active eq 1">class="active"</if>><a href="{:U('/statistic/realtimeList',array('p2'=>$_GET['p2'],'p1'=>$vo['p']))}">{$vo.p}</a></li>
+                                </volist>
+                                <li class="next <empty name="page1.nextPage">disabled</empty>"><a href="{:U('/statistic/realtimeList',array('p2'=>$_GET['p2'],'p1'=>$page1['nextPage']))}" <empty name="page1.nextPage">onclick="return false;"</empty>>下一页&nbsp;<span class="fa fa-angle-right"></span></a></li>
+                            </ul>
+                            <div class="pull-right mt25 ml10 clearfix w190">
+                                <span class="pull-left mr5">跳到</span>
+                                <select class="form-control pull-left mt-8" style="width:60px;height:31px" onchange = "window.location.href=''+this.value+''">
+									<for start="1" end="$page1.totalPage" comparison="elt">
+                                    <option value = "{:U('/statistic/realtimeList',array('p2'=>$_GET['p2'],'p1'=>$i))}" <if condition="$page1.nowPage eq $i">selected="selected"</if>>{$i}</option>
+									</for>
+                                </select>
+                                <span class="pull-left ml15">共{$page1.totalPage}页</span>
+                            </div>
+                        </div>  
+                    </div>
+                    <div class="tab-pane" id="lkajfao">
+                        <div class="tab-pane active" id="dsaffasd">
+                       <table class="bg_white mt-1">
+                            <thead class="no-border">
+                                <tr class="bg_f1">
+                                    <th class="text-center">排名</th>
+                                    <th class="text-center" width="32%"> 商品信息</th>
+                                    <th class="text-center"> 支付买家数</th>
+                                    <th class="text-center"> 支付转化率</th>
+                                    <th class="text-center"> 访客数</th>
+                                    <th class="text-center"> 浏览量</th>
+                                    <th class="text-center"> 支付金额(元）</th>
+                                </tr>
+                            </thead>
+                            <tbody class="no-border-y text-center">
+								<volist name="buyTop" id="vo">
+                                <tr>
+                                    <td class="ptb15">{$vo.no}</td>
+                                    <td class="ptb15 text-left  ">
+                                        <a target="_blank" href="">
+                                            <img class="fl mr10" width="60" height="60" src="{$vo.goodsInfo.goods.images}" style="max-width: 945px;">
+                                            <div class="text_44 mb0 w210 h34 over">{$vo.goodsInfo.goods.goods_name}</div>
+                                            <h6 class="mb0 text_over text_yellow">￥ {$vo.goodsInfo.price}</h6>
+                                        </a>
+                                    </td>
+                                    <td class="ptb15">{$vo.buyer}</td>
+                                    <td class="ptb15">{$vo.buyerPercen}%</td>
+                                    <td class="ptb15">{$vo.uv}</td>
+                                    <td class="ptb15">{$vo.pv}</td>
+                                    <td class="ptb15">{$vo.money}</td>
+                                </tr>
+								</volist>
+                                
+                                
+                            </tbody>
+                         </table>
+                         <div class="text-right">
+                            <ul class="pagination">
+                                 <li class="prev <empty name="page2.prevPage">disabled</empty>"><a href="{:U('/statistic/realtimeList',array('p1'=>$_GET['p1'],'p2'=>$page2['prevPage']))}" <empty name="page2.prevPage">onclick="return false;"</empty>><span class="fa fa-angle-left"></span>&nbsp;上一页</a></li>
+								<volist name="page2.page" id="vo">
+                                <li <if condition="$vo.active eq 1">class="active"</if>><a href="{:U('/statistic/realtimeList',array('p1'=>$_GET['p1'],'p2'=>$vo['p']))}">{$vo.p}</a></li>
+                                </volist>
+								 <li class="next <empty name="page2.nextPage">disabled</empty>"><a href="{:U('/statistic/realtimeList',array('p1'=>$_GET['p1'],'p2'=>$page2['nextPage']))}" <empty name="page2.nextPage">onclick="return false;"</empty>>下一页&nbsp;<span class="fa fa-angle-right"></span></a></li>
+                                
+                            </ul>
+                            <div class="pull-right mt25 ml10 clearfix w190">
+                                <span class="pull-left mr5">跳到</span>
+                                <select class="form-control pull-left mt-8" style="width:60px;height:31px" onchange = "window.location.href=''+this.value+''">
+                                   
+									<for start="1" end="$page2.totalPage" comparison="elt">
+                                    <option value = "{:U('/statistic/realtimeList',array('p1'=>$_GET['p1'],'p2'=>$i))}" <if condition="$page2.nowPage eq $i">selected="selected"</if>>{$i}</option>
+									</for>
+                                </select>
+                                <span class="pull-left ml15">共{$page2.totalPage}页</span>
+                            </div>
+                        </div> 
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+</block>
+
+<block name="css"></block>
+<block name="script">
+
+
+
+
+<script src="__NEW_DESIGN__flatdream/js/jquery.js"></script>
+<script src="__NEW_DESIGN__flatdream/js/jquery.pushmenu/js/jPushMenu.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.nanoscroller/jquery.nanoscroller.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.sparkline/jquery.sparkline.min.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.ui/jquery-ui.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.gritter/js/jquery.gritter.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/behaviour/core.js"></script>
+<script src="__NEW_DESIGN__flatdream/js/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.flot/jquery.flot.js"></script>
+
+</block>
+

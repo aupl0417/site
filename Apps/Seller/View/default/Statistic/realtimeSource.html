@@ -1,0 +1,203 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body mt10">
+	<include file="Public:nav_statistic" />
+
+    <div class="container">
+		<include file="Public:side_statistic" />
+        <div class="w960 fl">
+            <ol class="breadcrumb pd10 bor_der bor_r0 mt0 mb20">
+                <li><a href="/">数据统计</a> </li>
+                <li><a href="">实时统计</a></li>
+                <li><a href="">实时来源</a></li>
+            </ol>
+            <div class="ptb10 solid_b mb35">
+                <span class="fs16">来源分布</span>
+                <span class="pull-right text_77 mt5 mr10">更新时间：{:date('Y-m-d H:i:s',time())}</span>
+            </div>
+
+            <div class="row mb20">
+                <div class="col-xs-6">
+                     <blockquote class="pd0 pl10 mt10 mb10 fs14 strong">PC端来源TOP5</blockquote>
+                     <table class="bg_white no-border mt20 hover">
+                            <thead class="no-border">
+                                <tr class="text_77">
+                                    <th>来源名称</th>
+                                    <th class="text-center">浏览次数</th>
+                                    <th class="text-center">成交转化率</th>
+                                </tr>
+                            </thead>
+                            <tbody class="no-border-y solid_b text-center">
+								<volist name="pcTop" id="vo">
+                                <tr>
+                                    <td class="ptb15 text-left">{$vo.source}</td>
+                                    <td class="ptb15">{$vo.num}</td>
+                                    <td class="ptb15">{:sprintf("%.2f",$vo['payNum']/$vo['num']*100)}%</td>
+                                </tr>
+								</volist>
+								<!--
+                                <tr>
+                                    <td class="ptb15 text-left">站内搜索</td>
+                                    <td class="ptb15">256</td>
+                                    <td class="ptb15">269%</td>
+                                </tr>
+                                <tr>
+                                    <td class="ptb15 text-left">店铺收藏</td>
+                                    <td class="ptb15">256</td>
+                                    <td class="ptb15">269%</td>
+                                </tr>
+                                <tr>
+                                    <td class="ptb15 text-left">宝贝收藏</td>
+                                    <td class="ptb15">256</td>
+                                    <td class="ptb15">269%</td>
+                                </tr>
+                                <tr>
+                                    <td class="ptb15 text-left">活动页面</td>
+                                    <td class="ptb15">256</td>
+                                    <td class="ptb15">269%</td>
+                                </tr>
+								-->
+                            </tbody>
+                         </table>
+                </div>
+                <div class="col-xs-6">
+                    <blockquote class="pd0 pl10 mt10 mb10 fs14 strong">手机端来源TOP5</blockquote>
+                    <table class="bg_white hover no-border mt20">
+                        <thead class="no-border">
+                            <tr class="text_77">
+                                <th>来源名称</th>
+                                <th class="text-center">浏览次数</th>
+                                <th class="text-center">成交转化率</th>
+                            </tr>
+                        </thead>
+                        <tbody class="no-border-y solid_b text-center">
+							<volist name="wapTop" id="vo">
+							<tr>
+								<td class="ptb15 text-left">{$vo.source}</td>
+								<td class="ptb15">{$vo.num}</td>
+								<td class="ptb15">{:sprintf("%.2f",$vo['payNum']/$vo['num']*100)}%</td>
+							</tr>
+							</volist>
+							<!--
+                            <tr>
+                                <td class="ptb15 text-left">首页广告</td>
+                                <td class="ptb15">256</td>
+                                <td class="ptb15">269%</td>
+                            </tr>
+                            <tr>
+                                <td class="ptb15 text-left">站内搜索</td>
+                                <td class="ptb15">256</td>
+                                <td class="ptb15">269%</td>
+                            </tr>
+                            <tr>
+                                <td class="ptb15 text-left">店铺收藏</td>
+                                <td class="ptb15">256</td>
+                                <td class="ptb15">269%</td>
+                            </tr>
+                            <tr>
+                                <td class="ptb15 text-left">宝贝收藏</td>
+                                <td class="ptb15">256</td>
+                                <td class="ptb15">269%</td>
+                            </tr>
+                            <tr>
+                                <td class="ptb15 text-left">活动页面</td>
+                                <td class="ptb15">256</td>
+                                <td class="ptb15">269%</td>
+                            </tr>
+							-->
+                        </tbody>
+                     </table> 
+                </div>
+            </div>
+
+
+            <div class="ptb10 solid_b mb35">
+                <span class="fs16">地域分布</span>
+                <span class="pull-right text_77 mt5 mr10">更新时间：{:date('Y-m-d H:i:s',time())}</span>
+            </div>
+
+            <div class="tab-container tab_li_sty">
+                <ul class="nav nav-tabs solid_b">
+                    <li class="active"><a class="strong" href="#dsaffasd" data-toggle="tab">访客数分布</a></li>
+                    <li class=""><a href="#lkajfao" class="strong" data-toggle="tab">支付买家数分布</a></li>
+                </ul>
+                <div class="tab-content mb0 ptb10 plr20 mt-1" style="border:1px solid #ddd">
+                    <div class="tab-pane active" id="dsaffasd">
+                        <div class="row mt10">
+                            <div class="col-xs-6">
+                                这里放地图
+                            </div>
+                            <div class="col-xs-6">
+                               <table class="bg_white hover no-border">
+                                    <thead class="no-border">
+                                        <tr class="text_77">
+                                            <th>地域</th>
+                                            <th class="text-center"> 访客数</th>
+                                            <th class="text-center">访客数占比</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="no-border-y">
+										<volist name="visitMap" id="vo" offset="0" length='5'>
+                                        <tr>
+                                            <td class="ptb15">{$vo.city}</td>
+                                            <td class="ptb15 text-center">{$vo.num}</td>
+                                            <td class="ptb15 text-center">{$vo.percen}%</td>
+                                        </tr>
+										</volist>
+                                       
+                                    </tbody>
+                                 </table>  
+                            </div>
+                        </div>               
+                    </div>
+                    <div class="tab-pane" id="lkajfao">
+                        <div class="row mt10">
+                            <div class="col-xs-6">
+                                这里放地图
+                            </div>
+                            <div class="col-xs-6">
+                               <table class="bg_white hover no-border">
+                                    <thead class="no-border">
+                                        <tr class="text_77">
+                                            <th>地域</th>
+                                            <th class="text-center"> 访客数</th>
+                                            <th class="text-center">支付买家数占比</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="no-border-y">
+                                        <volist name="buyerMap" id="vo" offset="0" length='5'>
+                                        <tr>
+                                            <td class="ptb15">{$vo.city}</td>
+                                            <td class="ptb15 text-center">{$vo.num}</td>
+                                            <td class="ptb15 text-center">{$vo.percen}%</td>
+                                        </tr>
+										</volist>
+                                    </tbody>
+                                 </table>  
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+</block>
+
+
+<block name="css"></block>
+<block name="script">
+<script src="__NEW_DESIGN__flatdream/js/jquery.js"></script>
+<script src="__NEW_DESIGN__flatdream/js/jquery.pushmenu/js/jPushMenu.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.nanoscroller/jquery.nanoscroller.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.sparkline/jquery.sparkline.min.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.ui/jquery-ui.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.gritter/js/jquery.gritter.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/behaviour/core.js"></script>
+<script src="__NEW_DESIGN__flatdream/js/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.flot/jquery.flot.js"></script>
+
+</block>

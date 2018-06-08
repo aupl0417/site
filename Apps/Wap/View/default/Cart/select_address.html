@@ -1,0 +1,98 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			选择收货地址
+		</div>
+		<div class="r">
+			<div class="text" onclick="select_address_ok()">确定</div>
+		</div>
+	</div>
+</header>
+<section>
+	<div class="load-body">数据加载中……</div>
+</section>
+<footer class="footer border-t fixed-bottom">
+	<div class="row">
+		<div class="col-2">
+			<div class="footer-btn-default border-r" onclick="openWin({name:'address',url:'/Address/index',close:true})">管理收货地址</div>
+		</div>
+
+		<div class="col-2">
+			<div class="footer-btn-default" onclick="openWin({name:'address_new',url:'/Address/address_new',close:true})">添加收货地址</div>
+		</div>
+	</div>
+</footer>
+
+<script id="tpl_select_address" type="text/html">
+	<% for (i=0;i< data.length;i++){ %>
+		<div class="line-box-m noicon" onclick="select_address($(this))" data-id="<%= data[i].id %>">
+			<div class="title"><%= data[i].linkname %> ，<%= data[i].mobile %> <% if(data[i].tel!=""){ %>，<%= data[i].tel %><% } %></div>
+			<div class="text-gray"><%= data[i].province_name %> <%= data[i].city_name %> <%= data[i].district_name %> <%= data[i].town_name %> <%= data[i].street %><% if(data[i].postcode!=""){ %>，<%= data[i].postcode %><% } %></div>
+		</div>
+	<% } %>
+</script>	
+<script>
+	fixBar();
+	
+	ajax_post({
+		url:'/Api/api',
+		data:{apiurl:'/Address/address_list',is_openid:1},
+	},function(ret){
+		if(ret.code==1){			
+			var html = template('tpl_select_address', {data:ret.data});
+			$('.page.active section').html(html);
+		}else if(ret.code==3){
+			$('.page.active section').html(no_data_text);
+		}
+	});
+	
+	
+	function select_address(obj){
+		obj.closest('section').find('.line-box-m.selected').removeClass('selected').addClass('noicon');
+		obj.removeClass('noicon').addClass('selected');
+	}
+	
+	function select_address_ok(){
+		var size=$('.page.active .line-box-m.selected').size();
+		if(size!=1){
+			valert({msg:'请选择一个收货地址！'});
+			return false;
+		}
+		
+		var address_id=$('.page.active .line-box-m.selected').data('id');
+		$('.page#cart_next .address').html($('.page.active .line-box-m.selected').html());
+		$('.page#cart_next #address_id').val(address_id);
+		
+		//计算运费
+		$('.page#cart_next .shop').each(function(){
+			var obj=$(this);
+			var d=$(this).data();
+			var express_type=$(this).find('#express_type_'+d.express_tpl_id).val();
+			if(express_type!=''){
+				ajax_post({
+					url:'/Api/api',
+					data:{apiurl:'/CartVer2/express_price',is_openid:1,address_id:address_id,seller_id:d.seller_id,express_type:express_type,express_tpl_id:d.express_tpl_id}
+				},function(ret){
+					if(ret.code==1){
+					
+						var goods_price=parseFloat(obj.find('.shop_goods_price').html());
+						var total_price=goods_price+parseFloat(ret.data.express_price);
+						total_price=Math.round(total_price*100)/100;
+						obj.find('.shop_express_price').html(ret.data.express_price);
+						obj.find('.shop_total_price').html(total_price);
+					
+						cart_select_total();
+					}else{
+						valert(ret);
+					}
+				});
+			}
+		});
+		
+		closeWin();
+	}
+	
+</script>

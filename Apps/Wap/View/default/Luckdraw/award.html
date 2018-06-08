@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>唐人街</title>
+		<meta name="keywords" content="唐人街" />
+		<meta name="description" content="唐人街" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<link href="../Public/Css/style.css" media="screen" rel="stylesheet" type="text/css">
+		<link href="../Public/Css/Animate/animate.min.css" media="screen" rel="stylesheet" type="text/css">
+		<link href="../Public/Js/Banner/css/styles.css" media="screen" rel="stylesheet" type="text/css">
+		
+		<link href="../Public/Js/alertPopShow/common.css" media="screen" rel="stylesheet" type="text/css">
+		<link href="../Public/Css/custom.css" media="screen" rel="stylesheet" type="text/css">
+		
+		<!--焦点图-->
+		<!--<link rel="stylesheet" href="../Public/Js/responsiveslides/lrtk.css">-->
+		
+		<!--焦点图-->
+		<link rel="stylesheet" href="../Public/Js/bxslider/jquery.bxslider.css">
+		
+		<script src="../Public/Js/jquery-2.1.1.min.js"></script>		
+		<script src="../Public/Js/template-native.js"></script>
+		<script src="../Public/Js/jquery.form.js"></script>
+		<script src="../Public/Js/alertPopShow/alertPopShow.js"></script>
+		<script src="../Public/Js/iscroll-probe.js"></script>
+		<script src="../Public/Js/jquery.countdown.min.js"></script>
+		<script src="../Public/Js/global.js"></script>
+		
+		<!--焦点图-->
+		<!--<script src="../Public/Js/responsiveslides/responsiveslides.min.js"></script>-->
+		
+		<!--焦点图-->
+		<script type="text/javascript" src="../Public/Js/bxslider/jquery.bxslider.min.js"></script>
+	</head>
+
+<!--
+<script type="text/javascript" src="../Public/Js/jquery-1.7.2.min.js"></script>-->
+<!--抽奖样式-->
+<link href="../Public/Js/luckDraw/style.css" media="screen" rel="stylesheet" type="text/css">
+
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="history.go(-1)"></i>
+		</div>
+		<div class="title">
+			领奖页面
+		</div>
+		<if condition =" $_SESSION['user'] neq ''">
+		<div class="r" style="width:60px">
+			<div onclick = "window.location.href='{:U('Luckdraw/luck_list')}'">中奖列表</div>
+		</div>
+		<else/>
+		<div class="r">
+			<div onclick = "user_login()">登录</div>
+		</div>
+		</if>
+	</div>
+</header>
+
+<div id = "zhezhao" onclick = "tips_cancel()"></div>
+<empty name="addr">
+<if condition="$prize_info['is_receive'] eq 1">
+<div id = "add_address">
+	<iframe src = "{$url}/Address/address_new" width="100%" height="100%" frameborder="0"></iframe>
+</div>
+</if>
+</empty>
+<div class = "body_a">
+	<div class = "award_bg">
+		
+		<notempty name="prize_info">
+			<div class = "prize_info">
+				<div class="prize_img">
+					<img src="{$prize_info.images}" />
+				</div>
+				<div class="text-center">
+					<p>奖品名称：{$prize_info.prize_name}</p>
+				</div>
+			</div>
+			<div class = "express">
+				<if condition="$prize_info['prize_type'] eq 1 && $prize_info['is_receive'] eq 1">
+				<div class="choice_address clear">
+					<div class = "address_title f_l">收货地址：</div>
+					<div class ="address f_l">
+						
+					</div>
+					<input type="hidden" id = "addr" value = ""/>
+				</div>
+				<div class = "express_price">需要支付快递费用：<span id = "show_express_price">{$prize_info.express_price}元</span></div>
+				<div class = "choice_pay_type clear">
+					<div class = "pay_type_title f_l">支付方式：</div>
+					<div class ="pay_type f_l"></div>
+					<input type="hidden" id = "pay_type" value = ""/>
+				</div>
+				<div class = "safe_pas">
+					<input type="password" id= "safe_password" value = "" placeholder="安全密码"/>
+				</div>
+				</if>
+				<if condition="$prize_info['is_receive'] eq 1">
+				<div class = "button w30">
+					<div class = "ft16 text-center pt10 pd10" onclick="receive(this)" id="receive_button">确认领取</div>
+				</div>
+				<elseif condition="$prize_info['is_receive'] eq 2"/>
+				<div class = "button w80">
+					<p class = "text-center ft20">领取状态：已领取</p>
+				</div>
+				<else/>
+				<div class = "button w80">
+					<p class = "text-center ft20">领取状态：已过期</p>
+				</div>
+				</if>
+			</div>
+			
+			<if condition = "$prize_info['is_receive'] eq 2">
+				<!--<div class="ft18 color-fff pt10 pd10 text-center">
+					发放记录
+				</div>-->
+				<div class = "deliver_log">
+					<div class = "button w80">
+						<if condition="$prize_info['is_deliver'] eq 2">
+						<p class = "text-center ft20">发放状态：已发放</p>
+						<else/>
+						<p class = "text-center ft20">发放状态：未发放</p>
+						</if>
+					</div>
+					<if condition="$prize_info['is_deliver'] eq 2 && $prize_info['express_code'] neq 0">
+						<div class = "div-center w80 ft16 pd10">快递公司：{$prize_info.express_company}</div>
+						<div class = "div-center w80 ft16 pd10">快递单号：{$prize_info.express_code}</div>
+						<div class = "div-center w80 ft16 pd10">发放时间：{$prize_info.express_time}</div>
+						<div class="div-center w80 ft16 pd10 pt10">
+							<div class="title b">物流跟踪记录</div>
+						</div>
+						
+				
+						<notempty name="express_log">
+							<div class = "express_log w80 div-center pt10 pd10 pl10 pr10">
+								<ul class="timeline">
+								<volist name="express_log" id="vo">
+								<li>
+								<span class="date">{$vo.time}</span>
+								<div class="content">{$vo.context}</div>
+								</li>
+									
+								</volist>
+								</ul>
+							</div>
+						<else/>
+							<div class = "div-center w80 ft16 pd10 text-center">暂无物流记录</div>
+						</notempty>
+					</if>
+				</div>
+			</if>
+			
+			<div class = "page active ">
+				<div class="vmodal">
+					<div class="vmodal-header">
+						标题
+					</div>
+					<div class="vmodal-content">
+						
+					</div>
+					<div class="vmodal-footer row">
+						<div class="col-2">
+							<div class="vmodal-btn vmodal-cancel">取消</div>
+						</div>
+						<div class="col-2">
+							<div class="vmodal-btn vmodal-success">确定</div>
+						</div>
+					</div>	
+				</div>
+			</div>
+		<else/>
+			<div class = "no_prize">
+				没有此奖品信息
+			</div>
+			
+		</notempty>
+	</div>
+</div>
+<script>
+	$(function(){
+		$("#user_login").css('margin-left','-'+($("#user_login").width()/2)+'px');
+		$("#user_login").css('margin-top','-'+($("#user_login").height()/2)+'px');
+		$("#add_address").css('margin-left','-'+($("#add_address").width()/2)+'px');
+	});
+	
+</script>
+<script id="tpl_address" type="text/html">
+	<volist name="addr" id="vo">
+		<div class="line-box noicon row">
+			<div class= "addr_selcet" id="{$vo.id}">{$vo.province_name}{$vo.city_name}{$vo.district_name}{$vo.town_name}{$vo.street}（{$vo.linkname}  收）{$vo.mobile|hiddenStr}</div>
+		</div>
+	</volist>
+</script>
+<script id="tpl_pay_type" type="text/html">
+	<div class="line-box noicon row">
+		<div class="pay_type_select" id="1">余额</div>
+	</div>
+	<div class="line-box noicon row">
+		<div class="pay_type_select" id="2">唐宝</div>
+	</div>
+</script>
+<if condition="$prize_info['prize_type'] eq 1">
+	<script>
+		<empty name="addr">
+			<if condition="$prize_info['is_receive'] eq 1">
+			$(function(){
+		　　	valert({msg:'请添加收货地址！'});
+				$("#zhezhao").show();
+				$("#add_address").show();
+				setInterval('check_address()',2000);
+			}); 
+			function check_address(){
+				ajax_post({
+					url:'/Luckdraw/check_address',
+				},function(ret){
+					if(ret.code == 1){
+						location.reload(true);
+						//console.log('刷新页面');
+					}
+				});
+			}
+			</if>
+		</empty>
+		
+		$(".choice_address").click(function(){
+			<empty name="addr">
+			valert({msg:'请添加收货地址！'});
+			$("#add_address").show();
+			$("#zhezhao").show();
+			return false;
+			</empty>
+		
+			var html = template('tpl_address');
+			vmodal({
+				title:'发货地址',
+				msg:html,
+			},function(){
+				
+				$(".line-box").click(function(){
+					$(this).removeClass('noicon').addClass('selected').siblings().addClass('noicon');
+				});
+				$(".vmodal-success").click(function(){
+					if($(".line-box.selected .addr_selcet").length>0){
+						$(".address").html($(".line-box.selected .addr_selcet").html());
+						$("#addr").val($(".line-box.selected .addr_selcet").attr('id'));
+					}
+				});
+			});
+		});
+		$(".choice_pay_type").click(function(){
+			
+			var html = template('tpl_pay_type');
+			vmodal({
+				title:'支付方式',
+				msg:html,
+			},function(){
+				
+				$(".line-box").click(function(){
+					$(this).removeClass('noicon').addClass('selected').siblings().addClass('noicon');
+				});
+				$(".vmodal-success").click(function(){
+					if($(".line-box.selected .pay_type_select").length>0){
+						var pay_type = $(".line-box.selected .pay_type_select").attr('id');
+						$(".pay_type").html($(".line-box.selected .pay_type_select").html());
+						$("#pay_type").val(pay_type);
+						if(pay_type == 1){
+							$("#show_express_price").html(express_price+'元');
+						}else if(pay_type == 2){
+							$("#show_express_price").html((express_price*100)+'唐宝');
+						}
+					}
+				});
+			});
+		});
+		
+		var express_price = {$prize_info.express_price};
+		var is_receive = 1;
+		function receive(obj){	
+			var safe_password = $("#safe_password").val();
+			var addr = $("#addr").val();
+			var pay_type = $("#pay_type").val();
+			console.log(pay_type);
+			if(is_receive == 0){return false;}
+			is_receive = 0;
+			ajax_post({
+				url:'/Api/api',
+				data:{apiurl:'/Luckdraw/award_winning',is_openid:1,uid:'{$_GET.u}',no:'{$_GET.n}',safe_password:safe_password,addr:addr,pay_type:pay_type,no_sign:'safe_password,addr,pay_type'}
+			},function(ret){
+				if(ret.code == 1){
+					valert(ret);
+					$(obj).html('已领取');
+					location.reload(true);
+				}else{
+					is_receive = 1;
+					valert(ret);
+				}
+			});
+		}
+	</script>
+<else/>
+	<script>
+		<if condition="$prize_info['is_receive'] eq 1">
+		receive($("#receive_button"));
+		</if>
+		var is_receive = 1;
+		function receive(obj){
+			if(is_receive == 0){return false;}
+			is_receive = 0;
+			ajax_post({
+				url:'/Api/api',
+				data:{apiurl:'/Luckdraw/award_winning',is_openid:1,uid:'{$_GET.u}',no:'{$_GET.n}'}
+			},function(ret){
+				if(ret.code == 1){
+					valert(ret);
+					$(obj).html('已领取');
+					location.reload(true);
+				}else{
+					is_receive = 1;
+					valert(ret);
+				}
+			});
+		}
+		
+	</script>
+</if>
+<script>
+	//取消
+	function tips_cancel(str){
+		if(str != null){
+			valert({msg:str});
+		}
+		
+		$("#zhezhao").hide();
+		$("#no_chance_tips").hide();
+		$("#add_address").hide();
+		$("#luck_tips").hide();
+		$("#user_login").hide();
+	}
+</script>
+<if condition =" $_SESSION['user'] neq ''">
+<else/>
+	<div id = "user_login">
+		<form id="form-login" class="p10">
+			<div class="login-box">
+				<input name="username" id="username" placeholder="昵称/手机号码">
+
+				<input type="password" name="password" id="password" placeholder="登录密码">
+				
+				<div class="btn btn-danger btn-lg btn-block md20" onclick="login()">登录</div>
+				<div class="fl" onclick="window.location.href='{$url}/Login/register'">
+					还没有账号，去注册
+				</div>
+				<div class="fr" onclick="window.location.href='{$url}/Login/forget'">
+					忘记密码
+				</div>	
+			</div>
+			<input type="hidden" name="apiurl" value="/Erp/check_login">
+		</form>
+	</div>
+	<script>
+		function user_login(){
+			$("#zhezhao").show();
+			$("#user_login").show();
+		}
+		function login(){
+			var data=getFormJson('#form-login');
+			ajax_post({
+				url:'/Api/api',
+				data:data,
+			},function(ret){
+				if(ret.code==1) {
+					//openWin({name:'ucenter',url:'/Ucenter/index',close:true,ref:true});
+					location.reload(true);
+				}else{
+					valert(ret);
+				}
+			});
+		}
+		
+	</script>
+</if>

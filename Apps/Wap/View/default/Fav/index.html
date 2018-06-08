@@ -1,0 +1,61 @@
+<header class="header fixed-top">
+  <div>
+    <div class="l">
+      <i class="icons i-back" onclick="closeWin()"></i>
+    </div>
+    <div class="title">
+      收藏
+    </div>
+    <div class="r">
+      <div class="text" onclick="openWin({name:'edit',url:'/Fav/edit'})">编辑</div>     
+    </div>
+  </div>
+</header>
+<section>
+  <div class="pagelist">
+    <div class="load-body">数据加载中……</div>
+  </div>
+ <!--  <div class="p10 load-more" onclick="goods_loadmore()">
+    <div class="btn btn-lg btn-block btn-danger btn-trans">加载更多……</div>
+  </div> -->
+</section>
+
+
+
+<script id="fav_list" type="text/html">
+  
+    <% for (var i = 0; i < data.length; i ++) { %>
+    <div class="line-box-m row hover noicon" onclick="openWin({name:'goods_view',url:'<%= data[i].attr_list[0].detail_url%>'})">
+      <div class="col-5"><img src="<%= data[i].goods.images %>" alt="<%= data[i].goods.goods_name %>"></div>
+      <div class="col-5x3 pl10">
+        <div class="goods_name"><%= data[i].goods.goods_name %></div>
+        <!-- <div class="text-gray"><%= data[i].sale_num %></div> -->
+        <div><span class="price"><%= data[i].goods.price%></span> 元</div>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <% } %>
+
+</script>
+
+
+<script>
+  fixBar(1);
+  
+  
+    ajax_post({
+      url:'/Api/api',
+      data:{apiurl:'/Fav/goods_list',is_openid:1},
+    },function(ret){
+      if(ret.code==1){      
+        var html = template('fav_list', {data:ret.data.list});      
+        $('.page.active .pagelist').html(html);
+       
+      }else if(ret.code==3){
+        $('.page.active .pagelist div').html("暂无收藏记录");
+      }
+    }); 
+  
+  
+  
+</script>

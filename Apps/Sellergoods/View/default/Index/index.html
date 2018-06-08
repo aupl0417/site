@@ -1,0 +1,102 @@
+<include file="header" />
+<header style="border-bottom: solid 2px #fbc819">
+    <div class="">
+        <div class="clearfix content_tle fs16 strong">
+            <!--<img class="fl plr20" height="27" src="../Public/images/dt_logo.png" alt="" style="margin: 9px 16px 0 16px;">-->
+            <a href="" style="display: inline-block; width: 180px; padding: 0;">
+                <img src="../Public/images/dt_logo.png">
+            </a>
+            <a <empty name="Think.get.url">class="active alert"</empty> href="{:DM('sell')}" onclick="">商品管理首页</a>
+            <a <eq name="Think.get.url" value="cate">class="active alert"</eq> href="{:DM('sell')}{:U('Index/index',array('url'=>'cate'))}">分类管理</a>
+            <a <eq name="Think.get.url" value="/goods/create">class="active alert"</eq> href="{:U('/index')}?url=/goods/create">发布商品</a>
+            <a <eq name="Think.get.url" value="/goods/import">class="active alert"</eq> href="{:U('/index')}?url=/goods/import">导入商品</a>
+            <a href="{:DM('seller')}">卖家中心<span class="ab fs30 fl">◆</span></a>
+            <div class="pull-right open_yun fs12">
+                <!-- <input class="fl form-control" type="text"> -->
+                <!-- <div class="fl btn btn_m btn-prusia btntrans">搜索</div> -->
+                <a href="javascript:;">{$Think.session.user.nick}</a>
+                <!-- <a href="">工单</a> -->
+                <!-- <a href="">站内信</a> -->
+                <a href="{:DM('user', '/logout')}">退出</a>
+            </div>
+        </div>
+    </div>
+</header>
+    <div class="centent_body">
+        <div class="ticket-main-wrap service-ticket-create">
+            <ul id="left_sidebar" class="sidebar" style="overflow-y:auto;">
+                <include file="Public/side" />
+            </ul><!-- left over -->
+            <div class="content-wrap" style="padding:0;">
+                <iframe src="{$first_url}" height="100%" width="100%"  frameborder="0" class="main-iframe" id="main-iframe"></iframe>
+            </div><!-- right over -->
+        </div>
+    </div>
+<script>
+
+function deleteWorkorder(w_no){
+    vmodal({
+        title:"删除工单",
+        // url:'{:U("/freightTemplate/create_area",array("express_id"=>$data["id"]))}',
+        msg:"您真的要删除吗？",
+        class:'text-center',
+        confirm:1,
+    },function(ret){
+        $(".modal-ok").click(function(){
+            var ac = '{:enCryptRestUri("/Workorder/delete")}';
+            ajax_post({
+                url: '/run/authRun',
+                headers:{Action:ac},
+                data:{
+                    w_no:w_no
+                }
+            },function(ret){
+                ret.status = ret.code;
+                talert(ret);
+                if(ret.code == 1){
+                    setTimeout(function(){
+                        ref();
+                    },1000);
+                }
+            });
+        });
+    });
+}
+    $(function(){
+        $("#main-iframe").height( $(window).height()-$('header').height()-5);
+        $("#left_sidebar").height( $(window).height()-$('header').height()-5);
+
+
+    });
+    function url_frame(obj,url){
+
+        $(obj).closest('li').addClass('sidebar-current').siblings().removeClass('sidebar-current');
+        $("#main-iframe").attr('src',url);
+
+    }
+
+    function showSecondCate(obj,sid){
+
+        var new_src =  $(obj).attr('src2');
+        var old_src =  $(obj).attr('src');
+        if($(obj).attr('is_show') == 1){
+            $(obj).attr('is_show',0);
+            $('.s_'+sid+'').hide();
+        }else{
+            $(obj).attr('is_show',1);
+            $('.s_'+sid+'').show();
+        }
+        $(obj).attr('src',new_src);
+        $(obj).attr('src2',old_src);
+        event.stopPropagation();
+    }
+    //分类页刷新
+    function cate_reload(){
+        location.href="{:DM('sell')}{:U('Index/index',array('url'=>'cate'))}";
+    }
+
+</script>
+
+
+</body>
+</html>

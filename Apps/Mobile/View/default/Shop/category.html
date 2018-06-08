@@ -1,0 +1,65 @@
+<include file="Public:header" />
+		<div class="page-group">
+			<div id="page-shop-category" class="page" data-shop_id="{$_GET.shop_id}">
+				<!-- 标题栏 -->
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left back" href="/"></a>
+					<h1 class="title">店内商品搜索/分类</h1>
+					<a class="icon iconfont icon-category pull-right ml5 ac-menu" onclick="top_menu()"></a>
+				</header>
+
+				<!-- 浮动导航 -->
+				<include file="Public:fixed-menu" />
+		
+				<!-- 这里是页面内容区 -->		
+				<div class="content">
+					<div class="content-padded">
+						<div class="searchbar">
+							<a class="searchbar-cancel">取消</a>
+							<div class="search-input">
+								<label class="icon icon-search" for="search"></label>
+								<input id="search" type="search" id="q" name="q" placeholder="输入关键字...">
+							</div>
+						</div>	
+					</div>
+					
+	
+
+					<!--分类-->
+					<notempty name="category">
+					<div class="list-block">
+						<ul>
+							<volist name="category" id="vo">
+							<li>
+								<a href="/Shop/goods/shop_id/{$_GET.shop_id}/sid/{$vo.id}" class="item-link item-content">
+									<div class="item-inner">
+										<div class="item-title">{$vo.category_name}</div>
+									</div>
+								</a>
+							</li>
+							<notempty name="vo.dlist">
+							<div class="p5 border-d bg-gray">
+								<div class="row">
+									<volist name="vo.dlist" id="dl">
+										<div class="col-50">
+											<a href="/Shop/goods/shop_id/{$_GET.shop_id}/sid/{$dl.id}" class="btn btn-block btn-white btn-lg mtd03">{$dl.category_name}</a>
+										</div>
+									</volist>
+								</div>
+							</div>
+							</notempty>
+							</volist>
+						</ul>
+					</div>
+					</notempty>
+
+				</div>			
+				
+			</div>		
+
+		
+		</div>	
+		
+
+<include file="Public:script" />
+<include file="Public:footer" />

@@ -1,0 +1,38 @@
+{:W('Widget/listable',array(array(
+	'data'	=>$data['list'],
+	'items'	=>[
+		[
+			'title'	=>	'选择',
+			'type'	=>	'html',
+			'html'	=>	'<input type="checkbox" class="i-red-square" name="id[]" id="id[]" value="[id]">',
+			'td_attr'=>	'width="60" class="text-center"',
+			'norder'=>	1,
+		],
+		[
+			'title'	=>	'ID',
+			'field'	=>	'id',
+			'td_attr'=>	'class="text-center"',
+		],
+		[
+			'title'	=>	'状态',
+			'field'	=>	'status',
+			'td_attr'=>	'class="text-center"',
+			'function' => 'return status($val["status"]);',
+		],
+		[
+			'title' => '认证名称',
+	        'field' => 'cert_name',
+		],
+		[
+			'title' => '所属分类',
+	        'field' => 'category_name',
+		],
+		[
+			'title' => '操作',
+	        'type'  => 'html',
+	        'html'	=>	'<a data-type="vmodal" data-title="新增参数分组" data-url="__URL__/certAdd/sid/[category_id]/id/[id]" data-width="800" href="javascript:;" class="btn btn-sm btn-info btn-rad btn-trans btn-block m0">修改</a>',
+	        'td_attr'=>	'width="100" class="text-center"',
+			'norder'=>	1,
+		],
+	],
+)))}

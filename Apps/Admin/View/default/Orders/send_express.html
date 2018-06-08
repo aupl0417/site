@@ -1,0 +1,55 @@
+<form class="p10 vform form-horizontal" data-url="__URL__/send_express_save" id="form_send_express">
+	{:W('Widget/buildform',array(array(
+		'field'		=>array(
+			array(
+				'formtype'		=>'select_images',
+				'label'			=>'快递公司',
+				'name'			=>'express_company_id',
+				'is_need'		=>true,
+				'level'	=>2,
+				'field'	=>array(
+					'category_name'	=>'category_name',
+					'images'		=>'logo',
+					'width'			=>150,
+					'height'		=>50,
+					'dlist'			=>'company',
+					'value'			=>'id',
+					'name'			=>'sub_name',
+				),
+				'data'	=>CURD(array('table'=>'ExpressCategoryRelation','do'=>'D','relation'=>true,'field'=>'id,category_name')),
+			),		
+			array(
+				'formtype'		=>'text',
+				'label'			=>'快递单号',
+				'name'			=>'express_code',
+				'is_need'		=>true,
+			),
+			
+			array(
+				'formtype'		=>'hidden',
+				'name'			=>'seller_id',
+			),		
+			array(
+				'formtype'		=>'hidden',
+				'name'			=>'s_no',
+			),
+		),
+	),$rs))}
+<div class="p20 text-center">
+	<button type="submit" class="btn btn-primary btn-150px"><i class="fa fa-check"></i> 提交</button>
+</div>
+	
+	
+
+</form>
+<script>
+checkform({
+	formid:'#form_send_express',
+},function(ret){
+	valert(ret);
+	if(ret.status=='success'){
+		ref();
+	}
+});
+
+</script>

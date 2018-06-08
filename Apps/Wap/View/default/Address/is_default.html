@@ -1,0 +1,23 @@
+
+
+
+
+   
+<div class="line-box noicon hover" onclick="xuan_is_default({id:'1',msg:'是'})">
+	<div class="fl title">是</div>
+</div>
+<div class="line-box noicon hover" onclick="xuan_is_default({id:'0',msg:'否'})">
+	<div class="fl title">否</div>
+</div>
+
+
+<script>
+
+
+function xuan_is_default(data){
+	$('.page.active #_is_default').html(data.msg);
+	$('.page.active #is_default').val(data.id);
+	$('.page.active .vmodal .vmodal-footer').click();
+}
+
+</script>

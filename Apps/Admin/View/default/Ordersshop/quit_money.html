@@ -1,0 +1,80 @@
+<table>
+	<thead>
+		<tr>
+			<th class="text-center">ID</th>
+			<th class="text-center">商品ID</th>
+			<th class="text-center">商品图片</th>
+			<th>商品标题</th>
+			
+			<th class="text-center">退款</th>
+			<th class="text-center">退运费</th>
+			<th class="text-center">操作</th>
+		</tr>
+	</thead>
+	<tbody>
+		<volist name="rs.orders_goods" id="goods">
+		<tr>
+			<td class="text-center id">{$goods.id}</td>
+			<td class="text-center">{$goods.goods_id}</td>
+			<td class="text-center"><a href="{:C('sub_domain.item')}/goods/{$goods.attr_list_id}" target="_blank"><img src="{:myurl($goods['images'],60)}"></a></td>
+			<td>
+				<a href="{:C('sub_domain.item')}/goods/{$goods.attr_list_id}" target="_blank" style="word-break:break-all;">{$goods.goods_name}</a>
+				<div class="md10"></div>
+				<notempty name="goods.activity_name"><span class="btn btn-danger btn-trans btn-xs m0">{$goods.activity_name}</span></notempty>
+			</td>
+			<td class="text-center">
+				<empty  name="goods.refund_totals_price">
+					<input type="text" id="refund_totals_price" name="refund_totals_price" placeholder="请输入总退款金额" value="" class="form-control">
+				<else />
+					<input type="text" id="refund_totals_price" name="refund_totals_price" placeholder="请输入总退款金额" value="{$goods.refund_totals_price}" class="form-control">
+				</empty>
+			</td>
+			<td class="text-center">
+				<empty name="goods.refund_express_price">
+					<input type="text" id="refund_express_price" name="refund_express_price" placeholder="请输入退款运费" value="" class="form-control">
+				<else />
+					<input type="text" id="refund_express_price" name="refund_express_price" placeholder="请输入退款运费" value="{$goods.refund_express_price}" class="form-control">
+				</empty>
+			</td>
+			<td class="text-center">
+				<div class="btn btn-info" onclick="save($(this))">确认修改</div>
+			</td>
+		</tr>
+		</volist>
+	</tbody>
+</table>
+
+<script>
+//录入利润
+function save(obj){
+	var tr=obj.closest('tr');
+	var order_id = tr.find('.id').text();//ID
+	var total_price = tr.find('input[name="refund_totals_price"]').val();//退款总金额
+	var other_price = tr.find('input[name="refund_express_price"]').val();//附加费用
+
+	if(!total_price){
+		valert({msg:'退款总金额不能为空！'});
+		return false;
+	}
+	if(!other_price){
+		valert({msg:'附加费用不能为空！'});
+		return false;
+	}
+	if(isNaN(other_price)){
+		valert({msg:'退款总金额只能是数字！'});
+		return false;
+	}
+	
+	ajax_post({
+		url:"__URL__/edit_orders_refund",
+		data : {
+			total : total_price,
+			id : order_id,
+			other : other_price,		
+		},
+	},function(res) {
+		valert(res);
+	})
+
+}
+</script>

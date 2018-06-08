@@ -1,0 +1,26 @@
+<include file="Public:header" />
+		<div class="page-group">
+			<div id="page-multi-pay" class="page" data-o_no="{$_GET.o_no}">
+				<!-- 标题栏 -->
+				<neq name="_GET.nobar" value="1">
+				<header class="bar bar-nav">
+					<a href="/Orders/index/o_no/{$_GET.o_no}" class="icon icon-left pull-left" data-no-cache="true"></a>
+					<h1 class="title">合并订单付款</h1>
+					<a class="icon iconfont icon-category pull-right ml5 ac-menu" onclick="top_menu()"></a>
+				</header>
+
+				<!-- 浮动导航 -->
+				<include file="Public:fixed-menu" />
+
+				</neq>
+				<!-- 这里是页面内容区 -->		
+				<div class="content">
+					<iframe src="/Cashier/multi_pay_iframe/o_no/{$_GET.o_no}/paytype/{$_GET.paytype}" frameborder="0" marginheight="0" marginwidth="0" height="100%" width="100%" scrolling="no"></iframe>				
+				</div><!--/content-->
+				
+			</div>
+		</div>	
+		
+
+<include file="Public:script" />
+<include file="Public:footer" />

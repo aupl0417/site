@@ -1,0 +1,85 @@
+	<form class="form-horizontal" id="formadd" name="formadd">
+		<ul class="nav nav-tabs border-d">
+			<li class="active">
+				<a href="#tab2" data-toggle="tab">功能菜单</a>
+			</li>
+			<li>
+				<a href="#tab3" data-toggle="tab">模块权限</a>
+			</li>
+
+		</ul>
+		<div class="tab-content tab-content-noborder">
+			<div class="tab-pane active" id="tab2">
+				<volist name="menulist" id="vo">
+				<div class="box md20">
+					<div class="ft18 p10 border-d">
+						<label><input type="checkbox" class="i-grey-square" name="menuid[]" id="menuid[]" value="{$vo.id}" {:in_array($vo['id'],$rs['menuid'])?'checked':''} data-type="select-all" data-tag="#{$vo.id}"> {$vo.name}</label>
+					</div>
+					<notempty name="vo.dlist">
+					<div class="p20" id="{$vo.id}">
+						<volist name="vo.dlist" id="ds">
+						<div class="ft16"><label><input type="checkbox" class="i-grey-square" name="menuid[]" id="menuid[]" value="{$ds.id}" {:in_array($ds['id'],$rs['menuid'])?'checked':''} data-type="select-all" data-tag="#{$ds.id}"> {$ds.name}</label></div>
+						<notempty name="ds.dlist">
+						<div class="p20" style="margin-left:20px;" id="{$ds.id}">
+							<div class="row">
+							<volist name="ds.dlist" id="dds">
+								<div class="col-xs-2"><label><input type="checkbox" class="i-grey-square" name="menuid[]" id="menuid[]" value="{$dds.id}" {:in_array($dds['id'],$rs['menuid'])?'checked':''}> {$dds.name}</label></div>						
+							</volist>
+							</div>
+						</div>
+						</notempty>						
+						</volist>
+					</div>
+					</notempty>
+				</div>
+				</volist>
+			</div>
+			<div class="tab-pane" id="tab3">
+				<table class="hover">
+					<thead>
+						<th width="150">模块名称</th>
+						<th width="150">控制器</th>
+						<th>权限</th>
+					</thead>
+					<volist name="modules" id="vo">
+					<tr>
+						<td><label><input type="checkbox" class="i-grey-square" data-type="select-all" data-tag="#a-{$vo.id}"> {$vo.controller_name}</label></td>
+						<td>{$vo.controller}</td>
+						<td id="a-{$vo.id}">
+							<label class="mr20" style=""><input type="checkbox" name="action[]" class="i-grey-square" value="{$vo.controller}:C" {:in_array($vo['controller'].':C',$rs['action'])?'checked':''} /> 创建(C)</label>
+							<label class="mr20" style=""><input type="checkbox" name="action[]" class="i-grey-square" value="{$vo.controller}:U" {:in_array($vo['controller'].':U',$rs['action'])?'checked':''} /> 修改(U)</label>
+							<label class="mr20" style=""><input type="checkbox" name="action[]" class="i-grey-square" value="{$vo.controller}:R" {:in_array($vo['controller'].':R',$rs['action'])?'checked':''} /> 读取(R)</label>					
+							<label class="mr20" style=""><input type="checkbox" name="action[]" class="i-grey-square" value="{$vo.controller}:D" {:in_array($vo['controller'].':D',$rs['action'])?'checked':''} /> 删除(D)</label>
+						
+						</td>
+					</tr>
+					</volist>
+				</table>
+			</div>
+
+		</div>
+
+	
+		<input type="hidden" name="id" value="{$_GET.id}">
+		<div class="text-center">
+			<button type="submit" class="btn btn-lg btn-rad btn-trans btn-primary"><i class="fa fa-check"></i> 提交</button>
+		</div>								
+
+	</form>
+
+<script>
+checkbox_select_all();
+iCheckClass();
+checkform({
+	formid:'#formadd',
+	url:'__URL__/action_set_save',
+	script:'callback(ret)'
+});
+
+function callback(ret){
+	valert({status:ret.status,msg:ret.msg});
+	if(ret.status=='success'){
+		ref();
+	}
+}
+</script>

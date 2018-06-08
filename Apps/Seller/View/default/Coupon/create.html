@@ -1,0 +1,112 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body">
+	<include file="Public:nav" />
+	<div class="container mb30">
+		<include file="Public:side" />
+		<div class="w980 fl">
+			<div class="bor_der">
+				<div class="bg_f1 clearfix fs14 text_44 tle_R">
+					<a class="fl plr15 line40 ml-1 active" href="javascript:;">{$seo['title']}</a>
+				</div>
+				<!-- 主体部分 -->
+				{:W('Common/Builder/form', [['data' => $keyList, 'run' => '/coupon/create']])}
+			</div>
+		</div>
+	</div>
+</div>
+</block>
+<block name="css">
+<script src="__FLATDREAM__/js/bootstrap.datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script src="__FLATDREAM__/js/bootstrap.datetimepicker/js/bootstrap-datetimepicker.zh-CN.js"></script>
+<link rel="stylesheet" href="__FLATDREAM__/js/bootstrap.datetimepicker/css/bootstrap-datetimepicker.css" />
+<link rel="stylesheet" type="text/css" href="/Public/CSS/flatdream/js/jquery.icheck/skins/square/_all.css">
+</block>
+<block name="script">
+<script>
+$(document).ready(function() {
+	checkform({
+		formid:"#formadd",
+		rules:{
+			sday:{
+				required:true,
+			},
+			eday:{
+				required:true,
+			},
+			min_price:{
+				required:true,
+				digits:true,
+				number:true,
+				min:function() {
+					var price = $("input[name='price']").val();
+					return parseInt(price)
+				},
+			},
+			max_num:{
+				required:true,
+				digits:true,
+				number:true,
+				min:1,
+			},
+			price:{
+				required:true,
+				number:true,
+				digits:true,
+				min:1,
+			},
+			num:{
+				number:true,
+				digits:true,
+				min:1,
+			},
+		},
+		messages:{
+			sday:{
+				required:'生效时间不能为空',
+			},
+			eday:{
+				required:'失效时间不能为空',
+			},
+			min_price:{
+				required:'需消费金额不能为空',
+				digits:'需消费金额必须是整数',
+				number:'需消费金额只能填写数字',
+				min:function() {
+					var price = $("input[name='price']").val();
+					if(price == '') {
+						return '请先填写面值'
+					} else {
+						return '需消费金额不能小于' + price
+					}
+				},
+			},
+			max_num:{
+				required:'领取数量不能为空',
+				digits:'领取数量必须是整数',
+				number:'领取数量只能填写数字',
+				min:'单个用户最多可领取数量不能小于1',
+			},
+			price:{
+				required:'面值不能为空',
+				number:'面值为数字类型',
+				digits:'面值必须是整数',
+				min:'面值不能小于1元',
+			},
+			num:{
+				number:'发行数量必须是数字类型',
+				digits:'发行数量必须是整数',
+				min:'发行数量不能小于1',
+			},
+		},
+	},function(res) {
+		talert({status:res.code,msg:res.msg});
+		if(res.code == 1) {
+			setTimeout(function() {
+				gourl({url:"{:U('/coupon')}"});
+			}, 1000);
+		}
+	});
+});
+</script>
+</block>

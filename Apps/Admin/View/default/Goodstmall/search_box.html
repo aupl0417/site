@@ -1,0 +1,34 @@
+<form method="get" action="__URL__/" role="form" class="hover-shadow hover-search p10 md10">
+	<table class="no-bordered">
+		<tr>
+			<td width="250" class="p0" valign="top">
+				<a href="__URL__/add" class="btn btn-trans btn-rad btn-primary mt8"><i class="fa fa-plus"></i> 新增记录</a>
+				<div class="btn btn-trans btn-rad btn-primary mt8" onclick="vmodal({title:'从EXCEL文件导入',url:'__URL__/excel_import',width:'800px'})"><i class="fa fa-plus"></i> Excel导入</div>
+			</td>		
+			<notempty name="search_fields">
+			<td class="p0">
+				{:W('Widget/searchform',array($search_fields,I('get.'),$fcfg['search_col']))}
+			</td>
+			<td width="100" class="p0" valign="top"><button type="submit" class="btn btn-rad btn-trans btn-primary btn-block mt8"><i class="fa fa-search"></i> 搜索</button></td>
+			</notempty>
+		</tr>
+	</table>
+</form>
+<div class="clearfix"></div>
+
+<form method="get" action="__URL__/get_tmall_list" role="form" class="hover-shadow hover-search p10 md10" target="_blank">
+	<table class="no-bordered">
+		<tr>
+			<td class="" width="100">
+				<a href="{:U('/Goodstmall/index', ['type' => 0])}" class="btn btn-rad btn-trans btn-primary btn-block">0的商品</a>
+			</td>
+			<td class="" width="100">
+				<a href="{:U('/Goodstmall/index', ['type' => 1])}" class="btn btn-rad btn-trans btn-primary btn-block">1的商品</a>
+			</td>
+			<td class="">
+				<input type="text" id="q" name="q" placeholder="请输入店铺名或关键词" value="" class="form-control">
+			</td>
+			<td width="100"><button type="submit" class="btn btn-rad btn-trans btn-primary btn-block"><i class="fa fa-search"></i> 采集</button></td>
+		</tr>
+	</table>
+</form>

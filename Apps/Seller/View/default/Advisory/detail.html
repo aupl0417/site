@@ -1,0 +1,100 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body">
+	<include file="Public:nav" />
+	<div class="container mb30">
+		<include file="Public:side" />
+		<div class="w980 fl">
+			<div class="bor_der">
+				<div class="bg_f1 clearfix fs14 text_44 tle_R">
+					<a class="fl plr15 line40 ml-1 active" href="javascript:;">咨询详情</a>
+				</div>
+				<!-- 主体部分 -->
+				<div class="pd10">
+					<h5 class="strong">咨询详情</h5>
+					<table class="table table-bordered table-advance table-hover mb30">
+						<tbody>
+							<tr>
+								<th class="col-xs-2 text-right" style="vertical-align: middle;">咨询类型</th>
+								<td class="col-xs-10" style="vertical-align: middle;">{$data.type_name}</td>
+							</tr>
+							<tr>
+								<th class="col-xs-2 text-right" style="vertical-align: middle;">咨询时间</th>
+								<td class="col-xs-10" style="vertical-align: middle;">{$data.atime}</td>
+							</tr>
+							<tr>
+								<th class="col-xs-2 text-right" style="vertical-align: middle;">咨询用户</th>
+								<td class="col-xs-10" style="vertical-align: middle;">{$data.nick}</td>
+							</tr>
+							<tr>
+								<th class="col-xs-2 text-right" style="vertical-align: middle;">咨询商品名称</th>
+								<td class="col-xs-10" style="vertical-align: middle;">
+									<a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', ['id' => $data['attr_list_id']])}">{$data.goods_name}</a>
+								</td>
+							</tr>
+							<tr>
+								<th class="col-xs-2 text-right" style="vertical-align: middle;">咨询商品图片</th>
+								<td class="col-xs-10" style="vertical-align: middle;">
+									<a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', ['id' => $data['attr_list_id']])}">
+									<img alt="{$data.goods_name}" src="{:myurl($data['images'], 60)}">
+									</a>
+								</td>
+							</tr>
+							<tr>
+								<th class="col-xs-2 text-right" style="vertical-align: middle;">咨询内容</th>
+								<td class="col-xs-10" style="vertical-align: middle;">{$data.content}</td>
+							</tr>
+							<tr>
+								<th class="col-xs-2 text-right" style="vertical-align: middle;">咨询状态</th>
+								<td class="col-xs-10" style="vertical-align: middle;">{$data.status_name}</td>
+							</tr>
+							<eq name="data.status" value="1">
+								<tr>
+									<th class="col-xs-2 text-right" style="vertical-align: middle;">回复咨询</th>
+									<td class="col-xs-10" style="vertical-align: middle;">
+										<a href="javascript:;" class="btn btn-primary reply-btn">立即回复</a>
+									</td>
+								</tr>
+							<else />
+								<tr>
+									<th class="col-xs-2 text-right" style="vertical-align: middle;">回复时间</th>
+									<td class="col-xs-10" style="vertical-align: middle;">{$data.reply_time}</td>
+								</tr>
+								<tr>
+									<th class="col-xs-2 text-right" style="vertical-align: middle;">回复内容</th>
+									<td class="col-xs-10" style="vertical-align: middle;">{$data.reply_content}</td>
+								</tr>
+								<tr>
+									<th class="col-xs-2 text-right" style="vertical-align: middle;">其他操作</th>
+									<td class="col-xs-10" style="vertical-align: middle;">
+										<a href="javascript:;" class="btn btn-primary reply-edit-btn">修改回复</a>
+									</td>
+								</tr>
+							</eq>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</block>
+<block name="css"></block>
+<block name="script">
+<script>
+$(document).ready(function() {
+	$(".reply-btn").click(function() {
+		vmodal({
+			url:'{:U("/advisory/reply", ["id" => $data["id"]])}',
+			title:'回复咨询',
+		});
+	});
+	$(".reply-edit-btn").click(function() {
+		vmodal({
+			url:'{:U("/advisory/edit", ["id" => $data["id"]])}',
+			title:'修改咨询',
+		});
+	});
+});
+</script>
+</block>

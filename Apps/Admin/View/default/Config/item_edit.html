@@ -1,0 +1,245 @@
+	<form class="form-horizontal" id="formadd" name="formadd">
+
+						<ul class="nav nav-tabs border-d">
+							<li class="active">
+								<a href="#tab-1" data-toggle="tab">基本信息</a>
+							</li>
+							<li>
+								<a href="#tab-2" data-toggle="tab">数据信息</a>
+							</li>
+							<li>
+								<a href="#tab-3" data-toggle="tab">附加信息</a>
+							</li>
+						</ul>
+						<div class="tab-content tab-content-noborder">
+							<div class="tab-pane active" id="tab-1">
+											{:W('Widget/create_form',array(array(
+												'field'		=>array(						
+													array(
+														'type'			=>'input',
+														'textname'		=>'标题',
+														'name'			=>'title',
+														'placeholder'	=>'请输入字段标题',
+														'is_need'		=>1,
+														'value'			=>$rs['title'],
+													),
+													array(
+														'type'			=>'input',
+														'textname'		=>'变量名',
+														'name'			=>'name',
+														'placeholder'	=>'请输入变量名,请用字母或数字组成',
+														'is_need'		=>1,
+														'value'			=>$rs['name'],
+													),													
+													array(
+														'type'			=>'radio',
+														'textname'		=>'状态',
+														'name'			=>'active',
+														'data'		=>array(
+																			array('value'=>1,'name'=>'激活'),
+																			array('value'=>0,'name'=>'锁定'),
+																		),
+														'field'			=>array('value','name'),
+														'is_need'		=>1,
+														'class'			=>'mr20',
+														'value'			=>$rs['active'],
+													),
+													array(
+														'type'			=>'select',
+														'textname'		=>'表单类型',
+														'name'			=>'type',
+														'data'			=>C('FORM_TYPE'),
+														'field'			=>array('value','name'),
+														'is_need'		=>1,
+														'value'			=>$rs['type'],
+													),
+													array(
+														'type'			=>'input',
+														'textname'		=>'默认值',
+														'name'			=>'isdefault',
+														'value'			=>$rs['config']['isdefault'],
+													),	
+													array(
+														'type'			=>'radio',
+														'textname'		=>'必填',
+														'name'			=>'is_need',
+														'data'		=>array(
+																			array('value'=>1,'name'=>'是'),
+																			array('value'=>0,'name'=>'否'),
+																		),
+														'field'			=>array('value','name'),
+														'class'			=>'mr20',
+														'value'			=>$rs['config']['is_need'],
+													),
+													array(
+														'type'			=>'textarea',
+														'textname'		=>'验证规则',
+														'name'			=>'rules',
+														'attr'			=>'rows="3"',
+														'placeholder'	=>'数组格式',
+														'value'			=>$rs['config']['rules'],
+													),
+
+												),
+											)))}
+						
+							</div>
+							<div class="tab-pane" id="tab-2">
+											{:W('Widget/create_form',array(array(
+												'field'		=>array(
+													array(
+														'type'			=>'textarea',
+														'textname'		=>'选项数据源',
+														'name'			=>'data',
+														'attr'			=>'rows="5"',
+														'placeholder'	=>'数组格式',
+														'value'			=>$rs['config']['data'],
+													),													
+													array(
+														'type'			=>'textarea',
+														'textname'		=>'插入数据前执行',
+														'name'			=>'fun_before',
+														'attr'			=>'rows="3"',
+														'placeholder'	=>'数组格式',
+														'value'			=>$rs['config']['fun_before'],
+													),	
+													array(
+														'type'			=>'textarea',
+														'textname'		=>'插入数据后执行',
+														'name'			=>'fun_after',
+														'attr'			=>'rows="3"',
+														'placeholder'	=>'数组格式',
+														'value'			=>$rs['config']['fun_after'],
+													),	
+													array(
+														'type'			=>'textarea',
+														'textname'		=>'读取数据前执行',
+														'name'			=>'fun_read',
+														'attr'			=>'rows="3"',
+														'placeholder'	=>'数组格式',
+														'value'			=>$rs['config']['fun_read'],
+													),
+	
+												),
+											)))}
+						
+							</div>
+							
+							<div class="tab-pane" id="tab-3">
+											{:W('Widget/create_form',array(array(
+												'field'		=>array(
+													array(
+														'type'			=>'input',
+														'textname'		=>'提示',
+														'name'			=>'tips',
+														'value'			=>$rs['config']['tips'],
+													),
+													array(
+														'type'			=>'input',
+														'textname'		=>'输入框提示',
+														'name'			=>'placeholder',
+														'value'			=>$rs['config']['placeholder'],
+													),
+													array(
+														'type'			=>'input',
+														'textname'		=>'表单属性',
+														'name'			=>'attr',
+														'value'			=>$rs['config']['attr'],
+													),	
+													array(
+														'type'			=>'input',
+														'textname'		=>'Class',
+														'name'			=>'class',
+														'value'			=>$rs['config']['class'],
+													),	
+													array(
+														'type'			=>'input',
+														'textname'		=>'Style',
+														'name'			=>'style',
+														'value'			=>$rs['config']['style'],
+													),														
+													array(
+														'type'			=>'input',
+														'textname'		=>'表单前HTML',
+														'name'			=>'prev',
+														'value'			=>$rs['config']['prev'],
+													),													
+													array(
+														'type'			=>'input',
+														'textname'		=>'表单后HTML',
+														'name'			=>'next',
+														'value'			=>$rs['config']['next'],
+													),													
+													array(
+														'type'			=>'input',
+														'textname'		=>'addon_left',
+														'name'			=>'addon_left',
+														'value'			=>$rs['config']['addon_left'],
+													),													
+													array(
+														'type'			=>'input',
+														'textname'		=>'addon_right',
+														'name'			=>'addon_right',
+														'value'			=>$rs['config']['addon_right'],
+													),													
+													array(
+														'type'			=>'hidden',
+														'name'			=>'id',
+														'value'			=>$rs['id']
+													)
+
+												),
+											)))}
+						
+							</div>
+						</div>	
+
+		<div class="text-center">
+			<button type="submit" class="btn btn-lg btn-rad btn-trans btn-primary"><i class="fa fa-check"></i> 提交</button>
+		</div>								
+
+	</form>
+<script>
+
+iCheckClass();
+checkform({
+	formid:'#formadd',
+	url:'__URL__/item_edit_save',
+	rules:{
+		sid:{
+			required:true
+		},
+		name:{
+			required:true
+		},
+		title:{
+			required:true
+		},
+		type:{
+			required:true
+		}
+	},
+	messages:{
+		sid:{
+			required:'请选择上级'
+		},
+		name:{
+			required:'请输入名称'
+		},
+		title:{
+			required:'请输入标题'
+		},
+		type:{
+			required:'请选择类型'
+		}
+	},
+	script:'callback(ret)'
+});
+
+function callback(ret){
+	valert({status:ret.status,msg:ret.msg});
+	if(ret.status=='success'){
+		$('#ajax-modal').modal('hide');
+	}
+}
+</script>

@@ -1,0 +1,75 @@
+<include file="Public:header" />
+<div class="container">
+    
+    <div class="mt30 mb20 bg_white">
+        <div class="layui-tab layui-tab-card">
+            <ul class="layui-tab-title">
+                <li <if condition='ACTION_NAME EQ "index"'>class="layui-this"</if>><a href="{:U('Tj/index')}">总揽</a></li>
+                <li <if condition='ACTION_NAME EQ "jcdata"'>class="layui-this"</if>><a href="{:U('Tj/jcdata')}">基础数据</a></li>
+                <li <if condition='ACTION_NAME EQ "live"'>class="layui-this"</if>><a href="{:U('Tj/live')}">实时访问</a></li>              
+            </ul>
+            <div class="layui-tab-content p20">
+            	<div class="fl fs14 mt20 text-gray">统计数据截止到昨天</div>
+            	<div class="fr"><a href="{:U('Tj/jcdata')}" class="layui-btn layui-btn-small <if condition="$_GET['device'] neq 'pc' and $_GET['device'] neq 'wap'">layui-btn-danger<else/>layui-btn-primary</if> mt20 mr5">全部</a></div>
+            	<div class="fr"><a href="{:U('Tj/jcdata',['device' => 'wap'])}" class="layui-btn layui-btn-small <if condition="$_GET['device'] eq 'wap'">layui-btn-danger<else/>layui-btn-primary</if> mt20 mr5">移动端</a></div>            
+            	<div class="fr"><a href="{:U('Tj/jcdata',['device' => 'pc'])}" class="layui-btn layui-btn-small <if condition="$_GET['device'] eq 'pc'">layui-btn-danger<else/>layui-btn-primary</if> mt20 mr5">PC</a></div>
+                <!-- 内容 -->
+                
+                <table class="mb30 td_ptb20 bor_no">
+                    <thead class=" bg_white">
+	                    <tr class="h50 lh50">
+	                        <th class="text-center fs16">广告信息</th>
+	                        <th class="text-center fs16" width="320">&nbsp;</th>
+	                        <th class="text-center fs16">展示量</th>
+	                        <th class="text-center fs16">点击量</th>
+	                        <th class="text-center fs16">点击率（%）</th>
+	                        <th class="text-center fs16">成交笔数</th>
+	                        <th class="text-center fs16">成交金额（元）</th>
+	                        <th class="text-center fs16">转化率（%）</th>
+	                    </tr>
+                    </thead>
+
+                    <tbody class="bg_white">
+			        	<volist name="data.list" id="vo">
+				        	<tr>
+				        		<td class="text-center"><a href="{$vo['images']}" class="image-zoom"><img src="{:myurl($vo['images'],100)}"/></a></td>
+				        		<td>
+				        			<div class="fs14">广告标题：{$vo.name}</div>
+	                                <div class="fs14">推广类型：
+	                                	<switch name="vo.type">
+	                                	 <case value="0">商品</case>
+	                                	 <case value="1">店铺</case>
+	                                	 <case value="2">站外链接</case>
+	                                	</switch>
+	                                </div>
+	                                <div class="fs14">位置：位置{$vo.sort+1}</div>
+	                                <div class="fs14">时间：{$vo.sday} 到 {$vo.eday}</div>
+				        		</td>
+				        		<td class="text-center fs16">{$vo.show}</td>
+				        		<td class="text-center fs16">{$vo.hit}</td>
+				        		<td class="text-center fs16">
+				        			<php>echo round($vo['hit']/$vo['show']*100,2);</php>%
+				        		</td>
+				        		<td class="text-center fs16">{$vo.orders}</td>
+				        		<td class="text-center fs16">{$vo.orders_price}</td>
+				        		<td class="text-center fs16"><php>echo round($vo['orders']/$vo['hit']*100,2);</php>%</td>
+				        	</tr>
+			        	</volist>
+                    </tbody>
+                </table>
+                <div class="pd10">
+                   <div class="row text-center">
+                     	<div class="col-xs-10 text-right">
+                         	{$data.page.page}
+                     	</div>
+                		<div class="col-xs-2 text-center mt25"> {$data.page.total}</div>
+                	</div>
+                </div>
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<include file="Public:footer" />

@@ -1,0 +1,40 @@
+<form data-url="__URL__/formtpl_edit_save" id="form_create" class="form-horizontal">
+<div class="vform">
+	{:W('Widget/buildform',array(array(
+		'field'		=>array(
+			array(
+				'formtype'		=>'text',
+				'label'			=>'表单模板名称',
+				'name'			=>'tpl_name',
+				'is_need'		=>true,
+			),
+			array(
+				'formtype'		=>'textarea',
+				'label'			=>'备注',
+				'name'			=>'remark',				
+			),
+			array(
+				'formtype'		=>'hidden',
+				'name'			=>'id',
+				'value'			=>$rs['id'],
+			),
+		),
+	),$rs))}
+<div class="p20 text-center">
+	<button type="submit" class="btn btn-primary btn-150px"><i class="fa fa-check"></i> 提交</button>
+</div>
+<!--token-->
+</div>
+</form>
+<script>
+
+checkform({
+	formid:'#form_create',
+},function(ret){
+	valert(ret);
+	if(ret.status=='success'){
+		ref();
+	}
+});
+
+</script>

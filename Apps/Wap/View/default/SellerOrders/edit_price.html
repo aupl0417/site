@@ -1,0 +1,131 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin({ref:true})"></i>
+		</div>
+		<div class="title">
+			修改价格
+		</div>
+		<div class="r">
+		</div>
+	</div>
+</header>
+<section>	
+	<div class="load-body">数据加载中……</div>
+</section>
+<script id="tpl_order_edit_price" type="text/html">
+	<div class="line-box noicon hover md10">
+		<div class="title">订单号：<%= data.s_no %></div>
+	</div>
+	<% for(i=0;i<data.orders_goods.length;i++){ %>
+	<div class = "order_price_value md10">
+		<input name="orders_goods_id[]" type="hidden" value="<%= data.orders_goods[i].id %>">
+		<div class="line-box-m hover row">
+			<div class="col-15"><img src="<%= data.orders_goods[i].images %>" alt="商品图片"></div>
+			<div class="col-85">
+				<div class="pl10 pr10" onclick="openWin({name:'goods_view',url:'/Goods/view/id/<%= data.orders_goods[i].attr_list_id %>'})">
+					<div class="lh2-18px"><%= data.orders_goods[i].goods_name %></div>
+					<div class="row">
+						<div class="col-50 text-gray"><%= data.orders_goods[i].attr_name %></div>
+						<div class="col-50 text-gray text-right"><%= data.orders_goods[i].price %> x <%= data.orders_goods[i].num %>件</div>
+					</div>					
+				</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="line-input row">
+			<div class="col-30">
+					修改价格
+			</div>
+			<div class="col-70">
+				<input id="total_price_edit[]" name="total_price_edit[]" type="text" value="<%= data.orders_goods[i].total_price_edit %>">
+			</div>
+		</div>	
+	</div>
+	
+	<% } %>	
+	<div class="line-input row">
+		<div class="col-30">
+			修改运费
+		</div>
+		<div class="col-70">
+			<input id="express_price" name="express_price" type="text" value="<%= data.express_price %>">
+		</div>
+	</div>
+
+	<div class="line-box nobg noicon text-center">
+		运费 <%= data.express_price %>，实付 <%= data.pay_price %>
+	</div>
+	
+	
+	
+	
+	<div class="btn btn-danger btn-block m10" onclick="orders_edit_price()">保存</div>
+</script>
+
+<script>
+	fixBar(1);
+	
+	ajax_post({
+		url:'/Api/api',
+		data:{apiurl:'/SellerOrders/orders_goods',is_openid:1,s_no:'{$_GET.s_no}'}
+	},function(ret){
+		var html=template('tpl_order_edit_price',{data:ret.data});
+		$('.page.active section').html(html);
+	});
+
+	
+	//修改订单商品价格
+	function orders_edit_price(){
+		var s_no = '{$_GET.s_no}';
+		var express_price = '';
+		var orders_goods_id = '';
+		var total_price_edit = '';
+		var result=true;
+		
+		$(".page.active section .order_price_value").each(function(k,v){
+			orders_goods_id += k+'='+($(this).find("input[name='orders_goods_id[]']").val())+'&';
+			if($(this).find("input[name='total_price_edit[]']").val() == ''){
+				valert({status:0,msg:'销售价不能为空'});
+				result = false;
+			}else{
+				total_price_edit += k+'='+($(this).find("input[name='total_price_edit[]']").val())+'&';
+			}
+		});
+		if($('.page.active section input[name="express_price"]').val() == ''){
+			valert({status:0,msg:'运费不能为空'});
+			result = false;
+		}else{
+			express_price = $('.page.active section input[name="express_price"]').val();
+		}
+		
+		if(!result){
+			return result;
+		}
+		
+		orders_goods_id = orders_goods_id.substring(0,orders_goods_id.length-1);
+		total_price_edit = total_price_edit.substring(0,total_price_edit.length-1);
+		
+		var data={
+			apiurl:'/SellerOrders/orders_price_edit',
+			is_openid:1,
+			no_sign:'',
+			s_no:s_no,
+			express_price:express_price,
+			orders_goods_id:orders_goods_id,
+			total_price_edit:total_price_edit,
+		};
+		ajax_post({
+			url:'/Api/api',
+			data:data,
+		},function(ret){
+			if(ret.code==1) {
+				valert(ret);
+				winRef(); 
+			}else{
+				valert(ret);
+			}
+		});
+	}
+	
+</script>

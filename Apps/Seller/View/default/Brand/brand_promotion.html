@@ -1,0 +1,78 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body">
+	<include file="Public:nav" />
+	<div class="container mb30">
+		<include file="Public:side" />
+		<div class="w980 fl">
+			<div class="bor_der">
+				<div class="bg_f1 clearfix fs14 text_44 tle_R">
+					<a class="fl plr15 line40 ml-1 active" href="javascript:;">{$seo['title']}</a>
+				</div>
+				<!-- 主体部分 -->
+				<if condition="$data.code eq 3">
+					{:W('Common/Builder/nors', array('param' => array('text' => '没有推广品牌！')))}
+					<div class="text-center pd10">
+						<a class="btn btn-info" href="/brand/my_brand.html">新增</a>
+					</div>
+				<else />
+					<div class="row pd10">
+						<volist name="data" id="vo">
+						<div class="col-xs-3 mb30" style = 'width:329px;'>
+							<div class="bor_hover over text-center hover_p">
+								<div class="amg">
+									<img src="{:myurl($vo['images'],297)}" style = 'width:297px;height:297px;'>
+								</div>							
+								<div class="mt-20 mb5"><img src="{:myurl($vo['logo'],101)}" style = 'width:101px;height:80px;'></div>
+								<p class="fs18 text_44 mb5">{$vo.name}</p>
+								<p class="fs14 text_77 mb20">{$vo.ename}</p>
+								
+								<h6>
+									<a  class="btn btn-info link-white">{$vo.status_name}</a>
+									<a href="{:U('brand/view/',array('id'=>$vo['brand_id']))}" class="btn btn-primary link-white">修改</a>
+								</h6>
+							</div>
+						</div>
+						</volist>
+					</div>
+				</if>
+			</div>
+		</div>
+	</div>
+</block>
+<block name="css"></block>
+<block name="script"> <script type="text/javascript">
+	$(document).ready(function() {
+		$(".del-addr").click(function() {
+			var d = $(this).data();
+			vmodal({
+				title : '删除提示',
+				msg : '您真的要删除吗?',
+				class : 'text-center',
+				confirm : 1,
+			    footer:false,
+			    width:'600px',
+			}, function(ret) {
+				$(".modal-ok").click(function() {
+					ajax_post({
+						url : '/run/authRun',
+						data : {
+							id : d.id
+						},
+						headers : {
+							Action : '{:enCryptRestUri("/Addr/del")}'
+						},
+					}, function(ret) {
+						talert({
+							status : ret.code,
+							msg : ret.msg
+						});
+						if (ret.code == 1) {
+							setTimeout("ref()", 1000);
+						}
+					})
+				})
+			})
+		})
+	});
+</script> </block>

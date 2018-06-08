@@ -1,0 +1,70 @@
+<div class="bg-warning pd10 mb20">
+	<i class="fa fa-exclamation-circle fs16 fl text_yellow"></i>
+	<p class="ml20 mb0">声明：请在72个小时内完成回复，回复后可以做修改，但不能删除咨询。</p>
+</div>
+<table class="table table-bordered table-advance table-hover mb30">
+	<tbody>
+		<tr>
+			<th class="col-xs-2 text-right" style="vertical-align: middle;">咨询类型</th>
+			<td class="col-xs-10" style="vertical-align: middle;">{$data.type_name}</td>
+		</tr>
+		<tr>
+			<th class="col-xs-2 text-right" style="vertical-align: middle;">咨询时间</th>
+			<td class="col-xs-10" style="vertical-align: middle;">{$data.atime}</td>
+		</tr>
+		<tr>
+			<th class="col-xs-2 text-right" style="vertical-align: middle;">咨询用户</th>
+			<td class="col-xs-10" style="vertical-align: middle;">{$data.nick}</td>
+		</tr>
+		<tr>
+			<th class="col-xs-2 text-right" style="vertical-align: middle;">咨询商品名称</th>
+			<td class="col-xs-10" style="vertical-align: middle;">
+				<a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', ['id' => $data['attr_list_id']])}">{$data.goods_name}</a>
+			</td>
+		</tr>
+		<tr>
+			<th class="col-xs-2 text-right" style="vertical-align: middle;">咨询商品图片</th>
+			<td class="col-xs-10" style="vertical-align: middle;">
+				<a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', ['id' => $data['attr_list_id']])}">
+				<img alt="{$data.goods_name}" src="{:myurl($data['images'], 60)}">
+				</a>
+			</td>
+		</tr>
+		<tr>
+			<th class="col-xs-2 text-right" style="vertical-align: middle;">咨询内容</th>
+			<td class="col-xs-10" style="vertical-align: middle;">{$data.content}</td>
+		</tr>
+		<tr>
+			<th class="col-xs-2 text-right" style="vertical-align: middle;">咨询状态</th>
+			<td class="col-xs-10" style="vertical-align: middle;">{$data.status_name}</td>
+		</tr>
+	</tbody>
+</table>
+{:W('Common/Builder/form', [['data' => $keyList, 'run' => '/run/authRun', 'name' => 'advisoryForm']])}
+<script>
+$(document).ready(function() {
+	checkform({
+		formid:"#advisoryForm",
+		headers : {Action : '{$advisoryReplyHeader}'},
+		rules:{
+			content:{
+				required:true,
+				rangelength:[5,120]
+			},
+		},
+		messages:{
+			content:{
+				required:'回复内容不能为空',
+				rangelength:'回复内容长度介于5-120位之间',
+			},
+		}
+	},function(ret) {
+		talert({status:ret.code,msg:ret.msg});
+		if(ret.code == 1) {
+			setTimeout(function() {
+				ref();
+			}, 1000);
+		}
+	})
+});
+</script>

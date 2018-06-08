@@ -1,0 +1,152 @@
+<div class="clearfix">
+	<div class="pull-right text-gray" onclick="$(this).closest('tr').toggleClass('hide');"><i class="fa fa-times-circle-o fa-2x"></i></div>	
+</div>
+
+<div class="p20 box">
+	<!--
+	<div class="ft18 strong p10 border-d">基本信息</div>
+	<div class="row p10">
+		<div class="col-xs-6">商家名称：{$shop_info.shop_name}</div>
+	</div>
+	-->
+	<if condition="$goods_info.status eq 1">
+		<div class="ft18 strong p10 mt10">违规下架</div>
+		<form data-url="__URL__/ajax_illegal_add" data-id="#form_{$_GET.id}" id="form_{$_GET.id}" class="form-horizontal vform" onsubmit="return submit_open($(this))">
+				{:W('Widget/buildform',array(array(
+					'field'		=>array(	
+						array(
+							'formtype'		=>'hidden',
+							'name'			=>'shop_name',
+							'value'			=>$shop_info['shop_name'],
+						),
+						array(
+							'formtype'		=>'hidden',
+							'name'			=>'shop_id',
+							'value'			=>$shop_info['id'],
+						),
+						array(
+							'formtype'		=>'hidden',
+							'name'			=>'uid',
+							'value'			=>$shop_info['uid'],
+						),
+						array(
+							'formtype'		=>'hidden',
+							'name'			=>'goods_id',
+							'value'			=>$_GET['id'],
+						),
+						array(
+							'formtype'		=>'select',
+							'label'			=>'违规行为',
+							'name'			=>'wrongdoing',
+							'data'			=>$rules,
+							'field'			=>array(0,1),
+						),
+						array(
+							'formtype'		=>'radio',
+							'label'			=>'严重程度',
+							'name'			=>'type',
+							'data'			=>array(array(1,'一般'),array(2,'严重'),array(3,'非常严重')),
+							'field'			=>array(0,1),
+						),
+						array(
+							'formtype'		=>'text',
+							'label'			=>'违规情节',
+							'name'			=>'plot',
+						),
+						array(
+							'formtype'		=>'textarea',
+							'label'			=>'违规描述',
+							'name'			=>'describe',
+						),
+						array(
+							'formtype'		=>'text',
+							'label'			=>'处罚方式',
+							'name'			=>'punishment',
+						),
+						
+						array(
+							'formtype'		=>'html',
+							'label'			=>' ',
+							'html'			=>'<button type="submit" class="btn btn-primary btn-150px logs-add"><i class="fa fa-check"></i> 提交</button>'
+						),
+
+					),
+				)))}
+		</form>
+	<else/>
+		<div class="ft18 strong p10 mt10">此商品不在上架状态，无需强制下架</div>
+	</if>
+	<notempty name="illegas">
+		<div class="ft18 strong p10 mt20 border-d mb10">过往违规记录</div>
+		<volist name="illegas" id="vo">
+			
+				<div class="row p10">
+					
+					<div class="col-xs-6">违规行为：{$vo.rules_title}</div>
+					<div class="col-xs-6">严重程度：{$vo.type_name}</div>
+					<div class="col-xs-6">违规时间：{$vo.atime}</div>
+					<div class="col-xs-6">处理情况：{$vo.status_name}</div>
+				</div>
+				
+		</volist>
+	</notempty>
+	
+</div>
+<div class="clearfix">
+	<div class="pull-right text-gray" onclick="$(this).closest('tr').toggleClass('hide');"><i class="fa fa-times-circle-o fa-2x"></i></div>	
+</div>
+
+<script>
+image_zoom();
+
+$("#wrongdoing").change(function(){
+	
+	var id = $(this).val();
+	
+	ajax_post({
+		'url':'/Goods/ajax_get_point',
+		data:{'id':id}
+		
+	},function(ret){
+		if(ret.status == 'success'){
+			var html = '<div id="dec_point">一般违规扣分：<span style="color:red;">'+ret.data.point1+'</span> 严重违规扣分：<span style="color:red;">'+ret.data.point2+'</span> 非常严重违规扣分：<span style="color:red;">'+ret.data.point3+'</span></div>'
+			$("#dec_point").remove();
+			$(".f-type .col-xs-7").append(html);
+		}else{
+			valert(ret);
+		}
+	});
+	
+})
+
+
+function submit_open(obj){
+	var formid='#'+obj.attr('id');
+	var data = getFormJson(formid);
+	if(!data.wrongdoing){
+		valert({status:'warning',msg:'请选择违规行为'});
+		return false;
+	}
+	if(!data.type){
+		valert({status:'warning',msg:'请选择违规严重程度'});
+		return false;
+	}
+	if(data.plot==''){
+		valert({status:'warning',msg:'请输入违规情节'});
+		return false;
+	}
+	
+	ajax_post_form({
+		formid:formid,
+	},function(ret){
+		valert(ret);
+		if(ret.status=='success'){
+			
+			
+		}		
+	});
+	
+	return false;
+}
+
+</script>

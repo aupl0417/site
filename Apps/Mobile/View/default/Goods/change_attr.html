@@ -1,0 +1,76 @@
+<div class="price-box clearfix" style="height:30%;">
+	<div class="img" style="height: 100%;">
+		<a href="/Goods/view/id/{$rs.id}" class="close-popup"><img class="lazyload" data-sizes="auto" data-src="{:myurl($rs['images'],200)}" alt="商品主图" src="../Public/images/nopic.gif" style="max-height: 100%;max-width:100%"></a>
+	</div>
+	<div class="price-row">
+		<div>
+			<!--秒杀价格-->
+			<eq name="rs.is_miaosha" value="1">
+				<span class="price mr03">￥{$rs.goods.officialactivity_price}</span> <span class="text-gray ft06">原价 <span class="text-overline">￥{:round($rs['price'] * 1.2)}</span></span>
+				<else />
+				<span class="price">￥{$rs.price}</span>
+			</eq>
+		</div>
+		<div class="score ft05 text-gray hide">
+			奖励  {$rs.score} 积分
+		</div>
+		<div style="line-height: 1rem;height:1rem;font-size:0.6rem;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">已选：{$rs.attr_name}</div>
+	</div>
+</div>
+
+<form name="form_sku_attr" id="form_sku_attr" onsubmit="return false;" class="sku-down" style="height: 70%;overflow: hidden;">		
+	<!-- 商品SKU-->
+	<div class="list-block" style="height:100%;overflow: auto;">
+		<ul>
+			<volist name="rs.attr" id="vo" key="fkey">
+				<li>
+					<div class="item-content price-btn">
+						<div class="item-inner">
+							<div class="item-title label">{$vo.attr_name}</div>
+							<div class="item-input">
+								<volist name="vo.option" id="option">
+									<div class="btn btn-white btn-md m03 fl {:in_array($option['attr'],$rs['attr_ids'])?'active selected':''} {:sku_status($option,$fkey,$rs['attr_id'],$rs['attr_list'],$rs['attr'])}" data-attr_id="{$option.attr}" data-goods_id="{$rs.goods_id}" onclick="change_attr($(this))">{$option.attr_value}</div>
+								</volist>
+							</div>
+						</div>
+					</div>
+				</li>
+			</volist>
+			<li <if condition="$rs.is_goupiao eq 1">style="display:none"</if>>
+				<div class="item-content">
+					<div class="item-inner">
+						<div class="item-title label">库存</div>
+						<div class="item-input">{$rs.num} 件
+						</div>
+					</div>
+				</div>
+			</li>
+			<gt name="rs.weight" value="0">
+				<li>
+					<div class="item-content">
+						<div class="item-inner">
+							<div class="item-title label">重量</div>
+							<div class="item-input">
+								{$rs.weight} Kg
+							</div>
+						</div>
+					</div>
+				</li>
+			</gt>
+			<li>
+				<div class="item-content">
+					<div class="item-inner">
+						<div class="item-title label">数量</div>
+						<div class="item-input">
+							<div class="num-dec" onclick="sku_num_dec($(this))">-</div>
+							<div class="num-inc" onclick="sku_num_inc($(this))">+</div>
+							<input type="number" name="num" id="num" placeholder="订购数量" value="1" maxlength="6" data-max_num="{$rs.num}" style="max-width: 5rem;margin-left: 2rem;text-align: center;">
+						</div>
+					</div>
+				</div>
+			</li>
+		</ul>
+		<div style="height:3rem"></div>
+	</div>
+	<input type="hidden" name="attr_list_id" id="attr_list_id" value="{$rs.id}" />	
+</form>

@@ -1,0 +1,70 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			退款列表
+		</div>
+	</div>
+</header>
+<section id="refund-list-content">
+	<div class='load-body'>数据加载中...</div>
+</section>
+<script id="refund-list-html" type="text/html">
+<% for(i = 0;i < data.length;i++){ %>
+	<div class="box noicon hover m10">
+		<div class="col-100 p10 text-left"><span class="mr20">流水号：<%= data[i].r_no %></span><span>创建时间：<%= data[i].atime %></span></div>
+		<div class="col-100 p10 text-left"><span class="mr20">订单号：<%= data[i].s_no %></span></div>
+		<div class="col-100 p10 text-left">
+			<div class="col-100 p5" onclick="openWin({name:'goods_view',url:'/Goods/view/id/<%= data[i].attr_list_id %>'})"><img width="50" src="<%= data[i].g_images %>" /></div>
+			<div class="col-100 p5"><%= data[i].attr_name %></div>
+			<div class="col-100 p5"><%= data[i].goods_name %></div>
+		</div>
+		<div class="col-100 p10 text-left">退款数量：<%= data[i].num %>,退款金额：<%= data[i].money %></div>
+		<div class="col-100 p10 text-left">状态：<%= data[i].status_name %></div>
+		<div class="col-100 p10 text-right">
+			<% if(data[i].status == 3){ %>
+				<div class="btn btn-xs btn-danger mr10" onclick="openWin({name:'refund',url:'/Refund/edit/r_no/<%= data[i].r_no %>'})">编辑</div>
+			<% } %>
+			<% if(data[i].status == 4){ %>
+				<div class="btn btn-xs btn-danger mr10" onclick="openWin({name:'refund',url:'/Refund/send_back/r_no/<%= data[i].r_no %>'})">确认寄回商品</div>
+			<% } %>
+			<% if(data[i].status != 10 && data[i].status != 11 && data[i].status != 100 && data[i].status != 20){ %>
+				<div class="btn btn-xs btn-danger mr10" onclick="refund_cancel('<%= data[i].r_no %>')">取消</div>
+			<% } %>
+				<div class="btn btn-xs btn-danger mr10" onclick="openWin({name:'refund',url:'/Refund/view/r_no/<%= data[i].r_no %>'})">详情</div>
+		</div>
+	</div>
+<% } %>
+</script>
+	
+
+<include file="Public:d_layer" />
+
+
+<script>
+
+fixBar(1);
+ajax_post({
+	url:'/Api/api',
+	data:{
+		apiurl:'/Refund/index/',
+		is_openid:1,
+	}
+},function(ret){
+	// console.log(ret);
+	if(ret.code == 1){
+		var html = template('refund-list-html', {data:ret.data.data});
+		$('#refund-list-content').html(html);
+	}
+});
+function refund_cancel(r_no){
+	vmodal({
+		title:'取消退款',
+		url:'__URL__/cancel/r_no/' + r_no,
+		is_footer:false,
+	});
+}
+
+</script>

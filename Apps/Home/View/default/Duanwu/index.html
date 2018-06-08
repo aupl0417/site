@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>活动页面</title>
+		<link rel="stylesheet" href="../Public/duanwu/css/bootstrap.css" />
+		<link rel="stylesheet" href="../Public/duanwu/css/style.css" />
+		
+		<script type="text/javascript" src="__PUBLIC__/new_design/flatdream/js/jquery.js"></script>
+		<script type="text/javascript" src="__PUBLIC__/Jquery/jquery.lazyload.min.js"></script>
+	
+		
+	</head>
+	<body>
+		<include file="Home@Public:header" />
+		<include file="Home@Public:top" />
+		<a name="top"></a>
+		<div class="content">
+		<a name="f1"></a>
+			<div><img src="../Public/duanwu/images/1.jpg" style="min-height:630px;width:100%"/></div>
+			
+			<a name="f2"></a>
+			<div><img src="../Public/duanwu/images/2.jpg" style="min-height:537px;width:100%"/></div>
+			<a name="f3"></a>
+			<div><img src="../Public/duanwu/images/3.jpg" style="min-height:161px;width:100%"/></div>
+			
+			<div>
+				<a href="{$goods[0][goods][url]}" target="_blank">
+					<img src="../Public/duanwu/images/4.jpg" style="min-height:414px;width:100%"/>
+				</a>
+			</div>
+			<div>
+				<a href="{$goods[1][goods][url]}" target="_blank">
+					<img src="../Public/duanwu/images/5.jpg" style="min-height:430px;width:100%"/>
+				</a>
+			</div>
+			<div>
+				<a href="{$goods[2][goods][url]}" target="_blank">
+					<img src="../Public/duanwu/images/6.jpg" style="min-height:440px;width:100%"/>
+				</a>
+			</div>
+			<div>
+				<a href="{$goods[3][goods][url]}" target="_blank">
+					<img src="../Public/duanwu/images/7.jpg" style="min-height:423px;width:100%"/>
+				</a>
+			</div>
+			<div>
+				<a href="{$goods[4][goods][url]}" target="_blank">
+					<img src="../Public/duanwu/images/8.jpg" style="min-height:457px;width:100%"/>
+				</a>
+			</div>
+			<div>
+				<a href="{$goods[5][goods][url]}" target="_blank">
+					<img src="../Public/duanwu/images/9.jpg" style="min-height:422px;width:100%"/>
+				</a>
+			</div>
+			<div>
+				<a href="{$goods[6][goods][url]}" target="_blank">
+					<img src="../Public/duanwu/images/10.jpg" style="min-height:546px;width:100%"/>
+				</a>
+			</div>
+			<a name="f4"></a>
+			<div><img src="../Public/duanwu/images/11.jpg" style="min-height:134px;width:100%"/></div>
+			<!--端午必备-->
+			<div class="green">
+				<div class="link-goods clearfix">
+					<volist name="goods" id="vo" offset="7" length='8'>
+						<div class="fl link-goods-item">
+							<img src = "../Public/duanwu/images/18.png" class="itl"/>
+							<img src = "../Public/duanwu/images/19.png" class="itr"/>
+							<img src = "../Public/duanwu/images/16.png" class="ibl"/>
+							<img src = "../Public/duanwu/images/17.png" class="ibr"/>
+							<a href="{$vo.goods.url}" target="_blank">
+							<img class="lazyload" data-original="{$vo.goods.images}" src="__PUBLIC__/images/nopic.png" style="width:100%">
+							<div class="goods_name">
+								{$vo.goods.goods_name|default='读取失败'}
+							</div>
+							<div class="goods_price clearfix">
+								<div class="fl">端午价 <span>{$vo.goods.price}</span></div>
+								<div class="fr">抢购</div>
+							</div>
+							</a>
+						</div>
+					</volist>
+				</div>
+			</div>
+			<a name="f5"></a>
+			<div><img src="../Public/duanwu/images/12.jpg" style="min-height:212px;width:100%"/></div>
+			<!--品牌精选-->
+			<div class="violet">
+				<div class="link-goods clearfix">
+					<volist name="goods" id="vo" offset="15" length='16'>
+						<div class="fl link-goods-item">
+							<img src = "../Public/duanwu/images/18.png" class="itl"/>
+							<img src = "../Public/duanwu/images/19.png" class="itr"/>
+							<img src = "../Public/duanwu/images/16.png" class="ibl"/>
+							<img src = "../Public/duanwu/images/17.png" class="ibr"/>
+							<a href="{$vo.goods.url}" target="_blank">
+							<img class="lazyload" data-original="{$vo.goods.images}" src="__PUBLIC__/images/nopic.png" style="width:100%">
+							<div class="goods_name">
+								{$vo.goods.goods_name|default='读取失败'}
+							</div>
+							<div class="goods_price clearfix">
+								<div class="fl">端午价 <span>{$vo.goods.price}</span></div>
+								<div class="fr">抢购</div>
+							</div>
+							</a>
+						</div>
+					</volist>
+				</div>
+			</div>
+			<a name="f6"></a>
+			<div><img src="../Public/duanwu/images/13.jpg" style="min-height:226px;width:100%"/></div>
+			<!--猜你喜欢-->
+			<div class="orange">
+				<div class="link-goods clearfix">
+					<volist name="goods" id="vo" offset="31" length='12'>
+						<div class="fl link-goods-item">
+							<img src = "../Public/duanwu/images/18.png" class="itl"/>
+							<img src = "../Public/duanwu/images/19.png" class="itr"/>
+							<img src = "../Public/duanwu/images/16.png" class="ibl"/>
+							<img src = "../Public/duanwu/images/17.png" class="ibr"/>
+							<a href="{$vo.goods.url}" target="_blank">
+							<img class="lazyload" data-original="{$vo.goods.images}" src="__PUBLIC__/images/nopic.png" style="width:100%">
+							<div class="goods_name">
+								{$vo.goods.goods_name|default='读取失败'}
+							</div>
+							<div class="goods_price clearfix">
+								<div class="fl">端午价 <span>{$vo.goods.price}</span></div>
+								<div class="fr">抢购</div>
+							</div>
+							</a>
+						</div>
+					</volist>
+				</div>
+			</div>
+			<div><a href="#top"><img src="../Public/duanwu/images/14.jpg" style="min-height:307px;width:100%"/></a></div>
+			
+			
+			
+			
+			<!--右侧-->
+			<div class="right-nav">
+				<div class="link">
+					<img src="../Public/duanwu/images/15.png"/>
+					<a href="#f1"><img class="f1 link-button" src="../Public/muqinjie/images/100.png"/></a>
+					<a href="#f2"><img class="f2 link-button" src="../Public/muqinjie/images/100.png"/></a>
+					<a href="#f3"><img class="f3 link-button" src="../Public/muqinjie/images/100.png"/></a>
+					<a href="#f4"><img class="f4 link-button" src="../Public/muqinjie/images/100.png"/></a>
+					<a href="#f5"><img class="f5 link-button" src="../Public/muqinjie/images/100.png"/></a>
+					<a href="#f6"><img class="f6 link-button" src="../Public/muqinjie/images/100.png"/></a>
+					<a href="#top"><img class="f7 link-button" src="../Public/muqinjie/images/100.png"/></a>
+					
+				</div>
+			</div>
+		</div>
+	</body>
+	
+
+	<script type="text/javascript"> 
+	$(function() { 
+		$("img").lazyload({
+			 placeholder : "__PUBLIC__/images/nopic.png", //加载图片前的占位图片
+			 effect      : "fadeIn", //加载图片使用的效果(淡入)
+			 skip_invisible : false,
+			 threshold : 200
+		});
+	}); 
+
+	</script>
+</html>

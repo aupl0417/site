@@ -1,0 +1,28 @@
+<form method="get" action="" role="form" class="hover-shadow hover-search p10 md10">
+
+	<table class="no-bordered">
+		<tr>
+			<td class="p0">
+				<table>
+					<tr>
+						<td>	
+							<input id="s_no" name="s_no" value="{$_GET.s_no}" class="form-control" placeholder="请输入订单号" />					
+						</td>					
+						<td><input id="sday" name="sday" value="{$_GET.sday}" class="form-control" placeholder="时间(从)" data-type="between-datepick" data-var="maxDate" data-tag="#eday" />							
+						</td>
+						<td><input id="eday" name="eday" value="{$_GET.eday}" class="form-control" placeholder="时间(至)" data-type="between-datepick"data-var="minDate" data-tag="#sday" /></td>
+						<td><input id="q" name="q" value="{$_GET.q}" class="form-control" placeholder="请输入搜索关键词" /></td>
+						<td>
+							<select id="table_name" name="table_name" class="form-control">
+								<option value="erp_pays_notify_success">erp_pays_notify_success</option>
+								<option value="erp_pays_notify_error" <if condition="$_GET.table_name eq erp_pays_notify_error">selected="selected"</if>>erp_pays_notify_error</option>
+							</select>
+						</td>
+					<tr>
+				</table>
+			</td>
+			<td width="100" class="p0"><button type="submit" class="btn btn-rad btn-trans btn-primary btn-block"><i class="fa fa-search"></i> 搜索</button></td>
+		</tr>
+	</table>
+</form>
+<div class="clearfix"></div>

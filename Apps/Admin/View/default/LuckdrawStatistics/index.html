@@ -1,0 +1,320 @@
+<include file="Public:header" />
+<include file="nav" />
+<js href="__JS__/ECharts/echarts.min.js" />
+	<div class="pd20">
+		<div class="bor_der pd15 m20 block-flat">
+			<h5 class="fs16 mt0">昨天基础数据统计</h5>
+			<table class="bg_white table_dotted">
+				<tbody class="solid_t">
+					<tr>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">抽奖次数</p>
+							<strong>{$yes_data.luck_num}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">中奖次数</p>
+							<strong>{$yes_data.winning_num}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">消费唐宝总数</p>
+							<strong>{$yes_data.use_tangbao}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">中奖积分总数</p>
+							<strong>{$yes_data.winning_score}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">实物中奖次数</p>
+							<strong>{$yes_data.entity_winning_num}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">实物领奖次数</p>
+							<strong>{$yes_data.entity_receive_num}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">实物领奖概率</p>
+							<strong>{$yes_data.entity_receive_percen}%</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">已付运费</p>
+							<strong>{$yes_data.pay_express_price}</strong>
+						</td>
+					</tr>
+				</tbody>
+			</table>	
+		</div>
+		
+		
+			
+		<div class="clearfix"></div>
+		
+		<div class="box p20 m20">
+			<div id="main" style="width: 100%;height:400px;"></div>
+		</div>
+		<script type="text/javascript">
+			// 基于准备好的dom，初始化echarts实例
+			var myChart = echarts.init(document.getElementById('main'));
+			// 指定图表的配置项和数据
+			{:W('Widget/luckdraw_total')}
+			// 使用刚指定的配置项和数据显示图表。
+			myChart.setOption(option);
+		</script>
+		<style>
+			.flex-start{display: -webkit-flex; /* Safari */	display: flex;}
+			.flex-jcsb{justify-content:space-between;}
+			.flex-fb50{flex-basis:50%}
+		</style>
+		<div class="mt30 flex-start flex-jcsb">
+			<div class="flex-fb50">
+				<div class="box p20 m20">
+					<div id="main1" style="width: 100%;height:400px;"></div>
+				</div>
+				<script type="text/javascript">
+					// 基于准备好的dom，初始化echarts实例
+					var myChart2 = echarts.init(document.getElementById('main1'));
+						option2 = {
+							title : {
+								text: '昨日中奖奖品占比',
+								x:'left'
+							},
+							tooltip : {
+								trigger: 'item',
+								formatter: "{a} <br/>{b} : {c} ({d}%)"
+							},
+							legend: {
+								orient: 'vertical',
+								left: 'right',
+								data: [
+									<volist name="winning_list" id="vo">
+									'{$vo.prize_name}',
+									</volist>
+									]
+							},
+							series : [
+								{
+									name: '奖品占比',
+									type: 'pie',
+									radius : '55%',
+									center: ['50%', '60%'],
+									data:[
+										<volist name="winning_list" id="vo">
+										{value:{$vo.winning_num}, name:'{$vo.prize_name}'},
+										</volist>
+
+									],
+									itemStyle: {
+										emphasis: {
+											shadowBlur: 10,
+											shadowOffsetX: 200,
+											shadowColor: 'rgba(0, 0, 0, 0.5)'
+										}
+									}
+								}
+							]
+						};
+
+					// 使用刚指定的配置项和数据显示图表。
+					myChart2.setOption(option2);
+				</script>
+			</div>
+			<div class="flex-fb50">
+				<div class="box p20 m20">
+					<div id="main2" style="width: 100%;height:400px;"></div>
+				</div>
+				<script type="text/javascript">
+						// 基于准备好的dom，初始化echarts实例
+						var myChart3 = echarts.init(document.getElementById('main2'));
+						option3 = {
+							title : {
+								text: '昨日实物领奖奖品占比',
+								x:'left'
+							},
+							tooltip : {
+								trigger: 'item',
+								formatter: "{a} <br/>{b} : {c} ({d}%)"
+							},
+							legend: {
+								orient: 'vertical',
+								left: 'right',
+								data: [
+								<volist name="receive_list" id="vo">
+								'{$vo.prize_name}',
+						</volist>
+						]
+						},
+						series : [
+							{
+								name: '奖品占比',
+								type: 'pie',
+								radius : '55%',
+								center: ['50%', '60%'],
+								data:[
+								<volist name="receive_list" id="vo">
+									{value:{$vo.receive_num}, name:'{$vo.prize_name}'},
+						</volist>
+
+						],
+						itemStyle: {
+							emphasis: {
+								shadowBlur: 10,
+										shadowOffsetX: 200,
+										shadowColor: 'rgba(0, 0, 0, 0.5)'
+							}
+						}
+						}
+						]
+						};
+
+						// 使用刚指定的配置项和数据显示图表。
+						myChart3.setOption(option3);
+					</script>
+			</div>
+		</div>
+
+		<div class="bor_der pd15 m20 block-flat">
+			<h5 class="fs16 mt0">累计数据统计</h5>
+			<table class="bg_white table_dotted">
+				<tbody class="solid_t">
+				<tr>
+					<td class="fs14 pd30">
+						<p class="mb20 fs14 text_77">抽奖次数</p>
+						<strong>{$total_data.luck_num}</strong>
+					</td>
+					<td class="fs14 pd30">
+						<p class="mb20 fs14 text_77">中奖次数</p>
+						<strong>{$total_data.winning_num}</strong>
+					</td>
+					<td class="fs14 pd30">
+						<p class="mb20 fs14 text_77">消费唐宝总数</p>
+						<strong>{$total_data.use_tangbao}</strong>
+					</td>
+					<td class="fs14 pd30">
+						<p class="mb20 fs14 text_77">中奖积分总数</p>
+						<strong>{$total_data.winning_score}</strong>
+					</td>
+					<td class="fs14 pd30">
+						<p class="mb20 fs14 text_77">实物中奖次数</p>
+						<strong>{$total_data.entity_winning_num}</strong>
+					</td>
+					<td class="fs14 pd30">
+						<p class="mb20 fs14 text_77">实物领奖次数</p>
+						<strong>{$total_data.entity_receive_num}</strong>
+					</td>
+					<td class="fs14 pd30">
+						<p class="mb20 fs14 text_77">实物领奖概率</p>
+						<strong>{$total_data.entity_receive_percen}%</strong>
+					</td>
+					<td class="fs14 pd30">
+						<p class="mb20 fs14 text_77">已付运费</p>
+						<strong>{$total_data.pay_express_price}</strong>
+					</td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+
+<include file="Public:copyright" />
+<include file="Public:js" />
+<script>
+$(document).ready(function(){
+	$('.delete-select').click(function(){
+		if($('input[type="checkbox"]:checked').size()==0){
+			valert({status:'warning',msg:'请至少选择一项！'})
+			return false;
+		}else {
+			confirm_form({
+				formid:'#formlist',
+				furl:'__URL__/delete_select',
+				script:'callback(ret)',
+				title:'删除记录',
+				msg:'真的要删除吗？',
+				class:'text-center',
+				confirm:1
+			});
+		}
+	});
+
+	$('.active-change').click(function(){
+		if($('input[type="checkbox"]:checked').size()==0){
+			valert({status:'warning',msg:'请至少选择一项！'})
+			return false;
+		}else {
+			confirm_form({
+				formid:'#formlist',
+				furl:'__URL__/active_change_select/toactive/'+$('#toactive').val(),
+				script:'activeCall(ret)',
+				title:'批量更改记录状态',
+				msg:'真的要改记录状态吗？',
+				class:'text-center',
+				confirm:1
+			});
+		}
+	});
+	
+	$('.sid-change').click(function(){
+		if($('input[type="checkbox"]:checked').size()==0){
+			valert({status:'warning',msg:'请至少选择一项！'})
+			return false;
+		}else if($('#tosid').val()==''){
+			valert({status:'warning',msg:'请选择一个分类'})
+			return false;			
+		}else {
+			confirm_form({
+				formid:'#formlist',
+				furl:'__URL__/sid_change_select/tosid/'+$('#tosid').val(),
+				script:'activeCall(ret)',
+				title:'批量记录归类',
+				msg:'真的要批量记录归类吗？',
+				class:'text-center',
+				confirm:1
+			});
+		}
+	});	
+	
+	$('#gopage').change(function(){
+		var url=$('#gopage').val();
+		location.href=url;
+	});
+	$('.go-page').click(function(){
+		var url=$('#gopage').val();
+		location.href=url;
+	});	
+	
+	$('.btn-view').click(function(){
+		var d=$(this).data();
+		//alert(d.tag);
+		var tag='#view-'+d.id;
+		var item='#item-'+d.id;
+
+		$(tag).toggleClass('hide');
+		if($(item).html()=='') loadurl({tag:item,url:d.url});
+	});
+});
+
+function callback(ret){
+	valert({status:ret.status,msg:ret.msg});
+	if(ret.status=='success'){
+		$('input[type="checkbox"]:checked').each(function(){
+			$('#'+$(this).val()).remove();
+		});
+		$('#ajax-modal').modal('hide');
+	}
+}
+
+function delCall(ret,tag){
+	valert({status:ret.status,msg:ret.msg});
+	if(ret.status=='success'){
+		$(tag).remove();
+		$('#ajax-modal').modal('hide');
+	}
+}
+function activeCall(ret){
+	valert({status:ret.status,msg:ret.msg});
+	if(ret.status=='success'){
+		setTimeout(function(){
+			ref();
+		},500);
+	}
+}
+</script>
+<include file="Public:footer" />

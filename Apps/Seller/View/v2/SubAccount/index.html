@@ -1,0 +1,94 @@
+<extend name="Seller@Public:base" />
+<block name="body">
+    <div class="centent_body">
+        <!-- to do your html codeing -->
+        <div class="revision_bg">
+            <div class="container ptb_size_lg clearfix">
+                <!-- 左侧导航 -->
+                <include file="Public:sideNav" />
+                <!-- 左侧导航结束 -->
+
+                <div class="revisionRight pd15" style="width: 1020px"><!-- 右侧内容 -->
+
+                    <div class="clearfix revisionOrderTab sid-active" data-sid="{$function}">
+                        <a class="fr btn btn-primary" href="{:U('/subAccount/create')}">创建子账号</a>
+                        <a class="fr btn btn-primary mr10" href="{:U('/subAccount/apply')}">申请增额</a>
+                        <a class="orderOption" data-sid="index" href="{:U('/subAccount')}">子账号管理</a>
+                        <a class="orderOption" data-sid="applyList" href="{:U('/subAccount/applyList')}">申请列表</a>
+                    </div>
+                    <div class="bg-warning pd10 letter-spacing1 mb20">
+                        <i class="fa fa-exclamation-circle fs16 fl text_yellow"></i>
+                        <p class="ml20 mb0">小提示，您当前最多可创建<strong class="text_yellow"> {$shop_info.max_sub_user} </strong>个子账号，子账号不够？<a class="text_blue" href="{:U('/subAccount/apply')}">申请增额</a> 。</p>
+                    </div>
+                    <div class="content">
+                        <empty name="data.list">
+                            {:W('Common/Builder/nors', array('param' => array('text' => $data['msg'])))}
+                            <else />
+                            <volist name="data.list" id="vo">
+                                <div class="alert solid_b">
+                                    <eq name="vo.status" value="1">
+                                        <a href="javascript:;" data-title="删除/冻结子账号" data-url="{:U('/subAccount/delAccount', ['id' => $vo['id']])}" class="fr text_yellow fs14 btn-edit">删除/冻结</a>
+                                        <a href="javascript:;" data-title="修改账户组" data-url="{:U('/subAccount/changeGroup', ['id' => $vo['id']])}" class="fr text_blue fs14 mr10 btn-edit">修改账户组</a>
+                                        <a href="javascript:;" data-title="修改头像" data-url="{:U('/subAccount/changeAvatar', ['id' => $vo['id']])}" class="fr text_blue fs14 mr10 btn-edit">修改头像</a>
+                                        <a href="javascript:;" data-title="修改密码" data-url="{:U('/subAccount/changePass', ['id' => $vo['id']])}" class="fr text_blue fs14 mr10 btn-edit">修改密码</a>
+                                        <else />
+                                        <a href="javascript:;" data-title="解冻子账号" data-id="{$vo.id}" class="fr text_yellow fs14 btn-thaw">解冻</a>
+                                    </eq>
+                                    <strong class="fs14 mr10">{$vo.nick}</strong> <span class="fs14 mr10" style="color: #b8b8b8">|</span> <span style="color: #b8b8b8">{$vo.group_name}</span>
+                                </div>
+                            </volist>
+                        </empty>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <!-- my codeing over -_-   -->
+
+    </div>
+</block>
+
+<block name="css">
+</block>
+
+<block name="script">
+    <!-- to do your javascript codeing -->
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $(".btn-edit").click(function () {
+                var d = $(this).data();
+                vmodal({
+                    url:d.url,
+                    title:d.title,
+                    width:'900px',
+                })
+            });
+            $(".btn-thaw").click(function () {
+                var d = $(this).data();
+                vmodal({
+                    title:d.title,
+                    data:{id:d.id},
+                    width:'600px',
+                    msg:'您真的要解冻当前子账户吗？',
+                    class:'text-center',
+                    confirm:1,
+                    footer:false,
+                }, function () {
+                    $(".modal-ok").click(function() {
+                        ajax_post({
+                            url:'__SELF__?ret=/Erp/delAccount',
+                            data:{id:d.id,status:1},
+                        },function(ret) {
+                            talert({status:ret.code,msg:ret.msg});
+                            if(ret.code == 1) {
+                                ref();
+                            }
+                        })
+                    })
+                });
+            })
+        });
+    </script>
+</block>

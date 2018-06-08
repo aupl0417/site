@@ -1,0 +1,59 @@
+<div class="p20 box">
+	<div class="row">
+		<div class="col-xs-6 auth-text">
+			<div>店铺名称：<span class="ft18 strong text-danger">{$rs.shop.shop_name}</span></div>
+			<div>订单号：{$rs.s_no}</div>
+			<div>买家：{$rs.user.nick}</div>
+			<div>卖家：{$rs.seller.nick}</div>
+			<div>下单时间：{$rs.atime}</div>
+			<div>支付时间：{$rs.pay_time}</div>
+			<div>收货时间：{$rs.receipt_time}</div>
+			<div>支付类型：
+				{:status($rs['pay_type'],array(1=>array('余额支付', 'btn-success'),2=>array('唐宝支付', 'btn-danger'),3=>array('支付宝', 'btn-success'),4=>array('微信', 'btn-success')))}
+			</div>
+		</div>
+		<div class="col-xs-6 auth-text">
+			<div>订单总金额：<span class="ft18 strong text-danger">{$rs.total_price}</span></div>
+			<div>支付金额：<span class="ft18 strong text-danger">{$rs.pay_price}</span></div>
+			<div>运费：<span class="ft18 strong text-danger">{$rs.express_price_edit}</span></div>
+			<div>商品总金额：<span class="ft18 strong text-danger">{$rs.goods_price_edit}</span></div>
+			<div>未纳入升级金额：<span class="ft18 strong text-danger">{$rs.goods_price_edit}</span></div>
+			<div>提交数据：<button type="button" class="btn btn-primary btn-150px logs-add"><i class="fa fa-check"></i> 提交</button>
+			</div>
+		</div>
+	</div>
+	<form data-url="__URL__/post1" data-id="#form_{$rs.id}" id="form_{$rs.id}" class="text-center">
+		{:W('Widget/buildform',array(array(
+			'field'		=>array(
+				array(
+					'formtype'		=>'hidden',
+					'name'			=>'id',
+					'value'			=>$rs['id'],
+				),
+			),
+		)))}
+	</form>
+</div>
+<div class="clearfix">
+	<div class="pull-right text-gray" onclick="$(this).closest('tr').toggleClass('hide');"><i class="fa fa-times-circle-o fa-2x"></i></div>	
+</div>
+
+<script>
+image_zoom();
+$('.logs-add').click(function(){
+	var d=$('#form_'+'{$rs.id}').data();
+	ajax_post_form({
+		formid:d.id
+	},function(ret){
+		if(ret.code==1){
+			valert({'status':'success','msg':ret.msg});
+			var tag='#item-{$rs.id}';
+			var url='__URL__/view/id/{$rs.id}';
+			loadurl({tag:tag,url:url});
+		} else {
+			valert({'status':'warning','msg':ret.msg});
+		}
+	});
+
+});
+</script>

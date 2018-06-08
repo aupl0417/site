@@ -1,0 +1,124 @@
+<div class="p20 box">
+	<div class="row auth-text">
+		<div class="col-xs-7">
+			<div class="p10">
+				<div class="row">
+					<div class="col-xs-2">
+						<img src="{:myurl($rs['orders_goods']['images'],160)}">
+					</div>
+					<div class="col-xs-5">
+						<div>申请编号：<span class="ft16">{$rs.r_no}</span></div>
+						<div>订单号：{$rs.s_no}</div>
+						<div>申请类型：{:status($rs['type'],['',['换货'],['维修','btn-info']])}</div>
+						<div>申请数量：{$rs.num}</div>
+						
+					</div>
+					<div class="col-xs-5">
+						<div>申请时间：{$rs.atime}</div>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-xs-2">
+						
+					</div>
+					<div class="col-xs-5">
+						<div>申请原因：{$rs.reason}</div>						
+					</div>
+					<div class="col-xs-5">
+					</div>
+				</div>				
+			</div>
+			
+
+		</div>
+
+		<div class="col-xs-5">
+			<div class="box p10 md10 ft16">
+				买家：{$rs.user.nick} / {$rs.user.mobile}
+			</div>		
+			<div class="box p10 md10 ft16">
+				卖家：{$rs.seller.nick} / {$rs.seller.mobile}
+			</div>		
+			<div class="box p10">
+				<div class="ft16">店铺：<span class="strong"><a href="{:shop_url($rs['shop']['id'],$rs['shop']['domain'])}">{$rs.shop.shop_name}</a></span> (QQ：{$rs.shop.qq})</div>
+			</div>
+		</div>
+	</div>
+	<div class="ft18 strong p10 border-d md20">处理记录</div>
+	
+	<form data-url="__URL__/logs_add" data-id="#form_{$rs.id}" id="form_{$rs.id}" class="form-horizontal vform">
+			{:W('Widget/buildform',array(array(
+				'field'		=>array(	
+					array(
+						'formtype'		=>'textarea',
+						'label'			=>'留言/回复',
+						'name'			=>'remark',
+					),
+					array(
+						'formtype'		=>'hidden',
+						'name'			=>'r_id',
+						'value'			=>$rs['id'],
+					),					
+					array(
+						'formtype'		=>'html',
+						'label'			=>' ',
+						'html'			=>'<button type="button" class="btn btn-primary btn-150px logs-add"><i class="fa fa-check"></i> 提交</button>'
+					),
+
+
+				),
+			)))}
+	
+	
+	</form>
+	<notempty name="rs.logs">
+	<ul class="timeline">
+		<volist name="rs.logs" id="vo">
+		<li>
+			<i class="fa fa-clock-o"></i>
+			<span class="date">
+				{$vo.atime}
+			</span>
+			<div class="content">
+				<div class="row">
+					<div class="col-xs-2 text-center">
+						<gt name="vo.a_uid" value="0">
+						<img width="60" src="{:myurl($vo['admin']['face'],60)}" class="img-circle">
+						<div>{$vo.admin.username}</div>
+						<else />
+						<img width="60" src="{:myurl($vo['user']['face'],60)}" class="img-circle">
+						<div>{$vo.user.nick}</div>
+						</gt>
+					</div>
+					<div class="col-xs-10">{$vo.remark|nl2br}</div>
+				</div>
+
+			</div>
+		</li>
+		</volist>
+	</ul>
+	</notempty>
+	
+</div>
+<div class="clearfix">
+	<div class="pull-right text-gray" onclick="$(this).closest('tr').toggleClass('hide');"><i class="fa fa-times-circle-o fa-2x"></i></div>	
+</div>
+
+<script>
+image_zoom();
+$('.logs-add').click(function(){
+	var d=$(this).closest('form').data();
+	ajax_post_form({
+		formid:d.id
+	},function(ret){
+		valert(ret);
+		if(ret.status=='success'){
+			var tag='#item-{$rs.id}';
+			var url='__URL__/view/id/{$rs.id}';
+			loadurl({tag:tag,url:url});
+		}
+	});
+
+});
+</script>

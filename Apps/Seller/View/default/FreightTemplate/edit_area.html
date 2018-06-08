@@ -1,0 +1,155 @@
+<form class="row form-horizontal group-border-dashed" id="freight-template-area">
+
+	<div class="col-xs-12">
+		<div class="form-group f-express">
+			<label class="col-xs-2 pd0 control-label"><span class="text_yellow">*</span>快递运费：</label>
+			<div class="col-xs-10">
+				<div class="input-group">
+					<div class="row md10 express-default">
+						<div class="col-xs-3">
+							<div class="input-group">
+								<span class="input-group-addon">起步</span>
+								<input type="text" class="form-control" id="first_unit" name="first_unit" value="{$area.first_unit}">
+								<span class="input-group-addon unit-info">{$express.unit}</span>
+							</div>
+						</div>
+						<div class="col-xs-3">
+							<div class="input-group">
+							<span class="input-group-addon">运费</span>
+								<input type="text" class="form-control" id="first_price" name="first_price" value="{$area.first_price}">
+								<span class="input-group-addon">元</span>
+							</div>
+						</div>
+						<div class="col-xs-3">
+							<div class="input-group">
+								<span class="input-group-addon">每加</span>
+								<input type="text" class="form-control" id="next_unit" name="next_unit" value="{$area.next_unit}">
+								<span class="input-group-addon unit-info">{$express.unit}</span>
+							</div>
+						</div>
+						<div class="col-xs-3">
+							<div class="input-group">
+								<span class="input-group-addon">加钱</span>
+								<input type="text" class="form-control" id="next_price" name="next_price" value="{$area.next_price}">
+								<span class="input-group-addon">元</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="tips-form text-gray ft12 link-blue"></div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12" id="area-city-ids">
+		<div class="form-group">
+			<label class="col-xs-2 pd0 control-label"><span class="text_yellow">*</span>选择地区：</label>
+			<div class="col-xs-10" style="max-height:500px;overflow:auto;padding-right:20px;">
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<td width="20%">省份</td>
+							<td width="80%">城市</td>
+						</tr>
+					</thead>
+					<tbody>
+						<foreach name="city" item="vo">
+						<tr>
+						<td><label class="square fl mr5"><input onclick="checkAll(this)" type="checkbox" value="" /><span></span></label>{$vo.a_name}</td>
+						<td>
+							<foreach name="vo.child" item="v">
+							<div class="col-xs-4 mt7">
+								<label class="square fl mr5">
+									<input name="city_ids" <if condition="$v['checked'] eq 1 ">checked="checked"</if> <if condition="$v['disable'] eq 1 ">disabled="disabled"</if> value="{$v.id}" type="checkbox" />
+									<span <if condition="$v['disable'] eq 1 ">style="background:#e6e4e0;"</if>></span>
+								</label>
+								<strong>{$v.a_name}</strong>
+							</div>
+							</foreach>
+						</td>
+						</tr>
+						</foreach>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12">
+		<div class="form-group">
+			<label class="col-xs-2 pd0 control-label"></label>
+			<div class="col-xs-6 clearfix">
+				<a href="javascript:;" class="col-xs-4 btn btn-primary btn_m plr20 fl opreating" onclick="Confirm()">确定提交</a>
+			</div>
+		</div>
+	</div>
+
+</form>
+<script>
+function Confirm(){
+	var data = getFormJson('#freight-template-area');
+	if(data.first_unit == '' || data.first_unit == undefined){
+		talert({msg:'起步件/Kg 不能为空'});
+		return false;
+	}
+	if(data.first_price == '' || data.first_price == undefined){
+		talert({msg:'起步费用不能为空'});
+		return false;
+	}
+	if(data.next_unit == '' || data.next_unit == undefined){
+		talert({msg:'续件/Kg 不能为空'});
+		return false;
+	}
+	if(data.next_price == '' || data.next_price == undefined){
+		talert({msg:'续件/Kg 费用不能为空'});
+		return false;
+	}
+	var ids = new Array(0);
+	$('#area-city-ids input').each(function(x,y){
+		if($(this).prop('checked') == true){
+			if(y.value != ''){
+				ids.push(y.value);
+			}
+		}
+	});
+	if(ids[0] == undefined){
+		talert({msg:'请至少选择一个城市'});
+		return false;
+	}
+	// 相当于php的implode,js默认是逗号
+	ids = ids.join();
+	// alert(ids);
+	ac = '{:enCryptRestUri("/FreightTemplate/area2")}';
+	ajax_post({
+	  	url:'{:U("/run/authRun")}',
+	  	data:{
+	  		express_id:'{$_GET["express_id"]}',
+	  		first_unit:data.first_unit,
+	  		first_price:data.first_price,
+	  		next_unit:data.next_unit,
+	  		next_price:data.next_price,
+	  		city_ids:ids,
+	  		id:'{$_GET["id"]}',
+	  	},
+	  	headers : {Action : ac},
+  	},function(ret) {
+	  	talert({status:ret.code,msg:ret.msg});
+	  	if(ret.code == 1){
+	   		ref();
+		}
+  	})
+}
+function checkAll(t){
+	if($(t).prop('checked') == false ){
+		$(t).parents('td').next().find('input').prop('checked', false);
+	}else{
+		$(t).parents('td').next().find('input').each(function(x,y){
+			if($(this).prop('disabled') != true){
+				$(this).prop('checked', true);
+			}
+		});
+	}
+}
+
+
+</script>

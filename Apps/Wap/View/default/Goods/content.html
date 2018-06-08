@@ -1,0 +1,34 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			商品详情
+		</div>
+		<div class="r">
+		</div>
+	</div>
+</header>
+<section>	
+	<div class="content p10">
+		<div class="load-body">数据加载中……</div>
+	</div>
+</section>
+
+
+<script>
+	fixBar(1);
+	
+	ajax_post({
+		url:'/Api/api',
+		data:{apiurl:'/Goods/goods_content',goods_id:'{$_GET.goods_id}'},
+	},function(ret){
+		if(ret.code==1){			
+			$('.page.active section .content').html(ret.data.content);
+		}else if(ret.code==3){
+			$('.page.active section .content').html(no_data_text);
+		}
+	});
+	
+</script>

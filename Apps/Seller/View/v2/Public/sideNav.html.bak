@@ -1,0 +1,42 @@
+<div class="revisionLeft controller-active" data-controller="__CONTROLLER__" data-url="__SELF__" style="width: 150px;">
+    <div class="pb10">
+        <div class="user_left_tle">
+            <a class="revisionRoad" href="javascript:;">交易管理</a>
+            <div class="ad">
+                <a class="revisionRoadSon" data-controller="/Orders" href="{:U('/orders')}">订单管理</a>
+                <a class="revisionRoadSon" data-controller="/Comments" href="{:U('/comments')}">评价管理</a>
+                <a class="revisionRoadSon" data-controller="/Service" href="{:U('/service')}">售后管理</a>
+                <a class="revisionRoadSon" data-controller="/Refund" href="{:U('/refund')}">退款管理</a>
+            </div>
+        </div>
+        <div class="user_left_tle">
+            <a class="revisionRoad" href="javascript:;">模板管理</a>
+            <div class="ad">
+                <a class="revisionRoadSon" data-controller="/Package" href="{:U('/package')}">包装模板</a>
+                <a class="revisionRoadSon" data-controller="/Protection" href="{:U('/protection')}">售后模板</a>
+                <a class="revisionRoadSon" data-controller="/Express" href="{:U('/express')}">运费模板</a>
+            </div>
+        </div>
+        <div class="user_left_tle">
+            <a class="revisionRoad" href="javascript:;">营销工具</a>
+            <div class="ad">
+                <a class="revisionRoadSon" data-controller="/Activity" href="{:U('/activity')}">促销管理</a>
+                <a class="revisionRoadSon" href="{:U('/brand/promotionList')}">品牌推广</a>
+                <a class="revisionRoadSon" data-controller="/Coupon" href="{:U('/coupon')}">优惠券管理</a>
+                <a class="revisionRoadSon" target="_blank" href="{:DM('/ad')}">广告位购买</a>
+            </div>
+        </div>
+        <div class="user_left_tle">
+            <a class="revisionRoad" href="javascript:;">客户服务</a>
+            <div class="ad">
+                <a class="revisionRoadSon" data-controller="/Advisory" href="{:U('/advisory')}">商品咨询</a>
+                <a class="revisionRoadSon" target="_blank" href="{:DM('expressprint')}">物流工具</a>
+                <a class="revisionRoadSon" data-controller="/Addr" href="{:U('/addr')}">收货地址</a>
+                <a class="revisionRoadSon" data-controller="/Brand" href="{:U('/brand')}">我的品牌</a>
+                <a class="revisionRoadSon" href="{:DM('www', '/service')}">联系客服</a>
+                <a class="revisionRoadSon" data-controller="/SubAccount" href="{:U('/subAccount')}">账号管理</a>
+                <a class="revisionRoadSon" data-controller="/UserGroup" href="{:U('/userGroup')}">账号组管理</a>
+            </div>
+        </div>
+    </div>
+</div>

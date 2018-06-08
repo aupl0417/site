@@ -1,0 +1,61 @@
+<include file="Public:header" />
+		<div class="page-group">
+			<div id="page-shop-best" class="page" data-page_num="{$pagelist.pageinfo.page}" data-shop_id="{$_GET.shop_id}">
+				<input type="hidden" id="p" name="p" value="2" />
+				<!-- 标题栏 -->
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left back" href="/"></a>
+					<h1 class="title">促销</h1>
+					<a class="icon iconfont icon-category pull-right ml5 ac-menu" onclick="top_menu()"></a>
+				</header>
+
+				<!-- 浮动导航 -->
+				<include file="Public:fixed-menu" />
+		
+				<!-- 这里是页面内容区 -->		
+				<div class="content infinite-scroll" data-distance="100" data-p="1">
+					<notempty name="pagelist.list">
+					<div class="p5">						
+						<div class="row img-block love-home list-container">
+							<volist name="pagelist.list" id="vo">
+							<div class="col-50">
+								<a href="/Goods/view/id/{$vo.attr_list.0.id}" class="love-goods-item">
+									<div class="goods-images">
+										<img class="lazyload" data-sizes="auto" data-src="{:myurl($vo['images'],320)}" src="../Public/images/nopic.gif" width="100%" alt="{$vo.goods_name}">
+									</div>
+									<div class="goods-name">{$vo.goods_name}</div>
+									<div class="goods-info clearfix md5">
+										<div class="pull-right text-gray ft05">售出  {$vo.sale_num} 件</div>
+										<div class="price">￥{$vo.price}</div>
+										<div class="clearfix"></div>
+										<div class="pull-right text-gray ft05">
+											奖励  {:intval($vo['score_ratio']*$vo['price']*100)} 分
+										</div>										
+									</div>
+								</a>
+							</div>
+							</volist>
+						</div>	
+						
+					</div>
+						<!-- 加载提示符 -->
+						<div class="infinite-scroll-preloader">
+							<div class="preloader">
+							</div>
+						</div>
+						<else />
+								<div class="nors text-center">
+									<div><i class="iconfont icon-sousuowujieguo ft3"></i></div>
+									 找不到记录！
+								</div>
+						</notempty>						
+				</div>			
+				
+			</div>		
+
+		
+		</div>	
+		
+
+<include file="Public:script" />
+<include file="Public:footer" />

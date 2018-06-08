@@ -1,0 +1,436 @@
+<include file="Public:header" />
+<div class="text-center max-100"><a href="https://edushop.yunlianhui.com/" target="_blank"><img src="../Public/images/top_ad.jpg" alt="乐兑商学院"></a></div>
+<include file="Public:top_bar" />
+<include file="Public:top" />
+<include file="Public:home_r_cart" />
+
+<div style="position:relative;">
+	<div class="clearfix" data-type="ad" data-positionid="64" data-tid="ad_slide_first"></div>
+	
+	<div style="position:absolute;width:100%;z-index:1000;top:0;">
+		<div style="width:1200px;margin:auto;position:relative;">
+			<div class="fr r-box" style="position: absolute; z-index:2000; top: 0px; right: 0; background: #f4f4f4">
+				<div class="news-box">
+					<div class="header">
+						<div class="pull-right"><span class="mr10 ft12" style="font-weight:normal"><a target="_blank" href="https://www.999qf.cn/help/notice">更多<i class="fa fa-angle-double-right"></i></a></span></div>
+						<div class="news-title">公告</div>
+					</div>
+					<div class="news-content" data-type="art" data-tid="gonggao" data-rest="{:U('/Rest/news')}"></div>
+				</div>
+				<div class="news-box">
+					<div class="header">
+						<div class="pull-right"><span class="mr10 ft12" style="font-weight:normal"><a href="{$Think.config.sub_domain.help}{:U('/Index/plist',array('sid'=>101))}">更多<i class="fa fa-angle-double-right"></i></a></span></div>
+						<div class="news-title">规则</div>
+					</div>
+					<div class="news-content" data-type="art" data-tid="guize" data-ntag="1" data-rest="{:U('/Rest/top',array('table'=>'help','limit'=>4,'sid'=>101,'field'=>'id,name'))}"></div>
+				</div>		
+				<div class="bg-gray p10 u-box border-t">
+					<if condition="C('user.id') gt 0">
+					<div class="text-center">
+					<div class="md5"><img src="{:myurl(C('user.face'),40)}" class="img-circle border-1px" width="40" height="40"></div>
+					<div class="md5 text-danger">Hi！{:C('user.username')}</div>
+					</div>
+					
+					<div class="text-center">
+						<div class="line20 mt10"><a href="{$Think.config.sub_domain.buyer}{:U('/Orders/index')}">我买到的宝贝</a></div>
+						<div class="line20 mb10"><a href="{$Think.config.sub_domain.seller}{:U('/Orders/index')}">我卖出的宝贝</a></div>
+						<div class="text-left w_85">
+							<a class="btn btn-xs btn-default " href="{$Think.config.sub_domain.ylpay}">账号管理</a>
+							<a class="fr btn btn-xs btn-default" href="{$Think.config.sub_domain.login}{:U('/Login/logout')}">退出账户</a>
+						</div>
+						
+					</div>
+										
+					<else />
+					<div class="text-center">
+					<div class="md5"><img src="__IMAGES__/face.jpg" class="img-circle" width="40" height="40"></div>
+					<div class="md5 text-danger">Hi！欢迎光临乐兑商城</div>
+					</div>
+					
+					<a href="{$Think.config.sub_domain.login}" class="btn btn-block btn-primary link-white">会员登录</a>
+					<a href="{$Think.config.sub_domain.register}" class="btn btn-block btn-default">免费注册</a>
+					</if>
+				</div>
+			</div>
+			<div class="option category-first"></div>
+		</div>
+	</div>
+</div>	
+
+
+	
+<div class="clearfix md20"></div>
+<div class="container" id="floor-box">
+	<div class="md20 clearfix" data-type="ad" data-positionid="3" data-tid="ad_285x150">
+	</div>
+	
+	<!--1F 服装-->
+	<div class="floor" id="1f">
+		<div class="header">
+			<div class="fl">
+				<span class="floor-text label label-danger">1F</span> <span class="floor-title">男女服饰/内衣/配饰</span>
+			</div>
+			<div class="fr">
+				<a href="{$Think.config.sub_domain.search}{:U('/Index/index',array('sid'=>100841621))}" class="btn btn-sm btn-rad btn-trans btn-default">更多<i class="fa fa-angle-double-right"></i></a>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+		<div class="floor-content">
+			<div class="fl">
+				<!--ad-->
+				<div class="clearfix" data-type="ad" data-positionid="4" data-tid="ad_vcenter"></div>
+				
+				<div class="p20" data-type="art" data-tid="products_category" data-ntag="1" data-rest="{:U('/Rest/floor_sort',array('sid'=>'100841621'))}"></div>
+			</div>
+			
+			<div class="itabs-content floor-itabs-content" id="floor-1">
+				<div class="itabs-pane active">				
+					<div class="w-580px">
+						<!--ad-->
+						<div class="clearfix" data-type="ad" data-positionid="5"></div>
+						<div class="clearfix" data-type="ad" data-positionid="7" data-tid="ad_290x195"></div>
+					</div>
+					<div class="w-290px">
+						<div class="clearfix" data-type="ad" data-positionid="6" data-tid="ad_vcenter"></div>
+					</div>
+					
+					
+				</div>
+				<div class="itabs-pane"></div>
+				<div class="itabs-pane"></div>
+				<div class="itabs-pane"></div>
+				<div class="itabs-pane"></div>			
+			</div>
+			<div class="clearfix"></div>
+		</div>
+
+	</div>
+	<!--/1F-->
+	
+	<div class="clearfix md20" data-type="ad" data-positionid="8" data-tid="ad_vcenter"></div>
+
+	<!--2F 化妆品-->
+	<div class="floor" id="2f">
+		<div class="header">
+			<div class="fl">
+				<span class="floor-text label label-danger">2F</span> <span class="floor-title">化妆品/护理清洁</span>
+			</div>
+			<div class="fr">
+				<a href="{$Think.config.sub_domain.search}{:U('/Index/index',array('sid'=>100841627))}" class="btn btn-sm btn-rad btn-trans btn-default">更多<i class="fa fa-angle-double-right"></i></a>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+		<div class="floor-content">
+			<div class="fl">
+				<!--ad-->
+				<div class="clearfix" data-type="ad" data-positionid="18" data-tid="ad_vcenter"></div>
+				
+				<div class="p20" data-type="art" data-tid="products_category" data-ntag="1" data-rest="{:U('/Rest/floor_sort',array('sid'=>100841627))}"></div>
+			</div>
+			
+			<div class="itabs-content floor-itabs-content" id="floor-2">
+				<div class="itabs-pane active">				
+					<div class="w-580px">
+						<!--ad-->
+						<div class="clearfix" data-type="ad" data-positionid="15" data-tid="ad_290x195"></div>
+						<div class="clearfix" data-type="ad" data-positionid="16" data-tid="ad_290x195"></div>
+					</div>
+					<div class="w-290px">
+						<div class="clearfix" data-type="ad" data-positionid="17" data-tid="ad_vcenter"></div>
+					</div>
+					
+					
+				</div>
+				<div class="itabs-pane"></div>
+				<div class="itabs-pane"></div>
+				<div class="itabs-pane"></div>
+				<div class="itabs-pane"></div>			
+				<div class="itabs-pane"></div>			
+				<div class="itabs-pane"></div>			
+			</div>
+			<div class="clearfix"></div>
+		</div>
+
+	</div>
+	<!--/2F-->	
+	
+	<div class="clearfix md20" data-type="ad" data-positionid="9" data-tid="ad_vcenter"></div>
+	
+	<!--3F 鞋包-->
+	<div class="floor" id="3f">
+		<div class="header">
+			<div class="fl">
+				<span class="floor-text label label-danger">3F</span> <span class="floor-title">男鞋/女鞋/箱包/钟表</span>
+			</div>
+			<div class="fr">
+				<a href="{$Think.config.sub_domain.search}{:U('/Index/index',array('sid'=>100841624))}" class="btn btn-sm btn-rad btn-trans btn-default">更多<i class="fa fa-angle-double-right"></i></a>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+		<div class="floor-content">
+			<div class="fl">
+				<!--ad-->
+				<div class="clearfix" data-type="ad" data-positionid="19" data-tid="ad_vcenter"></div>
+				
+				<div class="p20" data-type="art" data-tid="products_category" data-ntag="1" data-rest="{:U('/Rest/floor_sort',array('sid'=>'100841624'))}"></div>
+			</div>
+			
+			<div class="itabs-content floor-itabs-content" id="floor-3">
+				<div class="itabs-pane active">				
+					<div class="w-580px">
+						<!--ad-->
+						<div class="clearfix" data-type="ad" data-positionid="21"></div>
+						<div class="clearfix" data-type="ad" data-positionid="20" data-tid="ad_290x195"></div>						
+					</div>
+					<div class="w-290px">
+						<div class="clearfix" data-type="ad" data-positionid="22" data-tid="ad_vcenter"></div>
+					</div>
+					
+					
+				</div>
+				<div class="itabs-pane"></div>
+				<div class="itabs-pane"></div>
+				<div class="itabs-pane"></div>
+				<div class="itabs-pane"></div>			
+				<div class="itabs-pane"></div>			
+				<div class="itabs-pane"></div>			
+			</div>
+			<div class="clearfix"></div>
+		</div>
+
+	</div>
+	<!--/3F-->	
+	<div class="clearfix md20" data-type="ad" data-positionid="10" data-tid="ad_vcenter"></div>
+
+	<!--4F 手机数码-->
+	<div class="floor" id="4f">
+		<div class="header">
+			<div class="fl">
+				<span class="floor-text label label-danger">4F</span> <span class="floor-title">手机/数码/通讯</span>
+			</div>
+			<div class="fr">
+				<a href="{$Think.config.sub_domain.search}{:U('/Index/index',array('sid'=>100841630))}" class="btn btn-sm btn-rad btn-trans btn-default">更多<i class="fa fa-angle-double-right"></i></a>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+		<div class="floor-content">
+			<div class="fl">
+				<!--ad-->
+				<div class="clearfix" data-type="ad" data-positionid="23" data-tid="ad_vcenter"></div>
+				
+				<div class="p20" data-type="art" data-tid="products_category" data-ntag="1" data-rest="{:U('/Rest/floor_sort',array('sid'=>'100841630'))}"></div>
+			</div>
+			
+			<div class="itabs-content floor-itabs-content" id="floor-4">
+				<div class="itabs-pane active">				
+					<div class="w-580px">
+						<!--ad-->
+						<div class="clearfix" data-type="ad" data-positionid="24"></div>
+						<div class="clearfix" data-type="ad" data-positionid="25" data-tid="ad_290x195"></div>
+					</div>
+					<div class="w-290px">
+						<div class="clearfix" data-type="ad" data-positionid="26" data-tid="ad_vcenter"></div>
+					</div>
+					
+					
+				</div>
+				<div class="itabs-pane"></div>
+				<div class="itabs-pane"></div>
+				<div class="itabs-pane"></div>
+				<div class="itabs-pane"></div>			
+				<div class="itabs-pane"></div>			
+				<div class="itabs-pane"></div>			
+			</div>
+			<div class="clearfix"></div>
+		</div>
+
+	</div>
+	<!--/4F-->	
+	
+	<div class="clearfix md20" data-type="ad" data-positionid="11" data-tid="ad_vcenter"></div>
+	
+
+	<!--5F 家用电器-->
+	<div class="floor" id="5f">
+		<div class="header">
+			<div class="fl">
+				<span class="floor-text label label-danger">5F</span> <span class="floor-title">电脑/公办</span>
+			</div>
+			<div class="fr">
+				<a href="{$Think.config.sub_domain.search}{:U('/Index/index',array('sid'=>100841636))}" class="btn btn-sm btn-rad btn-trans btn-default">更多<i class="fa fa-angle-double-right"></i></a>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+		<div class="floor-content">
+			<div class="fl">
+				<!--ad-->
+				<div class="clearfix" data-type="ad" data-positionid="27" data-tid="ad_vcenter"></div>
+				
+				<div class="p20" data-type="art" data-tid="products_category" data-ntag="1" data-rest="{:U('/Rest/floor_sort',array('sid'=>'100841636'))}"></div>
+			</div>
+			
+			<div class="itabs-content floor-itabs-content" id="floor-5">
+				<div class="itabs-pane active">				
+					<div class="w-580px">
+						<!--ad-->
+						
+						<div class="clearfix" data-type="ad" data-positionid="28" data-tid="ad_290x195"></div>
+						<div class="clearfix" data-type="ad" data-positionid="29" data-tid="ad_290x195"></div>
+					</div>
+					<div class="w-290px">
+						<div class="clearfix" data-type="ad" data-positionid="30" data-tid="ad_vcenter"></div>
+					</div>
+					
+					
+				</div>
+				<div class="itabs-pane"></div>
+				<div class="itabs-pane"></div>
+				<div class="itabs-pane"></div>
+				<div class="itabs-pane"></div>			
+				<div class="itabs-pane"></div>			
+				<div class="itabs-pane"></div>			
+			</div>
+			<div class="clearfix"></div>
+		</div>
+
+	</div>
+	<!--/5F-->		
+
+	<div class="clearfix md20" data-type="ad" data-positionid="12" data-tid="ad_vcenter"></div>
+	
+	<!--6F 母婴玩具-->
+	<div class="floor" id="6f">
+		<div class="header">
+			<div class="fl">
+				<span class="floor-text label label-danger">6F</span> <span class="floor-title">母婴/玩具/乐器</span>
+			</div>
+			<div class="fr">
+				<a href="{$Think.config.sub_domain.search}{:U('/Index/index',array('sid'=>100841645))}" class="btn btn-sm btn-rad btn-trans btn-default">更多<i class="fa fa-angle-double-right"></i></a>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+		<div class="floor-content">
+			<div class="fl">
+				<!--ad-->
+				<div class="clearfix" data-type="ad" data-positionid="31" data-tid="ad_vcenter"></div>
+				
+				<div class="p20" data-type="art" data-tid="products_category" data-ntag="1" data-rest="{:U('/Rest/floor_sort',array('sid'=>'100841645'))}"></div>
+			</div>
+			
+			<div class="itabs-content floor-itabs-content" id="floor-6">
+				<div class="itabs-pane active">				
+					<div class="w-580px">
+						<!--ad-->
+						
+						<div class="clearfix" data-type="ad" data-positionid="33"></div>
+						<div class="clearfix" data-type="ad" data-positionid="32" data-tid="ad_290x195"></div>
+					</div>
+					<div class="w-290px">
+						<div class="clearfix" data-type="ad" data-positionid="34" data-tid="ad_vcenter"></div>
+					</div>
+					
+					
+				</div>
+				<div class="itabs-pane"></div>
+				<div class="itabs-pane"></div>
+				<div class="itabs-pane"></div>
+				<div class="itabs-pane"></div>			
+				<div class="itabs-pane"></div>			
+				<div class="itabs-pane"></div>			
+			</div>
+			<div class="clearfix"></div>
+		</div>
+
+	</div>
+	<!--/6F-->		
+	
+	<div class="clearfix md20" data-type="ad" data-positionid="13" data-tid="ad_vcenter"></div>
+
+	<!--7F 食品保健-->
+	<div class="floor" id="7f">
+		<div class="header">
+			<div class="fl">
+				<span class="floor-text label label-danger">7F</span> <span class="floor-title">食品/茶酒/零食</span>
+			</div>
+			<div class="fr">
+				<a href="{$Think.config.sub_domain.search}{:U('/Index/index',array('sid'=>100841633))}" class="btn btn-sm btn-rad btn-trans btn-default">更多<i class="fa fa-angle-double-right"></i></a>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+		<div class="floor-content">
+			<div class="fl">
+				<!--ad-->
+				<div class="clearfix" data-type="ad" data-positionid="35" data-tid="ad_vcenter"></div>
+				
+				<div class="p20" data-type="art" data-tid="products_category" data-ntag="1" data-rest="{:U('/Rest/floor_sort',array('sid'=>'100841633'))}"></div>
+			</div>
+			
+			<div class="itabs-content floor-itabs-content" id="floor-7">
+				<div class="itabs-pane active">				
+					<div class="w-580px">
+						<!--ad-->
+						<div class="clearfix" data-type="ad" data-positionid="36"></div>
+						<div class="clearfix" data-type="ad" data-positionid="37" data-tid="ad_290x195"></div>
+					</div>
+					<div class="w-290px">
+						<div class="clearfix" data-type="ad" data-positionid="38" data-tid="ad_vcenter"></div>
+					</div>
+					
+					
+				</div>
+				<div class="itabs-pane"></div>
+				<div class="itabs-pane"></div>
+				<div class="itabs-pane"></div>
+				<div class="itabs-pane"></div>			
+				<div class="itabs-pane"></div>			
+				<div class="itabs-pane"></div>			
+			</div>
+			<div class="clearfix"></div>
+		</div>
+
+	</div>
+	<!--/7F-->		
+
+
+	<div class="clearfix md20" data-type="ad" data-positionid="40" data-tid="ad_vcenter"></div>
+
+	<!--品牌汇-->
+	<div class="floor-brand md20 clearfix">
+		<div class="l">
+			<div class="clearfix" data-type="ad" data-positionid="100762192" data-tid="ad_vcenter"></div>
+		</div>
+		<div class="c">
+			<div class="clearfix" data-type="ad" data-positionid="100762195" data-tid="brand"></div>
+		</div>
+		<div class="r">
+			<div class="clearfix" data-type="ad" data-positionid="39" data-tid="ad_vcenter"></div>
+		</div>
+	</div>
+	<!--/8F-->
+	
+	<!--左侧楼层标签-->
+	<div id="floor-lefticon" class="dn">
+		<ul role="tablist">
+			<li><a class="re" href="#" data-tag="#1f">1F<img class="dn ab t0 l0" src="/Apps/Home/View/default/Public/images/1f.png"/></a></li>
+			<li><a class="re" href="#" data-tag="#2f">2F<img class="dn ab t0 l0" src="/Apps/Home/View/default/Public/images/2f.png"/></a></li>
+			<li><a class="re" href="#" data-tag="#3f">3F<img class="dn ab t0 l0" src="/Apps/Home/View/default/Public/images/3f.png"/></a></li>
+			<li><a class="re" href="#" data-tag="#4f">4F<img class="dn ab t0 l0" src="/Apps/Home/View/default/Public/images/4f.png"/></a></li>
+			<li><a class="re" href="#" data-tag="#5f">5F<img class="dn ab t0 l0" src="/Apps/Home/View/default/Public/images/5f.png"/></a></li>
+			<li><a class="re" href="#" data-tag="#6f">6F<img class="dn ab t0 l0" src="/Apps/Home/View/default/Public/images/6f.png"/></a></li>
+			<li><a class="re" href="#" data-tag="#7f">7F<img class="dn ab t0 l0" src="/Apps/Home/View/default/Public/images/7f.png"/></a></li>
+		</ul>
+	</div>	
+	<script src="/Apps/Home/View/default/Public/js/menu.js"></script>
+</div>
+
+
+
+
+
+<include file="artTemplate" />
+<include file="Public:copyright" />
+<include file="Public:js" />
+<script>
+
+</script>
+<include file="Public:footer" />

@@ -1,0 +1,46 @@
+<extend name="Home@Public:base" />
+
+<block name="body">
+	{:W('Common/Builder/form', array(array('data' => $keyList)))}
+</block>
+<block name="script">
+<script>
+	$(function() {
+		checkform({
+			formid:"#formadd",
+			headers :{
+				//'Action' : 	'',
+				'Nosign'	:	'haha',
+			},
+			rules:{
+				mobile:{
+					required:true,
+				},
+				smscode:{
+					required:true,
+				},
+				vcode:{
+					required:true,
+				}
+			},
+			messages:{
+				mobile:{
+					required:'手机号码不能为空',
+				},
+				smscode:{
+					required:'短信验证码不能为空',
+				},
+				vcode:{
+					required:'图形验证码不能为空',
+				}
+			}
+		},function(ret) {
+			alert(ret.code)
+			talert({status:ret.code,msg:ret.msg});
+			if(ret.code == 1) {
+				setTimeout("ref()", 1000);
+			}
+		})
+	})
+</script>
+</block>

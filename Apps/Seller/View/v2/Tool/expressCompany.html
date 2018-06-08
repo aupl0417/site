@@ -1,0 +1,133 @@
+<link rel="stylesheet" type="text/css" href="/Public/CSS/flatdream/js/jquery.icheck/skins/square/_all.css">
+<div class="pd10">
+    <!-- <div class="header">
+        <h3><a href="javascript:;" data-url="{:U('/opens/addCheckInfo', array('type' => 'brand'))}" data-title="添加品牌" class="btn btn-info opreating btn-brandAdd disabled">添加品牌</a></h3>
+    </div> -->
+    <div class="over form-horizontal">
+        <div class="form-group">
+            <div class="col-xs-3">
+                <input type="text" name="search-q" value="{$Think.get.q}" id="search-q" maxlength="15" class="form-control" placeholder="搜索快递公司，请输入快递公司名字进行搜索">
+            </div>
+            <div class="col-xs-2">
+                <button type="button" class="btn btn-primary btn-trans btn-rad" onclick="searchQ()">点击搜索</button>
+            </div>
+        </div>
+    </div>
+    <empty name="data.code">
+        <table class="table table-bordered table-advance table-hover mb30">
+            <tbody>
+            <tr>
+                <th class="col-xs-1 text-center" style="vertical-align: middle;">
+                    选择
+                    <!--<input type="checkbox" class="i-red-square checkAll" id="checkAll"><label style="" id="labelCheckAll" for="checkAll"></label>-->
+                </th>
+                <th class="col-xs-2 text-center" style="vertical-align: middle;">图片</th>
+                <th class="col-xs-3 text-center" style="vertical-align: middle;">名称</th>
+                <th class="col-xs-3 text-center" style="vertical-align: middle;">电话</th>
+                <th class="col-xs-1 text-center" style="vertical-align: middle;">网址</th>
+                <th class="col-xs-1 text-center" style="vertical-align: middle;">编号</th>
+            </tr>
+            <volist name="data.list" id="vo">
+                <tr class="countBrand">
+                    <td class="text-center" style="vertical-align: middle;">
+                        <input type="radio" <in name="vo.id" value="$chooseIds">checked</in> class="i-red-square" name="ids[]" value="{$vo.id}">
+                    </td>
+                    <td class="text-center img">
+                        <a class="image-zoom" href="javascript:;" onclick="bigImage($(this))" data-url="{$vo['logo']}" title="大图">
+                            <img src="{$vo['logo']}" width="60" />
+                        </a>
+                    </td>
+                    <td style="vertical-align: middle;" class="text-center col-xs-1">{$vo.company}</td>
+                    <td style="vertical-align: middle;" class="text-center col-xs-1">
+                        {$vo.tel}
+                    </td>
+                    <td style="vertical-align: middle;" class="text-center col-xs-1"><a target="_blank" href="{$vo.website}" class="text_blue">查看网址</a> </td>
+                    <td style="vertical-align: middle;" class="text-center col-xs-1">{$vo.id}</td>
+                </tr>
+            </volist>
+            </tbody>
+        </table>
+        <div class="page-box text-center">
+            {:page_html($data['pageinfo'])}
+        </div>
+        <!--<div class="text-center mt30">-->
+            <!--<a href="javascript:;" class="btn btn-lg btn-rad btn-trans btn-primary " id="submitCheckbox">确定选择</a>-->
+        <!--</div>-->
+        <else />
+        {:W('Common/Builder/nors', array('param' => array('text' => $data['msg'])))}
+    </empty>
+</div>
+<script>
+    iCheckClass();
+    $(document).ready(function () {
+        var inputName = '{$Think.get.inputName}' ? '{$Think.get.inputName}' : 'goods';
+        var company = $("input[name='"+inputName+"']").val();
+        //var url = '__SELF__';
+
+        /**
+         * 分页
+         */
+        $(".page-box a").click(function (e) {
+            var url = $(this).attr('href');
+            $(".modal-body").load(url);
+            //stopDefault(e);
+            return false;
+        });
+
+
+        /**
+         *
+         *  选择
+         */
+        $('input[type="radio"]').on('ifChecked ifUnchecked', function (event) {
+            if (event.type == 'ifChecked') {
+                var data = {id:$(this).val(), images:$(this).closest('tr').find('td .image-zoom').data('url')}
+                $("input[name='"+inputName+"']").val(data.id);
+
+                if (data.id == 361) {   //无需物流
+                    $("#express_code").val('--');
+                    $("#express_code").parent().addClass('hide');
+                } else {
+                    $("#express_code").parent().removeClass('hide');
+                    $("#express_code").val('');
+                }
+
+                var html = '<li id="'+inputName+ data.id +'" data-name="'+inputName+'" data-id="'+data.id+'" data-path="'+data.images+'" class="text-center">' +
+                                '<div class="li-img-box">' +
+                                    '<a href="'+data.images+'" data-title="大图" class="image-zoom" title="大图">' +
+                                        '<img src="'+data.images+'">' +
+                                    '</a>' +
+                                '</div>' +
+                            '</li>';
+                $("#images-list-" + inputName).html(html);
+                $("#ajax-modal").modal('hide');
+            }
+        })
+
+
+        /**
+         *  预选中
+         */
+        if (company != '') {
+            $('input[type="radio"]').each(function () {
+                if (($(this).val() == company)) {
+                    //$(this).iCheck('check');
+                }
+            });
+        }
+    });
+
+    /**
+     *
+     * 搜索
+     *
+     */
+    function searchQ() {
+        var keyword = $("#search-q").val();
+        var url = '/tool/expressCompany/inputName/{$Think.get.inputName}.html';
+        if (keyword != '') {
+            url = url + '?q=' + encodeURI(keyword);
+        }
+        $(".modal-body").load(url);
+    }
+</script>

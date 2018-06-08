@@ -1,0 +1,124 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			寄回商品
+		</div>
+		<div class="r">
+		</div>
+	</div>
+</header>
+
+<section>	
+	<div class="load-body">数据加载中……</div>
+</section>
+
+
+<script id="tpl_service_send_express" type="text/html">
+<form id="form-service-send-express">
+	<div class="line-box noicon hover">
+		<div class="title">售后单号：<%= data.r_no %></div>
+	</div>
+	<div class="line-box-m row address md10" onclick="openWin({name:'service_select_address',url:'/Service/select_address'})">
+		<div class="col-4">
+			<img src="../Public/Images/icon-add2.png">
+		</div>
+		<div class="col-4x3">
+			<div class="ft16" style="line-height:60px">请选择收货地址</div>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+	<% if(data.address!=""){ %>
+	<div class="line-box-m noicon">
+		<%= data.address%>
+		<div class="clearfix"></div>
+	</div>
+	<%}%>
+	<div class="line-box-m hover row express-company" onclick="openWin({name:'select_express_company',url:'__URL__/select_express_company'})">
+		<div class="col-30">
+			<img src="/Public/images/icon-plus.png" alt="快递公司logo">
+		</div>
+		<div class="col-70 text-right text-gray">
+			<div style="line-height:40px;margin-right:20px;">请选择快递公司</div>
+		</div>
+		<input type="hidden" name="express_company_id" id="express_company_id" value="">
+		<div class="clearfix"></div>
+	</div>
+	<div class="line-input row">
+		<div class="col-30">快递单号</div>
+		<div class="col-70">
+			<input name="express_code" id="express_code" placeholder="请输入快递单号">
+		</div>
+		<div class="clearfix"></div>
+	</div>	
+	<input type="hidden" name="apiurl" value="/Refund3/send_express">
+	<input type="hidden" name="is_openid" value="1">	
+	<input type="hidden" name="s_no" value="<%= data.s_no %>">	
+	<input type="hidden" name="r_no" value="<%= data.r_no %>">
+	<input type="hidden" id="address_id" name="address_id" value="">
+	<div class="p10">
+		<div class="btn btn-lg btn-block btn-danger" onclick="send_express()">寄回商品</div>
+	</div>	
+</form>
+</script>
+
+<script id="address_default" type="text/html">
+		<div class="title"><%= data.linkname %> ，<%= data.mobile %> <% if(data.tel!=""){ %>，<%= data.tel %><% } %></div>
+		<div class="text-gray"><%= data.province_name %> <%= data.city_name %> <%= data.district_name %> <%= data.town_name %> <%= data.street %><% if(data.postcode!=""){ %>，<%= data.postcode %><% } %></div>
+</script>
+
+<script>
+	fixBar(1);	
+	
+	ajax_post({
+		url:'/Api/apis',
+		data:{
+				service:{apiurl:'/Refund3/view',is_openid:1,r_no:'{$_GET.r_no}'},
+				address:{apiurl:'/Address/default_address',is_openid:1},
+			}
+	},function(ret){
+		if(ret.service.code == 1){
+			var html=template('tpl_service_send_express',{data:ret.service.data});
+			$('.page.active section').html(html);
+		}
+		if(ret.address.code == 1){
+			var html = template('address_default', {data:ret.address.data});
+			$(".page.active #form-service-send-express .address").html(html);
+			$(".page.active #form-service-send-express #address_id").val(ret.address.data.id);
+		}
+	});	
+	
+	function send_express(){
+		var data=getFormJson('#form-service-send-express');
+		if(data.express_company_id==''){
+			valert({msg:'请选择快递公司！'});
+			$('.page.active #express_company_id').focus();
+			return false;
+		}
+				
+		if(data.express_code==''){
+			valert({msg:'请输入快递单号'});
+			$('.page.active #express_code').focus();
+			return false;
+		}
+		if(data.address_id==''){
+			valert({msg:'请选择收货地址！'});
+			return false;
+		}
+		
+		ajax_post({
+			url:'/Api/api',
+			data:data,
+		},function(ret){
+			valert(ret);
+			if(ret.code==1){
+				setTimeout(function(){
+					closeWin({ref:true});
+				},1000);
+			}
+		});
+	}
+	
+</script>

@@ -1,0 +1,160 @@
+<div class="clearfix">
+	<div class="pull-right text-gray" onclick="$(this).closest('tr').toggleClass('hide');"><i class="fa fa-times-circle-o fa-2x"></i></div>	
+</div>
+
+<div class="p20 box">
+	<div class="ft18 strong p10 border-d">基本信息</div>
+	<div class="row p10">
+		<div class="col-xs-6">用户ID：{$rs.uid}</div>
+		<div class="col-xs-6">用户名：{$rs.nick}</div>
+		<div class="col-xs-6">电话：{$rs.mobile}</div>
+		<div class="col-xs-6">商家名称：{$rs.shop_name}</div>
+	</div>
+	<div class="row p10">
+		<div class="col-xs-6">
+			<div style="padding:5px 0;">商品信息：</div>
+			<img src="{$rs.goods_info.images}" style="width:130px;"/>
+			<div style="padding:5px 0;">商品名称：{$rs.goods_info.goods_name}</div>
+			<div style="padding:5px 0;">商品价格：{$rs.goods_info.price}</div>
+			<div style="padding:5px 0;">累计售出：{$rs.goods_info.sale_num}</div>
+			
+		</div>
+		
+		
+		
+	</div>
+	<div class="ft18 strong p10 border-d">违规&申诉</div>
+	<div class="row border-d">
+		<div class="col-xs-6 auth-text border-r">
+			<div class="ft16 strong p10 border-d text-center" style="color: #e33;">违规描述</div>
+			<div style="overflow: auto;max-height: 500px;">
+				{:html_entity_decode($rs['describe'])}
+			</div>
+		</div>
+		<div class="col-xs-6 auth-text">
+			<div class="ft16 strong p10 border-d text-center" style="color: #09f;">申诉内容</div>
+			<div style="overflow: auto;">
+				{:html_entity_decode($rs['appeal'])}
+			</div>
+		</div>
+	</div>
+	
+	<div class="ft18 strong p10 mt10">审核回复</div>
+	<form data-url="__URL__/logs_add" data-id="#form_{$rs.id}" id="form_{$rs.id}" class="form-horizontal vform" onsubmit="return submit_open($(this))">
+			{:W('Widget/buildform',array(array(
+				'field'		=>array(	
+					array(
+						'formtype'		=>'radio',
+						'label'			=>'处理结果',
+						'name'			=>'status',
+						'data'			=>array(array(2,'处罚生效'),array(3,'处罚取消'),array(5,'违规补充')),
+						'field'			=>array(0,1),
+					),
+					array(
+						'formtype'		=>'textarea',
+						'label'			=>'审核回复内容',
+						'name'			=>'remark',
+					),
+					array(
+						'formtype'		=>'hidden',
+						'name'			=>'id',
+						'value'			=>$rs['id'],
+					),
+					array(
+						'formtype'		=>'hidden',
+						'name'			=>'point',
+						'value'			=>$rs['point'],
+					),
+					array(
+						'formtype'		=>'hidden',
+						'name'			=>'uid',
+						'value'			=>$rs['uid'],
+					),
+					array(
+						'formtype'		=>'hidden',
+						'name'			=>'goods_id',
+						'value'			=>$rs['goods_id'],
+					),
+					array(
+						'formtype'		=>'html',
+						'label'			=>' ',
+						'html'			=>'<button type="submit" class="btn btn-primary btn-150px logs-add"><i class="fa fa-check"></i> 提交</button>'
+					),
+
+				),
+			)))}
+	
+	
+	</form>
+	
+	<notempty name="rs.logs">
+		<div class="ft18 strong p10 mt20 border-d mb10">审核申诉记录</div>
+		<ul class="timeline">
+			<volist name="rs.logs" id="vo">
+				<li>
+					<i class="fa fa-clock-o"></i>
+					<span class="date">
+						{$vo.atime}
+					</span>
+					<div class="content">
+						<div class="md20">状态：
+							{:status($vo['status'],[2=>['处罚生效','btn-warning'],3=>['处罚取消','btn-warning'],4=>['申诉补充','btn-info'],5=>['违规补充','btn-info']])}
+						</div>
+						<notempty name="vo.remark">
+							<div class="md20 ft14">
+								内容：
+								
+								{:html_entity_decode($vo['remark'])}
+							</div>
+						</notempty>
+						
+						<small class="md10">
+							<if condition="$vo.a_uid neq 0">
+							雇员ID：{$vo.a_uid}
+							<else/>
+							用户提交
+							</if>
+						</small>
+						
+					</div>
+				</li>
+			</volist>
+		</ul>
+	</notempty>
+	
+</div>
+<div class="clearfix">
+	<div class="pull-right text-gray" onclick="$(this).closest('tr').toggleClass('hide');"><i class="fa fa-times-circle-o fa-2x"></i></div>	
+</div>
+
+<script>
+image_zoom();
+
+function submit_open(obj){
+	var formid='#'+obj.attr('id');
+	var data = getFormJson(formid);
+	if(!data.status){
+		valert({status:'warning',msg:'请选择处理结果'});
+		return false;
+	}
+	if(data.remark==''){
+		valert({status:'warning',msg:'请输入审核回复内容'});
+		obj.find('#remark').focus();
+		return false;
+	}
+	
+	ajax_post_form({
+		formid:formid,
+	},function(ret){
+		valert(ret);
+		if(ret.status=='success'){
+			var tag='#item-{$rs.id}';
+			var url='__URL__/view/id/{$rs.id}';
+			loadurl({tag:tag,url:url});
+		}		
+	});
+	
+	return false;
+}
+
+</script>

@@ -1,0 +1,218 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="content_body">
+	<include file="Public:nav" />
+	<div class="container mb30">
+		<include file="Public:side" />
+		
+		<div class="w980 fl">				
+				<div class="bor_der row mg0 mb20">
+					<div class="col-xs-5 pd0 solid_r">
+						<div class="solid_b pd10 clearfix re">
+							<a href="{:U('/setting')}"><img class="fl mr15" width="100" src="{:myurl($shop['shop_logo'],120)}"></a>
+							<h5 class="mt0">
+								<strong class="mr5">{$shop.shop_name}</strong>
+								<img class="mr5" src="__NEW_DESIGN__images/voucher_1.png">
+								<img class="mr5" src="__NEW_DESIGN__images/voucher_2.png">
+							</h5>
+							<h5 class="text_77 over h17">主营类目：
+								<span class="text_44" title="{:implode(',',$shop['category_name'])}">{:implode(',',$shop['category_name'])}</span>
+							</h5>
+							<h5 class="text_77 over h17">店铺类型：
+								<span class="text_44 mr5">{$shop.type_name}</span>
+							</h5>
+							<h5 class="mt15 mb0">
+								<a href="{:U('/setting')}"><strong>店铺设置</strong></a>
+								<span class="plr5">|</span>
+								<a href="{$shop.shop_url}" target="_blank"><strong>查看我的店铺</strong></a>
+							</h5>
+							<a href="{:U('/setting')}" class="ab text-center set_shop">设置店标</a>
+						</div>
+						<div class="pd0">
+							<blockquote class="pd0 pl10 mt10 mb10 fs14 strong">账户资产</blockquote>
+							<div style="height:60px">							
+								<p class="text-center fs18 pt15 strong">{$account.a_freeMoney}(元)</p>
+								<div class="text-center" style="margin-bottom:10px">待结算货款：<span class="text-danger strong">{$total.wait}</span> (元) <a href="{:U('/orders/index',array('sid' => 40))}" style="margin-left:10px;color:blue;">详情</a></div>
+							</div>					
+							<h5 class="text-center">
+								<a class="plr5" href="{:erp_url($cfg['erp']['domain']['pay'].'/assetCenter/recharge')}" target="_blank">充值</a>
+								<a class="plr5" href="{:erp_url($cfg['erp']['domain']['pay'].'/assetCenter/withdraw')}" target="_blank">提现</a>
+								<a class="plr5" href="{:erp_url($cfg['erp']['domain']['pay'].'/assetCenter/transferVoucher')}" target="_blank">转账</a>
+								<a class="plr5" href="{:erp_url($cfg['erp']['domain']['pay'].'/transactionLog/index')}" target="_blank">明细</a>
+							</h5>
+							<div class="solid_t bg_f1 pd10 text-center clearfix">
+								<a class="mr15" href="{:erp_url($cfg['erp']['domain']['pay'].'/set/thirdTpos')}" target="_blank">支付宝（<span class="text_77">{$account.zhifubao}</span>）</a>
+								<a href="{:erp_url($cfg['erp']['domain']['pay'].'/set/bankCard')}" target="_blank">银行卡（<span class="text_ree">{$account.bank}</span>）</a>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-7 pd0">
+						<blockquote class="pd0 pl10 mt10 mb10 fs14 strong">待办提醒</blockquote>
+						<div class="solid_t row mg0">
+							<div class="col-xs-3 pd0 solid_r over" style="height:240px">
+								<div class="bg_f1 pd10 strong mb10">订单管理</div>
+								<a href="{:U('/orders/index',['sid' => 2])}"><p class="pl10 pt10">待发货（<span class="text_yellow">{$total.orders.2}</span>）</p></a>
+								<a href="{:U('/orders/index',['sid' => 1])}"><p class="pl10 pt10">未付款（<span class="text_yellow">{$total.orders.1}</span>）</p></a>
+								<a href="{:U('/orders/index',['sid' => 4])}"><p class="pl10 pt10">待评价（<span class="text_yellow">{$total.orders.4}</span>）</p></a>
+								<a href="{:U('/refund')}"><p class="pl10 pt10">待退款（<span class="text_yellow">{$total.orders.20}</span>）</p></a>
+							</div>		
+							<div class="col-xs-4 pd0 solid_r over" style="height:240px">
+								<div class="bg_f1 pd10 strong mb10">商品管理</div>
+								<a href="{:U('/goods')}"><p class="pl10 pt10">出售中的商品（<span class="text_yellow">{$total.goods.1}</span>）</p></a>
+								<a href="{:U('/goods/noshelves')}"><p class="pl10 pt10">待上架的商品（<span class="text_yellow">{$total.goods.2}</span>）</p></a>
+								<a href="{:U('/goods/recommend')}"><p class="pl10 pt10">橱窗中的商品（<span class="text_yellow">{$total.goods.best}</span>）</p></a>
+								<a href="{:U('/goods/violation')}"><p class="pl10 pt10">违规中的商品（<span class="text_yellow">{$total.goods.4}</span>）</p></a>							</div>
+							<div class="col-xs-5 pd0 over" style="height:240px">
+								<div class="bg_f1 pd10 strong mb10">犯规记录</div>
+								<a href="{:U('/goods/violation',['type'=>1])}"><p class="pl10 pt10">一遍违规累计扣分（<span class="text_yellow">{$total.illegl.1}</span>）</p></a>
+								<a href="{:U('/goods/violation',['type'=>2])}"><p class="pl10 pt10">严重违规累计扣分（<span class="text_yellow">{$total.illegl.2}</span>）</p></a>
+							</div>		
+						</div>
+					</div>
+				</div>
+
+				<div class="bor_der mb20 hide">
+					<blockquote class="pd0 pl10 pr10 mt10 mb10 fs14"><strong>代办提醒</strong> <a class="fr" href=""> 查看更多</a></blockquote>
+					<div class="solid_t">
+						<div class="pd10">
+							<ul class="mb0 mt10">
+								<li class="h17 mb10">
+									<a href="">
+										<span class="bg_white pr10">一大波乐兑新规则来袭</span>
+										<span class="bg_white pl10 fr text_77">2016-6-21</span>
+										<div class="solid_center mt-9"></div>
+									</a>
+								</li>
+
+								<li class="h17 mb10">
+									<a href="">
+										<span class="bg_white pr10">一大波乐兑新规则来袭</span>
+										<span class="bg_white pl10 fr text_77">2016-6-21</span>
+										<div class="solid_center mt-9"></div>
+									</a>
+								</li>
+								<li class="h17 mb10">
+									<a href="">
+										<span class="bg_white pr10">一大波乐兑新规则来袭</span>
+										<span class="bg_white pl10 fr text_77">2016-6-21</span>
+										<div class="solid_center mt-9"></div>
+									</a>
+								</li>
+								<li class="h17 mb10">
+									<a href="">
+										<span class="bg_white pr10">一大波乐兑新规则来袭</span>
+										<span class="bg_white pl10 fr text_77">2016-6-21</span>
+										<div class="solid_center mt-9"></div>
+									</a>
+								</li>
+								<li class="h17 mb10">
+									<a href="">
+										<span class="bg_white pr10">一大波乐兑新规则来袭</span>
+										<span class="bg_white pl10 fr text_77">2016-6-21</span>
+										<div class="solid_center mt-9"></div>
+									</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+
+				<div class="bor_der mb20">
+					<blockquote class="pd0 pl10 pr10 mt10 mb10 fs14"><strong>店铺数据</strong> <a class="fr hide"> 跟多店铺数据</a></blockquote>
+					<div class="solid_t">
+						<table class="bor_no">
+							<tbody>
+								<tr class="text-center text_44 bg_f1">
+									<td class="text_77 bor_no bg_white">昨天全天店铺数据</td>
+									<td class="bor_no">订单数</td>
+									<td class="bor_no">销售金额</td>
+									<td class="bor_no">商品件数</td>
+									<td class="bor_no">支付买家数</td>
+									<td class="bor_no">客单数
+										<i class="fa fa-question-circle bs-example bs-example-tooltip re" data-toggle="tooltip" title="" data-original-title="单个客人单次消费的均价"></i>
+									</td>
+									<td class="bor_no">退款单数</td>
+								</tr>
+								<tr class="text-center text_yellow bg_white">
+									<td class="bor_no fs16"></td>
+									<td class="bor_no fs16">{$total.sale_total.num}</td>
+									<td class="bor_no fs16">{$total.sale_total.money}</td>
+									<td class="bor_no fs16">{$total.sale_total.goods_num}</td>
+									<td class="bor_no fs16">{$total.sale_total.buyer}</td>
+									<td class="bor_no fs16">{$total.sale_total.price}</td>
+									<td class="bor_no fs16">{$total.sale_total.refund}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>	
+				</div>
+
+				<div class="bor_der mb20">
+					<blockquote class="pd0 pl10 pr10 mt10 mb10 fs14"><strong>快捷导航</strong> </blockquote>					<div class="solid_t row mg0 plr20 text-center">
+						<div class="col-xs-2 pd20">
+							<a class="hover_bg" href="{:U('/orders/index', ['sid' => 2])}">
+								<img class="mg15" src="__NEW_DESIGN__images/sell_1.png">
+								<p class="mb20">订单发货</p>
+							</a>	
+						</div>
+						<div class="col-xs-2 pd20">
+							<a class="hover_bg" href="{:U('/refund')}">
+								<img class="mg15" src="__NEW_DESIGN__images/sell_2.png">
+								<p class="mb20">退货管理</p>
+							</a>	
+						</div>
+						<div class="col-xs-2 pd20">
+							<a class="hover_bg" href="{:U('/refund')}">
+								<img class="mg15" src="__NEW_DESIGN__images/sell_3.png">
+								<p class="mb20">退款列表</p>
+							</a>	
+						</div>
+						<div class="col-xs-2 pd20">
+							<a class="hover_bg" href="{:DM('ad')}">
+								<img class="mg15" src="__NEW_DESIGN__images/sell_4.png">
+								<p class="mb20">广告位购买</p>
+							</a>	
+						</div>
+						<div class="col-xs-2 pd20">
+							<a class="hover_bg" href="{:U('/activity')}">
+								<img class="mg15" src="__NEW_DESIGN__images/sell_5.png">
+								<p class="mb20">促销管理 </p>
+							</a>	
+						</div>
+						
+						<div class="col-xs-2 pd20">
+							<a class="hover_bg" href="{:U('/brand/my_brand')}">
+								<img class="mg15" src="__NEW_DESIGN__images/sell_6.png">
+								<p class="mb20">我的品牌</p>
+							</a>
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</block>
+<block name="css"></block>
+<block name="script">
+<script src="__NEW_DESIGN__js/owl.carousel.min.js"></script>
+<script src="__NEW_DESIGN__js/owl.carousel.js"></script>
+<script>
+$(document).ready(function() {
+	$(function(){
+	    $('#owl-demo').owlCarousel({
+	        navigation: true,
+	        items: 2,
+	    });
+	});
+	$(function(){
+	    $('#owl-demo_1,#owl-demo_2').owlCarousel({
+	        navigation: true,
+	        items: 6,
+	    });
+	});
+})
+</script>
+<script>
+	$('[data-toggle=tooltip]').tooltip({html : true });
+</script>
+</block>

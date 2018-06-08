@@ -1,0 +1,37 @@
+<extend name="Seller@Public:base" />
+<block name="body">
+    <div class="centent_body">
+        <!-- to do your html codeing -->
+        <div class="revision_bg">
+            <div class="container ptb_size_lg clearfix">
+                <!-- 左侧导航 -->
+                <include file="Public:sideNav" />
+                <!-- 左侧导航结束 -->
+
+                <div class="revisionRight pd15" style="width: 1020px"><!-- 右侧内容 -->
+                    <div class="clearfix revisionOrderTab" data-url="">
+                        <a class="orderOption active" href="javascript:;">评价回复</a>
+                    </div>
+
+                    <include file="comment" />
+
+                    <!-- 表单 -->
+                    <include file="Public:forms" />
+
+                </div>
+
+            </div>
+        </div>
+        <!-- my codeing over -_-   -->
+
+    </div>
+</block>
+
+<block name="css">
+
+</block>
+
+<block name="script">
+    <!-- to do your javascript codeing -->
+    {$form.js}
+</block>

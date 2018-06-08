@@ -1,0 +1,111 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin({ref:true})"></i>
+		</div>
+		<div class="title">
+			投资理财
+		</div>
+		<div class="r">
+			
+		</div>
+	</div>
+</header>
+<section>
+	<form id="form-finance-add">
+		<div class="line-input row hover">
+			<div class="col-4 ft14">转入积分</div>
+			<div class="col-4x3">
+				<input name="score" id="score" placeholder="请输入要转入理财的积分" onblur="finance_tips()">
+			</div>
+		</div>
+		<div class="line-box nobg noicon text-gray">
+			我的积分账户：<span class="ac_score text-success">0</span> 分 <span class="text-success" onclick="openWin({name:'score_add',url:'/Score/add'})">购买</span>
+		</div>
+		<div class="line-box row hover noicon">
+			<div class="col-4">需转入现金</div>
+			<div class="col-4x3 text-right need-cash">
+				0.00
+			</div>
+		</div>
+		<div class="line-box nobg noicon text-gray">
+			我的现金账户：<span class="ac_cash text-success">0</span> 元 <span class="text-success" onclick="openWin({name:'recharge',url:'/Recharge/index'})">充值</span>
+		</div>	
+		<div class="line-box row hover noicon">
+			<div class="col-4">{:C('cfg.finance')['min_day']}天预计收益</div>
+			<div class="col-4x3 text-right win-cash">
+				0.00
+			</div>
+		</div>
+		<div class="p10">
+			<div class="btn btn-lg btn-block btn-danger md10" onclick="finance_add()">转入</div>
+		</div>		
+	</form>
+</section>
+
+
+<script>
+	fixBar(1);
+	
+	ajax_post({
+		url:'/Api/api',
+		data:{apiurl:'/Account/account',is_openid:1},
+	},function(ret){
+		if(ret.code==1){			
+			$('.page.active .ac_cash').html(ret.data.ac_cash);
+			$('.page.active .ac_score').html(ret.data.ac_score);
+		}
+	});		
+
+	var min_day={:C('cfg.finance')['min_day']};
+	var min_money={:C('cfg.finance')['min_money']};
+	var max_money={:C('cfg.finance')['max_money']};
+	var add_ratio={:C('cfg.finance')['add_ratio']};
+	var year_ratio={:C('cfg.finance')['year_ratio']};
+	
+	function finance_tips(){
+		var score=parseInt($('.page.active #score').val());
+		if(score<min_money){
+			valert({msg:'最低积分不得少于分'+min_money+'！'});
+			return false;
+		}
+		if(score>max_money){
+			valert({msg:'最高积分不得大于分'+max_money+'！'});
+			return false;
+		}
+		
+		var need_cash=Math.round(score * add_ratio *100)/100;
+		var win_cash=Math.round((score * year_ratio)/365 * min_day * 100)/100;
+		$('.page.active .need-cash').html(need_cash);
+		$('.page.active .win-cash').html(win_cash);
+	}
+	
+	function finance_add(){
+		if($('.page.active #score').val()==''){
+			valert({msg:'请输入积分！'});
+			$('.page.active #score').focus();
+			return false;
+		}		
+		var score=parseInt($('.page.active #score').val());	
+		if(score<min_money){
+			valert({msg:'最低积分不得少于分'+min_money+'！'});
+			return false;
+		}
+		if(score>max_money){
+			valert({msg:'最高积分不得大于分'+max_money+'！'});
+			return false;
+		}				
+		
+		ajax_post({
+			url:'/Api/api',
+			data:{apiurl:'/Finance/add',is_openid:1,score:score},
+		},function(ret){
+			if(ret.code==1){			
+				openWin({name:'finance_orders_view',url:'/Finance/view/f_no/'+ret.data.f_no,close:true});
+			}else{
+				valert(ret);
+			}
+		});	
+	}
+	
+</script>

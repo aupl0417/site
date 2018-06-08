@@ -1,0 +1,103 @@
+<extend name="Seller@Public:base" />
+<block name="body">
+    <div class="centent_body">
+        <!-- to do your html codeing -->
+        <div class="revision_bg">
+            <div class="container ptb_size_lg clearfix">
+                <!-- 左侧导航 -->
+                <include file="Public:sideNav" />
+                <!-- 左侧导航结束 -->
+
+                <div class="revisionRight pd15" style="width: 1020px"><!-- 右侧内容 -->
+                    <div class="clearfix revisionOrderTab" data-url="">
+                        <a class="orderOption active" href="javascript:;">{$title}</a>
+                    </div>
+                    <div class="bg-warning pd10 letter-spacing1">
+                        <i class="fa fa-exclamation-circle fs16 fl text_yellow"></i>
+                        <p class="ml20 mb0">小提示，您当前正在创建<strong class="text_yellow"> 优惠券 </strong>，请输入以下必填项。</p>
+                    </div>
+					
+					
+                    <!-- 表单 -->
+                    <include file="Public:forms" />
+
+					
+					
+                </div>
+
+            </div>
+        </div>
+        <!-- my codeing over -_-   -->
+
+    </div>
+</block>
+
+<block name="css">
+
+</block>
+
+<block name="script">
+    <!-- to do your javascript codeing -->
+    {$form.js}
+	<script>
+	var gids = new Array();
+	show_goods();
+	$("input[name='goods_ids']").closest('.form-group').hide();
+	
+	//选择使用场景
+	$('input[name="use_type"]').on('ifChecked', function(){
+		if($(this).val()==1){
+			$("input[name='goods_ids']").closest('.form-group').hide();
+		}else{
+			$("input[name='goods_ids']").closest('.form-group').show();
+		}
+		
+	});
+	
+	//显示下面的商品图片
+	function show_goods(){
+		var goods_ids = $("input[name='goods_ids']").val();
+		if(goods_ids == 1){
+			goods_ids = $("input[name='goods_ids']").next().data('val');
+		}
+		gids = goods_ids.split(",");
+		
+		ajax_post({
+			url:'/Coupon/show_goods',
+			data:{goods_ids:goods_ids},
+		},function(ret) {
+			var html = '';
+			if(ret.code==1){
+				$.each(ret.data,function(k,v){
+					html +=  '<li>'
+								+'<div class="li-img-box" data-id="'+v.id+'">'
+									+'<div class="delete-images" onclick="delete_goods(this,\''+v.id+'\')"><div class="selected-icon"><i class="fa fa-times"></i></div></div>'
+									+'<a href="{:DM('item')}/goods/'+v.attr_list[0].id+'" target="_blank">'
+										+'<img src="'+v.images+'?imageMogr2/thumbnail/!130x130r/gravity/Center/crop/130x130" alt="'+v.goods_name+'" title="'+v.goods_name+'">'
+										+'<p class="text_over" style="width:130px;margin:10px 0 0;">'+v.goods_name+'</p>'
+										+'<p style="margin-bottom:0px;">￥'+v.price+'</p>'
+										+'<p style="margin-bottom:0px;">销量：'+v.num+'</p>'
+									+'</a>'
+								+'</div>'
+							+'</li>'
+				});
+				
+			}
+			$("input[name='goods_ids']").next().next().find('.images-select-box').html(html);
+		})
+	}
+	
+	//删除商品
+	function delete_goods(obj,goods_id){
+		var position = $.inArray(goods_id, gids);
+		if(position != -1){
+			gids.splice(position,1);
+			$("input[name='goods_ids']").val(gids.join(','));
+			$(obj).closest('li').remove();
+		}
+	}
+	
+	
+	
+	</script>
+</block>

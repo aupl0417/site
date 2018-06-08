@@ -1,0 +1,846 @@
+<div class="vform"> 
+<volist name="param.field" id="vo" key="uskey">
+		
+		<if condition="$vo['type'] eq 'group'">
+
+			<div class="form-group f-{$vo.name}">
+				<notempty name="vo.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$vo.textname} {$vo['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+				<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+					{:W('Widget/form_group',array(array(
+						'tpl'	=>'vform_group',
+						'data'	=>$vo,
+						'rs'	=>$param['rs'],
+					)))}	
+					<div class="tips-form text-gray ft12 link-blue">{$vo.tips}</div>	
+				</div>
+			</div>
+			<neq name="param.dline" value="hide"><div class="line line-dashed b-b line-lg pull-in"></div> </neq>
+		
+		<elseif condition="$vo['type'] eq 'hidden'" />
+			<input type="hidden" id="{$vo.name}" name="{$vo.name}" value="{$vo.value}" />
+		<else />
+			<php>
+				$relations = $param['field'][($uskey - 1)];
+				if(is_array($relations[0])) {
+					$a = true;
+				}
+			</php>
+			<eq name="a" value="true">
+				<notempty name="relations.0">
+					<div class="relationform">
+						<input type="hidden" name="id" value="{$relations.id}" />
+						<volist name="relations" id="re" key="rekey">
+							<include file="Widget/vform_relations" />
+						</volist>
+						<div class="form-group">
+							<div class="text-left condition-plus-delete-box">
+								<label class="col-xs-3 control-label"></label>
+								<div class="col-xs-7">
+								<div class="input-group">
+									<div class="">
+										<button type="button" data-id="{$relations.id}" class="btn btn-lg btn-rad btn-trans btn-default condition-plus-delete"><i class="fa fa-minus-square"></i>删除条件</button>
+									</div>
+								</div>
+								<div class="tips-form text-gray ft12 link-blue"></div>
+							</div>
+							</div>
+						</div>
+					</div>
+				</notempty>
+			</eq>
+			<switch name="vo.type">
+				<case value="html">
+					<!--html-->
+					<div class="form-group f-{$vo.name}">
+						<notempty name="vo.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$vo.textname} {$vo['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+						<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+						{$vo.html}
+						</div>
+					</div>
+				</case>
+			
+				<case value="input">
+					<!--input-->
+					<div class="form-group f-{$vo.name}">
+						<notempty name="vo.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$vo.textname} {$vo['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+						<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+							<div class="input-group">
+								{$vo.button_left}
+								{$vo.addon_left}
+								<div class="<if condition="$vo['icon_left'] neq '' or $vo['icon_right'] neq ''">input-icon</if>">
+									{$vo.icon_left}
+									<input type="text" id="{$vo.name}" class="form-control {$vo.class}" name="{$vo.name}" placeholder="{$vo['placeholder']?$vo['placeholder']:$vo['textname']}" value="{$vo.value}" {$vo.attr}  />
+									{$vo.icon_right}
+								</div>
+								{$vo.addon_right}
+								{$vo.button_right}
+							</div>
+							<div class="tips-form text-gray ft12 link-blue">{$vo.tips}</div>
+							{$vo['next']}
+						</div>
+					</div>
+					
+				</case>
+				
+				
+				
+				
+				
+				<case value="tag">
+					<!--tag-->
+					<div class="form-group f-{$vo.name}">
+						<notempty name="vo.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$vo.textname} {$vo['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+						<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+							<div class="input-group">
+								{$vo.button_left}
+								{$vo.addon_left}
+								<div class="<if condition="$vo['icon_left'] neq '' or $vo['icon_right'] neq ''">input-icon</if>">
+									{$vo.icon_left}
+									<input type="text" id="{$vo.name}" class="form-control tag-input {$vo.class}" name="{$vo.name}" placeholder="{$vo['placeholder']?$vo['placeholder']:$vo['textname']}" value="{$vo.value}" {$vo.attr}  />
+									{$vo.icon_right}
+								</div>
+								{$vo.addon_right}
+								{$vo.button_right}
+							</div>
+							<div class="tips-form text-gray ft12 link-blue">{$vo.tips}</div>
+						</div>
+					</div>
+					
+				</case>
+				
+				
+				<case value="date">
+					<!--date-->
+					<div class="form-group f-{$vo.name}">
+						<notempty name="vo.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$vo.textname} {$vo['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+						<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+							<div class="input-group">
+								{$vo.button_left}
+								{$vo.addon_left}
+								<div class="<if condition="$vo['icon_left'] neq '' or $vo['icon_right'] neq ''">input-icon</if>">
+									{$vo.icon_left}
+									<input type="text" id="{$vo.name}" class="form-control datepicker {$vo.class}" name="{$vo.name}" placeholder="{$vo['placeholder']?$vo['placeholder']:$vo['textname']}" value="{$vo.value}" {$vo.attr} " data-date-format="yyyy-mm-dd"  />
+									{$vo.icon_right}
+								</div>
+								{$vo.addon_right}
+								{$vo.button_right}
+							</div>
+							<div class="tips-form text-gray ft12 link-blue">{$vo.tips}</div>
+						</div>
+					</div>
+					
+				</case>
+				
+				
+				
+
+
+				<case value="datetime">
+					<!--datetime-->
+					<div class="form-group f-{$vo.name}">
+						<notempty name="vo.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$vo.textname} {$vo['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+						<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+							<div class="input-group">
+								{$vo.button_left}
+								{$vo.addon_left}
+								<div class="<if condition="$vo['icon_left'] neq '' or $vo['icon_right'] neq ''">input-icon</if>">
+									{$vo.icon_left}
+									<input type="text" id="{$vo.name}" class="form-control datepicker {$vo.class}" name="{$vo.name}" placeholder="{$vo['placeholder']?$vo['placeholder']:$vo['textname']}" value="{$vo.value}" {$vo.attr} " data-date-format="yyyy-mm-dd"  />
+									{$vo.icon_right}
+								</div>
+								{$vo.addon_right}
+								{$vo.button_right}
+							</div>
+							<div class="tips-form text-gray ft12 link-blue">{$vo.tips}</div>
+						</div>
+					</div>
+					
+				</case>
+
+
+
+				<case value="editor">
+					<!--editor-->
+					<div class="form-group f-{$vo.name}">
+						<notempty name="vo.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$vo.textname} {$vo['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+						<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+							<div class="input-group">
+								{$vo.button_left}
+								{$vo.addon_left}
+								<html:editor id="{$vo.name}" name="{$vo.name}" type="UEDITOR" style=" {$vo['style']?$vo['style']:'min-height:150px;'}">{$vo.value|html_entity_decode}</html:editor>
+								{$vo.addon_right}
+								{$vo.button_right}
+							</div>
+							<div class="tips-form text-gray ft12 link-blue">{$vo.tips}</div>
+						</div>
+					</div>
+					
+				</case>
+				<case value="editor-wang">
+					<!--editor-->
+					<div class="form-group f-{$vo.name}">
+						<notempty name="vo.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$vo.textname} {$vo['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+						<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+							<div class="input-group">
+								{$vo.button_left}
+								{$vo.addon_left}
+								<html:editor id="{$vo.name}" name="{$vo.name}" type="WANGEDIT" style=" {$vo['style']?$vo['style']:'min-height:150px;'}">{$vo.value|html_entity_decode}</html:editor>
+								{$vo.addon_right}
+								{$vo.button_right}
+							</div>
+							<div class="tips-form text-gray ft12 link-blue">{$vo.tips}</div>
+						</div>
+					</div>
+					
+				</case>
+				
+				
+				<case value="sku">
+					<!--images-->
+					<div class="form-group f-{$vo.name}">
+						<notempty name="vo.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$vo.textname} {$vo['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+						<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+							<div class="input-group">
+								{$vo.button_left}
+								{$vo.addon_left}
+
+
+								{:W('Widget/sku',array(array(
+									'vo'		=>$vo,
+								)))}
+
+								{$vo.addon_right}
+								{$vo.button_right}
+							</div>
+							<input type="hidden" name="_sku_" value="1">
+							<div class="tips-form text-gray ft12 link-blue">{$vo.tips}</div>
+						</div>
+					</div>
+					
+				</case>
+
+				<case value="attr">
+					<!--attr-->
+					<div class="form-group f-{$vo.name}">
+						<notempty name="vo.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$vo.textname} {$vo['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+						<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+							<div class="input-group">
+								{:W('Widget/attr',array(array(
+									'vo'		=>$vo,
+									'goods_id'	=>$param['goods_id'],
+								)))}
+						</div>
+						</div>
+					</div>
+				</case>
+				<case value="color">
+					<!--tag-->
+					<div class="form-group f-{$vo.name}">
+						<notempty name="vo.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$vo.textname} {$vo['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+						<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+							<div class="input-group">
+								{$vo.button_left}
+								{$vo.addon_left}
+								<div class="<if condition="$vo['icon_left'] neq '' or $vo['icon_right'] neq ''">input-icon</if>">
+									{$vo.icon_left}
+									<input type="text" id="{$vo.name}" class="form-control minicolors {$vo.class}" name="{$vo.name}" placeholder="{$vo['placeholder']?$vo['placeholder']:$vo['textname']}" data-control="hue" value="{$vo.value}" {$vo.attr}  />
+									{$vo.icon_right}
+								</div>
+								{$vo.addon_right}
+								{$vo.button_right}
+							</div>
+							<div class="tips-form text-gray ft12 link-blue">{$vo.tips}</div>
+						</div>
+					</div>
+					
+				</case>
+				<case value="express">
+					<div class="form-group f-{$vo.name}">
+						<notempty name="vo.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$vo.textname} {$vo['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+						<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+							<div class="input-group">
+								{$vo.button_left}
+								{$vo.addon_left}
+
+								{:W('Widget/express_set',array(array(
+									'vo'	=>$vo,
+								)))}
+
+								{$vo.addon_right}
+								{$vo.button_right}
+							</div>
+							<input type="hidden" name="_express_{$vo.name}" value="1">
+							<div class="tips-form text-gray ft12 link-blue">{$vo.tips}</div>
+						</div>
+					</div>
+					
+				</case>
+				
+				<case value="radio-table">
+					<!--images--> 
+					<div class="form-group f-{$vo.name}">
+						<notempty name="vo.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$vo.textname} {$vo['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+						<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+							<div class="input-group">
+								{$vo.button_left}
+								{$vo.addon_left}
+
+									<div class="btn btn-rad btn-trans btn-primary" onclick="vmodal({iframe:'/RadioTable/index/table/{$vo.data.table}/tpl/{$vo.data.tpl}/sellerid/{$_GET.sellerid}',tag:'#ajax-modal2',width:'95%',title:'选择{$vo.textname}',script:'$(\'.vform-action\').html(\'{$vo.name}\')'})"><i class="fa fa-cloud-upload"></i> 选择{$vo.textname}</div>
+									
+									<ul id="{$vo.name}-list" class="list-rs mt10">
+										
+										<notempty name="vo.value">	
+										<li class="rs p10 box" data-path="{$vo.name}">
+											<div class="l-80px">
+												<notempty name="vo.value.images">
+													<a class="image-zoom" href="{$vo.value.images}" title="{$vo.value.name}"><img src="{:myurl($vo['value']['images'],60)}"></a>
+												</notempty>
+											</div>
+											<div class="r-80px">
+												<h4>{$vo.value.name}</h4>
+												<div><div class="btn btn-rad btn-trans btn-xs btn-primary" onclick="$(this).parents().parent('li').remove();$('#{$vo.name}').val('');"><i class="fa fa-times"></i> 删除</div></div>
+											</div>
+										</li>
+										</notempty>
+									</ul>									
+
+									
+									<input type="hidden" id="{$vo.name}" name="{$vo.name}" value="{$vo.value.id}">
+
+
+								{$vo.addon_right}
+								{$vo.button_right}
+							</div>
+							<div class="tips-form text-gray ft12 link-blue">{$vo.tips}</div>
+						</div>
+					</div>
+					
+				</case>
+				
+				<case value="images">
+					<!--images-->
+					<div class="form-group f-{$vo.name}">
+						<notempty name="vo.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$vo.textname} {$vo['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+						<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+							<div class="input-group">
+								{$vo.button_left}
+								{$vo.addon_left}
+
+									<div class="btn btn-rad btn-trans btn-primary upload" upload" data-name="{$vo.name}"><i class="fa fa-cloud-upload"></i> 上传图片</div>
+									<!-- vmodal({iframe:'/UploadOne/index/field/{$vo.name}',tag:'#ajax-modal2',width:'95%',title:'选择{$vo.textname}',script:'$(\'.vform-action\').html(\'{$vo.name}\')'}) -->
+									<ul id="{$vo.name}-list" class="images-select-box">
+										<notempty name="vo.value">											
+											<li id="" data-path="{$vo.value}" class="text-center">
+												<div class="li-img-box">
+													<a class="image-zoom" href="{$vo.value}" title="{$vo.value}"><img src="{:myurl($vo['value'],250)}"></a>
+												</div>													
+												<div class="delete-images" onclick="$(this).parent('li').remove();$('#{$vo.name}').val('');"><div class="selected-icon"><i class="fa fa-times"></i></div></div>												
+											</li>
+											
+										</notempty>
+									</ul>
+									<input type="hidden" id="{$vo.name}" name="{$vo.name}" value="{$vo.value}">
+
+
+
+								{$vo.addon_right}
+								{$vo.button_right}
+							</div>
+							<div class="tips-form text-gray ft12 link-blue">{$vo.tips}</div>
+						</div>
+					</div>
+					
+				</case>
+				
+				
+				<case value="images-more">
+					<!--images-->
+					<div class="form-group f-{$vo.name}">
+						<notempty name="vo.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$vo.textname} {$vo['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+						<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+							<div class="input-group">
+								{$vo.button_left}
+								{$vo.addon_left}
+
+									<div class="btn btn-rad btn-trans btn-primary" onclick="vmodal({iframe:'/UploadMore/index/field/{$vo.name}',tag:'#ajax-modal2',width:'95%',title:'选择{$vo.textname}',script:'$(\'.vform-action\').html(\'{$vo.name}\')'})"><i class="fa fa-cloud-upload"></i> 上传图片</div>
+									<ul id="{$vo.name}-list" class="images-select-box">
+										<volist name="vo.value" id="img">										
+											<li id="" data-path="{$img}" class="text-center">
+												<div class="li-img-box">
+													<a class="image-zoom" href="{$img}" title="{$img}"><img src="{$img}?imageView2/2/w/250/h/250"></a>
+												</div>													
+												<div class="delete-images" onclick="$(this).parent('li').remove();"><div class="selected-icon"><i class="fa fa-times"></i></div></div>												
+												<input type="hidden" id="{$vo.name}[]" name="{$vo.name}[]" value="{$img}">
+											</li>
+											
+										</volist>
+									</ul>
+									
+
+
+
+								{$vo.addon_right}
+								{$vo.button_right}
+							</div>
+							<div class="tips-form text-gray ft12 link-blue">{$vo.tips}</div>
+						</div>
+					</div>
+					
+				</case>					
+				
+				<!--普通上传图片表单-带预览-->
+				<case value="images-file">
+					<!--images-->
+					<div class="form-group f-{$vo.name}">
+						<notempty name="vo.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$vo.textname} {$vo['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+						<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+							<div class="input-group">
+								{$vo.button_left}
+								{$vo.addon_left}
+
+								<div class="fileinput fileinput-new" data-provides="fileinput">
+									<div class="fileinput-new thumbnail" style="width: 200px; height: 120px;">
+										<img src="{:$vo['value']?myurl($vo['value'],120):'../Public/images/upload-nopic.png'}" alt="上传图片">
+									</div>
+									<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; height: 120px;">
+									</div>
+									<div>
+										<span class="btn btn-primary btn-file btn-rad btn-trans">
+											<span class="fileinput-new">
+												选择图片
+											</span>
+											<span class="fileinput-exists">
+												重选
+											</span>
+											<input type="file" name="{$vo.name}">
+										</span>
+										<a href="#" class="btn btn-primary btn-rad btn-trans fileinput-exists" data-dismiss="fileinput">
+											删除
+										</a>
+									</div>
+								</div>
+
+
+
+								{$vo.addon_right}
+								{$vo.button_right}
+							</div>
+							<input type="hidden" name="_images_{$vo.name}" value="{$vo.value}">
+							<div class="tips-form text-gray ft12 link-blue">{$vo.tips}</div>
+						</div>
+					</div>
+					
+				</case>				
+
+				<case value="web-uploader">
+					<!--images-->
+					<div class="form-group f-{$vo.name}">
+						<notempty name="vo.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$vo.textname} {$vo['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+						<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+							<div class="input-group">
+								{$vo.button_left}
+								{$vo.addon_left}
+
+								<div id="uploader" data-url="{:U('/Upload/web_uploader',array('field'=>$vo['name']))}">
+									<div class="queueList">
+										<div id="dndArea" class="placeholder">
+											<div id="filePicker"></div>
+											<p>或将照片拖到这里，单次最多可选300张</p>
+										</div>
+									</div>
+									<div class="statusBar" style="display:none;">
+										<div class="progress">
+											<span class="text">0%</span>
+											<span class="percentage"></span>
+										</div><div class="info"></div>
+										<div class="btns">
+											<div id="filePicker2"></div><div class="uploadBtn">开始上传</div>
+										</div>
+									</div>
+								</div>
+								<div class="web_uploader_{$vo.name}"></div>
+
+
+									<ul id="{$vo.name}-list" class="form-images-select magnific-popup-wrap">
+										<notempty name="vo.value.0">
+											<volist name="vo.value" id="dl">
+											<li id="" data-path="{$dl}" class="text-center"><div class="md10 the-box"><a class="zooming" href="{:myurl($dl)}" title="{$dl}" target="_blank"><img src="{:myurl($dl)}"></a></div><div class="btn btn-xs btn-danger md20" onclick=$('li[data-path="{$dl}"]').remove();><i class="fa fa-times"></i> 删除</div><input type="hidden" name="{$vo.name}[]" value="{$dl}"></li>
+											</volist>
+										</notempty>
+									</ul>
+
+
+
+								{$vo.addon_right}
+								{$vo.button_right}
+							</div>
+							<div class="tips-form text-gray ft12 link-blue">{$vo.tips}</div>
+						</div>
+					</div>
+					
+				</case>
+
+
+				
+				
+				<case value="password">
+					<!-- password-->
+					<div class="form-group f-{$vo.name}">
+						<notempty name="vo.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$vo.textname} {$vo['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+						<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+							<div class="input-group">
+								{$vo.button_left}
+								{$vo.addon_left}
+								<div class="<if condition="$vo['icon_left'] neq '' or $vo['icon_right'] neq ''">input-icon</if>">
+									{$vo.icon_left}
+									<input type="password" id="{$vo.name}" class="form-control {$vo.class}" name="{$vo.name}" placeholder="{$vo['placeholder']?$vo['placeholder']:$vo['textname']}" value="{$vo.value}" {$vo.attr}  />
+									<input type="hidden" name="_password_{$vo.name}" value="{$vo.value}" >
+									{$vo.icon_right}
+								</div>
+								{$vo.addon_right}
+								{$vo.button_right}
+							</div>
+							
+							<div class="tips-form text-gray ft12 link-blue">{$vo.tips}</div>
+						</div>
+					</div>
+					
+				</case>
+				
+				
+				
+				
+				<case value="select">
+					<!-- select-->
+					<div class="form-group f-{$vo.name}">
+						<notempty name="vo.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$vo.textname} {$vo['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+						<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+							<div class="input-group">
+								{$vo.button_left}
+								{$vo.addon_left}
+								<select id="{$vo.name}" class="form-control {$vo.class}" name="{$vo.name}" {$vo.attr}  >
+									<notempty name="vo.first_option">{$vo.first_option}<else /><option value="">请选择{$vo.textname}</option></notempty>
+									<volist name="vo.data" id="dl">
+										<neq name="dl.dlist" value="">
+											<option value="{$dl[$vo['field'][0]]}" {$vo['value']==$dl[$vo['field'][0]]?'selected':''}>{$dl[$vo['field'][1]]} {$vo['field'][2]?$dl[$vo['field'][2]]:''}</option>
+												<volist name="dl.dlist" id="ds">
+													<option value="{$ds[$vo['field'][0]]}" {$vo['value']==$ds[$vo['field'][0]]?'selected':''}>　|——{$ds[$vo['field'][1]]}</option>
+
+													<neq name="ds.dlist" value="">
+													<foreach name="ds.dlist" item="it">
+														<option value="{$it[$vo['field'][0]]}" {$vo['value']==$it[$vo['field'][0]]?'selected':''}>　　　|——{$it[$vo['field'][1]]}</option>
+													</foreach>
+													</neq>
+
+												</volist>
+										<else />
+											<option value="{$dl[$vo['field'][0]]}" {$vo['value']==$dl[$vo['field'][0]]?'selected':''}>{$dl[$vo['field'][1]]} {$vo['field'][2]?$dl[$vo['field'][2]]:''}</option>
+										</neq>
+									</volist>
+									
+								</select>
+
+								{$vo.addon_right}
+								{$vo.button_right}
+							</div>
+							
+							<div class="tips-form text-gray ft12 link-blue">{$vo.tips|html_entity_decode}</div>
+						</div>
+					</div>
+					
+				</case>
+				
+				
+				
+				
+				
+				<case value="year">
+					<!-- year-->
+					<div class="form-group f-{$vo.name}">
+						<notempty name="vo.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$vo.textname} {$vo['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+						<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+						
+							<div class="input-group">
+								{$vo.button_left}
+								{$vo.addon_left}
+								<select id="{$vo.name}" class="form-control {$vo.class}" name="{$vo.name}" {$vo.attr}  >
+									<notempty name="vo.first_option">{$vo.first_option}<else /><option value="">请选择{$vo.textname}</option></notempty>
+									<for start="$vo.data.start" end="$vo.data.end" >
+										<option value="{$i}" {$vo['value']==$i?'selected':''}>{$i} 年</option>
+									</for>
+									
+								</select>
+
+								{$vo.addon_right}
+								{$vo.button_right}
+							</div>
+							
+							<div class="tips-form text-gray ft12 link-blue">{$vo.tips}</div>
+						</div>
+					</div>
+					
+				</case>
+				
+				
+				
+				<case value="month">
+					<!-- month-->
+					<div class="form-group f-{$vo.name}">
+						<notempty name="vo.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$vo.textname} {$vo['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+						<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+						
+							<div class="input-group">
+								{$vo.button_left}
+								{$vo.addon_left}
+								<select id="{$vo.name}" class="form-control {$vo.class}" name="{$vo.name}" {$vo.attr}  >
+									<notempty name="vo.first_option">{$vo.first_option}<else /><option value="">请选择{$vo.textname}</option></notempty>
+									<for start="1" end="13" >
+										<option value="{$i}" {$vo['value']==$i?'selected':''}>{$i} 月</option>
+									</for>
+									
+								</select>
+
+								{$vo.addon_right}
+								{$vo.button_right}
+							</div>
+							
+							<div class="tips-form text-gray ft12 link-blue">{$vo.tips}</div>
+						</div>
+					</div>
+					
+				</case>
+				
+				
+				<case value="day">
+					<!-- month-->
+					<div class="form-group f-{$vo.name}">
+						<notempty name="vo.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$vo.textname} {$vo['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+						<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+						
+							<div class="input-group">
+								{$vo.button_left}
+								{$vo.addon_left}
+								<select id="{$vo.name}" class="form-control {$vo.class}" name="{$vo.name}" {$vo.attr}  >
+									<notempty name="vo.first_option">{$vo.first_option}<else /><option value="">请选择{$vo.textname}</option></notempty>
+									<for start="1" end="32" >
+										<option value="{$i}" {$vo['value']==$i?'selected':''}>{$i} 日</option>
+									</for>
+									
+								</select>
+
+								{$vo.addon_right}
+								{$vo.button_right}
+							</div>
+							
+							<div class="tips-form text-gray ft12 link-blue">{$vo.tips}</div>
+						</div>
+					</div>
+					
+				</case>
+				
+				
+				<case value="textarea">
+					<!--textarea-->
+					<div class="form-group f-{$vo.name}">
+						<notempty name="vo.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$vo.textname} {$vo['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+						<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+						
+							<div class="input-group">
+								{$vo.addon_left}
+
+								<textarea id="{$vo.name}" class="form-control {$vo.class}" name="{$vo.name}" placeholder="{$vo.placeholder}" {$vo.attr} {$vo.style}>{$vo.value}</textarea>
+								{$vo.addon_right}
+
+							
+							</div>
+							
+							<div class="tips-form text-gray ft12 link-blue">{$vo.tips}</div>
+						</div>
+					</div>
+					
+				</case>
+				
+				
+
+
+
+				<case value="radio">
+					<!--radio-->
+					<div class="form-group f-{$vo.name}">
+						<notempty name="vo.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$vo.textname} {$vo['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+						<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+						
+							<div class="input-group">
+								{$vo.addon_left}
+								<volist name="vo.data" id="dl">
+									<label class="{$vo.class}" style="{$vo.style}"><input type="radio" class="i-grey-square" name="{$vo.name}" value="{$dl[$vo['field'][0]]}" {$vo['value']==$dl[$vo['field'][0]]?'checked':''} {$vo.attr} /> {$dl[$vo['field'][1]]}</label>
+								</volist>
+								{$vo.addon_right}
+							
+							</div>
+							
+							<div class="tips-form text-gray ft12 link-blue">{$vo.tips}</div>
+						</div>
+					</div>
+					
+				</case>
+				
+				<!--开关式单选-->
+				<case value="radio-switch">					
+					<!--radio-->					
+					<div class="form-group f-{$vo.name}">
+						<notempty name="vo.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$vo.textname} {$vo['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+						<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+						
+							<div class="input-group">
+								{$vo.addon_left}
+								
+								<label class="{$vo.class}" style="{$vo.style}">
+								<input type="checkbox" class="i-grey-square" id="{$vo.name}" name="{$vo.name}" value="1" {$vo['value']==1?'checked':''} {$vo.attr}>
+								</label>								
+								{$vo.addon_right}
+							
+							</div>
+							<input type="hidden" name="_radio_switch_{$vo.name}" value="1" />
+							<div class="tips-form text-gray ft12 link-blue">{$vo.tips}</div>
+						</div>
+					</div>
+					
+				</case>
+
+				<case value="checkbox">
+					<!--checkbox-->
+					<div class="form-group f-{$vo.name}">
+						<notempty name="vo.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$vo.textname} {$vo['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+						<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+						
+							<div class="input-group">
+								{$vo.addon_left}
+								<volist name="vo.data" id="dl">
+									<label class="{$vo.class}" style="{$vo.style}"><input type="checkbox" class="i-grey-square" name="{$vo.name}[]" value="{$dl[$vo['field'][0]]}" {$dl[$vo['field'][0]]|input_checked=$vo['value'],'checked'} {$vo.attr} <if condition="$key eq 0 and $vo['is_need'] eq 1">required</if> /> {$dl[$vo['field'][1]]}</label>
+								</volist>
+								{$vo.addon_right}
+							
+							</div>
+							<input type="hidden" name="_checkbox_{$vo.name}" value="1" />
+							<div class="tips-form text-gray ft12 link-blue">{$vo.tips}</div>
+						</div>
+					</div>
+					
+				</case>
+
+
+				<case value="checkbox-more">
+					<!--checkbox_more-->
+					<div class="form-group f-{$vo.name}">
+						<notempty name="vo.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$vo.textname} {$vo['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+						<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+						
+							<div class="input-group box p10">
+								<div style="max-height:200px;overflow:auto;">
+								{$vo.addon_left}
+								<volist name="vo.data" id="dl">
+									<div class="md20">
+									<label class="{$vo.class}" style="{$vo.style}">
+										<empty name="dl.dlist">
+										<input type="checkbox" class="i-grey-square" name="{$vo.name}[]" value="{$dl[$vo['field'][0]]}" {$dl[$vo['field'][0]]|input_checked=$vo['value'],'checked'} {$vo.attr} />
+										</empty>
+										<strong>{$dl[$vo['field'][1]]}</strong>
+									</label>
+								
+									<!--子级-->
+									<neq name="dl.dlist" value="">
+										{:W('Widget/checkbox_more',array(array(
+											'data'	=>$dl['dlist'],
+											'vo'	=>$vo,
+										)))}
+									</neq>
+									</div>
+								</volist>
+								{$vo.addon_right}
+								</div>
+							</div>
+							<input type="hidden" name="_checkbox_{$vo.name}" value="1" />
+							<div class="tips-form text-gray ft12 link-blue">{$vo.tips}</div>
+						</div>
+					</div>
+					
+				</case>
+
+				<!-----验证码----->
+				<case value="vcode">
+					<!--vcode-->
+					<div class="form-group f-{$vo.name}">
+						<notempty name="vo.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$vo.textname} {$vo['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+						<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+							<div class="input-group">
+								{$vo.button_left}								
+								<div class="row">
+									<div class="col-xs-6 pr10">
+										{$vo.addon_left}
+										<div class="<if condition="$vo['icon_left'] neq '' or $vo['icon_right'] neq ''">input-icon</if>">
+											{$vo.icon_left}
+											<input type="text" id="{$vo.name}" class="form-control {$vo.class}" name="{$vo.name}" placeholder="{$vo['placeholder']?$vo['placeholder']:$vo['textname']}" value="{$vo.value}" {$vo.attr}  />
+											{$vo.icon_right}
+										</div>
+										{$vo.addon_right}
+									</div>
+									<div class="col-xs-6 pl0">
+										<a href="javascript:void(0)" class="verify" title="点击图片更换验证码" data-url="/Login/verify"><img src="/Login/verify" alt="验证码" class="verifyimg"></a>
+									</div>
+								</div>							
+								{$vo.button_right}
+							</div>
+							<div class="tips-form text-gray ft12 link-blue">{$vo.tips}</div>
+						</div>
+					</div>						
+
+				</case>
+
+				<case value="edit-area">
+					<!--textarea-->
+					<div class="form-group f-{$vo.name}">
+						<notempty name="vo.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$vo.textname} {$vo['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+						<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+						
+							<div class="input-group">
+								{$vo.addon_left}
+
+								<textarea id="{$vo.name}" class="form-control edit-area {$vo.class}" name="{$vo.name}" placeholder="{$vo.placeholder}" {$vo.attr} {$vo.style|html_entity_decode}>{$vo.value}</textarea>
+								{$vo.addon_right}
+
+							
+							</div>
+							
+							<div class="tips-form text-gray ft12 link-blue">{$vo.tips}</div>
+						</div>
+					</div>
+					
+				</case>				
+				
+				<case value="modal-category">
+					<div class="form-group f-{$vo.name}">
+						<notempty name="vo.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$vo.textname} {$vo['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+						<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+							<div class="input-group">
+								{$vo.button_left}
+								{$vo.addon_left}
+			
+									<div class="btn btn-rad btn-trans btn-primary" onclick="sidChange();" ><i class="fa fa-cloud-upload"></i> {$vo.textname}</div>
+									<input type="type" id="{$vo.name}" name="{$vo.name}" value="{$vo.value}">
+								{$vo.addon_right}
+								{$vo.button_right}
+							</div>
+							<div class="tips-form text-gray ft12 link-blue">{$vo.tips}</div>
+						</div>
+					</div>
+				</case>
+				
+			</switch>
+			<neq name="param.dline" value="hide"><div class="line line-dashed b-b line-lg pull-in"></div> </neq>
+		</if>
+</volist>
+</div>
+
+<div class="hide vform-action"></div>
+

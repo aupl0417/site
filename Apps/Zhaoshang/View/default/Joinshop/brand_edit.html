@@ -1,0 +1,338 @@
+<include file="Public:header" />
+<include file="Public:menu" />
+
+<div class="w1200 mt20 md20 bg-white box">
+	<div class="box-header">
+		填写品牌资料
+	</div>
+	<div class="box-content p50">
+		<form name="form-shop" id="form-shop" class="form-horizontal vform" data-url="__URL__/brand_save" method="post" onsubmit="return submit_form();">
+			<div  class="crow md30">
+				<div class="ccol-15">
+					<ul class="brand-left">
+						<volist name="info:brand" id="vo">
+						<li class="{$key==0?'active':''}">{$vo:name}</li>
+						</volist>
+					</ul>
+				</div>
+				
+				<div class="ccol-85 border-l" style="min-height:500px;">
+					<div class="form-list" style="margin-left:50px;">
+						<volist name="info:brand" id="vo" key="nkey">
+						<div class="item {$key>0?'hide':''}">
+							{:W('Common/Builder/buildform',array(array(
+								'field'		=>array(					
+									array(
+										'formtype'		=>'text',
+										'label'			=>'品牌名称',
+										'name'			=>'name_'.$nkey,
+										'is_need'		=>true,
+										'attr'			=>'maxlength="60" readonly',
+										'value'			=>$vo->name
+									),							
+									array(
+										'formtype'		=>'text',
+										'label'			=>'商标证号/受理书编号',
+										'name'			=>'code_'.$nkey,
+										'is_need'		=>true,
+										'attr'			=>'maxlength="30"',
+									),								
+									array(
+										'formtype'		=>'images',
+										'label'			=>'商标logo',
+										'name'			=>'logo_'.$nkey,
+										'is_need'		=>true,
+										//'attr'			=>'data-width="200" data-height="200"',
+										'tips'			=>'<span class="ft12">建议尺寸为200 x 200px以上的JPG、GIF、PNG图片</span>',
+									),								
+									array(
+										'formtype'		=>'radio',
+										'label'			=>'是否代理',
+										'name'			=>'is_agent_'.$nkey,
+										'is_need'		=>true,
+										'field'			=>array(0,1),
+										'data'			=>array(
+												array(0,'自有品牌'),
+												array(1,'代理品牌'),
+											),
+										'value'			=>$brand[$nkey]['is_agent_'.$nkey]?$brand[$nkey]['is_agent_'.$nkey]:1
+									),									
+								),
+							),$brand[$nkey]))}
+							<notempty name="vo:cred">
+							<table class="nobg mt30" style="line-height:25px;">
+								<thead class="strong">
+									<tr>
+										<th width="150" class="text-center">资质名称</th>
+										<th>描述</th>
+										<th width="250">资质图片</th>
+										<th width="100" class="text-center">操作</th>
+									</tr>
+								</thead>
+								<tbody>
+									<volist name="vo:cred" id="v">
+									<tr data-id="{$v.id}" data-is_need="{$v.is_need}" data-max="5">
+										<td>{$v.cred_name}</td>
+										<td>{$v.about|nl2br}
+											<notempty name="v.images">
+												<a href="{$v.images}" target="_blank" class="text-blue">(样图)</a>
+											</notempty>
+										</td>
+										<td>
+											<ul class="upload-cred-images">
+											{:W('Widget/cred_images',array($brand[$nkey]['cred'][$v['id']]))}
+											</ul>
+										</td>
+										<td class="text-center text-blue td-upload">
+											<input type="hidden" name="cred_{$v.id}_{$nkey}" id="cred_{$v.id}_{$nkey}" value="{:$brand[$nkey]['cred'][$v['id']]}">
+											上传图片
+										</td>
+									</tr>
+									</volist>
+								</tbody>
+							</table>
+							</notempty>
+						</div>
+						</volist>						
+					</div>
+				</div>
+				
+				<div class="clearfix"></div>
+			</div>
+			
+			<input type="hidden" name="is_edit" value="1">
+			<div class="p10">
+				<div class="pull-left"><a href="__URL__/shop_type" class="btn btn-danger btn-150px btn-trans">上一步</a></div>
+				<div class="pull-right"><button type="submit" class="btn btn-danger btn-150px btn-next">下一步</button></div>
+			</div>
+		</form>
+	</div>
+
+</div>
+
+
+<form enctype="multipart/form-data" id="form-upload2" data-url="/Upload/upload_save" class="hide">
+	<input id="imageData" name="imageData" type="file" value="" />
+	<input type="hidden" id="field" name="field" value="">
+</form>
+
+
+<include file="Public:copyright" />
+<include file="Public:js" />
+
+
+<script>
+$(document).ready(function(){
+	$('.brand-left li').click(function(){
+		$(this).addClass('active').siblings().removeClass('active');
+		$('.form-list .item').addClass('hide').eq($(this).index()).removeClass('hide');
+	});
+	
+	$('[data-type="upload-images"]').each(function(i){
+		$(this).click(function(){
+				//alert(i);
+			var d = $(this).closest('.input-group').find('input[type="hidden"]').data();
+			var field = $(this).closest('.input-group').find('input[type="hidden"]').attr('name');
+			$('#form-upload')[0].reset();
+			$('#form-upload #width').val(d.width);
+			$('#form-upload #height').val(d.height);
+			$('#form-upload #field').val(field);
+			$('#form-upload #imageData').click();
+		
+		});
+	});	
+	
+	$('#form-upload #imageData').change(function(){
+			if($(this).val()!=''){
+				var html='<li class="text-center">';
+					html+='	<div class="li-img-box">';
+					html+='	<img src="/Public/images/wap_loading.gif">';												
+					html+='	</div>';												
+					html+='</li>';
+				
+				var tag='#'+$('#form-upload #field').val()+'-list';
+				$(tag).html(html);	
+				
+				ajax_post_form({
+					formid:'#form-upload',
+				},function(ret){
+					valert(ret);
+					if(ret.code==1){
+						
+						$('#'+$('#form-upload #field').val()).val(ret.url);
+						// 替换内容
+						var html='<li class="text-center" data-path="'+ret.url+'">';
+							html+='	<div class="li-img-box">';
+							html+='	<img src="'+ret.url+'?imageMogr2/thumbnail/!150x150r">';												
+							html+='	</div>';												
+							html+='</li>';
+						$(tag).html(html);
+					}
+				});				
+			}
+	});	
+	
+	$('.item input[type="radio"]').on('ifClicked',function(){
+		var is_agent=$(this).val();
+		
+		if(is_agent==1){
+			$(this).closest('.item').find('tr[data-id="49"]').removeClass('hide');
+		}else{
+			$(this).closest('.item').find('tr[data-id="49"]').addClass('hide');
+			$(this).closest('.item').find('tr[data-id="49"] ul').html('');
+			$(this).closest('.item').find('tr[data-id="49"] input').val('');
+		}
+		
+	});
+	$('.item input[type="radio"]:checked').each(function(){
+		var is_agent=$(this).val();
+		
+		if(is_agent==1){
+			$(this).closest('.item').find('tr[data-id="49"]').removeClass('hide');
+		}else{
+			$(this).closest('.item').find('tr[data-id="49"]').addClass('hide');
+			$(this).closest('.item').find('tr[data-id="49"] ul').html('');
+			$(this).closest('.item').find('tr[data-id="49"] input').val('');
+		}		
+	});
+	
+	$('.td-upload').click(function(){
+		var tr=$(this).closest('tr');
+		var tr_data=tr.data();
+		var li_size=tr.find('ul li').size();
+		var field=$(this).find('input').attr('name');
+		
+		if(li_size >= tr_data.max){
+			talert({status:'warning',msg:'最多只能传'+tr_data.max+'张图片！'});
+			return false;
+		}
+		$('#form-upload2')[0].reset();
+		//alert(field);
+		$('#form-upload2 #field').val(field);
+		$('#form-upload2 #imageData').click();		
+	});
+	
+	$('#form-upload2 #imageData').change(function(){
+			if($(this).val()!=''){
+				var field=$('#form-upload2 #field').val();
+				$('#'+field).closest('td').addClass('load-icon');
+				var tr=$('#'+field).closest('tr');
+				ajax_post_form({
+					formid:'#form-upload2',
+				},function(ret){
+					valert(ret);
+					if(ret.code==1){
+						//
+						if(tr.find('li[data-url="'+ret.url+'"]').size()==0){
+							var html='<li data-url="'+ret.url+'">';
+								html+='<div class="action" onclick="delete_img($(this))"><i class="fa fa-times text-danger"></i></div>';
+								html+='<img src="'+ret.url+'?imageMogr2/thumbnail/!80x80r" alt="资质图片">';
+								html+='</li>';
+
+							tr.find('ul').append(html);
+							var img=new Array();
+							tr.find('ul li').each(function(){
+								img.push($(this).data('url'));
+							});
+							
+							$('#'+field).val(img.join(','));
+						}
+					}
+					$('#'+field).closest('td').removeClass('load-icon');
+				});				
+			}
+	});
+});	
+
+function delete_img(obj){
+	var obj;
+	var tr=obj.closest('tr');
+	
+	vmodal({
+		title:'删除图片',
+		msg:'<h4 class="md20">真的要删除图片吗？</h4>',
+		class:'text-center',
+		confirm:1,
+		width:'650px',
+	},function(){
+		$('.modal-ok').unbind().click(function(){
+			obj.closest('li').remove();
+			if(tr.find('li').size()>0){
+				var img=new Array();
+				tr.find('ul li').each(function(){
+					img.push($(this).data('url'));
+				});
+							
+				tr.find('input').val(img.join(','));				
+			}else{
+				tr.find('input').val('');
+			}
+			
+			$('#ajax-modal').modal('hide');
+		});
+	});
+}
+
+function submit_form(){
+	var res=true;
+	$('.form-list .item').each(function(index){
+		if($(this).find('input[name^="name"]').val()==''){
+			$('.brand-left li').eq(index).click();
+			talert({status:'warning',msg:'品牌名称不能为空！'});
+			res=false;
+			return false;
+		}
+		if($(this).find('input[name^="code"]').val()==''){
+			$('.brand-left li').eq(index).click();
+			talert({status:'warning',msg:'请输入商标证号/受理书编号！'});
+			res=false;
+			return false;
+		}
+		if($(this).find('input[name^="logo"]').val()==''){
+			$('.brand-left li').eq(index).click();
+			talert({status:'warning',msg:'请上传品牌logo！'});
+			res=false;
+			return false;
+		}
+		
+		if($(this).find('input[name^="cred_45"]').val()==''){
+			$('.brand-left li').eq(index).click();
+			talert({status:'warning',msg:'请上传商标注册证或商标注册申请受理通知书！'});
+			res=false;
+			return false;
+		}
+
+		var is_agent=$(this).find('input[name^="is_agent"]:checked').val();
+		var shop_type_id={$info:shop_type_id};
+		
+		if($(this).find('input[name^="cred_49"]').val()=='' && is_agent==1 && shop_type_id!=6){	//非个人店铺
+			$('.brand-left li').eq(index).click();
+			talert({status:'warning',msg:'请上传品牌授权书！'});
+			res=false;
+			return false;
+		}		
+	});
+	
+	if(res==false) return false;
+	
+		ajax_post_form({
+			formid:'#form-shop',
+		},function(ret){
+			talert(ret);
+			if(ret.code == 1){
+				var shop_type_id={$info:shop_type_id};
+				if(shop_type_id==6) {
+					window.location.href='__URL__/shop_info';
+				}
+				else {
+					window.location.href='__URL__/industry';
+				}
+			}
+		});	
+	
+	return false;
+}
+
+</script>
+
+<include file="Public:footer" />

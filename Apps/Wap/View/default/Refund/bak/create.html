@@ -1,0 +1,176 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			申请退款
+		</div>
+		<div class="r">
+			
+		</div>
+	</div>
+</header>
+<section id="refund-list-content">
+	<div class="load-body">数据加载中...</div>
+</section>
+<script type="text/html" id="refund-html">
+<% for(i=0;i < data.length;i++){ %>
+	<% if(data[i].max_num > 0){ %>
+	<form id="refund-goods-<%= data[i].id %>">
+	<div class="wait_rate_goods md10">
+		
+		<div class="line-box-m row hover noicon" onclick="openWin({name:'goods_view',url:'/Goods/view/id/<%= data[i].attr_list_id %>'})">
+			<div class="col-100 p10 text-left"><span class="mr20">订单号：<%= data[i].s_no %></span></div>
+			<div class="col-15"><img src="<%= data[i].images %>" alt="商品图片"></div>
+			<div class="col-85">
+				<div class="pl10 pr10">
+					<div class="lh2-18px"><%= data[i].goods_name %></div>
+					<div class="text-gray"><%= data[i].attr_name %></div>
+					<div class="lh2-18px">单价：<%= data[i].price %></div>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		
+		<div class="line-box row noicon">
+
+			<div class="col-30">退款数量</div>
+			<div class="col-70">
+				<input name="num" value="" placeholder="可退商品数量<%= data[i].max_num %>" maxlength="10" />
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="line-box row noicon">
+			<div class="col-30">退款金额</div>
+			<div class="col-70">
+				<input name="money" value="" placeholder="剩余总金额<%= data[i].max_price %>"  maxlength="10" />
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="line-box-m noicon row">
+			<div class="col-30">退款原因</div>
+			<div class="col-70">
+				<textarea id="content" name="reason" placeholder="请输入退款原因" maxlength="200" rows="10"></textarea>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="line-box hover noicon">
+			<div class="md8"></div>
+			<div class="text-right">
+				<div class="btn btn-xs btn-danger" onclick="submit_refund(<%= data[i].id %>,2)">退款</div>
+			<% if(data[i].status == 3){ %>
+				<div class="btn btn-xs btn-danger" onclick="submit_refund(<%= data[i].id %>,1)">退货并退款</div>
+			<% } %>
+			</div>
+			
+		</div>
+	</div>
+	<input type="hidden" name="price" value="<%= data[i].price %>" />
+	<input type="hidden" name="max_price" value="<%= data[i].max_price %>" />
+	<input type="hidden" name="max_num" value="<%= data[i].max_num %>" />
+
+	<input type="hidden" name="type"  value="" />
+	<input type="hidden" name="orders_goods_id" value="<%= data[i].id %>" />
+	<input type="hidden" name="apiurl" value="/Refund/create" />
+	<input type="hidden" name="is_openid" value="1" >
+	<input type="hidden" name="no_sign" value="price,max_num,max_price" />
+	</form>
+	<% } %>
+<% } %>
+
+</script>
+
+<script>
+fixBar(1);
+$(function(){
+	ajax_post({
+		url:'/Api/api',
+		data:{
+			apiurl:'/Refund/allow',
+			is_openid:1,
+			s_no:'{$_GET["s_no"]}',
+			no_sign:'s_no',
+		},
+	},function(ret){
+		// console.log(ret);
+		if(ret.code == 1){
+			var html = template('refund-html', {data:ret.data.data});
+			// console.log(html);
+			$('#refund-list-content').html(html);
+		}else{
+			$('#refund-list-content').html('<div class="text-center">暂无可退款商品</div>');
+		}
+	});
+});
+// 提交退款
+function submit_refund(id,t){
+	var data = getFormJson('#refund-goods-' + id);
+
+	if(data.num == '' || data.num == 0 || isNaN(data.num)){
+		$('#refund-goods-' + id).find("input[name='num']").val(0);
+		valert({msg:'数量不能为空'});
+		return false;
+	}
+	if(parseInt(data.num) > data.max_num){
+		valert({msg:'超过退款数量'});
+		$('#refund-goods-' + id).find("input[name='num']").val(data.max_num);
+		return false;
+	}
+
+	if(data.money == '' || data.money == 0 || isNaN(data.money)){
+		$('#refund-goods-' + id).find("input[name='money']").val(0);
+		valert({msg:'退款金额不能为空'});
+		return false;
+	}
+	if(parseFloat(data.money) > data.max_price){
+		valert({msg:'超过退款金额'});
+		$('#refund-goods-' + id).find("input[name='money']").val(data.max_price);
+		return false;
+	}
+	if(parseFloat(data.money) > data.num * data.price){
+		valert({msg:'每件商品退款不能超过单价'});
+		$('#refund-goods-' + id).find("input[name='money']").val(data.num * data.price);
+		return false;
+	}
+	
+	// 判断退款原因
+	var reason = data.reason;
+	if( reason == ''){
+		valert({msg:'请输入退款原因'});
+		return false;
+	}
+	// 提交
+	// console.log(data);return false;
+	data.type = t;
+	// console.log(data);
+	ajax_post({
+		url:'Api/api',
+		data:data,
+	},function(ret){
+		// console.log(ret);return false;
+		if( ret.code == 1 ){
+			valert(ret);
+			openWin({name:'refund',url:'/Refund/view/r_no/' + ret.data.data.r_no});
+		}else{
+			valert({msg:'操作失败，请重试'});
+		}
+	});
+
+}
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+

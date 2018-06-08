@@ -1,0 +1,47 @@
+
+<div class="m20">
+
+	<form class="form-horizontal" id="formadd" name="formadd">
+		<table class="hover">
+			<thead>
+				<th width="30%">页面</th>
+				<th>操作类型</th>
+			</thead>
+			<volist name="action" id="vo">
+			<tr>
+				<td>{$key}</td>
+				<td>
+					<label class="mr20" style=""><input type="checkbox" name="{$key}[]" class="i-grey-square" value="C" {:in_array('C',$action[$key])?'checked':''} /> 创建(C)</label>
+					<label class="mr20" style=""><input type="checkbox" name="{$key}[]" class="i-grey-square" value="U" {:in_array('U',$action[$key])?'checked':''} /> 修改(U)</label>
+					<label class="mr20" style=""><input type="checkbox" name="{$key}[]" class="i-grey-square" value="R" {:in_array('R',$action[$key])?'checked':''} /> 读取(R)</label>					
+					<label class="mr20" style=""><input type="checkbox" name="{$key}[]" class="i-grey-square" value="D" {:in_array('D',$action[$key])?'checked':''} /> 删除(D)</label>
+					<label class="mr20" style=""><input type="checkbox" name="{$key}[]" class="i-grey-square" value="Ajax" {:in_array('Ajax',$action[$key])?'checked':''} /> Ajax</label>
+				</td>
+			</tr>
+			</volist>
+		</table>
+		<input type="hidden" name="id" value="{$_GET.id}">
+		<div class="text-center mt20">
+			<button type="submit" class="btn btn-primary btn-150px"><i class="fa fa-check"></i> 提交</button>
+		</div>						
+	
+	</form>
+
+</div>
+
+
+<script>
+iCheckClass();
+checkform({
+	formid:'#formadd',
+	url:'__URL__/action_set_save',
+	script:'callback(ret)'
+});
+
+function callback(ret){
+	valert({status:ret.status,msg:ret.msg});
+	if(ret.status=='success'){
+		$('#ajax-modal').modal('hide');
+	}
+}
+</script>

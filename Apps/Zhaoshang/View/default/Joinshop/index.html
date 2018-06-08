@@ -1,0 +1,83 @@
+<include file="Public:header" />
+<include file="Public:menu" />
+
+<div class="w1200 mt20 md20 bg-white box">
+	<div class="box-header">
+		入驻须知
+	</div>
+
+	<div class="box-content p50">
+		<div class="ft18 md10">个人资质</div>
+		<table class="nobg md30">
+			<thead class="strong">
+				<tr>
+					<th width="150" class="text-center">条件</th>
+					<th width="100" class="text-center">状态</th>
+					<th>描述</th>
+					<th width="150" class="text-center">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td class="text-center">实名认证</td>
+					<td class="text-center">{:$rs->auth==1?'<i class="fa fa-check text-success fa-2x"></i>':'<i class="fa fa-times text-danger fa-2x"></i>'}</td>
+					<td>须通过实名认证</td>
+					<td class="text-center">{:$rs->auth==1?'-':'<a href="'.erp_url(C('cfg.erp')['domain']['u'].'/auth').'" target="_blank">去认证</a>'}</td>
+				</tr>
+				<tr>
+					<td class="text-center">用户等级</td>
+					<td class="text-center">{:$rs->u_level>1?'<i class="fa fa-check text-success fa-2x"></i>':'<i class="fa fa-times text-danger fa-2x"></i>'}</td>
+					<td>必须是“创客”或“创投”，您当前为“<span class="b text-danger">{$rs:u_level_text}</span>”</td>
+					<td class="text-center">{:$rs->u_level>1?'-':'<a href="'.erp_url(C('cfg.erp')['domain']['u'].'/upgrade').'" target="_blank">升级</a>'}</td>
+				</tr>
+			</tbody>
+		</table>
+		
+		<div class="ft18 md10">账户类型</div>
+		<table class="nobg md30">
+			<thead class="strong">
+				<tr>
+					<th width="150" class="text-center">账户类型</th>
+					<th width="100" class="text-center">状态</th>
+					<th>描述</th>
+					<th width="150" class="text-center">分账模式</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!--  
+					<tr>
+						<td class="text-center">个人账户</td>
+						<td class="text-center">{:$rs->u_type==0?'<i class="fa fa-check text-success fa-2x"></i>':''}</td>
+						<td>个体店铺</td>
+						<td class="text-center">分账</td>
+					</tr>
+				-->
+				<tr>
+					<td class="text-center">企业账户</td>
+					<td class="text-center">{:$rs->u_type==1?'<i class="fa fa-check text-success fa-2x"></i>':''}</td>
+					<td>旗舰店、专卖店、专营店、个体店铺{:$rs->u_type==0?'，<a href="'.erp_url(C('cfg.erp')['domain']['u'].'/upgrade').'" class="text-danger b" target="_blank">立即进行企业认证</a>':''}</td>
+					<td class="text-center">分账</td>
+				</tr>
+			</tbody>
+		</table>	
+
+		<div class="p10 text-center">
+			<a href="__URL__/agreement" class="btn btn-danger btn-150px {:$status!=1?'disabled':''}">下一步</a>
+		</div>
+	</div>
+
+</div>
+
+
+<include file="Public:copyright" />
+<include file="Public:js" />
+
+
+<script>
+$(document).ready(function(){
+
+
+});	
+</script>
+
+<include file="Public:footer" />

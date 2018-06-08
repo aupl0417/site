@@ -1,0 +1,149 @@
+<include file="Public:header" />
+		<div class="page-group">
+			<div id="page-orders-service-logs" class="page">
+				<!-- 标题栏 -->
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left back" data-no-cache="true"></a>
+					<h1 class="title">售后协商记录</h1>
+					<a class="icon iconfont icon-category pull-right ml5 ac-menu" onclick="top_menu()"></a>
+				</header>
+
+				<!-- 浮动导航 -->
+				<include file="Public:fixed-menu" />
+				
+				<!-- 这里是页面内容区 -->		
+				<div class="content">
+					<div class="p5 box bg-white show-form">
+						<div class="p5 bg-gray2 text-gray">输入留言（必填）</div>
+					</div>
+					
+					<form name="form-logs-add" id="form-logs-add" onsubmit="return false;" class="hide">
+						<div class="list-block media-list">
+							<ul>
+								<li>
+									<div class="item-content">
+										<div class="item-inner">
+											<div class="item-title-row">
+												<div class="item-title" style="min-width:4rem">留言备注</div>
+												<div class="item-input">
+													<textarea id="remark" name="remark" placeholder="请输入留言或备注，不超过200字" maxlength="200"></textarea>
+												</div>
+											</div>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class="item-content">
+										<div class="upload-box">
+											<div class="upload-action">
+												<div class="upload-btn">
+													<input id="imageData" name="imageData" type="file" value="" />
+													<img alt="上传图片" src="../Public/images/up_load.jpg" width="60">
+													<input type="hidden" id="images" name="images" />
+												</div>
+											</div>
+											<div class="images-list">
+								
+											</div>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class="item-content2 text-right border-t">
+										<div class="btn btn-lg btn-danger btn-trans btn-submit" style="min-width: 5rem;">发表留言</div>
+									</div>
+								</li>								
+							</ul>
+						</div>
+						<input type="hidden" name="r_no" id="r_no" value="{$_GET.r_no}" />
+					</form>							
+					
+					<div class="clearfix md5"></div>					
+					<volist name="list" id="vo">
+					<div class="list-block media-list">
+						<ul>
+							<gt name="vo.uid" value="0">
+								<if condition="$vo['uid'] eq $_SESSION['user']['id']">
+								<li>
+									<div class="item-content">
+										<div class="item-media"><i class="iconfont icon-wode text-info"></i></div>
+										<div class="item-inner">
+											<div class="item-title-row">
+												<div class="item-title"><strong>自己</strong></div>
+												<div class="item-after">{$vo.atime}</div>
+											</div>
+										</div>
+									</div>
+								</li>
+								<else />
+								<li>
+									<div class="item-content">
+										<div class="item-media"><i class="iconfont icon-dianpu text-yellow"></i></div>
+										<div class="item-inner">
+											<div class="item-title-row">
+												<div class="item-title"><strong>商家</strong></div>
+												<div class="item-after">{$vo.atime}</div>
+											</div>
+										</div>
+									</div>
+								</li>
+								</if>
+							<else />
+								<li>
+									<div class="item-content">
+										<div class="item-media"><i class="iconfont icon-kefu text-red"></i></div>
+										<div class="item-inner">
+											<div class="item-title-row">
+												<div class="item-title"><strong>乐兑客服</strong></div>
+												<div class="item-after">{$vo.atime}</div>
+											</div>
+										</div>
+									</div>
+								</li>
+							</gt>
+							
+							<li>
+								<div class="item-content2">
+									<div class="md5">
+										<div class="status-name">{$vo.status_name}</div>
+									</div>
+									<div class="text">
+										描述：<span class="text-gray">{$vo.remark}</span>
+									</div>
+									
+									<notempty name="vo.images">
+										<div class="mt05"></div>
+										<div class="row">
+											<volist name="vo.images" id="img">
+												<div class="col-20">
+													<img class="lazyload" data-sizes="auto" data-src="{:myurl($img,200)}" alt="晒图" src="../Public/images/nopic.gif" width="100%">
+												</div>
+											</volist>
+										</div>
+									</notempty>
+									
+									<if condition="$vo['express_code'] neq '' or $vo['address'] neq '' or $vo['num'] gt 0 or $vo['money'] gt 0 or $vo['refund_express'] gt 0">
+									<div class="logs-sys-box">
+										<notempty name="vo.express_code"><div>物流公司：{$vo.express_company.company}，运单号：{$vo.express_code}</div></notempty>
+										<notempty name="vo.address"><div>{:$vo['uid']== $_SESSION['user']['id'] ? '我的地址：':'商家地址：'}{$vo.address}</div></notempty>
+										<div>
+											<gt name="vo.num" value="0">售后商品数量  {$vo.num} 件；</gt>
+										</div>
+									</div>
+									</if>
+								</div>
+							</li>							
+						</ul>
+					</div>
+					<div class="clearfix md5"></div>
+					</volist>
+				
+				
+				</div><!--/content-->
+				
+			</div>
+		</div>	
+		
+
+<include file="Public:script" />
+<include file="Public:footer" />

@@ -1,0 +1,166 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body">
+<include file="Public:nav" />
+	<div class="container mb30">
+		<include file="Public:side" />
+		<div class="w980 fl">				
+				<div class="bor_der">
+					<div class="bg_f1 clearfix fs14 text_44 tle_R">
+						<a class="fl plr15 line40 ml-1 active" href="javascript:;">商品分类</a>
+						<a data-title="添加分类" data-url="{:U('/category/add')}" class="fl plr15 line40 ml-1 btn-add" href="javascript:;">添加分类</a>
+					</div>
+					<div class="solid_t mt-1 pd15">
+						<div class=" mb20">
+							<notempty name="data.code">
+								{:W('Common/Builder/nors', array('param' => array('text' => $data['msg'])))}
+							<else />
+								<div class="clearfix bg_f1 guide_tle bor_der">
+									<div class="pt10 fl">
+										<label class="square fl ml15 mr10">
+											<input id="checkAll" type="checkbox">
+											<span></span>
+										</label>
+										<a class="mr20" href="javascript:;">全选</a>	
+										<a class="del-all" class="mr20" href="javascript:;">批量删除</a>	
+									</div>								
+								</div>
+								<div class="row mg0">
+									<div class="clearfix bor_der mt-1">
+										<div class="col-xs-9 line30">分类名称</div>
+										<!-- <div class="col-xs-4 line30 text-center">移动</div> -->
+										<div class="col-xs-3 line30 text-right pr35">操作</div>	
+									</div>
+									<volist name="data" id="vo">
+										<div class="clearfix solid_b">
+											<div class="col-xs-9 line30 pd10">
+												<label class="square fl ml7 mr10 mt10"><input class="ids" name="ids[]" value="{$vo.id}" type="checkbox"><span></span></label>
+												<div class="ml25">
+													<div class="clearfix" style="height:35px; line-height:35px;">
+														<!-- <i class="fa fa-play mt10 fl"></i> -->
+														{$vo.category_name}
+													</div>
+													<volist name="vo.dlist"	id="dl">
+														<div class="ml30">
+															<div class="clearfix" style="height:35px; line-height:35px;">
+																<!-- <span class="solid_l solid_b fl" style="width:17px;height:17px"></span> -->
+																{$dl.category_name}
+															</div>
+														</div>
+													</volist>
+												</div>
+											</div>
+											<!-- <div class="col-xs-4 line30 text-center mt15">
+												<a class="mr5" href="javasctipt:;"><img src="__NEW_DESIGN__images/move_top_1.png"></a>
+												<a class="mr5" href="javasctipt:;"><img src="__NEW_DESIGN__images/move_top.png"></a>
+												<a class="mr5" href="javasctipt:;"><img src="__NEW_DESIGN__images/move_domn.png"></a>
+												<a class="mr5" href="javasctipt:;"><img src="__NEW_DESIGN__images/move_domn_1.png"></a>
+											</div> -->
+											<div class="col-xs-3 line30 text-right" style="height:35px; line-height:35px;padding-top:10px;">
+												<a data-title="修改分类" data-url="{:U('/category/add', ['id' => $vo['id']])}" data-id="{$dl.id}" class="text_blue btn-add" href="javascript:;">修改</a>
+												<span class="plr5">|</span>
+												<a data-id="{$vo.id}" class="text_blue btn-del" href="javascript:;">删除</a>
+											</div>
+											<volist name="vo.dlist"	id="dl">
+											<!-- <div class="col-xs-4 line30 text-center mt15">
+												<a class="mr5" href="javasctipt:;"><img src="__NEW_DESIGN__images/move_top_1.png"></a>
+												<a class="mr5" href="javasctipt:;"><img src="__NEW_DESIGN__images/move_top.png"></a>
+												<a class="mr5" href="javasctipt:;"><img src="__NEW_DESIGN__images/move_domn.png"></a>
+												<a class="mr5" href="javasctipt:;"><img src="__NEW_DESIGN__images/move_domn_1.png"></a>
+											</div> -->
+											<div class="col-xs-3 line30 text-right" style="height:35px; line-height:35px;">
+												<a data-title="修改分类" data-url="{:U('/category/add', ['id' => $dl['id']])}" data-id="{$dl.id}" class="text_blue btn-add" href="javascript:;">修改</a>
+												<span class="plr5">|</span>
+												<a data-id="{$dl.id}" class="text_blue btn-del" href="javascript:;">删除</a>
+											</div>
+											</volist>
+										</div>
+									</volist>
+								</div>
+							</notempty>
+						</div>
+					</div>
+				</div>
+			</div><!-- 右边结束 -->
+
+		</div>
+</div>
+</block>
+<block name="css"></block>
+<block name="script">
+<script>
+$(document).ready(function() {
+	$("#checkAll").change(function() {
+		if($(this).is(":checked") == true) {
+			$(".ids").prop("checked", true)
+		} else {
+			$(".ids").prop("checked", false)
+		}
+	});
+	$(".del-all").click(function() {
+		var ids	=	'';
+		$(".ids").each(function() {
+			if($(this).is(":checked") == true) {
+				ids += $(this).val() + ',';
+			}
+		});
+		if(ids == '') {
+			talert({status:0,msg:'请至少选择一项'});
+			return false;
+		}
+		vmodal({
+			  title:'批量删除提示',
+			  msg:'您确定要删除已选择的分类吗？',
+			  class:'text-center',
+			  confirm:1,
+		      footer:false,
+		      width:'600px',
+		  },function(ret) {
+			  $(".modal-ok").click(function() {
+				  ajax_post({
+					  url:'{:U("/run/authRun")}',
+					  data:{id:ids},
+					  headers : {Action : '{:enCryptRestUri("/Category/deletes")}'},
+				  },function(ret) {
+					  talert({status:ret.code,msg:ret.msg});
+					  if(ret.code == 1) {
+					   ref(); 
+					}
+				  })
+			  })
+		  })
+	});
+	$(".btn-del").click(function() {
+		var d	=	$(this).data();
+		vmodal({
+			  title:'删除提示',
+			  msg:'您确定要删除此分类吗？',
+			  class:'text-center',
+			  confirm:1,
+		      footer:false,
+		      width:'600px',
+		  },function(ret) {
+			  $(".modal-ok").click(function() {
+				  ajax_post({
+					  url:'{:U("/run/authRun")}',
+					  data:{id:d.id},
+					  headers : {Action : '{:enCryptRestUri("/Category/delete")}'},
+				  },function(ret) {
+					  talert({status:ret.code,msg:ret.msg});
+					  if(ret.code == 1) {
+					   ref(); 
+					}
+				  })
+			  })
+		  })
+	});
+	$(".btn-add").click(function() {
+		var d	=	$(this).data();
+		vmodal({
+			title:d.title,
+			url:d.url,
+		});
+	})
+})
+</script>
+</block>

@@ -1,0 +1,158 @@
+<include file="Public:header" />
+		<div class="page-group">
+			<div id="page-my-coupon" class="page">
+				<!-- 标题栏 -->
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left back" href="/"></a>
+					<h1 class="title">优惠券详情</h1>
+					<a class="icon iconfont icon-category pull-right ml5 ac-menu" onclick="top_menu()"></a>
+				</header>
+
+				<!-- 浮动导航 -->
+				<include file="Public:fixed-menu" />
+				
+				<!-- 这里是页面内容区 -->		
+				<div class="content">
+					<div class="list-block coupon-view">
+						<ul>
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title">优惠券编码</div>
+										<div class="item-after">{$rs.short_code}</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title">类型</div>
+										<div class="item-after">{$rs.type_name}</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title">面值</div>
+										<div class="item-after">￥<span class="text-red">{$rs.price}</span>，满{$rs.min_price}元可用</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title">有效期</div>
+										<div class="item-after">{$rs.sday} ~ {$rs.eday}</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title">使用状态</div>
+										<div class="item-after">{$rs.use_name}</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title">使用场景</div>
+										<div class="item-after">{$rs.use_type_name}</div>
+									</div>
+								</div>
+							</li>
+							
+							<notempty name="rs.shop_id">
+							<li>
+								<a href="javascript:;" data-url="/Shop/index/shop_id/{$rs.shop_id}" class="item-content item-link">
+									<div class="item-inner">
+										<div class="item-title">店铺</div>
+										<div class="item-after">{$rs.shop_name}</div>
+									</div>
+								</a>
+							</li>								
+							</notempty>
+						</ul>	
+					</div>
+					
+					<!--指定类目-->
+					<notempty name="rs.category">
+						<div class="content-block-title"><i class="iconfont icon-youhuiquan"></i> 限以下类目使用</div>
+						<div class="list-block">
+							<ul>
+								<volist name="rs.category" id="vo">
+									<li>
+										<a href="/Search/goods/cid/{$vo.id}" class="item-content item-link">
+											<div class="item-inner">
+												<div class="item-title">{$vo.category_name}</div>
+											</div>
+										</a>
+									</li>
+								</volist>
+							</ul>
+						</div>
+					</notempty>				
+					
+					<!--指定店铺-->
+					<notempty name="rs.shop_list">
+						<div class="content-block-title"><i class="iconfont icon-youhuiquan"></i> 限以下店铺使用</div>
+						<div class="list-block">
+							<ul>
+								<volist name="rs.shop_list" id="vo">
+									<li>
+										<a href="javascript:;" data-url="/Shop/index/shop_id/{$vo.id}" class="item-link item-content">
+											<div class="item-media">
+												<img class="lazyload img-circle border-1px" data-sizes="auto" data-src="{:myurl($vo['shop_logo'],100)}" alt="店铺logo" src="../Public/images/nopic.gif" width="44">
+											</div>
+											<div class="item-inner">
+												<div class="item-title-row">
+													<div class="item-title strong">{$vo.shop_name}</div>	
+													<div class="item-subtitle text-gray">
+														<div class="ft06">综合评分：<span class="text-danger">{$vo.fraction}</span></div>
+													</div>
+												</div>
+											</div>
+										</a>
+									</li>
+								</volist>
+							</ul>
+						</div>
+					</notempty>						
+					<!--指定商品-->
+					<notempty name="rs.goods_list">
+						<div class="content-block-title"><i class="iconfont icon-youhuiquan"></i> 限以下商品使用</div>
+						<div class="p5 bg-white">
+							<div class="row img-block love-home list-container">
+								<volist name="rs.goods_list" id="vo">
+									<div class="col-50">
+										<a href="/Goods/view/id/{$vo.attr_list.0.id}" class="love-goods-item">
+											<div class="goods-images">
+												<img class="lazyload" data-sizes="auto" data-src="{:myurl($vo['images'],320)}" src="../Public/images/nopic.gif" width="100%" alt="{$vo.goods_name}">
+											</div>
+											<div class="goods-name">{$vo.goods_name}</div>
+											<div class="goods-info clearfix md5">
+												<div class="pull-right text-gray ft05">售出 {$vo.sale_num} 件</div>
+												<div class="price">￥{$vo.price}</div>
+												<div class="clearfix"></div>
+												<div class="pull-right text-gray ft05">
+													奖励 {:intval($vo['score_ratio']*$vo['price']*100)} 分
+												</div>
+											</div>
+										</a>
+									</div>
+								</volist>
+							</div>
+						</div>
+
+					</notempty>	
+					
+				</div>			
+				
+			</div>
+		</div>	
+		
+
+<include file="Public:script" />
+<include file="Public:footer" />

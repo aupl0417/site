@@ -1,0 +1,178 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body">
+	<include file="Public:nav" />
+	<div class="container mb30">
+		<include file="Public:side" />
+		<div class="w980 fl">
+			<div class="bor_der">
+				<div class="bg_f1 clearfix fs14 text_44 tle_R">
+					<a class="fl plr15 line40 ml-1 active" href="javascript:;">添加资质</a>
+				</div>
+				
+				<!-- 主体部分 -->
+				<div class="col-lg-12 pull-left cate-box">
+					<div class="block-flat mt10" style="border-top:1px solid #efefef;">
+						<div class="header">							
+							<h3><a href="javascript:;" data-url="{:U('/open/addCheckInfo', array('type' => 'category'))}" data-title="添加类目" class="btn btn-info opreating">添加类目</a></h3>
+						</div>
+						<div class="content">
+							<empty name="cate.code">
+								<table class="table table-bordered table-advance table-hover mb30">
+									<tbody>
+										<tr>
+											<th class="col-xs-10 text-center" style="vertical-align: middle;">类目名称</th>
+											<th class="col-xs-2 text-center" style="vertical-align: middle;">操作 </th>
+										</tr>
+										<volist name="cate" id="vo">
+											<tr class="countTr">
+												<td style="vertical-align: middle;" class="text-center col-xs-2">{$vo.category_name}</td>
+												<td style="vertical-align: middle;" class="text-center col-xs-1">
+													<a href="javascript:;" data-id="{$vo.id}" data-action="{:enCryptRestUri('/delCheckInfo/category')}" data-title="删除类目" class="btn btn-default btn-ml plr20 btn_m del">删除</a>
+												</td>
+											</tr>
+										</volist>
+									</tbody>
+								</table>
+							<else />
+								{:W('Common/Builder/nors', array('param' => array('text' => '还未添加分类！')))}
+							</empty>
+						</div>
+					</div>				
+				</div>
+				
+				<div class="col-lg-12 pull-left brand-box">
+					<div class="block-flat mt10" style="border-top:1px solid #efefef;">
+						<div class="header">							
+							<h3><a href="javascript:;" data-url="{:U('/open/addCheckInfo', array('type' => 'brand'))}" data-title="添加品牌" class="btn btn-info opreating">添加品牌</a></h3>
+						</div>
+						<div class="content">
+							<empty name="brand.code">
+								<table class="table table-bordered table-advance table-hover mb30">
+									<tbody>
+										<tr>
+											<th class="col-xs-2 text-center" style="vertical-align: middle;">品牌名称</th>
+											<th class="col-xs-2 text-center" style="vertical-align: middle;">品牌LOGO</th>
+											<th class="col-xs-2 text-center" style="vertical-align: middle;">品牌所有者</th>
+											<th class="col-xs-2 text-center" style="vertical-align: middle;">品牌类型</th>
+											<th class="col-xs-2 text-center" style="vertical-align: middle;">经营类型 </th>
+											<th class="col-xs-2 text-center" style="vertical-align: middle;">操作 </th>
+										</tr>
+										<volist name="brand" id="vo">
+											<tr class="countTr">
+												<td style="vertical-align: middle;" class="text-center col-xs-2">{$vo.b_name}</td>
+												<td class="text-center">
+													<a class="image-zoom" href="{$vo['b_logo']}" title="大图">
+														<img src="{:myurl($vo['b_logo'], 100)}" />
+													</a>
+												</td>
+												<td style="vertical-align: middle;" class="text-center col-xs-1">{$vo.b_master}</td>
+												<td style="vertical-align: middle;" class="text-center col-xs-1">{$vo.b_type}</td>
+												<td style="vertical-align: middle;" class="text-center col-xs-1">{$vo.b_scope}</td>
+												<td style="vertical-align: middle;" class="text-center col-xs-1">
+													<a href="javascript:;" data-id="{$vo.id}" data-action="{:enCryptRestUri('/delCheckInfo/brand')}" data-title="删除品牌" class="btn btn-default btn-ml plr20 btn_m del">删除</a>
+												</td>
+											</tr>
+										</volist>
+									</tbody>
+								</table>
+							<else />
+								{:W('Common/Builder/nors', array('param' => array('text' => '还未添加品牌！')))}
+							</empty>
+						</div>
+					</div>				
+				</div>
+				
+				<div class="col-lg-12 pull-left cert-box">
+					<div class="block-flat mt10" style="border-top:1px solid #efefef;">
+						<div class="header">							
+							<h3><a href="javascript:;" data-url="{:U('/open/addCheckInfo', array('type' => 'cert'))}" data-title="添加资质" class="btn btn-info opreating">添加资质</a></h3>
+						</div>
+						<div class="content">
+							<empty name="cert.code">
+								<table class="table table-bordered table-advance table-hover mb30">
+									<tbody>
+										<tr>
+											<th class="col-xs-2 text-center" style="vertical-align: middle;">资质类目</th>
+											<th class="col-xs-2 text-center" style="vertical-align: middle;">资质名称</th>
+											<th class="col-xs-2 text-center" style="vertical-align: middle;">资质证书照片</th>
+											<th class="col-xs-2 text-center" style="vertical-align: middle;">资质期限</th>
+											<th class="col-xs-2 text-center" style="vertical-align: middle;">操作 </th>
+										</tr>
+										<volist name="cert" id="vo">
+											<tr class="countTr">
+												<td style="vertical-align: middle;" class="text-center col-xs-2">{$vo.category_name}</td>
+												<td style="vertical-align: middle;" class="text-center col-xs-1">{$vo.cert_name}</td>
+												<td class="text-center">
+													<a class="image-zoom" href="{$vo['cert_images']}" title="大图">
+														<img src="{:myurl($vo['cert_images'], 100)}" />
+													</a>
+												</td>
+												<td style="vertical-align: middle;" class="text-center col-xs-1">{$vo.expire_day}</td>
+												<td style="vertical-align: middle;" class="text-center col-xs-1">
+													<a href="javascript:;" data-id="{$vo.id}" data-action="{:enCryptRestUri('/delCheckInfo/cert')}" data-title="删除资质" class="btn btn-default btn-ml plr20 btn_m del">删除</a>
+												</td>
+											</tr>
+										</volist>
+									</tbody>
+								</table>
+							<else />
+								{:W('Common/Builder/nors', array('param' => array('text' => '还未添加资质！')))}
+							</empty>
+						</div>
+					</div>				
+				</div>
+				<div class="text-center pd10">
+					<a class="btn btn-info" href="{:U('/open/step3')}"><i class="fa fa-mail-reply"></i>上一步</a><a class="btn btn-success ml20 btn-next" href="{:U('/open/step5')}"><i class="fa fa-mail-forward"></i>下一步</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</block>
+<block name="css"></block>
+<block name="script">
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	//var brandSize	=	$(".brand-box .countTr").size();
+	var cateSize	=	$(".cate-box .countTr").size();
+	//var cretSize	=	$(".cret-box .countTr").size();
+	if(cateSize == 0) {
+		$(".btn-next").addClass('disabled');
+	}
+	
+	$(".opreating").click(function() {
+		var d 	=	$(this).data();
+		vmodal({
+			title:d.title,
+			url:d.url,
+		});
+	})
+	$(".del").click(function() {
+		var d 	=	$(this).data();
+		vmodal({
+			  title:'删除提示',
+			  msg:'您真的要删除吗?',
+			  class:'text-center',
+			  confirm:1,
+		      footer:false,
+		      width:'600px',
+		  },function(ret) {
+			  $(".modal-ok").click(function() {
+				  ajax_post({
+					  url:'{:U("/run/authRun")}',
+					  data:{id:d.id},
+					  headers : {Action : d.action},
+				  },function(ret) {
+					  talert({status:ret.code,msg:ret.msg});
+					  if(ret.code == 1) {
+						  setTimeout("ref()", 1000);
+					  }
+				  })
+			  })
+		  })
+	})
+})
+</script>
+</block>

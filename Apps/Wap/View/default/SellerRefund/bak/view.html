@@ -1,0 +1,73 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			退款详情
+		</div>
+	</div>
+</header>
+<section id="seller_refund-view-content">
+	<div class="load-body">数据加载中...</div>
+</section>
+
+<script id="seller_refund-view-html" type="text/html">
+	<div class="p10">
+		<div class="m10">退款流水号：{$_GET.r_no}</div>
+		<ul class="timeline">
+			<% for(i=0;i<data.length;i++){ %>
+			<li>
+				<span class="date">
+					<%= data[i].atime %>
+				</span>
+				<div class="content">
+					<p class="m5"><%= data[i].nick %></p>
+					<p class="m5"><%= data[i].remark %></p>
+					<% for(j=0;j < data[i].images_list.length;j++){ %>
+						<img class="m10" src="<%= data[i].images_list[j] %>" width="50" /><br/>
+					<% } %>
+				</div>
+				
+			</li>
+			<% } %>
+		</ul>
+	</div>
+	<div class="row hover nobg noicon">
+		<div class="col-100 text-right">
+			<div class="btn btn-xs btn-danger mr10 text-right" onclick="add_logs('{$_GET.r_no}')">添加留言</div>
+		</div>
+	</div>
+</script>
+
+
+<include file="Public:d_layer" />
+
+
+<script>
+
+fixBar(1);
+ajax_post({
+	url:'/Api/api',
+	data:{
+		apiurl:'/SellerRefund/view/',
+		r_no:'{$_GET.r_no}',
+		is_openid:1,
+	}
+},function(ret){
+	// console.log(ret);
+	if(ret.code == 1){
+		var html = template('seller_refund-view-html', {data:ret.data.data});
+		// console.log(html);
+		$('#seller_refund-view-content').html(html);
+	}
+});
+function add_logs(r_no){
+	vmodal({
+		title:'退款留言',
+		url:'__URL__/logs/r_no/' + r_no,
+		is_footer:false,
+	});
+}
+
+</script>

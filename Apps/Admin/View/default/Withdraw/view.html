@@ -1,0 +1,112 @@
+<div class="p20 box">
+	<div class="row">
+		<div class="col-xs-6 auth-text">
+			<div>用户ID：{$rs.uid}</div>
+			<div>用户名：{$rs.user.nick}</div>
+			<div>流水号：{$rs.w_no}</div>
+			<div>银行：<span class="ft18 strong">{$rs.card.bank_name}</span></div>
+			<div>分行：{$rs.card.province} {$rs.card.city} {$rs.card.address}</div>
+
+		</div>
+		<div class="col-xs-6 auth-text">
+			<div>户名：<span class="ft18 strong">{$rs.master}</span></div>
+			<div>账号：<span class="ft18 strong">{$rs.account}</span></div>
+			
+			<div>申请时间：{$rs.atime}</div>
+			<div>到账时间：{$rs.pay_time}</div>
+			<div>审核状态：
+				{:status($rs['status'],array(0=>array('在途','btn-default'),1=>array('到账','btn-success'),2=>array('驳回','btn-danger')))}
+			</div>			
+		</div>
+	</div>
+	<div class="ft18 strong p10 border-d md20">审核记录</div>
+	
+	<form data-url="__URL__/logs_add" data-id="#form_{$rs.id}" id="form_{$rs.id}" class="form-horizontal vform">
+			{:W('Widget/buildform',array(array(
+				'field'		=>array(	
+					array(
+						'formtype'		=>'radio',
+						'label'			=>'状态',
+						'name'			=>'status',
+						'data'			=>array(array(0,'在途'),array(1,'到账'),array(2,'驳回')),
+						'field'			=>array(0,1),
+						'value'			=>$rs['status'],
+					),
+					array(
+						'formtype'		=>'textarea',
+						'label'			=>'原因',
+						'name'			=>'reason',
+						'tips'			=>'拒绝审核时必填',
+					),
+					array(
+						'formtype'		=>'hidden',
+						'name'			=>'w_id',
+						'value'			=>$rs['id'],
+					),					
+					array(
+						'formtype'		=>'html',
+						'label'			=>' ',
+						'html'			=>'<button type="button" class="btn btn-primary btn-150px logs-add"><i class="fa fa-check"></i> 提交</button>'
+					),
+
+
+				),
+			)))}
+	
+	
+	</form>
+	<notempty name="rs.logs">
+	<ul class="timeline">
+		<volist name="rs.logs" id="vo">
+		<li>
+			<i class="fa fa-clock-o"></i>
+			<span class="date">
+				{$vo.atime}
+			</span>
+			<div class="content">
+				<div class="md20">审核状态：
+					{:status($vo['status'],array(0=>array('在途','btn-default'),1=>array('到账','btn-success'),2=>array('驳回','btn-danger')))}
+				</div>
+				<notempty name="vo.reason">
+				<div class="md20 ft14">
+					原因：
+					{$vo.reason|nl2br}
+				</div>
+				</notempty>
+				<notempty name="vo.remark">
+				<div class="md20 ft14">
+					备注：
+					{$vo.remark|nl2br}
+				</div>
+				</notempty>
+				<small class="md10">
+					雇员ID：{$vo.a_uid}
+				</small>
+			</div>
+		</li>
+		</volist>
+	</ul>
+	</notempty>
+	
+</div>
+<div class="clearfix">
+	<div class="pull-right text-gray" onclick="$(this).closest('tr').toggleClass('hide');"><i class="fa fa-times-circle-o fa-2x"></i></div>	
+</div>
+
+<script>
+image_zoom();
+$('.logs-add').click(function(){
+	var d=$(this).closest('form').data();
+	ajax_post_form({
+		formid:d.id
+	},function(ret){
+		valert(ret);
+		if(ret.status=='success'){
+			var tag='#item-{$rs.id}';
+			var url='__URL__/view/id/{$rs.id}';
+			loadurl({tag:tag,url:url});
+		}
+	});
+
+});
+</script>

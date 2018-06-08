@@ -1,0 +1,45 @@
+<?php
+/**
+ * ----------------------------------------
+ * 唐人街待处理订单数据入列
+ * ----------------------------------------
+ * Author: Lazycat <673090083@qq.com>
+ * ----------------------------------------
+ * 2016-11-1
+ * -----------------------------------------
+ */
+class TrjPut
+{
+    public $worker;
+    /**
+     * @param string $args['type'] 入列类型,即上面注释的类型
+     */
+    public function run($args){
+        $res = curl_post(APIURL.'/Cron/item',array('type' => $args['type']));
+        $res = json_decode($res,true);
+
+        //file_put_contents('/tmp/'.$args['type'].'.txt',var_export($res,true).PHP_EOL.PHP_EOL,FILE_APPEND);
+        if(is_array($res) && !empty($res)) {
+            $bs = new BeanstalkdJob($args['type']);
+            foreach ($res as $val) {
+                $data = [
+                    'execute' => 'TrjOrders',
+                    'args' => array('type' => $args['type'], 'val' => $val),
+                ];
+                $bs->put($data);
+            }
+        }
+    }
+
+
+    public function _exit(){
+        $pid = posix_getpid();
+        if($pid > 0) swoole_process::kill($pid);
+    }
+
+    public function get_pid(){
+        $pid = posix_getpid();
+        return $pid;
+    }
+}
+

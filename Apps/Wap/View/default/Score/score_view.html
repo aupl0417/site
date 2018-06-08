@@ -1,0 +1,78 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			积分明细详情
+		</div>
+		<div class="r">
+			
+		</div>
+	</div>
+</header>
+<section>
+	<div class="load-body">数据加载中……</div>
+</section>
+
+
+<script id="tpl_score_view" type="text/html">
+	<div class="line-box noicon fr-70 hover">
+		<div class="fl title"><%= data.type_name %></div>
+		<% if(data.money>0){ %>
+			<div class="fr ft14 text-success">+<%= data.money %></div>
+			<% }else{ %>
+			<div class="fr ft14 text-danger"><%= data.money %></div>
+		<% } %>		
+
+	</div>
+	<div class="line-box noicon fr-gray fr-70 hover">
+		<div class="fl title">流水号</div>
+		<div class="fr"><%= data.c_no %></div>
+	</div>
+	<div class="line-box noicon fr-gray fr-70 hover">
+		<div class="fl title">创建时间</div>
+		<div class="fr"><%= data.atime %></div>
+	</div>
+	<div class="line-box noicon fr-gray fr-70 hover">
+		<div class="fl title">转出账户</div>
+		<div class="fr"><%= data.from_nick %></div>
+	</div>
+	<div class="line-box noicon fr-gray fr-70 hover">
+		<div class="fl title">转入账户</div>
+		<div class="fr"><%= data.to_nick %></div>
+	</div>
+	<div class="line-box noicon fr-gray fr-70 hover">
+		<div class="fl title">异动类型</div>
+		<div class="fr"><%= data.category %></div>
+	</div>
+	<% if(data.ordersno!=""){ %>
+	<div class="line-box noicon fr-gray fr-70 hover">
+		<div class="fl title">关联订单号</div>
+		<div class="fr"><%= data.ordersno %></div>
+	</div>	
+	<% } %>
+	<div class="line-box noicon fr-gray fr-70 hover">
+		<div class="fl title">状态</div>
+		<div class="fr">已结算</div>
+	</div>
+</script>
+
+<script>
+	fixBar(1);
+	
+	ajax_post({
+		url:'/Api/api',
+		data:{apiurl:'/Account/score_view',is_openid:1,c_no:'{$_GET.c_no}'},
+	},function(ret){
+		if(ret.code==1){			
+			var html = template('tpl_score_view', {data:ret.data});
+			$('.page.active section').html(html);
+			hover('.page.active section');
+		}else if(ret.code==3){
+			$('.page.active section').html(no_data_text);
+		}
+	});	
+
+	
+</script>

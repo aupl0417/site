@@ -1,0 +1,93 @@
+<include file="Public:header" />
+		<div class="page-group">
+			<div id="page-service-goods-list" class="page">
+				<!-- 标题栏 -->
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left back" href="/"></a>
+					<h1 class="title">售后记录</h1>
+					<a class="icon iconfont icon-category pull-right ml5 ac-menu" onclick="top_menu()"></a>
+				</header>
+
+				<!-- 浮动导航 -->
+				<include file="Public:fixed-menu" />
+		
+				<!-- 这里是页面内容区 -->		
+				<div class="content">				
+					<notempty name="list">
+						<div class="p5 ft05 text-gray">
+							<div class="md5"><i class="iconfont icon-weibiaoti1 text-red"></i> 申请售后累积数量（含已取消）超过订购的商品数量时，取消将不可再次发取售后申请</div>
+						</div>						
+						<div class="list-container">
+							<volist name="list" id="vo">
+								<div class="list-block media-list">
+									<ul>
+										<li>
+											<div class="item-content item-link">
+												<div class="item-media"><i class="icon iconfont icon-dianpu"></i></div>
+												<div class="item-inner">
+													<div class="item-title-row">
+														<div class="item-title"><a href="javascript:;" data-url="/Shop/index/shop_id/{$vo.shop_id}">{$vo.shop.shop_name}</a></div>
+														<div class="item-after"><a href="/Service/view/r_no/{$vo.r_no}" data-no-cache="true"><span class="text-red">{$vo.status_name}</span></a></div>
+													</div>
+												</div>
+											</div>
+										</li>
+										<li class="bg-gray2">
+											<div class="item-bottom p5 text-gray ft05">
+												售后数量  {$vo.num} 件
+											</div>
+											<a href="/Service/view/r_no/{$vo.r_no}" class="item-content">
+												<div class="item-media">
+													<img class="lazyload" data-sizes="auto" data-src="{:myurl($vo['orders_goods']['images'],150)}" alt="商品主图" src="../Public/images/nopic.gif" width="60">
+												</div>
+												<div class="item-inner">
+													<div class="item-title-row">
+														<div class="item-title">{$vo.orders_goods.goods_name}</div>
+													</div>
+													<div class="item-subtitle">
+														<div class="ft05">{$vo.orders_goods.attr_name}</div>
+													</div>
+												</div>
+											</a>
+										</li>
+					
+										<li>
+											<a href="/Service/view/r_no/{$vo.r_no}" class="item-content">
+												<div class="item-media"><i class="icon iconfont text-red icon-shouhou1"></i></div>
+												<div class="item-inner">													
+													<div class="item-title-row">
+														<div class="item-title">
+															{$vo.type_name}
+														</div>														
+													</div>
+												</div>
+											</a>
+										</li>
+									</ul>
+								</div>
+								<div class="clearfix md5"></div>
+							</volist>
+						</div>
+						<else />
+						<div class="nors text-center">
+							<div><i class="iconfont icon-tuihuo01 ft3"></i></div>
+							暂无退款记录！
+						</div>
+					</notempty>
+						
+
+					
+					
+				</div><!--/content-->
+				
+			</div>
+			
+		
+			
+			
+			
+		</div>	
+		
+
+<include file="Public:script" />
+<include file="Public:footer" />

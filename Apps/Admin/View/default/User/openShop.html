@@ -1,0 +1,65 @@
+<include file="Public:header" />
+<include file="nav" title="用户开店" />
+<div class="m20 p20 bg-white">
+    <form data-url="__URL__/saveShop" data-id="#form_send_batch" id="form_send_batch" class="form-horizontal vform">
+        {:W('Widget/buildform',array(array(
+            'field'		=>array(
+                array(
+                    'formtype'		=>'hidden',
+                    'name'			=>'uid',
+                    'value'			=>$uid,
+                ),
+                array(
+                    'formtype'		=>'text',
+                    'name'			=>'shop_name',
+                    'label'			=>'店铺名称',
+        'value' => $shop['shop_name']
+                ),
+                array(
+                    'formtype'		=>'select',
+                    'name'			=>'type_id',
+                    'label'			=>'店铺类型',
+                    'data'			=>$type,
+                    'field'			=>array('id','type_name'),
+        'value' => $shop['type_id']
+                ),
+                array(
+                    'formtype'		=>'radio',
+                    'name'			=>'is_test',
+                    'label'			=>'是否为测试店铺',
+                    'data'			=>array(array(0, '非测试店铺'), array(1, '测试店铺')),
+                    'field'			=>array('0','1'),
+                    'value'         => $shop['is_test']
+                ),
+                array(
+                    'formtype'		=>'html',
+                    'label'			=>' ',
+                    'html'			=>'<button type="button" class="btn btn-primary btn-150px btn-open-shop"><i class="fa fa-check"></i> 立即开店</button>'
+            ),
+        ),
+        )))}
+    </form>
+</div>
+<include file="Public:copyright" />
+<include file="Public:js" />
+<script>
+    $(".btn-open-shop").click(function() {
+        if ($('input[name="shop_name"]').val() == '') {
+            valert({status:'warning',msg:'店铺名称不能为空'});
+            return false;
+        }
+        if ($('select[name="type_id"]').val() == '') {
+            valert({status:'warning',msg:'店铺类型不能为空'});
+            return false;
+        }
+        var d=$(this).closest('form').data();
+        ajax_post_form({
+            formid:d.id
+        },function(ret){
+            valert(ret);
+            if(ret.status=='success'){
+                //ref();
+            }
+        });
+    });
+</script>

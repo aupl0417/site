@@ -1,0 +1,96 @@
+<div class="clearfix">
+	<div class="pull-right text-gray" onclick="$(this).closest('tr').toggleClass('hide');"><i class="fa fa-times-circle-o fa-2x"></i></div>	
+</div>
+	<style>
+		.b_button div{border-bottom:none;border-radius:5px 5px 0 0; -moz-border-radius:5px 5px 0 0; -webkit-border-radius:5px 5px 0 0;cursor:pointer;}
+		.b_button .active{background:rgb(242,242,242)}
+		.b_list{margin-top:20px;}
+	</style>
+	<div class="box">
+
+		<div class = "b_list">
+			<div class = "flex flex-fdr border p20" style="height:400px;">
+				<div class = "flex-f1 flex flex-fdc mr10 border">
+					<div class = "flex-f1 flex flex-fdr border-b">
+						<div class = "flex-f1 p20 flex flex-aic">
+							<div>
+								<p>优惠劵ID</p>
+								<strong>{$rs.id}</strong>
+							</div>
+						</div>
+						<div class = "flex-f1 p20 flex flex-aic">
+							<div>
+								<p>面值</p>
+								<strong>{$rs.price}元</strong>
+							</div>
+						</div>
+						<div class = "flex-f1 p20 flex flex-aic">
+							<div>
+								<p>最低使用限度</p>
+								<strong>{$rs.min_price}元</strong>
+							</div>
+						</div>
+					</div>
+					<div class = "flex-f1 flex flex-fdr border-b">
+						<div class = "flex-f1 p20 flex flex-aic">
+							<div>
+								<p>发行数量</p>
+								<strong>{$rs.num}张</strong>
+							</div>
+						</div>
+						<div class = "flex-f1 p20 flex flex-aic">
+							<div>
+								<p>领取数量</p>
+								<strong>{$rs.get_num}张</strong>
+							</div>
+						</div>
+						<div class = "flex-f1 p20 flex flex-aic">
+							<div>
+								<p>使用数量</p>
+								<strong>{$rs.use_num}张</strong>
+							</div>
+						</div>
+					</div>
+					<div class = "flex-f1 flex flex-fdr">
+						<div class = "flex-f1 p20 flex flex-aic">
+							<div>
+								<p>发布时间</p>
+								<strong>{$rs.atime}</strong>
+							</div>
+						</div>
+						<div class = "flex-f1 p20 flex flex-aic">
+							<div>
+								<p>生效时间</p>
+								<strong>{$rs.eday}</strong>
+							</div>
+						</div>
+						<div class = "flex-f1 p20 flex flex-aic">
+							<div>
+								<p>截止时间</p>
+								<strong>{$rs.sday}</strong>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class = "flex-f1 flex flex-fdc ml10 border">
+					<div class="flex-f1" id="coupon_{$rs.id}" style="height:400px;"></div>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			// 基于准备好的dom，初始化echarts实例
+			var myChart = echarts.init(document.getElementById('coupon_{$rs.id}'));
+
+			// 指定图表的配置项和数据
+			{:W('Echart/pie_echart',array('param' => $data))}
+
+			// 使用刚指定的配置项和数据显示图表。
+			myChart.setOption(option);
+		</script>
+			
+	</div>
+	
+
+<div class="clearfix">
+	<div class="pull-right text-gray" onclick="$(this).closest('tr').toggleClass('hide');"><i class="fa fa-times-circle-o fa-2x"></i></div>	
+</div>

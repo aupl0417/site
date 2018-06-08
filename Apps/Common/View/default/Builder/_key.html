@@ -1,0 +1,516 @@
+<switch name="field.type">
+	<case value="htmltext">
+		<span  class="form-control">{$field.subtitle}</span>
+	</case>
+	<case value="input">
+		<input type="text" id="{$field.name}" class="form-control" name="{$field.name}" placeholder="<notempty name="field.subtitle">{$field.subtitle}<else />{$field.title}</notempty>" value="{$field.value}">
+	</case>
+	<case value="pass">
+		<div class="">
+			<input autocomplete="new-password" type="password" id="{$field.name}" class="form-control" name="{$field.name}" placeholder="<notempty name="field.subtitle">{$field.subtitle}<else />{$field.title}</notempty>" value="">
+		</div>
+	</case>
+	<case value="searchSelect">
+		<input type="text" autocomplete="off" data-name="{$field.name}" id="{$field.name}_search" class="form-control" name="{$field.name}_search" placeholder="<notempty name="field.subtitle">{$field.subtitle}<else />{$field.title}</notempty>" value="{$field.value}">
+		<input type="hidden" id="{$field.name}"  name="{$field.name}" value="{$field.value}" />
+		<div class="search-select-list-box hide pd10" style="z-index:999;border:solid 1px #b8b8b8; margin-top:33px; position: relative;">
+			<ul>
+				
+			</ul>
+		</div>
+	</case>
+	<case value="select">
+		<select id="{$field.name}" class="form-control " name="{$field.name}">
+			<option value="">请选择{$field.title}</option>
+			<volist name="field.options" id="vo">
+				<option <eq name="field.value" value="$key">selected</eq> value="{$key}">{$vo}</option>
+			</volist>
+		</select>
+	</case>
+	<case value="checkbox">
+		<div class="">
+			<volist name="field.options" id="vo">
+				<label class="" style="">
+					<!-- <input type="checkbox" <eq name="field.value" value="$key">checked</eq> name="{$field.name}[]" value="{$key}"> -->
+					<div class="icheckbox_square-grey" aria-checked="false" aria-disabled="false" style="position: relative;">
+						<input <eq name="field.value" value="$key">checked</eq> type="checkbox" class="i-grey-square" name="{$field.name}[]" value="{$key}" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);">
+						<ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins>
+					</div> {$vo}
+				</label>
+			</volist>
+		</div>
+	</case>
+	<case value="textarea">
+		<div class="">
+			<textarea id="{$field.name}" class="form-control" name="{$field.name}" rows="" cols="">{$field.value}</textarea>
+		</div>
+	</case>
+	<case value="vcode">
+		<div class="row mgt0">
+			<div class="col-xs-6 pr10">
+				<div class="">
+					<input type="text" id="{$field.name}" class="form-control " name="{$field.name}" placeholder="{$field.title}" value="" maxlength="5">
+				</div>
+			</div>
+			<div class="col-xs-6 pl0">
+				<a href="javascript:void(0)" data-url="{:DM('user')}{:U('/verify')}" class="verify" title="点击图片更换验证码">
+					<img src="{:DM('user')}{:U('/verify')}" alt="验证码" class="verifyimg" style="height:35px;">
+				</a>
+			</div>
+		</div>
+	</case>
+	<case value="smscode">
+		<div class="">
+			<input name="{$field.name}" id="{$field.name}" type="text" class="form-control" placeholder="{$field.title}" value="">
+		</div>
+		<span class="input-group-btn"><button type="button" class="btn btn-danger smscode bg-8ac text_white" onclick="sendMsg(this);">获取验证码</button></span>
+	</case>
+	<case value="protocol">
+		<div class="">
+			<label class="" style="">
+				<div class="icheckbox_square-grey" aria-checked="false" aria-disabled="false" style="position: relative;">
+					<input type="checkbox" class="i-grey-square" name="{$field.name}[]" value="1" checked style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);">
+					<ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins>
+				</div> {$field.title}
+				<volist name="field.options" id="vo" key="vkey">
+					<a href="javascript:void(0)" data-type="vmodal" data-url="{$vkey}" data-width="900px" data-backdrop="false" data-title="乐兑用户注册协议">&lt;&lt;{$vo}&gt;&gt;</a>
+				</volist>
+			</label>
+		</div>
+	</case>
+	<case value="mutilImages">
+		<div class="uploader">
+		    <div id="filePicker_{$field.name}">选择图片</div>
+	    	<ul id="images-list-{$field.name}" class="images-select-box">
+				<notempty name="field.value">
+				<php>
+					$picList	=	explode(',', rtrim($field['value'], ','));
+				</php>
+					<volist name="picList" id="piclist">
+						<li id="" data-path="{$piclist}" class="text-center">
+							<div class="li-img-box">
+								<a href="{$piclist}" data-title="大图" class="image-zoom" title="大图">
+									<img src="{$piclist}">
+								</a>
+							</div>
+							<div data-name="{$field.name}" class="delete-images" onclick="reMove($(this));">
+								<div class="selected-icon"><i class="fa fa-times"></i></div>
+							</div>
+						</li>
+					</volist>
+				</notempty>
+			</ul>
+		    <input name="{$field.name}" type="hidden" value="{$field.value}" />
+		</div>
+
+		<script>
+			// 是否定义了上传数量限制
+			if(FILE_NUM_LIMIT == undefined){
+				// 最大上传默认5个
+				var FILE_NUM_LIMIT = 5;
+			}
+			// 初始化Web Uploader
+			var uploader_{$field.name} = WebUploader.create({
+
+			    // 选完文件后，是否自动上传。
+			    auto: true,
+			    formData:{
+			    	action  : '{:enCryptRestUri("/Upload/curlUpload")}',
+			    },
+			    // swf文件路径
+			    swf: 'Uploader.swf',
+
+			    // 文件接收服务端。
+				server: "{:U('/run/upload')}",
+				fileSingleSizeLimit:1024 * 1024 * 2,
+			    // 选择文件的按钮。可选。
+			    // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+			    pick: '#filePicker_{$field.name}',
+			    duplicate :false,
+			    // 只允许选择图片文件。
+			    accept: {
+			        title: 'Images',
+			        extensions: 'gif,jpg,jpeg,bmp,png',
+			        mimeTypes: 'image/*',
+			    },
+			    // 上传文件数量限制
+			    fileNumLimit : FILE_NUM_LIMIT,
+			});
+			
+			uploader_{$field.name}.on('fileQueued', function (file) {
+            	uploader_{$field.name}.upload();
+            });
+			
+			uploader_{$field.name}.on('error', function(code) {
+				switch(code) {
+					case 'F_EXCEED_SIZE':
+						talert({status:0,msg:'图片大小不能超过2M'});
+						break;
+					case 'Q_EXCEED_NUM_LIMIT':
+						talert({status:0,msg:'超过文件上传数量限制'});
+						break;
+				}
+			})
+			
+			/*上传成功**/
+            uploader_{$field.name}.on('uploadSuccess', function (file, data) {
+               	if(data.code == 1) {
+               		data = data.data;
+               		var fileVal = $("input[name='{$field.name}']").val();
+               		var inUrl	=	false;
+               		var valenth = fileVal.split(',');
+               		for(var ii in valenth) {
+	               		if(valenth[ii] != '') {
+	    					if(valenth[ii] == data.url) {
+	    						inUrl	=	true;
+	    					}
+	    				}
+               		}
+               		if(inUrl == true) {
+               			return;
+               		}
+               		
+               		var saveVal = fileVal + data.url + ',';
+               		$("input[name='{$field.name}']").val(saveVal);
+               		var html = '<li id="" data-path="'+data['url']+'" data-upid="'+file.id+'" class="text-center">'+
+									'<div class="li-img-box">'+
+										'<a href="javascript:;" onclick="bigImage($(this));" class="image-zoom" data-url="'+data['url']+'" title="大图"><img src="'+data['url']+'"></a>'+
+									'</div>'+													
+									'<div data-name="{$field.name}" class="delete-images" onclick="reMove($(this), uploader_{$field.name});"><div class="selected-icon"><i class="fa fa-times"></i></div></div>'+											
+								'</li>';
+			        $("input[name='{$field.name}']").parent().find("#images-list-{$field.name}").append(html);
+
+               	} else {
+               		talert({status:data.code,msg:data.msg});
+               	}
+            });
+			function reMove(obj, up) {
+				var data	=	$(obj).parent().data();
+				var name	=	obj.data('name');
+				var thisval =	$("input[name='"+name+"']").val();
+				var valenth = thisval.split(',');
+				var images	=	'';
+				for(var ii in valenth) {
+					if(valenth[ii] != '') {
+						if(valenth[ii] != data.path) {
+							images += valenth[ii] + ',';
+						}
+					}
+				}
+				$("input[name='"+name+"']").val(images);
+				$(obj).parent().remove();
+				if(up != undefined) {
+					up.removeFile( data.upid, true );
+				}
+			}
+		</script>
+	</case>
+	<case value="singleImages">
+		<div class="uploader">
+		    <div id="filePicker_{$field.name}">选择图片</div>
+	    	<ul id="images-list-{$field.name}" class="images-select-box">
+	    		<notempty name="field.value">
+				<li id="" data-path="{$field.value}" class="text-center">
+					<div class="li-img-box">
+						<a href="{$field.value}" data-title="大图" class="image-zoom" title="大图">
+							<img src="{$field.value}">
+						</a>
+					</div>
+					<!-- <div class="delete-images" onclick="reMove($(this));">
+						<div class="selected-icon">
+							<i class="fa fa-times"></i>
+						</div>
+					</div> -->
+				</li>
+				</notempty>
+			</ul>
+		    <input name="{$field.name}" type="hidden" value="{$field.value}" />
+		</div>
+		<script>
+		$(document).ready(function() {
+				// 初始化Web Uploader
+				var uploader_{$field.name} = WebUploader.create({
+
+				    // 选完文件后，是否自动上传。
+				    auto: true,
+
+				    formData:{
+				    	action  : '{:enCryptRestUri("/Upload/curlUpload")}',
+				    },
+				    // swf文件路径
+				    swf: 'Uploader.swf',
+				    fileSingleSizeLimit:1024 * 1024 * 2,
+				    // 文件接收服务端。
+					server: "{:U('/run/upload')}",
+				    // 选择文件的按钮。可选。
+				    // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+				    pick: '#filePicker_{$field.name}',
+				    duplicate :true,
+				    // 只允许选择图片文件。
+				    accept: {
+				        title: 'Images',
+				        extensions: 'gif,jpg,jpeg,bmp,png',
+				        mimeTypes: 'image/*',
+				    },
+				    // 上传文件数量限制
+				    //fileNumLimit : FILE_NUM_LIMIT,
+				});
+				uploader_{$field.name}.on('fileQueued', function (file) {
+	            	uploader_{$field.name}.upload();
+	            });
+				uploader_{$field.name}.on('error', function(code) {
+					switch(code) {
+						case 'F_EXCEED_SIZE':
+							talert({status:0,msg:'图片大小不能超过2M'});
+							break;
+						case 'Q_EXCEED_NUM_LIMIT':
+							talert({status:0,msg:'超过文件上传数连限制'});
+							break;
+					}
+				})
+				/*上传成功**/
+                uploader_{$field.name}.on('uploadSuccess', function (file, data) {
+                	if(data.code == 1) {
+                		data = data.data;
+                		$("input[name='{$field.name}']").val(data.url);
+                		var html = '<li id="" data-path="'+data['url']+'" class="text-center">'+
+										'<div class="li-img-box">'+
+											'<a href="javascript:;" onclick="bigImage($(this));" class="image-zoom" data-url="'+data['url']+'" title="大图"><img src="'+data['url']+'"></a>'+
+										'</div>'+													
+										//'<div class="delete-images" onclick="reMove($(this));"><div class="selected-icon"><i class="fa fa-times"></i></div></div>'+											
+									'</li>';
+				        $("input[name='{$field.name}']").parent().find("#images-list-{$field.name}").html(html);
+                	} else {
+                		talert({status:data.code,msg:data.msg});
+                	}
+                });
+			})
+		</script>
+	</case> 
+	<case value="ueditor">
+		{:W('Common/Builder/ueditor', array(array('name' => $field['name'], 'value' => $field['value'])))}
+	</case>
+	<case value="city">
+		{:W('Common/Builder/chinaCity', array(array('name' => $field['name'], 'value' => $field['value'])))}
+	</case>
+	<case value="id">
+		<input name="{$field.name}" value="{$field.value}" type="hidden" />
+	</case>
+	<case value="date">
+		<div class="input-group date datetime defaultDate" data-min-view="2"
+			data-date-format="yyyy-mm-dd">
+			<input name="{$field.name}" data-filter="gte" class="form-control form-filter" readonly="" id="{$field.name}" type="text" value="{$field.value}">
+			<span class="input-group-addon btn default">
+				<span class="glyphicon glyphicon-th fa fa-calendar"></span>
+			</span>
+		</div>
+		<script> 
+		$('.defaultDate').datetimepicker({
+			format : 'yyyy-mm-dd',
+			language:  'zh-CN',
+			weekStart : 1,
+			todayBtn : 1,
+			autoclose : 1,
+			todayHighlight : 1,
+			startView : 2,
+			forceParse : 0,
+			showMeridian : 1
+		});
+		</script>
+	</case>
+	<case value="datetime">
+		<div class="input-group date datetimes" data-date-format="yyyy-mm-dd hh:ii">
+			<input name="{$field.name}" class="form-control form-filter" readonly="false" id="{$field.name}" type="text" value="{$field.value}">
+			<span class="input-group-addon btn default">
+				<span class="glyphicon glyphicon-th fa fa-calendar"></span>
+			</span>
+		</div>
+		<script>
+		$('.datetimes').datetimepicker({
+			format : 'yyyy-mm-dd hh:ii',
+			language:  'zh-CN',
+			weekStart : 1,
+			todayBtn : 1,
+			autoclose : 1,
+			todayHighlight : 1,
+			startView : 2,
+			forceParse : 0,
+			showMeridian : 1,
+		});
+		</script>
+	</case>
+	<case value="searchDay">
+		<div class="form-inline">
+			<volist name="field.name" id="fName">
+				<div style="width:40%;" class="input-group date datetime mr10 searchDate" data-min-view="2" data-date-format="yyyy-mm-dd">
+					<span class="input-group-addon date"><eq name="key" value="0">从<else />到</eq></span> <input name="{$fName}" data-filter="<eq name="key" value="0">gte<else />lte</eq>" class="form-control form-filter" readonly="" id="{$fName}{$key}" type="text">
+						<span class="input-group-addon btn default"><span class="glyphicon glyphicon-th fa fa-calendar"></span>
+					</span>
+				</div>
+			</volist>
+		</div>
+		<script>
+		$('.searchDate').datetimepicker({
+			format : 'yyyy-mm-dd',
+			language:  'zh-CN',
+			weekStart : 1,
+			todayBtn : 1,
+			autoclose : 1,
+			todayHighlight : 1,
+			startView : 2,
+			forceParse : 0,
+			showMeridian : 1
+		});
+		</script>
+	</case>
+	<case value="rate">
+		<div class="clearfix">
+			<php>
+				$value	=	!is_null($field['value']) ? intval($field['value']) : null;
+			</php>
+			<volist name="field.options" id="vo">
+				<label class="square mr10 fs12 fl"><input id="{$field.name}{$key}" <if condition="$value === $key">checked</if> value="{$key}" type="radio" name="{$field.name}"><span></span></label>
+				<label for="{$field.name}{$key}" class="fl mr20">{$vo}</label>
+			</volist>
+		</div>
+	</case>
+	<case value="file">
+		<div class="uploader">
+		    <div id="filePicker_{$field.name}">选择文件</div>
+	    	<ul id="images-list-{$field.name}" class="images-select-box">
+	    		<notempty name="field.value">
+				<li id="" data-path="{$field.value}" class="text-center">
+					<div class="li-img-box">
+						<a href="{$field.value}" data-title="大图" class="image-zoom" title="大图">
+							<img src="{$field.value}">
+						</a>
+					</div>
+					<!-- <div class="delete-images" onclick="reMove($(this));">
+						<div class="selected-icon">
+							<i class="fa fa-times"></i>
+						</div>
+					</div> -->
+				</li>
+				</notempty>
+			</ul>
+		    <input name="{$field.name}" type="hidden" value="{$field.value}" />
+		</div>
+		<script>
+			$(document).ready(function() {
+				// 初始化Web Uploader
+				var uploader_{$field.name} = WebUploader.create({
+
+				    // 选完文件后，是否自动上传。
+				    auto: true,
+
+				    formData:{
+				    	action  : '{:enCryptRestUri("/Upload/curlUpload")}',
+				    },
+				    // swf文件路径
+				    swf: 'Uploader.swf',
+				    fileSingleSizeLimit:1024 * 1024 * 2,
+				    // 文件接收服务端。
+					server: "{:U('/run/upload')}",
+				    // 选择文件的按钮。可选。
+				    // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+				    pick: '#filePicker_{$field.name}',
+				    duplicate :true,
+				    // 只允许选择图片文件。
+				    accept: {
+				        title: 'File',
+				        extensions: 'gif,jpg,jpeg,bmp,png,css,zip,rar,docx',
+				        //mimeTypes: 'image/*',
+				    },
+				    // 上传文件数量限制
+				    fileNumLimit : FILE_NUM_LIMIT,
+				});
+				uploader_{$field.name}.on('fileQueued', function (file) {
+	            	uploader_{$field.name}.upload();
+	            });
+				uploader_{$field.name}.on('error', function(code) {
+					switch(code) {
+						case 'F_EXCEED_SIZE':
+							talert({status:0,msg:'图片大小不能超过2M'});
+							break;
+						case 'Q_EXCEED_NUM_LIMIT':
+							talert({status:0,msg:'超过文件上传数连限制'});
+							break;
+					}
+				})
+				/*上传成功**/
+                uploader_{$field.name}.on('uploadSuccess', function (file, data) {
+                	if(data.code == 1) {
+                		data = data.data;
+                		$("input[name='{$field.name}']").val(data.url);
+                		var html = '<li id="" data-path="'+data['url']+'" class="text-center">'+
+										'<div class="li-img-box">'+
+											'<a href="javascript:;" onclick="bigImage($(this));" class="image-zoom" data-url="'+data['url']+'" title="大图"><img src="'+data['url']+'"></a>'+
+										'</div>'+													
+										//'<div class="delete-images" onclick="reMove($(this));"><div class="selected-icon"><i class="fa fa-times"></i></div></div>'+											
+									'</li>';
+				        $("input[name='{$field.name}']").parent().find("#images-list-{$field.name}").html(html);
+                	} else {
+                		talert({status:data.code,msg:data.msg});
+                	}
+                });
+			})
+		</script>
+	</case>
+	<case value="goods">
+		<input type="hidden" name="{$field.name}" value="<notempty name="field.value.goodsIds">{$field.value.goodsIds}</notempty>" />
+		<a href="javascript:;" data-type="vmodal" data-title="商品选择" data-url="{:U('/goods/choose', ['type' => $field['name'], 'id' => $field['value']['aid'], 'field' => $field['name']])}" data-val="{$field.value}" class="btn btn-danger chooseGoods">{$field.title}</a>
+		<div>
+			<ul id="images-list-{$field.name}" class="images-select-box">
+				<notempty name="field.value.goods">
+					<volist name="field.value.goods" id="goods">
+						<li data-name="{$field.name}" data-id="{$goods.id}" data-path="{$goods.images}" class="text-center">
+							<div class="li-img-box">
+								<a href="{$goods.images}" data-title="大图" class="image-zoom" title="大图">
+									<img src="{$goods.images}">
+								</a>
+							</div>
+							<div class="delete-images" onclick="reMoveGoods($(this));">
+								<div class="selected-icon">
+									<i class="fa fa-times"></i>
+								</div>
+							</div>
+						</li>
+					</volist>
+				</notempty>
+			</ul>
+		</div>
+		<script>
+		function reMoveGoods(obj) {
+			var d	=	$(obj).parent().data();
+			var thisval =	$("input[name='"+d.name+"']").val();
+			var valenth = thisval.split(',');
+			var images	=	'';
+			for(var ii in valenth) {
+				if(valenth[ii] != '' && valenth[ii] != d.id) {
+					images += valenth[ii] + ',';
+				}
+			}
+			$("input[name='"+d.name+"']").val(images);
+			$(obj).parent().remove();
+		}
+		</script>
+	</case>
+	<case value="selectAddress">
+		<input type="hidden" name="{$field.name}" id="{$field.name}" value="<notempty name="field.value">{$field.value}<else />{$field.options.0.id}</notempty>" />
+		<div class="pull-right">
+			<a href="{$field.other.url}" target="_blank" class="btn-danger btn-xs btn-trans">管理地址</a>
+		</div>
+		<div class="clearfix md10"></div>
+		<div class="select-address">
+			<volist name="field.options" id="vo" key="k">
+				<div class="item <if condition="$vo['id'] eq $field['value']">active<elseif condition="$key eq 0" />active</if>" onclick="select_address_item($(this))" data-id="{$vo.id}" data-field="{$field.name}">
+					<div><span class="ft16">{$vo.linkname}</span> , {$vo.mobile} <notempty name="vo.tel">，{$vo.tel}</notempty></div>
+					<div class="text-gray">{$vo.province_name} {$vo.ctiy_name} {$vo.district_name} {$vo.town_name} {$vo.street} <notempty name="vo.postcode">，（{$vo.postcode}）</notempty></div>
+				</div>
+			</volist>			
+		</div>
+		<script>
+
+		</script>
+	</case>	
+</switch>

@@ -1,0 +1,25 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin();openWin({name:'ucenter',url:'/Ucenter/index',ref:true})"></i>
+		</div>
+		<div class="title">
+			提示
+		</div>
+		<div class="r">
+			
+		</div>
+	</div>
+</header>
+<section>
+	<div class="tips">
+		<div class="text text-success md10">购买成功！</div>
+		<div class="btn btn-danger" onclick="openWin({name:'my_agent',url:'/Upgrade/my_agent',close:true,ref:true})">我的代理</div>		
+		<div class="btn btn-danger" onclick="openWin({name:'upgrade',url:'/Upgrade/agent_buy',close:true})">再次购买</div>		
+	</div>
+</section>
+
+
+<script>
+	fixBar(1);	
+</script>

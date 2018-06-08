@@ -1,0 +1,112 @@
+<div class="p20 box">
+	<div class="row">
+		<div class="col-xs-5 auth-text">
+			<div class="ft16 p10 md10 border-d">报名商品资料</div>
+			<div><a href="{:C('sub_domain.item')}/goods/{$rs.goods_attr_list.id}" target="_blank"><img src="{:myurl($rs['goods']['images'],100)}" alt="商品主图"></a></div>
+			<div>商品标题：<a href="{:C('sub_domain.item')}/goods/{$rs.goods_attr_list.id}" target="_blank">{$rs.goods.goods_name}</a></div>
+			<div>价格：<span class="ft16 text-danger">￥{$rs.goods.price} <neq name="rs.goods.price_max" value="$rs['goods']['price']">~ {$rs.goods.price_max}</neq></span></div>
+			<div>奖励比例：{$rs.goods.score_ratio}</div>
+			<div>库存：{$rs.goods.num}</div>
+			<div>累计售出：{$rs.goods.sale_num}</div>
+			<div>评分：{$rs['goods']['fraction'] * 100}%</div>
+			<div>人气：{$rs.goods.view}</div>
+			<div>收藏：{$rs.goods.fav_num}</div>
+			<div>权重：{$rs.goods.pr}</div>
+		</div>
+		<div class="col-xs-7">
+			<div class="row">
+				<div class="col-xs-6 auth-text">
+					<div class="ft16 p10 md10 border-d">报名资料</div>			
+					<volist name="rs.images" id="vo">
+						<div class="md10"><a class="image-zoom" href="{$vo}" title="大图"><img src="{:myurl($vo,150,100,2,'',1)}" alt="图片"></a></div>
+					</volist>
+					
+					<div>活动标题：<span class="ft16">{$rs.subject}</span></div>
+					<div>活动价格：<span class="text-danger">{$rs.price}</span></div>
+					<div>报名库存：<span class="text-info">{$rs.num}</span></div>
+				</div>				
+				<div class="col-xs-6 auth-text">
+					<div class="ft16 p10 md10 border-d">商家资料</div>
+					<div>店铺：<a href="{:shop_url($rs['shop']['id'],$rs['shop']['domain'])}" target="_blank"><span class="ft16">{$rs.shop.shop_name}</span></a></div>
+					<div>昵称：{$rs.user.nick}</div>
+					<div>店铺状态：{:status($rs['shop']['status'],[['暂停营业','btn-default'],['正常营业','btn-success'],['强制关闭','btn-danger']])}</div>
+					<div>在售商品：{$rs.shop.goods_num}</div>
+					<div>综合评分：{$rs.shop.fraction}</div>
+					<div>物流评分：{$rs.shop.fraction_speed}</div>
+					<div>服务评分：{$rs.shop.fraction_service}</div>
+					<div>描述评分：{$rs.shop.fraction_desc}</div>
+					<div>累计违规扣分：{$rs.shop.illegl_point}</div>
+					
+				</div>
+		
+			</div>
+			
+			<div class="ft16 p10 md10 border-d">审核结果</div>
+			<div class="md10">审核状态：{:status($rs['status'],[['待审核','btn-default'],['审核通过','btn-success'],['被拒绝','btn-danger']])}</div>
+			<notempty name="rs.reason">
+				<div class="text-danger strong">拒绝原因：</div>
+				{$rs.reason|nl2br}
+			</notempty>
+		</div>
+	</div>
+
+	<div class="ft18 strong p10 border-d md20 mt20">审核记录</div>
+	
+	<form data-url="__URL__/logs_add" data-id="#form_{$rs.id}" id="form_{$rs.id}" class="form-horizontal vform">
+			{:W('Widget/buildform',array(array(
+				'field'		=>array(	
+					array(
+						'formtype'		=>'radio',
+						'label'			=>'状态',
+						'name'			=>'status',
+						'data'			=>array(array(0,'等待审核'),array(1,'通过审核'),array(2,'拒绝审核')),
+						'field'			=>array(0,1),
+						'value'			=>$rs['status'],
+					),
+					array(
+						'formtype'		=>'textarea',
+						'label'			=>'原因',
+						'name'			=>'reason',
+						'tips'			=>'拒绝审核时必填',
+					),
+					array(
+						'formtype'		=>'hidden',
+						'name'			=>'id',
+						'value'			=>$rs['id'],
+					),					
+					array(
+						'formtype'		=>'html',
+						'label'			=>' ',
+						'html'			=>'<button type="button" class="btn btn-primary btn-150px logs-add"><i class="fa fa-check"></i> 提交</button>'
+					),
+
+
+				),
+			)))}
+	
+	
+	</form>
+
+	
+</div>
+<div class="clearfix">
+	<div class="pull-right text-gray" onclick="$(this).closest('tr').toggleClass('hide');"><i class="fa fa-times-circle-o fa-2x"></i></div>	
+</div>
+
+<script>
+image_zoom();
+$('.logs-add').click(function(){
+	var d=$(this).closest('form').data();
+	ajax_post_form({
+		formid:d.id
+	},function(ret){
+		valert(ret);
+		if(ret.status=='success'){
+			var tag='#item-{$rs.id}';
+			var url='__URL__/view/id/{$rs.id}';
+			loadurl({tag:tag,url:url});
+		}
+	});
+
+});
+</script>

@@ -1,0 +1,34 @@
+<form class="p10 vform form-horizontal" data-url="__URL__/orders_close_save" id="orders_close_save">
+	{:W('Widget/buildform',array(array(
+		'field'		=>array(
+			array(
+				'formtype'		=>'textarea',
+				'label'			=>'关闭原因',
+				'name'			=>'reason',
+				'attr'			=>'rows="5"',
+				'is_need'		=>true,
+			),	
+			array(
+				'formtype'		=>'hidden',
+				'name'			=>'o_no',
+			),
+		),
+	),I('get.')))}
+<div class="p20 text-center">
+	<button type="submit" class="btn btn-primary btn-150px"><i class="fa fa-check"></i> 提交</button>
+</div>
+	
+	
+
+</form>
+<script>
+checkform({
+	formid:'#orders_close_save',
+},function(ret){
+	valert(ret);
+	if(ret.status=='success'){
+		ref();
+	}
+});
+
+</script>

@@ -1,0 +1,76 @@
+<div class="clearfix">
+	<div class="pull-right text-gray" onclick="$(this).closest('tr').toggleClass('hide');"><i class="fa fa-times-circle-o fa-2x"></i></div>	
+</div>
+	<div class="flex flex-fdr ml10 mr10 mt10">
+		<div class="flex-f1 box mr10">
+			<div class="text-center ft16 p10 border-b">用户统计</div>
+			<div class="flex flex-fdr ">
+				<div class="flex-f1 p10 border-r">
+					<p class="text-center">新增用户总数</p>
+					<p class="text-center">{$rs.member}</p>
+				</div>
+				<div class="flex-f1 p10">
+					<p class="text-center">累计用户总数</p>
+					<p class="text-center">{$rs.total_member}</p>
+				</div>
+			</div>
+		</div>
+		<div class="flex-f1-half box ml10">
+			<div class="text-center ft16 p10 border-b">店铺统计</div>
+			<div class="flex flex-fdr">
+				<div class="flex-f1 p10 border-r">
+					<p class="text-center">新增申请开店总数</p>
+					<p class="text-center">{$rs.open_store_user}</p>
+				</div>
+				<div class="flex-f1 p10 border-r">
+					<p class="text-center">新增开店成功总数</p>
+					<p class="text-center">{$rs.open_store_success}</p>
+				</div>
+				<div class="flex-f1 p10 border-r">
+					<p class="text-center">强制关闭店铺数</p>
+					<p class="text-center">{$rs.close_store}</p>
+				</div>
+				<div class="flex-f1 p10">
+					<p class="text-center">正常营业店铺数</p>
+					<p class="text-center">{$rs.normal_store}</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="flex flex-fdr ml10 mr10 mt10">
+		<div class="flex-f1 box mr10">
+			<div class="text-center ft16 p10 border-b">评价统计</div>
+			<div class="flex flex-fdr ">
+				<div class="flex-f1 p10 border-r">
+					<p class="text-center">新增评价笔数</p>
+					<p class="text-center">{$rs.comment_num}</p>
+				</div>
+				<div class="flex-f1 p10">
+					<p class="text-center">累计评价总数</p>
+					<p class="text-center">{$rs.comment_total_num}</p>
+				</div>
+			</div>
+		</div>
+		<div class="flex-f1-half box ml10">
+			<div class="text-center ft16 p10 border-b">商品统计</div>
+			<div class="flex flex-fdr">
+				<div class="flex-f1 p10 border-r">
+					<p class="text-center">新增商品数量</p>
+					<p class="text-center">{$rs.goods_num}</p>
+				</div>
+				<div class="flex-f1 p10 border-r">
+					<p class="text-center">新增违规商品数量</p>
+					<p class="text-center">{$rs.illegal_goods_num}</p>
+				</div>
+				<div class="flex-f1 p10 border-r">
+					<p class="text-center">在线出售商品总数</p>
+					<p class="text-center">{$rs.online_goods_num}</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+
+<div class="clearfix">
+	<div class="pull-right text-gray" onclick="$(this).closest('tr').toggleClass('hide');"><i class="fa fa-times-circle-o fa-2x"></i></div>	
+</div>

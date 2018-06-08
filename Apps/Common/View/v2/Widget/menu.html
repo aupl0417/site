@@ -1,0 +1,31 @@
+<div class="ab w210 bg_white menu_nav menu_new">
+	<volist name="data" id="vo" offset="0" length='12'>
+	<h5 class="text_2b fs14">
+		<div class="fl text-center line30 mr5" style="width:30px">
+			<img width="18" height="18" src="{$vo.icon}">
+		</div>
+		<div class="root_category"><a class="fl pr10" href="{:DM('s')}{:U('/index/index/', ['id' => $vo['id']])}">{$vo.category_name}</a></div>
+		<div class="ab clearfix solid_b menu_block">	
+			<div class="menu_cl pd10">
+				<volist name="vo.dlist" id="dvo">
+					<div class="clearfix mb7">							
+						<a class="fl menu_cl_tle pr20 strong" href="{:DM('s')}{:U('/index/index/', ['id' => $dvo['id']])}">{$dvo.category_name}</a>
+						<div class="fl menu_cl_body clearfix">
+							<volist name="dvo.dlist" id="ddvo">
+								<a class="fl pr10" href="{:DM('s')}{:U('/index/index/', ['id' => $ddvo['id']])}">{$ddvo.category_name}</a><span class="pr10 fl">|</span>
+							</volist>
+						</div>						
+					</div>
+				</volist>
+			</div>												
+			<div class="fr w225 ml10">
+				<!-- <a href=""><img class="mb8" src="__IMAGES__/shop/shop_4.jpg"></a>
+				<a href=""><img class="mb8" src="images/shop/shop_4.jpg"></a>
+				<a href=""><img class="mb8" src="images/shop/shop_4.jpg"></a> -->
+			</div>
+		</div>
+	</h5>
+	</volist>
+</div>
+
+		

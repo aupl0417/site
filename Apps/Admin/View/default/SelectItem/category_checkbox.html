@@ -1,0 +1,86 @@
+<ul class="nav nav-tabs border-d">
+	<volist name="list" id="vo">
+	<li class="{$key==0?'active':''}">
+		<a href="#{$vo.id}" data-toggle="tab">{$vo.sub_name}</a>
+	</li>
+	</volist>
+</ul>
+
+<div class="tab-content tab-content-noborder">
+	<volist name="list" id="vo">
+	<div class="tab-pane {$key==0?'active':''}" id="{$vo.id}">
+
+		<table>
+			<thead>
+				<tr>
+					<th width="180" class="text-center ft16">二级类目</th>
+					<th class="ft16">三级类目</th>
+				</tr>
+			</thead>
+			<tbody>
+				<volist name="vo.dlist" id="second">
+				<tr>
+					<td><label class=" mr20" style=""><input type="checkbox" class="i-red-square" name="second_category" value="100841621" data-type="select-all" data-tag="#{$second.id}" data-name="{$second.category_name}" > {$second.category_name}</label></td>
+					<td>
+						<div class="row" id="{$second.id}">
+							<volist name="second.dlist" id="three">
+							<div class="col-xs-3"><label class=" mr20" style=""><input type="checkbox" class="i-red-square" name="category_id" value="{$three.id}"> {$three.category_name}</label></div>
+							</volist>
+						</div>
+					</td>
+				</tr>
+				</volist>
+			</tbody>
+		</table>
+
+	</div>
+	</volist>
+	
+	<div class="p10 text-center">
+		<div class="btn btn-150px btn-primary mt20" onclick="select_ok($(this))">确定选择</div>
+	</div>		
+</div>
+
+<script>
+iCheckClass('#ajax-modal');
+checkbox_select_all();
+
+	function select_ok(obj){
+		var size = $('#ajax-modal input[name="category_id"]:checked').size();
+		if(size==0){
+			valert({status:'warning',msg:'请选择类目！'});
+			return false;
+		}
+		
+		var field	= $('.vform-action').html();
+		var tag		= '.f-'+field;
+		var html	= '';
+		var ids		= new Array();
+		$('#ajax-modal input[name="category_id"]:checked').each(function(index){
+			var id 				= $(this).val();
+			var category_name	= $(this).closest('label').text();
+			
+			if($(tag).find('[data-id="'+ id +'"]').size() == 0){ //如果已添加过的话将不再添加	
+				ids.push(id);
+				html +='<li data-id="'+ id +'" class="hover-shadow"><div class="ac-box"><i class="fa fa-times-circle fa-2x text-danger" onclick="delete_item($(this))"></i></div>';
+				html +='<div class="category_name">'+ category_name +'</div>';
+				html +='</li>';
+			}
+		});
+		
+		if(html!=''){
+			var old_ids = $('#'+field).val();
+			if(old_ids!='') ids.push(old_ids);
+			$('#'+field).val(ids.join(','));
+			
+			if($('.f-'+field+' .col-xs-7 .category-list').size()>0){
+				$('.f-'+field+' .col-xs-7 .category-list').prepend(html);
+			}else{
+				html='<ul class="category-list mt10">'+html+'</ul>';
+				$('.f-'+field+' .col-xs-7').append(html);
+			}
+		}
+		
+		$('#ajax-modal').modal('hide');
+	}
+</script>

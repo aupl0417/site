@@ -1,0 +1,299 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="nav-tabs">
+			<div class="nav-tabs-item" onclick="openWin({name:'register',url:'/Login/register',close:true})">个人注册</div><div class="nav-tabs-item active">企业注册</div>
+		</div>
+		<div class="r">
+			<div class="text" onclick="login()">登录</div>
+		</div>
+	</div>
+</header>
+
+<section>
+	<?php 
+		preg_match("/ref\/[0-9]+/",$_SERVER['HTTP_REFERER'],$match);
+		if($match){
+			$ref = str_replace("ref/","",$match[0]);
+		}
+	?>
+
+	<?php
+		if (C('cfg.site')['is_register'] == 0) {
+	?>
+	<div class="load-body">{:C('cfg.site')['is_register_tips']}</div>
+
+	<?php
+		} else {
+	?>
+
+	<form id="form-register"  data-url="__URL__/check_login">
+		<div class="line-input row hover">
+			<div class="col-4">用户名</div>
+			<div class="col-4x3"><input id="username" name="username" maxlength="20" placeholder="6~20位之间的中文、字母、数字或下划线组合"/></div>
+		</div>
+		<div class="line-input row hover">
+			<div class="col-4">密码</div>
+			<div class="col-4x3"><input type = "password" id="password" name="password" maxlength="20" placeholder="8-20位字符，支持字母、数字及符号组合"></div>
+		</div>
+		<div class="line-box row hover">
+			<div class="col-4">组织机构类型	</div>
+			<div class="col-4x3 text-right text-gray" id="organize" data-id=""  onclick="select_organize($(this))">请选择组织机构类型</div>
+        </div>
+		<div class="line-input row hover">
+			<div class="col-4">公司名称</div>
+			<div class="col-4x3"><input id="company" name="company" maxlength="20" placeholder="请输入您的公司名称，与营业执照一致" ></div>
+		</div>
+		<div class="line-input row hover">
+			<div class="col-4">营业执照</div>
+			<div class="col-4x3"><input id="company_license" maxlength="24" name="company_license" placeholder="请输入营业执照号码或统一社会信用代码号" ></div>
+		</div>
+<!-- 		<div class="line-input row hover">
+			<div class="col-4">分享人</div>
+			<div class="col-4x3"><input id="ref" name="ref" maxlength="100" value = "<?php echo $ref;?>" placeholder="请输入分享人用户名或分享码或手机号" onblur = "ref_user(this)"></div>
+		</div> -->
+		<div class="line-input row hover" id = "ref_user" style = 'display:none;'>
+			<div class="col-4">分享人昵称</div>
+			<div class="col-4x3"> </div>
+		</div>
+		<div class="line-input row hover" id = "ref_user_mobile" style = 'display:none;'>
+			<div class="col-4">分享人手机</div>
+			<div class="col-4x3"> </div>
+		</div>
+		<div class="line-input row hover">
+			<div class="col-4">手机号码</div>
+			<div class="col-4x3"><input class ="fl" id="mobile" maxlength="15" name="mobile" placeholder="可用于登录和找回密码"></div>
+		</div>
+		<div class="line-input row hover" style = 'padding:0 0 0 10px'>
+			<div class="col-4">验证码</div>
+			<div class="col-4x3">
+				<input class ="fl" id="smscode" name="smscode" placeholder="填写获取的验证码" maxlength="10" style = "width:53%" onblur = "">
+				<div class = "fr" style = "width:45%;text-align:center;background:#cc0001;color:#fff;" onclick = 'send_smscode(this)' id = "sendButton">获取验证码</div>
+			</div>
+		</div>
+		<div class="p10">
+
+		<!-- <p style = 'color:#FEAE1B;'>分享人填写后不可更改</p> -->
+		<div class="btn btn-danger btn-lg btn-block md20" onclick="register()">完成</div>
+		<div>
+			<div class="col-10 text-center fl" style="margin-right:10px;"><i class="icons icons-20px is_agreement i-checkbox" onclick = "is_agreement(this)"></i></div>
+			<div class="col-90 ft14 fl">
+				阅读并以接受 <span style = "color:#8ac500" onclick="agreement()">《唐人街商城注册协议》</span>
+			</div>
+			<div class = "clearfix"></div>
+		</div>
+		</div>
+	</form>
+
+	<?php } ?>
+
+</section>
+<include file="Public:d_layer" />
+<script id="tpl_organize" type="text/html">
+    <% for (var i = 0; i < data.length; i ++) { %>
+		<div class="line-box row hover noicon" data-id="<%= data[i].value %>" onclick="tick_organize($(this))">
+			<!-- <div class="col-5" style="width:35px;height:35px;padding-top:5px;"></div> -->
+			<div class="col-5x4 pl10 sub_name"><%= data[i].text %></div>
+		</div>
+    <% } %>
+
+</script>
+
+<script>
+	<?php if($ref){?>
+	$("#ref").blur();
+	<?php }?>
+	fixBar(1);
+	var register_ref = '';
+	//获取分享人信息
+	function ref_user(obj){
+		if($(obj).val() != register_ref){
+			register_ref = $(obj).val();
+			if(register_ref.length > 0){
+				ajax_post({
+					url:'/Api/api',
+					data:{apiurl:'/Erp/get_user_info',code:register_ref},
+				},function(ret){
+					if(ret.code==1){			
+						$('.page.active #ref_user ').show().children(".col-4x3").html(ret.data.u_nick);
+						var tel = ret.data.u_tel;
+						tel = tel.slice(0,3) + '****' + tel.slice(7);
+						$('.page.active #ref_user_mobile ').show().children(".col-4x3").html(tel);
+					}else{
+						$('.page.active #ref_user ').hide();
+						valert({msg:"找不到该分享人"});
+					}
+				});
+			}
+		}
+	}
+	var register_curCount = 0;
+	//发送验证码
+	function send_smscode(obj){
+		if(register_curCount != 0){
+			valert({msg:'180秒内只允许发送一次短信'});
+			return false;
+		}
+		mobile = $('.page.active #mobile').val();
+		if(!mobile.match(/^1[3456789]\d{9}$/)){
+			valert({msg:'手机号码格式不正确！'});
+			return false;
+		}
+		ajax_post({
+			url:'/Api/api',
+			data:{apiurl:'/Erp/sms_code',mobile:mobile},
+		},function(ret){
+			if(ret.code==1){
+				register_curCount = 180;
+				$(obj).html("" + register_curCount + "秒后重新获取");
+				InterValObj = window.setInterval(SetRemainTime, 1000);
+			}else{
+				valert(ret);
+			}
+		});
+	}
+	//验证码计时
+	function SetRemainTime() {
+		if (register_curCount == 0) {                
+			window.clearInterval(InterValObj);//停止计时器
+			$(".page.active #sendButton").html("重新发送验证码");
+		}
+		else {
+			register_curCount--;
+			$(".page.active #sendButton").html("" + register_curCount + "秒后重新获取");
+		}
+	}
+	var register_smscode_pass = 0;
+	var register_smscode = '';
+	
+	//勾选协议
+	function is_agreement(obj){
+		$(obj).toggleClass("active");
+	}
+	
+	//注册
+	function register(){
+		if(!$('.page.active .is_agreement').hasClass('active')){
+			valert({msg:'请勾选注册协议'});
+			return false;
+		}
+		if($('.page.active #username').val()==''){
+			valert({msg:'请输入用户名'});
+			$('.page.active #username').focus();
+			return false;
+		}
+		if($('.page.active #username').val().length < 6){
+			valert({msg:'用户名必须是6~20位之间的中文/字母/数字/下划线组合,不能以_或数字开头,不能以_结束'});
+			$('.page.active #username').focus();
+			return false;
+		}
+		if($('.page.active #password').val()==''){
+			valert({msg:'请输入密码'});
+			$('.page.active #password').focus();
+			return false;
+		}
+		if($('.page.active #password').val().length < 8){
+			valert({msg:'密码必须是8-20位字符，支持字母、数字及符号组合'});
+			$('.page.active #password').focus();
+			return false;
+		}
+
+		if($('.page.active #organize').data('id')==''){
+			valert({msg:'请选择组织机构类型'});
+			//$('.page.active #organize').focus();
+			return false;
+		}
+		if($('.page.active #company').val()==''){
+			valert({msg:'请输入公司名称'});
+			$('.page.active #company').focus();
+			return false;
+		}
+
+		if($('.page.active #company_license').val()==''){
+			valert({msg:'请输入营业执照'});
+			$('.page.active #company_license').focus();
+			return false;
+		}
+		if($('.page.active #company_license').val().length < 15 && $('.page.active #company_license').val().length > 24){
+			valert({msg:'营业执照只能为15~24位'});
+			$('.page.active #company_license').focus();
+			return false;
+		}
+
+		if($('.page.active #mobile').val()==''){
+			valert({msg:'请输入手机号码'});
+			$('.page.active #mobile').focus();
+			return false;
+		}
+		if($('.page.active #smscode').val()==''){
+			valert({msg:'请输入验证码'});
+			$('.page.active #smscode').focus();
+			return false;
+		}
+		// if(!register_smscode_pass){
+		// 	valert({msg:'短信验证码错误'});
+		// 	return false;
+		// }
+		ajax_post({
+			url:'/Api/api',
+			data:{
+				apiurl:'/Erp/register_company',
+				username:$('.page.active #username').val(),
+				password:$('.page.active #password').val(),
+				organize:$('.page.active #organize').data("id"),
+				company:$('.page.active #company').val(),
+				company_license:$('.page.active #company_license').val(),
+				ref:$('.page.active #ref').val(),
+				mobile:$('.page.active #mobile').val(),
+				smscode:$('.page.active #smscode').val(),
+				no_sign:'ref',
+			},
+		},function(ret){
+			if(ret.code==1){
+				valert({msg:'恭喜你，注册成功'});
+				closeWin();
+				openWin({name:'login',url:'/Login/index',ref:true});
+			}else{
+				valert(ret);
+			}
+		});
+	}
+	function agreement(){
+		openWin({name:'login',url:'/Login/agreement'});
+	}
+	function login(){
+		openWin({name:'login',url:'/Login/index',close:true});
+	}
+
+
+	function select_organize(obj){
+		var d=obj.data();
+	//var list = '{"1":"企业","2":"事业单位","3":"机关","4":"社会团体","5":"民办非企业单位","6":"基金会","7":"居委会","8":"村委会","9":"其他组织机构"}';
+		var list = [{value:"1",text:"企业"},{value:"2","text":"事业单位"},{value:"3",text:"机关"},{value:"4",text:"社会团体"},{value:"5",text:"民办非企业单位"},{value:"6",text:"基金会"},{value:"7",text:"居委会"},{value:"8",text:"村委会"},{value:"9",text:"其他组织机构"}];
+		//console.log(list);
+		var html = template('tpl_organize', {data:list});
+		//console.log(html);
+		vmodal({
+			title:'选择组织机构类型',
+			msg:html,
+		},function(){
+			$('.page.active .vmodal .vmodal-success').unbind();
+			$('.page.active .vmodal .vmodal-success').click(function(){
+				var organize_id=$(this).closest('.vmodal').find('.line-box.selected').data('id');
+				//alert('.page.active #express_'+cart_data.list[d.index].shop.uid);
+				$('.page.active #organize').data('id',organize_id).html($(this).closest('.vmodal').find('.line-box.selected .sub_name').html());
+				//obj.find('.col-4x3').html($(this).closest('.vmodal').find('.line-box.selected .sub_name').html());
+				
+				//console.log($('.page.active #organize').data('id'));
+			});
+		});
+	}
+
+		//选择快递公司
+	function tick_organize(obj){
+		obj.closest('.vmodal-content').find('.line-box.selected').removeClass('selected').addClass('noicon');
+		obj.removeClass('noicon').addClass('selected');
+	}
+</script>

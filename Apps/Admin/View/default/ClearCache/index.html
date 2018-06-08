@@ -1,0 +1,48 @@
+<include file="Public:header" />
+<include file="nav" />
+
+<div class="m20">
+	<div class="block-flat">
+		<div class="content">	
+			<div class="text-center nors">
+				<div class="btn btn-lg btn-primary clearCache"><i class="fa fa-trash-o"></i> 清除缓存</div>
+			</div>
+		</div>
+	</div>
+		
+	<div class="block-flat">
+		<div class="header">							
+            <h3>Memcached所有Key</h3>
+         </div>
+		<div class="content">	
+			<div class="row">
+				<volist name="keys" id="vo">
+				<div class="col-xs-3 md10">
+					{$vo}
+				</div>
+				</volist>
+			</div>
+		</div>
+	</div>		
+</div>
+
+
+
+<include file="Public:copyright" />
+<include file="Public:js" />
+<script>
+	$('.clearCache').click(function(){
+		ajax_get({
+			url:'__URL__/clear',
+			script:'callback(ret)'
+		});	
+	});
+	
+	function callback(ret){
+		valert({
+			status:ret.status,
+			msg:ret.msg
+		})
+	}
+</script>
+<include file="Public:footer" />

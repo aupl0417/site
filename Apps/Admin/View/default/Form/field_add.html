@@ -1,0 +1,269 @@
+<form data-url="__URL__/field_add_save" id="form_create" class="form-horizontal">
+<div class="vform">
+	<ul class="nav nav-tabs border-d">
+		<li class="active">
+			<a href="#tab1" data-toggle="tab">基本信息</a>
+		</li>
+		<li>
+			<a href="#tab2" data-toggle="tab">数据信息</a>
+		</li>
+		<li>
+			<a href="#tab3" data-toggle="tab">验证规则</a>
+		</li>
+		<li>
+			<a href="#tab4" data-toggle="tab">其它选项</a>
+		</li>
+	</ul>
+	<div class="tab-content tab-content-noborder">
+		<div class="tab-pane active" id="tab1">
+			{:W('Widget/buildform',array(array(
+				'field'		=>array(
+					array(
+						'formtype'		=>'select',
+						'label'			=>'分组',
+						'name'			=>'group_id',
+						'is_need'		=>true,
+						'data'			=>CURD(array('table'=>'formtpl_group','map'=>array('formtpl_id'=>$_GET['formtpl_id']))),
+						'field'			=>array('id','group_name'),
+						'value'			=>I('get.group_id'),
+					),					
+					array(
+						'formtype'		=>'text',
+						'label'			=>'标签名称',
+						'name'			=>'label',
+						'is_need'		=>true,
+					),
+					array(
+						'formtype'		=>'text',
+						'label'			=>'字段名称',
+						'name'			=>'name',
+						'is_need'		=>true,
+					),
+					array(
+						'formtype'		=>'radio',
+						'label'			=>'状态',
+						'name'			=>'active',
+						'data'			=>array(array(1,'启用'),array(0,'停用')),
+						'field'			=>array(0,1),
+						'value'			=>1,
+					),
+					array(
+						'formtype'		=>'select',
+						'label'			=>'表单类型',
+						'name'			=>'formtype',
+						'data'			=>CURD(array('table'=>'formtpl_type','field'=>'formtype,type_name','cache_name'=>'formtpl_type_select')),
+						'field'			=>array('formtype','type_name'),
+					),
+					array(
+						'formtype'		=>'text',
+						'label'			=>'默认值',
+						'name'			=>'default',
+						'tips'			=>'当为空时默认填写的值',
+					),
+					array(
+						'formtype'		=>'radio',
+						'label'			=>'必填',
+						'name'			=>'is_need',
+						'data'			=>array(array(1,'是'),array(0,'否')),
+						'field'			=>array(0,1),
+						'tips'			=>'开启后会显示*号，验证规则需要自行定义',
+					),					
+					array(
+						'formtype'		=>'radio',
+						'label'			=>'搜索字段',
+						'name'			=>'is_search',
+						'data'			=>array(array(1,'是'),array(0,'否')),
+						'field'			=>array(0,1),
+					),
+					array(
+						'formtype'		=>'radio',
+						'label'			=>'列表字段',
+						'name'			=>'is_list',
+						'data'			=>array(array(1,'是'),array(0,'否')),
+						'field'			=>array(0,1),
+					),					
+					array(
+						'formtype'		=>'hidden',
+						'name'			=>'formtpl_id',
+						'value'			=>I('get.formtpl_id'),
+					),
+
+				),
+			),$rs))}
+		</div><!--/panel-->
+		<div class="tab-pane" id="tab2">
+			{:W('Widget/buildform',array(array(
+				'field'		=>array(
+					array(
+						'formtype'		=>'textarea',
+						'label'			=>'数据源',
+						'name'			=>'data',
+						'attr'			=>'rows="5"',
+						'tips'			=>'数组格式，主要用于选项值',
+					),
+					array(
+						'formtype'		=>'textarea',
+						'label'			=>'插入数据前执行',
+						'name'			=>'fun_before',
+						'attr'			=>'rows="5"',
+						'tips'			=>'写入数据前进行格式化处理',
+					),
+					array(
+						'formtype'		=>'textarea',
+						'label'			=>'读取数据后执行',
+						'name'			=>'fun_read',
+						'attr'			=>'rows="5"',
+						'tips'			=>'读取后进行格式化处理',
+					),
+
+
+				),
+			),$rs))}
+		
+		</div><!--/panel-->
+		
+		<div class="tab-pane" id="tab3">
+			<div class="p20 box md20 text-gray">
+				该验证规则为ThinkPHP的MODEL自动验证规则，填写后将会生成MODEL文件，设置前请先了解ThinkPHP模型验证规则
+			</div>
+			{:W('Widget/buildform',array(array(
+				'field'		=>array(
+					array(
+						'formtype'		=>'radio',
+						'label'			=>'是否验证',
+						'name'			=>'is_verify',
+						'data'			=>array(array(0,'否'),array(1,'是')),
+						'field'			=>array(0,1),
+						'tips'			=>'开启验证后下面设置方有效',
+					),				
+					array(
+						'formtype'		=>'text',
+						'label'			=>'提示信息',
+						'name'			=>'verify_tips',
+						'tips'			=>'错误时提示的内容',
+					),
+					array(
+						'formtype'		=>'radio',
+						'label'			=>'验证条件',
+						'name'			=>'verify_map',
+						'data'			=>array(array(0,'存在字段就验证'),array(1,'必须验证'),array(2,'值不为空时验证')),
+						'field'			=>array(0,1),
+						'value'			=>0,
+					),
+					array(
+						'formtype'		=>'radio',
+						'label'			=>'验证时间',
+						'name'			=>'verify_time',
+						'data'			=>array(array(1,'新增时验证'),array(2,'编辑时验证'),array(3,'都验证')),
+						'field'			=>array(0,1),
+						'value'			=>3,
+					),
+					array(
+						'formtype'		=>'select',
+						'label'			=>'附加规则',
+						'name'			=>'verify_regextype',
+						'data'			=>array(
+								array('regex','regex正则验证'),
+								array('function','function函数验证'),
+								array('callback','callback方法验证'),
+								array('confirm','confirm验证表单中的两个字段是否相同'),
+								array('equal','equal验证是否等于某个值'),
+								array('notequal','notequal验证是否不等于某个值'),
+								array('in','in验证是否在某个范围内'),
+								array('notin','notin验证是否不在某个范围内'),
+								array('length','length验证长度'),
+								array('between','between验证范围'),
+								array('notbetween','notbetween验证不在某个范围'),
+								array('expire','expire验证是否在有效期'),
+								array('ip_allow','ip_allow验证IP是否允许'),
+								array('ip_deny','ip_deny验证IP是否禁止'),
+								array('unique','unique验证是否唯一'),
+						),
+						'field'			=>array(0,1),
+					),
+					array(
+						'formtype'		=>'textarea',
+						'label'			=>'验证规则',
+						'name'			=>'verify_regex',
+						'value'			=>'require',
+					),
+					array(
+						'formtype'		=>'textarea',
+						'label'			=>'自定义规则',
+						'name'			=>'verify_custom',
+						'tips'			=>'当附加规则为funciton且验证规则为checkform时，此项方有效，相关Class在TP框架Org\Util\CheckData，用法：array("is_ip")或多项验证 array(array("require"),array("is_email"))',
+					),
+
+
+
+				),
+			),$rs))}		
+		</div><!--/panel-->
+		
+		<div class="tab-pane" id="tab4">
+			{:W('Widget/buildform',array(array(
+				'field'		=>array(
+					array(
+						'formtype'		=>'textarea',
+						'label'			=>'提示',
+						'name'			=>'tips',
+						'attr'			=>'rows="3"',
+						'tips'			=>'提示内容',
+					),
+					array(
+						'formtype'		=>'text',
+						'label'			=>'placeholder提示',
+						'name'			=>'placeholder',
+					),
+					array(
+						'formtype'		=>'text',
+						'label'			=>'CLASS',
+						'name'			=>'class',
+					),
+					array(
+						'formtype'		=>'text',
+						'label'			=>'STYLE',
+						'name'			=>'style',
+					),
+					array(
+						'formtype'		=>'text',
+						'label'			=>'属性',
+						'name'			=>'attr',
+						'tips'			=>'标签属性，如：rows="5"',
+					),
+					array(
+						'formtype'		=>'textarea',
+						'label'			=>'前面HTML',
+						'name'			=>'prevhtml',
+						'attr'			=>'rows="3"',
+					),
+					array(
+						'formtype'		=>'textarea',
+						'label'			=>'后面HTML',
+						'name'			=>'nexthtml',
+						'attr'			=>'rows="3"',
+					),
+
+
+				),
+			)))}			
+		</div><!--/panel-->
+	</div>
+<div class="p20 text-center">
+	<button type="submit" class="btn btn-primary btn-150px"><i class="fa fa-check"></i> 提交</button>
+</div>
+<!--token-->
+</div>
+</form>
+<script>
+iCheckClass();
+checkform({
+	formid:'#form_create',
+},function(ret){
+	valert(ret);
+	if(ret.status=='success'){
+		ref();
+	}
+});
+
+</script>

@@ -1,0 +1,69 @@
+<include file="Public:header" />
+<include file="Public:menu" />
+
+<div class="w1200 mt20 md20 bg-white box">
+	<div class="box-header">
+		提示信息
+	</div>
+	
+	<div class="box-content p50">	
+		<div class="alert alert-warning alert-white-alt2 rounded">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+			<div class="icon"><i class="fa fa-warning"></i></div>
+			<strong>提示!</strong> 开店申请是乐兑商城考察卖家入驻资格与诚信级别的过程，年满18岁的大陆居民均可申请，完成申请后即可在乐兑商城免费售卖商品.
+			<div class="mt10 link-blue">
+				<a target="_blank" href="{:C('sub_domain.faq')}/view.html?id=864" class="text_blue">申请遇到问题？</a><br />
+				<a target="_blank" href="{:C('sub_domain.faq')}/view.html?id=865"  class="text_blue">了解开店认证需要材料</a>
+			</div>
+		</div>		
+						
+		<div class="crow">
+				<div class="ccol-35 text-right">
+					<img src="../Public/images/icon-no.png" alt="审核图标">
+				</div>
+				<div class="ccol-65">
+					<h3 class="mt30 md20">可能是以下原因无法入驻：</h3>
+					<h4 class="mt30 md20">1、您还未进行企业/个体户认证；</h4>
+					<h4 class="mt30 md20">2、您还未升级为创客或者创投；</h4>
+					<div class="md20"></div>
+					<!-- <div>您可根据反馈回来的原因重新提交资料进行审核；</div> -->
+					<div class="md10">有疑问可联系客服咨询。</div>		
+					<notempty name="logs.remark">
+						<!-- <div class="md10"><span class="b">原因：</span>{$logs.remark|nl2br}</div>	 -->
+					</notempty>
+					<!-- <a href="__URL__/shop_type" class="btn btn-trans btn-150px btn-danger">重新提交资料</a> -->
+				</div>
+			</div>
+			<div class="clearfix"></div>
+			<div class="p10 mt30 hide">
+				<!-- <div class="pull-left"><a href="__URL__/shop_info" class="btn btn-danger btn-150px btn-trans">上一步</a></div> -->
+				<!-- <div class="pull-right"><button type="button" class="btn btn-danger btn-150px btn-next disabled">下一步</button></div> -->
+			</div>
+
+		<div class="clearfix md30"></div>
+		
+										
+			
+
+
+	</div>
+
+</div>
+
+
+
+<include file="Public:copyright" />
+<include file="Public:js" />
+
+
+<script>
+$(document).ready(function(){
+	
+});	
+
+
+
+
+</script>
+
+<include file="Public:footer" />

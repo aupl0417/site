@@ -1,0 +1,6 @@
+.slider{display:block}/*用于获取更加体验*/
+.focus span{width:10px;height:10px;margin-right:10px;border-radius:50%;background:#666;font-size:0}
+.focus span.current{background:#fff}
+.slider img{
+	max-width: 100% !important;
+}

@@ -1,0 +1,167 @@
+<include file="Public:header" />
+<include file="nav" />
+
+<notempty name="pagelist.list">
+<div class="m20">
+	<include file="search_box" />
+	
+
+	<form id="formlist" name="formlist">
+	<div class="block-flat">
+		<div class="content">		
+			<include file="widget_pagelist" />			
+			
+			<div class="clearfix"></div>
+			<div class="row">
+				<div class="col-xs-10 text-center">
+					{$pagelist.page.page}
+				</div>
+				<div class="col-xs-2 text-right">
+					<div class="page-total">共 {$pagelist.allnum} 条记录，共 {$pagelist.allpage} 页</div>
+				</div>
+			</div>
+
+		</div>
+		
+	</div>
+	
+	</form><!--/form-->
+
+	<div class="clearfix h50px"></div>
+	
+</div>
+
+
+<div class="navbar-fixed-bottom border-t">
+	<div class="buttom-bar bg-white-50">
+
+		<div class="row">
+			<div class="col-xs-3">
+				<button type="button" class="btn btn-info btn-rad btn-trans select-all"><i class="fa fa-location-arrow"></i> 全选 / 反选</button>
+				<button type="button" class="btn btn-primary btn-rad btn-trans delete-select"><i class="fa fa-times"></i> 删除选中记录</button>
+			</div>
+
+			<div class="col-xs-2 pull-right">
+				<div class="input-group pull-right">
+					<select id="gopage" name="gopage" class="form-control">
+						<option value="1">跳转</option>
+						{$pagelist.page.gopage}
+					</select>					
+				</div>			
+			</div>
+
+					
+		</div>
+			
+	</div>
+</div>	
+
+<else />
+<div class="m20">
+	<include file="search_box" />
+	<div class="text-center nors">
+		<div class="nors-tips md20">暂无记录！</div>
+		<a href="__URL__/add" class="btn btn-trans btn-lg btn-rad btn-primary"><i class="fa fa-plus"></i> 新增记录</a>		
+	</div>
+</div>
+</notempty>
+
+
+
+<include file="Public:copyright" />
+<include file="Public:js" />
+<script>
+$(document).ready(function(){
+	$('.delete-select').click(function(){
+		if($('input[type="checkbox"]:checked').size()==0){
+			valert({status:'warning',msg:'请至少选择一项！'})
+			return false;
+		}else {
+			confirm_form({
+				formid:'#formlist',
+				furl:'__URL__/delete_select',
+				script:'callback(ret)',
+				title:'删除记录',
+				msg:'真的要删除吗？',
+				class:'text-center',
+				confirm:1
+			});
+		}
+	});
+
+	$('.active-change').click(function(){
+		if($('input[type="checkbox"]:checked').size()==0){
+			valert({status:'warning',msg:'请至少选择一项！'})
+			return false;
+		}else {
+			confirm_form({
+				formid:'#formlist',
+				furl:'__URL__/active_change_select/toactive/'+$('#toactive').val(),
+				script:'activeCall(ret)',
+				title:'批量更改记录状态',
+				msg:'真的要改记录状态吗？',
+				class:'text-center',
+				confirm:1
+			});
+		}
+	});
+	
+	$('.sid-change').click(function(){
+		if($('input[type="checkbox"]:checked').size()==0){
+			valert({status:'warning',msg:'请至少选择一项！'})
+			return false;
+		}else if($('#tosid').val()==''){
+			valert({status:'warning',msg:'请选择一个分类'})
+			return false;			
+		}else {
+			confirm_form({
+				formid:'#formlist',
+				furl:'__URL__/sid_change_select/tosid/'+$('#tosid').val(),
+				script:'activeCall(ret)',
+				title:'批量记录归类',
+				msg:'真的要批量记录归类吗？',
+				class:'text-center',
+				confirm:1
+			});
+		}
+	});	
+	
+	$('#gopage').change(function(){
+		var url=$('#gopage').val();
+		location.href=url;
+	});
+	$('.go-page').click(function(){
+		var url=$('#gopage').val();
+		location.href=url;
+	});	
+	
+
+});
+
+function callback(ret){
+	valert({status:ret.status,msg:ret.msg});
+	if(ret.status=='success'){
+		$('input[type="checkbox"]:checked').each(function(){
+			$('#'+$(this).val()).remove();
+		});
+		$('#ajax-modal').modal('hide');
+	}
+}
+
+function delCall(ret,tag){
+	valert({status:ret.status,msg:ret.msg});
+	if(ret.status=='success'){
+		$(tag).remove();
+		$('#ajax-modal').modal('hide');
+	}
+}
+function activeCall(ret){
+	valert({status:ret.status,msg:ret.msg});
+	if(ret.status=='success'){
+		setTimeout(function(){
+			ref();
+		},500);
+	}
+}
+</script>
+<include file="Public:footer" />

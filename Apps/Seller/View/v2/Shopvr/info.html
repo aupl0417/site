@@ -1,0 +1,203 @@
+<extend name="Seller@Public:base" />
+<block name="body">
+    <div class="centent_body">
+        <!-- to do your html codeing -->
+        <div class="revision_bg">
+            <div class="container ptb_size_lg clearfix">
+                <!-- 左侧导航 -->
+                <include file="Public:sideNav" />
+                <!-- 左侧导航结束 -->
+
+                <div class="revisionRight pd15" style="width: 1020px"><!-- 右侧内容 -->
+                    <!--<div class="clearfix revisionOrderTab" data-url="">-->
+                        <!--<a class="orderOption active" href="javascript:;">订单评价</a>-->
+                    <!--</div>-->
+                    <div class="row">
+                    	<div class="clearfix revisionOrderTab sid-active col-sm-12">
+                        	<h4><a href="#" class="orderOption active">违规记录申诉</a></h4>
+                        </div>
+                        <div class="col-sm-12">
+                        	<div class="alert alert-danger" role="alert" style="padding: 10px;margin-bottom: 10px;">如对违规记录有任何异议可在三天内发起申诉，如过期未发起申诉违规行为将被判定，届时处罚将生效！</div>
+                        	<table class="no-border mb20 bg_f1">
+		                        <thead class="no-border-y">
+			                        <tr>
+				                        <td width="7%">违规类型</td>
+				                        <td width="10%">违规行为</td>
+				                        <td width="8%">严重程度</td>
+				                        <td width="15%">违规情节</td>
+				                        <td width="10%">扣分分值</td>
+				                        <td width="20%">处理方式</td>
+				                        <td width="10%">状态</td>
+				                        <td width="10%">发起时间</td>
+				                        <td width="">操作</td>
+			                        </tr>
+			                        <tr><td colspan="9" style="background-color: white;"></td></tr>
+		                        </thead>
+		                        <tbody style="background-color: white;">
+	                        		<tr style="border: solid 2px #F8F8F8">
+				                        <td>{$info.rules_type_name}</td>
+				                        <td>{$info.rules.reason}</td>
+				                        <td>{$info.type_name}</td>
+				                        <td>
+											<div style="max-height:100px;overflow:auto;" alt="{$vo.plot}">{$info.plot}</div>
+										</td>
+				                        <td>{$info.point}</td>
+				                        <td><div style="max-height:100px;overflow:auto;" alt="{$vo.plot}">{$info.punishment}</div></td>
+				                        <td>{$info.status_name}</td>
+				                        <td>{$info.atime}</td>
+				                        <td class="text-center">
+										
+											<switch name="info.status">
+											<case value="0">
+												<div>
+					                        		<a href="__URL__/su/id/{$info.id}.html" class="btn btn-primary btn-sm">&nbsp;申诉&nbsp;</a>
+					                        	</div>
+											</case>
+											<case value="1">
+												<div>
+					                        		<a href="__URL__/su/id/{$info.id}.html" class="btn btn-primary btn-sm">&nbsp;申诉补充&nbsp;</a>
+					                        	</div>
+											</case>
+											<default />
+												
+											</switch>
+										
+										
+										
+				                        	
+				                        </td>
+			                        </tr>
+		                        </tbody>
+		                    </table>
+                        </div>
+						<notempty name="info.goods_info">
+						<div class="col-sm-12">
+							
+                        	<h3>违规商品</h3><hr/>
+                        	<div class="alert alert-danger" role="alert" style="padding: 10px;margin-bottom: 10px;">对违规商品信息进行重新编辑，通过审核后可以重新上架</div>
+                        		<div style="max-height: 500px;overflow: auto;">
+                        			<a href="{:DM('sell')}?url=/goods/edit/id/{$info.goods_info.id}" target="_blank">
+									<img src = "{$info.goods_info.images}" width="140px;"/>
+									<p class="pt5">商品名称：{$info.goods_info.goods_name}</p>
+									<p class="pt5">商品状态：<span style="color:red">{$info.goods_illegl_status_name}</span></p>
+									</a>
+									<div>
+										<a href="{:DM('sell')}?url=/goods/edit/id/{$info.goods_info.id}" target="_blank" class="btn btn-primary btn-sm">&nbsp;修改&nbsp;</a>
+									</div>
+                        		</div>
+                        	
+                        </div>
+						</notempty>
+                        <div class="col-sm-12">
+                        	<h3>违规描述</h3><hr/>
+                        	<div style="padding: 10px 20px 10px 20px;border: 1px solid #ccc;">
+                        		<div style="max-height: 500px;overflow: auto;">
+                        			{:html_entity_decode($info['describe'])}
+                        		</div>
+                        	</div>
+                        </div>
+						
+						<if condition="$info.appeal neq ''">
+                        <div class="col-sm-12">
+                        	<h3>申诉内容</h3><hr/>
+                        	<div style="padding: 10px 20px 10px 20px;border: 1px solid #ccc;">
+                        		<div style="max-height: 500px;overflow: auto;">
+                        			{:html_entity_decode($info['appeal'])}
+                        		</div>
+                        	</div>
+                        </div>
+						</if>
+						
+						<notempty name="info.logs">
+                        <div class="col-sm-12 mt20">
+                        	<h3>申诉审核记录</h3><hr/>
+                        	<ul class="timeline" style="margin-left: 50px;">
+								<volist name="info.logs" id="vo">
+									<li>
+										<i class="fa fa-clock-o"></i>
+										<span class="date">
+											{$vo.atime}
+										</span>
+										<div class="content">
+											<div class="md20">状态：
+												<div class="btn btn-xs btn-rad btn-trans m0 btn-info">{$vo.status_name}</div>
+											</div>
+											<notempty name="vo.remark">
+												<div class="md20 ft14">
+													内容：
+													{:html_entity_decode($vo['remark'])}
+												</div>
+											</notempty>
+										</div>
+									</li>
+								</volist>
+							</ul>
+                        </div>
+						</notempty>
+						
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- my codeing over -_-   -->
+
+    </div>
+</block>
+
+<block name="css">
+	<script src="__FLATDREAM__/js/bootstrap.datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="__FLATDREAM__/js/bootstrap.datetimepicker/js/bootstrap-datetimepicker.zh-CN.js"></script>
+    <link rel="stylesheet" href="__FLATDREAM__/js/bootstrap.datetimepicker/css/bootstrap-datetimepicker.css" />
+    <js href="__JS__/qiniu_ueditor/ueditor_mintoolbar.config.js" />
+    <js href="__JS__/qiniu_ueditor/ueditor.all.min.js" />
+    <js href="__JS__/qiniu_ueditor/lang/zn-cn/zh-cn.js" />
+</block>
+
+<block name="script">
+	<script>
+		var ue = UE.getEditor('appeal');
+		$(function(){
+			$(".datetime").datetimepicker({
+                format : 'yyyy-mm-dd'
+            });
+            $('.datetime').datetimepicker({
+                language:  'zh-CN',
+                weekStart : 1,
+                todayBtn : 1,
+                autoclose : 1,
+                todayHighlight : 1,
+                startView : 2,
+                forceParse : 0,
+                showMeridian : 1
+            });
+			$('#type').change(function(index){
+				var id=$(this).val();
+				$.getJSON('__URL__/get_wrongdoing',{id:id},function(data){
+					var html='<option value="">请选择违规行为</option>';
+					for(var i in data){
+						html+='<option value="'+data[i]['id']+'" data-remark="'+data[i]['remark']+'">'+data[i]['reason']+'</option>';
+					}
+					$('#wrongdoing').html(html);
+				});
+			});
+			ue.ready(function() {
+			    ue.setContent("{:html_entity_decode(html_entity_decode($info['appeal']))}");
+			});
+		});
+		$(".btn-submit").click(function() {
+			var d = $(this).data();
+			var appeal = ue.getContent();
+			ajax_post({
+				url:'/run/authRun',
+				data:{id:d.id,appeal:appeal},
+				headers : {Action : '{:enCryptRestUri("/Shopvr/save_appeal")}'},
+			},function(ret) {
+				talert({status:ret.code,msg:ret.msg});
+				if(ret.code == 1) {
+					setTimeout("ref()", 1000);
+				}
+			});
+		});
+	</script>
+</block>

@@ -1,0 +1,39 @@
+<include file="Public:header" />
+<include file="Public:menu" />
+
+<div class="w1200 mt20 md20 bg-white box">
+	<div class="box-header">
+		提示
+	</div>
+	
+	<div class="box-content p50 ft16" style="line-height:30px;min-height:450px;">
+			<div class="crow">
+				<div class="ccol-35 text-right">
+					<img src="../Public/images/icon-ok.png" alt="审核图标">
+				</div>
+				<div class="ccol-40">
+					<h2 class="mt30 md20">已开店成功</h2>
+					<div>店铺名称：<span class="b">{$rs:shop_name}</span></div>
+					<div class="md20">店铺地址：<a href="{$rs:shop_url}" target="_blank">{$rs:shop_url}</a></div>					
+					<a href="{$rs:shop_url}" class="btn btn-trans btn-150px btn-danger" target="_blank">浏览店铺</a>
+					<a href="{:C('sub_domain.make')}/Main" class="btn btn-trans btn-150px btn-danger" target="_blank">装修店铺</a>					
+				</div>
+			</div>
+			<div class="clearfix"></div>
+	</div>
+
+</div>
+
+
+<include file="Public:copyright" />
+<include file="Public:js" />
+
+
+<script>
+$(document).ready(function(){
+
+
+});	
+</script>
+
+<include file="Public:footer" />

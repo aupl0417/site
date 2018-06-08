@@ -1,0 +1,190 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			身份认证
+		</div>
+		<div class="r">
+			<div class="text"></div>
+		</div>
+	</div>
+</header>
+<section>
+	<div class="load-body">数据加载中……</div>
+	
+</section>
+
+<script>
+	
+	fixBar(1);
+	is_auth();
+	
+	
+	
+	
+	function is_auth(){
+		ajax_post({
+			url:'/Api/api',
+			data:{apiurl:'/Auth/auth_status',is_openid:1},
+		},function(ret){
+			if(ret.code==1){			
+				if(ret.data.auth_type == 1){
+					var auth_person_text = '<div class="line-box-m row hover" onclick="closeWin();openWin({name:\'auth_person\',url:\'/Auth/person\'})"><div class="col-4">个人认证</div><div class="col-4x3 text-gray withdraw-account" style="max-width:70%"><div class="text-right">'+ret.data.status_name+'</div></div><div class="clearfix"></div></div>';
+					$('.page.active section').html(auth_person_text);
+				}else if(ret.data.auth_type == 2){
+					var auth_company_text = '<div class="line-box-m row hover" onclick="closeWin();openWin({name:\'auth_company\',url:\'/Auth/company\'})"><div class="col-4">企业认证</div><div class="col-4x3 text-gray withdraw-account" style="max-width:70%"><div class="text-right">'+ret.data.status_name+'</div></div><div class="clearfix"></div></div>';
+					$('.page.active section').html(auth_company_text);
+				}
+			}else if(ret.code == '0'){
+				var tpl_text = '<div class="line-box-m row hover" onclick="closeWin();openWin({name:\'auth_person\',url:\'/Auth/person\'})"><div class="col-4">个人认证</div><div class="clearfix"></div></div><div class="line-box-m row hover" onclick="closeWin();openWin({name:\'auth_company\',url:\'/Auth/company\'})"><div class="col-4">企业认证</div><div class="clearfix"></div></div>';
+				$('.page.active section').html(tpl_text);
+			}else{
+				valert(ret);
+			}
+		});
+	}
+	
+	var register_up_uid = '';
+	//获取分享人信息
+	function ref_user(obj){
+		if($(obj).val() != register_up_uid){
+			register_up_uid = $(obj).val();
+			if(register_up_uid.length > 0){
+				ajax_post({
+					url:'/Api/api',
+					data:{apiurl:'/User/ref_user',uid:register_up_uid},
+				},function(ret){
+					if(ret.code==1){			
+						$('.page.active #ref_user ').show().children(".col-4x3").html(ret.data.name);
+					}else{
+						$('.page.active #ref_user ').hide();
+						valert(ret);
+					}
+				});
+			}
+		}
+	}
+	var register_curCount = 0;
+	//发送验证码
+	function send_smscode(obj){
+		if(register_curCount != 0){
+			valert({msg:'60秒内只允许发送一次短信'});
+			return false;
+		}
+		mobile = $('.page.active #mobile').val();
+		if(!mobile.match(/^1[3456789]\d{9}$/)){
+			valert({msg:'手机号码不正确！'});
+			return false;
+		}
+		ajax_post({
+			url:'/Api/api',
+			data:{apiurl:'/Sms/smscode',mobile:mobile,tplid:"11"},
+		},function(ret){
+			if(ret.code==1){
+				register_curCount = 60;
+				$(obj).html("" + register_curCount + "秒后重新获取");
+				InterValObj = window.setInterval(SetRemainTime, 1000);
+			}else{
+				valert(ret);
+			}
+		});
+	}
+	//验证码计时
+	function SetRemainTime() {
+		if (register_curCount == 0) {                
+			window.clearInterval(InterValObj);//停止计时器
+			$(".page.active #sendButton").html("重新发送验证码");
+		}
+		else {
+			register_curCount--;
+			$(".page.active #sendButton").html("" + register_curCount + "秒后重新获取");
+		}
+	}
+	var register_smscode_pass = 0;
+	var register_smscode = '';
+	//检查验证码
+	function check_smscode(obj){
+		if($(obj).val() != register_smscode){
+			register_smscode = $(obj).val();
+			if(register_smscode.length>0 && $('.page.active #mobile').val().length > 0){
+				ajax_post({
+					url:'/Api/api',
+					data:{
+						apiurl:'/Sms/check_smscode',
+						tplid:"11",
+						smscode:register_smscode,
+						mobile:$('.page.active #mobile').val()
+					},
+				},function(ret){
+					if(ret.code==1){
+						register_smscode_pass = 1;
+					}else{
+						valert(ret);
+					}
+				});
+			}
+		}
+	}
+	//勾选协议
+	function is_agreement(obj){
+		$(obj).toggleClass("active");
+	}
+	//注册
+	function register(){
+		if(!$('.page.active .is_agreement').hasClass('active')){
+			valert({msg:'请勾选注册协议'});
+			return false;
+		}
+		if($('.page.active #username').val()==''){
+			valert({msg:'请输入账号'});
+			$('.page.active #username').focus();
+			return false;
+		}
+		if($('.page.active #password').val()==''){
+			valert({msg:'请输入密码'});
+			$('.page.active #password').focus();
+			return false;
+		}
+		if($('.page.active #mobile').val()==''){
+			valert({msg:'请输入手机号码'});
+			$('.page.active #mobile').focus();
+			return false;
+		}
+		if($('.page.active #smscode').val()==''){
+			valert({msg:'请输入验证码'});
+			$('.page.active #smscode').focus();
+			return false;
+		}
+		if(!register_smscode_pass){
+			valert({msg:'短信验证码错误'});
+			return false;
+		}
+		ajax_post({
+			url:'/Api/api',
+			data:{
+				apiurl:'/User/register',
+				username:$('.page.active #username').val(),
+				password:$('.page.active #password').val(),
+				up_uid:$('.page.active #up_uid').val(),
+				mobile:$('.page.active #mobile').val(),
+				smscode:$('.page.active #smscode').val(),
+				no_sign:'up_uid',
+			},
+		},function(ret){
+			if(ret.code==1){
+				closeWin();
+				openWin({name:'login',url:'/Login/index',ref:true});
+			}else{
+				valert(ret);
+			}
+		});
+	}
+	function agreement(){
+		openWin({name:'login',url:'/Login/agreement'});
+	}
+	function login(){
+		openWin({name:'login',url:'/Login/index',close:true});
+	}
+</script>

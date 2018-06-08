@@ -1,0 +1,72 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			添加支付宝/财付通
+		</div>
+		<div class="r">
+			<div class="text" onclick="card_add()">保存</div>
+		</div>
+	</div>
+</header>
+<section>
+	<form id="form-card-add">
+	<div class="line-box row hover" onclick="vmodal({title:'选择账号类别',url:'__URL__/select_type'})">
+		<div class="col-4">账号类别</div>
+		<div class="col-4x3 text-right text-gray type">请选择账号类别</div>
+	</div>
+	<div class="line-box noicon row hover">
+		<div class="col-4">户名</div>
+		<div class="col-4x3 text-gray">{$_SESSION['user']['name']}</div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">账号</div>
+		<div class="col-4x3"><input id="account" name="account" placeholder="请输入账号"></div>
+	</div>
+
+
+	<input type="hidden" name="type" id="type">
+	<input type="hidden" name="master" id="master" value="{$_SESSION['user']['name']}">
+	<input type="hidden" name="apiurl" value="/Withdraw/card_alipay_add">
+	<input type="hidden" name="is_openid" value="1">
+	</form>
+</section>
+
+<include file="Public:d_layer" />
+
+<script>
+	fixBar(1);
+
+	
+	function card_add(){
+		var data=getFormJson('#form-card-add');
+		if(data.type==''){
+			valert({msg:'请选择账号类别！'});
+			return false;
+		}
+
+		if(data.account==''){
+			valert({msg:'请输入账号！'});
+			return false;
+		}
+		
+		ajax_post({
+			url:'/Api/api',
+			data:data,
+		},function(ret){
+			if(ret.code==1){			
+				openWin({name:'wallet',url:'/Wallet/index',ref:true,close:true});
+			}else{
+				valert(ret);
+			}
+		});		
+	}
+	
+
+	
+
+
+	
+</script>

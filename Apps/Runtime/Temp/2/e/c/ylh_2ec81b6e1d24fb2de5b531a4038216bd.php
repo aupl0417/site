@@ -1,0 +1,3 @@
+<?php
+//000000000060a:10:{s:2:"id";s:3:"130";s:13:"position_name";s:7:"baseTop";s:4:"type";s:1:"1";s:3:"num";s:1:"2";s:14:"default_images";s:53:"https://pic.tangmall.net/FveFENTRRREfmNPavRXzaG1N-zgT";s:3:"url";s:1:"#";s:5:"width";s:4:"1920";s:6:"height";s:2:"60";s:7:"is_seat";s:1:"0";s:3:"ads";a:1:{i:0;a:14:{s:4:"name";s:7:"baseTop";s:4:"sort";s:1:"0";s:6:"images";s:53:"https://pic.tangmall.net/FveFENTRRREfmNPavRXzaG1N-zgT";s:3:"url";s:20:"http://www.baidu.com";s:2:"id";s:3:"386";s:4:"sday";s:10:"2016-07-15";s:4:"eday";s:10:"2016-07-31";s:4:"days";s:10:"2016-07-15";s:10:"is_default";s:1:"1";s:8:"goods_id";s:1:"0";s:7:"shop_id";s:1:"0";s:4:"type";s:1:"0";s:17:"background_images";s:0:"";s:10:"subcontent";s:0:"";}}}
+?>

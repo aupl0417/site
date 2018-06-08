@@ -1,0 +1,35 @@
+	<div class="col-xs-3">
+			<ul class="itabs tabs-help">
+				<li class="active"><a href="javascript:void()">我是买家</a></li>
+				<li class=""><a href="javascript:void()">我是卖家</a></li>
+			</ul>
+
+			<div class="itabs-content tabs-help-content box">
+				<div class="itabs-pane active">
+					<foreach name="category_buyer" item="vo" key="k" >
+						<div class="us">
+							<div class="us-name">{$vo.category_name}</div>
+							<ul>
+							<foreach name="vo['dlist']" item="v" key="vk" >
+								<li id="{$v.id}"><a href="{:U('/index')}?cid={$v.id}">{$v.category_name}</a></li>
+							</foreach>
+							</ul>
+						</div>
+					</foreach>
+				</div>
+
+
+				<div class="itabs-pane ">
+					<foreach name="category_seller" item="vo" key="k" >
+						<div class="us">
+							<div class="us-name">{$vo.category_name}</div>
+							<ul>
+							<foreach name="vo['dlist']" item="v" key="vk" >
+								<li id="{$v.id}"><a href="{:U('/index')}?cid={$v.id}">{$v.category_name}</a></li>
+							</foreach>
+							</ul>
+						</div>
+					</foreach>
+				</div>	
+			</div>
+		</div>

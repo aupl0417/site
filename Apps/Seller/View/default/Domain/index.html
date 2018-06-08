@@ -1,0 +1,50 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body">
+	<include file="Public:nav" />
+	<div class="container mb30">
+		<include file="Public:side" />
+		<div class="w980 fl">
+			<div class="bor_der">
+				<div class="bg_f1 clearfix fs14 text_44 tle_R">
+					<a class="fl plr15 line40 ml-1 active" href="javascript:;">域名设置</a>
+				</div>
+				{:W('Common/Builder/form', [['data' => $keyList, 'run' => '/run/authRun']])}
+				<!-- 主体部分 -->
+			</div>
+		</div>
+	</div>
+</div>
+</block>
+<block name="css"></block>
+<block name="script">
+<script>
+$(document).ready(function() {
+	checkform({
+		formid:"#formadd",
+		rules:{
+			domain:{
+				required:true,
+				isEnglish:true,
+				minlength:5,
+				maxlength:10,
+				remote:'{:U("/domain/check")}',
+			},
+		},
+		messages:{
+			domain:{
+				required:'域名不能为空',
+				minlength:'域名最少5位字符',
+				maxlength:'域名最长10位字符',
+				remote:'域名格式错误或已被使用(格式为5~20位之间的字母或字母和数字的组合！)',
+			},
+		},
+	},function(res) {
+		talert({status:res.code,msg:res.msg});
+		if(res.code == 1) {
+			setTimeout("ref()", 1000);
+		}
+	});
+});
+</script>
+</block>

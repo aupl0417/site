@@ -1,0 +1,700 @@
+<include file="Public:header" />
+<div class="container ">
+	<div class="mt30 mb20 bg_white p20 fs16 bor_der">
+		频道&nbsp;
+		<a href="{:U('Source/index',['device'=>1])}" class="layui-btn <eq name='parm.device' value='1'>layui-btn-danger<else/>layui-btn-primary</eq>">PC</a>
+		<a href="{:U('Source/index',['device'=>2])}" class="layui-btn <eq name='parm.device' value='2'>layui-btn-danger<else/>layui-btn-primary</eq>">WAP</a>
+	</div>
+	<div class="mt20 mb20 bg_white fs14">
+		<div class="col-xs-3 bor_der p10 mr10 fl" style="width: 200px;">
+			<div class="fs16 p10">投放页面</div>
+			<div class="mt10">
+				<a href="{:U('Source/index',['channel'=>'index','device'=>$parm['device']])}" class="layui-btn <eq name='parm.channel' value='index'>layui-btn-danger<else/>layui-btn-primary</eq> w170 mb10">首页</a><br/>
+				<a href="{:U('Source/index',['channel'=>'brand','device'=>$parm['device']])}" class="layui-btn <eq name='parm.channel' value='brand'>layui-btn-danger<else/>layui-btn-primary</eq> w170 mb10">品牌页</a><br/>
+			</div>
+		</div>
+		<div class="col-xs-9 bor_der p10 fr" style="width: 990px;">
+			<div>
+				<div style="width: 970px; height: 81px; position: absolute;" class="p20 fs14 ffb">
+					
+				</div>
+				<a href="javascript:;" data-url="{:U('/Source/create_orders',['id' => 19])}" data-id="19" data-w="{$data.19.width}" data-h="{$data.19.height}" data-bw="{$data.19.background_width}" data-bh="{$data.19.background_height}" class="showad">
+					<div style="width: 619px;height: 346px;position: absolute;left: 183px;top: 233px;" class="p20 fs14 ffb text-center">
+						广告名称：{$data.19.position_name}<br/>
+						尺寸：{$data.19.width}x{$data.19.height}（px）<br/>
+						背景尺寸：{$data.19.background_width}x{$data.19.background_height}（px）<br/>
+						价格：{$data.19.price}元/日<br/>
+						广告类型：
+						<switch name="data.19.type">
+							<case value="1">图片</case>
+							<case value="2">焦点图</case>
+							<case value="3">文本</case>
+						</switch>
+						<div style="display: none;">
+							<span style="color: #555;">可投放类目：</span>{$data.19.cate_name}
+						</div>
+					</div>
+				</a>
+				<a href="javascript:;" data-url="{:U('/Source/create_orders',['id' => 134])}" data-id="19" data-w="{$data.134.width}" data-h="{$data.134.height}" data-bw="{$data.134.background_width}" data-bh="{$data.134.background_height}" class="showad">
+					<div style="width: 952px;height: 124px;position: absolute;left: 22px;top: 604px;overflow: auto;" class="p10 fs14 ffb text-center">
+						广告名称：{$data.134.position_name}<br/>
+						尺寸：{$data.134.width}x{$data.134.height}（px）<br/>
+						背景尺寸：{$data.134.background_width}x{$data.134.background_height}（px）<br/>
+						价格：{$data.134.price}元/日<br/>
+						广告类型：
+						<switch name="data.134.type">
+							<case value="1">图片</case>
+							<case value="2">焦点图</case>
+							<case value="3">文本</case>
+						</switch>
+						<div style="display: none;">
+							<span style="color: #555;">可投放类目：</span>{$data.134.cate_name}
+						</div>
+					</div>
+				</a>
+				<a href="javascript:;" data-url="{:U('/Source/create_orders',['id' => 135])}" data-id="135" data-w="{$data.135.width}" data-h="{$data.135.height}" data-bw="{$data.135.background_width}" data-bh="{$data.135.background_height}" class="showad">
+					<div style="width: 273px;height: 359px;position: absolute;left: 22px;top: 782px;overflow: auto;" class="p20 fs14 ffb text-center">
+						广告名称：{$data.135.position_name}<br/>
+						尺寸：{$data.135.width}x{$data.135.height}（px）<br/>
+						背景尺寸：{$data.135.background_width}x{$data.135.background_height}（px）<br/>
+						价格：{$data.135.price}元/日<br/>
+						广告类型：
+						<switch name="data.135.type">
+							<case value="1">图片</case>
+							<case value="2">焦点图</case>
+							<case value="3">文本</case>
+						</switch>
+						<div style="display: none;">
+							<span style="color: #555;">可投放类目：</span>{$data.135.cate_name}
+						</div>
+					</div>
+				</a>
+				<a href="javascript:;" data-url="{:U('/Source/create_orders',['id' => 136])}" data-id="136" data-w="{$data.136.width}" data-h="{$data.136.height}" data-bw="{$data.136.background_width}" data-bh="{$data.136.background_height}" class="showad">
+					<div style="width: 246px;height: 359px;position: absolute;left: 296px;top: 782px;overflow: auto;" class="p20 fs14 ffb text-center">
+						广告名称：{$data.136.position_name}<br/>
+						尺寸：{$data.136.width}x{$data.136.height}（px）<br/>
+						背景尺寸：{$data.136.background_width}x{$data.136.background_height}（px）<br/>
+						价格：{$data.136.price}元/日<br/>
+						广告类型：
+						<switch name="data.136.type">
+							<case value="1">图片</case>
+							<case value="2">焦点图</case>
+							<case value="3">文本</case>
+						</switch>
+						<div style="display: none;">
+							<span style="color: #555;">可投放类目：</span>{$data.136.cate_name}
+						</div>
+					</div>
+				</a>
+				<a href="javascript:;" data-url="{:U('/Source/create_orders',['id' => 137])}" data-id="137" data-w="{$data.137.width}" data-h="{$data.137.height}" data-bw="{$data.137.background_width}" data-bh="{$data.137.background_height}" class="showad">
+					<div style="width: 289px;height: 359px;position: absolute;left: 557px;top: 782px;overflow: auto;" class="p20 fs14 ffb text-center">
+						广告名称：{$data.137.position_name}<br/>
+						尺寸：{$data.137.width}x{$data.137.height}（px）<br/>
+						背景尺寸：{$data.137.background_width}x{$data.137.background_height}（px）<br/>
+						价格：{$data.137.price}元/日<br/>
+						广告类型：
+						<switch name="data.137.type">
+							<case value="1">图片</case>
+							<case value="2">焦点图</case>
+							<case value="3">文本</case>
+						</switch>
+						<div style="display: none;">
+							<span style="color: #555;">可投放类目：</span>{$data.137.cate_name}
+						</div>
+					</div>
+				</a>
+				<a href="javascript:;" data-url="{:U('/Source/create_orders',['id' => 138])}" data-id="138" data-w="{$data.138.width}" data-h="{$data.138.height}" data-bw="{$data.138.background_width}" data-bh="{$data.138.background_height}" class="showad">
+					<div style="width: 126px;height: 359px;position: absolute;left: 848px;top: 782px;overflow: auto;" class="p10 fs14 ffb text-center">
+						广告名称：{$data.138.position_name}<br/>
+						尺寸：{$data.138.width}x{$data.138.height}（px）<br/>
+						背景尺寸：{$data.138.background_width}x{$data.138.background_height}（px）<br/>
+						价格：{$data.138.price}元/日<br/>
+						广告类型：
+						<switch name="data.138.type">
+							<case value="1">图片</case>
+							<case value="2">焦点图</case>
+							<case value="3">文本</case>
+						</switch>
+						<div style="display: none;">
+							<span style="color: #555;">可投放类目：</span>{$data.138.cate_name}
+						</div>
+					</div>
+				</a>
+				<a href="javascript:;" data-url="{:U('/Source/create_orders',['id' => 139])}" data-id="139" data-w="{$data.139.width}" data-h="{$data.139.height}" data-bw="{$data.139.background_width}" data-bh="{$data.139.background_height}" class="showad">
+					<div style="width: 342px;height: 166px;position: absolute;left: 24px;top: 1196px;overflow: auto;" class="p20 fs14 ffb text-center">
+						广告名称：{$data.139.position_name}<br/>
+						尺寸：{$data.139.width}x{$data.139.height}（px）<br/>
+						背景尺寸：{$data.139.background_width}x{$data.139.background_height}（px）<br/>
+						价格：{$data.139.price}元/日<br/>
+						广告类型：
+						<switch name="data.139.type">
+							<case value="1">图片</case>
+							<case value="2">焦点图</case>
+							<case value="3">文本</case>
+						</switch>
+						<div style="display: none;">
+							<span style="color: #555;">可投放类目：</span>{$data.139.cate_name}
+						</div>
+					</div>
+				</a>
+				<a href="javascript:;" data-url="{:U('/Source/create_orders',['id' => 141])}" data-id="141" data-w="{$data.141.width}" data-h="{$data.141.height}" data-bw="{$data.141.background_width}" data-bh="{$data.141.background_height}" class="showad">
+					<div style="width: 342px;height: 166px;position: absolute;left: 24px;top: 1388px;overflow: auto;" class="p20 fs14 ffb text-center">
+						广告名称：{$data.141.position_name}<br/>
+						尺寸：{$data.141.width}x{$data.141.height}（px）<br/>
+						背景尺寸：{$data.141.background_width}x{$data.141.background_height}（px）<br/>
+						价格：{$data.141.price}元/日<br/>
+						广告类型：
+						<switch name="data.141.type">
+							<case value="1">图片</case>
+							<case value="2">焦点图</case>
+							<case value="3">文本</case>
+						</switch>
+						<div style="display: none;">
+							<span style="color: #555;">可投放类目：</span>{$data.141.cate_name}
+						</div>
+					</div>
+				</a>
+				<a href="javascript:;" data-url="{:U('/Source/create_orders',['id' => 143])}" data-id="143" data-w="{$data.143.width}" data-h="{$data.143.height}" data-bw="{$data.143.background_width}" data-bh="{$data.143.background_height}" class="showad">
+					<div style="width: 214px;height: 359px;position: absolute;left: 392px;top: 1196px;overflow: auto;" class="p20 fs14 ffb text-center">
+						广告名称：{$data.143.position_name}<br/>
+						尺寸：{$data.143.width}x{$data.143.height}（px）<br/>
+						背景尺寸：{$data.143.background_width}x{$data.143.background_height}（px）<br/>
+						价格：{$data.143.price}元/日<br/>
+						广告类型：
+						<switch name="data.143.type">
+							<case value="1">图片</case>
+							<case value="2">焦点图</case>
+							<case value="3">文本</case>
+						</switch>
+						<div style="display: none;">
+							<span style="color: #555;">可投放类目：</span>{$data.143.cate_name}
+						</div>
+					</div>
+				</a>
+				<a href="javascript:;" data-url="{:U('/Source/create_orders',['id' => 144])}" data-id="144" data-w="{$data.144.width}" data-h="{$data.144.height}" data-bw="{$data.144.background_width}" data-bh="{$data.144.background_height}" class="showad">
+					<div style="width: 344px;height: 359px;position: absolute;left: 631px;top: 1196px;overflow: auto;" class="p20 fs14 ffb text-center">
+						广告名称：{$data.144.position_name}<br/>
+						尺寸：{$data.144.width}x{$data.144.height}（px）<br/>
+						背景尺寸：{$data.144.background_width}x{$data.144.background_height}（px）<br/>
+						价格：{$data.144.price}元/日<br/>
+						广告类型：
+						<switch name="data.144.type">
+							<case value="1">图片</case>
+							<case value="2">焦点图</case>
+							<case value="3">文本</case>
+						</switch>
+						<div style="display: none;">
+							<span style="color: #555;">可投放类目：</span>{$data.144.cate_name}
+						</div>
+					</div>
+				</a>
+				<a href="javascript:;" data-url="{:U('/Source/create_orders',['id' => 145])}" data-id="145" data-w="{$data.145.width}" data-h="{$data.145.height}" data-bw="{$data.145.background_width}" data-bh="{$data.145.background_height}" class="showad">
+					<div style="width: 256px;height: 240px;position: absolute;left: 22px;top: 1637px;overflow: auto;" class="p20 fs14 ffb text-center">
+						广告名称：{$data.145.position_name}<br/>
+						尺寸：{$data.145.width}x{$data.145.height}（px）<br/>
+						背景尺寸：{$data.145.background_width}x{$data.145.background_height}（px）<br/>
+						价格：{$data.145.price}元/日<br/>
+						广告类型：
+						<switch name="data.145.type">
+							<case value="1">图片</case>
+							<case value="2">焦点图</case>
+							<case value="3">文本</case>
+						</switch>
+						<div style="display: none;">
+							<span style="color: #555;">可投放类目：</span>{$data.145.cate_name}
+						</div>
+					</div>
+				</a>
+				<a href="javascript:;" data-url="{:U('/Source/create_orders',['id' => 149])}" data-id="149" data-w="{$data.149.width}" data-h="{$data.149.height}" data-bw="{$data.149.background_width}" data-bh="{$data.149.background_height}" class="showad">
+					<div style="width: 126px;height: 240px;position: absolute;left: 278px;top: 1637px;overflow: auto;" class="p10 fs14 ffb text-center">
+						广告名称：{$data.149.position_name}<br/>
+						尺寸：{$data.149.width}x{$data.149.height}（px）<br/>
+						背景尺寸：{$data.149.background_width}x{$data.149.background_height}（px）<br/>
+						价格：{$data.149.price}元/日<br/>
+						广告类型：
+						<switch name="data.149.type">
+							<case value="1">图片</case>
+							<case value="2">焦点图</case>
+							<case value="3">文本</case>
+						</switch>
+						<div style="display: none;">
+							<span style="color: #555;">可投放类目：</span>{$data.149.cate_name}
+						</div>
+					</div>
+				</a>
+				<a href="javascript:;" data-url="{:U('/Source/create_orders',['id' => 146])}" data-id="146" data-w="{$data.146.width}" data-h="{$data.146.height}" data-bw="{$data.146.background_width}" data-bh="{$data.146.background_height}" class="showad">
+					<div style="width: 382px;height: 240px;position: absolute;left: 403px;top: 1637px;overflow: auto;" class="p20 fs14 ffb text-center">
+						广告名称：{$data.146.position_name}<br/>
+						尺寸：{$data.146.width}x{$data.146.height}（px）<br/>
+						背景尺寸：{$data.146.background_width}x{$data.146.background_height}（px）<br/>
+						价格：{$data.146.price}元/日<br/>
+						广告类型：
+						<switch name="data.146.type">
+							<case value="1">图片</case>
+							<case value="2">焦点图</case>
+							<case value="3">文本</case>
+						</switch>
+						<div style="display: none;">
+							<span style="color: #555;">可投放类目：</span>{$data.146.cate_name}
+						</div>
+					</div>
+				</a>
+				<a href="javascript:;" data-url="{:U('/Source/create_orders',['id' => 147])}" data-id="147" data-w="{$data.147.width}" data-h="{$data.147.height}" data-bw="{$data.147.background_width}" data-bh="{$data.147.background_height}" class="showad">
+					<div style="width: 188px;height: 240px;position: absolute;left: 786px;top: 1637px;overflow: auto;" class="p20 fs14 ffb text-center">
+						广告名称：{$data.147.position_name}<br/>
+						尺寸：{$data.147.width}x{$data.147.height}（px）<br/>
+						背景尺寸：{$data.147.background_width}x{$data.147.background_height}（px）<br/>
+						价格：{$data.147.price}元/日<br/>
+						广告类型：
+						<switch name="data.147.type">
+							<case value="1">图片</case>
+							<case value="2">焦点图</case>
+							<case value="3">文本</case>
+						</switch>
+						<div style="display: none;">
+							<span style="color: #555;">可投放类目：</span>{$data.147.cate_name}
+						</div>
+					</div>
+				</a>
+				<a href="javascript:;" data-url="{:U('/Source/create_orders',['id' => 148])}" data-id="148" data-w="{$data.148.width}" data-h="{$data.148.height}" data-bw="{$data.148.background_width}" data-bh="{$data.148.background_height}" class="showad">
+					<div style="width: 952px;height: 235px;position: absolute;left: 22px;top: 1877px;overflow: auto;" class="p20 fs14 ffb text-center">
+						广告名称：{$data.148.position_name}<br/>
+						尺寸：{$data.148.width}x{$data.148.height}（px）<br/>
+						背景尺寸：{$data.148.background_width}x{$data.148.background_height}（px）<br/>
+						价格：{$data.148.price}元/日<br/>
+						广告类型：
+						<switch name="data.148.type">
+							<case value="1">图片</case>
+							<case value="2">焦点图</case>
+							<case value="3">文本</case>
+						</switch>
+						<div style="display: none;">
+							<span style="color: #555;">可投放类目：</span>{$data.148.cate_name}
+						</div>
+					</div>
+				</a>
+				<a href="javascript:;" data-url="{:U('/Source/create_orders',['id' => 154])}" data-id="154" data-w="{$data.154.width}" data-h="{$data.154.height}" data-bw="{$data.154.background_width}" data-bh="{$data.154.background_height}" class="showad">
+					<div style="width: 256px;height: 240px;position: absolute;left: 22px;top: 2186px;overflow: auto;" class="p20 fs14 ffb text-center">
+						广告名称：{$data.154.position_name}<br/>
+						尺寸：{$data.154.width}x{$data.154.height}（px）<br/>
+						背景尺寸：{$data.154.background_width}x{$data.154.background_height}（px）<br/>
+						价格：{$data.154.price}元/日<br/>
+						广告类型：
+						<switch name="data.154.type">
+							<case value="1">图片</case>
+							<case value="2">焦点图</case>
+							<case value="3">文本</case>
+						</switch>
+						<div style="display: none;">
+							<span style="color: #555;">可投放类目：</span>{$data.154.cate_name}
+						</div>
+					</div>
+				</a>
+				<a href="javascript:;" data-url="{:U('/Source/create_orders',['id' => 150])}" data-id="150" data-w="{$data.150.width}" data-h="{$data.150.height}" data-bw="{$data.150.background_width}" data-bh="{$data.150.background_height}" class="showad">
+					<div style="width: 126px;height: 240px;position: absolute;left: 278px;top: 2186px;overflow: auto;" class="p10 fs14 ffb text-center">
+						广告名称：{$data.150.position_name}<br/>
+						尺寸：{$data.150.width}x{$data.150.height}（px）<br/>
+						背景尺寸：{$data.150.background_width}x{$data.150.background_height}（px）<br/>
+						价格：{$data.150.price}元/日<br/>
+						广告类型：
+						<switch name="data.150.type">
+							<case value="1">图片</case>
+							<case value="2">焦点图</case>
+							<case value="3">文本</case>
+						</switch>
+						<div style="display: none;">
+							<span style="color: #555;">可投放类目：</span>{$data.150.cate_name}
+						</div>
+					</div>
+				</a>
+				<a href="javascript:;" data-url="{:U('/Source/create_orders',['id' => 153])}" data-id="153" data-w="{$data.153.width}" data-h="{$data.153.height}" data-bw="{$data.153.background_width}" data-bh="{$data.153.background_height}" class="showad">
+					<div style="width: 381px;height: 240px;position: absolute;left: 404px;top: 2186px;overflow: auto;" class="p20 fs14 ffb text-center">
+						广告名称：{$data.153.position_name}<br/>
+						尺寸：{$data.153.width}x{$data.153.height}（px）<br/>
+						背景尺寸：{$data.153.background_width}x{$data.153.background_height}（px）<br/>
+						价格：{$data.153.price}元/日<br/>
+						广告类型：
+						<switch name="data.153.type">
+							<case value="1">图片</case>
+							<case value="2">焦点图</case>
+							<case value="3">文本</case>
+						</switch>
+						<div style="display: none;">
+							<span style="color: #555;">可投放类目：</span>{$data.153.cate_name}
+						</div>
+					</div>
+				</a>
+				<a href="javascript:;" data-url="{:U('/Source/create_orders',['id' => 152])}" data-id="152" data-w="{$data.152.width}" data-h="{$data.152.height}" data-bw="{$data.152.background_width}" data-bh="{$data.152.background_height}" class="showad">
+					<div style="width: 189px;height: 240px;position: absolute;left: 786px;top: 2186px;overflow: auto;" class="p20 fs14 ffb text-center">
+						广告名称：{$data.152.position_name}<br/>
+						尺寸：{$data.152.width}x{$data.152.height}（px）<br/>
+						背景尺寸：{$data.152.background_width}x{$data.152.background_height}（px）<br/>
+						价格：{$data.152.price}元/日<br/>
+						广告类型：
+						<switch name="data.152.type">
+							<case value="1">图片</case>
+							<case value="2">焦点图</case>
+							<case value="3">文本</case>
+						</switch>
+						<div style="display: none;">
+							<span style="color: #555;">可投放类目：</span>{$data.152.cate_name}
+						</div>
+					</div>
+				</a>
+				<a href="javascript:;" data-url="{:U('/Source/create_orders',['id' => 151])}" data-id="151" data-w="{$data.151.width}" data-h="{$data.151.height}" data-bw="{$data.151.background_width}" data-bh="{$data.151.background_height}" class="showad">
+					<div style="width: 952px;height: 236px;position: absolute;left: 23px;top: 2427px;overflow: auto;" class="p20 fs14 ffb text-center">
+						广告名称：{$data.151.position_name}<br/>
+						尺寸：{$data.151.width}x{$data.151.height}（px）<br/>
+						背景尺寸：{$data.151.background_width}x{$data.151.background_height}（px）<br/>
+						价格：{$data.151.price}元/日<br/>
+						广告类型：
+						<switch name="data.151.type">
+							<case value="1">图片</case>
+							<case value="2">焦点图</case>
+							<case value="3">文本</case>
+						</switch>
+						<div style="display: none;">
+							<span style="color: #555;">可投放类目：</span>{$data.151.cate_name}
+						</div>
+					</div>
+				</a>
+				<a href="javascript:;" data-url="{:U('/Source/create_orders',['id' => 164])}" data-id="164" data-w="{$data.164.width}" data-h="{$data.164.height}" data-bw="{$data.164.background_width}" data-bh="{$data.164.background_height}" class="showad">
+					<div style="width: 255px;height: 239px;position: absolute;left: 23px;top: 2736px;overflow: auto;" class="p20 fs14 ffb text-center">
+						广告名称：{$data.164.position_name}<br/>
+						尺寸：{$data.164.width}x{$data.164.height}（px）<br/>
+						背景尺寸：{$data.164.background_width}x{$data.164.background_height}（px）<br/>
+						价格：{$data.164.price}元/日<br/>
+						广告类型：
+						<switch name="data.164.type">
+							<case value="1">图片</case>
+							<case value="2">焦点图</case>
+							<case value="3">文本</case>
+						</switch>
+						<div style="display: none;">
+							<span style="color: #555;">可投放类目：</span>{$data.164.cate_name}
+						</div>
+					</div>
+				</a>
+				<a href="javascript:;" data-url="{:U('/Source/create_orders',['id' => 160])}" data-id="160" data-w="{$data.160.width}" data-h="{$data.160.height}" data-bw="{$data.160.background_width}" data-bh="{$data.160.background_height}" class="showad">
+					<div style="width: 126px;height: 239px;position: absolute;left: 278px;top: 2736px;overflow: auto;" class="p10 fs14 ffb text-center">
+						广告名称：{$data.160.position_name}<br/>
+						尺寸：{$data.160.width}x{$data.160.height}（px）<br/>
+						背景尺寸：{$data.160.background_width}x{$data.160.background_height}（px）<br/>
+						价格：{$data.160.price}元/日<br/>
+						广告类型：
+						<switch name="data.160.type">
+							<case value="1">图片</case>
+							<case value="2">焦点图</case>
+							<case value="3">文本</case>
+						</switch>
+						<div style="display: none;">
+							<span style="color: #555;">可投放类目：</span>{$data.160.cate_name}
+						</div>
+					</div>
+				</a>
+				<a href="javascript:;" data-url="{:U('/Source/create_orders',['id' => 163])}" data-id="163" data-w="{$data.163.width}" data-h="{$data.163.height}" data-bw="{$data.163.background_width}" data-bh="{$data.163.background_height}" class="showad">
+					<div style="width: 381px;height: 239px;position: absolute;left: 404px;top: 2736px;overflow: auto;" class="p20 fs14 ffb text-center">
+						广告名称：{$data.163.position_name}<br/>
+						尺寸：{$data.163.width}x{$data.163.height}（px）<br/>
+						背景尺寸：{$data.163.background_width}x{$data.163.background_height}（px）<br/>
+						价格：{$data.163.price}元/日<br/>
+						广告类型：
+						<switch name="data.163.type">
+							<case value="1">图片</case>
+							<case value="2">焦点图</case>
+							<case value="3">文本</case>
+						</switch>
+						<div style="display: none;">
+							<span style="color: #555;">可投放类目：</span>{$data.163.cate_name}
+						</div>
+					</div>
+				</a>
+				<a href="javascript:;" data-url="{:U('/Source/create_orders',['id' => 162])}" data-id="162" data-w="{$data.162.width}" data-h="{$data.162.height}" data-bw="{$data.162.background_width}" data-bh="{$data.162.background_height}" class="showad">
+					<div style="width: 189px;height: 239px;position: absolute;left: 786px;top: 2736px;overflow: auto;" class="p20 fs14 ffb text-center">
+						广告名称：{$data.162.position_name}<br/>
+						尺寸：{$data.162.width}x{$data.162.height}（px）<br/>
+						背景尺寸：{$data.162.background_width}x{$data.162.background_height}（px）<br/>
+						价格：{$data.162.price}元/日<br/>
+						广告类型：
+						<switch name="data.162.type">
+							<case value="1">图片</case>
+							<case value="2">焦点图</case>
+							<case value="3">文本</case>
+						</switch>
+						<div style="display: none;">
+							<span style="color: #555;">可投放类目：</span>{$data.162.cate_name}
+						</div>
+					</div>
+				</a>
+				<a href="javascript:;" data-url="{:U('/Source/create_orders',['id' => 161])}" data-id="161" data-w="{$data.161.width}" data-h="{$data.161.height}" data-bw="{$data.161.background_width}" data-bh="{$data.161.background_height}" class="showad">
+					<div style="width: 951px;height: 236px;position: absolute;left: 23px;top: 2975px;overflow: auto;" class="p20 fs14 ffb text-center">
+						广告名称：{$data.161.position_name}<br/>
+						尺寸：{$data.161.width}x{$data.161.height}（px）<br/>
+						背景尺寸：{$data.161.background_width}x{$data.161.background_height}（px）<br/>
+						价格：{$data.161.price}元/日<br/>
+						广告类型：
+						<switch name="data.161.type">
+							<case value="1">图片</case>
+							<case value="2">焦点图</case>
+							<case value="3">文本</case>
+						</switch>
+						<div style="display: none;">
+							<span style="color: #555;">可投放类目：</span>{$data.161.cate_name}
+						</div>
+					</div>
+				</a>
+				<a href="javascript:;" data-url="{:U('/Source/create_orders',['id' => 169])}" data-id="169" data-w="{$data.169.width}" data-h="{$data.169.height}" data-bw="{$data.169.background_width}" data-bh="{$data.169.background_height}" class="showad">
+					<div style="width: 255px;height: 239px;position: absolute;left: 23px;top: 3285px;overflow: auto;" class="p20 fs14 ffb text-center">
+						广告名称：{$data.169.position_name}<br/>
+						尺寸：{$data.169.width}x{$data.169.height}（px）<br/>
+						背景尺寸：{$data.169.background_width}x{$data.169.background_height}（px）<br/>
+						价格：{$data.169.price}元/日<br/>
+						广告类型：
+						<switch name="data.169.type">
+							<case value="1">图片</case>
+							<case value="2">焦点图</case>
+							<case value="3">文本</case>
+						</switch>
+						<div style="display: none;">
+							<span style="color: #555;">可投放类目：</span>{$data.169.cate_name}
+						</div>
+					</div>
+				</a>
+				<a href="javascript:;" data-url="{:U('/Source/create_orders',['id' => 165])}" data-id="165" data-w="{$data.165.width}" data-h="{$data.165.height}" data-bw="{$data.165.background_width}" data-bh="{$data.165.background_height}" class="showad">
+					<div style="width: 124px;height: 239px;position: absolute;left: 279px;top: 3285px;overflow: auto;" class="p10 fs14 ffb text-center">
+						广告名称：{$data.165.position_name}<br/>
+						尺寸：{$data.165.width}x{$data.165.height}（px）<br/>
+						背景尺寸：{$data.165.background_width}x{$data.165.background_height}（px）<br/>
+						价格：{$data.165.price}元/日<br/>
+						广告类型：
+						<switch name="data.165.type">
+							<case value="1">图片</case>
+							<case value="2">焦点图</case>
+							<case value="3">文本</case>
+						</switch>
+						<div style="display: none;">
+							<span style="color: #555;">可投放类目：</span>{$data.165.cate_name}
+						</div>
+					</div>
+				</a>
+				<a href="javascript:;" data-url="{:U('/Source/create_orders',['id' => 168])}" data-id="168" data-w="{$data.168.width}" data-h="{$data.168.height}" data-bw="{$data.168.background_width}" data-bh="{$data.168.background_height}" class="showad">
+					<div style="width: 381px;height: 239px;position: absolute;left: 404px;top: 3285px;overflow: auto;" class="p20 fs14 ffb text-center">
+						广告名称：{$data.168.position_name}<br/>
+						尺寸：{$data.168.width}x{$data.168.height}（px）<br/>
+						背景尺寸：{$data.168.background_width}x{$data.168.background_height}（px）<br/>
+						价格：{$data.168.price}元/日<br/>
+						广告类型：
+						<switch name="data.168.type">
+							<case value="1">图片</case>
+							<case value="2">焦点图</case>
+							<case value="3">文本</case>
+						</switch>
+						<div style="display: none;">
+							<span style="color: #555;">可投放类目：</span>{$data.168.cate_name}
+						</div>
+					</div>
+				</a>
+				<a href="javascript:;" data-url="{:U('/Source/create_orders',['id' => 167])}" data-id="167" data-w="{$data.167.width}" data-h="{$data.167.height}" data-bw="{$data.167.background_width}" data-bh="{$data.167.background_height}" class="showad">
+					<div style="width: 189px;height: 239px;position: absolute;left: 786px;top: 3285px;overflow: auto;" class="p20 fs14 ffb text-center">
+						广告名称：{$data.167.position_name}<br/>
+						尺寸：{$data.167.width}x{$data.167.height}（px）<br/>
+						背景尺寸：{$data.167.background_width}x{$data.167.background_height}（px）<br/>
+						价格：{$data.167.price}元/日<br/>
+						广告类型：
+						<switch name="data.167.type">
+							<case value="1">图片</case>
+							<case value="2">焦点图</case>
+							<case value="3">文本</case>
+						</switch>
+						<div style="display: none;">
+							<span style="color: #555;">可投放类目：</span>{$data.167.cate_name}
+						</div>
+					</div>
+				</a>
+				<a href="javascript:;" data-url="{:U('/Source/create_orders',['id' => 166])}" data-id="166" data-w="{$data.166.width}" data-h="{$data.166.height}" data-bw="{$data.166.background_width}" data-bh="{$data.166.background_height}" class="showad">
+					<div style="width: 952px;height: 237px;position: absolute;left: 23px;top: 3524px;overflow: auto;" class="p20 fs14 ffb text-center">
+						广告名称：{$data.166.position_name}<br/>
+						尺寸：{$data.166.width}x{$data.166.height}（px）<br/>
+						背景尺寸：{$data.166.background_width}x{$data.166.background_height}（px）<br/>
+						价格：{$data.166.price}元/日<br/>
+						广告类型：
+						<switch name="data.166.type">
+							<case value="1">图片</case>
+							<case value="2">焦点图</case>
+							<case value="3">文本</case>
+						</switch>
+						<div style="display: none;">
+							<span style="color: #555;">可投放类目：</span>{$data.166.cate_name}
+						</div>
+					</div>
+				</a>
+				<a href="javascript:;" data-url="{:U('/Source/create_orders',['id' => 174])}" data-id="174" data-w="{$data.174.width}" data-h="{$data.174.height}" data-bw="{$data.174.background_width}" data-bh="{$data.174.background_height}" class="showad">
+					<div style="width: 255px;height: 239px;position: absolute;left: 23px;top: 3834px;overflow: auto;" class="p20 fs14 ffb text-center">
+						广告名称：{$data.174.position_name}<br/>
+						尺寸：{$data.174.width}x{$data.174.height}（px）<br/>
+						背景尺寸：{$data.174.background_width}x{$data.174.background_height}（px）<br/>
+						价格：{$data.174.price}元/日<br/>
+						广告类型：
+						<switch name="data.174.type">
+							<case value="1">图片</case>
+							<case value="2">焦点图</case>
+							<case value="3">文本</case>
+						</switch>
+						<div style="display: none;">
+							<span style="color: #555;">可投放类目：</span>{$data.174.cate_name}
+						</div>
+					</div>
+				</a>
+				<a href="javascript:;" data-url="{:U('/Source/create_orders',['id' => 170])}" data-id="170" data-w="{$data.170.width}" data-h="{$data.170.height}" data-bw="{$data.170.background_width}" data-bh="{$data.170.background_height}" class="showad">
+					<div style="width: 126px;height: 239px;position: absolute;left: 278px;top: 3834px;overflow: auto;" class="p20 fs14 ffb text-center">
+						广告名称：{$data.170.position_name}<br/>
+						尺寸：{$data.170.width}x{$data.170.height}（px）<br/>
+						背景尺寸：{$data.170.background_width}x{$data.170.background_height}（px）<br/>
+						价格：{$data.170.price}元/日<br/>
+						广告类型：
+						<switch name="data.170.type">
+							<case value="1">图片</case>
+							<case value="2">焦点图</case>
+							<case value="3">文本</case>
+						</switch>
+						<div style="display: none;">
+							<span style="color: #555;">可投放类目：</span>{$data.170.cate_name}
+						</div>
+					</div>
+				</a>
+				<a href="javascript:;" data-url="{:U('/Source/create_orders',['id' => 173])}" data-id="173" data-w="{$data.173.width}" data-h="{$data.173.height}" data-bw="{$data.173.background_width}" data-bh="{$data.173.background_height}" class="showad">
+					<div style="width: 381px;height: 239px;position: absolute;left: 404px;top: 3834px;overflow: auto;" class="p20 fs14 ffb text-center">
+						广告名称：{$data.173.position_name}<br/>
+						尺寸：{$data.173.width}x{$data.173.height}（px）<br/>
+						背景尺寸：{$data.173.background_width}x{$data.173.background_height}（px）<br/>
+						价格：{$data.173.price}元/日<br/>
+						广告类型：
+						<switch name="data.173.type">
+							<case value="1">图片</case>
+							<case value="2">焦点图</case>
+							<case value="3">文本</case>
+						</switch>
+						<div style="display: none;">
+							<span style="color: #555;">可投放类目：</span>{$data.173.cate_name}
+						</div>
+					</div>
+				</a>
+				<a href="javascript:;" data-url="{:U('/Source/create_orders',['id' => 172])}" data-id="172" data-w="{$data.172.width}" data-h="{$data.172.height}" data-bw="{$data.172.background_width}" data-bh="{$data.172.background_height}" class="showad">
+					<div style="width: 190px;height: 239px;position: absolute;left: 785px;top: 3834px;overflow: auto;" class="p20 fs14 ffb text-center">
+						广告名称：{$data.172.position_name}<br/>
+						尺寸：{$data.172.width}x{$data.172.height}（px）<br/>
+						背景尺寸：{$data.172.background_width}x{$data.172.background_height}（px）<br/>
+						价格：{$data.172.price}元/日<br/>
+						广告类型：
+						<switch name="data.172.type">
+							<case value="1">图片</case>
+							<case value="2">焦点图</case>
+							<case value="3">文本</case>
+						</switch>
+						<div style="display: none;">
+							<span style="color: #555;">可投放类目：</span>{$data.172.cate_name}
+						</div>
+					</div>
+				</a>
+				<a href="javascript:;" data-url="{:U('/Source/create_orders',['id' => 171])}" data-id="171" data-w="{$data.171.width}" data-h="{$data.171.height}" data-bw="{$data.171.background_width}" data-bh="{$data.171.background_height}" class="showad">
+					<div style="width: 952px;height: 235px;position: absolute;left: 23px;top: 4074px;overflow: auto;" class="p20 fs14 ffb text-center">
+						广告名称：{$data.171.position_name}<br/>
+						尺寸：{$data.171.width}x{$data.171.height}（px）<br/>
+						背景尺寸：{$data.171.background_width}x{$data.171.background_height}（px）<br/>
+						价格：{$data.171.price}元/日<br/>
+						广告类型：
+						<switch name="data.171.type">
+							<case value="1">图片</case>
+							<case value="2">焦点图</case>
+							<case value="3">文本</case>
+						</switch>
+						<div style="display: none;">
+							<span style="color: #555;">可投放类目：</span>{$data.171.cate_name}
+						</div>
+					</div>
+				</a>
+				
+				<img src="../Public/images/home.png" width="100%"/>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="modelShow2" style="display: none;">
+	<div class="p20 bor_der text-center">
+		<p class="pull-center fs16">你的店铺经营类目和宝贝类目与所选广告位<span class="text_red">投放类目不符</span>，<br/><br/>请重新选择要投放的广告位</p>
+		<hr/>
+		<p class="pull-center fs16" style="color: #FF5722;line-height: 20px;" id="ktflm"></p>
+	</div>
+</div>
+<div id="modelShow4" style="display: none;">
+	<div class="p20 bor_der text-center">
+		<p class="pull-center fs16">没有找到符合<span class="text_red">投放尺寸</span>和<span class="text_red">投放类目</span>并<span class="text_red">审核通过</span>的素材，<br/><br/>请根据该广告要求<a href="{:U('/Sucai/create')}" class="text_blue" target="_blank">添加素材</a></p>
+	</div>
+</div>
+<script>
+	$(function(){
+		$(".showad").hover(function(){
+			$(this).find("div").removeClass("ffb");
+			$(this).find("div").addClass("ffbon");
+			$(this).attr("title","点击投放广告");
+		},function(){
+			$(this).find("div").removeClass("ffbon");
+			$(this).find("div").addClass("ffb");
+		});
+		$(".showad").click(function(){
+			var url=$(this).data("url");
+			var id=$(this).data("id");
+			var w=$(this).data("w");
+			var h=$(this).data("h");
+			var bw=$(this).data("bw");
+			var bh=$(this).data("bh");
+			var s=$(this).find("div>div").html();
+			if(url&&id&&w&&h){
+				$.post("__URL__/checksad",{id:id,w:w,h:h,bw:bw,bh:bh},function(data){
+					if(data==1){
+						window.location.href=url;
+					}else if(data==2){
+						$("#ktflm").html(s);
+						layer.open({
+							  type: 1,
+							  title: false,
+							  closeBtn: 0,
+							  shadeClose: true,
+							  area: '650px',
+							  content: $("#modelShow2").html(),
+							  btn: ["关闭"],
+						});
+					}else if(data==3){
+						$("#ktflm").html(s);
+						layer.open({
+							  type: 1,
+							  title: false,
+							  closeBtn: 0,
+							  shadeClose: true,
+							  area: '650px',
+							  content: $("#modelShow2").html(),
+							  btn: ["关闭"],
+						});
+					}else if(data==4){
+						layer.open({
+							  type: 1,
+							  title: false,
+							  closeBtn: 0,
+							  shadeClose: true,
+							  area: '600px',
+							  content: $("#modelShow4").html(),
+							  btn: ["添加素材","关闭"],
+							  yes: function(index){
+								  layer.close(index);
+								  window.location.href="{:U('/Sucai/create')}";
+							  },
+						});
+					}else{
+						layerMsg("未知错误，请稍候再试~");
+					} 
+				});
+			}
+		});
+	});
+</script>
+<include file="Public:footer" />

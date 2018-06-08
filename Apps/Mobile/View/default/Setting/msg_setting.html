@@ -1,0 +1,49 @@
+<include file="Public:header" />
+		<div class="page-group">
+			<div id="page-setting-msg_setting" class="page" data-page_num="{$pagelist.pageinfo.page}">
+				<!-- 标题栏 -->
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left back"></a>
+					<h1 class="title">消息设置</h1>
+					<button class="button button-link button-nav pull-right save-btn">
+						保存
+					</button>
+				</header>
+				<!-- 浮动导航 -->
+				<include file="Public:fixed-menu" />
+				<!-- 这里是页面内容区 -->		
+				<div class="content">
+					<form id="msg-setting">
+						<div class="list-block">
+							<ul>
+								<volist name="categorys" id="vo">
+								<li>
+									<div class="item-content">
+										<div class="item-media"><i class="icon icon-form-toggle"></i></div>
+										<div class="item-inner">
+											<div class="item-title label">接收{$vo.category_name}</div>
+											<div class="item-input">
+												<label class="label-switch fr">
+													<input type="checkbox" name="categorys" value="{$vo.id}" <if condition="$vo.is_receive eq 1">checked="checked"</if>>
+													<div class="checkbox"></div>
+												</label>
+											</div>
+										</div>
+									</div>
+								</li>
+								</volist>
+							</ul>
+							
+							
+						</div>
+					</form>
+				</div><!--/content-->	
+				
+			</div>		
+
+		
+		</div>	
+		
+
+<include file="Public:script" />
+<include file="Public:footer" />

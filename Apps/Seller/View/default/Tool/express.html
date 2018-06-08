@@ -1,0 +1,19 @@
+<div class="ml40 pl20">
+	<div class="block-transparent">
+		<notempty name="rs.showapi_res_body">
+			<ul class="timeline">
+				<volist name="rs.showapi_res_body.data" id="vo">
+					<li>
+						<i class="fa fa-angle-double-down"></i>
+						<span class="date">{$vo.ftime}</span>
+						<div class="content">
+							<p><strong>{$vo.context}</strong></p>
+						</div>
+					</li>
+				</volist>
+			</ul>
+			<else/>
+			{:W('Common/Builder/nors', array('param' => array('text' => '获取物流信息失败！')))}
+		</notempty>
+	</div>
+</div>

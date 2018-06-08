@@ -1,0 +1,95 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			理财明细
+		</div>
+		<div class="r">
+			
+		</div>
+	</div>
+</header>
+<section>
+	<div class="pagelist">
+		<div class="load-body">数据加载中……</div>
+	</div>
+	<div class="p10 load-more" onclick="loadmore()">
+		<div class="btn btn-lg btn-block btn-danger btn-trans">加载更多……</div>
+	</div>
+</section>
+
+
+<script id="tpl_finance_list" type="text/html">
+    <% for (var i = 0; i < data.length; i ++) { %>
+		<div class="line-box-m row hover" onclick="openWin({name:'finance_view',url:'/Finance/finance_view/d_no/<%= data[i].d_no %>'})">			
+				<div class="col-4x3" style="max-width:70%">
+					<div><%= data[i].type_name %></div>
+					<div class="text-gray"><%= data[i].category %></div>
+					<div class="text-gray"><%= data[i].atime %></div>
+				</div>
+				<div class="col-4 text-right">
+					<% if(data[i].money>0){ %>
+					<div class="text-success ft14">+<%= data[i].money %></div>
+					<% }else{ %>
+						<div class="text-danger ft14"><%= data[i].money %></div>
+					<% } %>
+					<div class="text-gray">已结算</div>
+				</div>
+			
+			<div class="clearfix"></div>
+		</div>
+    <% } %>
+
+</script>
+
+<script>
+	fixBar(1);
+	
+	var data={apiurl:'/Account/change_finance',is_openid:1,no_sign:'p,pagesize'};
+	pagelist(data);
+	
+	function pagelist(data,param){
+		var d=$('.page.active section').data();
+		var p=1;
+		if(d.p!=undefined){
+			p=d.p;
+		}
+		
+		if(d.allpage!=undefined && d.p>d.allpage){
+			$('.page.active .load-more').html('已无记录可加载！');
+			return false;
+		}
+		
+		data.p=p;		
+		ajax_post({
+			url:'/Api/api',
+			data:data,
+		},function(ret){
+			if(ret.code==1){			
+				var html = template('tpl_finance_list', {data:ret.data.list});				
+				if(p==1){
+					$('.page.active .pagelist').html(html);
+				}else{
+					$('.page.active .pagelist').append(html);
+				}
+				p++;
+				$('.page.active section').data({p:p,allpage:ret.data.allpage});
+				
+				if(ret.data.allpage>1){
+					$('.page.active .load-more').addClass('active');
+				}
+				
+			}else if(ret.code==3){
+				$('.page.active .pagelist').html(no_data_text);
+			}
+		});	
+	}
+	
+	function loadmore(){
+		pagelist(data);
+	}
+
+	
+</script>

@@ -1,0 +1,119 @@
+<include file="Home@Public:header" />
+<header>
+	<div class="container mt30">
+		<div class="row mg0">
+			<div class="col-xs-2 pd0">
+				<a href="{:DM('www')}"><img
+					src="__NEW_DESIGN__images/dt_logo.png"></a>
+			</div>
+			<div class="col-xs-2 pr0">
+				<div class="pt5 pl15 mt10 fs20 strong solid_l">设置密码</div>
+			</div>
+		</div>
+	</div>
+</header>
+<div class="centent_body">
+	<div style="border-bottom: 2px solid #c81623">
+		<div class="container text-right pb5">
+			<a href="{:U('/login')}">已有账户</a>？ <a href="{:U('/login')}">立即登录</a>
+		</div>
+	</div>
+	<div class="login_img">
+		<div class="container pt40 pb40">
+			<div class="col-xs-6" style="left:50%;margin-left:-30%">
+				<div class="login-wbox-opactiy">
+					<div class="pd10 bg_white" id="code-icon-box">
+						<div class="pd10">
+							<form id='formadd' class="form-horizontal"
+								data-url="{:U('/run')}">
+								<input type="hidden" name="erp_uid" value="{$data.erp_uid}" />
+								<input type="hidden" name="signcode" value="{$data.sign_code}" />
+								<div class="text-center fs18 mb30 mt10 re text-center">
+									<strong>设置密码</strong>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label pr0">新密码：</label>
+									<div class="col-sm-9">
+										<input name="password" id="password" type="password" class="form-control" placeholder="8-20位字符，建议字母、数字及符号组合">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label pr0">确认密码：</label>
+									<div class="col-sm-9">
+										<input name="password2" type="password" class="form-control" placeholder="请再次输入密码">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label pr0"></label>
+									<div class="col-sm-9">
+										<button class="btn btn-danger btn-block btn-lg btn-person">提交</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+					<!--正常登录-->
+					<div class="pd10 bg_white" style="display: none" id="com-icon-box">
+						<div class="pd10">
+							<form class="form-horizontal">
+								<div class="text-center fs18 mb50 mt10 re">
+									<strong>手机扫码，安全登录</strong>
+								</div>
+								<div class="code-icon">
+									<a href="javascript:void(0)" id="com-icon-input"><img
+										src="__NEW_DESIGN__images/com-img-icon.png" alt=""></a>
+								</div>
+								<div class="mt20 mb50 text-center ">
+									<div class=" text-center">
+										<img src="__NEW_DESIGN__images/code-img2.jpg" alt=""
+											width="200" height="200" class="solid-all">
+									</div>
+								</div>
+								<div class="ptb10 text-center">请使用乐兑客户端扫描二维码登录</div>
+							</form>
+						</div>
+					</div>
+					<!--二维码登录-->
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<include file="Home@Public:footer" />
+<include file="Home@Public:js" />
+<script>
+$(document).ready(function() {
+	checkform({
+		formid:"#formadd",
+		rules:{
+			password:{
+				required:true,
+				rangelength:[8,20],
+			},
+			password2:{
+				required:true,
+				equalTo:'#formadd #password',
+			},
+		},
+		messages:{
+			password:{
+				required:'新密码不能为空',
+				rangelength:'新密码长度8-20位，建议使用字母/数字/符号组合',
+			},
+			password2:{
+				required:'确认新密码不能为空',
+				equalTo:'两次密码不一致',
+			},
+		},
+	},function(res) {
+		talert({status:res.code,msg:res.msg});
+		if(res.code == 1) {
+			setTimeout(function() {
+				gourl({url:'{:U("/login")}'});
+			}, 1000);
+		}
+	});
+});
+</script>
+</body>
+</html>

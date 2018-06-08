@@ -1,0 +1,107 @@
+<include file="Index/header" />
+<div class="bg-gray content-wrap" style="height: 100%; width: 100%; overflow: scroll;">
+
+    <div class="content pd15">
+        <div class="bg-warning pd10 letter-spacing1">
+            <i class="fa fa-exclamation-circle fs16 fl text_yellow"></i>
+            <p class="ml20 mb0">小提示，目前只支持“天猫”和“淘宝”店铺宝贝导入，其它店铺宝贝导入敬请期待！</p>
+        </div>
+        <div class="row mt30">
+            <form onsubmit="return false;">
+                <div class="col-md-4">
+                    <input type="text" id="name" name="name" class="form-control" placeholder="请输入宝贝关键词">
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary btn-trans btn-rad btn-search">搜索宝贝</button>
+                </div>
+            </form>
+            <div class="col-md-8 mt20 pt10 products-list" style="border-top: solid 1px #F8F8F8">
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="loading hide" style = 'position: fixed;top: 45%;left: 25%;z-index: 1000; background: #F0F0F0;width: 500px; padding: 50px;'>
+    <div class="loading-body text-center"><img src="/Public/images/loading.gif">loading...</div>
+</div>
+<script id="products-list" type="text/html">
+    <table class="no-border no-border-x no-border-y md20">
+        <thead class="no-border">
+        <tr>
+            <th width="80" class="text-center">顺序</th>
+            <th width="80" class="text-center">宝贝图片</th>
+            <th>宝贝标题</th>
+            <th width="100" class="text-center">价格</th>
+            <th width="150" class="text-center">店铺</th>
+            <th width="80" class="text-center">操作</th>
+        </tr>
+        </thead>
+        <tbody class="no-border-y">
+        {{each data as val i}}
+        <tr>
+            <td width="80" class="text-center">{{i+1}}</td>
+            <td width="80" class="text-center"><img src="{{val.images}}" alt="{{val.name}}" style="max-width:80px;max-height:80px;"></td>
+            <td><div class="ft16 md5"><a href="{{val.detail_url}}" target="_blank">{{val.name}}</a></div></td>
+            <td width="100" class="text-center">{{val.price}}</td>
+            <td width="150" class="text-center">{{val.nick}}</td>
+            <td width="80" class="text-center"><div class="btn btn-primary btn-trans btn-rad" onclick="importGoods($(this));" data-id="{{val.nid}}" data-price="{{val.price}}" data-mprice="{{val.price_market}}" data-category="{{val.category}}" data-shoptype="{{val.shop_type}}" data-url="{{val.detail_url}}">导入商品</div></td>
+        </tr>
+        {{/each}}
+        </tbody>
+    </table>
+</script>
+<script>
+    $(document).ready(function () {
+        $(".btn-search").click(function () {
+            var name = $("#name").val();
+            if (name == '') {
+                talert({status:0,msg:'宝贝关键词不能为空'});
+                return false;
+            }
+            $("loading").removeClass('hide');
+            ajax_post({
+                url:'{:U("/run/authrun")}',
+                data:{type:1, name:name},
+            }, function (res) {
+                $("loading").addClass('hide');
+                if (res.code == 1) {
+                    var html = template('products-list', {data:res.data});
+                    $('.products-list').html(html);
+                } else {
+                    talert({status:0, msg:res.msg});
+                }
+            });
+        });
+    });
+
+    /**
+     * 导入商品
+     *
+     * @param obj
+     */
+    function importGoods(obj) {
+        var d = obj.data();
+        vmodal({
+            title:'一键导入',
+            msg:'<div class="text-center"><div><img src="/Public/images/loading2.gif"></div><h2>导入中……</h2></div>',
+            width:'650px',
+        });
+
+        var url='{:U("/Supplier/getTmallItem")}';
+        if(d.shoptype==1) url='{:U("/Supplier/getTaoBaoItem")}';
+
+        ajax_post({
+            url:url,
+            data:d,
+        },function(ret){
+            if(ret.status=='success'){
+                $('#ajax-modal .modal-body').html('<h2 class="text-center text-danger">'+ret.msg+'</h2><div class="p10 text-center ft4"><div class="md10">需要编辑并完善属性后方可上架！</div><a href="{:U('/Supplier/goods', ['status' => 2])}" class="btn btn-info btn-150px link-white">去仓库看看</a><a href="/Supplier/goods_edit/id/'+ret.url+'" class="btn btn-primary btn-150px link-white">编辑宝贝</a></div>');
+            }else{
+                $('#ajax-modal .modal-body').html('<h2 class="text-center text-danger">'+ret.msg+'</h2>');
+            }
+        });
+    }
+</script>
+</body>
+</html>

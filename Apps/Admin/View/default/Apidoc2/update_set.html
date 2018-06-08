@@ -1,0 +1,165 @@
+<div class="well">
+<h3 class="mb30">{$one.api_url}</h3>
+	<form id="api-update-set-save" class="" onsubmit="return;">
+		<input type="hidden" name="id" value="{$one.id}" />
+		<div class="form-group">
+		    <label ><span style="color:red">*</span>标题</label>
+		    <input type="text" readonly="true" name="title" class="form-control" value="{$one.title}" placeholder="输入接口标题">
+		</div>
+		<div class="form-group">
+		    <!-- <label >接口描述</label> -->
+		    <!-- <textarea name="content" readonly="true" class="form-control" rows="3">{$one.content}</textarea> -->
+		</div>
+		<div class="form-group">
+		    <label ><span style="color:red">*</span>类目</label>
+		    <select name="sid" class="form-control " style="">
+				<foreach name="category" item="value">
+					<optgroup label="{$value.category_name}">
+						<foreach name="value.child" item="vo">
+							<option value="{$vo.id}" <?php if($vo['id'] == $one['sid'])echo 'selected="selected"'; ?>>{$vo.category_name}</option>
+						</foreach>
+					</optgroup>
+				</foreach>
+			</select>
+		</div>
+		<!-- <h4 class="mb30">参数</h4> -->
+		<table style="background-color:#fff">
+			<thead>
+				<!-- <tr>
+					<th nowrap="nowrap"><strong>参数</strong></th>
+					<th nowrap="nowrap"><strong>类型</strong></th>
+					<th nowrap="nowrap"><strong>是否必须</strong></th>
+					<th nowrap="nowrap"><strong>参数描述</strong></th>
+					<th nowrap="nowrap" style="text-align:center" width="100">
+						<button type="button" class="btn btn-sm btn-info btn-rad btn-trans" onclick="createParam()">新增参数</button>
+					</th>
+				</tr> -->
+			</thead>
+			<tbody id="param-list">
+				<!--  -->
+				<?php
+					# $param = json_decode($one['param'],true);foreach($param as $k => $v){
+				?>
+					<!-- <tr class="param-list-item">
+						<td style="word-break:break-all">
+							<div class="form-group">
+							    <input readonly="true" name="param[{$k}][name]" type="text" class="form-control" value="{$v.name}" placeholder="输入参数">
+							</div>
+						</td>
+						<td style="word-break:break-all">
+							<div class="form-group">
+							    <input readonly="true" name="param[{$k}][type]" type="text" class="form-control" value="{$v.type}" placeholder="输入类型">
+							</div>
+						</td>
+						<td style="word-break:break-all">
+							<div class="form-group">
+							    <input readonly="true" name="param[{$k}][need]" type="text" class="form-control" value="{$v.need}" placeholder="是否必须">
+							</div>
+						</td>
+						<td style="word-break:break-all">
+							<div class="form-group">
+							    <textarea readonly="true" name="param[{$k}][descript]" class="form-control" rows="3">{$v.descript}</textarea>
+							</div>
+						</td>
+						<td style="word-break:break-all;text-align:center">
+							<button type="button" class="btn btn-sm btn-danger btn-rad btn-trans" onclick="deleteParam($(this))">删除</button>
+						</td>
+					</tr> -->
+				<?php
+					# }
+				?>
+			</tbody>
+		</table>
+		<div class="form-group">
+		    <!-- <label for="exampleInputName2"><span style="color:red">*</span>例子</label> -->
+		    <!-- <textarea readonly="true" name="example" class="form-control" rows="5"> -->
+		    <?php
+		    	# $example = json_decode($one['example']);
+		    	# foreach($example as $vo){
+		    	# 	echo $vo;
+		    	# 	echo "\n";
+		    	# }
+		    ?>
+
+		    <!-- </textarea> -->
+		</div>
+		<div class="form-group">
+		    <!-- <label >返回</label> -->
+		    <!-- <textarea readonly="true" name="return" class="form-control" rows="5"> -->
+		    <?php
+		    	# echo($one['return']); 
+		    ?>
+		    <!-- </textarea> -->
+		</div>
+		<div class="p20 text-center">
+			<button type="button" class="btn btn-info btn-rad btn-trans confirm-update"><i class="fa fa-check"></i>开始更新</button>
+		</div>
+	</form>
+</div>
+
+
+<script>
+
+$(function(){
+	$('.confirm-update').on('click', function(){
+		var data = getFormJson('#api-update-set-save');
+		if(data.title == ''){
+			valert({status:'warnning',msg:'接口标题必填'});
+			return false;
+		}else if(data.example == ''){
+			valert({status:'warnning',msg:'例子不能为空'});
+			return false;
+		}else{
+			
+		}
+		ajax_post_form({
+			formid:'#api-update-set-save',
+			url:'__URL__/update_set_save',
+		},function(ret){
+			valert(ret);
+			if(ret.status == 'success'){
+				$('#ajax-modal').modal('hide');
+				ref();
+			}
+		});
+	});
+});
+
+function deleteParam(obj){
+	var tr = obj.parent().parent();
+	tr.html('');
+	tr.hide();
+}
+
+function createParam(){
+	var length = $('#param-list .param-list-item').length;
+	var html = '';
+	html += '<tr class="param-list-item">';
+	html += '<td style="word-break:break-all">';
+	html += '<div class="form-group">';
+	html += '<input name="param[' + length + '][name]" type="text" class="form-control" value="" placeholder="输入参数">';
+	html += '</div>';
+	html += '</td>';
+	html += '<td style="word-break:break-all">';
+	html += '<div class="form-group">';
+	html += '<input name="param[' + length + '][type]" type="text" class="form-control" value="" placeholder="输入类型">';
+	html += '</div>';
+	html += '</td>';
+	html += '<td style="word-break:break-all">';
+	html += '<div class="form-group">';
+	html += '<input name="param[' + length + '][need]" type="text" class="form-control" value="" placeholder="是否必须">';
+	html += '</div>';
+	html += '</td>';
+	html += '<td style="word-break:break-all">';
+	html += '<div class="form-group">';
+	html += '<textarea name="param[' + length + '][descript]" class="form-control" rows="3"></textarea>';
+	html += '</div>';
+	html += '</td>';
+	html += '<td style="word-break:break-all;text-align:center">';
+	html += '<button type="button" class="btn btn-sm btn-danger btn-rad btn-trans" onclick="deleteParam($(this))">删除</button>';
+	html += '</td>';
+	html += '</tr>';
+	$('#param-list').append(html);
+
+}
+</script>

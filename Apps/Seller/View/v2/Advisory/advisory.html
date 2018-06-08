@@ -1,0 +1,70 @@
+<div class="bg-warning pd10 mb20">
+    <i class="fa fa-exclamation-circle fs16 fl text_yellow"></i>
+    <p class="ml20 mb0">声明：请在72个小时内完成回复，回复后可以做修改，但不能删除咨询。</p>
+</div>
+
+<table class="no-border mb20 bg_f1"><!-- 类型说明 -->
+    <tbody class="no-border-y">
+    <tr class="text-center">
+        <td width="75%" style="padding:0">
+            <table class="no-border">
+                <tbody class="no-border-y">
+                <td width="13%"></td>
+                <td width="34%">商品信息</td>
+                <td width="16%">咨询时间</td>
+                <td width="14%">咨询类型</td>
+                <td width="18%">买家</td>
+                </tbody>
+            </table>
+        </td>
+        <td width="13%">状态</td>
+        <td width="12%">操作</td>
+    </tr>
+    </tbody>
+
+
+    <table class="revisionTable table"><!-- 订单信息 -->
+        <tbody class="bg_white">
+            <tr class="text-center">
+                <td style="padding:0; width:75%">
+                    <table class="no-border table-hover">
+                        <tbody class="no-border-y">
+                        <tr><!-- 同店铺第一个商品 -->
+                            <td width="13%">
+                                <a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', ['id' => $data['attr_list_id']])}">
+                                    <img src="{:myurl($data['images'], 80)}" class="img-thumbnail"></a>
+                            </td>
+                            <td valign="top" width="34%" class="text-left">
+                                <a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', ['id' => $vo['attr_list_id']])}">{$data.goods_name}</a>
+                                <div class="md5 text-gray mt5">咨询时间：{$data.atime}</div>
+                            </td>
+                            <td width="16%">
+                                <span class="text_yellow">￥ {$data.price}</span>
+                            </td>
+                            <td width="14%">{$data.type_name}</td>
+                            <td width="18%">
+                                <a class="text_44" target="_blank" href="{:DM('oauth2')}{:U('Im/check',['receiver' => $data['nick']])}"><img class="mr5" width="12" src="/Public/images/icon-im.png"> {$data.nick}</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </td>
+                <td style="vertical-align: middle; width:13%" rowspan="1">
+                    <div style="padding: 0 10px;">
+                        <a href="javascript:;" class="btn btn-sm btn-primary btn-rad btn-trans btn-block m0">{$data.status_name}</a>
+                    </div>
+                </td>
+                <td style="vertical-align: middle; width:12%" rowspan="1">
+                    <p><a class="text_blue" href="{:U('/advisory/detail', ['id' => $data['id']])}">详情</a></p>
+                </td>
+            </tr>
+        </tbody>
+    </table><!-- 订单信息结束 -->
+</table><!-- 类型说明结束 -->
+
+<div class="row" style="border-top: solid 1px #F8F8F8">
+    <div class="col-sm-12">
+        <h4>咨询内容</h4>
+        {$data.content}
+    </div>
+</div>

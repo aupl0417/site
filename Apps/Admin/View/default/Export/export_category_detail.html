@@ -1,0 +1,161 @@
+<include file="Public:header" />
+<include file="nav2" />
+<div class="m20">
+	<div class="block-flat">
+		<form method="post" action="" role="form" id="export-form" class="p10 md10">
+			<input type="hidden" value="{$res.id}" name="id"/>
+			<table class="no-bordered no-bg">
+				<tr>
+					<td width="10%" class="text-right strong">方案分类名称</td>
+					<td><input type="text" name="category_name" placeholder="" value="{$res.name}" class="form-control" style=""></td>
+				</tr>
+			</table>
+			<table class="no-bordered no-bg" id="condition-table">
+				<volist name="res.condition" id="vo">
+				<tr>
+					<td width="10%" class="text-right strong">条件字段</td>
+					<td>
+						<label class="mr10">
+							<select class="form-control" name="is_open[]">
+								<option value="1" <if condition="$vo.is_open eq 1">selected="selected"</if>>启用</option>
+								<option value="0" <if condition="$vo.is_open eq 0">selected="selected"</if>>停用</option>
+							</select>
+						</label>
+						<label class="mr10"><input type="text" name="label[]" placeholder="label" value="{$vo.label}" class="form-control" style=""></label>
+						<label class="mr10">
+							<select class="form-control" name="formtype[]">
+								<option value="">类型</option>
+								<option value="checkbox" <if condition="$vo.formtype eq 'checkbox'">selected="selected"</if>>多选</option>
+								<option value="radio" <if condition="$vo.formtype eq 'radio'">selected="selected"</if>>单选</option>
+								<option value="date" <if condition="$vo.formtype eq 'date'">selected="selected"</if>>时间文本框</option>
+								<option value="text" <if condition="$vo.formtype eq 'text'">selected="selected"</if>>文本框</option>
+							</select>
+						</label>
+						<label class="mr10"><input type="text" name="name[]" placeholder="name" value="{$vo.name}" class="form-control" style=""></label>
+						<label class="mr10" >
+							<input type="text" name="value[]" placeholder="value" value='{$vo.value}' class="form-control" style="">							
+						</label>
+						<label class="mr10">
+							<button type="button" class="btn btn-primary" onclick="$(this).closest('tr').remove()">删除</button>
+						</label>
+					</td>
+				</tr>
+				</volist>
+			</table>
+			<div class="p10 text-center">
+				<button type="button" class="btn btn-lg btn-rad btn-trans btn-primary add-condition">新增条件字段</button>
+			</div>
+
+			<table class="no-bordered no-bg" id="field-table">
+				<volist name="res.field" id="vo">
+				<tr>
+					<td width="10%" class="text-right strong">导出字段</td>
+					<td>
+						<label class="mr10">
+							<select class="form-control" name="field_is_open[]">
+								<option value="1" <if condition="$vo.field_is_open eq 1">selected="selected"</if>>启用</option>
+								<option value="0" <if condition="$vo.field_is_open eq 0">selected="selected"</if>>停用</option>
+							</select>
+						</label>
+						<label class="mr10"><input type="text" name="field_label[]" placeholder="label" value="{$vo.field_label}" class="form-control" style=""></label>
+						<label class="mr10"><input type="text" name="field_value[]" placeholder="value" value="{$vo.field_value}" class="form-control" style=""></label>
+						<label class="mr10">
+							<button type="button" class="btn btn-primary" onclick="$(this).closest('tr').remove()">删除</button>
+						</label>
+					</td>
+				</tr>
+				</volist>
+			</table>
+			<div class="p10 text-center">
+				<button type="button" class="btn btn-lg btn-rad btn-trans btn-primary add-field">新增导出字段</button>
+			</div>
+			
+			<div class="p10 text-center">
+				<button type="button" class="btn btn-lg btn-rad btn-trans btn-default" onclick="back()"><i class="fa fa-mail-reply"></i> 返回</button>
+				<button type="submit" class="btn btn-primary btn-lg">保存设置</button>
+
+				
+				
+			</div>
+			
+
+		</form>
+		
+		
+		
+		<div id="condition-tpl" class="hide">
+			<table>
+			<tr>
+				<td width="10%" class="text-right strong">条件字段</td>
+				<td>
+					<label class="mr10">
+						<select class="form-control" name="is_open[]">
+							<option value="1">启用</option>
+							<option value="0">停用</option>
+						</select>
+					</label>
+					<label class="mr10"><input type="text" name="label[]" placeholder="label" value="" class="form-control" style=""></label>
+					<label class="mr10">
+						<select class="form-control" name="formtype[]">
+							<option value="">类型</option>
+							<option value="checkbox">多选</option>
+							<option value="radio">单选</option>
+							<option value="date">时间文本框</option>
+							<option value="text">文本框</option>
+						</select>
+					</label>
+					<label class="mr10"><input type="text" name="name[]" placeholder="name" value="" class="form-control" style=""></label>
+					<label class="mr10"><input type="text" name="value[]" placeholder="value" value='' class="form-control" style=""></label>
+					<label class="mr10">
+						<button type="button" class="btn btn-primary" onclick="$(this).closest('tr').remove()">删除</button>
+					</label>
+				</td>
+			</tr>
+			</table>
+		</div>
+		<div id="field-tpl" class="hide">
+			<table>
+			<tr>
+				<td width="10%" class="text-right strong">导出字段</td>
+				<td>
+					<label class="mr10">
+						<select class="form-control" name="field_is_open[]">
+							<option value="1">启用</option>
+							<option value="0">停用</option>
+						</select>
+					</label>
+					<label class="mr10"><input type="text" name="field_label[]" placeholder="label" value="" class="form-control" style=""></label>
+					<label class="mr10"><input type="text" name="field_value[]" placeholder="value" value="" class="form-control" style=""></label>
+					<label class="mr10">
+						<button type="button" class="btn btn-primary" onclick="$(this).closest('tr').remove()">删除</button>
+					</label>
+				</td>
+			</tr>
+			</table>
+		</div>
+	</div>
+</div>
+<div class="clearfix"></div>
+
+<include file="Public:copyright" />
+<include file="Public:js" />
+
+<script>
+iCheckClass('#export_set');
+
+$(".add-condition").click(function(){
+	var html = $("#condition-tpl tr").eq(0).html();
+	$("#export-form #condition-table").append('<tr>'+html+'</tr>');
+});
+$(".add-field").click(function(){
+	var html = $("#field-tpl tr").eq(0).html();
+	$("#export-form #field-table").append('<tr>'+html+'</tr>');
+});
+
+$('#condition-table tbody').sortable({
+    stop: function(event, ui) {}
+});
+$('#field-table tbody').sortable({
+    stop: function(event, ui) {}
+});
+</script>

@@ -1,0 +1,44 @@
+<div class="line-box-m noicon row">
+	<div class="col-100">
+		<textarea id="seller-refund-reason" name="reason" placeholder="内容或描述" maxlength="200" rows="10"></textarea>
+	</div>
+	<div class="clearfix"></div>
+</div>
+<div class="line-box  noicon row hover">
+	<div class="fl text-center text-danger col-50" onclick="nothing('{$_GET.r_no}',1)">确定</div>
+	<div class="fl text-center text-danger col-50" onclick="nothing('{$_GET.r_no}',0)">返回</div>
+</div>
+<script>
+function nothing(r_no,is){
+	if(is == 0){
+		$('.page.active .vmodal .vmodal-footer').click();
+	}else{
+		var reason = $('#seller-refund-reason').val();
+		if(reason == ''){
+			valert({msg:'请输入内容或描述'});
+			return false;
+		}
+		ajax_post({
+			url:'/Api/api',
+			data:{
+				apiurl:'/SellerRefund/nothing',
+				is_openid:1,
+				r_no:r_no,
+				reason:reason,
+			}
+		},function(ret){
+			console.log(ret);
+			if(ret.code == 1){
+				valert(ret);
+				$('.page.active .vmodal .vmodal-footer').click();
+				openWin({name:'seller_refund',url:'/SellerRefund/view/r_no/' + r_no,ref:true});
+			}else{
+				valert(ret);
+				$('.page.active .vmodal .vmodal-footer').click();
+			}
+		});
+	}
+}
+
+
+</script>

@@ -1,0 +1,36 @@
+<form method="get" action="" role="form" class="hover-shadow hover-search p10 md10">
+
+	<table class="no-bordered">
+		<tr>
+			<td class="p0">
+				<table>
+					<tr>
+						<td>	
+							<input id="val" name="val" value="{$_GET.val}" class="form-control" placeholder="请输入订单号" />					
+						</td>					
+						<td><input id="sday" name="sday" value="{$_GET.sday}" class="form-control" placeholder="时间(从)" data-type="between-datepick" data-var="maxDate" data-tag="#eday" />							
+						</td>
+						<td><input id="eday" name="eday" value="{$_GET.eday}" class="form-control" placeholder="时间(至)" data-type="between-datepick"data-var="minDate" data-tag="#sday" /></td>
+						
+						<td><input id="q" name="q" value="{$_GET.q}" class="form-control" placeholder="请输入搜索关键词" /></td>
+						<td>
+							<select id="table_name" name="table_name" class="form-control">
+								<option value="cron_orders">cron_orders</option>
+								<option value="cron_refund" <if condition="$_GET.table_name eq cron_refund">selected="selected"</if>>cron_refund</option>
+								<option value="cron_service" <if condition="$_GET.table_name eq cron_service">selected="selected"</if>>cron_service</option>
+								<option value="cron_shop_total" <if condition="$_GET.table_name eq cron_shop_total">selected="selected"</if>>cron_shop_total</option>
+								<option value="cron_shop_update" <if condition="$_GET.table_name eq cron_shop_update">selected="selected"</if>>cron_shop_update</option>
+							</select>
+						</td>
+					<tr>
+				</table>
+			</td>
+			<td width="100" class="p0"><button type="submit" class="btn btn-rad btn-trans btn-primary btn-block"><i class="fa fa-search"></i> 搜索</button></td>
+		</tr>
+	</table>
+
+	
+	
+
+</form>
+<div class="clearfix"></div>

@@ -1,0 +1,66 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			选择街道、镇
+		</div>
+		<div class="r">
+			<div class="text" onclick="selected_town()">确认</div>
+		</div>
+	</div>
+</header>
+<section>
+	<div class="load-body">数据加载中……</div>
+</section>
+
+<script id="town_list_{$_GET.level}" type="text/html">
+	<div class="line-box sm nobg noicon text-gray">请选择街道、镇：<span class="text-success select-city"></span></div>
+    <% for (var i = 0; i < data.length; i ++) { %>
+		<div class="line-box" onclick="select_town($(this))" data-level="{$_GET.level}" data-page="{$_GET.page}" data-field="{$_GET.field}" data-id="<%= data[i].id %>" data-name="<%= data[i].a_name%>">
+			<div class="title"><%= data[i].a_name%></div>
+		</div>
+    <% } %>
+
+</script>
+
+<script>
+	fixBar(1);
+	ajax_post({
+		url:'/Api/api',
+		data:{apiurl:'/Tools/city',sid:{$_GET['sid']?$_GET['sid']:0},'no_sign':'sid'},
+	},function(ret){
+		if(ret.code==1){			
+			var html = template('town_list_{$_GET.level}', {data:ret.data});
+			$('.page.active section').html(html);
+			hover('.page.active section');
+		}else if(ret.code==3){
+			$('.page.active section').html(no_data_text);
+		}
+	});
+	
+	function select_town(obj){
+		var d=obj.data();
+		$('.page.active .select-city').data(d).html(d.name);
+	}
+	
+	function selected_town(){
+		var d=$('.page.active .select-city').data();
+		if(d.level == 3){
+			if(check_city_agent(d.id)==false){
+				valert({msg:'该地区已存在着代理！'});
+				return false;
+			}		
+			var city=$('.page#select_province .select-city').html()+' '+$('.page#select_city .select-city').html()+' '+$('.page#select_district .select-city').html()+' '+d.name;
+			$('.page#'+d.page+' .city').html(city);
+			$('.page#'+d.page+' #city_id').val(d.id);
+			closeToWin({name:'agent_order'});
+		}else{
+			valert({msg:'请选择街道、镇'});
+		}
+		
+
+	}
+	
+</script>

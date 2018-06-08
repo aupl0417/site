@@ -1,0 +1,64 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			退款记录
+		</div>
+		<div class="r">
+		</div>
+	</div>
+</header>
+<section>	
+	<div class="load-body">数据加载中……</div>
+</section>
+<script id="tpl_seller_refund_item_list" type="text/html">
+<% for(i=0;i<data.length;i++){ %>
+	<div class="line-box hover row" onclick="openWin({name:'seller_refund_view',url:'/SellerRefund/view/r_no/<%= data[i].r_no %>'})">
+		<div class="col-70"><div class="b">退款单号：<%= data[i].r_no %></div></div>
+		<div class="col-30 text-right text-danger"><%= data[i].status_name %></div>
+	</div>
+	
+	<% if(data[i].type==3){ %>
+	<div class="line-box hover noicon">
+		退运费
+	</div>	
+	<% }else{ %>
+	<div class="line-box-m hover row" onclick="openWin({name:'goods_view',url:'/Goods/view/id/<%= data[i].orders_goods.attr_list_id %>'})">
+		<div class="col-15"><img src="<%= data[i].orders_goods.images %>" alt="商品图片"></div>
+		<div class="col-85">
+			<div class="pl10 pr10">
+				<div class="lh2-18px"><%= data[i].orders_goods.goods_name %></div>
+				<div class="row">
+					<div class="col-50 text-gray"><%= data[i].orders_goods.attr_name %></div>
+					
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	</div>	
+	<% } %>
+
+	<div class="clearfix md10"></div>
+<% } %>
+	
+</script>
+
+<script>
+	fixBar(1);
+	
+	ajax_post({
+		url:'/Api/api',
+		data:{apiurl:'/SellerRefund/item_list',is_openid:1,s_no:'{$_GET.s_no}'}
+	},function(ret){
+		if(ret.code==1){
+			var html=template('tpl_seller_refund_item_list',{data:ret.data});
+			$('.page.active section').html(html);
+		}else{
+			$('.page.active .load-body').html(no_data_text);
+		}
+	});
+
+	
+</script>

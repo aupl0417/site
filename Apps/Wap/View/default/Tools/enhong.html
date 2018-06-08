@@ -1,0 +1,27 @@
+<notempty name="orders">
+	<volist name="orders" id="vo">
+	<div>订单号：<strong>{$vo.s_no}</strong>(共 <strong color="#ff3300">{$vo.pay_price}</strong> 元)</div>
+	<div>付款时间：{$vo.pay_time}</div>
+	<br />
+	<div>姓名：{$vo.address.linkname}</div>
+	<div>手机：{$vo.address.mobile} <notempty name="vo.address.tel">，{$vo.address.tel}</notempty></div>
+	<div>地址：{$vo.address.province} {$vo.address.city} {$vo.address.district} {$vo.address.town} {$vo.address.street}</div>
+	<br />
+		<volist name="vo.goods" id="gl">
+			<div>{$gl.goods_name}</div>			
+			<notempty name="gl.taobao">
+				<div>
+				<notempty name="gl.taobao.tk_url">
+				<a href="{$gl.taobao.tk_url}" target="_blank">{$gl.taobao.tk_url}</a>
+				<else />
+				<a href="{$gl.taobao.detail_url}" target="_blank">{$gl.taobao.detail_url}</a>
+				</notempty>
+				</div>
+			</notempty>
+			<div>{$gl.attr_name}，数量 {$gl.num}</div><br />
+		</volist>
+		<br />---------------------------------------------------<br /><br />
+	</volist>
+<else />
+没有订单
+</notempty>

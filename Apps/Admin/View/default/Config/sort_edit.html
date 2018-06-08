@@ -1,0 +1,90 @@
+	<form class="form-horizontal" id="formadd" name="formadd">
+
+											{:W('Widget/create_form',array(array(
+												'field'		=>array(
+													array(
+														'type'			=>'select',
+														'textname'		=>'上级',
+														'name'			=>'sid',
+														'data'			=>get_category(array('table'=>'config_sort')),
+														'field'			=>array('id','name'),
+														'iscategory'	=>1,
+														'value'			=>$rs['sid']
+													),												
+													array(
+														'type'			=>'input',
+														'textname'		=>'名称',
+														'name'			=>'name',
+														'placeholder'	=>'请输入分组名称',
+														'is_need'		=>1,
+														'value'			=>$rs['name']
+													),
+													array(
+														'type'			=>'input',
+														'textname'		=>'参数',
+														'name'			=>'ac',
+														'placeholder'	=>'请输入参数',
+														'is_need'		=>1,
+														'value'			=>$rs['ac']
+													),													
+													array(
+														'type'			=>'radio',
+														'textname'		=>'状态',
+														'name'			=>'active',
+														'data'		=>array(
+																			array('value'=>1,'name'=>'激活'),
+																			array('value'=>0,'name'=>'锁定'),
+																		),
+														'field'			=>array('value','name'),
+														'is_need'		=>1,
+														'class'			=>'mr20',
+														'value'			=>1,
+														'value'			=>$rs['active']
+													),
+													array(
+														'type'		=>'hidden',
+														'name'		=>'id',
+														'value'		=>$rs['id']
+													),
+
+												),
+											)))}
+	
+
+		<div class="text-center">
+			<button type="submit" class="btn btn-lg btn-rad btn-trans btn-primary"><i class="fa fa-check"></i> 提交</button>
+		</div>								
+
+	</form>
+<script>
+
+iCheckClass();
+checkform({
+	formid:'#formadd',
+	url:'__URL__/sort_edit_save',
+	rules:{
+		name:{
+			required:true
+		},
+		ac:{
+			required:true
+		}
+	},
+	messages:{
+		name:{
+			required:'请输入分组名称'
+		},
+		ac:{
+			required:'请输入参数'
+		}
+	},
+	script:'callback(ret)'
+});
+
+function callback(ret){
+	valert({status:ret.status,msg:ret.msg});
+	if(ret.status=='success'){
+		ref();
+	}
+}
+</script>

@@ -1,0 +1,207 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body">
+	<include file="Public:nav" />
+	<div class="container mb30">
+		<include file="Public:side" />
+		<div class="w980 fl">
+			<div class="bor_der">
+					<div class="bg_f1 clearfix fs14 text_44 tle_R">
+						<a class="fl plr15 line40 ml-1 active" href="javascript:;">添加运费模板</a>
+					</div>
+					<div class="solid_t mt-1 plr15 ptb10">
+						<blockquote class="pd0 pl10 mt10 mb20 fs14 strong">添加运费模板</blockquote>
+						<form class="row form-horizontal group-border-dashed" id="freight-template-create" data-url='/run/authApi'>
+							<div class="clearfix">
+
+								<div class="col-xs-12">
+									<div class="form-group">
+										<label class="col-xs-2 pd0 control-label"><span class="text_yellow">*</span>模板名称：</label>
+										<div class="col-xs-10 pr0"><input name="express_name" type="text" class="form-control"></div>
+									</div>
+								</div>
+
+								<div class="col-xs-12">
+									<div class="form-group">
+										<label class="col-xs-2 pd0 control-label"><span class="text_yellow">*</span>选择快递：</label>
+										<div class="col-xs-10 pr0">
+											<select class="form-control" name="express_company_id">
+												<foreach name="company" item="vo">
+													<optgroup label="{$vo.category_name}">
+													<foreach name="vo.dlist" item="v">
+							                    		<option value="{$v.id}" >{$v.company}</option>
+							                    	</foreach>
+													</optgroup>
+							                    </foreach>
+							                </select>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-xs-12">
+									<div class="form-group">
+										<label class="col-xs-2 pd0 control-label"><span class="text_yellow">*</span>计量单位：</label>
+										<div class="col-xs-1 mt7">
+											<label class="square fl mr5">
+												<input type="checkbox" checked="checked" class="unit" onclick="check_unit(this,'件')"/>
+												<span></span>
+											</label>
+											<strong>件</strong>
+										</div>
+										<div class="col-xs-1 mt7">
+											<label class="square fl mr5">
+												<input type="checkbox" class="unit" onclick="check_unit(this,'Kg')"/>
+												<span></span>
+											</label>
+											<strong>Kg</strong>
+										</div>
+										<input type="hidden" name="unit" value="件" />
+									</div>
+								</div>
+
+							</div>
+							
+
+							<div class="col-xs-12">
+								<div class="form-group f-express">
+									<label class="col-xs-2 pd0 control-label"><span class="text_yellow">*</span>快递运费：</label>
+									<div class="col-xs-10">
+										<div class="input-group">
+											<div class="row md10 express-default">
+												<div class="col-xs-3">
+													<div class="input-group">
+														<span class="input-group-addon">起步</span>
+														<input type="text" class="form-control" id="first_unit" name="first_unit" value="">
+														<span class="input-group-addon unit-info">件</span>
+													</div>
+												</div>
+												<div class="col-xs-3">
+													<div class="input-group">
+													<span class="input-group-addon">运费</span>
+														<input type="text" class="form-control" id="first_price" name="first_price" value="">
+														<span class="input-group-addon">元</span>
+													</div>
+												</div>
+												<div class="col-xs-3">
+													<div class="input-group">
+														<span class="input-group-addon">每加</span>
+														<input type="text" class="form-control" id="next_unit" name="next_unit" value="">
+														<span class="input-group-addon unit-info">件</span>
+													</div>
+												</div>
+												<div class="col-xs-3">
+													<div class="input-group">
+														<span class="input-group-addon">加钱</span>
+														<input type="text" class="form-control" id="next_price" name="next_price" value="">
+														<span class="input-group-addon">元</span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="tips-form text-gray ft12 link-blue"></div>
+									</div>
+								</div>
+							</div>
+
+							
+
+							<div class="col-xs-12">
+								<div class="form-group">
+									<label class="col-xs-2 pd0 control-label">备注：</label>
+									<div class="col-xs-10 pr0"><input name="remark" type="text" class="form-control"></div>
+								</div>
+							</div>
+
+
+							<div class="col-xs-12">
+								<div class="form-group">
+									<label class="col-xs-2 pd0 control-label"></label>
+									<div class="col-xs-6 clearfix">
+										<a href="javascript:;" class="col-xs-4 btn btn-primary btn_m plr20 fl opreating" onclick="checkForms()">确定添加</a>
+									</div>
+								</div>
+							</div>
+
+						</form>
+					</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+</block>
+<block name="css"></block>
+
+<block name="script">
+<script>
+function checkForms() {
+	var data = getFormJson('#freight-template-create');
+
+	if(data.express_name == '' || data.express_name == undefined){
+		talert({msg:'模板名称不能为空'});
+		return false;
+	}
+	if(data.express_company_id == '' || data.express_company_id == undefined){
+		talert({msg:'快递不能为空'});
+		return false;
+	}
+	if(data.unit == '' || data.unit == undefined){
+		talert({msg:'计量单位必须选择'});
+		return false;
+	}
+	if(data.first_unit == '' || data.first_unit == undefined){
+		talert({msg:'起步件/Kg 不能为空'});
+		return false;
+	}
+	if(data.first_unit < 0){
+		talert({msg:'请填写正确的起步件/Kg'});
+		return false;
+	}
+	if(data.first_price == '' || data.first_price == undefined){
+		talert({msg:'起步费用不能为空'});
+		return false;
+	}
+	if(data.first_price < 0){
+		talert({msg:'请填写正确的起步费用'});
+		return false;
+	}
+	if(data.next_unit == '' || data.next_unit == undefined){
+		talert({msg:'续件/Kg 不能为空'});
+		return false;
+	}
+	if(data.next_unit < 0){
+		talert({msg:'请填写正确的续件/Kg'});
+		return false;
+	}
+	if(data.next_price == '' || data.next_price == undefined){
+		talert({msg:'续件/Kg 费用不能为空'});
+		return false;
+	}
+	if(data.next_price < 0){
+		talert({msg:'请填写正确的续件/Kg 费用'});
+		return false;
+	}
+	// 请求
+	ajax_post({
+		url:'/run/authRun',
+		data:data,
+	},function(ret){
+		talert({status:ret.code,msg:ret.msg});
+		  	if(ret.code == 1) {
+		  		var url = '{:U("freightTemplate/edit",array(),false)}' + '/id/' + ret.data.id;
+		  		window.location.href = url;
+			}
+	});
+}
+
+function check_unit(th,unit){
+	$('#freight-template-create .unit').prop('checked',false);
+	$(th).prop('checked',true);
+	$('#freight-template-create').find('input[name="unit"]').val(unit);
+	$('#freight-template-create .unit-info').html(unit);
+}
+
+
+
+</script>
+</block>

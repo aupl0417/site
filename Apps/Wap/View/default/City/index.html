@@ -1,0 +1,43 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			选择城市
+		</div>
+		<div class="r">
+			<div class="text" onclick="">确认</div>
+		</div>
+	</div>
+</header>
+<section>
+
+</section>
+
+<script id="citylist" type="text/html">
+	<div class="line-box sm nobg noicon text-gray">请选择城市：</div>
+    <% for (var i = 0; i < data.length; i ++) { %>
+		<div class="line-box" onclick="openWin({name:'select_city',url:'/City/index/sid/<%= data[i].id%>/level/{$_GET.level}'})">
+			<div class="title"><%= data[i].a_name%></div>
+		</div>
+    <% } %>
+
+</script>
+
+<script>
+	fixBar(1);
+	ajax_post({
+		url:'/Api/api',
+		data:{apiurl:'/Tools/city',sid:{$_GET['sid']?$_GET['sid']:0},'no_sign':'sid'},
+	},function(ret){
+		if(ret.code==1){			
+			var html = template('citylist', {data:ret.data});
+			$('.page.active section').html(html);
+			hover('.page.active section');
+		}
+	});
+	
+
+	
+</script>

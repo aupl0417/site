@@ -1,0 +1,103 @@
+<notempty name="data.code">
+{:W('Common/Builder/nors', array('param' => array('text' => $data['msg'])))}
+<else />
+<form class="form-horizontal" id="formadd" name="formadd" data-url="/run/authRun" novalidate="novalidate">
+	<div class="p10 attr-set-list">
+		<input type="hidden" name="goods_id" value="{$data[0]['goods_id']}" />
+		<table>
+			<thead>
+				<tr>
+					<th class="text-center">顺序</th>
+					<th>属性</th>
+					<th>销售价 <i class="fa fa-arrow-down" onclick="addsome(2)"></i></th>
+					<th>市场价 <i class="fa fa-arrow-down" onclick="addsome(3)"></i></th>
+					<th>成本价 <i class="fa fa-arrow-down" onclick="addsome(4)"></i></th>
+					<th>库存 <i class="fa fa-arrow-down" onclick="addsome(5)"></i></th>
+					<th>编号 <i class="fa fa-arrow-down" onclick="addsome(6)"></i></th>
+					<th>条形码 <i class="fa fa-arrow-down" onclick="addsome(7)"></i></th>
+					<th>重量 <i class="fa fa-arrow-down" onclick="addsome(8)"></i></th>
+				</tr>
+			</thead>
+			<tbody>
+				<volist name="data" id="vo">
+					<tr>
+						<td class="text-center">{$key + 1}</td>
+						<td class="attr-item-name">{$vo.attr_name}
+							<input type="hidden" name="id[]" value="{$vo.id}">
+						</td>
+						<td>
+							<input type="text" name="price[]" value="{$vo.price}" class="form-control">
+						</td>
+						<td>
+							<input type="text" name="price_market[]" value="{$vo.price_market}" class="form-control">
+						</td>
+						<td>
+							<input type="text" name="price_purchase[]" value="{$vo.price_purchase}" class="form-control">
+						</td>
+						<td>
+							<input type="text" name="num[]" value="{$vo.num}" class="form-control">
+						</td>
+						<td>
+							<input type="text" name="code[]" value="{$vo.code}" class="form-control">
+						</td>
+						<td>
+							<input type="text" name="barcode[]" value="{$vo.barcode}" class="form-control">
+						</td>
+						<td>
+							<input type="text" name="weight[]" value="{$vo.weight}" class="form-control">
+						</td>
+					</tr>
+				</volist>
+			</tbody>
+		</table>
+		<div class="text-center mt20">
+			<button type="button" class="btn btn-primary bg-8ac mb30 border_none text_white inline-block btn-150px fs18 btn-submit ">提交</button>
+		</div>
+	</div>
+</form>
+
+<script>
+$(document).ready(function(){
+	$(".btn-submit").click(function() {
+		$("input[name='price[]']").each(function() {
+			if($(this).val() == '') {
+				talert({status:0,msg:'销售价不能为空'});
+				return false;
+			}
+		})
+		$("input[name='num[]']").each(function() {
+			if($(this).val() == '') {
+				talert({status:0,msg:'库存不能为空'});
+				return false;
+			}
+		});
+		var data	=	$("#formadd").serialize();
+		ajax_post({
+			url:"{:U('/run/authRun')}",
+			headers : {Action : '{:enCryptRestUri("/Goods/changeSku")}'},
+			data : data,
+		},function(res) {
+			talert({status:res.code,msg:res.msg});
+			if(res.code == 1) {
+			  	ref(); 
+			}
+		})
+	});
+});
+
+function addsome(index){
+	var value='';
+	$('.attr-set-list tbody tr').each(function(){
+		if($(this).find('td').eq(index).find('input').val()!=''){
+			value=$(this).find('td').eq(index).find('input').val();
+			return false;
+		}
+	});
+	$('.attr-set-list tbody tr').each(function(){
+		//if($(this).find('td').eq(index).find('input').val()==''){
+			$(this).find('td').eq(index).find('input').val(value);
+		//}	
+	});
+}	
+</script>
+</notempty>

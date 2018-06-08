@@ -1,0 +1,75 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			提现账户
+		</div>
+		<div class="r">
+			<div class="text" onclick="withdraw_account_selected()">确认</div>
+		</div>
+	</div>
+</header>
+<section>
+
+	<div class="account-list">
+		<div class="load-body">数据读取中……</div>
+	</div>
+	<div class="p10">
+		<div class="btn btn-lg btn-trans btn-block btn-danger" onclick="openWin({name:'card_add',url:'/Card/card_add',authed:true,close:true})">添加银行卡</div>
+	</div>	
+</section>
+
+<script id="tpl_withdraw_account_select" type="text/html">
+    <% for (var i = 0; i < data.length; i ++) { %>
+		<div class="line-box-m row hover noicon" onclick="withdraw_account_click($(this))" data-id="<%= data[i].id %>">			
+			<div class="col-5" style="max-width:40px">
+				<img src="<%= data[i].bank.logo %>" class="img-circle">
+			</div>
+			<div class="col-5x4 pl10">
+				<div class="bank_name"><%= data[i].bank.bank_name %></div>
+				<div class="text-gray account"><%= data[i].master %> , <%= data[i].account %></div>
+			</div>			
+			<div class="clearfix"></div>
+		</div>
+    <% } %>
+
+</script>
+
+<script>
+	fixBar(1);
+	
+	ajax_post({
+		url:'/Api/api',
+		data:{apiurl:'/Withdraw/card_list',is_openid:1},
+	},function(ret){
+		if(ret.code==1){			
+			var html = template('tpl_withdraw_account_select', {data:ret.data});	
+			$('.page.active .account-list').html(html);
+		}else if(ret.code==3){
+			$('.page.active .account-list').html(no_data_text);
+		}
+	});
+	
+	function withdraw_account_click(obj){
+		$('.page.active .line-box-m.selected').removeClass('selected').addClass('noicon');
+		obj.addClass('selected');
+	}
+	
+	function withdraw_account_selected(){
+		var size=$('.page.active .line-box-m.selected').size();
+		if(size==0){
+			valert({msg:'请选择提现账户！'});
+			return false;
+		}
+		
+		var html='<div class="row"><div class="col-10"><img src="'+$('.page.active .line-box-m.selected img').attr('src')+'" class="img-circle"></div><div class="col-90"><div class="pl10"><div>'+$('.page.active .line-box-m.selected .bank_name').html()+'</div><div class="text-gray">'+$('.page.active .line-box-m.selected .account').html()+'</div></div></div></div>';
+		
+		$('.page#withdraw .withdraw-account').html(html);
+		$('.page#withdraw #card_id').val($('.page.active .line-box-m.selected').attr('data-id'));
+		closeWin();
+	}
+
+	
+</script>

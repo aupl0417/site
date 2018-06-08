@@ -1,0 +1,191 @@
+<include file="Public:header" />
+<include file="Public:menu" />
+
+<div class="w1200 mt20 md20 bg-white box">
+	<div class="box-header">
+		填写行业资质
+	</div>
+	
+	<div class="box-content p50">
+		<form name="form-shop" id="form-shop" class="form-horizontal vform" data-url="__URL__/industry_save" method="post" onsubmit="return submit_form();">	
+						
+			<table class="nobg md30" style="line-height:25px;">
+				<thead class="strong">
+					<tr>
+						<th width="150" class="text-center">资质名称</th>
+						<th>描述</th>
+						<th width="300">资质图片</th>
+						<th width="100" class="text-center">操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<volist name="cred" id="v">
+
+					<tr data-id="{$v:id}" data-is_need="{:$v->is_need?1:0}" data-max="5">
+						<td>{:$v->is_need>0?'<span class="text-danger b">*</span>':''} <span class="cred_name">{$v:cred_name}</span></td>
+						<td valign="top">
+							<div class="b">类目：{:implode('、',$v->category_name)}</div>
+							{$v:about|nl2br}
+							<notempty name="v:images">
+								<a href="{$v:images}" target="_blank" class="text-blue">(样图)</a>
+							</notempty>
+						</td>
+						<td>
+							<ul class="upload-cred-images">
+								{:W('Widget/cred_images',array($industry[$v->id]))}
+							</ul>
+						</td>
+						<td class="text-center text-blue td-upload">
+							<input type="hidden" name="cred_{$v:id}" id="cred_{$v:id}" value="{:$industry[$v->id]}">
+							上传图片
+						</td>
+					</tr>
+					</volist>
+				</tbody>
+			</table>		
+		
+			<input type="hidden" name="is_edit" value="1">
+			<div class="p10">
+				<div class="pull-left"><a href="__URL__/brand/ps/1" class="btn btn-danger btn-150px btn-trans">上一步</a></div>
+				<div class="pull-right"><button type="submit" class="btn btn-danger btn-150px btn-next">下一步</button></div>
+			</div>
+		</form>
+	</div>
+
+</div>
+
+
+<form enctype="multipart/form-data" id="form-upload2" data-url="/Upload/upload_save" class="hide">
+	<input id="imageData" name="imageData" type="file" value="" />
+	<input type="hidden" id="field" name="field" value="">
+</form>
+
+
+<include file="Public:copyright" />
+<include file="Public:js" />
+
+
+<script>
+$(document).ready(function(){
+	$('.brand-left li').click(function(){
+		$(this).addClass('active').siblings().removeClass('active');
+		$('.form-list .item').addClass('hide').eq($(this).index()).removeClass('hide');
+	});
+	
+
+	
+	$('.td-upload').click(function(){
+		var tr=$(this).closest('tr');
+		var tr_data=tr.data();
+		var li_size=tr.find('ul li').size();
+		var field=$(this).find('input').attr('name');
+		
+		if(li_size >= tr_data.max){
+			talert({status:'warning',msg:'最多只能传'+tr_data.max+'张图片！'});
+			return false;
+		}
+		$('#form-upload2')[0].reset();
+		//alert(field);
+		$('#form-upload2 #field').val(field);
+		$('#form-upload2 #imageData').click();		
+	});
+	
+	$('#form-upload2 #imageData').change(function(){
+			if($(this).val()!=''){
+				var field=$('#form-upload2 #field').val();
+				$('#'+field).closest('td').addClass('load-icon');
+				var tr=$('#'+field).closest('tr');
+				ajax_post_form({
+					formid:'#form-upload2',
+				},function(ret){
+					valert(ret);
+					if(ret.code==1){
+						//
+						if(tr.find('li[data-url="'+ret.url+'"]').size()==0){
+							var html='<li data-url="'+ret.url+'">';
+								html+='<div class="action" onclick="delete_img($(this))"><i class="fa fa-times text-danger"></i></div>';
+								html+='<img src="'+ret.url+'?imageMogr2/thumbnail/!80x80r" alt="资质图片">';
+								html+='</li>';
+							
+							tr.find('ul').append(html);
+							var img=new Array();
+							tr.find('ul li').each(function(){
+								img.push($(this).data('url'));
+							});
+							
+							$('#'+field).val(img.join(','));
+						}
+					}
+					$('#'+field).closest('td').removeClass('load-icon');
+				});				
+			}
+	});
+});	
+
+function delete_img(obj){
+	var obj;
+	var tr=obj.closest('tr');
+	
+	vmodal({
+		title:'删除图片',
+		msg:'<h4 class="md20">真的要删除图片吗？</h4>',
+		class:'text-center',
+		confirm:1,
+		width:'650px',
+	},function(){
+		$('.modal-ok').unbind().click(function(){
+			obj.closest('li').remove();
+			if(tr.find('li').size()>0){
+				var img=new Array();
+				tr.find('ul li').each(function(){
+					img.push($(this).data('url'));
+				});
+							
+				tr.find('input').val(img.join(','));				
+			}else{
+				tr.find('input').val('');
+			}
+			
+			$('#ajax-modal').modal('hide');
+		});
+	});
+}
+
+function submit_form(){
+	var res=true;
+	
+	var n=0; //统计tr中上有上传图片的数量
+	$('table tbody tr').each(function(index){
+		var data=$(this).data();
+		if(data.is_need==1 && $(this).find('input').val()==''){
+			talert({status:'warning',msg:'必须上传'+$(this).find('.cred_name').text()+'图片'});
+			res=false;
+			return false;
+		}
+		
+		if($(this).find('input').val() !='') n++;
+		
+	});
+	
+	if(n==0){
+		talert({status:'warning',msg:'请上传资质图片！'});
+		return false;
+	}
+	
+	if(res==false) return false;
+	
+		ajax_post_form({
+			formid:'#form-shop',
+		},function(ret){
+			talert(ret);
+			if(ret.code == 1){
+				window.location.href='__URL__/shop_info';
+			}
+		});	
+	
+	return false;
+}
+
+</script>
+
+<include file="Public:footer" />

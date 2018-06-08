@@ -1,0 +1,268 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body">
+	<include file="Public:nav" />
+	<div class="container mb30">
+		<include file="Public:side" />
+		<div class="w980 fl">
+			<div class="bor_der">
+				<div class="bg_f1 clearfix fs14 text_44 tle_R">
+					<a class="fl plr15 line40 ml-1 active" href="javascript:;">{$seo['title']}</a>
+				</div>
+				<!-- 主体部分 -->
+				{:W('Common/Builder/form', [['data' => $keyList, 'run' => '/activity/createSave']])}
+			</div>
+		</div>
+	</div>
+</div>
+<div class="hide maxnum">{$maxnum}</div>
+</block>
+<block name="css">
+<script src="__FLATDREAM__/js/bootstrap.datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script src="__FLATDREAM__/js/bootstrap.datetimepicker/js/bootstrap-datetimepicker.zh-CN.js"></script>
+<link rel="stylesheet" href="__FLATDREAM__/js/bootstrap.datetimepicker/css/bootstrap-datetimepicker.css" />
+<link rel="stylesheet" type="text/css" href="/Public/CSS/flatdream/js/jquery.icheck/skins/square/_all.css">
+</block>
+<block name="script">
+<script>
+<notempty name="Think.get.id">
+$(document).ready(function() {
+	checkform({
+		formid:"#formadd",
+		rules:{
+			start_time:{
+				required:true,
+				//date:true
+			},
+			end_time:{
+				required:true,
+				//date:true
+			},
+			full_money:{
+				required:function() {
+					var typeId	=	$('input[name="type_id"]').val();
+					if(typeId == 2 || typeId == 3 || typeId == 6) {
+						return true;
+					} else {
+						return false;
+					}
+				},
+				number:true,
+				min:function() {
+					var typeId	=	$('input[name="type_id"]').val();
+					if(typeId == 6) {
+						return 0.1;
+					} else {
+						return 0;
+					}
+				},
+			},
+			sku_num:{
+				digits:true,
+				number:true,
+				min:1,
+			},
+			max_num:{
+				digits:true,
+				number:true,
+				min:1,
+			},
+			full_value:{
+				required:true,
+				number:true,
+				<switch name="data.type_id">
+					<case value="3">
+						max:function() {
+							return parseFloat($("input[name='full_money']").val(), 2);
+						},
+					</case>
+					<case value="4">
+					//digits:true,
+					min:0.1,
+					max:9.9,
+					</case>
+				</switch>
+			},
+		},
+		messages:{
+			start_time:{
+				required:'请选择活动开始时间',
+				date:'活动开始时间类型不正确'
+			},
+			end_time:{
+				required:'请选择活动结束时间',
+				date:'活动结束时间类型不正确'
+			},
+			full_money:{
+				required:<switch name="data.type_id">
+					<case value="1">
+					'需消费金额不能为空 '
+					</case>
+					<case value="2">
+					'需消费金额不能为空 '
+					</case>
+					<case value="3">
+					'需消费金额不能为空 '
+					</case>
+					<default />
+					'{$title}不能为空'
+				</switch>,
+				number:'{$title}只能填写数字',
+				min:'{$title}不能小于0',
+			},
+			sku_num:{
+				digits:'{$title}数量必须是整数',
+				number:'{$title}数量只能填写数字',
+				min:'{$title}数量不能小于1',
+			},
+			max_num:{
+				digits:'{$title}数量必须是整数',
+				number:'{$title}数量只能填写数字',
+				min:'{$title}数量不能小于1',
+			},
+			full_value:{
+				required:'{$title}不能为空',
+				number:'{$title}为数字类型',
+				<switch name="data.type_id">
+						<case value="3">
+							max:'优惠金额金额不能大于需消费金额 ',
+						</case>
+						<case value="4">
+							digits:'必须是整数',
+							min:'不能小于0.1',
+							max:'不能大于9.9',
+						</case>
+					</switch>
+			},
+		},
+	},function(res) {
+		talert({status:res.code,msg:res.msg});
+		if(res.code == 1) {
+			setTimeout(function() {
+				gourl({url:"{:U('/activity')}"});
+			}, 1000);
+		}
+	});
+});
+<else />
+$(document).ready(function() {
+	checkform({
+		formid:"#formadd",
+		rules:{
+			start_time:{
+				required:true,
+				//date:true
+			},
+			end_time:{
+				required:true,
+				//date:true
+			},
+			full_money:{
+				required:function() {
+					var typeId	=	$('input[name="type_id"]').val();
+					if(typeId == 2 || typeId == 3 || typeId == 6) {
+						return true;
+					} else {
+						return false;
+					}
+				},
+				number:true,
+				min:function() {
+					var typeId	=	$('input[name="type_id"]').val();
+					if(typeId == 6) {
+						return 0.1;
+					} else {
+						return 0;
+					}
+				},
+			},
+			sku_num:{
+				digits:true,
+				number:true,
+				min:1,
+			},
+			max_num:{
+				digits:true,
+				number:true,
+				min:1,
+			},
+			full_value:{
+				required:true,
+				number:true,
+				<switch name="Think.get.type">
+					<case value="3">
+						max:function() {
+							return parseFloat($("input[name='full_money']").val(), 2);
+						},
+					</case>
+					<case value="4">
+					//digits:true,
+					min:0.1,
+					max:9.9,
+					</case>
+				</switch>
+			},
+		},
+		messages:{
+			start_time:{
+				required:'请选择活动开始时间',
+				date:'活动开始时间类型不正确'
+			},
+			end_time:{
+				required:'请选择活动结束时间',
+				date:'活动结束时间类型不正确'
+			},
+			full_money:{
+				required:<switch name="Think.get.type">
+					<case value="1">
+					'需消费金额不能为空 '
+					</case>
+					<case value="2">
+					'需消费金额不能为空 '
+					</case>
+					<case value="3">
+					'需消费金额不能为空 '
+					</case>
+					<default />
+					'{$title}不能为空'
+				</switch>,
+				number:'{$title}只能填写数字',
+				min:'{$title}不能小于{$minPrice}',
+			},
+			sku_num:{
+				digits:'{$title}数量必须是整数',
+				number:'{$title}数量只能填写数字',
+				min:'{$title}数量不能小于1',
+			},
+			max_num:{
+				digits:'{$title}数量必须是整数',
+				number:'{$title}数量只能填写数字',
+				min:'{$title}数量不能小于1',
+			},
+			full_value:{
+				required:'{$title}不能为空',
+				number:'{$title}为数字类型',
+				<switch name="Think.get.type">
+						<case value="3">
+							max:'优惠金额金额不能大于需消费金额 ',
+						</case>
+						<case value="4">
+							digits:'必须是整数',
+							min:'不能小于0.1',
+							max:'不能大于9.9',
+						</case>
+					</switch>
+			},
+		},
+	},function(res) {
+		talert({status:res.code,msg:res.msg});
+		if(res.code == 1) {
+			setTimeout(function() {
+				gourl({url:"{:U('/activity')}"});
+			}, 1000);
+		}
+	});
+});
+</notempty>
+</script>
+</block>

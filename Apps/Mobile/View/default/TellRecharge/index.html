@@ -1,0 +1,284 @@
+<include file="Public:header" />
+		<div class="page-group">
+			<div id="page-tellrecharge" class="page bg-white">
+				<!-- 标题栏 -->
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left back" href="/"></a>
+					<h1 class="title"> <a class="mr1">手机充值</a> <a href="/TellRecharge/recharge_list">充值记录</a></h1>
+					<a class="icon iconfont icon-category pull-right ml5 ac-menu" onclick="top_menu()"></a>
+				</header>
+
+				<!-- 浮动导航 -->
+				<include file="Public:fixed-menu" />
+				
+				<!-- 这里是页面内容区 -->		
+				<div class="content">
+					<div class="buttons-tab recharge-tabs fixed-bar">
+						<a href="#tab1" class="tab-link button <eq name='type' value='1'>active</eq>">
+							充话费
+						</a>
+						<a href="#tab2" class="tab-link button <eq name='type' value='2'>active</eq>">
+							充流量
+						</a>
+					</div>
+					
+					<div class="clearfix" style="height: 2rem;"></div>
+					<div class="tabs">
+						<div class="tab <eq name='type' value='1'>active</eq> img-block infinite-scroll" id="tab1" data-page_num="{$fare.pageinfo.page}">		
+							<div class="list-block">
+								<ul>
+									<li>
+										<div class="item-right">
+											<div class="mobile">
+												<i class="iconfont icon-shoujishuma strong"></i>
+											</div>
+										</div>
+										<div class="item-content">
+											<div class="item-inner">
+												<div class="item-input">
+													<input type="text" id="mobile" name="mobile" class="strong" placeholder="请输入手机号码" maxlength="11" autocomplete="new-password" value="{$mobile}">
+												</div>
+											</div>
+										</div>
+									</li>
+									<li></li>
+								</ul>
+							</div>
+							<div class="bg-white m5 tellrecharge" data-operator="1">
+								<notempty name="res.fare">
+									<foreach name="res.fare" item="vo" key="ke">
+										<div class="row fare fare-{$ke} {$ke!=chinamobile?'hide':''}">
+											<foreach name="vo" item="vol" key="key">
+												<a class="col-33 text-center tellrecharge-tell pt5 md5" par_data="{$vol.fare}" price_data="{$vol.price}" type="{$vol.type}">
+													<div class="ft08">{$vol.fare}</div>
+													<span class="ft05">售价:{$vol.price}元</span>
+												</a>
+											</foreach>
+										</div>
+									</foreach>									
+								<else />
+									<div class="nors text-center">
+										<div><i class="iconfont icon-sousuowujieguo ft3"></i></div>
+										 找不到记录！
+									</div>
+								</notempty>						
+							</div>
+							<div class="clearfix md1"></div>
+							<!--充值方式-->
+							<div class="list-block recharge-fare-type hide">
+								<ul>
+									<li class="bg-gray p5 tips_type">
+											<i class="iconfont icon-qitazuopin"></i> 请选择充值方案
+									</li>
+									<li class="selected" data-value="1">
+										<div class="item-content">
+											<div class="item-inner">
+												<div class="item-title-row">
+													<div class="item-title fare_result1"></div>
+													<div class="item-after"></div>
+												</div>
+											</div>
+										</div>
+									</li>
+									<li data-value="2">
+										<div class="item-content">
+											<div class="item-inner">
+												<div class="item-title-row">
+													<div class="item-title fare_result2"></div>
+													<div class="item-after"></div>
+												</div>
+											</div>
+										</div>
+									</li>
+								</ul>
+							</div>	
+							<div class="clearfix md3"></div>
+							<div class="goods-footer fixed-bottom">
+								<div class="cart-btn">
+									<div class="btn-buy btn-fare-pay hide">确认支付</div>
+								</div>
+							</div>
+						</div><!--/tab-item-->	
+
+						<div class="tab <eq name='type' value='2'>active</eq> img-block infinite-scroll" id="tab2" data-page_num="{$flow.pageinfo.page}">	
+							<div class="list-block">
+								<ul>
+									<li>
+										<div class="item-right">
+											<div class="mobile">
+												<i class="iconfont icon-shoujishuma strong"></i>
+											</div>
+										</div>
+										<div class="item-content">
+											<div class="item-inner">
+												<div class="item-input">
+													<input type="text" id="mobile" name="mobile" class="strong" placeholder="请输入手机号码" maxlength="11" autocomplete="new-password" value="{$mobile}">
+												</div>
+											</div>
+										</div>
+									</li>
+									<li></li>
+								</ul>
+							</div>
+							<div class="bg-white m5 tellrecharge" data-operator="1">
+								<notempty name="res.flow">
+									<foreach name="res.flow" item="vo" key="ke">
+										<div class="row flow flow-{$ke} {$ke!=chinamobile?'hide':''}">
+											<foreach name="vo" item="vol" key="key">
+												<a class="col-33 text-center tellrecharge-tell pt5 md5" par_data="{$vol.fare}" price_data="{$vol.price}" type="{$vol.type}">
+													<div class="ft08">{$vol.fare}</div>
+													<span class="ft05">售价:{$vol.price}元</span>
+												</a>
+											</foreach>
+										</div>
+									</foreach>										
+								<else />
+									<div class="nors text-center">
+										<div><i class="iconfont icon-sousuowujieguo ft3"></i></div>
+										 找不到记录！
+									</div>
+								</notempty>						
+							</div>
+							<div class="clearfix md1"></div>
+							<!--充值方式-->
+							<div class="list-block recharge-flow-type hide">
+								<ul>
+									<li class="bg-gray p5 tips_type">
+											<i class="iconfont icon-qitazuopin"></i> 请选择充值方案
+									</li>
+									<li class="selected" data-value="1">
+										<div class="item-content">
+											<div class="item-inner">
+												<div class="item-title-row">
+													<div class="item-title flow_result1"></div>
+													<div class="item-after"></div>
+												</div>
+											</div>
+										</div>
+									</li>
+									<li data-value="2">
+										<div class="item-content">
+											<div class="item-inner">
+												<div class="item-title-row">
+													<div class="item-title flow_result2"></div>
+													<div class="item-after"></div>
+												</div>
+											</div>
+										</div>
+									</li>
+								</ul>
+							</div>	
+							<div class="goods-footer fixed-bottom">
+								<div class="cart-btn">
+									<div class="btn-buy btn-flow-pay hide">确认支付</div>
+								</div>
+							</div>	
+							<div class="clearfix md3"></div>							
+						</div><!--/tab-item-->						
+					</div>
+				</div>
+			</div>	
+			
+			<!--选择充值方式，和付款方式-->
+			<div class="popup popup-recharge">
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left close-popup" data-no-cache="true"></a>
+					<h1 class="title">手机充值</h1>
+					<a class="icon iconfont icon-guanbi1 pull-right ml5 ac-menu close-popup"></a>
+				</header>				
+				
+				<div class="content">
+					<form name="form-pay" id="form-pay" onsubmit="return false">
+						<notempty name="paytype">
+							<div class="list-block media-list pay-type">
+								<ul>
+									<li class="bg-gray p5 tips">
+										<i class="iconfont icon-jifen1"></i> 请选择支付方式
+									</li>
+									<volist name="paytype" id="vo" key="k">
+										<if condition="$k eq 1">
+											<li data-value="{$vo.pg_id}" class="selected">
+												<div class="item-content">
+													<div class="item-media">
+														<i class="iconfont {$vo.iconfont} text-yellow"></i>
+													</div>
+													<div class="item-inner">
+														<div class="item-title-row">
+															<div class="item-title">{$vo.pg_name}</div>
+															<div class="item-after"></div>
+														</div>
+													</div>
+												</div>
+											</li>	
+										<else />											
+											<li data-value="{$vo.pg_id}">
+												<div class="item-content">
+													<div class="item-media">
+														<i class="iconfont {$vo.iconfont} text-yellow"></i>
+													</div>
+													<div class="item-inner">
+														<div class="item-title-row">
+															<div class="item-title">{$vo.pg_name}</div>
+															<div class="item-after"></div>
+														</div>
+													</div>
+												</div>
+											</li>
+										</if>
+									</volist>
+								</ul>
+							</div>					
+						</notempty>
+					</form>
+				</div>
+				
+				<div class="goods-footer fixed-bottom">
+					<div class="cart-btn">
+						<div class="btn-buy btn-submit-pay">立即付款</div>
+					</div>
+				</div>		
+			</div>
+			
+			<!--popup 收银台-->
+			<div class="popup popup-cashier">
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left close-popup" data-no-cache="true" data-popup=".popup-cashier"></a>
+					<h1 class="title">付款</h1>
+					<a class="icon iconfont icon-guanbi1 pull-right ml5 ac-menu close-popup" data-popup=".popup-cashier"></a>
+				</header>				
+				
+				<div class="content">
+				</div>
+			</div>
+			
+			<div class="fare-list hide">
+				<volist name="res.fare" id="ls">
+				<div class="fare-{$key}">
+					<div class="row">
+						<volist name="ls" id="vo">
+						<a class="col-33 text-center tellrecharge-tell pt5 md5" par_data="{$vo.fare}" price_data="{$vo.price}" type="1">
+							<div class="ft08">{$vo.fare}</div>
+							<span class="ft05">售价:{$vo.price}元</span>
+						</a>
+						</volist>
+					</div>
+				</div>
+				</volist>
+				
+				<volist name="res.flow" id="ls">
+				<div class="flow-{$key}">
+					<div class="row">
+						<volist name="ls" id="vo">
+						<a class="col-33 text-center tellrecharge-tell pt5 md5" par_data="{$vo.fare}" price_data="{$vo.price}" type="1">
+							<div class="ft08">{$vo.fare}</div>
+							<span class="ft05">售价:{$vo.price}元</span>
+						</a>
+						</volist>
+					</div>
+				</div>
+				</volist>				
+			</div>
+		</div>	
+
+<include file="Public:script" />
+<include file="Public:footer" />

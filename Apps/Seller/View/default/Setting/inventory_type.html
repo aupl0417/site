@@ -1,0 +1,122 @@
+
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body">
+
+	<include file="Public:nav" />
+	<link rel="stylesheet" type="text/css" href="../Public/css/inventory_type.css">
+	<div class="container mb30">
+		<include file="Public:side" />
+		<div class="w980 fl">
+			<div class="bor_der">
+				<include file="nav" />
+				<form id="formadd" action="/run/authRun" method="post" class="form-horizontal vform mb30">
+
+					<div class="form-group mt30">
+						<label class="col-xs-3 control-label" style="height:60px;line-height:60px;padding:0;">
+						<if condition="session('user.type') eq 1">
+						选择一个结算方式：
+						<else/>
+						当前结算方式
+						</if>
+						</label>
+						<div class="col-xs-9">
+							<div >
+								<ul class="inventory_type">
+									<li value="0" class="inventory_type_select <if condition="$shop_info.inventory_type eq 0"> active</if>" data-value="0">扣除货款模式</li>
+									<php> if((int) session('user.type') === 1){ </php>
+										<li value="1" class="inventory_type_select <if condition="$shop_info.inventory_type eq 1"> active</if>" data-value="1">库存积分分发模式</li>
+									<php> } </php>
+								</ul>
+								<div class="clearfix md20"></div>
+							</div>
+							
+							<div class="inventory_about" style="margin-right:20px;">
+								<div class="item" <if condition="$shop_info.inventory_type neq '0'">style="display:none" </if>>
+									<div class="b"><i class="fa fa-lightbulb-o"></i> 扣除货款模式</div>
+									选择扣除货款的结算方式，买家确认收货后货款结算到商家账户上的时间暂定为10天。
+									扣除部分订单交易金额作为库存积分的代付款，将余下的货款结算给商家。
+								</div>
+								<div class="item" <if condition="$shop_info.inventory_type neq '1'">style="display:none" </if>>
+									<div class="b"><i class="fa fa-lightbulb-o"></i> 库存积分分发模式</div>
+									选择库存积分分发的结算方式，买家确认收货后货款将实时结算到商家的账户上。
+									当商家库存积分不足时，买家无法支付订单。
+									商家购买足够库存积分后将提醒买家再次支付。
+								</div>
+							</div>
+						</div>
+						<!--  -->
+						<input type="hidden" name="inventory_type" value="{$shop_info.inventory_type}" />
+					</div>
+
+					<if condition="session('user.type') eq 1">
+						<div class="form-group mt30">
+							<label class="col-xs-3 control-label">支付密码<span class="text_yellow" aria-required="true">*</span></label>
+							<div class="col-xs-3">
+								<div class="input-group">
+									<input type="password" class="form-control" maxlength="6" name="password_pay" placeholder="请输入支付密码" value="" aria-required="true" aria-invalid="false" aria-describedby="password-pay-error">			
+								</div>
+								<div class="tips-form text-gray ft12">
+								</div>
+							</div>
+						</div>
+					
+
+						<div class="form-group mt30">
+							<label class="col-xs-3 control-label">&nbsp;</label>
+							<div class="col-xs-9">
+								<button type="submit" id="submit-inventory" class="btn btn-primary" style="width:150px;height:40px;padding:0">确定修改</button>
+							</div>
+						</div>
+					</if>
+
+				</form>
+				<!-- 主体部分 -->
+			</div>
+		</div>
+	</div>
+</div>
+</block>
+<block name="css">
+<script type="text/javascript" src="/Public/Webuploader/js/webuploader.js"></script>
+<link rel="stylesheet" type="text/css" href="/Public/Webuploader/css/webuploader.css">
+</block>
+<block name="script">
+<script type="text/javascript">
+	ACTION = '{:enCryptRestUri("/Setting/inventory_type_save")}';
+	$(document).ready(function(){
+		$('.inventory_type_select').on('click',function(){
+			$('.inventory_type_select').removeClass('active');
+			$(this).addClass('active');
+			$('input[name="inventory_type"]').val($(this).attr('value'));
+			$('.inventory_about .item').hide();
+			$('.inventory_about .item').eq($(this).attr('value')).show();
+		});
+		checkform({
+			formid:"#formadd",
+			rules:{
+				password_pay:{
+					required:true,
+				},
+				inventory_type:{
+					required:true,
+				}
+				
+			},
+			messages:{
+				password_pay:{
+					required:'请输入安全密码',
+				},
+				inventory_type:{
+					required:'结算方式不能为空',
+				},
+			},
+		},function(res) {
+			talert({status:res.code,msg:res.msg});
+			if(res.code == 1) {
+				setTimeout("ref()", 1000);
+			}
+		});
+	});
+</script>
+</block>

@@ -1,0 +1,18 @@
+<form method="get" action="__URL__/" role="form" class="hover-shadow hover-search p10 md10">
+
+	<table class="no-bordered">
+		<tr>
+			<td width="150" class="p0 " valign="top">
+				<volist name="nav_list" id="vo">
+					<a href="{:U('export/add_programme/',['id'=>$vo[id]])}" class="btn btn-trans btn-rad btn-primary mt8 mr10"><i class="fa fa-plus"></i> 新增{$vo.name}</a>
+				</volist>
+				
+			</td>		
+			
+		</tr>
+	</table>
+	
+	
+
+</form>
+<div class="clearfix"></div>

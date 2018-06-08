@@ -1,0 +1,181 @@
+<form method="get" action="/Goods/" role="form" id="ajax_search" class="hover-shadow hover-search p10 md10" onsubmit="return ajax_search()">
+
+	<table class="no-bordered">
+		<tr>
+			<td class="p0">
+				<table class="no-bordered no-bg">
+					<tr>
+						<td>
+							<select id="status" name="status" class="form-control " style="">
+								<option value="">请选择状态</option>
+								<option value="0">暂停营业</option>
+								<option value="1" selected>营业中</option>
+								<option value="2">强制关闭</option>
+							</select>
+						</td>
+						<td><input type="text" id="shop_name" name="shop_name" placeholder="请输入店铺名称" value="" class="form-control " style=""></td>
+						<td><input type="text" id="nick" name="nick" placeholder="请输入用户昵称" value="" class="form-control " style=""></td>
+						<td><input type="text" id="tel" name="tel" placeholder="请输入电话" value="" class="form-control " style=""></td>
+						<td><input type="text" id="mobile" name="mobile" placeholder="请输入手机号码" value="" class="form-control " style=""></td>
+						<td><input type="text" id="wang" name="wang" placeholder="请输入旺旺" value="" class="form-control " style=""></td>
+						<td><input type="text" id="qq" name="qq" placeholder="请输入ＱＱ" value="" class="form-control " style=""></td>
+					</tr>
+					<tr></tr>
+				</table>
+			</td>
+			<td width="100" class="p0" valign="top"><button type="submit" class="btn btn-rad btn-trans btn-primary btn-block mt8"><i class="fa fa-search"></i> 搜索</button></td>
+		</tr>
+	</table>
+
+</form>
+
+<notempty name="pagelist.list">
+
+			{:W('Widget/listable',array(array(
+				'data'	=>$pagelist['list'],
+				'items'	=>array(
+					array(
+						'title'	=> '选择',
+						'type'	=> 'html',
+						'html'	=> '<input type="checkbox" name="id" id="id" class="i-red-square" value="[id]" />',
+						'td_attr'	=> 'width="60" class="text-center"',	
+						'norder'	=> 1,
+					),
+					array(
+						'title'	=> 'ID',
+						'field'	=> 'id',
+						'td_attr'	=> 'width="100" class="text-center"',	
+						'norder'	=> 1,
+					),
+					array(
+						'title'	=> '状态',
+						'field'	=> 'status',
+						'td_attr'	=> 'width="100" class="text-center"',
+						'function'	=> 'return status($val[\\'status\\'],[[\\'暂停营业\\',\\'btn-block\\'],[\\'正常营业\\',\\'btn-block btn-success\\'],[\\'强制关闭\\',\\'btn-block btn-danger\\']]);',
+						'norder'	=> 1,
+					),						
+					array(
+						'title'	=> '店铺logo',
+						'field'	=> 'shop_logo',
+						'td_attr'	=> 'width="100" class="text-center"',
+						'function'	=> 'return images($val["shop_logo"],150);',
+						'norder'	=> 1,
+					),	
+					array(
+						'title'	=> '店铺名称',
+						'field'	=> 'shop_name',			
+						'norder'	=> 1,
+						'function'	=> 'return \\'<a href="\\'\.shop_url($val[\\'id\\'],$val[\\'domain\\'])\.\\'" target="_blank">\\'.$val[\\'shop_name\\'].\\'</a>\\';',
+					),					
+					array(
+						'title'	=> '卖家昵称',
+						'field'	=> 'nick',			
+						'norder'	=> 1,
+						'function'	=> 'return $val[\\'user\\'][\\'nick\\'];',
+					),					
+					array(
+						'title'	=> '手机',
+						'field'	=> 'mobile',		
+						'norder'	=> 1,
+					),					
+					array(
+						'title'	=> 'QQ',
+						'field'	=> 'qq',		
+						'norder'	=> 1,
+					),					
+					array(
+						'title'	=> '权重',
+						'field'	=> 'pr',		
+						'norder'	=> 1,
+					),					
+					array(
+						'title'	=> '城市',
+						'field'	=> 'province',		
+						'norder'	=> 1,
+						'function'	=> 'return $val[\\'province\\'][\\'a_name\\'].\\' \\'.$val[\\'city\\'][\\'a_name\\'];',
+					),					
+					array(
+						'title'	=> '分账模式',
+						'field'	=> 'inventory_type',		
+						'norder'	=> 1,
+						'function'	=> 'return status($val[\\'inventory_type\\'],[[\\'延时扣款\\',\\'btn-block\\'],[\\'即时扣款\\',\\'btn-block btn-info\\']]);',
+					),					
+				
+				
+				),
+			)))}
+			
+			<div class="p10 page-box">
+				{:page_html($pagelist['pageinfo'])}
+			</div>
+			
+		<div class="p10 text-center">
+			<button type="button" class="btn btn-150px btn-rad btn-trans select-all"><i class="fa fa-location-arrow"></i> 全选/反选</button>
+			<div class="btn btn-150px btn-primary" onclick="select_ok($(this))">确定选择</div>
+		</div>			
+<else />
+	<div class="text-center nors">找不到记录！</div>
+</notempty>
+<script>
+	iCheckClass('#ajax-modal');
+	select_all({tag:'#ajax-modal'});
+	$('.page-box a').click(function(event){
+		event.preventDefault();
+		var url = $(this).attr('href');
+		//alert(url);
+		ajax_load('#ajax-modal .modal-body',url);
+	});
+	
+	function ajax_search(){
+		var data = getFormJson('#ajax_search');
+		var param =$.param(data);
+		//alert(param);
+		var url='/SelectItem/shop/tpl/shop_checkbox?'+param;
+		ajax_load('#ajax-modal .modal-body',url);
+
+		return false;
+	}
+	
+	function select_ok(obj){
+		var size = $('#ajax-modal input[name="id"]:checked').size();
+		if(size==0){
+			valert({status:'warning',msg:'请选择记录！'});
+			return false;
+		}
+		
+		var field	= $('.vform-action').html();
+		var tag		= '.f-'+field;
+		var html	= '';
+		var ids		= new Array();
+		$('#ajax-modal input[name="id"]:checked').each(function(index){
+			var id 			= $(this).val();
+			var obj 		= $(this).closest('tr');
+			var img 		= obj.find('img').attr('src');	
+			var shop_name	= obj.find('td').eq(4).find('a').html();
+			var linkurl		= obj.find('td').eq(4).find('a').attr('href');
+			
+			if($(tag).find('[data-id="'+ id +'"]').size() == 0){ //如果已添加过的话将不再添加	
+				ids.push(id);
+				html +='<li data-id="'+ id +'" class="hover-shadow"><div class="ac-box"><i class="fa fa-times-circle fa-2x text-danger" onclick="delete_item($(this))"></i></div><div class="goods-item-box">';
+				html +='<div><a href="'+linkurl+'" target="_blank"><img src="' + img + '" alt="店铺logo" class="img-circle"></a></div>';
+				html +='<div class="shop_name"><a href="'+linkurl+'" target="_blank"><i class="fa fa-home"></i> '+ shop_name +'</a></div>';
+				html +='</div></li>';
+			}
+		});
+		
+		if(html!=''){
+			var old_ids = $('#'+field).val();
+			if(old_ids!='') ids.push(old_ids);
+			$('#'+field).val(ids.join(','));
+			
+			if($('.f-'+field+' .col-xs-7 .shop-list').size()>0){
+				$('.f-'+field+' .col-xs-7 .shop-list').prepend(html);
+			}else{
+				html='<ul class="shop-list mt10">'+html+'</ul>';
+				$('.f-'+field+' .col-xs-7').append(html);
+			}
+		}
+		
+		$('#ajax-modal').modal('hide');
+	}
+</script>

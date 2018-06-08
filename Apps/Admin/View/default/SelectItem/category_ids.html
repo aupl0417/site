@@ -1,0 +1,10 @@
+<notempty name="list">
+<ul class="category-list mt10">
+	<volist name="list" id="vo">
+	<li data-id="{$vo.id}" class="hover-shadow">
+		<div class="ac-box"><i class="fa fa-times-circle fa-2x text-danger" onclick="delete_item($(this))"></i></div>
+		<div class="category_name">{$vo.category_name}</div>
+	</li>
+	</volist>
+</ul>
+</notempty>

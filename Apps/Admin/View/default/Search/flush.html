@@ -1,0 +1,57 @@
+<include file="Public:header" />
+<div class="navbar-fixed-top">
+		<div class="pull-right">
+			<div class="btn btn-primary btn-rad btn-trans m10" onclick="ref()"><i class="fa fa-refresh"></i> 刷新</div>
+		</div>
+		
+		<ul class="nav-box2" data-page="__SELF__">
+			<li><a href="__SELF__">刷新索引</a></li>
+		</ul>
+	</div>
+
+<div class="m20">
+	<div class="block-flat">
+		<div class="content">	
+			<div class="text-center nors">
+				<div data-pro="goods" data-title="刷新商品索引" class="btn btn-lg btn-primary flush-index"><i class="fa fa-trash-o"></i> 刷新商品索引</div>
+				<div data-pro="shop" data-title="刷新商家索引" class="btn btn-lg btn-primary flush-index ml20"><i class="fa fa-trash-o"></i> 刷新商家索引</div>
+				<div data-pro="demo" data-title="刷新demo索引" class="btn btn-lg btn-primary flush-index ml20"><i class="fa fa-trash-o"></i> 刷新demo索引</div>
+			</div>
+		</div>
+	</div>
+		
+</div>
+
+
+
+<include file="Public:copyright" />
+<include file="Public:js" />
+<script>
+	$('.flush-index').click(function(){
+		var d	=	$(this).data();
+		vmodal({
+			  title:'刷新索引提示',
+			  msg:'您真的要'+d.title+'吗?',
+			  class:'text-center',
+			  confirm:1,
+			  footer:false,
+			  width:'600px',
+		  },function(ret) {
+			  $(".modal-ok").click(function() {
+				  ajax_post({
+					  url:'__SELF__',
+					  data:{pro:d.pro},
+				  },function(ret) {
+					  valert({
+							status:ret.code,
+							msg:ret.msg
+					  });
+					  if(ret.code == 'success') {
+						  ref();
+					  }
+				  })
+			  })
+		  })
+	});
+</script>
+<include file="Public:footer" />

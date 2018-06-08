@@ -1,0 +1,84 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			修改银行卡
+		</div>
+		<div class="r">
+			<div class="text" onclick="card_edit()">保存</div>
+		</div>
+	</div>
+</header>
+<section>
+	<form id="form-card-edit">
+	<div class="line-box row hover noicon">
+		<div class="col-4">账号类别</div>
+		<div class="col-4x3 text-gray type">请选择账号类别</div>
+	</div>
+
+	<div class="line-box noicon row hover">
+		<div class="col-4">开户名</div>
+		<div class="col-4x3 text-gray">{$_SESSION['user']['name']}</div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">账号</div>
+		<div class="col-4x3"><input id="account" name="account" placeholder="请输入账号"></div>
+	</div>
+
+	<input type="hidden" name="id" value="{$_GET.id}">
+	<input type="hidden" name="type" id="type">
+	<input type="hidden" name="master" id="master">
+	<input type="hidden" name="apiurl" value="/Withdraw/card_alipay_edit">
+	<input type="hidden" name="is_openid" value="1">
+	</form>
+</section>
+
+<include file="Public:d_layer" />
+
+<script>
+	fixBar(1);
+
+	ajax_post({
+		url:'/Api/api',
+		data:{apiurl:'/Withdraw/card_view',is_openid:1,id:{$_GET.id}},
+	},function(ret){
+		if(ret.code==1){			
+			$('.page.active section #master').val(ret.data.master);		
+			$('.page.active section #account').val(ret.data.account);
+			$('.page.active section #type').val(ret.data.type);
+			$('.page.active section .type').html(ret.data.type_name);
+		}
+	});
+	
+	function card_edit(){
+		var data=getFormJson('#form-card-edit');
+		if(data.type==''){
+			valert({msg:'请选择账号类别！'});
+			return false;
+		}
+
+		if(data.account==''){
+			valert({msg:'请输入账号！'});
+			return false;
+		}
+		
+		ajax_post({
+			url:'/Api/api',
+			data:data,
+		},function(ret){
+			if(ret.code==1){			
+				openWin({name:'wallet',url:'/Wallet/index',ref:true,close:true});
+			}else{
+				valert(ret);
+			}
+		});		
+	}
+	
+
+	
+
+
+	
+</script>

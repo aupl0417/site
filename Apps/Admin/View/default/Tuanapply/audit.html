@@ -1,0 +1,173 @@
+<div class="p20 box">
+	<div class="row">
+		<div class="col-xs-3 auth-text">
+			<div class="ft16 p10 md10 border-d">商家资料</div>
+			<div>店铺：<a href="{:shop_url($one['shop']['id'],$one['shop']['domain'])}" target="_blank"><span class="ft16">{$rs.shop.shop_name}</span></a></div>
+			<div>昵称：{$rs.user.nick}</div>
+			<div>店铺状态：{:status($rs['shop']['status'],[['暂停营业','btn-default'],['正常营业','btn-success'],['强制关闭','btn-danger']])}</div>
+			<div>在售商品：{$rs.shop.goods_num}</div>
+			<div>综合评分：{$rs.shop.fraction}</div>
+			<div>物流评分：{$rs.shop.fraction_speed}</div>
+			<div>服务评分：{$rs.shop.fraction_service}</div>
+			<div>描述评分：{$rs.shop.fraction_desc}</div>
+			<div>累计违规扣分：{$rs.shop.illegl_point}</div>
+			
+		</div>
+		<div class="col-xs-9">
+			<div>
+				<div class="ft16 p10 md10 border-d">商品资料</div>
+				<div><a href="{:C('sub_domain.item')}/goods/{$rs['goods']['attr_list'][0][id]}" target="_blank"><img src="{:myurl($rs['goods']['images'],100)}" alt="商品主图"></a></div>
+				<div>商品名称：<a href="{:C('sub_domain.item')}/goods/{$rs['goods']['attr_list'][0][id]}" target="_blank"><span class="ft16">{$rs.goods.goods_name}</span></a></div>
+				<div>奖励比例：{$rs.goods.score_ratio}</div>
+				<div>评分：{$rs['goods']['fraction'] * 100}%</div>
+				<div>人气：{$rs.goods.view}</div>
+				<div>收藏：{$rs.goods.fav_num}</div>
+				<div>权重：{$rs.goods.pr}</div>
+				<div class="ft16 p10 md10 border-d">拼团购申请资料</div>
+				<div>发布类目：{$rs.category_name}</div>
+				<div>成团人数：{$rs.number}人</div>
+				<div>上架天数：{$rs.days}天</div>
+				<table class="mt10" style="border-top:1px solid #ccc;">
+					<tr>
+						<td>顺序</td>
+						<td>属性</td>
+						<td>拼团购价格</td>
+						<td>单独购价格</td>
+						<td>拼团购商品总数</td>
+						<td>库存</td>
+					</tr>
+					<volist name="rs.tuan_apply_list" id="vol">
+						<tr>
+							<td>{$key}</td>
+							<td>{$vol.attr_name}</td>
+							<td class="text-danger">{$vol.price}</td>
+							<td>{$vol.single_price}</td>
+							<td>{$vol.num}</td>
+							<td>{$vol.attr_num}</td>
+						</tr>
+					</volist>
+					
+				</table>
+			</div>
+		</div>
+		<!--
+		<volist name="rs.tuan_apply_list" id="vo">
+		<div class="col-xs-3 auth-text">
+			<div class="ft16 p10 md10 border-d">报名商品资料</div>
+			<div><a href="{:C('sub_domain.item')}/goods/{$vo['goods']['attr_list'][0][id]}" target="_blank"><img src="{:myurl($vo['goods']['images'],100)}" alt="商品主图"></a></div>
+			<div>商品标题：<a href="{:C('sub_domain.item')}/goods/{$vo['goods']['attr_list'][0][id]}" target="_blank">{$vo.goods.goods_name}</a></div>
+			<div>价格：<span class="ft16 text-danger">￥{$vo.goods.price} <neq name="vo.goods.price_max" value="$vo['goods']['price']">~ {$vo.goods.price_max}</neq></span></div>
+			<div>奖励比例：{$vo.goods.score_ratio}</div>
+			<div>库存：{$vo.goods.num}</div>
+			<div>累计售出：{$vo.goods.sale_num}</div>
+			<div>评分：{$vo['goods']['fraction'] * 100}%</div>
+			<div>人气：{$vo.goods.view}</div>
+			<div>收藏：{$vo.goods.fav_num}</div>
+			<div>权重：{$vo.goods.pr}</div>
+			<div class="ft16 p10 md10 border-d">拼团购申请资料</div>
+			<div>成团人数：{$vo.number}</div>
+			<div>拼团购价格：<span class="ft16 text-danger">￥{$vo.price}</span></div>
+			<div>单独买价格：<span class="ft16 text-danger">￥{$vo.single_price}</span></div>
+			<div>上架天数：{$vo.days}</div>
+			<div>拼团购商品总数：{$vo.num}</div>
+		</div>
+		</volist>
+		-->
+	</div>
+	<div class="ft18 strong p10 border-d mt20 md20">审核记录</div>
+	<notempty name="one.tuan_apply_logs">
+	<ul class="timeline">
+		<volist name="one.tuan_apply_logs" id="vo">
+		<li>
+			<i class="fa fa-clock-o"></i>
+			<span class="date">
+				{$vo.atime}
+			</span>
+			<div class="content">
+				<div class="md20">审核状态：
+					{:status($vo['status'],[['审核中'],['审核成功','btn-success'],['被拒绝','btn-danger']])}
+				</div>
+			
+				<notempty name="vo.content">
+				<div class="md20 ft14">
+					备注：
+					{$vo.content|nl2br}
+				</div>
+				</notempty>
+				<small class="md10">
+					雇员ID：{$vo.admin_id}
+				</small>
+			</div>
+		</li>
+		</volist>
+	</ul>
+	</notempty>
+	<?php if($one['status'] == 0){ ?>
+	<form data-url="__URL__/audit_save" id="formadd" class="form-horizontal vform" onsubmit="return submit_form($(this))">
+		<table class="no-bg no-bordered">
+			<tbody>
+				<tr>
+					<td width="30%" class="text-right strong">状态：</td>
+					<td width="20%" class="text-left">
+						<label class="mr20"><input type="radio" class="i-red-square" name="status" value="0" <if condition="$one['status'] eq 0"> checked=""</if>>审核中</label>
+						<label class="mr20"><input type="radio" class="i-red-square" name="status" value="1" <if condition="$one['status'] eq 1"> checked=""</if>>审核通过</label>
+						<label class="mr20"><input type="radio" class="i-red-square" name="status" value="2" <if condition="$one['status'] eq 2"> checked=""</if>>审核失败</label>
+					</td>
+					
+				</tr>
+				<tr>
+					<td width="30%" class="text-right strong">备注：</td>
+					<td width="30%" colspan="2">
+						<textarea name="content" id="content" placeholder="请输入备注" class="form-control"></textarea>
+					</td>
+					<td width="20%"></td>
+				</tr>	
+				<!-- <tr>
+					<td width="30%" class="text-right strong">是否发送短信通知：</td>
+					<td width="30%" colspan="2">
+						<label class=" mr20" style=""><input type="checkbox" class="i-red-square" name="is_sms" value="1" > 是</label>
+					</td>
+					<td width="20%"></td>
+				</tr>	 -->			
+				<tr>
+					<td width="30%" class="text-right strong"></td>
+					<td width="30%" colspan="2">
+						<button type="submit" class="btn btn-danger btn-150px">提交</button>
+					</td>
+					<td width="20%"></td>
+				</tr>			
+			</tbody>
+		</table>
+		<input type="hidden" name="id" value="{$one.id}">
+	</form>
+	<?php } ?>
+</div>
+<script type="text/javascript">
+
+function submit_form(obj){
+	var data = getFormJson('#formadd');
+	if(data.content == ''){
+		valert({'status':'warnning',msg:'备注不能为空。'});
+		return false;
+	}
+	$.ajax({
+		type:'post',
+		url:'__URL__/audit_save',
+		data:data,
+		dataType:'json',
+		success:function(ret){
+			valert(ret);
+			if(ret.status == 'success'){
+				ref();
+			}
+		},
+		error:function(){
+			valert({status:'warnning',msg:'请求失败，请稍后重试。'});
+		},
+	});
+	return false;
+}
+
+
+
+</script>

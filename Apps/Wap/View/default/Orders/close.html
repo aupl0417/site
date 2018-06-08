@@ -1,0 +1,63 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			关闭订单
+		</div>
+		<div class="r">
+		</div>
+	</div>
+</header>
+
+<section>
+	<form id="form-orders-close">
+	<div class="line-box hover row noicon">
+		<div class="col-30">订单号</div>
+		<div class="col-70 text-right text-gray">{$_GET.s_no}</div>
+	</div>
+	<div class="line-box-m noicon row">
+		<div class="col-30">关闭原因</div>
+		<div class="col-70">
+				<textarea id="reason" name="reason" placeholder="请输入关闭原因" maxlength="100" rows="5"></textarea>
+		</div>
+		<div class="clearfix"></div>
+	</div>	
+	<input type="hidden" name="apiurl" value="/Orders/orders_shop_close">
+	<input type="hidden" name="is_openid" value="1">
+	<input type="hidden" name="s_no" value="{$_GET.s_no}">
+	</form>
+	
+	<div class="p10">
+		<div class="btn btn-lg btn-block btn-danger" onclick="orders_close()">提交</div>
+	</div>
+</section>
+
+
+<script>
+	fixBar(1);
+	
+	
+	function orders_close(){
+		var data=getFormJson('#form-orders-close');
+		if(data.reason==''){
+			valert({msg:'请输入关闭原因！'});
+			$('.page.active #reason').focus();
+			return false;
+		}
+		
+		ajax_post({
+			url:'/Api/api',
+			data:data,
+		},function(ret){
+			valert(ret);
+			if(ret.code==1){
+				setTimeout(function(){
+					closeWin({ref:true});
+				},1000);
+			}
+		});
+	}
+	
+</script>

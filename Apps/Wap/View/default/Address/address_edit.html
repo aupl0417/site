@@ -1,0 +1,154 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			修改收货地址
+		</div>
+	</div>
+</header>
+<section id="address-info-content">
+	<div class="load-body">数据加载中...</div>
+
+</section>
+
+<script type="text/html" id="address-info">
+<form id="new-address-form">
+	<div class="line-input hover row">
+		<div class="col-30">收货联系人</div>
+		<div class="col-70"><input name="linkname" value="<%= data.linkname %>"  type="text" placeholder="请输入收货联系人" /></div>
+	</div>
+
+	<div class="line-input hover row">
+		<div class="col-30">手机</div>
+		<div class="col-70"><input name="mobile" value="<%= data.mobile %>" type="text" placeholder="请输入手机" /></div>
+	</div>
+
+	<div class="line-input hover row">
+		<div class="col-30">电话</div>
+		<div class="col-70"><input name="tel" value="<%= data.tel %>" type="text" placeholder="请输入电话" /></div>
+	</div>
+
+	<div class="line-box hover row" onclick="openWin({name:'address_province',url:'/Address/province',ref:true})">
+		<div class="col-30">选择地区</div>
+		<div class="col-70 text-right" id="Address-choose"></div>
+	</div>
+
+	<div class="line-input hover row">
+		<div class="col-30">详细地址</div>
+		<div class="col-70"><input name="street" value="<%= data.street %>" type="text" placeholder="请填写详细地址" /></div>
+	</div>
+
+	<div class="line-input hover row">
+		<div class="col-30">邮编</div>
+		<div class="col-70"><input name="postcode" value="<%= data.postcode %>" type="text" placeholder="填写邮政编码" /></div>
+	</div>
+
+	<div class="line-box hover row" onclick="choose_is_default()">
+		<div class="col-30">是否默认</div>
+		<div class="clo-70 text-right" id="_is_default"><% if(data.is_default == 1){ %>是<% }else{ %>否<% } %></div>
+	</div>
+
+	<div class="p10">
+		<div class="btn btn-lg btn-danger btn-block" onclick="address_submit()">提交</div>
+	</div>
+
+	
+	<input type="hidden" aname="<%= data.province_name %>" value="<%= data.province %>" name="province" id="province" />
+	<input type="hidden" aname="<%= data.city_name %>" value="<%= data.city %>" name="city" id="city" />
+	<input type="hidden" aname="<%= data.district_name %>" value="<%= data.district %>" name="district" id="district" />
+	<input type="hidden" aname="<%= data.town_name %>" value="<%= data.town %>" name="town" id="town" />
+	<input type="hidden" value="<%= data.is_default %>" name="is_default" id="is_default" />
+
+
+	<input type="hidden" name="id" value="<%= data.id %>">
+	<input type="hidden" name="apiurl" value="/Address/edit" />
+	<input type="hidden" name="is_openid" value="1" />
+	<input type="hidden" name="no_sign" value="tel,postcode,is_default,town" />
+	</form>
+</script>
+
+
+<include file="Public:d_layer" />
+
+<script>
+fixBar(1);
+$(function(){
+	ajax_post({
+		url:'/Api/api',
+		data:{
+			apiurl:'/Address/view',
+			is_openid:1,
+			id:{$_GET['id']},
+		},
+	},function(ret){
+		if( ret.code == 1 ){
+			// alert(JSON.stringify(ret));
+			var html = template('address-info',{data:ret.data});
+			$('#address-info-content').html(html);
+			Address_sync();
+		}else{
+			valert(ret);
+		}
+	});
+});
+// 选择是否为默认
+function choose_is_default(){
+	vmodal({
+		title:'是否设置为默认地址',
+		url:'__URL__/is_default',
+		is_footer:false,
+	});
+}
+// 同步地区显示信息
+function Address_sync(){
+	var html = '';
+	html += $('.page #new-address-form #province').attr('aname');
+	html += ' ' + $('.page #new-address-form #city').attr('aname');
+	html += ' ' + $('.page #new-address-form #district').attr('aname');
+	html += ' ' + $('.page #new-address-form #town').attr('aname');
+	$('.page #new-address-form #Address-choose').html(html);
+}
+// 清除所选的城市信息
+function clear_city(){
+	$('.page #new-address-form #city').attr('aname','');
+	$('.page #new-address-form #city').val('');
+}
+// 清除所选的区域信息
+function clear_district(){
+	$('.page #new-address-form #district').attr('aname','');
+	$('.page #new-address-form #district').val('');
+}
+// 清除所选的县/镇信息
+function clear_town(){
+	$('.page #new-address-form #town').attr('aname','');
+	$('.page #new-address-form #town').val('');
+}
+
+// 最终提交
+function address_submit(){
+	var data = getFormJson('#new-address-form');
+	if(data.linkname == ''){valert({msg:'请填写 收货联系人'});return false;}
+	if(data.mobile == ''){valert({msg:'请填写 手机'});return false;}
+	if(data.province == ''){valert({msg:'请选择 省份'});return false;}
+	if(data.city == ''){valert({msg:'请选择 城市'});return false;}
+	if(data.district == ''){valert({msg:'请选择 区域'});return false;}
+	// if(data.town == ''){valert({msg:'请选择 县/镇'});return false;}
+	if(data.street == ''){valert({msg:'请填写 详细地址'});return false;}
+	ajax_post({
+		url:'/Api/api',
+		data:data,
+	},function(ret){
+		// console.log(ret);
+		valert(ret);
+		if( ret.code == 1 ){
+			closeWin();
+			setTimeout(function(){
+				openWin({name:'address',url:'/Address/index',ref:true});
+			},1000);
+		}
+	});
+}
+
+</script>

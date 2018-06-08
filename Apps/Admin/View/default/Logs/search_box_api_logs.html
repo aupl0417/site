@@ -1,0 +1,47 @@
+<form method="get" action="" role="form" class="hover-shadow hover-search p10 md10">
+
+	<table class="no-bordered">
+		<tr>
+			<td class="p0">
+				<table>
+					<tr>
+						<td>	
+							<input id="name" name="name" value="{$_GET.nick}" class="form-control" placeholder="请输入会员账号" />					
+						</td>					
+						<td><input id="sday" name="sday" value="{$_GET.sday}" class="form-control" placeholder="时间(从)" data-type="between-datepick" data-var="maxDate" data-tag="#eday" />							
+						</td>
+						<td><input id="eday" name="eday" value="{$_GET.eday}" class="form-control" placeholder="时间(至)" data-type="between-datepick"data-var="minDate" data-tag="#sday" /></td>
+						<td>
+							<select id="field" name="field" class="form-control">
+								<option value="res">搜索字段(默认搜res)</option>
+								<option value="post">post提交数据</option>
+								<option value="res">res返回结果</option>
+								<option value="url">操作的URL</option>
+							</select>
+						
+						</td>
+						<td><input id="q" name="q" value="{$_GET.q}" class="form-control" placeholder="请输入搜索关键词" /></td>
+						<td>
+							<select id="table_name" name="table_name" class="form-control">
+								<option value="api_" >api</option>
+								<option value="api_v2_" <if condition="$_GET.table_name eq api_v2_">selected="selected"</if>>api_v2</option>
+							</select>
+						</td>
+						<td>
+							<select id="month" name="month" class="form-control">
+								<option>请选择月份</option>
+								{$change_option}
+							</select>
+						</td>
+					<tr>
+				</table>
+			</td>
+			<td width="100" class="p0"><button type="submit" class="btn btn-rad btn-trans btn-primary btn-block"><i class="fa fa-search"></i> 搜索</button></td>
+		</tr>
+	</table>
+
+	
+	
+
+</form>
+<div class="clearfix"></div>

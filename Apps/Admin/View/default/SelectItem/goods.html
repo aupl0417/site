@@ -1,0 +1,167 @@
+<form method="get" action="/Goods/" role="form" id="ajax_search" class="hover-shadow hover-search p10 md10" onsubmit="return ajax_search()">
+
+	<table class="no-bordered">
+		<tr>
+			<td class="p0">
+				<table class="no-bordered no-bg">
+					<tr>
+						<td>
+							<select id="status" name="status" class="form-control " style="">
+								<option value="">请选择状态</option>
+								<option value="0">删除</option>
+								<option value="1" selected>上架</option>
+								<option value="2">仓库</option>
+								<option value="3">主图缺失</option>
+								<option value="4">违规</option>
+								<option value="5">异常</option>
+							</select>
+						</td>
+						<td>
+							<select id="is_self" name="is_self" class="form-control " style="">
+								<option value="">请选择是否自营</option>
+								<option value="0">否</option>
+								<option value="1">是</option>
+							</select>
+						</td>
+						<td>
+							<select id="is_love" name="is_love" class="form-control " style="">
+								<option value="">请选择首页猜您喜欢</option>
+								<option value="0">否</option>
+								<option value="1">是</option>
+							</select>
+						</td>
+						<td><input type="text" id="goods_name" name="goods_name" placeholder="请输入宝贝标题" value="" class="form-control " style=""></td>
+						<td><input type="text" id="seller" name="seller" placeholder="请输入卖家" value="" class="form-control " style=""></td>
+						<td><input type="text" id="shop" name="shop" placeholder="请输入店铺名称" value="" class="form-control " style=""></td>
+					</tr>
+
+				</table>
+			</td>
+			<td width="100" class="p0" valign="top"><button type="submit" class="btn btn-rad btn-trans btn-primary btn-block mt8"><i class="fa fa-search"></i> 搜索</button></td>
+		</tr>
+	</table>
+
+</form>
+
+<notempty name="pagelist.list">
+
+			{:W('Widget/listable',array(array(
+				'data'	=>$pagelist['list'],
+				'items'	=>array(
+					array(
+						'title'	=> '选择',
+						'type'	=> 'html',
+						'html'	=> '<input type="radio" name="id" id="id" class="i-red-square" value="[id]" />',
+						'td_attr'	=> 'width="60" class="text-center"',	
+						'norder'	=> 1,
+					),
+					array(
+						'title'	=> 'ID',
+						'field'	=> 'id',
+						'td_attr'	=> 'width="100" class="text-center"',	
+						'norder'	=> 1,
+					),
+					array(
+						'title'	=> '图片',
+						'field'	=> 'images',
+						'td_attr'	=> 'width="100" class="text-center"',
+						'function'	=> 'return images($val["images"],60);',
+						'norder'	=> 1,
+					),
+					array(
+						'title'	=> '商品标题',
+						'field'	=> 'goods_name',			
+						'norder'	=> 1,
+					),					
+					array(
+						'title'	=> '价格',
+						'field'	=> 'price',			
+						'norder'	=> 1,
+						'td_attr'	=> 'class="text-center"',
+					),					
+					array(
+						'title'	=> '库存',
+						'field'	=> 'num',		
+						'norder'	=> 1,
+						'td_attr'	=> 'class="text-center"',
+					),					
+					array(
+						'title'	=> '销量',
+						'field'	=> 'sale_num',	
+						'norder'	=> 1,
+						'td_attr'	=> 'class="text-center"',
+					),	
+					array(
+						'title'	=> '卖家昵称',
+						'field'	=> 'images',
+						'function'	=> 'return $val["seller"]["nick"];',
+						'norder'	=> 1,
+					),
+					array(
+						'title'	=> '店铺名称',
+						'field'	=> 'images',
+						'function'	=> 'return $val["shop"]["shop_name"];',
+						'norder'	=> 1,
+					),					
+				),
+			)))}
+			
+			<div class="p10 page-box">
+				{:page_html($pagelist['pageinfo'])}
+			</div>
+			
+		<div class="p10 text-center">
+			<div class="btn btn-150px btn-primary" onclick="select_ok($(this))">确定选择</div>
+		</div>			
+<else />
+	<div class="text-center nors">找不到记录！</div>
+</notempty>
+<script>
+	iCheckClass('#ajax-modal');
+	$('.page-box a').click(function(event){
+		event.preventDefault();
+		var url = $(this).attr('href');
+		//alert(url);
+		ajax_load('#ajax-modal .modal-body',url);
+	});
+	
+	function ajax_search(){
+		var data = getFormJson('#ajax_search');
+		var param =$.param(data);
+		//alert(param);
+		var url='/SelectItem/goods?'+param;
+		ajax_load('#ajax-modal .modal-body',url);
+
+		return false;
+	}
+	
+	function select_ok(obj){
+		var size = $('#ajax-modal input[name="id"]:checked').size();
+		if(size==0){
+			valert({status:'warning',msg:'请选择记录！'});
+			return false;
+		}
+		
+		var id=$('#ajax-modal input[name="id"]:checked').val();
+		var field=$('.vform-action').html();
+		$('#'+field).val(id);
+		
+		var obj = $('#ajax-modal input[name="id"]:checked').closest('tr');
+		var img = obj.find('img').attr('src');
+		var goods_name = obj.find('td').eq(3).html();
+		var price = obj.find('td').eq(4).html();
+		var num = obj.find('td').eq(5).html();
+		var	html = '<div class="crow"><div class="ccol-10"><img src="'+img+'" alt="商品图片"></div><div class="ccol-80 pl10"><h3 class="ft16">'+goods_name+'</h3><span class="mr20">价格：'+price+'</span><span class="mr20">库存：'+num+'</span></div></div><div class="clearfix"></div>';
+
+		//alert(html);
+		
+		if($('.f-'+field+' .col-xs-7 .box').size()>0){
+			$('.f-'+field+' .col-xs-7 .box').html(html);
+		}else{
+			html='<div class="box p10">'+html+'</div>';
+			$('.f-'+field+' .col-xs-7').append(html);
+		}
+		
+		$('#ajax-modal').modal('hide');
+	}
+</script>

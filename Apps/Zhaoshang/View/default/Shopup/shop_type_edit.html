@@ -1,0 +1,256 @@
+<include file="Public:header" />
+<include file="Public:menu" />
+
+<div class="w1200 mt20 md20 bg-white box">
+	<div class="box-header">
+		选择店铺类型
+	</div>
+	
+	<div class="box-content p50">
+		<form name="form-shop" id="form-shop" data-url="__URL__/shop_type_set" onsubmit="return submit_form();">
+			<div class="ft16 b md10">选择店铺类型 （您目前的店铺类型：<span style="color: red;">{$shop_info.shop_type_name}</span>）</div>
+			<table class="shop_type md20">
+				<tr>
+					<volist name="shop_type" id="vo">
+						<!-- 企业用户的个人店铺才可以升级 u_typ为1表示企业用户 -->
+						<if condition="$shop_info['shop_type_id'] eq 6">
+							<td data-id="{$vo:id}" class="<eq name="vo:id" value="$info:shop_type_id"> thismy</eq>">
+								<img src="{:myurl($vo->icon,60)}" alt="{$vo:type_name}" class="img-circle"> {$vo:type_name}</eq>
+							</td>
+						<else/>
+							<td data-id="{$vo:id}" class="<eq name="info:shop_type_id" value="$vo:id"> thismy<else/>disabled</eq>">
+								<img src="{:myurl($vo->icon,60)}" alt="{$vo:type_name}" class="img-circle"> {$vo:type_name}</eq>
+							</td>
+						</if>
+					</volist>
+				</tr>
+			</table>
+			
+			<div class="md30 about">
+			<volist name="shop_type" id="vo">
+				<div class="{:$info->shop_type_id!=$vo->id?'hide':''}">
+					{$vo:content|nl2br}
+				</div>
+			</volist>
+
+			</div>
+			
+			
+			<div class="brand md30">
+				
+			</div>
+			
+			<input type="hidden" name="shop_type_id" id="shop_type_id" value="{$info:shop_type_id}">
+			
+			<input type="hidden" name="is_edit" value="1">
+			<div class="p10">
+				<div class="pull-left"><a href="__URL__/agreement" class="btn btn-danger btn-150px btn-trans">上一步</a></div>
+				<div class="pull-right"><button type="submit" class="btn btn-danger btn-150px btn-next">下一步</button></div>
+			</div>
+		</form>
+	</div>
+
+</div>
+
+<volist name="shop_type" id="vo">
+<script id="tpl_brand_{$vo:id}" type="text/html">
+	<div class="ft16 md10"><span class="b mr20">经营品牌及类目</span><small>（允许：品牌{$vo:max_brand}个，一级类目{$vo:max_category}个，二级类目{$vo:max_second_category}个）</small></div>
+			
+	<table class="nobg" data-max_brand="{$vo:max_brand}" data-max_category="{$vo:max_category}" data-max_second_category="{$vo:max_second_category}">
+		<thead class="strong">
+			<tr>
+				<th width="60" class="text-center">序号 </th>
+				<th width="250" class="text-center">品牌 </th>
+				<th>经营类目 </th>
+			</tr>
+		</thead>
+		<tbody>
+			
+			<for start="0" end="$vo:max_brand">
+			<tr>
+				<td class="text-center">
+					{$i+1}
+				</td>
+				<td>
+					<input name="brand_name[]" id="brand_name[]" class="form-control noborder" maxlength="60" value="{:$info->brand[$i]->name}" placeholder="请输入品牌名称{:$vo->id==7?'（选填）':''}" >
+				</td>
+						
+				<td>
+					<div class="md10"><div class="btn btn-danger btn-xs" onclick="select_category($(this))">选择类目</div></div>	
+					<input type="hidden" name="first_category[]" id="first_category[]" value="{:$info->brand[$i]->first_category}">
+					<input type="hidden" name="second_category[]" id="second_category[]" value="{:$info->brand[$i]->second_category}">
+					<ul class="brand_category">
+					{:W('Widget/brand_category',array($info->brand[$i]->second_category))}
+					</ul>
+				</td>
+			</tr>
+			</for>
+			
+		</tbody>
+	</table>	
+	<div class="text-gray p10">
+		已选择一级类目 <span class="first_category text-danger">{:count($info->first_category)}</span> 个，二级类目 <span class="second_category text-danger">{:count($info->second_category)}</span> 个
+	</div>
+</script>
+</volist>
+
+<include file="Public:copyright" />
+<include file="Public:js" />
+
+
+<script>
+$(document).ready(function(){
+
+	$('#is_read').on('ifChecked', function(){
+		$('.step-next').removeClass('disabled');
+	});
+	$('#is_read').on('ifUnchecked', function(){
+		$('.step-next').addClass('disabled');
+	});	
+	
+	$('.shop_type tr td').not('.disabled').click(function(){
+		$(this).addClass('active').siblings().removeClass('active');
+		$('.about > div').eq($(this).index()).removeClass('hide').siblings().addClass('hide');
+		if($('.btn-next').hasClass('disabled')) $('.btn-next').removeClass('disabled');
+		
+		$('#shop_type_id').val($(this).data('id'));
+		
+		var tpl='tpl_brand_'+$(this).data('id');
+		var html=template(tpl);
+		$('.brand').html(html);
+	});
+	
+	var tpl='tpl_brand_{$info:shop_type_id}';
+	var html=template(tpl);
+	$('.brand').html(html);	
+	
+	$('.thismy').click();
+});	
+
+function submit_form(){
+	var data=getFormJson('#form-shop');
+	if(data.shop_type_id==''){
+		talert({status:'warning',msg:'请选择店铺类型！'});
+		return false;
+	}
+	
+	
+	if($('.brand tbody tr li').size()==0){
+		talert({status:'warning',msg:'请选择经营类目！'});
+		return false;
+	}	
+	//非个人店
+	var res=true;
+	if(data.shop_type_id!=7){		
+		$('.brand tbody tr').each(function(index){
+			if($(this).find('input[name="brand_name[]"]').val() !=''){				
+				if($(this).find('li').size()==0){
+					res=false;
+					talert({status:'warning',msg:'请选择经营类目！'});
+					return false;
+				}
+			}
+		});
+	}
+	
+	if(res==true){
+		ajax_post_form({
+			formid:'#form-shop',
+		},function(ret){
+			talert(ret);
+			if(ret.code == 1){
+				//alert(ret.data.brand_num);
+				if(ret.data.brand_num > 0) window.location.href='__URL__/brand';
+				else window.location.href='__URL__/industry';
+			}
+		});
+	}
+	
+	return false;
+}
+
+function select_category(obj){
+	var brand_name=obj.closest('tr').find('input[name="brand_name[]"]').val();
+	var shop_type_id=$('#shop_type_id').val();
+	
+	if(brand_name=='' && shop_type_id!=7){
+		talert({status:'warning',msg:'请先输入品牌名称'});
+		obj.closest('tr').find('input[name="brand_name[]"]').focus();
+		return false;
+	}
+	
+	var index=obj.closest('tr').index();
+	vmodal({
+		title:'选择经营类目',
+		url:'__URL__/select_category/index/'+index,
+		width:'650px',
+	},function(){
+		$('.modal-footer .pull-left').html('<div class="btn btn-danger">确定</div>');
+	});
+}
+
+
+	
+	//类目数量检测
+	function check_category_num(first_id,second_id){
+		var cfg=$('.brand table').data();
+		
+		var f_cid= new Array();
+		var s_cid= new Array();
+		
+		if(first_id!=undefined) f_cid.push(first_id);
+		if(second_id!=undefined) s_cid.push(second_id);
+		
+		$('.brand tbody tr').each(function(index){
+			$(this).find('li').each(function(){
+				var d=$(this).data();
+				if(in_array(d.first_id,f_cid) <0) f_cid.push(d.first_id);
+				if(in_array(d.id,s_cid) <0) s_cid.push(d.id);
+			});
+	
+		});
+		
+		if(f_cid.length > cfg.max_category){
+			talert({status:'warning',msg:'一级类目不得超过'+cfg.max_category+'个！'});
+			return false;
+		}
+		if(s_cid.length > cfg.max_second_category){
+			talert({status:'warning',msg:'二级类目不得超过'+cfg.max_second_category+'个！'});
+			return false;
+		}		
+		
+		$('.first_category').html(f_cid.length);
+		$('.second_category').html(s_cid.length);
+		
+
+	}
+	
+	//删除类目
+	function delete_select(obj){
+		var tr=obj.closest('tr');
+		//alert(tr.index());
+		var data=obj.closest('li').data();
+		obj.closest('li').remove();
+		
+		var first_category=new Array();
+		var second_category=new Array();
+		
+		if(tr.find('li').size()>0){
+			tr.find('li').each(function(){
+				var d=$(this).data();
+				if(in_array(d.first_id,first_category) < 0) first_category.push(d.first_id);
+				if(in_array(d.id,second_category) < 0) second_category.push(d.id);
+			});
+			tr.find('input[name="first_category[]"]').val(first_category.join(','));
+			tr.find('input[name="second_category[]"]').val(second_category.join(','));			
+		}else{
+			tr.find('input[name="first_category[]"]').val('');
+			tr.find('input[name="second_category[]"]').val('');
+		}
+		
+		check_category_num();
+
+	}
+</script>
+
+<include file="Public:footer" />

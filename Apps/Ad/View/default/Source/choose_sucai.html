@@ -1,0 +1,82 @@
+<link rel="stylesheet" type="text/css" href="/Public/CSS/flatdream/js/jquery.icheck/skins/square/_all.css">
+<div class="pd10 text-center">
+	
+	<empty name="data.code">
+		<table class="table table-bordered table-advance table-hover mb30 mt10">
+			<tbody>
+				<tr>
+					<th class="col-xs-1 text-center" style="vertical-align: middle;"></th>
+					<th class="col-xs-2 text-center" style="vertical-align: middle;">素材图片</th>
+					<th class="col-xs-3 text-center" style="vertical-align: middle;">素材名称</th>
+					<th class="col-xs-2 text-center" style="vertical-align: middle;">素材尺寸</th>
+					<th class="col-xs-3 text-center" style="vertical-align: middle;">可投放类目</th>
+				</tr>
+				<volist name="data.list" id="vo">
+					<tr class="countBrand">
+						<td class="text-center" style="vertical-align: middle;">
+							<label class="square"><input type="radio" name="chooseSucai" value="{$vo.id}"><span></span></label>
+						</td>
+						<td class="text-center img">
+							<a class="image-zoom" href="#" onclick="bigImage($(this))" data-url="{$vo['images']}" title="大图">
+								<img src="{:myurl($vo['images'],70,70)}" />
+							</a>
+						</td>
+						<td style="vertical-align: middle;" class="text-center col-xs-1">{$vo.sucai_name}</td>
+						<td style="vertical-align: middle;" class="text-center col-xs-1">{$vo.width}x{$vo.height}</td>
+						<td style="vertical-align: middle;" class="text-center col-xs-1">{$vo.category_name}</td>
+						
+					</tr>
+				</volist>
+			</tbody>
+		</table>
+		<div class="text-center">
+			{:paresePageActionAjax($data['page']['page'], 'href="', 'href="#" onclick="gonextpage($(this))" data-url="')}
+		</div>
+		<div class="text-center">
+			<a href="javascript:;" class="btn btn-danger" id="submitRadio">确定选择</a>
+		</div>
+	<else />
+		<h4 class="pull-center">没有找到符合<span class="text_red">投放尺寸和投放类目</span>并<span class="text_red">审核通过</span>的素材，<a href="{:U('/Sucai/create')}" class="text_blue" target="_blank">去添加素材</a></h4>
+	</empty>
+</div>
+<script>
+iCheckClass();
+	
+	$("#submitRadio").on('click',function() {
+		var isChoose = false;
+		var Sucai = '';
+		var html = '';
+		$("input[name='chooseSucai']").each(function(){
+			if($(this).prop('checked') == true){
+				Sucai = $(this).attr('value');
+				isChoose = true;
+				html = $(this).parent().parent().parent().html();
+			}
+		});
+		if(isChoose == false) {
+			layerMsg('请至少选择一个素材!',{offset:'150px'});
+			return false;
+		}
+		
+		$('#choose-sucai').html(html);
+		$('#choose-sucai td').eq(0).remove();
+		$("#sucai_id").val(Sucai);
+		$(".modal").modal('hide');
+
+		
+		
+	});
+
+function gonextpage(obj) {
+	var url = obj.data('url');
+	$(".modal-body").load(url);
+}
+function searchQ(){
+	
+	var device = '{$_GET.device}';
+	var q = $('#search-q').val();
+	var url = '/Source/choose/device/' + device + '/q/' + q;
+	
+	$('.modal-body').load(url);
+}
+</script>

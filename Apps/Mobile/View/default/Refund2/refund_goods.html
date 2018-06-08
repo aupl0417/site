@@ -1,0 +1,202 @@
+<include file="Public:header" />
+		<div class="page-group">
+			<div id="page-refund2-goods" class="page">
+				<!-- 标题栏 -->
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left back" data-no-cache="true"></a>
+					<h1 class="title">商品退款</h1>
+					<a class="icon iconfont icon-category pull-right ml5 ac-menu" onclick="top_menu()"></a>
+				</header>
+
+				<!-- 浮动导航 -->
+				<include file="Public:fixed-menu" />
+				
+				<nav class="bar bar-tab">
+					<div class="footer-btn footer-btn-default btn-submit">申请退款</div>
+				</nav>				
+		
+				<!-- 这里是页面内容区 -->		
+				<div class="content">
+
+					<form name="form-refund-goods" id="form-refund-goods" onsubmit="return false;" data-url="/Refund2/add" data-can_price="{$rs.can_price}" data-can_num="{$rs.can_num}" data-can_express_price="{$rs.can_express_price}">
+						<div class="list-block media-list">
+							<ul>
+								<li>
+									<a href="/Orders/view/s_no/{$rs.s_no}" class="item-content item-link" data-no-cache="true">
+										<div class="item-inner">
+											<div class="item-title-row">
+												<div class="item-title">订单号</div>
+												<div class="item-after">{$rs.s_no}</div>
+												<input type="hidden" id="s_no" value="{$rs.s_no}" />
+											</div>
+										</div>
+									</a>
+								</li>
+								<li class="bg-gray2">
+									<a href="/Goods/view/id/{$rs.attr_list_id}" class="item-content">
+										<div class="item-media">
+											<img class="lazyload" data-sizes="auto" data-src="{:myurl($rs['images'],150)}" alt="商品主图" src="../Public/images/nopic.gif" width="60">
+										</div>
+										<div class="item-inner">
+											<div class="item-title-row">
+												<div class="item-title">{$rs.goods_name}</div>
+												<div class="item-after">
+													￥{$rs.price}
+												</div>
+											</div>
+											<div class="item-subtitle">
+												<div class="pull-right text-gray">x{$rs.num}</div>
+												<div class="ft05">{$rs.attr_name}</div>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<div class="item-content item-link {:$rs['can_num']>0 && $rs['can_price']>0?'open-popup':''}" data-popup=".popup-refundtype">
+										<div class="item-inner">
+											<div class="item-title-row">
+												<div class="item-title">退款类型</div>
+												<div class="item-after">{:$rs['can_num']>0 && $rs['can_price']>0?'退货并退款':'只退款'}</div>
+											</div>
+										</div>
+									</div>
+									<input type="hidden" name="type" id="type" value="{:$rs['can_num']>0 && $rs['can_price']>0?1:2}" />
+								</li>								
+								<li id="li-num" class="{:$rs['can_num']>0 && $rs['can_price']>0?'':'hide'}">
+									<div class="item-content">
+										<div class="item-inner">
+											<div class="item-title-row">
+												<div class="item-title" style="min-width:4rem">退回数量</div>		
+												<div class="item-input">
+													<input type="number" id="num" name="num" placeholder="请输入退回数量" value="" data-max="{$rs.can_num}">
+												</div>
+												<div class="item-after">
+													<span class="ml03 text-gray ft05">最多可退{$rs.can_num}件</span>
+												</div>
+												
+											</div>
+										</div>
+									</div>
+								</li>
+								<li id="li-money" class="{:$rs['can_price']<=0?'hide':''}">
+									<div class="item-content">
+										<div class="item-inner">
+											<div class="item-title-row">
+												<div class="item-title" style="min-width:4rem">退款金额</div>		
+												<div class="item-input">
+													<input type="number" id="price" name="price" placeholder="请输入退款金额" value="" data-max="{$rs.can_price}">
+												</div>
+												<div class="item-after">
+													<span class="ml03 text-gray ft05">最多可退￥{$rs.can_price}</span>
+												</div>
+												
+											</div>
+										</div>
+									</div>
+								</li>
+								
+								<li class="{:$rs['can_express_price']<=0?'hide':''}">
+									<div class="item-content">
+										<div class="item-inner">
+											<div class="item-title-row">
+												<div class="item-title" style="min-width:4rem">退运费</div>
+												<div class="item-input">
+													<input type="number" id="express_price" name="express_price" placeholder="请输入退运费金额" value="" data-max="{$rs.can_express_price}">
+												</div>
+												<div class="item-after">
+													<span class="ml03 text-gray ft05">最多可退￥{$rs.can_express_price}</span>
+												</div>
+											</div>
+										</div>
+									</div>
+								</li>
+									
+								<li>
+									<div class="item-content">
+										<div class="item-inner">
+											<div class="item-title-row">
+												<div class="item-title" style="min-width:4rem">退款原因</div>
+												<div class="item-input">
+													<textarea id="reason" name="reason" placeholder="请输入退款原因，不超过100字" maxlength="100" rows="8"></textarea>
+												</div>
+											</div>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class="item-content">
+										<div class="upload-box">
+											<div class="upload-action">
+												<div class="upload-btn">
+													<input id="imageData" name="imageData" type="file" value="" />
+													<img alt="上传图片" src="../Public/images/up_load.jpg" width="60">
+													<input type="hidden" id="images" name="images" />
+												</div>												
+											</div>
+											<div class="images-list">
+												
+											</div>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+						<div class="p5 text-gray ft05">
+							如果只退运费，退款类型请选“只退款”，退款金额填0，在退运费处填你想退的运费金额。
+						</div>
+						<input type="hidden" name="orders_goods_id" id="orders_goods_id" value="{$rs.id}" />
+					</form>				
+				
+				
+				</div><!--/content-->
+				
+			</div>
+			
+			
+			<!--popup 付款-->
+			<div class="popup popup-refundtype popup-top50" style="overflow: hidden;height:100%">
+				<div class="close-popup btn-close">
+					<i class="iconfont icon-guanbi1"></i>
+				</div>
+				
+				<div class="p5">请选择退款类型</div>
+				<div class="clearfix md5"></div>
+				<div class="list-block media-list refund-type">
+					<ul>
+						<li class="{:$rs['can_num']>0?'selected':''}" data-value="1">
+							<div class="item-content">
+								<div class="item-media">
+									<i class="iconfont icon-chanpin1 text-info"></i>
+								</div>
+								<div class="item-inner">
+									<div class="item-title-row">
+										<div class="item-title">退货并退款</div>
+										<div class="item-after"></div>
+									</div>
+								</div>
+							</div>
+						</li>
+						<li data-value="2" class="{:$rs['can_num']<1?'selected':''}">
+							<div class="item-content">
+								<div class="item-media">
+									<i class="iconfont icon-jifen text-yellow"></i>
+								</div>
+								<div class="item-inner">
+									<div class="item-title-row">
+										<div class="item-title">只退款</div>
+										<div class="item-after"></div>
+									</div>
+								</div>
+							</div>
+						</li>				
+					</ul>
+				</div>			
+
+			</div>				
+			
+			
+		</div>	
+		
+
+<include file="Public:script" />
+<include file="Public:footer" />

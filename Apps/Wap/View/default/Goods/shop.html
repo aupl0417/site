@@ -1,0 +1,98 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			<div class="row">
+				<div class="col-20">&nbsp;</div>
+				<div class="col-60">
+					<div class="input-search-box" >
+						<input type="text" id="q" name="q" placeholder="搜索商品/店铺" onclick="openWin({name:'search',url:'/Goods/search'})" />
+					</div>				
+				</div>
+				<div class="col-20"></div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="r">
+			<div class="text" onclick="openWin({name:'search_shop',url:'/Goods/shop',ref:true})">全部</div>		
+		</div>
+	</div>
+</header>
+<section>
+	<div class="pagelist">
+		<div class="load-body">数据加载中……</div>
+	</div>
+	<div class="p10 load-more" onclick="shop_pagelist()">
+		<div class="btn btn-lg btn-block btn-danger btn-trans">加载更多……</div>
+	</div>
+</section>
+
+<script id="tpl_shop_list" type="text/html">
+	<% for(i=0;i<data.length;i++){ %>
+	<div class="line-box-m row hover" onclick="openWin({name:'shop',url:'/Shop/index/shop_id/<%= data[i].id %>'})">
+		<div class="col-15"><img src="<%= data[i].shop_logo %>" class="img-circle" alt="店铺logo"></div>
+		<div class="col-85">
+			<div class="pl10 pr10">
+				<div class="b ft14"><%= data[i].shop_name %></div>
+				<div class=""><%= data[i].province %> <%= data[i].city %></div>
+				<div class="text-gray lh-18px"><%= data[i].about %></div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+	<div class="box row text-center md10">
+		<div class="col-33">
+			<div class="p10">
+				<div class="ft16 text-danger shop-view-fraction-desc" >5.0</div>
+				<div class="text-gray">描述相符</div>
+			</div>
+		</div>
+		<div class="col-33">
+			<div class="p10">
+				<div class="ft16 text-danger shop-view-fraction-service" >5.0</div>
+				<div class="text-gray">服务态度</div>
+			</div>
+		</div>
+		<div class="col-33">
+			<div class="p10">
+				<div class="ft16 text-danger shop-view-fraction-speed" >5.0</div>
+				<div class="text-gray">发货速度</div>
+			</div>
+		</div>	
+		<div class="clearfix"></div>
+	</div>	
+	<% } %>
+</script>
+
+
+
+<script>
+	fixBar(1);
+	var shop_data={apiurl:'/Goods/shop_list',q:'{$_GET.q}',no_sign:'q,p,pagesize,imgsize'};
+	
+	shop_pagelist();
+	
+	function shop_pagelist(){
+		var obj=$('.page.active section');
+		pagelist({
+			obj:obj,
+			data:shop_data,
+			success:function(ret){
+				var html=template('tpl_shop_list',{data:ret.data.list});
+				//alert(obj.data('p'));
+				if(obj.data('p')==2){
+					obj.find('.pagelist').html(html);
+
+				}else{
+					obj.find('.pagelist').append(html);
+				}			
+			},
+			error:function(ret){
+				obj.find('.pagelist').html(no_data_text);
+			},
+		});		
+	}
+	
+</script>

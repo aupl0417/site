@@ -1,0 +1,70 @@
+<include file="Public:header" />
+<div class="page-group">
+    <div id="page-drawluck-lists" class="page" data-count_page="{$data.pageinfo.page|default='0'}">
+        <input type="hidden" name="luckdrawNextPage" value="2">
+        <header class="bar bar-nav">
+            <a class="icon icon-left pull-left back" href="/"></a>
+            <h1 class="title">中奖记录</h1>
+            <a class="icon iconfont icon-category pull-right ml5 ac-menu" onclick="top_menu()"></a>
+        </header>
+
+        <!-- 浮动导航 -->
+        <include file="Public:fixed-menu" />
+
+        <notempty name="data.list">
+            <div class="content draw-content infinite-scroll infinite-scroll-bottom">
+                <div class="main">
+                    <volist name="data.list" id="vo">
+                        <div class="row no-gutter row-content">
+                            <div class="col-25 text-center jianbian h70">
+                                <p class="row-title-money" style="font-size: 1.3rem; margin-top: 0.3rem;">
+                                    <in name="vo.type_id" value="1,2"><span class="fs7rem">￥</span>{$vo['intro']['price']}<else />{$vo.intro.score}</in>
+                                </p>
+                                <p class="rem07" style="margin-top: -0.5rem;">
+                                    {$vo.typeName}
+                                </p>
+                            </div>
+                            <div class="col-50 h70">
+                                <in name="vo.type_id" value="1,2">
+                                    <p class="text-center rem07">
+                                        <notempty name="vo.intro.shop_name">{$vo.intro.shop_name}<else />&nbsp;</notempty>
+                                    </p>
+                                    <p class="text-center rem06">
+                                        满 {$vo['intro']['min_price']} 减 {$vo['intro']['price']}
+                                    </p>
+                                    <p class="text-center row-time">
+                                        {$vo['intro']['sday']} - {$vo['intro']['eday']}
+                                    </p>
+                                </in>
+                            </div>
+                            <div class="col-25 text-center pd05">
+                                <in name="vo.type_id" value="1,2">
+                                        <a href="{$vo['intro']['url']}" class="button button-danger mt05 pd0">去消费</a>
+                                    <else />
+                                        <gt name="vo.status" value="0">
+                                            <a href="javascript:;" class="button disabled mt05 pd0">已发放</a>
+                                            <else />
+                                            <a href="javascript:;" onclick="receiveScore('{$vo.id}', $(this));" class="button button-success mt05 pd0">领取</a>
+                                        </gt>
+                                </in>
+                            </div>
+                        </div>
+                    </volist>
+                </div>
+                <!-- 加载提示符 -->
+                <div class="infinite-scroll-preloader">
+                    <div class="preloader"></div>
+                </div>
+            </div>
+            <else />
+            <div class="content">
+                <div class="nors text-center">
+                    <div><i class="iconfont icon-sousuowujieguo ft3"></i></div>
+                    没有中奖记录，感觉去试试手气！
+                </div>
+            </div>
+        </notempty>
+    </div>
+</div>
+<include file="Public:script" />
+<include file="Public:footer" />

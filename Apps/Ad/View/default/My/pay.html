@@ -1,0 +1,69 @@
+<include file="Public:header" />
+
+<div class="container mt30">
+
+    <include file="payinfo" />
+    <div class="p10 bg-white bor_der" style="border-top: 0;">
+    	<div class="fs14 p10">
+			<strong>付款</strong>
+		</div>
+	    <form class="form-horizontal clearfix" id="ad-orders-pay">
+	        <input name="a_no" type="hidden" value="{$data.a_no}" />
+	        <div class="form-group mb0">
+	            <label class="col-xs-5 control-label fs14">
+	                总共需要 <span class="text_red" aria-required="true">*</span>
+	            </label>
+	            <div class="col-xs-3">
+	               <div class="fs18 strong text_red mt5">￥{$data.money_pay}</div>
+	            </div>
+	        </div>
+	        <div class="form-group mb0">
+	            <label class="col-xs-5 control-label fs14">
+	                安全密码<span class="text_red" aria-required="true">*</span>
+	            </label>
+	            <div class="col-xs-3">
+	                <input name="password_pay" type="password" class="form-control" maxlength="6" placeholder="请输入安全密码" value="">
+	                <!-- 防止enter提交 -->
+	                <input style='display:none' />
+	                <a class="layui-btn layui-btn-danger btn_m plr20 mt20" onclick="payForOrder()" >确定付款</a>
+	            </div>
+	        </div>   
+	    </form>
+	</div>
+</div>
+
+
+<script>
+
+function payForOrder(){
+	if($('#ad-orders-pay').find('input[name="password_pay"]').val() == ''){
+        layerMsg('请输入安全密码');
+		return false;
+	}
+	ajax_post_form({
+		formid: '#ad-orders-pay',
+		url: '/run/authRun',
+		headers:{Action:'{:enCryptRestUri("/Ad/adPay")}'},
+	},function(ret){
+		if(ret.code == 1){
+            layerMsg(ret.msg,{skin:'my-layer-success'},function(){
+                gourl({url:'{:U("My/index")}'});
+            });
+		}else{
+            layerMsg(ret.msg);
+        }
+
+	});
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+<include file="Public:footer" />

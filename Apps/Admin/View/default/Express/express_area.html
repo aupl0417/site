@@ -1,0 +1,19 @@
+<div class="btn btn-rad btn-trans btn-sm btn-primary" onclick="vmodal({title:'设置地区运费',width:'90%',url:'__URL__/express_area_add/express_id/{$_GET.express_id}'})"><i class="fa fa-plus"></i> 指定地区设定运费</div>
+
+<div class="clearfix md20"></div>
+
+<div class="list-group">
+	<volist name="list" id="vo">
+	<div class="list-group-item" id="{$vo.id}">
+		<div class="pull-right">
+			<div class="btn btn-info btn-rad btn-sm" onclick="vmodal({title:'设置地区运费',width:'90%',url:'__URL__/express_area_edit/id/{$vo.id}'})">修改</div>
+			<div class="btn btn-danger btn-rad btn-sm" onclick="area_delete($(this))" data-id="{$vo.id}">删除</div>
+		</div>
+		<div class="ft18 md10">首重(件) {$vo.first_unit} {$rs.unit} 费用 {$vo.first_price} 元，续重(件) {$vo.next_unit} {$rs.unit} 费用 {$vo.next_price} 元</div>
+		<div class="text-gray">
+		{$vo.citys}
+		</div>
+	</div>
+	</volist>
+</div>
+

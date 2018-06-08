@@ -1,0 +1,34 @@
+<div class="header">
+	<div class="w1200 crow">
+		<div class="ccol-30">
+			<a href="{:C('sub_domain.zhaoshang')}"><img src="../Public/images/logo.png" alt="招商频道logo" ></a>
+		</div>
+		<div class="ccol-70 text-right">
+			<div class="join">
+				<notempty name="info">
+					<a href="/Joinshop" class="btn btn-info btn-trans btn-150px"><i class="fa fa-eye"></i> 查看入驻情况</a>
+				<else />
+					<a href="/Joinshop" class="btn btn-danger btn-trans btn-150px"><i class="fa fa-pencil"></i> 我要入驻</a>
+				</notempty>
+				<if condition="session('user.level_id') egt 3 and session('user.type') eq 1 and session('user.shop_id') gt 0 and session('user.is_auth') eq 1 and session('user.shop_type') eq 6">
+					<a href="/Shopup" class="btn btn-danger btn-trans btn-150px"><i class="fa fa-pencil"></i> 店铺升级</a>
+				</if>
+			</div>
+		</div>
+	</div>
+</div>	
+<div class="clearfix"></div>
+<div class="menubar">
+	<div class="w1200">
+		<ul>
+			<li data-controller="Index"><a href="{:C('sub_domain.zhaoshang')}">首页</a></li>
+			<li data-controller="Condition"><a href="/Condition">入驻要求</a></li>
+			<li data-controller="Brand"><a href="/Brand">招商品牌</a></li>
+			<li data-controller="Guide"><a href="/Guide">入驻指南</a></li>
+			<li data-controller="About"><a href="/About">了解乐兑</a></li>
+			<li data-controller="Joinshop" class="{:CONTROLLER_NAME=='Joinshop'?'':'hide'}"><a href="javascript:void(0)">入驻申请</a></li>
+		</ul>
+		
+	</div>
+</div>
+<div class="clearfix"></div>

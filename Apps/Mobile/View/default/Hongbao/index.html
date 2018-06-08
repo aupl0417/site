@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>活动页</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="../Apps/Mobile/View/default/Hongbao/static/css/sm.css">
+    <link rel="stylesheet" href="../Apps/Mobile/View/default/Hongbao/static/css/sm-extend.css">
+    <link rel="stylesheet" href="../Apps/Mobile/View/default/Hongbao/static/css/css.css">
+</head>
+<body>
+<!-- 弹框 -->
+<div class="md-modal md-effect-5" id="modal-5">
+    <div class="md-content">
+        <div class="miao"></div>
+    </div>
+</div>
+<div class="md-overlay">
+    <ul class="couten"></ul>
+</div>
+<div class="mo" style="position: fixed;width: 100%;height: 100%; margin:0; left:0; top: 0;">
+    <div style="width: 13rem;text-align: center;margin: 0 auto; margin-top: 200px">
+        <img style="width: 100%;" usemap="Map" src="../Apps/Mobile/View/default/Hongbao/static/images/1yuan.png">
+        <map name="Map">
+            <area shape="rect" coords="75,276,202,308" href="#gzsm-box">
+        </map>
+        <span class="glyphicon glyphicon-remove" style="position: absolute;top: 190px;font-size: 30px;left: 15.5rem;">x</span>
+    </div>
+</div>
+<!-- 弹框 -->
+<div class="redmallWap-box">
+    <div class="wapbanner-img amg">
+        <img src="../Apps/Mobile/View/default/Hongbao/static/images/wapbanner-img.jpg" alt="">
+    </div>
+
+    <div class="wapbg-img">
+        <div class="wap-cont-8">
+            <div class="countdown-box" id="djs-box">
+                <div class="time-box">
+                    <div id='day_show' class="time-num day"></div>
+                    <div id='hour_show' class="time-num hour"></div>
+                    <div id='minute_show' class="time-num minute"></div>
+                    <div id='second_show' class="time-num second" ></div>
+                    <div style="clear: both;height: 0;line-height: 0;font-size: 0"></div>
+                </div>
+                <!--倒计时结束-->
+            </div>
+            <!--倒计时结束-->
+            <div class="wapboutique-box" id="jphc-box">
+                <div class="wapboutique-title amg text-center">
+                    <img src="../Apps/Mobile/View/default/Hongbao/static/images/wapBoutique-title-img.png" alt="">
+                </div>
+                <div class="wapboutique-mid">
+                    <ul class="list-unstyled over">
+                        <volist name="data" id="vo">
+                            <li>
+                                <a style="display: block" href="{:U('/goods/view', ['id' => $vo['attr_list'][0]['id']])}">
+                                    <div class="wapboutique-img over">
+                                        <img src="{:myurl($vo['images'], 338, 394)}" alt="" width="169" height="197">
+                                    </div>
+                                    <div class="wapboutique-text">
+                                        {$vo.goods_name}
+                                    </div>
+                                    <div class="wapboutique-bot">
+                                        <i>4.28开启红包购</i>
+                                        <span class="pull-right">产品详情</span>
+                                    </div>
+                                </a>
+                            </li>
+                        </volist>
+                    </ul>
+                </div>
+            </div>
+            <!--精品荟萃结束-->
+            <div class="rules-box" id="gzsm-box">
+                <div class="rules-title text-center">
+                    <img src="../Apps/Mobile/View/default/Hongbao/static/images/waprules-title-img.png" alt="">
+                </div>
+                <div class="rules-mid">
+                    <div class="re">
+                        <div class="media">
+                            <div class="media-left">
+                                <div  style="width:32px;">
+
+                                    <span>1</span>
+                                </div>
+                            </div>
+                            <div class="media-body fs14">
+                                从4月25日至4月27日这三天中，抢红包设置在每天的10：00、16：00、21：00整点开抢，共3轮/天，抢完即止；
+                            </div>
+                        </div>
+                    </div>
+                    <div class="re">
+                        <div class="media">
+                            <div class="media-left">
+                                <div  style="width:32px;">
+
+                                    <span>2</span>
+                                </div>
+                            </div>
+                            <div class="media-body fs14">
+                                在此次活动中所获得的现金红包仅限在乐兑商城易佰淘旗舰店中消费时使用，且任意商品均可使用；
+                            </div>
+                        </div>
+                    </div>
+                    <div class="re">
+                        <div class="media">
+                            <div class="media-left">
+                                <div  style="width:32px;">
+
+                                    <span>3</span>
+                                </div>
+                            </div>
+                            <div class="media-body fs14">
+                                抢红包次数限制为：每人10次机会/轮；
+                            </div>
+                        </div>
+                    </div>
+                    <div class="re">
+                        <div class="media">
+                            <div class="media-left">
+                                <div  style="width:32px;">
+
+                                    <span>4</span>
+                                </div>
+                            </div>
+                            <div class="media-body fs14">
+                                红包有效期为4月28日00：00至5月4日24：00，逾期作废；
+                            </div>
+                        </div>
+                    </div>
+                    <div class="re">
+                        <div class="media">
+                            <div class="media-left">
+                                <div  style="width:32px;">
+
+                                    <span>5</span>
+                                </div>
+                            </div>
+                            <div class="media-body fs14">
+                                每单笔订单仅限使用一个红包，且同一个红包不可拆分或叠加使用；
+                            </div>
+                        </div>
+                    </div>
+                    <div class="re">
+                        <div class="media">
+                            <div class="media-left">
+                                <div  style="width:32px;">
+
+                                    <span>6</span>
+                                </div>
+                            </div>
+                            <div class="media-body fs14">
+                                所有现金红包不可提现、转赠或出售给他人；
+                            </div>
+                        </div>
+                    </div>
+                    <div class="re">
+                        <div class="media">
+                            <div class="media-left">
+                                <div  style="width:32px;">
+
+                                    <span>7</span>
+                                </div>
+                            </div>
+                            <div class="media-body fs14">
+                                所获得的现金红包可在“我的优惠券”中查看；
+                            </div>
+                        </div>
+                    </div>
+                    <div class="re">
+                        <div class="media">
+                            <div class="media-left">
+                                <div  style="width:32px;">
+
+                                    <span>8</span>
+                                </div>
+                            </div>
+                            <div class="media-body fs14">
+                                在使用现金红包支付的过程中，若涉及到退款的情况，则只退实际付款金额，现金红包一旦使用概不退还；
+                            </div>
+                        </div>
+                    </div>
+                    <div class="re">
+                        <div class="media">
+                            <div class="media-left">
+                                <div  style="width:32px;">
+
+                                    <span>9</span>
+                                </div>
+                            </div>
+                            <div class="media-body fs14">
+                                使用现金红包支付订单时，所奖励的积分按照实际支付金额进行计算，现金红包所支付的部分没有积分奖励；
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="re">
+                        <div class="media">
+                            <div class="media-left">
+                                <div  style="width:32px;">
+
+                                    <span>10</span>
+                                </div>
+                            </div>
+                            <div class="media-body fs14">
+                                运费不能使用现金红包进行抵扣；
+                            </div>
+                        </div>
+                    </div>
+                    <div class="re">
+                        <div class="media">
+                            <div class="media-left">
+                                <div  style="width:32px;">
+
+                                    <span>11</span>
+                                </div>
+                            </div>
+                            <div class="media-body fs14">
+                                在使用现金红包时，所购买产品的价格必须≥面值的2倍才能进行正常支付，否则将无法进行结算；
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--活动规则结束-->
+            <div class="back-top-box text-center">
+                <a href="#jphc-box">
+                    <img src="../Apps/Mobile/View/default/Hongbao/static/images/back-top-img.png" alt="">
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="../Apps/Mobile/View/default/Hongbao/static/js/zepto.js"></script>
+<script src="../Apps/Mobile/View/default/Hongbao/static/js/fx.js"></script>
+<script src="../Apps/Mobile/View/default/Hongbao/static/js/config.js"></script>
+<script src="../Apps/Mobile/View/default/Hongbao/static/js/sm.js"></script>
+<script src="../Apps/Mobile/View/default/Hongbao/static/js/sm-extend.js"></script>
+
+<script>
+    //var intDiff = parseInt('{$nextTime}'); //倒计时总秒数量
+    var intDiff = parseInt(0); //倒计时总秒数量
+    var addTimeOut,timerOut;
+    $(function(){
+        timer(intDiff);
+        $(".mo img").click(function () {
+            $(".mo").css("display", "none")
+        });
+        $("area").click(function () {
+            $(".mo").css("display", "none")
+        });
+        // 点击确认的时候关闭模态层
+        $(".glyphicon-remove").click(function(){
+            $(".mo").css("display", "none")
+        });
+    });
+    function timer(intDiff){
+        var i=3
+        timerOut = window.setInterval(function(){
+            var day = 0,
+                hour = 0,
+                minute = 0,
+                second = 0; //时间默认值
+            if (intDiff > 0) {
+                day = Math.floor(intDiff / (60 * 60 * 24));
+                hour = Math.floor(intDiff / (60 * 60)) - (day * 24);
+                minute = Math.floor(intDiff / 60) - (day * 24 * 60) - (hour * 60);
+                second = Math.floor(intDiff) - (day * 24 * 60 * 60) - (hour * 60 * 60) - (minute * 60);
+            }
+            /**
+             * 如果仅剩3秒的时候倒计时抢红包
+             */
+            if (intDiff < 5) {
+                i--;
+                if( i == 1){
+                    //$(".md-overlay").addClass("md-showa")
+                    //$("#modal-5").addClass("md-showone");
+                    //rain();
+                    //十分钟后刷新当前页面
+                    setInterval(function () {
+                        window.location.reload();
+                    }, 600000)
+                }
+            }
+            if (minute <= 9) minute = '0' + minute;
+            if (second <= 9) second = '0' + second;
+            $('#day_show').html(day);
+            $('#hour_show').html('<s id="h"></s>' + hour);
+            $('#minute_show').html('<s></s>'+minute);
+            $('#second_show').html('<s></s>'+second);
+            intDiff--;
+        }, 1000);
+    }
+
+    //    红包雨
+    function rain(){
+
+        var win=(parseInt($(".couten").css("width"))) - 60;
+        $(".mo").css("height", $(document).height());
+        $(".couten").css("height", $(window).height());
+        $(".backward").css("height", $(document).height());
+        $("li").css({});
+
+        var del = function(){
+            nums++;
+            $(".li" + nums).remove();
+            setTimeout(del,200)
+        }
+
+        var add = function() {
+            var hb = parseInt(Math.random() * (4 - 1) + 1);  //类型产生；
+            var Wh = parseInt(Math.random() * (70 - 30) + 20);
+            var Left = parseInt(Math.random() * (win - 0) + 0);
+            //  var rot = (parseInt(Math.random() * (45 - (-45)) - 45)) + "deg";
+            //              console.log(rot)
+            num++;
+            $(".couten").append("<li class='li"+num+"' ><a onclick='post();' href='javascript:;'><img src='../Apps/Mobile/View/default/Hongbao/static/images/hb_" + hb + ".png'></a></li>");
+            $(".md-showone").css("z-index",200);
+            $(".li" + num).css({
+                "left": Left,
+            });
+            $(".li" + num).animate({'top':$(window).height()+500},5000,function(){
+                //删掉已经显示的红包
+                this.remove()
+            });
+            //点击红包的时候弹出模态层
+//            $("li").click(function(){
+//                //$(".mo").css("display", "block")
+//                alert();
+//                $.post('{:U("/hongbao/winning")}', {}, function (res) {
+//                    if (res.code == 1) {
+//                        $(".mo").find('img').attr('src', '../Apps/Mobile/View/default/Hongbao/static/images/'+res.data+'yuan.png');
+//                        $(".mo").css("display","block");
+//                    } else if(res.code == 401) {
+//                        //请登录
+//                        window.location.href = '{:U("/login")}';
+//                        //gourl('{:U("/login")}');
+//                    } else {
+//                        //未抢到或其他
+//                        var img = '../Apps/Mobile/View/default/Hongbao/static/images/'+res.msg+'.png';
+//                        $(".mo").find('img').attr('src', img);
+//                        $(".mo").css("display","block");
+//                    }
+//                }, 'json');
+//            });
+            addTimeOut = setTimeout(add,200)
+        }
+
+        //增加红包
+        var num = 0;
+        addTimeOut = setTimeout(add,3000);
+
+        //倒数计时
+        //var backward = function(){
+        //    numz--;
+        //    if(numz>0){
+        //        $(".backward span").html(numz);
+        //    }else{
+        //        $(".backward").remove();
+        //    }
+        //    setTimeout(backward,1000)
+        //
+        //}
+        //var numz = 4;
+        //backward();
+    }
+
+    function post() {
+        $.post('{:U("/hongbao/winning")}', {}, function (res) {
+            if (res.code == 1) {
+                $(".mo").css({"display":"block", 'height':'100%'});
+                $(".mo").find('img').attr('src', 'Public/hongbao/images/'+res.data+'yuan.png');
+            } else if(res.code == 401) {
+                //请登录
+                window.location.href = '{:U("/login")}';
+            } else if (res.code == 0){
+                //未抢到或其他
+                $(".mo").css({"display":"block", 'height':'100%'});
+                var img = 'Public/hongbao/images/'+res.msg+'.png';
+                $(".mo").find('img').attr('src', img);
+                if (res.msg == 'over') {    //已完成抢购
+                    window.clearTimeout(addTimeOut);
+                    $(".md-showa.md-overlay").remove();
+                    $(".md-effect-5").remove();
+                    clearInterval(timerOut);
+                    timer(res.data); //执行倒计时
+                }
+            }
+        }, 'json');
+    }
+</script>
+
+</html>

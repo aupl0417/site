@@ -1,0 +1,638 @@
+<include file="Public:header" />
+		<div class="page-group">
+			<div class="page" id="page-goods-view">
+				<!-- 标题栏 -->
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left back" href="/"></a>
+					<h1 class="title"><a href="/Goods/view/id/{$_GET.id}" class="mr1">商品</a> <a href="/Goods/content/id/{$_GET.id}/goods_id/{$rs.goods_id}" class="mr1">详情</a> <!--<a href="/Goods/rate/id/{$_GET.id}/goods_id/{$rs.goods_id}">评价</a>--></h1>
+					<a class="icon iconfont icon-category pull-right ml5 ac-menu" onclick="top_menu()"></a>
+				</header>
+
+				<!-- 浮动导航 -->
+				<include file="Public:fixed-menu" />
+				
+				<notempty name="rs">
+				<nav class="bar bar-tab">
+					<div class="goods-footer">
+						<div class="hide">
+							<div class="cart-icon">
+								<div>
+								
+									<div onclick="sellerMessageInfo({shop_id:'{$rs.shop.id}',nick:'{$rs.seller.nick}'})">
+										<i class="iconfont icon-kefu"></i>
+										<div>联系</div>
+									</div>
+								</div>
+								<div data-goods_id="{$rs.goods_id}" id="ac-fav">
+									<i class="iconfont icon-xihuanline {:$rs['is_fav'] == 1?'text-red':''}"></i>
+									<div>关注</div>
+								</div>
+								<div>
+									<a href="/Cart" data-no-cache="true">
+										<i class="iconfont icon-gouwuche1">
+											<notempty name="cart_total.style_num"><span class="badge">{$cart_total.style_num}</span></notempty>
+										</i>
+										<div>购物车</div>
+										
+									</a>
+								</div>
+							</div>
+						</div>
+						<div>
+							<div class="cart-btn">
+								<!--官方秒杀-->
+								<eq name="rs.is_miaosha" value="1">
+									<gt name="rs.goods.num" value="0">
+									<switch name="rs.miaosha_status">										
+										<case value="1"><div class="btn-buy" data-attr_list_id="{$rs.id}" data-num="1" data-atonce="1" onclick="add_to_cart($(this))">立即兑换</div></case>
+										<case value="2"><div class="btn-buy-over"><i class="iconfont icon-miaosha"></i> 即将开始</div></case>
+										<case value="3"><div class="btn-buy-over">秒杀结束</div></case>
+									</switch>
+									<else />
+										<div class="btn-buy-over">已售磬</div>
+									</gt>
+								<else />
+									<!--<div class="btn-add-cart" data-attr_list_id="{$rs.id}" data-num="1" onclick="add_to_cart($(this))">加入购物车</div>-->
+									<div class="btn-buy" data-attr_list_id="{$rs.id}" data-num="1" data-atonce="1" onclick="add_to_cart($(this))">立即兑换</div>
+								</eq>								
+							</div>
+						</div>
+					</div>
+				</nav>		
+				</notempty>
+		
+				<!-- 这里是页面内容区 -->
+				<div class="content">	
+					<notempty name="rs">
+					<!--焦点图-->
+					<div class="swiper-container" data-space-between='10'>
+						<div class="swiper-wrapper">
+							<volist name="rs.images_album" id="vo">
+							<div class="swiper-slide">
+								<img class="lazyload" data-sizes="auto" data-src="{:myurl($vo,640)}" alt="商品主图" src="../Public/images/nopic.gif" width="100%">
+							</div>
+							</volist>							
+						</div>
+						<div class="swiper-pagination"></div>
+					</div>
+
+					<!--官方秒杀倒计时-->
+					<eq name="rs.is_miaosha" value="1">
+						<div class="miaosha-time-box" data-time_dif="{$rs.goods.activity.time_dif}" data-status="{$rs.miaosha_status}" data-goods_id="{$rs.goods_id}" data-attr_list_id="{$rs.id}" data-init="0">
+							<in name="rs.miaosha_status" value="1,2">
+								<div id="clock"></div>
+							</in>
+						</div>
+					</eq>	
+					
+					<div class="item-box">
+						<div>{$rs.goods.goods_name}</div>
+						<div>		
+							<!--秒杀价格-->
+							<eq name="rs.is_miaosha" value="1">
+								<span class="price mr03"><img class="icon-price-23" src="../Public/images/icon_{$rs.goods.score_type}.png">{$rs.goods.officialactivity_price}</span> <span class="text-gray ft06">原价 <span class="text-overline"><img class="icon-price-23" src="../Public/images/icon_{$rs.goods.score_type}.png">{:round($rs['price'] * 1.2)}</span></span>
+							<else />
+								<span class="price"><img class="icon-price-23" src="../Public/images/icon_{$rs.goods.score_type}.png">{$rs.price}</span>
+							</eq>
+						</div>
+						
+						<div class="clearfix ft05 text-gray md03">
+							<gt name="rs.goods.sale_num" value="0">已售 {$rs.goods.sale_num} 件</gt> <gt name="rs.score" value="0">奖励  {$rs.score} 乐兑宝</gt>
+						</div>
+						
+						<!--促销标签-->
+						<div class="clearfix score-box">
+							<volist name="rs.label" id="vo">
+								<span class="btn btn-danger btn-trans btn-xs mr03">{$vo}</span>
+							</volist>
+						</div>
+						
+					
+					</div>
+					
+					<div class="list-block">
+						<ul>
+							<li>
+								<div class="item-content item-link open-popup" data-popup=".popup-attr">
+									<div class="item-row item-icon">
+										<div class="row">
+											<div class="col-20">
+												已选
+											</div>
+											<div class="col-80">
+												{$rs.attr_name}
+											</div>
+										</div>
+									</div>
+								</div>
+							</li>
+							<gt name="rs.weight" value="0">
+							<li>
+								<div class="item-content item-link">
+									<div class="item-row">
+										<div class="row">
+											<div class="col-20">
+												重量
+											</div>
+											<div class="col-80">
+												{$rs.weight} KG
+											</div>
+										</div>
+									</div>
+								</div>
+							</li>		
+							</gt>
+							<li>
+								<div class="item-content item-link open-popup" data-popup=".popup-express">
+									<div class="item-row item-icon">
+										<div class="row">
+											<div class="col-20">
+												发货地
+											</div>
+											<div class="col-80">
+												{$rs.city}
+											</div>
+										</div>
+									</div>
+								</div>
+							</li>
+							<li class="hide">
+								<div class="item-content item-link">
+									<div class="item-row">
+										<div class="row">
+											<div class="col-20">
+												服务
+											</div>
+											<div class="col-80">
+												七天无理由退换
+											</div>
+										</div>
+									</div>
+								</div>
+							</li>
+							<notempty name="rs.coupon">
+							<li class="hide">
+								<div class="item-content item-link open-popup" data-popup=".popup-coupon">
+									<div class="item-media"><i class="icon iconfont icon-youhuiquan text-red"></i></div>
+									<div class="item-inner">
+										<div class="item-title">优惠券</div>
+										<div class="item-after">领取</div>
+									</div>
+								</div>
+							</li>	
+							</notempty>
+						</ul>
+					</div>
+					
+					
+					<div class="md5"></div>
+					<div class="list-block">
+						<ul>
+							<li>
+								<a href="/Goods/content/id/{$_GET.id}/goods_id/{$rs.goods_id}" class="item-content item-link goods-url">
+									<div class="item-media"><i class="icon iconfont icon-tupian"></i></div>
+									<div class="item-inner">
+										<div class="item-title">图文详情</div>
+									</div>
+								</a>
+							</li>
+							
+						</ul>
+					</div>					
+					
+					<div class="md5"></div>					
+					<!--猜您喜欢-->
+					<div class="list-block goods-list media-list hide">
+						<ul class="list-container">
+							<li>
+								<a class="item-link item-content" href="javascript:;" data-url="/Shop/index/shop_id/{$rs.shop.id}">
+									<div class="item-media">
+										<img class="lazyload img-circle border-1px" data-sizes="auto" data-src="{:myurl($rs['shop']['shop_logo'],44)}" alt="店铺logo" src="../Public/images/nopic.gif" width="44">
+									</div>
+									<div class="item-inner">
+										<div class="item-title-row">
+											<div class="item-title">{$rs.shop.shop_name}</div>
+										</div>
+										<div class="item-subtitle text-gray">综合评分：<span class="text-red">{$rs.shop.fraction}</span></div>
+									</div>
+								</a>
+							</li>
+						</ul>
+
+					</div>	
+					<div class="bg-white block hide" style="min-height: 6.5rem;">
+						<div class="row shop-fraction">
+							<div class="col-33">
+								<div class="text-red">{$rs.shop.fraction_desc}</div>
+								<div class="text-gray">实物描述</div>
+							</div>
+							<div class="col-33">
+								<div class="text-red">{$rs.shop.fraction_service}</div>
+								<div class="text-gray">服务态度</div>								
+							</div>
+							<div class="col-33">
+								<div class="text-red">{$rs.shop.fraction_speed}</div>
+								<div class="text-gray">发货速度</div>								
+							</div>
+						</div>
+						<div class="m5">
+							<div class="row">
+								<div class="col-50">
+									<a class="btn btn-block btn-white btn-lg " onclick="sellerMessageInfo({shop_id:'{$rs.shop.id}',nick:'{$rs.seller.nick}',goods_id:'{$_GET.id}'})">联系卖家</a>
+								</div>
+								<div class="col-50">
+									<a class="btn btn-block btn-white btn-lg" href="javascript:;" data-url="/Shop/index/shop_id/{$rs.shop.id}">进入店铺</a>
+								</div>
+							</div>
+						</div>
+					</div>						
+					
+					<div class="md5"></div>
+					<div class="list-block hide">
+						<ul>
+							<li>
+								<a href="/Goods/rate/id/{$_GET.id}/goods_id/{$rs.goods_id}" class="item-content item-link">
+									<div class="item-media"><i class="icon iconfont icon-haoping"></i></div>
+									<div class="item-inner">
+										<div class="item-title">评价({$rs.goods.rate_num})</div>
+										<div class="item-after">更多</div>
+									</div>
+								</a>
+							</li>
+							
+						</ul>
+					</div>
+					<div class="bg-white block img-block hide" style="min-height: 3rem;">
+						<notempty name="rs.rate">						
+						<div class="list-block rate-list">						
+							<ul class="list-container">							
+								<volist name="rs.rate" id="vo">
+								<li class="rate-content item-link">
+									<div class="face">
+										<img class="lazyload img-circle border-1px" data-sizes="auto" data-src="{:myurl($vo['user']['face'],50)}" alt="头像" src="../Public/images/nopic.gif" width="50" height="50">
+									</div>
+									<div class="rate-info">
+										<div class="pull-right"><img src="../Public/images/rate_{$vo.rate}.png" alt="评价等级"></div>
+										<div class="nick">{$vo.user.nick}</div>
+										<div class="rate-text">{$vo.content|strip_tags}</div>
+										<div class="time">{$vo.atime}</div>
+									</div>
+								</li>
+								</volist>
+							</ul>
+	
+						</div>
+						<else />
+							<div class="nors text-center">
+								<div><i class="iconfont icon-zhongping ft3"></i></div>
+								 暂无评价！
+							</div>
+						</notempty>
+					</div>					
+					
+					<div class="md5"></div>					
+					<!--猜您喜欢-->
+					<div class="list-block">
+						<ul>
+							<li>
+								<div class="item-link item-content" onclick="love('.love-goods',$(this))" data-num="8" data-cid="{$rs.goods.category_id}">
+									<div class="item-media"><i class="icon iconfont icon-xihuanline"></i></div>
+									<div class="item-inner">
+										<div class="item-title">猜您喜欢</div>
+										<div class="item-after">换一组</div>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>		
+					<div class="row love-goods" style="min-height: 6.5rem;">
+						<volist name="love" id="vo">
+						<div class="col-25">
+							<a href="/Goods/view/id/{$vo.data.attr_list.0.id}" class="item-link goods-item">
+								<div class="goods-images">
+									<img class="lazyload" data-sizes="auto" data-src="{:myurl($vo['data']['images'],200)}" alt="{$vo.data.goods_name}" src="../Public/images/nopic.gif" width="100%">
+								</div>
+								<div class="goods-name">
+									{$vo.data.goods_name}
+								</div>
+							</a>
+						</div>
+						</volist>
+					</div>					
+					
+					
+					<div class="md5"></div>
+					<div class="goods-content-box">
+						<div class="line-1px"></div>
+						<div class="ac-text">
+							<a href="/Goods/content/id/{$_GET.id}/goods_id/{$rs.goods_id}"><i class="iconfont icon-tupian text-red"></i> 点击查看图文详情</a>
+						</div>
+					</div>
+					
+					<else />
+							<div class="nors text-center">
+								<div><i class="iconfont icon-sousuowujieguo ft3"></i></div>
+								 商品不存在或已下架！
+							</div>					
+					</notempty>
+
+				</div>
+			</div>
+
+			<!--运费计算-->
+			<div class="popup popup-express popup-top70">
+				<header class="bar bar-nav" style="display: block;">
+					<h1 class="title">运费查看</h1>
+					<div class="close-popup btn-close">
+						<i class="iconfont icon-guanbi1"></i>
+					</div>
+					<input type="hidden" name="express_tpl_id" id="express_tpl_id" value="{$rs.goods.express_tpl_id}" />		
+				</header>	
+
+				<div class="content" style="margin-top: 2.2rem">
+					<div class="content-inner">
+						<div class="list-block" >
+							<ul>
+								<li>
+									<div class="item-content">
+										<div class="item-inner">
+											<div class="item-title express_price">
+												<if condition="$express_price.is_free eq 1">
+												快递：包邮<span class="pl05"></span>EMS：包邮
+												<else />
+													<if condition="$express_price.is_express eq 1">
+														快递：{$express_price.express_default_first_price}元<span class="pl05"></span>
+													</if>
+													<if condition="$express_price.is_ems eq 1">
+														EMS：{$express_price.ems_default_first_price}元
+													</if>
+												</if>
+											</div>
+										</div>
+									</div>
+								</li>
+								<if condition="$express_price.is_free eq 0">
+									<li>
+										<div class="item-content">
+											<div class="item-inner">
+												<div class="item-title express_address">
+													{$rs.city}
+												</div>
+												<if condition="$express_price.is_free eq 0">
+													<div class="btn btn-md btn-white btn-plr06 open-popup" data-popup=".popup-province">选择地区</div>	
+												</if>
+											</div>
+										</div>
+									</li>
+								</if>
+							</ul>
+						</div>		
+					</div>
+				</div>	
+			</div>
+			
+			<!-- 省份 -->
+			<div class="popup popup-province popup-top30">
+				<header class="bar bar-nav" style="display: block">
+					<a class="icon icon-left pull-left back close-popup"></a>
+					<h1 class="title">选择省份</h1>
+				</header>
+				<div class="content">
+					<div class="content-inner">
+						<div class="list-block" >
+							<ul>
+								<volist name="city" id="vo">
+									<li>
+										<div class="item-link item-content open-popup" data-popup=".popup-city" data-id="{$vo.id}">
+											<div class="item-inner">
+												<div class="item-title">{$vo.sub_name}</div>
+											</div>
+										</div>
+									</li>
+								</volist>
+							</ul>
+						</div>		
+							
+					</div>
+				</div>
+			</div>	
+	
+			<!-- 城市 -->
+			<div class="popup popup-city popup-top30">
+				<header class="bar bar-nav" style="display: block">
+					<a class="icon icon-left pull-left back close-popup" data-popup=".popup-city"></a>				
+					<a class="button button-link button-nav pull-right" onclick="select_city_ok2()">
+						确定
+					</a>
+					<h1 class="title">选择城市</h1>
+				</header>
+				<div class="content">
+					<div class="content-inner">
+						<div class="list-block">
+							<ul>
+							</ul>
+						</div>		
+							
+					</div>
+				</div>
+			</div>		
+			
+			<!--SKU-->
+			<div class="popup popup-attr popup-top30" style="overflow: hidden;height:100%">
+				<div class="close-popup btn-close">
+					<i class="iconfont icon-guanbi1"></i>
+				</div>
+				
+				<div class="sku-box" style="height:100%">
+					<div class="price-box clearfix" style="height:30%;">
+						<div class="img" style="height: 100%;">
+							<img class="lazyload" data-sizes="auto" data-src="{:myurl($rs['images'],200)}" alt="商品主图" src="../Public/images/nopic.gif" style="max-height: 100%;max-width:100%">
+						</div>
+						<div class="price-row">						
+							<div>
+								<!--秒杀价格-->
+								<gt name="rs.goods.officialactivity_join_id" value="0">
+									<span class="price mr03">￥{$rs.goods.officialactivity_price}</span> <span class="text-gray ft06">原价 <span class="text-overline">￥{:round($rs['price'] * 1.2)}</span></span>
+								<else />
+									<span class="price">￥{$rs.price}</span>
+								</gt>
+							</div>
+							
+							<div class="score ft05 text-gray hide">
+								奖励  {$rs.score} 积分
+							</div>
+							<div style="line-height: 1rem;height:1rem;font-size:0.6rem;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">已选：{$rs.attr_name}</div>
+						</div>
+					</div>
+					
+					<form name="form_sku_attr" id="form_sku_attr" onsubmit="return false;" class="sku-down" style="height: 70%;overflow: hidden;">						
+						<!-- 商品SKU-->
+						<div class="list-block" style="height:100%;overflow: auto;">
+							<ul>
+								<volist name="rs.attr" id="vo" key="fkey">
+								<li>
+									<div class="item-content price-btn">
+										<div class="item-inner">
+											<div class="item-title label">{$vo.attr_name}</div>
+											<div class="item-input">
+												<volist name="vo.option" id="option">
+													<div class="btn btn-white btn-md m03 fl {:in_array($option['attr'],$rs['attr_ids'])?'active selected':''} {:sku_status($option,$fkey,$rs['attr_id'],$rs['attr_list'],$rs['attr'])}" data-attr_id="{$option.attr}" data-goods_id="{$rs.goods_id}" onclick="change_attr($(this))">{$option.attr_value}</div>
+												</volist>
+											</div>
+										</div>
+									</div>								
+								</li>
+								</volist>
+								<li <if condition="$rs.is_goupiao eq 1">style="display:none"</if>>
+									<div class="item-content">
+										<div class="item-inner">
+											<div class="item-title label">库存</div>
+											<div class="item-input">{$rs.num} 件
+											</div>
+										</div>
+									</div>									
+								</li>
+								<gt name="rs.weight" value="0">
+								<li>
+									<div class="item-content">
+										<div class="item-inner">
+											<div class="item-title label">重量</div>
+											<div class="item-input">
+												{$rs.weight} Kg
+											</div>
+										</div>
+									</div>
+								</li>			
+								</gt>							
+								<li>
+									<div class="item-content">
+										<div class="item-inner">
+											<div class="item-title label">数量</div>
+											<div class="item-input">
+												<div class="num-dec" onclick="sku_num_dec($(this))">-</div>
+												<div class="num-inc" onclick="sku_num_inc($(this))">+</div>
+												<input type="number" name="num" id="num" placeholder="订购数量" value="1" maxlength="6" data-max_num="{$rs.num}" style="max-width: 5rem;margin-left: 2rem;text-align: center;">											
+											</div>
+										</div>
+									</div>
+								</li>		
+							</ul>
+							<div style="height:3rem"></div>
+							
+						</div>
+						<input type="hidden" name="attr_list_id" id="attr_list_id" value="{$rs.id}" />							
+					</form>
+				</div>	
+				
+				<div class="goods-footer fixed-bottom">
+					<div class="cart-btn">
+						<!--官方秒杀-->
+						<eq name="rs.is_miaosha" value="1">
+							<gt name="rs.goods.num" value="0">
+								<switch name="rs.miaosha_status">
+									<case value="1">
+										<div class="btn-buy" data-goods_id="{$rs.goods_id}" data-atonce="1" onclick="select_to_cart($(this))">立即兑换</div>
+									</case>
+									<case value="2">
+										<div class="btn-buy-over"><i class="iconfont icon-miaosha"></i> 即将开始</div>
+									</case>
+									<case value="3">
+										<div class="btn-buy-over">秒杀结束</div>
+									</case>
+								</switch>
+								<else />
+								<div class="btn-buy-over">已售磬</div>
+							</gt>
+						<else />
+							<!--<div class="btn-add-cart" data-goods_id="{$rs.goods_id}" onclick="select_to_cart($(this))">加入购物车</div>-->
+							<div class="btn-buy" data-goods_id="{$rs.goods_id}" data-atonce="1" onclick="select_to_cart($(this))">立即兑换</div>
+						</eq>						
+						
+					</div>
+				</div>		
+			</div>
+		
+		
+			<!--优惠券-->
+			<div class="popup popup-coupon popup-top30">
+				<div class="close-popup btn-close">
+					<i class="iconfont icon-guanbi1"></i>
+				</div>
+				
+				<div class="text-center p5">领优惠券</div>
+				
+				<div class="coupon-list2" style="overflow: auto;height: 80%;">
+				<!--官方优惠券-->
+				<notempty name="rs.coupon.official">
+				<div class="p5">乐兑优惠券</div>					
+					<ul class="official-coupon">
+					<volist name="rs.coupon.official" id="vl">
+						<li data-batch_id="{$vl.id}" onclick="get_coupon($(this))">
+							<div class="coupon-item flex-vcenter">
+								<div class="lbox flex-vcenter">
+									<div>
+										<span class="price-icon">￥</span>
+										<span class="price">{$vl.price}</span>
+										<div class="tips">满{$vl.min_price}元可用</div>
+									</div>
+								</div>
+								<div class="rbox flex-vcenter">
+									<div>
+										<div class="ac">
+											<div class="get">领取</div>
+										</div>										
+										<div class="subject">{$vl.use_type_name}</div>
+										<div class="day">{$vl.sday} - {$vl.eday}</div>
+									</div>
+								</div>
+							</div>
+							</volist>
+						</li>
+					</ul>
+				
+				</notempty>
+				
+				<!--店铺优惠券-->
+				<notempty name="rs.coupon.shop">
+				<div class="p5">店铺优惠券</div>				
+					<ul class="official-coupon">
+					<volist name="rs.coupon.shop" id="vl">
+						<li data-batch_id="{$vl.id}" onclick="get_coupon($(this))">
+							<div class="coupon-item flex-vcenter blue">
+								<div class="lbox flex-vcenter">
+									<div>
+										<span class="price-icon">￥</span>
+										<span class="price">{$vl.price}</span>
+										<div class="tips">满{$vl.min_price}元可用</div>
+									</div>
+								</div>
+								<div class="rbox flex-vcenter">
+									<div>
+										<div class="ac">
+											<div class="get">领取</div>
+										</div>										
+										<div class="subject">{$vl.use_type_name}</div>
+										<div class="day">{$vl.sday} - {$vl.eday}</div>
+									</div>
+								</div>
+							</div>							
+						</li>
+					</volist>
+					</ul>
+				</notempty>				
+				
+				<div style="height: 1.5rem;"></div>
+				</div>
+				<div class="goods-footer fixed-bottom">
+					<div class="cart-btn close-popup">
+						<div class="btn-buy">确定</div>
+					</div>
+				</div>	
+			</div>		
+		
+		</div>	
+		
+		
+
+<include file="Public:script" />
+<include file="Public:footer" />

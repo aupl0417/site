@@ -1,0 +1,100 @@
+<form id="workorder-create-upload" enctype="multipart/form-data" action="/run/upload">
+<label>
+	<div class="" id='upload-file'>选择附件</div>
+	<!-- <input name="imageData[]" type="file" value="" style="display:none" onchange="displayText(1,$(this))" /> -->
+</label>
+
+
+
+
+<div class="btn btn-primary btn_m btn-block mt20" style="width:200px;" id="subUploadForm" onclick="subUploadForm()">确定</div>
+
+<input name="accessory_list" type="hidden" value=""  />
+<input name="accessory_name" type="hidden" value=""  />
+
+
+</form>
+
+<script>
+
+
+function subUploadForm(){
+	var len = $('#workorder-create-upload .p-text').length;
+	if(len == undefined || len == 0){
+		talert({msg:'没有上传附件'});
+		return false;
+	}
+	$('#accessory-text').html('已上传：' + $('#workorder-create-upload').find('input[name="accessory_name"]').val());
+	$('#workorder-create').find('input[name="accessory"]').val($('#workorder-create-upload').find('input[name="accessory_list"]').val());
+	$('#ajax-modal .btn-default').click();
+	
+}
+
+
+// 初始化Web Uploader
+var uploader = WebUploader.create({
+    // 选完文件后，是否自动上传。
+    auto: true,
+    formData:{
+    	action  : '{:enCryptRestUri("/Upload/fileUpload")}',
+    },
+    // swf文件路径
+    swf: 'Uploader.swf',
+    fileSingleSizeLimit:1024 * 1024 * 2,
+    // 文件接收服务端。
+	server: "{:U('/run/upload')}",
+    // 选择文件的按钮。可选。
+    // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+    pick: '#upload-file',
+    duplicate :true,
+});
+uploader.on('fileQueued', function (file) {
+	uploader.upload();
+});
+uploader.on('error', function(code) {
+	switch(code) {
+		case 'F_EXCEED_SIZE':
+			talert({status:0,msg:'图片大小不能超过2M'});
+			break;
+	}
+})
+/*上传成功**/
+uploader.on('uploadSuccess', function (file, data) {
+	// console.log(data);
+	if(data.code == 1){
+
+		var accObj = $('#workorder-create-upload').find('input[name="accessory_list"]');
+		var acc = accObj.val();
+		if(acc == ''){
+			accObj.val(data.data.url);
+		}else{
+			accObj.val(acc + ',' + data.data.url);
+		}
+
+		var nameObj = $('#workorder-create-upload').find('input[name="accessory_name"]');
+		var name = nameObj.val();
+		if(name == ''){
+			nameObj.val(data.data.name);
+		}else{
+			nameObj.val(name + '  ' + data.data.name);
+		}
+
+		var html = '<p class="ml10 mt10 mb10 p-text"><span>' + data.data.name + '</span></p>';
+		$('#subUploadForm').before(html);
+		// 到达3个直接默认完成，防止继续上传
+		if($('#workorder-create-upload .p-text').length == 3){
+			subUploadForm();
+		}
+
+	} else {
+		talert({status:data.code,msg:data.msg});
+	}
+});
+
+	
+
+
+
+
+
+</script>

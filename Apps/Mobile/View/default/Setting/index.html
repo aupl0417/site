@@ -1,0 +1,94 @@
+<include file="Public:header" />
+		<div class="page-group">
+			<div id="page-ucenter" class="page" data-page_num="{$pagelist.pageinfo.page}">
+				<!-- 标题栏 -->
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left back"></a>
+					<h1 class="title">设置</h1>
+				</header>
+				<!-- 浮动导航 -->
+				<include file="Public:fixed-menu" />
+				<!-- 这里是页面内容区 -->		
+				<div class="content">
+					<div class="list-block">
+						<ul>
+							<li>
+								<a class="item-link item-content" href="__URL__/user_info">
+									<div class="item-media"><i class="icon iconfont icon-gerenziliao"></i></div>
+									<div class="item-inner">
+										<div class="item-title">个人资料</div>
+									</div>
+								</a>
+							</li>
+							<li>
+								<a class="item-link item-content" href="__URL__/msg_setting">
+									<div class="item-media"><i class="icon iconfont icon-xiaoxi"></i></div>
+									<div class="item-inner">
+										<div class="item-title">消息设置</div>
+									</div>
+								</a>
+							</li>
+							<li>
+								<a class="item-link item-content" href="/ShoppingAddress">
+									<div class="item-media"><i class="icon iconfont icon-address"></i></div>
+									<div class="item-inner">
+										<div class="item-title">收货地址</div>
+									</div>
+								</a>
+							</li>
+						</ul>
+					</div>
+					
+					<div class="content-block-title"><i class="iconfont icon-1201"></i> 安全设置</div>
+					<div class="list-block">
+						<ul>
+							<li>
+								<a class="item-link item-content" href="/User/edit_login_password">
+									<div class="item-media"><i class="icon iconfont icon-mima2"></i></div>
+									<div class="item-inner">
+										<div class="item-title">修改登录密码</div>
+									</div>
+								</a>
+							</li>
+							<notempty  name="account.a_payPwd">
+							<li>
+								<a class="item-link item-content" href="/User/edit_safe_password">
+									<div class="item-media"><i class="icon iconfont icon-anquan"></i></div>
+									<div class="item-inner">
+										<div class="item-title">修改安全密码</div>
+									</div>
+								</a>
+							</li>
+							<else />
+							<li>
+								<a class="item-link item-content" href="/User/set_safe_password">
+									<div class="item-media"><i class="icon iconfont icon-anquan"></i></div>
+									<div class="item-inner">
+										<div class="item-title">设置安全密码</div>
+									</div>
+								</a>
+							</li>
+							</notempty >	
+
+							<li class="hide">
+								<a class="item-link item-content" href="#" onclick="$.toast('请登录PC端操作！')">
+									<div class="item-media"><i class="icon iconfont icon-shoujishuma"></i></div>
+									<div class="item-inner">
+										<div class="item-title">修改手机号码</div>
+									</div>
+								</a>
+							</li>
+						</ul>
+					</div>	
+					
+					<div class="button button-big button-fill button-danger m5 btn-logout">退出</div>
+				</div>			
+				
+			</div>		
+
+		
+		</div>	
+		
+
+<include file="Public:script" />
+<include file="Public:footer" />

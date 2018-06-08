@@ -1,0 +1,28 @@
+<div class="line-box noicon hover" onclick="choose_sex(0)">
+	<div class="fl title">保密</div>
+	<div class="fr ft16 font-color1"></div>
+</div>
+<div class="line-box noicon hover"  onclick="choose_sex(1)">
+	<div class="fl title">男</div>
+	<div class="fr ft16 font-color1"></div>
+</div>
+<div class="line-box noicon hover"  onclick="choose_sex(2)">
+	<div class="fl title">女</div>
+	<div class="fr ft16 font-color1"></div>
+</div>
+<script>
+
+	function choose_sex(sex){
+		// alert(sex);
+		if( sex == 1 ){
+			s = '男';
+		}else if( sex == 2 ){
+			s = '女';
+		}else{
+			s = '保密';
+		}
+		$('.page.active #sex').html(s);
+		$('.page.active #sex').attr('value',sex);
+		$('.page.active .vmodal .vmodal-footer').click();
+	}
+</script>

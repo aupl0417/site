@@ -1,0 +1,689 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body mt10">
+    <include file="Public:nav_statistic" />
+    <div class="container">
+		<include file="Public:side_statistic" />
+
+        <div class="w960 fl">
+            <ol class="breadcrumb pd10 bor_der bor_r0 mt0 mb20">
+                <li><a href="/">数据统计 </a> </li>
+                <li><a href="">流量分析</a></li>
+                <li><a href="">流量概况</a></li>
+            </ol>
+            <div class="ptb10 solid_b mb35">
+                <span class="fs16">流量总览</span>
+            </div>
+            <div class="mb35">
+                <div class="mb10">
+                    <strong class="fs14 text_black mr20">选择时间</strong>
+                    <a class="text_yellow plr20 <if condition='$con[total_type] eq 1'>btn btn-primary btn-xs </if>" onclick = "select_change('total','type',1)">昨天</a>
+                    <a class="text_yellow plr20 <if condition='$con[total_type] eq 2'>btn btn-primary btn-xs </if>" onclick = "select_change('total','type',2)">最近一周</a>
+                    <a class="text_yellow plr20 <if condition='$con[total_type] eq 3'>btn btn-primary btn-xs </if>" onclick = "select_change('total','type',3)">最近一个月</a>
+                    <a class="text_yellow plr20 <if condition='$con[total_type] eq 4'>btn btn-primary btn-xs </if>" onclick = "select_change('total','type',4)">最近三个月</a>
+                    <div class="pull-right btn-group btn-group-sm mt-5">
+                        <button type="button" class="btn btn-primary plr20 <if condition='$con[total_terminal] neq 1'> btn-trans</if>" onclick = "select_change('total','terminal',1)">全部</button>
+                        <button type="button" class="btn btn-primary plr20 <if condition='$con[total_terminal] neq 2'> btn-trans</if>" onclick = "select_change('total','terminal',2)">pc端</button>
+                        <button type="button" class="btn btn-primary plr20 <if condition='$con[total_terminal] neq 3'> btn-trans</if>" onclick = "select_change('total','terminal',3)">手机端</button>
+                    </div>
+                </div>
+
+                <table class="bg_white">
+                    <tbody class="solid_t">
+                        <tr>
+                            <td class="fs14 pd20">
+                                <p class="mb15 fs16">
+                                    访客数 
+                                    <small class="fa fa-question-circle ml10 text_yellow" data-placement="top" data-toggle="tooltip" data-original-title="店铺各页面被查看的次数"></small>
+                                </p>
+                                <strong class="text_yellow">{$total_data.uv}</strong>
+                                <h6 class="text_77 mt15">
+                                    环比增幅 
+                                    <span class="pull-right <if condition="$total_data.uv_type eq 1">text_yellow<else/>text_green</if>"><i class="fa <if condition="$total_data.uv_type eq 1">fa-long-arrow-up<else/>fa-long-arrow-down</if> mr5"></i>{$total_data.uv_percen}%</span>
+                                </h6>
+                            </td>
+                            <td class="fs14 pd20">
+                                 <p class="mb15 fs16">
+                                    浏览量 
+                                    <small class="fa fa-question-circle ml10 text_yellow" data-toggle="tooltip" title="全店各页面的访问人数"></small>
+                                </p>
+                                <strong class="text_yellow">{$total_data.pv}</strong>
+                                <h6 class="text_77 mt15">
+                                    环比增幅 
+									<span class="pull-right <if condition="$total_data.pv_type eq 1">text_yellow<else/>text_green</if>"><i class="fa <if condition="$total_data.pv_type eq 1">fa-long-arrow-up<else/>fa-long-arrow-down</if> mr5"></i>{$total_data.pv_percen}%</span>
+                                </h6>
+                            </td>
+                            <td class="fs14 pd20">
+                                 <p class="mb15 fs16">
+                                    跳失率 
+                                    <small class="fa fa-question-circle ml10 text_yellow" data-toggle="tooltip" title="表示顾客通过相应入口进入，只访问了一个页面就离开的访问次数"></small>
+                                </p>
+                                <strong class="text_yellow">{$total_data.jump}</strong>
+                                <h6 class="text_77 mt15">
+                                    环比增幅 
+									<span class="pull-right <if condition="$total_data.jump_type eq 1">text_yellow<else/>text_green</if>"><i class="fa <if condition="$total_data.jump_type eq 1">fa-long-arrow-up<else/>fa-long-arrow-down</if> mr5"></i>{$total_data.jump_percen}%</span>
+                                </h6>
+                            </td>
+                            <td class="fs14 pd20">
+                                 <p class="mb15 fs16">
+                                    人均浏览量 
+                                    <small class="fa fa-question-circle ml10 text_yellow" data-toggle="tooltip" title=""></small>
+                                </p>
+                                <strong class="text_yellow">{$total_data.avg_pv}</strong>
+                                <h6 class="text_77 mt15">
+                                    环比增幅 
+									<span class="pull-right <if condition="$total_data.avg_pv_type eq 1">text_yellow<else/>text_green</if>"><i class="fa <if condition="$total_data.avg_pv_type eq 1">fa-long-arrow-up<else/>fa-long-arrow-down</if> mr5"></i>{$total_data.avg_pv_percen}%</span>
+                                </h6>
+                            </td>
+                            <td class="fs14 pd20">
+                                <p class="mb15 fs16">
+                                    平均停留时间（秒) 
+                                    <small class="fa fa-question-circle ml10 text_yellow" data-toggle="tooltip" title=""></small>
+                                </p>
+                                <strong class="text_yellow">{$total_data.avg_residence_time}</strong>
+                                <h6 class="text_77 mt15">
+                                    环比增幅 
+									<span class="pull-right <if condition="$total_data.avg_residence_time_type eq 1">text_yellow<else/>text_green</if>"><i class="fa <if condition="$total_data.avg_residence_time_type eq 1">fa-long-arrow-up<else/>fa-long-arrow-down</if> mr5"></i>{$total_data.avg_residence_time_percen}%</span>
+                                </h6>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>    
+            </div>
+
+            <div class="ptb10 solid_b mb35">
+                <span class="fs16">流量趋势</span>
+            </div>
+
+            <div class="mb35">
+                <div class="mb10">
+                    <strong class="fs14 text_black mr20">选择时间</strong>
+                    <a class="text_yellow plr20 <if condition='$con[trend_type] eq 1'>btn btn-primary btn-xs </if>" onclick = "select_change('trend','type',1)">昨天</a>
+                    <a class="text_yellow plr20 <if condition='$con[trend_type] eq 2'>btn btn-primary btn-xs </if>" onclick = "select_change('trend','type',2)">最近一周</a>
+                    <a class="text_yellow plr20 <if condition='$con[trend_type] eq 3'>btn btn-primary btn-xs </if>" onclick = "select_change('trend','type',3)">最近一个月</a>
+                    <a class="text_yellow plr20 <if condition='$con[trend_type] eq 4'>btn btn-primary btn-xs </if>" onclick = "select_change('trend','type',4)">最近三个月</a>
+                    <div class="pull-right btn-group btn-group-sm mt-5">
+                        <button type="button" class="btn btn-primary plr20 <if condition='$con[trend_terminal] neq 1'> btn-trans</if>" onclick = "select_change('trend','terminal',1)">全部</button>
+                        <button type="button" class="btn btn-primary plr20 <if condition='$con[trend_terminal] neq 2'> btn-trans</if>" onclick = "select_change('trend','terminal',2)">pc端</button>
+                        <button type="button" class="btn btn-primary plr20 <if condition='$con[trend_terminal] neq 3'> btn-trans</if>" onclick = "select_change('trend','terminal',3)">手机端</button>
+                    </div>
+                </div>
+                <div class="mb10">
+                    <div id="chartdiv" style="width: 100%; height: 400px;"></div>
+                </div>
+            </div>
+
+            <div class="mb35">
+                <div class="ptb10 solid_b mb15">
+                    <span class="fs16">流量来源</span>
+                </div>
+                <div class="mb10">
+                    <strong class="fs14 text_black mr20">选择时间</strong>
+                    <a class="text_yellow plr20 <if condition='$con[source_type] eq 1'>btn btn-primary btn-xs </if>" onclick = "select_change('source','type',1)">昨天</a>
+                    <a class="text_yellow plr20 <if condition='$con[source_type] eq 2'>btn btn-primary btn-xs </if>" onclick = "select_change('source','type',2)">最近一周</a>
+                    <a class="text_yellow plr20 <if condition='$con[source_type] eq 3'>btn btn-primary btn-xs </if>" onclick = "select_change('source','type',3)">最近一个月</a>
+                    <a class="text_yellow plr20 <if condition='$con[source_type] eq 4'>btn btn-primary btn-xs </if>" onclick = "select_change('source','type',4)">最近三个月</a>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <blockquote class="pd0 pl10 mt10 mb10 fs14 strong">PC端来源TOP5</blockquote>
+                        <table class="bg_white no-border  hover">
+                            <thead class="no-border">
+                                <tr class="text_77">
+                                    <th>来源名称</th>
+                                    <th class="text-center">浏览次数</th>
+                                    <th class="text-center">成交转化率</th>
+                                </tr>
+                            </thead>
+                            <tbody class="no-border-y solid_b text-center">
+								<volist name="source_list.pc_list" id="vo">
+                                <tr>
+                                    <td class="ptb15 text-left">{$vo.source_title}</td>
+                                    <td class="ptb15">{$vo.pv}</td>
+                                    <td class="ptb15">{$vo.buy_percen}%</td>
+                                </tr>
+								</volist>
+                                
+                            </tbody>
+                         </table>
+                    </div>
+                    <div class="col-xs-6">
+                        <blockquote class="pd0 pl10 mt10 mb10 fs14 strong">手机端来源TOP5</blockquote>
+                        <table class="bg_white hover no-border">
+                            <thead class="no-border">
+                                <tr class="text_77">
+                                    <th>来源名称</th>
+                                    <th class="text-center">浏览次数</th>
+                                    <th class="text-center">成交转化率</th>
+                                </tr>
+                            </thead>
+                            <tbody class="no-border-y solid_b text-center">
+                                <volist name="source_list.wap_list" id="vo">
+                                <tr>
+                                    <td class="ptb15 text-left">{$vo.source_title}</td>
+                                    <td class="ptb15">{$vo.pv}</td>
+                                    <td class="ptb15">{$vo.buy_percen}%</td>
+                                </tr>
+								</volist>
+                            </tbody>
+                         </table> 
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb35">
+                <div class="ptb10 solid_b mb15">
+                    <span class="fs16">访客行为</span>
+                </div>
+                <div class="mb10">
+                    <strong class="fs14 text_black mr20">选择时间</strong>
+                    <a class="text_yellow plr20 <if condition='$con[behavior_type] eq 1'>btn btn-primary btn-xs </if>" onclick = "select_change('behavior','type',1)">昨天</a>
+                    <a class="text_yellow plr20 <if condition='$con[behavior_type] eq 2'>btn btn-primary btn-xs </if>" onclick = "select_change('behavior','type',2)">最近一周</a>
+                    <a class="text_yellow plr20 <if condition='$con[behavior_type] eq 3'>btn btn-primary btn-xs </if>" onclick = "select_change('behavior','type',3)">最近一个月</a>
+                    <a class="text_yellow plr20 <if condition='$con[behavior_type] eq 4'>btn btn-primary btn-xs </if>" onclick = "select_change('behavior','type',4)">最近三个月</a>
+                    <div class="pull-right btn-group btn-group-sm mt-5">
+                        <button type="button" class="btn btn-primary plr20 <if condition='$con[behavior_terminal] neq 1'> btn-trans</if>" onclick = "select_change('behavior','terminal',1)">全部</button>
+                        <button type="button" class="btn btn-primary plr20 <if condition='$con[behavior_terminal] neq 2'> btn-trans</if>" onclick = "select_change('behavior','terminal',2)">pc端</button>
+                        <button type="button" class="btn btn-primary plr20 <if condition='$con[behavior_terminal] neq 3'> btn-trans</if>" onclick = "select_change('behavior','terminal',3)">手机端</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <blockquote class="pd0 pl10 mt10 mb10 fs14 strong">店内搜索词TOP5</blockquote>
+                        <table class="bg_white hover no-border">
+                            <thead class="no-border">
+                                <tr class="text_77">
+                                    <th>搜索词</th>
+                                    <th class="text-center">搜索次数</th>
+                                    <th class="text-center" colspan="2" width="45%">下单转化率</th>
+                                </tr>
+                            </thead>
+                            <tbody class="no-border-y solid_b text-center">
+								<volist name="search_list.data" id="vo">
+                                <tr>
+                                    <td class="ptb15 text-left">{$vo.keyword}</td>
+                                    <td class="ptb15">{$vo.num}</td>
+                                    <td class="ptb15">
+                                        <div class="progress progress-striped active">
+                                            <div class="progress-bar progress-bar-danger" style="width: {$vo.uv_order_percen}%">{$vo.uv_order_percen}%</div>
+                                        </div>
+                                    </td>
+                                    <td class="ptb15 text-left">{$vo.uv_order_percen}%</td>
+                                </tr>
+								</volist>
+                                
+                            </tbody>
+                         </table>
+                    </div>
+                    <div class="col-xs-6">
+                        <blockquote class="pd0 pl10 mt10 mb10 fs14 strong">商品访问TOP3</blockquote>
+                        <table class="bg_white hover no-border">
+                            <thead class="no-border">
+                                <tr class="text_77">
+                                    <th width="60%">商品信息 </th>
+                                    <th class="text-center">访客数</th>
+                                    <th class="text-center">下单转化率</th>
+                                </tr>
+                            </thead>
+                            <tbody class="no-border-y solid_b text-center">
+								<volist name="goods_list.data" id="vo">
+                                <tr>
+                                    <td class="ptb10 text-left">
+                                        <img class="fl mr10" width="60" height="60" src="{$vo.images}" style="max-width: 945px;">
+                                        <div class="text_44 mb0 w190 h34 over">{$vo.goods_name}</div>
+                                        <h6 class="mb0 text_over text_yellow">￥ {$vo.price}</h6>
+                                    </td>
+                                    <td class="ptb10">{$vo.uv}</td>
+                                    <td class="ptb10">{$vo.uv_buy_percen}%</td>
+                                </tr>
+								</volist>
+                                
+                            </tbody>
+                         </table>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="mb35">
+                <div class="ptb10 solid_b mb15">
+                    <span class="fs16">访客特征</span>
+                </div>
+                <div class="mb10">
+                    <strong class="fs14 text_black mr20">选择时间</strong>
+                    <a class="text_yellow plr20 <if condition='$con[features_type] eq 1'>btn btn-primary btn-xs </if>" onclick = "select_change('features','type',1)">昨天</a>
+                    <a class="text_yellow plr20 <if condition='$con[features_type] eq 2'>btn btn-primary btn-xs </if>" onclick = "select_change('features','type',2)">最近一周</a>
+                    <a class="text_yellow plr20 <if condition='$con[features_type] eq 3'>btn btn-primary btn-xs </if>" onclick = "select_change('features','type',3)">最近一个月</a>
+                    <a class="text_yellow plr20 <if condition='$con[features_type] eq 4'>btn btn-primary btn-xs </if>" onclick = "select_change('features','type',4)">最近三个月</a>
+                    <div class="pull-right btn-group btn-group-sm mt-5">
+                        <button type="button" class="btn btn-primary plr20 <if condition='$con[features_terminal] neq 1'> btn-trans</if>" onclick = "select_change('features','terminal',1)">全部</button>
+                        <button type="button" class="btn btn-primary plr20 <if condition='$con[features_terminal] neq 2'> btn-trans</if>" onclick = "select_change('features','terminal',2)">pc端</button>
+                        <button type="button" class="btn btn-primary plr20 <if condition='$con[features_terminal] neq 3'> btn-trans</if>" onclick = "select_change('features','terminal',3)">手机端</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <blockquote class="pd0 pl10 mt10 mb10 fs14 strong">时段</blockquote>
+                        <div class="mt15">
+                            <div id="site_statistics2" style="height: 270px; padding: 0px; position: relative;"></div>
+                        </div>    
+                        
+                    </div>
+                    <div class="col-xs-6">
+                        <blockquote class="pd0 pl10 mt10 mb10 fs14 strong">城市TOP5</blockquote>
+                        <table class="bg_white hover no-border">
+                            <thead class="no-border">
+                                <tr class="text_77">
+                                    <th>地域</th>
+                                    <th class="text-center">日均访客量</th>
+                                    <th class="text-center">下单转化率</th>
+                                </tr>
+                            </thead>
+                            <tbody class="no-border-y solid_b text-center">
+								<volist name = "city_list.data" id = "vo">
+									<tr>
+										<td class="ptb15 text-left">{$vo.city}</td>
+										<td class="ptb15">{$vo.uv}</td>
+										<td class="ptb15">{$vo.uv_order_percen}%</td>
+									</tr>
+								</volist>
+                              
+                            </tbody>
+                         </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-6">
+                    <blockquote class="pd0 pl10 mt10 mb10 fs14 strong">新老访客</blockquote>
+                    <div id="chartdiv1" style="height: 300px; margin-top:-20px"></div>
+                </div>
+                <div class="col-xs-6">
+                    <blockquote class="pd0 pl10 mt10 mb10 fs14 strong">终端</blockquote>
+                    <div id="chartdiv2" style="height: 300px; margin-top:-20px"></div>
+                </div>
+            </div>
+        
+
+        </div>
+
+    </div>
+</div>
+<form action="" method="post" class="hide page_select">
+	<foreach name="con" item="vo" key="key">
+		<input type="hidden" name="{$key}" value="{$vo}"/>
+	</foreach>	
+</form>
+</block>
+
+<block name="css"></block>
+<block name="script">
+
+<script src="__NEW_DESIGN__flatdream/js/jquery.js"></script>
+<script src="__NEW_DESIGN__flatdream/js/jquery.pushmenu/js/jPushMenu.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.nanoscroller/jquery.nanoscroller.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.sparkline/jquery.sparkline.min.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.ui/jquery-ui.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.gritter/js/jquery.gritter.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/behaviour/core.js"></script>
+<script src="__NEW_DESIGN__flatdream/js/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.flot/jquery.flot.js"></script>
+
+<script src="__NEW_DESIGN__js/amcharts.js" type="text/javascript"></script>
+<script src="__NEW_DESIGN__js/serial.js" type="text/javascript"></script>
+<script src="__NEW_DESIGN__js/pie.js"></script>
+<script>
+
+	 var chart1;
+    var chart2;
+
+    makeCharts("light", "#FFFFFF");
+    function makeCharts(theme, bgColor, bgImage) {
+        // if (chart1) {
+        //     chart1.clear();
+        // }
+        // if (chart2) {
+        //     chart2.clear();
+        // }
+        // // background
+        // if (document.body) {
+        //     document.body.style.backgroundColor = bgColor;
+        //     document.body.style.backgroundImage = "url(" + bgImage + ")";
+        // }
+
+        chart1 = AmCharts.makeChart("chartdiv1", {
+            type: "pie",
+             dataProvider: [{
+                "country": "老客户",
+                "litres": {$new_customer_data.old_customer}
+            }, {
+                "country": "新客户",
+                "litres": {$new_customer_data.new_customer}
+            }],
+
+
+            titleField: "country",
+            valueField: "litres",
+            balloonText: "[[title]]<br><b>[[value]]</b> ([[percents]]%)",
+            legend: {
+                align: "center",
+                markerType: "circle"
+            }
+        });
+
+        chart2 = AmCharts.makeChart("chartdiv2", {
+            type: "pie",
+            dataProvider: [{
+                "country": "pc端",
+                "litres": {$terminal_data.pc}
+            }, {
+                "country": "手机端",
+                "litres": {$terminal_data.wap}
+            }],
+
+            titleField: "country",
+            valueField: "litres",
+            balloonText: "[[title]]<br><b>[[value]]</b> ([[percents]]%)",
+            legend: {
+                align: "center",
+                markerType: "circle"
+            }
+        });
+
+    }
+
+   var chart;
+   var chartData = [];
+
+
+   AmCharts.ready(function () {
+       // generate some random data first
+       generateChartData();
+       // SERIAL CHART
+       chart = new AmCharts.AmSerialChart();
+
+       chart.dataProvider = chartData;
+       chart.categoryField = "date";
+
+       // listen for "dataUpdated" event (fired when chart is inited) and call zoomChart method when it happens
+       chart.addListener("dataUpdated", zoomChart);
+
+       chart.synchronizeGrid = true; // this makes all axes grid to be at the same intervals
+
+       // AXES
+       // category
+       var categoryAxis = chart.categoryAxis;
+       categoryAxis.parseDates = true; // as our data is date-based, we set parseDates to true
+       categoryAxis.minPeriod = "DD"; // our data is daily, so we set minPeriod to DD
+       categoryAxis.minorGridEnabled = true;
+       categoryAxis.axisColor = "#DADADA";
+       categoryAxis.twoLineMode = true;
+       categoryAxis.dateFormats = [{
+            period: 'fff',
+            format: 'JJ:NN:SS'
+        }, {
+            period: 'ss',
+            format: 'JJ:NN:SS'
+        }, {
+            period: 'mm',
+            format: 'JJ:NN'
+        }, {
+            period: 'hh',
+            format: 'JJ:NN'
+        }, {
+            period: 'DD',
+            format: 'DD'
+        }, {
+            period: 'WW',
+            format: 'DD'
+        }, {
+            period: 'MM',
+            format: 'MMM'
+        }, {
+            period: 'YYYY',
+            format: 'YYYY'
+        }];
+
+       // first value axis (on the left)
+       var valueAxis1 = new AmCharts.ValueAxis();
+       valueAxis1.axisColor = "#FF6600";
+       valueAxis1.axisThickness = 2;
+       chart.addValueAxis(valueAxis1);
+
+       // second value axis (on the right)
+       var valueAxis2 = new AmCharts.ValueAxis();
+       valueAxis2.position = "right"; // this line makes the axis to appear on the right
+       valueAxis2.axisColor = "#FCD202";
+       valueAxis2.gridAlpha = 0;
+       valueAxis2.axisThickness = 2;
+       chart.addValueAxis(valueAxis2);
+/*
+       // third value axis (on the left, detached)
+       var valueAxis3 = new AmCharts.ValueAxis();
+       valueAxis3.offset = 50; // this line makes the axis to appear detached from plot area
+       valueAxis3.gridAlpha = 0;
+       valueAxis3.axisColor = "#B0DE09";
+       valueAxis3.axisThickness = 2;
+       chart.addValueAxis(valueAxis3);
+*/
+       // GRAPHS
+       // first graph
+       var graph1 = new AmCharts.AmGraph();
+       graph1.valueAxis = valueAxis1; // we have to indicate which value axis should be used
+       graph1.title = "PV";
+       graph1.valueField = "pv";
+       graph1.bullet = "round";
+       graph1.hideBulletsCount = 30;
+       graph1.bulletBorderThickness = 1;
+       chart.addGraph(graph1);
+
+       // second graph
+       var graph2 = new AmCharts.AmGraph();
+       graph2.valueAxis = valueAxis2; // we have to indicate which value axis should be used
+       graph2.title = "UV";
+       graph2.valueField = "uv";
+       graph2.bullet = "square";
+       graph2.hideBulletsCount = 30;
+       graph2.bulletBorderThickness = 1;
+       chart.addGraph(graph2);
+/*
+       // third graph
+       var graph3 = new AmCharts.AmGraph();
+       graph3.valueAxis = valueAxis3; // we have to indicate which value axis should be used
+       graph3.valueField = "views";
+       graph3.title = "green line";
+       graph3.bullet = "triangleUp";
+       graph3.hideBulletsCount = 30;
+       graph3.bulletBorderThickness = 1;
+       chart.addGraph(graph3);
+*/
+       // CURSOR
+       var chartCursor = new AmCharts.ChartCursor();
+       chartCursor.cursorAlpha = 0.1;
+       chartCursor.fullWidth = true;
+       chartCursor.valueLineBalloonEnabled = true;
+       chart.addChartCursor(chartCursor);
+
+       // SCROLLBAR
+       var chartScrollbar = new AmCharts.ChartScrollbar();
+       chart.addChartScrollbar(chartScrollbar);
+
+       // LEGEND
+       var legend = new AmCharts.AmLegend();
+       legend.marginLeft = 110;
+       legend.useGraphSettings = true;
+       chart.addLegend(legend);
+
+       // WRITE
+       chart.write("chartdiv");
+   });
+
+   // generate some random data, quite different range
+   function generateChartData() {
+       var firstDate = new Date();
+       firstDate.setDate(firstDate.getDate() - 50);
+	
+	
+		<volist name="trend_data.data" id="vo">
+			var newDate = '{$vo.year}-{$vo.month}-{$vo.day}';
+			var pv = '{$vo.pv}';
+			var uv = '{$vo.uv}';
+			
+			 chartData.push({
+               date: newDate,
+               pv: pv,
+               uv: uv,
+               //views: views
+           });
+		</volist>
+		
+/*
+       for (var i = 0; i < 50; i++) {
+           // we create date objects here. In your data, you can have date strings
+           // and then set format of your dates using chart.dataDateFormat property,
+           // however when possible, use date objects, as this will speed up chart rendering.
+		   
+           var newDate = new Date(firstDate);
+           newDate.setDate(newDate.getDate() + i);
+		   
+		   
+           var pv = Math.round(Math.random() * 40) + 100;
+           var uv = Math.round(Math.random() * 80) + 500;
+           //var views = Math.round(Math.random() * 6000);
+
+
+           chartData.push({
+               date: newDate,
+               pv: pv,
+               uv: uv,
+               //views: views
+           });
+       }
+	   */
+	   
+   }
+   // this method is called when chart is first inited as we listen for "dataUpdated" event
+   function zoomChart() {
+       // different zoom methods can be used - zoomToIndexes, zoomToDates, zoomToCategoryValues
+       chart.zoomToIndexes(10, 20);
+   }
+</script>
+<script type="text/javascript">
+  $(document).ready(function(){
+    function showTooltip(x, y, contents) {
+      $("<div id='tooltip'>" + contents + "</div>").css({
+        position: "absolute",
+        display: "none",
+        top: y + 5,
+        left: x + 5,
+        border: "1px solid #000",
+        padding: "5px",
+        'color':'#fff',
+        'border-radius':'2px',
+        'font-size':'11px',
+        "background-color": "#000",
+        opacity: 0.80
+      }).appendTo("body").fadeIn(200);
+    } 
+
+    function randValue() {
+      return (Math.floor(Math.random() * (1 + 50 - 20))) + 10;
+    }
+
+    var pageviews = [
+		<volist name = "hour_list" id="vo" key="key">
+			[{$key},{$vo}],
+		</volist>
+	];
+   
+
+    if ($('#site_statistics2').size() != 0) {
+      $('#site_statistics_loading').hide();
+      $('#site_statistics_content').show();
+      var plot_statistics2 = $.plot($("#site_statistics2"), [{
+        data: pageviews,
+        label: "Unique Visits"
+      }
+      ], {
+        series: {
+          bars: {
+            show: true,
+            barWidth: 0.6,
+            lineWidth: 0,
+            fill: true,
+            hoverable: true,
+            fillColor: {
+              colors: [{
+                opacity: 1
+              }, {
+                opacity: 1
+              }
+              ]
+            } 
+          },
+          shadowSize: 2
+        },
+        legend:{
+          show: false
+        },
+        grid: {
+        labelMargin: 10,
+           axisMargin: 500,
+          hoverable: true,
+          clickable: true,
+          tickColor: "rgba(0,0,0,0.15)",
+          borderWidth: 0
+        },
+        colors: ["#c81623", "#FFFFFF", "#52e136"],
+        xaxis: {
+          ticks: 11,
+          tickDecimals: 0
+        },
+        yaxis: {
+          ticks: 6,
+          tickDecimals: 0
+        }
+      });
+            
+      $("#site_statistics2").bind("plothover", function (event, pos, item) {
+      
+        var str = "(" + pos.x.toFixed(2) + ", " + pos.y.toFixed(2) + ")";
+
+        if (item) {
+          if (previousPoint != item.dataIndex) {
+            previousPoint = item.dataIndex;
+            $("#tooltip").remove();
+            var x = item.datapoint[0],
+            y = item.datapoint[1];
+            showTooltip(item.pageX, item.pageY,
+            item.series.label + "" + x + " = " + y + "%");
+          }
+        } else {
+          $("#tooltip").remove();
+          previousPoint = null;
+        }
+      }); 
+    }
+
+    });
+</script>
+<script>
+   
+
+	//页面页码切换
+	function select_change(type,name,new_val){
+		var old_val = $('.page_select input[name="'+type+'_'+name+'"]').val();
+		if(old_val != new_val){
+			$('.page_select input[name="'+type+'_'+name+'"]').val(new_val);
+			
+			if(name !== 'page'){
+				$('.page_select input[name="'+type+'_page"]').val(1);
+			}
+			$('.page_select').submit();
+		}
+	}
+    </script>
+</block>

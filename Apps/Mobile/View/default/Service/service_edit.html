@@ -1,0 +1,119 @@
+<include file="Public:header" />
+		<div class="page-group">
+			<div id="page-service-edit" class="page">
+				<!-- 标题栏 -->
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left back" data-no-cache="true"></a>
+					<h1 class="title">修改售后</h1>
+				</header>
+			
+				<!-- 工具栏 -->
+
+				<nav class="bar bar-tab">
+					<div class="goods-footer">
+						<div class="cart-btn">
+							<div class="btn-buy btn-submit">修改售后申请</div>
+						</div>
+					</div>
+				</nav>
+
+				<!-- 浮动导航 -->
+				<include file="Public:fixed-menu" />
+				<!-- 这里是页面内容区 -->		
+				<div class="content">
+					<notempty name="data">
+					<form name="form-rate" id="form-edit" onsubmit="return false">
+						<div class="list-block media-list">
+							<ul>
+								<li>
+									<div class="item-content">
+										<div class="item-inner">
+											<div class="item-title-row">
+												<div class="item-title">售后编号</div>
+												<div class="item-after">{$data.r_no}
+												</div>
+											</div>
+										</div>
+									</div>
+								</li>								
+								<li class="bg-gray2">
+									<a href="/Goods/view/id/{$data.orders_goods.attr_list_id}" class="item-content item-link">
+										<div class="item-media">
+											<img class="lazyload" data-sizes="auto" data-src="{:myurl($data['orders_goods']['images'],150)}" alt="商品主图" src="../Public/images/nopic.gif" width="60">
+										</div>
+										<div class="item-inner">											
+											<div class="item-title-row">
+												<div class="item-title">{$data.orders_goods.goods_name}</div>
+				
+											</div>
+											<div class="item-subtitle">
+												<div class="ft05">{$data.orders_goods.attr_name}</div>
+											</div>									
+										</div>
+									</a>
+								</li>
+	
+								<li>
+									<div class="item-content">
+										<div class="item-inner">
+											<div class="item-title-row">
+												<div class="item-title label">申请数量：</div>
+												<div class="item-input">
+													<input type="text" placeholder="最多可申请{$data.can_service_num}件" name="num" id="num" value="{$data.num}" data-max="{$data.can_service_num}">
+												</div>												
+												<div class="item-after">
+													<span class="ml03 text-gray ft05">最多可售后{$data.can_service_num}件</span>
+												</div>
+											</div>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class="item-content">
+										<div class="item-inner">
+											<div class="item-title-row">
+												<div class="item-title label">申诉原因：</div>
+												<div class="item-input">
+													<textarea id="reason" name="reason" placeholder="请输入申诉原因，不超过200字" maxlength="200" rows="8">{$data.reason}</textarea>
+												</div>
+											</div>
+										</div>
+									</div>
+								</li>	
+								<li>
+									<div class="item-content">
+										<div class="upload-box">
+											<div class="upload-action">
+												<div class="upload-btn">
+													<input id="imageData" name="imageData" type="file" value="" />
+													<img alt="上传图片" src="../Public/images/up_load.jpg" width="60">
+													<input type="hidden" id="images" name="images" value="{$data.images}" />
+												</div>												
+											</div>
+											<div class="images-list">
+												<volist name="data.images_list" id="vo">
+												<img src="{$vo}" alt="晒图" data-images="{$vo}" onclick="rate_images_remove($(this))">
+												</volist>
+											</div>
+										</div>
+									</div>
+								</li>								
+							</ul>
+						</div>
+						<div class="clearfix md5"></div>
+						<input type="hidden" name="r_no" value="{$data.r_no}" />
+					</form>
+					<else />
+						<div class="nors text-center">
+							<div><i class="iconfont icon-zhongping ft3"></i></div>
+							页面错误！
+						</div>			
+					</notempty>									
+				</div><!--/content-->
+				
+			</div>		
+		</div>	
+		
+
+<include file="Public:script" />
+<include file="Public:footer" />

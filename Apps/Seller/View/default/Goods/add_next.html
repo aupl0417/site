@@ -1,0 +1,587 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<style type="text/css">
+/* 选择属性组合的时候，防止超出 */
+.attr-lib .attr-set-list{
+	max-height: 395px;
+	overflow-y:auto; 
+}
+</style>
+<div class="centent_body">
+	<include file="Public:nav" />
+	<div class="container mb30">
+		<include file="Public:side" />
+		<div class="w980 fl">
+			<div class="row wizard-row">
+				<div class="col-md-12 fuelux">
+					<div class="block-wizard" style="border: 1px solid #efefef;border-radius:0;">
+
+						<div class="bg_f1 clearfix fs14 text_44 tle_R">
+							<a class="fl plr15 line40 ml-1 active" href="javascript:;">发布商品</a>
+						</div>
+						<div class="step-content">
+							<form class="form-horizontal vform" id="form-goods-add" data-url="__URL__/add_save">
+								<notempty name="daigou">
+								<div class=" plr15">
+										<blockquote class="pd0 pl10 mb0 fs14 strong">代购商品</blockquote>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-xs-3">代购手续费费率</label>
+									<div class="col-xs-7">
+										<div class="input-group">
+											<div>
+												<input type="text" id="daigou_ratio" name="daigou_ratio" value="{$daigou_cost_ratio}" class="form-control" maxlength="60">
+												<span>代购手续费按 <span class="text_yellow"><strong>代购金额*{$daigou_cost_ratio}</strong></span> 计算，最低<span class="text_yellow"><strong> {$daigou_min_cost}</strong> </span>元，封顶最高 <span class="text_yellow"><strong>{$daigou_max_cost}</strong> </span>元。</span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="mb40"></div>
+								</notempty>
+					
+								<div class=" plr15">
+										<blockquote class="pd0 pl10 mb0 fs14 strong">选择分类</blockquote>
+								</div>
+								<div class="active" id="step1">
+									<div class="bg_f1 ptb10 plr15 mg15 mb20">您当前选择的是：
+										<span class="selected">{$category}</span>
+										<a class="pull-right" onclick="vmodal({title:'选择分类',url:'/Goods/change_category',width:'700px'})">修改分类>></a>
+									</div>
+								</div>
+								<div class="mb40"></div>
+								
+								<div class="solid_b plr15 pb5">
+										<blockquote class="pd0 pl10 mb0 fs14 strong">基本信息</blockquote>
+								</div>
+								<div class="pd15" id="step2">
+
+			{:W('Common/Builder/buildform',array(array(
+				'field'		=>array(
+		
+					array(
+						'formtype'		=>'text',
+						'label'			=>'商品标题',
+						'name'			=>'goods_name',
+						'is_need'		=>true,
+						'attr'			=>'maxlength="60"',
+					),
+					array(
+						'formtype'		=>'text',
+						'label'			=>'商品副标题',
+						'name'			=>'sub_name',
+						'attr'			=>'maxlength="30"',
+					),										
+					array(
+						'formtype'		=>'text',
+						'label'			=>'商品编号',
+						'name'			=>'code',
+						'attr'			=>'maxlength="32"',
+					),					
+					array(
+						'formtype'		=>'select',
+						'label'			=>'积分奖励比例',
+						'name'			=>'score_ratio',
+						'data'			=>CURD(array('table'=>'goods_cfg','field'=>'score_ratio,cfg_name')),
+						'field'			=>array('score_ratio','cfg_name'),
+						'is_need'		=>1,
+					),
+					array(
+						'formtype'		=>'text',
+						'label'			=>'售后天数',
+						'name'			=>'service_days',
+						'attr'			=>'maxlength="5"',
+						'is_need'		=>($serviceDays > 0 ? 1 : 0),
+						'value'			=>$serviceDays,
+						'tips'			=>($serviceDays == 0 ? '填0或为空时则当前商品不包含售后服务' : '当前类目下的商品售后天数不能小于'.$serviceDays.'天'),
+					),
+					array(
+						'formtype'		=>'select',
+						'label'			=>'品牌',
+						'name'			=>'brand_id',
+						'data'			=>CURD(array('table'=>'brand','field'=>'id,b_name','map'=>array('uid'=>session('user.id'),'status'=>1))),
+						'field'			=>array('id','b_name'),
+					),					
+					array(
+						'formtype'		=>'images',
+						'label'			=>'商品主图',
+						'name'			=>'images',
+						'is_need'		=>1,
+						'tips'			=>'商品主图尺寸必须大于300px以上的正方形图片，建议800~1200px之间的图片',
+					),	
+					array(
+						'formtype'		=>'select',
+						'label'			=>'运费模板',
+						'name'			=>'express_tpl_id',
+						'data'			=>CURD(array('table'=>'express_tpl','map'=>array('uid'=>session('user.id')),'field'=>'id,tpl_name')),
+						'field'			=>array('id','tpl_name'),
+						'is_need'		=>1,
+					),	
+
+					array(
+						'formtype'		=>'select',
+						'label'			=>'包装模板',
+						'name'			=>'package_id',
+						'field'			=>['id','package_name'],
+						'data'			=>CURD(['table' => 'goods_package','map'=>['uid'=>session('user.id')]]),
+						'is_need'		=>true,						
+						'tips'			=>'去<a href="'.U('/package/add').'" target = "_blank">设置包装模板</a> <a style="cursor:pointer" onclick = "update_p(1)">更新包装模板</a>',
+					),	
+					
+					array(
+						'formtype'		=>'select',
+						'label'			=>'售后模板',
+						'name'			=>'protection_id',
+						'field'			=>['id','protection_name'],
+						'data'			=>CURD(['table' => 'goods_protection','map'=>['uid'=>session('user.id')]]),
+						'is_need'		=>true,
+						'tips'			=>'去<a href="'.U('/protection/add').'" target = "_blank">设置售后模板</a> <a style="cursor:pointer" onclick = "update_p(2)">更新售后模板</a>',
+					),	
+					
+					
+					array(
+						'formtype'		=>'radio',
+						'label'			=>'状态',
+						'name'			=>'status',
+						'data'			=>array(array(1,'上架'),array(2,'放入仓库')),
+						'field'			=>array(0,1),
+						'value'			=>1,
+						'is_need'		=>1,
+					),					
+					array(
+						'formtype'		=>'radio',
+						'label'			=>'推荐橱窗',
+						'name'			=>'is_best',
+						'data'			=>array(array(1,'是'),array(0,'否')),
+						'field'			=>array(0,1),
+					),					
+					array(
+						'formtype'		=>'checkbox',
+						'label'			=>'店内分类',
+						'name'			=>'shop_category_id',
+						'data'			=>get_category(['table'=>'shop_goods_category','field'=>'id,sid,category_name','sql'=>'status=1 and uid='.session('user.id'),'level'=>2]),
+						'field'			=>array('id','category_name'),
+						'level'			=>2,
+						'tpl'			=>'default',
+						'tips'			=>'去管理店内<a href="/category" target="_blank">商品分类</a> <a style="cursor:pointer" onclick = "update_category()">更新分类</a>',
+					),	
+					array(
+						'formtype'		=>'hidden',
+						'name'			=>'category_id',
+					),					
+				),
+			),$rs))}								
+								
+
+								</div>
+								
+								<div class="pd15 mb40"></div>
+								<div class="solid_b plr15 pb5">
+										<blockquote class="pd0 pl10 mb0 fs14 strong">设置属性</blockquote>
+								</div>
+								<div class=" pd15" id="step3">
+									<div id="attr-list"></div>
+
+								</div>
+								
+								<div class="pd15 mb40"></div>
+								<div class="solid_b plr15 pb5">
+										<blockquote class="pd0 pl10 mb0 fs14 strong">设置参数</blockquote>
+								</div>
+								<div class=" pd15" id="step4">
+									<div id="param-list"></div>
+
+								</div>
+								
+								<div class="pd15 mb40"></div>
+								<div class="solid_b plr15 pb5">
+										<blockquote class="pd0 pl10 mb0 fs14 strong">设置详情</blockquote>
+								</div>
+								<div class="pd15" id="step5">
+			{:W('Common/Builder/buildform',array(array(
+				'field'		=>array(
+		
+					array(
+						'formtype'		=>'editor',
+						'name'			=>'content',
+						'is_need'		=>true,
+						'col'			=>['','col-xs-12'],
+					),	
+				),
+			),$rs))}	
+
+								</div>
+
+								<div class=" pd15" id="step7">
+									<div class="form-group text-center">
+										<div class="col-sm-12">
+
+											<button type="button" data-step="7" data-wizard="#wizard1"
+												class="btn btn-success wizard-next">
+												<i class="fa fa-check"></i> 发布商品
+											</button>
+										</div>
+									</div>
+								</div>
+								<div class="vform-action hide"></div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+</div>
+</block>
+<block name="css">
+<link rel="stylesheet" type="text/css" href="/Public/CSS/flatdream/js/jquery.nanoscroller/nanoscroller.css" />
+<link rel="stylesheet" type="text/css" href="/Public/CSS/flatdream/js/bootstrap.switch/bootstrap-switch.min.css" />
+<link rel="stylesheet" type="text/css" href="/Public/CSS/flatdream/js/bootstrap.slider/css/slider.css" />
+<link rel="stylesheet" type="text/css" href="/Public/CSS/flatdream/js/fuelux/css/fuelux.css">
+<link rel="stylesheet" type="text/css" href="/Public/CSS/flatdream/js/fuelux/css/fuelux-responsive.min.css">
+<link rel="stylesheet" type="text/css" href="/Public/new_design/flatdream/js/jquery.icheck/skins/all.css">
+</block>
+
+
+
+<block name="script">
+<script type="text/javascript" src="/Public/CSS/flatdream/js/bootstrap.switch/bootstrap-switch.js"></script>
+<script type="text/javascript" src="/Public/CSS/flatdream/js/bootstrap.slider/js/bootstrap-slider.js" ></script>
+<script type="text/javascript" src="/Public/new_design/js/loader.min.js"></script>
+<script type="text/javascript" src="/Public/new_design/flatdream/js/jquery.icheck/icheck.js"></script>
+
+	<script type="text/javascript" src="/Public/Jquery/qiniu_ueditor/ueditor_mintoolbar.config.js"></script>
+	<script type="text/javascript" src="/Public/Jquery/qiniu_ueditor/ueditor.all.min.js"></script>
+	<script type="text/javascript" src="/Public/Jquery/qiniu_ueditor/lang/zh-cn/zh-cn.js"></script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+	attr_set({$category_id});
+	param_set({$category_id});
+	var sid={$category_id};
+	$('#category_id').val(sid);
+    //Fuel UX
+    $('.wizard-ux').wizard();
+    
+    $('.dropdown-toggle').dropdown();
+
+    $('.wizard-ux').on('changed',function(){
+      	//delete $.fn.slider;
+      	$('.bslider').slider();
+    });
+    
+    $("body .wizard-next").click(function(e){
+      var id = $(this).data("wizard");
+      var step= $(this).data("step");
+
+      //$(id).wizard('next');
+      //console.log(e);
+      //e.preventDefault();
+	  if(step==1){
+		var sid=$('.cid-2 h5.active').data('id');
+		if(sid==undefined){
+			talert({msg:'请选择类目！'});
+			return false;
+		}
+		$('#category_id').val(sid);
+		attr_set(sid);
+		param_set(sid);
+	  }
+	  
+	  if(checkdata(step)==false) return false;
+	  
+	  $(id).wizard('next');
+    });
+	
+
+	
+    
+    $(".wizard-previous").click(function(e){
+      var id = $(this).data("wizard");
+      
+      $(id).wizard('previous');
+      e.preventDefault();
+    });
+    
+	var imgage_upload = 0;
+	//上传图片
+	if($('[data-type="upload-images"]').size()>0){
+		$('[data-type="upload-images"]').click(function(){
+			var d=$(this).data();
+			$('.vform-action').html(d.name);
+			$('#imageData').click();			
+		});
+	}	
+	
+	// 选择图片后,上传
+	$('#imageData').change(function(){
+		if(imgage_upload != 0){return;}
+		imgage_upload++;
+		ajax_post_form({
+			formid:'#form-upload',
+		},function(ret){
+			if(ret.code==1){
+				$("#imageData").val('');
+				var field=$('.vform-action').html();
+				$('#'+field).val(ret.url);
+				// 替换内容
+				var html='<li class="text-center" style="margin-top:10px;">';
+					html+='	<div class="li-img-box">';
+					html+='	<img src="'+ret.url+'?imageMogr2/thumbnail/!150x150r">';
+					html+='	</div>';													
+					//html+='	<div class="delete-images" onclick="$(this).parent(\'li\').remove();$(\'#'+field+'\').val(\'\');"><div class="selected-icon"><i class="fa fa-times"></i></div></div>';												
+					html+='</li>';
+				$('#'+field+'-list').html(html);
+				imgage_upload=0;
+			}
+		});
+	});		
+	
+});
+//更新分类
+function update_category(){
+	ajax_get({
+		url:'__URL__/update_category',
+	},function(ret){
+		$(".f-shop_category_id .input-group").html('');
+		if(ret.code==1){
+			var html = '<div><div class="box p10" style="max-height:300px;overflow-x:hidden;overflow-y:auto">';
+			$.each(ret.data,function(k,v){
+				html+='<div class="ft16 md10">'
+						+'<label class=" mr20">'
+								+'<input type="checkbox" class="i-red-square" name="shop_category_id[]" value="'+v.id+'" data-type="select-all" data-tag="#'+v.id+'" data-name="'+v.category_name+'" >'
+							+' '+v.category_name
+						+'</label>'
+					+'</div>'
+					+'<div class="md20 row" id="'+v.id+'" style="padding:0 18px;">';
+				$.each(v.son,function(ke,va){
+					html+='<div class="col-xs-4">'
+							+'<label class=" mr20">'
+								+'<input type="checkbox" class="i-red-square" name="shop_category_id[]" value="'+va.id+'">'
+							+' '+va.category_name
+							+'</label>'
+						+'</div>'
+				});
+				html+='</div>';
+			});
+			html+='</div></div>';
+			$(".f-shop_category_id .input-group").html(html);
+			iCheckClass();
+		}
+		talert({status:ret.code,msg:ret.msg});
+	});	
+}
+//更新包装和售后模板
+function update_p(str){
+	ajax_get({
+		url:'__URL__/update_goods_p/type/'+str,
+	},function(ret){
+		if(str == 1){
+			html = '<option value="">请选择包装模板</option>';
+			for (var i = 0; i < ret.length; i++) { 
+				html += '<option value="'+ret[i].id+'">'+ret[i].package_name+'</option>';
+			}; 
+			$("#package_id").html(html);
+			talert({status:1,msg:'已更新包装模板！'});
+		}else{
+			html = '<option value="">请选择售后模板</option>';
+			for (var i = 0; i < ret.length; i++) { 
+				html += '<option value="'+ret[i].id+'">'+ret[i].protection_name+'</option>';
+			}; 
+			$("#protection_id").html(html);
+			talert({status:1,msg:'已更新售后模板！'});
+		}
+	});	
+}
+function checkdata(step) {
+	var data=getFormJson('#form-goods-add');
+	var serviceDays = '{$serviceDays}';
+	switch(step) {
+		case 7:
+			if(data.goods_name==''){
+				talert({msg:'请输入商品标题！'});
+				$('#goods_name').focus();
+				return false;
+			}		
+			if(data.score_ratio==''){
+				talert({msg:'请选择积分奖励比例！'});
+				$('#score_ratio').focus();
+				return false;
+			}
+			
+			if(serviceDays > 0) {
+				if (data.service_days == '') {
+					talert({msg:'请填写售后天数'});
+					$('#service_days').focus();
+					return false;
+				}
+				
+				if (data.service_days < serviceDays) {
+					talert({msg:'当前类目下的商品售后天数不能小于' + serviceDays + '天'});
+					$('#service_days').focus();
+					return false;
+				}
+			}
+			
+			if(data.images==''){
+				talert({msg:'请上传商品主图！'});
+				$('#images').focus();
+				return false;
+			}
+			
+			if(data.express_tpl_id==''){
+				talert({msg:'请选择运费模板！'});
+				$('#express_tpl_id').focus();
+				return false;
+			}
+			
+			if($('#attr-list input[type="checkbox"]:checked').size()==0){
+				talert({msg:'请选择商品属性！'});
+				return false;
+			}
+			
+			if($('#attr-list tbody tr').size()==0){
+				talert({msg:'请重新刷新页面设置属性！'});
+				return false;				
+			}
+			var result=true;
+			var price_min=9999999999999;
+			var price_max=0;
+			$('#attr-list tbody tr').each(function(index){
+				var price=$(this).find('input[name="attr_sku_price[]"]').val();
+				var price_market=$(this).find('input[name="attr_sku_price_market[]"]').val();
+				var price_purchase=$(this).find('input[name="attr_sku_price_purchase[]"]').val();
+				var weight=$(this).find('input[name="attr_sku_weight[]"]').val();
+				var num=$(this).find('input[name="attr_sku_num[]"]').val();
+				
+				if(price==''){
+					talert({msg:'请输入销售价！'});
+					$(this).find('input[name="attr_sku_price[]"]').focus();
+					result=false;
+					return false;						
+				}
+				if(weight==''){
+					talert({msg:'请输入正确的重量！'});
+					$(this).find('input[name="attr_sku_weight[]"]').focus();
+					result=false;
+					return false;						
+				}
+				if(num==''){
+					talert({msg:'请输入库存数量！'});
+					$(this).find('input[name="attr_sku_num[]"]').focus();
+					result=false;
+					return false;						
+				}
+				if(parseFloat(price) > parseFloat(price_market)){
+					talert({msg:'销售价不得大于市场价！'});
+					$(this).find('input[name="attr_sku_price[]"]').focus();
+					result=false;
+					return false;
+				}
+				if(parseFloat(price_purchase) > parseFloat(price)){
+					talert({msg:'成本价不得大于销售价！'});
+					$(this).find('input[name="attr_sku_price[]"]').focus();
+					result=false;
+					return false;
+				}
+				if(parseFloat(price) <= parseFloat(price_min)){ price_min=price }
+				if(parseFloat(price) >= parseFloat(price_max)){ price_max=price }			
+			});
+			/*
+			if(((price_min*1.5) < price_max) || ((price_max*0.5)>price_min)){
+				talert({msg:'最高价与最低价不能超过50%！'});
+				return false;
+			}*/
+			$('#step4 #param-list .form-group').each(function(){
+				//判断是否必填
+				if($(this).find('.control-label .required').length > 0){
+					//判断文本框
+					if($(this).find('.input-group input[type="text"]').length > 0){
+						if($(this).find('.input-group input[type="text"]').val() == ''){
+							talert({msg:'请填写'+$(this).children('.control-label').html()});
+							result=false;
+							return false;	
+						}
+					//判断多选框
+					}else if($(this).find('.input-group input[type="checkbox"]').length > 0){
+						if($(this).find('.input-group input[type="checkbox"]:checked').size() == 0){
+							talert({msg:'请选择'+$(this).children('.control-label').html()});
+							result=false;
+							return false;	
+						}
+					//判断下拉框
+					}else if($(this).find('.input-group select').length > 0){
+						if($(this).find('.input-group select').val() == ''){
+							talert({msg:'请选择'+$(this).children('.control-label').html()});
+							result=false;
+							return false;	
+						}
+					} 
+				}
+			})
+
+			if(data.package_id==''){
+				talert({msg:'请选择包装模板！'});
+				$('#package_id').focus();
+				return false;
+			}
+			if(data.protection_id==''){
+				talert({msg:'请选择售后模板！'});
+				$('#protection_id').focus();
+				return false;
+			}
+			if(!result){
+				return false;
+			}
+			ajax_post_form({
+				formid:'#form-goods-add',
+			},function(ret){
+				if(ret.code==1){
+					vmodal({
+						title:'提示',
+						msg:'<h3>发布成功！</h3><br><br><a href="/Goods/add" class="btn btn-info">继续发布商品<a><a href="{:DM('sell')}" class="btn btn-primary">管理商品</a>',
+						class:'text-center',
+					});
+				}else{
+					talert(ret);
+				}
+			});
+		break;		
+	}
+	
+	return true;
+}
+	
+	function param_set(cid){
+		loadurl({tag:'#param-list',url:'__URL__/param_set/cid/'+cid+'/goods_id/{$_GET.id}'});
+	}
+	function attr_set(cid){
+		loadurl({tag:'#attr-list',url:'__URL__/attr_set/cid/'+cid+'/goods_id/{$_GET.id}'});
+	}
+
+	function addsome(index){
+		var value='';
+		$('.attr-set-list tbody tr').each(function(){
+			if($(this).find('td').eq(index).find('input').val()!=''){
+				value=$(this).find('td').eq(index).find('input').val();
+				return false;
+			}
+		});
+		$('.attr-set-list tbody tr').each(function(){
+			//if($(this).find('td').eq(index).find('input').val()==''){
+				$(this).find('td').eq(index).find('input').val(value);
+			//}	
+		});
+	}	
+	
+
+</script>
+
+<form enctype="multipart/form-data" id="form-upload" data-url="__URL__/upload_save" class="hide">
+	<input id="imageData" name="imageData" type="file" value="" />
+</form>
+<form enctype="multipart/form-data" id="form-attr-upload" data-url="__URL__/upload_save" class="hide">
+	<input id="attrImageData" name="imageData" type="file" value="" />
+</form>
+</block>

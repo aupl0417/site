@@ -1,0 +1,132 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body">
+	<include file="Public:nav" />
+	<div class="container mb30">
+		<include file="Public:side" />
+		<div class="w980 fl">
+			<div class="bor_der">
+				<div class="bg_f1 clearfix fs14 text_44 tle_R">
+					<a class="fl plr15 line40 ml-1 active" href="javascript:;">商品导入</a>
+				</div>
+				<div class="pd10 ft14 text-gray">
+					目前只支持“天猫”和“淘宝”店铺宝贝导入，其它店铺宝贝导入敬请期待！
+				</div>
+				<div class="input-group input-group-lg md20 pd10">
+					<input type="text" id="shop_name" name="shop_name" class="form-control" placeholder="请输入宝贝关键词">
+					<span class="input-group-btn">
+					<button class="btn btn-primary btn-get" type="button">获取宝贝</button>
+					</span>
+				</div>
+				<div class = 'products-list'></div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="loading hide" style = 'position: fixed;top: 45%;left: 45%;z-index: 1000;'>
+	<div class="loading-body text-center"><img src="/Public/images/loading.gif"></div>
+</div>
+</block>
+<block name="css"></block>
+<block name="script">
+<script id="products-list" type="text/html">
+	<table class="no-border no-border-x no-border-y md20">
+		<thead class="no-border">
+			<tr>
+				<th width="80" class="text-center">顺序</th>
+				<th width="80" class="text-center">宝贝图片</th>
+				<th>宝贝标题</th>
+				<th width="100" class="text-center">价格</th>
+				<th width="150" class="text-center">店铺</th>
+				<th width="80" class="text-center">操作</th>
+			</tr>
+		</thead>
+		<tbody class="no-border-y">
+			{{each data as val i}}
+			<tr>
+				<td width="80" class="text-center">{{i+1}}</td>
+				<td width="80" class="text-center"><img src="{{val.images}}" alt="{{val.name}}" style="max-width:80px;max-height:80px;"></td>
+				<td><div class="ft16 md5"><a href="{{val.detail_url}}" target="_blank">{{val.name}}</a></div></td>
+				<td width="100" class="text-center">{{val.price}}</td>
+				<td width="150" class="text-center">{{val.nick}}</td>
+				<td width="80" class="text-center"><div class="btn btn-block btn-primary m0 btn-getpro" data-id="{{val.nid}}" data-price="{{val.price}}" data-mprice="{{val.price_market}}" data-category="{{val.category}}" data-shoptype="{{val.shop_type}}" data-url="{{val.detail_url}}">一键导入</div></td>
+			</tr>
+			{{/each}}
+		</tbody>
+	</table>
+</script>
+<script>
+clickDisabled();
+$(document).ready(function() {
+	$('.chinaCity').change(function() {
+		checkForms();
+	})
+})
+var search_key = '';
+$(".btn-get").click(function(){
+	if($("#shop_name").val() == ''){
+		talert({status:'warning',msg:'请输入店铺名称、旺旺名称或宝贝关键词'});
+		return false;
+	}
+	if($("#shop_name").val() == search_key){
+		return false;
+	}
+	$("loading").removeClass('hide');
+	ajax_post({
+		url:'/run/authRun',
+		data:{type:1,name:$("#shop_name").val()}
+	},function(ret){
+		search_key = $("#shop_name").val();
+		$("loading").addClass('hide');
+		if(ret.code == 1){
+			var html = template('products-list', {data:ret.data});	
+			$('.products-list').html(html);
+			
+			$('.btn-getpro').click(function(){
+				var obj=$(this);
+				var d=$(this).data();
+				vmodal({
+					title:'一键导入',
+					msg:'<div class="text-center"><div><img src="/Public/images/loading2.gif"></div><h2>导入中……</h2></div>',
+					width:'650px',
+				});
+				
+				var url='/Goods/get_tmall_item';
+				if(d.shoptype==1) url='/Goods/get_taobao_item';
+
+				ajax_post({
+					url:url,
+					data:d,
+				},function(ret){
+					if(ret.status=='success'){
+						
+						$('#ajax-modal .modal-body').html('<h2 class="text-center text-danger">'+ret.msg+'</h2><div class="p10 text-center ft4"><div class="md10">需要编辑并完善属性后方可上架！</div><a href="/goods/noshelves" class="btn btn-info btn-150px link-white">去仓库看看</a><a href="/goods/edit/id/'+ret.url+'" class="btn btn-primary btn-150px link-white" target="_blank">编辑宝贝</a></div>');
+					}else{
+						$('#ajax-modal .modal-body').html('<h2 class="text-center text-danger">'+ret.msg+'</h2>');
+					}
+				});				
+			});
+		}else{
+			talert({status:'warning',msg:ret.msg});
+		}
+	});
+	
+	/*
+	ajax_post({
+		url:'/Goods/import',
+		data:{type:1,name:$("#shop_name").val()}
+	},function(ret){
+		
+	});*/
+});
+
+
+
+
+
+
+
+
+
+</script>
+</block>

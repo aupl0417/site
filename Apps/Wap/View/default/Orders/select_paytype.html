@@ -1,0 +1,52 @@
+<div class="type-list">
+	<div class="line-box hover noicon" data-id="1" onclick="select_type($(this))">
+		现金账户
+	</div>
+	<div class="line-box hover noicon" data-id="2" onclick="select_type($(this))">
+		唐宝账户
+	</div>
+
+	<div class="line-box hover noicon hide" data-id="3" onclick="select_type($(this))">
+		支付宝
+	</div>
+	<!--
+	<div class="line-box hover noicon" data-id="4" onclick="select_type($(this))">
+		微信
+	</div>
+	-->
+</div>
+
+<script>
+
+	function select_type(obj){
+		obj.closest('.type-list').find('.line-box.selected').removeClass('selected').addClass('noicon');
+		obj.removeClass('noicon').addClass('selected');
+	}
+	
+	$('.page.active .vmodal-success').unbind();
+	$('.page.active .vmodal-success').click(function(){
+		/*
+		if($('.page.active .type-list .line-box.selected').attr('data-id')!=1){
+			valert({msg:'暂未开通此支付方式！'});
+			return false;
+		}
+		*/
+		
+		$('.page.active .paytype').html($('.page.active .type-list .line-box.selected').html());
+		$('.page.active #paytype').val($('.page.active .type-list .line-box.selected').attr('data-id'));
+		if($('.page.active .type-list .line-box.selected').attr('data-id')==1) {
+			$('.page.active .view-money').removeClass('hide');
+			$('.page.active .view-tang').addClass('hide');
+		} else if($('.page.active .type-list .line-box.selected').attr('data-id')==2) {
+			$('.page.active .view-money').addClass('hide');
+			$('.page.active .view-tang').removeClass('hide');
+		}
+		if($('.page.active .type-list .line-box.selected').attr('data-id')==3){
+			$('.page.active .view-money').removeClass('hide');
+			$('.page.active .view-tang').addClass('hide');
+			$('.page.active .pass').addClass('hide');
+		}else{
+			$('.page.active .pass').removeClass('hide');
+		}			
+	});
+</script>

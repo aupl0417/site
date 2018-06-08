@@ -1,0 +1,76 @@
+<include file="Public:header" />
+
+    <div class="container">
+        <div class="mb10  lh30">
+            <div class="clearfix">
+                <include file="nav" />
+            </div>
+        </div>
+        <div class="bor_der td_ptb20 solid_b">
+            <table class="no-border td_ptb20">
+                <thead>
+                    <tr class="strong no-border">
+                        <th class="text-center" width="10%">素材</th>
+                        <th>推广标题</th>
+                        <th class="text-center">展现量</th>
+                        <th class="text-center">点击量</th>
+                        <th class="text-center">点击率（%）</th>
+                        <th class="text-center">成交（笔）</th>
+                        <th class="text-center">成交金额（元）</th>
+                        <th class="text-center">转化率（%）</th>
+                        
+                    </tr>
+                </thead>
+                <tbody class="no-border-y bg_white">
+                    <notempty name="data.list">
+					<foreach name="data.list" item="vo">
+                    <tr>
+                        <td>
+                            <a href="{$vo.ad_sucai.images}" class="image-zoom" title="大图">
+                                <img src="{:myurl($vo['ad_sucai']['images'],200,80)}" class="img-thumbnail">  
+                            </a>
+                        </td>
+                        <td>
+                            <p class="mb5 line20 fs14">{$vo.ad_sucai.name}</p>
+                            <p class="mg0 text_77">尺寸：{$vo.ad_sucai.width}x{$vo.ad_sucai.height}</p>
+                            <!-- <p class="mg0 text_77">首页第一屏</p>
+                            <p class="mg0 text_77">http://www.tangmall.net</p> -->
+                        </td>
+                        <td class="text-center">{$vo.show}</td>
+                        <td class="text-center">{$vo.hit}</td>
+                        <td class="text-center"><php> echo round( ($vo['hit']/$vo['show']) * 100, 2); </php>%</td>
+                        <td class="text-center">{$vo.orders}</td>
+                        <td class="text-center">{$vo.orders_price}</td>
+                        <td class="text-center">0.05%</td>
+                        
+                    </tr>
+                    </foreach>
+                        <tr class="">
+                            <td colspan="8" class="pd0">
+                                <div>
+                                    <div class="row">
+                                        <div class="col-xs-10 text-right">
+                                            {:paresePageAction($data['page']['page'], '/Tj/getAdtjsc', isset($params) ? $params : "__ACTION__")}
+                                        </div>
+                                        <div class="col-xs-2 text-center mt25"> {$data.page.total}</div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    <else/>
+    					<tr class="text_red text-center h100 lh100">
+                            <td colspan="8 text-center text_red">
+    							<span>暂无数据</span>
+                            </td>
+                        </tr>
+					</notempty>
+                </tbody>
+            </table> 
+        </div>
+        
+
+        
+    </div>
+
+<include file="Public:footer" />
+

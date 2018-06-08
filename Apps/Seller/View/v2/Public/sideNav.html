@@ -1,0 +1,25 @@
+<div class="revisionLeft controller-active" data-controller="__CONTROLLER__" data-url="__SELF__" style="width: 150px;">
+    <div class="pb10">
+        <volist name=":getShopMenu()" id="vo">
+            <eq name="vo.position" value="4">
+            <div class="user_left_tle">
+                <a class="revisionRoad" href="javascript:;">{$vo.name}</a>
+                <div class="ad">
+                    <volist name="vo.child" id="c">
+                        <notempty name="Think.session.user.funIds">
+                            <in name="c.auth" value="$Think.session.user.funIds">
+                                <a class="revisionRoadSon {$c.class}" <eq name="c.target" value="1">target="_blank"</eq> data-controller="{$c.controller}" href="{:eval($c['url'])}">{$c.name}</a>
+                            </in>
+                            <else />
+                            <a class="revisionRoadSon {$c.class}" <eq name="c.target" value="1">target="_blank"</eq> data-controller="{$c.controller}" href="{:eval($c['url'])}">
+                                {$c.name}
+                                <eq name="vo.is_new" value="1"><img class="ml5" src="/Public/images/icon-new.gif" /></eq>
+                            </a>
+                        </notempty>
+                    </volist>
+                </div>
+            </div>
+            </eq>
+        </volist>
+    </div>
+</div>

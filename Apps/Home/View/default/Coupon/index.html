@@ -1,0 +1,205 @@
+<extend name="Home@Public:base" />
+<block name="body">
+    <div class="centent_body">
+        <include file="Home@Public:nav" />
+    </div>
+
+    <div class="centent_body" style="background: #c81623">
+        <div class="container">
+            <div class="row coupon-cate">
+                <a class="col-xs-1 text-center fs16 <empty name='Think.get.cat'>active</empty>" href="{:U('/coupon')}">
+                    <img src="__NEW_DESIGN__/images/coupon-all-icon.png">
+                    <br>
+                    全部优惠券
+                </a>
+                <volist name="cate" id="vo">
+                    <a class="col-xs-1 text-center fs16 <eq name='Think.get.cat' value='$vo.id'>active</eq>" href="{:U('/coupon/index', array_merge($_GET, ['cat' => $vo['id']]))}">
+                        <img src="{:myurl($vo['icon'], 18)}">
+                        <br>
+                        {$vo.sub_name}
+                    </a>
+                </volist>
+            </div>
+        </div>
+    </div>
+
+    <div class="centent_body">
+        <div class="container">
+            <ul class="search-nav ft12 clearfix mt20 mb20">
+                <li <empty name='Think.get.sort'>class="active"</empty>>
+                    <a href="{:U('/coupon/index', array_merge($_GET, ['sort' => '']))}" class="text">综合排序</a>
+                </li><li <eq name='Think.get.sort' value='quota'>class="active"</eq>>
+                <a href="{:U('/coupon/index', array_merge($_GET, ['sort' => 'quota']))}" class="text">
+                    面额最大 <i class="fa fa-angle-down ml5"></i>				</a>
+                </li><li <eq name='Think.get.sort' value='expire'>class="active"</eq>>
+                    <a href="{:U('/coupon/index', array_merge($_GET, ['sort' => 'expire']))}" class="text">
+                        即将过期 <i class="fa fa-angle-down ml5"></i>				</a>
+                </li><li <eq name='Think.get.sort' value='new'>class="active"</eq>>
+                    <a href="{:U('/coupon/index', array_merge($_GET, ['sort' => 'new']))}" class="text">
+                        最新发布 <i class="fa fa-angle-down ml5"></i>				</a>
+                </li>
+            </ul>
+			<!--
+            <div class="row">
+                <notempty name="data.list">
+                    <volist name="data.list" id="vo">
+                        <div class="col-xs-4 mb5 mt5">
+                            <span class="clearfix db" style="min-width:320px;display:block;margin:0 auto;">
+                                <img class="fl" src="/Public/images/voucher_one_l.png">
+                                <div class="voucher w320">
+                                    <div class="vou_centent vou_one pd10">
+                                        <div class="row">
+                                            <div class="col-xs-4 pr0 text-right">
+                                                <span class="fr fs40">{$vo.price}</span>
+                                                <span class="fr mt10 mr5 fs16">¥</span>
+                                            </div>
+                                            <div class="col-xs-8 pl10">
+                                                <h4 class="mb3">
+                                                    <a title="查看{$vo.shop_name}" style="color: #ffffff" target="_blank" href="{:shop_url($vo['shop_id'], $vo['domain'])}">{$vo.shop_name}</a>
+                                                </h4>
+                                                <h5 class="mt0">满{$vo.min_price}元可用</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="javascript:;" onclick="receiveCoupon({$vo.id})" style="display:inline-block;">
+                                    <div class="fl ml2 voucher_r">立即领取</div>
+                                    <img src="/Public/images/voucher_one_r.png">
+                                </a>
+                            </span>
+                        </div>
+                    </volist>
+                <else />
+                    <div class="text-center">
+                        <img src="__NEW_DESIGN__/images/no-find.png" alt="没找到">
+                    </div>
+                </notempty>
+            </div>
+			-->
+			<style>
+			.flex{
+				display: -webkit-flex; /* Safari */
+				display: flex;
+			}
+			.flex-aife{align-items:flex-end}
+			.flex-aifs{align-items:flex-start}
+			.flex-jcc{justify-content:center;}
+			.flex-jcsb{justify-content:space-between}
+			.flex-jcfs{justify-content:flex-start}
+			.flex-fdc{flex-direction:column}
+			.flex-aic{align-items:center;}
+			.flex-fww{flex-wrap:wrap}
+			
+			.coupon-list-one{border:1px solid #c81623;border-right:none;}
+			.coupon-l{padding:10px 10px 10px 10px;background:#f7c7c7;width:130px;}
+			.coupon-price{font-size:24px;color:#c81623;font-family: arial;font-weight:700}
+			.coupon-price span{font-size:50px;margin-bottom:-12px;color:#c81623;}
+			.coupon-min-price span{color:#c81623}
+			.coupon-m{padding-top:20px;}
+			.coupon-r{background:url(../Public/images/coupon1.png) #c81623 repeat-y;cursor:pointer;width:75px;}
+			.coupon-btn{width:20px;text-align:center;margin:0 15px;color:#fff;}
+
+			</style>
+			<div class="coupon-list mb10 row">
+				<volist name="data.list" id="vo">
+					<div class="col-xs-4 mb30">
+						<div class="coupon-list-one flex flex-jcsb ">
+							<div class="coupon-l">
+								<div class="flex flex-aife">
+									<div class="coupon-price flex flex-aife">￥<span class="coupon-price">{$vo.price}</span></div>
+									
+								</div>
+								<div class="coupon-min-price mb5">满<span>{$vo.min_price}</span>元可用</div>
+								
+							</div>
+							<div class="coupon-m">
+								<div class="mb5">{$vo.use_type_name}</div>
+								<div class="mb5 "><a href="{:shop_url($vo[shop_id])}" target="_blank" class="text_red"><strong>{$vo.shop_name}</strong></a></div>
+								<div>{$vo.sday} - {$vo.eday}</div>
+							</div>
+							<div class="coupon-r flex flex-aic flex-jcc" onclick="receiveCoupon({$vo.id})">
+								<div class="coupon-btn" >立即领取</div>
+							</div>
+						</div>
+					</div>
+				</volist>
+				
+			</div>
+			
+			
+			
+            <notempty name="data.list">
+                <notempty name="Think.get.shop">
+                    <div class="page-box p20 text-center mt30">
+                        <a href="{:shop_url($data['list'][0]['shop_id'], $data['list'][0]['domain'])}" class="btn btn-danger btn-rad btn-trans">立即使用</a>
+                    </div>
+                </notempty>
+            </notempty>
+            <gt name="data.allpage" value="1">
+                <div class="page-box p20 text-center">
+                    {:page_html($data['pageinfo'])}
+                </div>
+            </gt>
+        </div>
+    </div>
+</block>
+
+<block name="script">
+    <script>
+        $(document).ready(function() {
+            //顶部，静态化时需要用到
+            ajax_topbar();
+        });
+        //领取优惠券
+        function receiveCoupon(coupon) {
+            ajax_post({
+                url:'{:U("/run/authRun")}',
+                data:{b_id:coupon},
+            }, function(ret) {
+                if(ret.code == 401) {
+                    gourl({url:'{:DM("user", "/login")}'})
+                } else {
+                    talert({status:ret.code,msg:ret.msg});
+                }
+            });
+        }
+    </script>
+</block>
+
+<block name="css">
+    <style type="text/css">
+        .search-nav {
+            border: 1px solid #ebebeb;
+            background-color: #f9f9f9;
+        }
+        .search-nav li {
+            display: block;
+            float: left;
+            border-right: 1px solid #ebebeb;
+            height: 45px;
+        }
+        .search-nav li.active a {
+            background-color: white;
+            color: #c81623;
+        }
+        .search-nav li a.text {
+            display: block;
+            height: 45px;
+            line-height: 45px;
+            padding: 0 20px;
+        }
+        .mb3{white-space:nowrap;width: 182px; overflow: hidden;}
+        .coupon-cate>a{
+            display: block;color: #ffffff;padding: 20px 0;
+        }
+        .coupon-cate>a:hover{
+            color: #ffffff;
+            background: #e75c37;
+        }
+        .coupon-cate > .active{
+            color: #ffffff;
+            background: #e75c37;
+        }
+
+    </style>
+</block>

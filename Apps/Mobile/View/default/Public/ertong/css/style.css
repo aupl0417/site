@@ -1,0 +1,40 @@
+.pt5{padding-top:0.5rem;}
+.pl5{padding-left:0.5rem;}
+.pr5{padding-right:0.5rem;}
+.pd5{padding-bottom:0.5rem;}
+.bg-white{background:#fff;}
+h4{text-align: center;margin: 0.2rem;font-size:1.1rem;}
+
+.bgimg{font-size:0px;}
+.bgimg img{width:100%;display:block;margin-top:-1px;}
+
+.link{position:relative;}
+.link .link-button {position: absolute;top: 0;height: 100%;}
+.link .link-button.link-1{left: 21%;width: 14%;}
+.link .link-button.link-2{left: 60%;width: 19%;}
+.link .link-button.link-3{left: 40%;width: 17%;top: 16%;height: 43%;}
+	
+.link-goods-l{background:url(../images/100.png) repeat-y}
+.link-goods-r{background:url(../images/101.png) repeat-y right}
+
+.link-goods-item{margin-bottom:0.5rem;width:30%;background:#fff;}
+.link-goods-item .goods_name{font-size:0.7rem;padding:0 0.2rem 0.2rem;height:1.9rem;line-height:0.9rem;overflow:hidden;color:#868585;}
+.link-goods-item .goods_price{font-size:0.5rem;padding:0.2rem;font-weight:700}
+.link-goods-item .goods_price span{font-size:0.7rem;}
+.link-goods-item .goods_price img{width:90%;}
+
+
+.blue{background:#246eb8}
+.blue .goods_price{color:#187ee4}
+
+.violet{background:#5c259b}
+.violet .goods_price{color:#8729f2}
+
+.green{background:#17aa82}
+.green .goods_price{color:#02c283}
+
+.orange{background:#f5a603}
+.orange .goods_price{color:#e09702}
+
+.red{background:#ee1e35}
+.red .goods_price{color:#ef1c36}

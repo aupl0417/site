@@ -1,0 +1,45 @@
+<form data-url="__URL__/pr_extra_save" id="form_illegl_add" class="form-horizontal vform">
+
+			{:W('Widget/buildform',array(array(
+				'field'		=>array(
+					array(
+						'formtype'		=>'text',
+						'label'			=>'加分/扣分',
+						'name'			=>'pr_extra',
+						'tips'			=>'正数为加分，负数为扣分',
+						'value'			=>1,
+					),
+					array(
+						'formtype'		=>'textarea',
+						'label'			=>'商品ID',
+						'name'			=>'id',
+						'attr'			=>'readonly',
+					),
+
+				),
+			),$rs))}
+			
+	<div class="p20 text-center">
+		<button type="submit" class="btn btn-primary btn-150px"><i class="fa fa-check"></i> 提交</button>
+	</div>
+<!--token-->
+
+</form>			
+<script>
+var id=new Array();
+$('input[type="checkbox"]:checked').each(function(index){
+	id[index]=$(this).val();
+});
+$('#form_illegl_add #id').val(id.join(','));
+
+iCheckClass();
+checkform({
+	formid:'#form_illegl_add',
+},function(ret){
+	valert(ret);
+	if(ret.status=='success'){
+		ref();
+	}
+});
+
+</script>

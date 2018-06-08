@@ -1,0 +1,43 @@
+<include file="Public:header" />
+<include file="nav" />
+<div class="m20">
+	<div class="box left-menu activity_days_menu">
+		<div style="width:auto;">
+		<table>
+			<tbody>
+				<tr>
+					<volist name="days" id="vo">
+					<td id="{$vo}" id="{$vo}">
+						<div class="day clearfix {:date('Y-m-d')==$vo?'active':''}">
+							<div class="title">{$vo}</div>
+							<div class="time">
+								<volist name="time" id="t">
+									<a href="__URL__/day/day/{$vo}/time/{$t}#{$vo}" target="day_iframe" class="item {:$_GET["day"]==$vo && $_GET["time"]==$t?"active":""}">{$t}</a>
+								</volist>
+							</div>
+						</div>
+					</td>
+					</volist>	
+				</tr>
+			</tbody>
+		</table>
+		</div>
+	</div>
+
+</div>	
+
+<iframe src="__URL__/day" name="day_iframe" frameborder="0" width="100%" class="day-iframe"></iframe>
+
+<include file="Public:copyright" />
+<include file="Public:js" />
+<script>
+$(document).ready(function(){
+	//var offset = $('#{:date('Y-m-d')}').offset().left;		
+	//alert(offset);
+	//$("table").animate({left: offset}, 1000);
+	location.href='#{:date('Y-m-d')}';
+	
+
+});
+</script>
+<include file="Public:footer" />

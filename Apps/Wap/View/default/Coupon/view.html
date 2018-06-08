@@ -1,0 +1,72 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			优惠券详情
+		</div>
+		<div class="r">
+			
+		</div>
+	</div>
+</header>
+<section>
+	<div class="load-body">数据加载中……</div>
+</section>
+
+
+<script id="tpl_cash_view" type="text/html">
+	<div class="line-box noicon fr-70 hover">
+		<div class="fl title">优惠券价值</div>
+		<% if(data.price>0){ %>
+			<div class="fr ft14 text-success"><%= data.price %>元</div>
+			<% }else{ %>
+			<div class="fr ft14 text-danger"><%= data.price %>元</div>
+		<% } %>		
+
+	</div>
+	<div class="line-box noicon fr-gray fr-70 hover">
+		<div class="fl title">优惠券码</div>
+		<div class="fr"><%= data.code %></div>
+	</div>
+	<div class="line-box noicon fr-gray fr-70 hover">
+		<div class="fl title">有效时间</div>
+		<div class="fr"><%= data.sday %>-<%= data.eday %></div>
+	</div>
+	<div class="line-box noicon fr-gray fr-70 hover">
+		<div class="fl title">最低消费</div>
+		<div class="fr"><%= data.min_price %>元</div>
+	</div>
+	<div class="line-box noicon fr-gray fr-70 hover">
+		<div class="fl title">获取时间</div>
+		<div class="fr"><%= data.get_time %></div>
+	</div>
+	<div class="line-box noicon fr-gray fr-70 hover">
+		<div class="fl title">卖家ID</div>
+		<div class="fr"><%= data.seller.nick %></div>
+	</div>
+	<div class="line-box noicon fr-gray fr-70 hover">
+		<div class="fl title">状态</div>
+		<div class="fr"><%= data.status_name %></div>
+	</div>
+</script>
+
+<script>
+	fixBar(1);
+	
+	ajax_post({
+		url:'/Api/api',
+		data:{apiurl:'/Coupon/view',is_openid:1,code:'{$_GET.code}'},
+	},function(ret){
+		if(ret.code==1){			
+			var html = template('tpl_cash_view', {data:ret.data});
+			$('.page.active section').html(html);
+			hover('.page.active section');
+		}else if(ret.code==3){
+			$('.page.active section').html(no_data_text);
+		}
+	});	
+
+	
+</script>

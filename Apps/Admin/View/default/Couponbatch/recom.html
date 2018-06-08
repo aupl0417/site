@@ -1,0 +1,55 @@
+<notempty name="rs.category_id">
+	<div class="text-center pd10">当前优惠券已推荐至 <span style="color:#f00" class="text_red strong">{$cate[$rs['category_id']]}</span>,推荐时间 <span style="color:#f00" class="text_red strong">{$rs['addtime']}</span></div>
+</notempty>
+<form data-url="__URL__/recomSave" data-id="#form_{$rs.id}" id="form_{$rs.id}" class="form-horizontal vform">
+	{:W('Widget/buildform',array(array(
+		'field'		=>array(
+			array(
+				'formtype'		=>'select',
+				'name'			=>'category_id',
+				'label'			=>'类型',
+				'data'			=>$cates,
+				'field'			=>array('id','name'),
+				'required'		=>1,
+			),
+			array(
+				'formtype'		=>'text',
+				'label'			=>'排序',
+				'name'			=>'sort',
+			),
+			array(
+				'formtype'		=>'select',
+				'name'			=>'status',
+				'label'			=>'状态',
+				'data'			=>[[0,'待审核'],[1,'正常'],[2,'已过期'],[3,'已完成'],[4,'已关闭']],
+				'field'			=>array(0,1),
+				'require'		=>1,
+			),
+			array(
+				'formtype'		=>'hidden',
+				'name'			=>'coupon_id',
+				'value'			=>$rs['id'],
+			),					
+			array(
+				'formtype'		=>'html',
+				'label'			=>' ',
+				'html'			=>'<button type="button" class="btn btn-primary btn-150px recom-save"><i class="fa fa-check"></i> 提交</button>'
+			),
+		),
+	)))}
+</form>
+<script>
+$(document).ready(function() {
+	$(".recom-save").click(function() {
+		var d=$(this).closest('form').data();
+		ajax_post_form({
+			formid:d.id
+		},function(ret){
+			valert(ret);
+			if(ret.status=='success'){
+				ref();
+			}
+		});
+	})
+});
+</script>

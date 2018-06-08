@@ -1,0 +1,134 @@
+/***兼容旧样式***/
+.tenants-tab-box{padding:0;border:0px;}
+
+
+/*上传资料开始*/
+.tenants-time-box{padding: 15px 0px;}
+.tenants-time-box ul li{
+    font-size: 14px;
+    float: left;
+}
+.tenants-time-box ul li.active span{
+    background-color: #faa019;
+}
+.tenants-time-box ul li.active > span:after{
+    border-left: 10px solid #faa019;
+}
+.tenants-time-box ul li.active > div{
+    color: #faa019;
+}
+.tenants-time-box ul li:last-child > div{
+    padding-right: 0;
+}
+.tenants-time-box ul li:last-child > div:before{
+    display: none;
+}
+.tenants-time-box ul li > div{
+    padding-left:10px;
+    display: inline-block;
+    padding-right: 120px;
+    position: relative;
+    color: #999999;
+}
+.tenants-time-box ul li > div:before{
+    content: '';
+    width: 80px;
+    height: 1px;
+    background-color: #ccc;
+    position: absolute;
+    right: 30px;
+    top: 10px;
+}
+.tenants-time-box ul li span{
+    position: relative;
+    width: 20px;
+    height: 20px;
+    background-color: #cccccc;
+    display: inline-block;
+    color: white;
+    text-align: center;
+}
+.tenants-time-box ul li span:after{
+    content: '';
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-left: 10px solid #cccccc;
+    border-bottom: 10px solid transparent;
+    position: absolute;
+    left: 20px;
+}
+.tenants-tab-box .block-title{
+    background-color: #f7f7f7;
+}
+.tenants-tab-box li a{
+    padding: 12px 15px;
+    font-size: 16px;
+}
+.tenants-tab-box li.active a,
+.tenants-tab-box li.active a:hover,
+.tenants-tab-box li.active a:focus{
+    background-color: transparent;
+    border: 0;
+    border-bottom: 2px solid #faa019
+}
+.tenants-tab-pane{
+    padding: 30px 115px;
+}
+.lzx-photo-ul li{width: 110px;height: 110px;border: 1px solid #ccc;float:left;vertical-align:middle; text-align:center;margin-right: 10px;}
+.lzx-photo-ul li a{padding: 0}
+.lzx-photo-ul li img{width: 95%}
+.lzx-photo-ul li > i{display:inline-block;
+    height:100%;
+    vertical-align:middle
+}
+.information-box{
+    background-color: #f7f7f7;
+    padding: 10px 15px;
+}
+/*上传资料结束*/
+
+/*上传转账开始*/
+.lzx-zzpz-box li{border: 3px dashed #ccc;/*width: 200px*/}
+/*上传转账结束*/
+
+/*成功入驻开始*/
+.succeed-box{padding: 120px 50px;}
+/*成功入驻结束*/
+
+
+/**  复选框  **/
+
+
+
+.square input[type="checkbox"],.radius input[type="radio"]{opacity:0;filter:alpha(opacity=0);position:absolute;}
+.square input[type="checkbox"]+em:hover,.radius input[type="radio"]+em:hover{border: 1px solid #e7211a;}
+.radius input[type="radio"]+em{width:16px;height:16px;display:block;border:1px solid #ccc;position:relative;border-radius:20px;top: 2px}
+.radius input[type="radio"]:checked+em{    background: #ffc428;border: 1px solid #ffc428;}
+.radius input[type="radio"]:checked+em:after{border:0px;opacity:1;filter:alpha(opacity=100);content: '';position:absolute;width:11px;height:6px;background:transparent;top:2px;left:2px;border:2px solid #fff;border-top:none;border-right:none;-webkit-transform:rotate(-45deg);-ms-transform:rotate(-45deg);transform:rotate(-45deg);}
+.square input[type="checkbox"]+em{width:15px;height:15px;display:block;border:1px solid #ccc;position:relative;border-radius: 3px;}
+.square input[type="checkbox"]:checked+em{background:#fff;border: 1px solid #e7211a}
+.square input[type="checkbox"]:checked+em:after{border:0px;opacity:1;filter:alpha(opacity=100);content: '';position:absolute;width:11px;height:6px;background:transparent;top:2px;left:2px;border:2px solid #e7211a;border-top:none;border-right:none;-webkit-transform:rotate(-45deg);-ms-transform:rotate(-45deg);transform:rotate(-45deg);}
+
+
+
+/*公共样式开始*/
+.my-btn-blue:not(.btn-outline){
+    background-color: #1b9af7;
+    color: white;
+    border: 0;
+}
+.my-btn-white:not(.btn-outline){
+    background-color:  white;
+    color: #555555;
+    border: 1px solid #cccccc;
+}
+/*公共样式结束*/
+
+
+
+/**公共开始*/
+.c-fe1{color: #fe1b1b}
+.c-faa{color: #faa019}
+.no-strong{font-weight: 500}
+/**公共结束*/

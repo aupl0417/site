@@ -1,0 +1,18 @@
+<ul class="nav nav-tabs border-d">
+	<volist name="list" id="vo">
+	<li class="{$key==0?'active':''}">
+		<a href="#tab{$vo.id}" data-toggle="tab">{$vo.group_name}</a>
+	</li>
+	</volist>
+</ul>
+<div class="tab-content tab-content-noborder">
+	<volist name="list" id="vo">
+	<div class="tab-pane {$key==0?'active':''}" id="tab{$vo.id}">
+		{:W('Widget/buildform',array(array(
+			'field'		=>$vo['tplfields']
+		)))}
+
+	</div>
+	</volist>
+</div>
+

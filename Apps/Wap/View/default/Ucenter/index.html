@@ -1,0 +1,303 @@
+<section>
+	<if condition="session('user.id') gt 0">
+	<div class="user-header">
+		<div class="right"><i class="icons i-setting icons-30px mr10" onclick="openWin({name:'setting',url:'/Setting/index',logined:true})"></i>
+		<i onclick="openWin({name:'notice',url:'/Notice/index',logined:true})" class="icons i-bell icons-30px"></i><sup onclick="openWin({name:'notice',url:'/Notice/index',logined:true})" class="notice-alert"></sup></div>
+		<div class="user-header-body">
+			<div class="row">
+				<div class="col-10">&nbsp;</div>
+				<div class="col-20" style="max-width:75px;">
+					<img src="{:myurl(session('user.face'),75)}" class="img-circle">
+				</div>
+				<div class="col-60">
+					<div class="text pl20" style="padding-top:10px">
+						<div class="ft16">{$_SESSION['user']['nick']}</div>
+						{:$_SESSION['user']['level_name']}
+					</div>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+	</div>
+	<else />
+	
+	<div class="user-header">
+		<div class="right" onclick="openWin({name:'setting',url:'/Setting/index',logined:true})"><i class="icons i-setting icons-30px"></i> <i class="icons i-bell icons-30px hide"></i></div>
+		<div class="user-header-body">
+			<div class="row">
+				<div class="col-10">&nbsp;</div>
+				<div class="col-20" style="max-width:75px;">
+					<img src="../Public/Images/people_bg.jpg" class="img-circle">
+				</div>
+				<div class="col-60">
+					<div class="text pl20" style="padding-top:10px">
+						<div class="md5">您好，请先登录！</div>
+						<div class="btn btn-danger mr5" onclick="openWin({name:'login',url:'/Login/index'})">登录</div>
+						<div class="btn btn-danger" onclick="openWin({name:'register',url:'/Login/register'})">注册</div>
+					</div>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+	</div>	
+	
+	</if>
+	
+	<div class="row user-fav-icon md10">
+		<div class="col-25 hover" onclick="openWin({name:'shop_fav',url:'/Ucenter/shop_fav',logined:true})">
+			<div class="p10">
+				<i class="icons icons-30px i-guanzu"></i>
+				<div>关注店铺(<span id="shopfav-num">0</span>)</div>
+			</div>
+		</div>
+		<div class="col-25 hover" onclick="openWin({name:'goods_fav',url:'/Ucenter/goods_fav',logined:true})">
+			<div class="p10">
+				<i class="icons icons-30px i-star"></i>
+				<div>收藏商品(<span id="goodsfav-num">0</span>)</div>
+			</div>		
+		</div>
+		<div class="col-25 hover" onclick="openWin({name:'coupon_index',url:'/Coupon/index',logined:true})">
+			<div class="p10">
+				<i class="icons icons-30px i-coupon"></i>
+				<div>我的优惠券(<span id="coupon-num">0</span>)</div>
+			</div>		
+		</div>
+		<div class="col-25 hover" onclick="openWin({name:'goods_history',url:'/Ucenter/goods_history',logined:true})">
+			<div class="p10">
+				<i class="icons icons-30px i-history"></i>
+				<div>我的足迹</div>
+			</div>		
+		</div>
+		<div class="clearfix"></div>
+	</div>
+	
+	<div class="line-box hover row" onclick="openWin({name:'orders',url:'/Orders/index',logined:true})">
+		<div class="col-50 title">我的订单</div>
+		<div class="col-50 text-right text-gray">全部订单</div>
+	</div>
+	<div class="box row text-center border-d">
+		<div class="col-25" onclick="openWin({name:'orders',url:'/Orders/index/status/1',logined:true})">
+			<div class="p10 border-r">
+				<i class="icons icons-30px i-wallet2"></i>
+				<div>待付款(<span id="s-1">0</span>)</div>
+			</div>
+		</div>
+		<div class="col-25" onclick="openWin({name:'orders',url:'/Orders/index/status/2',logined:true})">
+			<div class="p10 border-r">
+				<i class="icons icons-30px i-getgoods"></i>
+				<div>待发货(<span id="s-2">0</span>)</div>
+			</div>
+		</div>
+		<div class="col-25" onclick="openWin({name:'orders',url:'/Orders/index/status/3',logined:true})">
+			<div class="p10 border-r">
+				<i class="icons icons-30px i-express"></i>
+				<div>待收货(<span id="s-3">0</span>)</div>
+			</div>
+		</div>
+		<div class="col-25" onclick="openWin({name:'orders',url:'/Orders/index/status/4',logined:true})">
+			<div class="p10">
+				<i class="icons icons-30px i-rate"></i>
+				<div>待评价(<span id="s-4">0</span>)</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+	<div class="line-box hover row" onclick="openWin({name:'refund',url:'/Refund/index'})">
+		<div class="col-50 title">退款中 (<span id="s-20">0</span>)</div>
+		<div class="col-50 text-right text-gray">查看全部</div>
+	</div>	
+	<div class="line-box hover row md10" onclick="openWin({name:'service',url:'/Service/index',logined:true})">
+		<div class="col-50 title">售后中 (<span id="s-21">0</span>)</div>
+		<div class="col-50 text-right text-gray">查看全部</div>
+	</div>
+	<div class="line-box hover row md10 hide" onclick="openWin({name:'daigou',url:'/Daigou/index',logined:true})">
+		<div class="col-50 title">我的代购 (<span id="s-22">0</span>)</div>
+		<div class="col-50 text-right text-gray">查看代购</div>
+	</div>
+	<div class="line-box hover row md10" onclick="openWin({name:'seller_ucenter',url:'/Seller/index'})">
+		<div class="col-50 title">我是商家</div>
+		<div class="col-50 text-right text-gray">商家入口</div>
+	</div>
+	
+	<div class="line-box hover row noicon">
+		<div class="col-50 title">资金账户</div>
+	</div>	
+	<div class="box row text-center md10">
+		<div class="col-50">
+			<div class="p10 border-r border-d">
+				<!-- <i class="icons icons-30px i-recharge"></i> -->
+				<div>现金账户总额(元)</div>
+				<p style="color:#ff9900;font-weight:bold;" id="a_freeMoney">-</p>		
+			</div>
+		</div>
+		<div class="col-50">
+			<div class="p10 border-r border-d">
+				<!-- <i class="icons icons-30px i-recharge"></i> -->
+				<div>积分</div>
+				<p style="color:#3598dc" id="a_storeScore">-</p>		
+			</div>
+		</div>
+		<div class="col-50">
+			<div class="p10 border-r border-d">
+				<!-- <i class="icons icons-30px i-recharge"></i> -->
+				<div>唐宝</div>
+				<p style="color:#3598dc" id="a_tangBao">-</p>		
+			</div>
+		</div>
+		<div class="col-50">
+			<div class="p10 border-r border-d">
+				<!-- <i class="icons icons-30px i-recharge"></i> -->
+				<div>其他&nbsp;</div>
+				<p class="text-gray">更多操作请登录PC端</p>		
+			</div>
+		</div>
+		
+		<div class="clearfix"></div>
+	</div>
+	
+	<div class="line-box hover row">
+		<div class="col-50 title">猜您喜欢</div>
+		<div class="col-50 text-right text-gray" onclick="guess()">换一批</div>
+	</div>
+	<div class="box row guess-love-list-content">
+
+	</div>
+
+</section>
+
+<footer class="footer border-t fixed-bottom">
+	<ul class="col-4">
+		<li>
+			<div class="menu hover" onclick="openWin({name:'home',url:'/Index/home'})">
+				<i class="icons i-home">
+				</i>
+				<div>
+					首页
+				</div>
+			</div>
+		</li>
+		<li>
+			<div class="menu hover" onclick="openWin({name:'category',url:'/Goods/category'})">
+				<i class="icons i-category">
+				</i>
+				<div>
+					分类
+				</div>
+			</div>
+		</li>
+		<li>
+			<div class="menu hover" onclick="openWin({name:'cart',url:'/Cart/index',logined:true})">
+				<div class ="cart_total_num hide"></div>
+				<i class="icons i-cart2">
+				</i>
+				<div>
+					购物车
+				</div>
+			</div>
+		</li>
+		<li>
+			<div class="menu hover" onclick="openWin({name:'ucenter',url:'/Ucenter/index'})">
+				<i class="icons i-my active">
+				</i>
+				<div>
+					我的
+				</div>
+			</div>
+		</li>
+	</ul>
+</footer>
+
+<script type="text/html" id="guess-love-list">
+	<% for(i=0;i<data.length;i++){ %>
+		<div class="col-25" onclick="openWin({name:'goods_view',url:'<%= data[i].attr_list[0].url %>'})">
+			<div class="p10">
+				<img src="<%= data[i].images %>" />
+				<div class="text-center lh2-20px"><%= data[i].goods_name %></div>
+			</div>
+		</div>
+	<% } %>
+	<div class="clearfix"></div>
+</script>
+
+<script>
+	fixBar(3);
+
+	var data = {};
+	//data.account = {apiurl:'/Erp/account',is_openid:1};
+	data.guess = {
+				apiurl:'/Goods/love_goods',
+				limit:4,
+				imgsize:200,
+				no_sign:'limit,imgsize'
+			};
+	data.tongji = {
+		apiurl:'/Buyer/total',
+		is_openid:1,
+	};
+	data.cart_num = {apiurl:'/Cart/cart_total',is_openid:1};
+	data.user = {apiurl:'/Erp/account',is_openid:1};
+	data.notice = {apiurl:'/NoticeMsg/count', is_openid:1};
+	ajax_post({
+		url:'/Api/apis',
+		data:data
+	},function(ret){
+		//if(ret.account.code==1){
+		//	$('.page.active .a_score').html(ret.account.data.a_score);
+		//}
+		if(ret.guess.code==1){
+			var html = template('guess-love-list',{data:ret.guess.data});
+			$('.guess-love-list-content').html(html);		
+		}
+		// 统计
+		if(ret.tongji.code == 1){
+			$('.page.active #s-1').html(ret.tongji.data.orders[1]);
+			$('.page.active #s-2').html(ret.tongji.data.orders[2]);
+			$('.page.active #s-3').html(ret.tongji.data.orders[3]);
+			$('.page.active #s-4').html(ret.tongji.data.orders[4]);
+			$('.page.active #s-20').html(ret.tongji.data.orders[20]);
+			$('.page.active #s-21').html(ret.tongji.data.orders[21]);
+			$('.page.active #s-22').html(ret.tongji.data.orders[22]);
+			$('.page.active #shopfav-num').html(ret.tongji.data.shop_fav);
+			$('.page.active #goodsfav-num').html(ret.tongji.data.goods_fav);
+			$('.page.active #coupon-num').html(ret.tongji.data.orders[23]);
+		}
+		
+		if(ret.notice.code == 1) {
+			$(".notice-alert").removeClass('hide').html(ret.notice.data.count);
+		}
+		
+		//购物车数量
+		if(ret.cart_num.code==1 && ret.cart_num.data.num > 0){
+			$(".cart_total_num").removeClass('hide').html(ret.cart_num.data.num);
+		}else{
+			$(".cart_total_num").addClass('hide').html(0);
+		}
+		if(ret.user.code == 1){
+			//console.log(ret.user);
+			$('.page.active #a_freeMoney').html(ret.user.data.a_freeMoney);
+			$('.page.active #a_storeScore').html(ret.user.data.a_storeScore);
+			$('.page.active #a_tangBao').html(ret.user.data.a_tangBao);
+		}
+
+	});
+
+
+	// 猜您喜欢
+	function guess(){
+		ajax_post({
+			url:'/Api/api',
+			data:{
+				apiurl:'/Goods/love_goods',
+				limit:4,
+				imgsize:200,
+				no_sign:'limit,imgsize'
+			}
+		},function(ret){
+			// console.log(ret);
+			var html = template('guess-love-list',{data:ret.data});
+			$('.guess-love-list-content').html(html);
+		});
+	}
+
+
+</script>

@@ -1,0 +1,141 @@
+<extend name="Seller@Public:base" />
+<block name="body">
+    <div class="centent_body">
+        <!-- to do your html codeing -->
+        <div class="revision_bg">
+            <div class="container ptb_size_lg clearfix">
+                <!-- 左侧导航 -->
+                <include file="Public:sideNav" />
+                <!-- 左侧导航结束 -->
+
+                <div class="revisionRight pd15" style="width: 1020px"><!-- 右侧内容 -->
+                    <div class="clearfix revisionOrderTab" data-url="">
+                        <a class="orderOption active" href="javascript:;">修改订单价格</a>
+                    </div>
+                    <div class="bg-warning pd10 letter-spacing1">
+                        <i class="fa fa-exclamation-circle fs16 fl text_yellow"></i>
+                        <p class="ml20 mb0">小提示，您当前正在修改订单金额。</p>
+                    </div>
+                    <form class="form-horizontal" id="formadd" name="formadd" data-url="/run/authRun" novalidate="novalidate">
+                        <input type="hidden" name="s_no" value="{$data.s_no}" />
+                        <div class="content mt30">
+                            <table class="no-border mb20 bg_f1"><!-- 类型说明 -->
+                                <tbody class="no-border-y">
+                                <tr class="text-center">
+                                    <td width="75%" style="padding:0">
+                                        <table class="no-border">
+                                            <tbody class="no-border-y">
+                                            <td width="13%"></td>
+                                            <td width="30%">商品信息</td>
+                                            <td width="12%">单价</td>
+                                            <td width="10%">数量</td>
+                                            <td width="18%">价格</td>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                    <td width="13%">运费</td>
+                                    <td width="12%">操作</td>
+                                </tr>
+                                </tbody>
+                            </table><!-- 类型说明结束 -->
+
+
+                            <table class="revisionTable table"><!-- 订单信息 -->
+                                <tbody class="bg_white">
+                                    <tr class="text-center">
+                                            <td style="padding:0; width:75%">
+                                                <volist name="data.orders_goods" id="vo">
+                                                <table class="no-border table-hover">
+                                                    <tbody class="no-border-y">
+                                                    <tr><!-- 同店铺第一个商品 -->
+                                                        <td width="13%">
+                                                            <a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', ['id' => $vo['attr_list_id']])}">
+                                                                <img src="{:myurl($vo['images_'], 80)}" class="img-thumbnail"></a>
+                                                            <input type="hidden" name="orders_goods_id[]" value="{$vo.id}">
+                                                        </td>
+                                                        <td valign="top" width="30%" class="text-left">
+                                                            <a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', ['id' => $vo['attr_list_id']])}">{$vo.goods_name}</a>
+                                                            <div class="md5 text-gray mt5">颜色/尺码：{$vo.attr_name}</div>
+                                                        </td>
+                                                        <td width="12%">
+                                                            <span class="text_yellow">{$vo.price}</span>
+                                                        </td>
+                                                        <td width="10%">×{$vo.num}</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                                </volist>
+                                            </td>
+                                        <td style="vertical-align: middle; width:12%">
+                                            <p><a class="text_blue" href="{:U('/orders/detail', ['id' => $data['s_no']])}">详情</a></p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table><!-- 订单信息结束 -->
+                        </div>
+
+                        
+                    </form>
+
+                        <div class="row">
+                        	<div class="col-md-3">
+                        		
+                        	</div>
+                        	<div class="col-md-6">
+                        		{$form.html}
+                        	</div>
+                        	<div class="col-md-2">
+                        		
+                        	</div>
+                        </div>
+
+                </div>
+
+            </div>
+        </div>
+        <!-- my codeing over -_-   -->
+
+    </div>
+</block>
+
+<block name="css">
+
+</block>
+
+<block name="script">
+    <!-- to do your javascript codeing -->
+    <script>
+    	/*
+        $(document).ready(function() {
+            $(".btn-submit").click(function() {
+                var result=true;
+                $("#formadd input").each(function() {
+                    if($(this).val() == '') {
+                        talert({status:0,msg:$(this).attr('tips')});
+                        result=false;
+                        return false;
+                    }
+                });
+                if(!result){return false;}
+                var data	=	$("#formadd").serialize();
+
+                ajax_post({
+                    url:"{:U('/run/authRun')}",
+                    headers : {Action : '{:enCryptRestUri("/Orders/priceEdit")}'},
+                    data : data,
+                },function(res) {
+                    talert({status:res.code,msg:res.msg});
+                    if(res.code == 1) {
+                        gourl({url:'{:U("/orders/detail", ["id" => $_GET["id"]])}'});
+                    }
+                })
+            });
+
+
+            var count = $("tr.count").size();
+            $(".rwospanTd").attr('rowspan', count);
+        })
+        */
+    </script>
+    {$form.js}
+</block>

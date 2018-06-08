@@ -1,0 +1,421 @@
+<include file="Public:header" />
+		<div class="page-group">
+			<div id="page-search-goods" class="page" data-page_num="{$pagelist.pageinfo.page}" data-cid="{$_GET.cid}" data-sort="{$_GET.sort}" data-is_self="{$_GET.is_self}" data-is_daigou="{$_GET.is_daigou}" data-free_express="{$_GET.free_express}" data-score_ratio="{$_GET.score_ratio}" data-is_shop="{$_GET.is_shop}" data-min_price="{$_GET.min_price}" data-max_price="{$_GET.max_price}" data-city_id="{$_GET.city_id}" data-option="{$_GET.option}" data-q="{$_GET.q}" data-score_type="{$_GET.score_type}">
+				<input type="hidden" name="p" id="p" value="2" />					
+				<!-- 标题栏 -->
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left back" href="/"></a>
+					<a class="search-bar" href="/Search" data-no-cache="true"><i class="iconfont icon-sousuo_sousuo"></i> 请输入关键词、店铺名</a>
+					<a class="icon iconfont icon-category pull-right ml5 ac-menu" onclick="top_menu()"></a>
+				</header>
+
+				<!-- 浮动导航 -->
+				<include file="Public:fixed-menu" />
+		
+		
+				<!-- 这里是页面内容区 -->		
+				<div class="content infinite-scroll" data-distance="100" data-p="1">
+					<notempty name="pagelist.attr.category">
+				
+					<div class="iscroll-category">
+						<div id="scroller" style="width:{:count($pagelist['attr']['category'])*4}rem;min-width:100%;">
+							<ul>
+							<volist name="pagelist.attr.category" id="vo">
+								<li>
+									<a href="/Search/goods/cid/{$vo.id}">{$vo.category_name}</a>
+								</li>
+							</volist>								
+							</ul>
+						</div>
+					</div>
+					
+					<div class="clearfix" style="margin-top: 2rem;"></div>
+					</notempty>
+					
+					<div class="sort-box">
+						<div>
+							<a data-no-cache="true" href="{:U('/Search/goods', array_merge($_GET, ['sort' => '']))}" class="{:I('get.sort')==''?'text-red':''}">综合</a>
+						</div>
+						<div>
+							<a data-no-cache="true" href="{:U('/Search/goods', array_merge($_GET, ['sort' => I('get.sort')=='sale_num-desc'?'sale_num-desc':'sale_num-desc']))}" class="{:I('get.sort')=='sale_num-desc'?'text-red':''}">销量</a>
+						</div>
+						<div>
+							<a data-no-cache="true" href="{:U('/Search/goods', array_merge($_GET, ['sort' => I('get.sort')=='price-asc'?'price-desc':'price-asc']))}" class="{:I('get.sort')=='price-desc'?'text-red':''} {:I('get.sort')=='price-asc'?'text-red':''}">价格
+							{:I('get.sort')=='price-asc'?'<i class="iconfont icon-xiangxia"></i>':'<i class="iconfont icon-xiangshang"></i>'}
+							</a>
+						</div>
+						<!--
+						<div>
+							<a data-no-cache="true" href="{:U('/Search/goods', array_merge($_GET, ['is_shop' => I('get.is_shop')==1?'':'1']))}" class="{:I('get.is_shop')==1?'text-red':''} {:I('get.sort')=='price-asc'?'text-red':''}">店铺
+							</a>
+						</div>	
+						-->
+						<div>
+							<a href="javascript:;" class="open-panel">筛选 <i class="iconfont icon-category1"></i></a>
+						</div>
+					</div>
+					<div class="clearfix" style="margin-top: 2rem;"></div>
+					<notempty name="recharge">
+						<div class="user-order-menu orders row no-gutter md5 ucenter-badge">
+							<a class="col-33 item-link" href="/TellRecharge/index" data-no-cache="true">
+								<i class="iconfont icon-huafeichongzhi"></i>
+								<div>充话费</div>
+							</a>
+							<a class="col-33 item-link" href="/TellRecharge/index/type/2" data-no-cache="true">
+								<i class="iconfont icon-huafeiliuliang"></i>
+								<div>充流量</div>
+							</a>
+							<a class="col-33 item-link" href="/TellRecharge/recharge_list" data-no-cache="true">
+								<i class="iconfont icon-huafeichaxun"></i>
+								<div>充值查询</div>
+							</a>						
+						</div>
+					</notempty>
+					<notempty name="pagelist.list">
+					<div class="list-block goods-list" style="margin-top: 0.5rem !important;">
+						<ul class="list-container">							
+							<volist name="pagelist.list" id="vo">
+							<li class="goods-content item-link" style="min-height: 121px;">
+								<a class="goods-item" href="/Goods/view/id/{$vo.data.attr_list.0.id}">
+									<div class="goods-images" style="min-width: 100px;">
+										<img class="lazyload" data-sizes="auto" data-src="{:myurl($vo['data']['images'],320)}" alt="商品主图" src="../Public/images/nopic.gif" width="100">
+									</div>
+									<div class="goods-info">
+										<div class="goods-name">{$vo.data.goods_name}</div>
+										
+										<div class="goods-info-more">
+											<div class="goods-price"><img class="icon-price" src="../Public/images/icon_{$vo.data.score_type}.png">{$vo.data.price} {:$vo['data']['is_daigou']==1?'<span class="lab lab-danger lab-xs ml03">代</span> ':''}</div>
+											<div class="score">{:$vo['data']['is_self']==1?'<span class="lab lab-trans lab-danger lab-xs mr03">自营</span> ':''}<!--奖励 {:$vo['data']['score_ratio'] * $vo['data']['price'] * 100} 积分，-->
+											<if condition="$vo['data']['is_goupiao'] eq 0">已售出 {$vo.data.sale_num}件</if></div>
+										</div>
+									</div>
+								</a>
+							</li>
+							</volist>
+						</ul>
+
+					</div>
+					<!-- 加载提示符 -->
+					<div class="infinite-scroll-preloader">
+						<div class="preloader">
+						</div>
+					</div>
+					<else />
+						<div class="nors text-center">
+							<div><i class="iconfont icon-sousuowujieguo ft3"></i></div>
+							 找不到记录！
+						</div>
+					</notempty>					
+				</div>			
+				
+			</div>
+		
+			<!-- popup, panel 等放在这里 -->
+			<div class="panel-overlay"></div>
+			<!-- Left Panel with Reveal effect -->
+			<div class="panel panel-right panel-reveal">
+
+			</div>
+			
+			
+			<!--筛选条件-->
+			<div class="hide select_options">
+				<div class="panel-box">
+					<!--<div class="panel-box-title">-->
+						<!--<div class="pull-right" onclick="search_goods($(this))" data-id="{$_GET['cid']}">确定</div>-->
+						<!--<div>筛选</div>-->
+					<!--</div>-->
+					<div class="panel-box-content">
+						<div class="row btn-box">
+							<!--
+							<div class="col-50">
+								<div class="item" data-val="is_self" onclick="search_isset($(this))">官推</div>
+							</div>
+							<div class="col-50">
+								<div class="item" data-val="is_daigou" onclick="search_isset($(this))">代购</div>
+							</div>
+							-->
+							<div class="col-50">
+								<div class="item" data-val="score_1" onclick="search_isset($(this))">金积分</div>
+							</div>
+							<div class="col-50">
+								<div class="item" data-val="score_4" onclick="search_isset($(this))">银积分</div>
+							</div>
+							<div class="col-50">
+								<div class="item" data-val="score_2" onclick="search_isset($(this))">现金</div>
+							</div>
+							<div class="col-50">
+								<div class="item" data-val="free_express" onclick="search_isset($(this))">包邮</div>
+							</div>
+						</div>
+				
+						<div class="list-block m0">
+							<ul>
+								<li class="category_city">
+									<a class="item-link item-content" onclick="select_province($(this))">
+										<div class="item-inner">
+											<div class="item-title">地区</div>
+											<div class="item-after"></div>
+										</div>
+									</a>
+								</li>
+				
+								<notempty name="pagelist.attr.category">
+									<li class="category_option">
+										<a class="item-link item-content" onclick="select_category($(this))">
+											<div class="item-inner">
+												<div class="item-title">分类</div>
+												<div class="item-after"></div>
+											</div>
+										</a>
+									</li>
+								</notempty>
+				
+								<notempty name="pagelist.attr.option">
+									<li class="category_attr">
+										<a class="item-link item-content" onclick="select_attr($(this))">
+											<div class="item-inner">
+												<div class="item-title">属性</div>
+												<div class="item-after"></div>
+											</div>
+										</a>
+									</li>
+								</notempty>
+				
+								<li class="category_price">
+									<a class="item-link item-content" onclick="select_price($(this))">
+										<div class="item-inner">
+											<div class="item-title">价格</div>
+											<div class="item-after"></div>
+										</div>
+									</a>
+								</li>
+							</ul>
+						</div>
+						<div class="row no-gutter" style="position: absolute;bottom: 2.2rem;width: 100%;">
+							<a class="col-50 text-center bg-gray close-panel" style="padding: 0.3rem;" href="javascript:;">取消</a>
+							<a class="col-50 text-center bg-yellow" onclick="search_goods($(this))" style="padding: 0.3rem;" href="javascript:;">确定</a>
+						</div>
+					</div>
+				</div>	
+			</div>
+
+			<!--城市一级分类-->
+			<div class="hide province">
+				<div class="panel-box">
+					<div class="panel-box-title">
+						<div class="icon icon-left pull-left" onclick="select_options()"></div>
+						<div>城市</div>
+					</div>
+				
+					<div class="panel-box-content">
+						<div class="list-block m0">
+							<ul>
+									<li onclick="search_goods_select_city($(this))" data-id="">
+										<a href="#" class="item-link item-content">
+											<div class="item-inner">
+												<div class="item-title">不限</div>
+											</div>
+										</a>
+									</li>								
+								<volist name="city" id="vo">
+									<li onclick="search_goods_select_city($(this))" data-id="{$vo.id}">
+										<a href="#" class="item-link item-content">
+											<div class="item-inner">
+												<div class="item-title">{$vo.sub_name}</div>
+											</div>
+										</a>
+									</li>
+								</volist>
+							</ul>
+						</div>
+					</div>
+				</div>	
+			</div>
+
+			<!--城市二级分类-->
+			<div class="hide city">
+				<volist name="city" id="vo">
+				<div class="panel-box" data-id="{$vo.id}">
+					<div class="panel-box-title">
+						<div class="icon icon-left pull-left" onclick="select_province()"></div>
+						<div>{$vo.sub_name}</div>
+					</div>
+				
+					<div class="panel-box-content">
+						<div class="list-block m0">
+							<ul>
+								<volist name="vo.dlist" id="city">
+									<li onclick="search_goods_select_city_item($(this))" data-id="{$city.id}">
+										<a href="#" class="item-link item-content">
+											<div class="item-inner">
+												<div class="item-title">{$city.a_name}</div>
+											</div>
+										</a>
+									</li>
+								</volist>
+							</ul>
+						</div>
+					</div>
+				</div>	
+				</volist>
+			</div>
+
+			<!--分类-->
+			<div class="hide category">
+				<div class="panel-box">
+					<div class="panel-box-title">
+						<div class="icon icon-left pull-left" onclick="select_options()"></div>
+						<div>分类</div>
+					</div>
+				
+					<div class="panel-box-content">
+						<div class="list-block m0">
+							<ul>
+								<li>
+									<div class="item-link item-content" onclick="select_category_item($(this))" data-id="">
+										<div class="item-inner">
+											<div class="item-title">全部</div>
+										</div>
+									</div>
+								</li>				
+								<volist name="pagelist.attr.category" id="vo">
+									<li>
+										<div class="item-link item-content" onclick="select_category_item($(this))" data-id="{$vo.id}">
+											<div class="item-inner">
+												<div class="item-title">{$vo.category_name}</div>
+											</div>
+										</div>
+									</li>
+								</volist>
+							</ul>
+						</div>
+					</div>
+				</div>	
+			</div>
+
+			<!--属性-->
+			<div class="hide goods_attr">
+				<div class="panel-box">
+					<div class="panel-box-title">
+						<div class="icon icon-left pull-left" onclick="select_options()"></div>
+						<div class="pull-right hide">确定</div>
+						<div>属性</div>
+					</div>
+				
+					<div class="panel-box-content">
+						<div class="list-block m0">
+							<ul>
+								<li>
+									<div class="item-link item-content" onclick="select_attr_item($(this))" data-id="">
+										<div class="item-inner">
+											<div class="item-title">全部</div>
+										</div>
+									</div>
+								</li>				
+								<volist name="pagelist.attr.option" id="vo">
+									<li>
+										<div class="item-link item-content" onclick="select_attr_data($(this))" data-id="{$key}">
+											<div class="item-inner">
+												<div class="item-title">{$vo.name}</div>
+											</div>
+										</div>
+									</li>
+								</volist>
+							</ul>
+						</div>
+					</div>
+				</div>	
+			</div>
+
+			<!--属性二级-->
+			<div class="hide goods_attr_data">
+				<volist name="pagelist.attr.option" id="vo">
+				<div class="panel-box" data-id="{$key}">
+					<div class="panel-box-title">
+						<div class="icon icon-left pull-left" onclick="select_attr()"></div>
+						<div>{$vo.name}</div>
+					</div>
+				
+					<div class="panel-box-content">
+						<div class="list-block m0">
+							<ul>
+								<volist name="vo.data" id="data">
+									<li onclick="select_attr_item($(this))" data-id="{$data.id}">
+										<a href="#" class="item-link item-content">
+											<div class="item-inner">
+												<div class="item-title">{$data.name}</div>
+											</div>
+										</a>
+									</li>
+								</volist>
+							</ul>
+						</div>
+					</div>
+				</div>	
+				</volist>
+			</div>
+
+			<!--价格-->
+			<div class="hide price">
+				<div class="panel-box">
+					<div class="panel-box-title">
+						<div class="icon icon-left pull-left" onclick="select_options()"></div>
+						<div class="pull-right hide">确定</div>
+						<div>价格</div>
+					</div>
+				
+					<div class="panel-box-content">
+						<div class="list-block m0">
+							<ul>
+								<li>
+									<div class="item-content" onclick="select_price_item($(this))" data-id="0">
+										<div class="item-inner">
+											<div class="item-title">不限</div>
+										</div>
+									</div>
+								</li>				
+
+								<li>
+									<div class="item-link item-content" onclick="select_price_item($(this))" data-id="1">
+										<div class="item-inner">
+											<div class="item-title">0-50</div>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class="item-link item-content" onclick="select_price_item($(this))" data-id="2">
+										<div class="item-inner">
+											<div class="item-title">50-200</div>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class="item-link item-content" onclick="select_price_item($(this))" data-id="3">
+										<div class="item-inner">
+											<div class="item-title">200-500</div>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class="item-link item-content" onclick="select_price_item($(this))" data-id="4">
+										<div class="item-inner">
+											<div class="item-title">500以上</div>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>	
+			</div>
+		
+		</div>	
+		
+
+
+
+
+
+<include file="Public:script" />
+<include file="Public:footer" />

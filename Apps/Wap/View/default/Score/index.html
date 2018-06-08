@@ -1,0 +1,43 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin({ref:true})"></i>
+		</div>
+		<div class="title">
+			积分
+		</div>
+		<div class="r">
+			<div class="text" onclick="openWin({name:'score_orders',url:'/Score/orders'})">购买记录</div> <div class="text" onclick="openWin({name:'score_list',url:'/Score/score_list'})">明细</div>
+		</div>
+	</div>
+</header>
+<section>
+	<div class="cash-box md20">
+		<div class="all_money">
+			0
+		</div>
+		<div>积分账户（分）</div>	
+	</div>
+	
+	<div class="p10">
+		<div class="btn btn-lg btn-block btn-danger btn-trans md10" onclick="openWin({name:'score_add',url:'__URL__/add'})">购买积分</div>
+		<div class="btn btn-lg btn-block btn-danger md10" onclick="openWin({name:'finance',url:'/Finance/index'})">投资理财</div>
+		<div class="btn btn-lg btn-block md10" onclick="openWin({name:'goods',url:'/Goods/index'})">兑换商品 >></div>
+	</div>
+</section>
+
+<script>
+	fixBar(1);
+	
+	ajax_post({
+		url:'/Api/api',
+		data:{apiurl:'/Account/account',is_openid:1},
+	},function(ret){
+		if(ret.code==1){			
+			$('.page.active .all_money').html(ret.data.ac_score);
+		}
+	});
+	
+
+	
+</script>

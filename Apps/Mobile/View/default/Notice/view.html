@@ -1,0 +1,23 @@
+<include file="Public:header" />
+	<div class="page-group">
+		<div id="page-notice-vies" class="page">
+			<!-- 标题栏 -->
+			<header class="bar bar-nav">
+				<a class="icon icon-left pull-left back" href="/"></a>
+				<h1 class="title">通知详情</h1>
+			</header>
+			<!-- 浮动导航 -->
+			<include file="Public:fixed-menu" />
+			<!-- 这里是页面内容区 -->		
+			<div class="content">
+				<div class="content-padded">
+				{$data.content}
+				<p class="color-gray">收件时间 {$data.atime}</p>
+				<div>
+			</div>	
+		</div>		
+	</div>	
+		
+
+<include file="Public:script" />
+<include file="Public:footer" />

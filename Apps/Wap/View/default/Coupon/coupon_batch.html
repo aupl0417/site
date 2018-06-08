@@ -1,0 +1,67 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			优惠券领取
+		</div>
+		<div class="r">
+		</div>
+	</div>
+</header>
+<section>
+	<div class="load-body">数据加载中……</div>	
+</section>
+
+<script id="my_receive_agent_list" type="text/html">
+<% for(i=0;i<data.length;i++){ %>
+	<div class="line-box hover row" onclick="get_coupon(<%=data[i].id%>)">
+		<div class="col-70"><span class="b">所属店铺：<%= data[i].shop_name %></span></div>
+		<div class="col-30 text-right text-danger">立即领取</div>	
+	</div>
+	<div class="line-box-m hover row noicon md10">
+		<div class="col-20">
+			<div class="p5" onclick="openWin({name:'shop',url:'/Shop/index/shop_id/<%= data[i].shop_id %>'})"><img src="<%= data[i].shop_logo %>" alt="商家LOGO"></div>
+		</div>
+		<div class="col-50">
+			<p>发布时间：<%= data[i].atime %></p>
+			<p>过期时间：<%= data[i].sday %> 至 <%= data[i].eday %></p>
+		</div>
+		<div class="col-30 text-right">
+			<p>需消费：<span class="text-danger">￥<%= data[i].min_price %> 元</span></p>
+			<p>面值：<span class="text-danger">￥<%= data[i].price %> 元</span></p>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+	
+<% } %>
+</script>
+
+<script>
+	fixBar(1);
+	
+	ajax_post({
+		url:'/Api/api',
+		data:{apiurl:'/Coupon/coupon_batch',is_openid:1,shop_id:'{$_GET["shop_id"]}',no_sign:'shop_id'},
+	},function(ret){
+		if(ret.code==1){			
+			var html = template('my_receive_agent_list', {data:ret.data.list});
+			$('.page.active section').html(html);
+			hover('.page.active section');
+		}else if(ret.code==3){
+			$('.page.active section').html('<div class="load-body">没有可领取的优惠券</div>');
+			hover('.page.active section');
+		}
+	});
+	function get_coupon(b_id){
+		ajax_post({
+			url:'/Api/api',
+			data:{apiurl:'/Coupon/get_coupon',is_openid:1,b_id:b_id},
+		},function(ret){
+			valert({msg:ret.msg});
+		});
+	}
+
+	
+</script>

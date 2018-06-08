@@ -1,0 +1,29 @@
+<!-- 大标题类目 -->
+<a class="text-center" href="{:DM('s')}{:U('/category')}"><div class="bg_red text_white fs16 ptb10 w200">所有商品分类</div></a>
+<!-- 菜单 -->
+<div class="ab w200 bg_white menu_nav menu_new">
+	<volist name="data" id="vo" offset="0" length='12'>
+		<h5 class="pl15 pr10 text_2b fs14">
+			{$vo.category_name}<i class="fa fa-angle-right fs16 fr"></i>
+			<div class="ab clearfix solid_b menu_block">
+				<div class="menu_cl pd10">
+					<div class="clearfix mb7">							
+						<strong class="fl menu_cl_tle pr20">时尚女装</strong>
+						<div class="fl menu_cl_body clearfix">
+							<a class="fl pr10" href="">女靴</a><span class="pr10 fl">|</span>
+							<a class="fl pr10" href="">情侣鞋</a><span class="pr10 fl">|</span>
+							<a class="fl pr10" href="">雪地靴</a><span class="pr10 fl">|</span>
+							<a class="fl pr10" href="">单鞋</a><span class="pr10 fl">|</span>
+						</div>						
+					</div>
+				</div>												
+				<div class="fr w225 ml10">
+					<a href=""><img class="mb8" src="images/shop/shop_4.jpg"></a>
+					<a href=""><img class="mb8" src="images/shop/shop_4.jpg"></a>
+					<a href=""><img class="mb8" src="images/shop/shop_4.jpg"></a>
+				</div>
+			</div>
+		</h5>
+	</volist>
+</div>
+		

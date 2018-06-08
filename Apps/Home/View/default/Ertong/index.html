@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>活动页面</title>
+		<link rel="stylesheet" href="../Public/ertong/css/bootstrap.css" />
+		<link rel="stylesheet" href="../Public/ertong/css/style.css" />
+		
+		<script type="text/javascript" src="__PUBLIC__/new_design/flatdream/js/jquery.js"></script>
+		<script type="text/javascript" src="__PUBLIC__/Jquery/jquery.lazyload.min.js"></script>
+	
+		
+	</head>
+	<body>
+		<include file="Home@Public:header" />
+		<include file="Home@Public:top" />
+		<a name="top"></a>
+		<div class="content">
+		
+			<div><img src="../Public/ertong/images/1.jpg" style="min-height:462px;width:100%"/></div>
+			<a name="f1"></a>
+			<div><img src="../Public/ertong/images/2.jpg" style="min-height:201px;width:100%"/></div>
+			<div class="link blue">
+				<!--学习用品-->
+				<img src="../Public/ertong/images/3.jpg" style="min-height:521px;width:100%;"/>
+				<div class="link-goods clearfix">
+					<volist name="goods" id="vo" offset="0" length='8'>
+						<div class="fl link-goods-item">
+							<a href="{$vo.goods.url}" target="_blank">
+							<img class="lazyload" data-original="{$vo.goods.images}" src="__PUBLIC__/images/nopic.png">
+							<div class="goods_name">
+								{$vo.goods.goods_name|default='读取失败'}
+							</div>
+							<div class="goods_price clearfix">
+								<div class="fl">￥<span>{$vo.goods.price|default='0.00'}</span></div>
+								<div class="fr"><img src="../Public/ertong/images/99.jpg"/></div>
+							</div>
+							</a>
+						</div>
+					</volist>
+				</div>
+			</div>
+			<a name="f2"></a>
+			<div><img src="../Public/ertong/images/4.jpg" style="min-height:283px;width:100%"/></div>
+			<div class="link violet">
+				<!--儿童玩具-->
+				<img src="../Public/ertong/images/5.jpg" style="min-height:521px;width:100%;"/>
+				<div class="link-goods clearfix">
+					<volist name="goods" id="vo" offset="8" length='8'>
+						<div class="fl link-goods-item">
+							<a href="{$vo.goods.url}" target="_blank">
+							<img class="lazyload" data-original="{$vo.goods.images}" src="__PUBLIC__/images/nopic.png">
+							<div class="goods_name">
+								{$vo.goods.goods_name|default='读取失败'}
+							</div>
+							<div class="goods_price clearfix">
+								<div class="fl">￥<span>{$vo.goods.price|default='0.00'}</span></div>
+								<div class="fr"><img src="../Public/ertong/images/98.jpg"/></div>
+							</div>
+							</a>
+						</div>
+					</volist>
+				</div>
+			</div>
+			<a name="f3"></a>
+			<div><img src="../Public/ertong/images/6.jpg" style="min-height:268px;width:100%"/></div>
+			<div class="link green">
+				<!--儿童鞋服-->
+				<img src="../Public/ertong/images/7.jpg" style="min-height:1044px;width:100%;"/>
+				<div class="link-goods clearfix">
+					<volist name="goods" id="vo" offset="16" length='16'>
+						<div class="fl link-goods-item">
+							<a href="{$vo.goods.url}" target="_blank">
+							<img class="lazyload" data-original="{$vo.goods.images}" src="__PUBLIC__/images/nopic.png">
+							<div class="goods_name">
+								{$vo.goods.goods_name|default='读取失败'}
+							</div>
+							<div class="goods_price clearfix">
+								<div class="fl">￥<span>{$vo.goods.price|default='0.00'}</span></div>
+								<div class="fr"><img src="../Public/ertong/images/97.jpg"/></div>
+							</div>
+							</a>
+						</div>
+					</volist>
+				</div>
+			</div>
+			<a name="f4"></a>
+			<div><img src="../Public/ertong/images/8.jpg" style="min-height:0px;width:100%"/></div>
+			<div class="link orange">
+				<!--零食-->
+				<img src="../Public/ertong/images/9.jpg" style="min-height:10px;width:100%;"/>
+				<div class="link-goods clearfix">
+					<volist name="goods" id="vo" offset="32" length='8'>
+						<div class="fl link-goods-item">
+							<a href="{$vo.goods.url}" target="_blank">
+							<img class="lazyload" data-original="{$vo.goods.images}" src="__PUBLIC__/images/nopic.png">
+							<div class="goods_name">
+								{$vo.goods.goods_name|default='读取失败'}
+							</div>
+							<div class="goods_price clearfix">
+								<div class="fl">￥<span>{$vo.goods.price|default='0.00'}</span></div>
+								<div class="fr"><img src="../Public/ertong/images/96.jpg"/></div>
+							</div>
+							</a>
+						</div>
+					</volist>
+				</div>
+			</div>
+			<a name="f5"></a>
+			<div><img src="../Public/ertong/images/10.jpg" style="min-height:0px;width:100%"/></div>
+			<div class="link red">
+				<!--运动户外-->
+				<img src="../Public/ertong/images/11.jpg" style="min-height:10px;width:100%;"/>
+				<div class="link-goods clearfix">
+					<volist name="goods" id="vo" offset="40" length='8'>
+						<div class="fl link-goods-item">
+							<a href="{$vo.goods.url}" target="_blank">
+							<img class="lazyload" data-original="{$vo.goods.images}" src="__PUBLIC__/images/nopic.png">
+							<div class="goods_name">
+								{$vo.goods.goods_name|default='读取失败'}
+							</div>
+							<div class="goods_price clearfix">
+								<div class="fl">￥<span>{$vo.goods.price|default='0.00'}</span></div>
+								<div class="fr"><img src="../Public/ertong/images/95.jpg"/></div>
+							</div>
+							</a>
+						</div>
+					</volist>
+				</div>
+			</div>
+			<div><a href="#top"><img src="../Public/ertong/images/12.jpg" style="min-height:0px;width:100%"/></a></div>
+			
+			
+			
+			
+			
+			
+			
+			
+			<!--右侧-->
+			<div class="right-nav">
+				<div class="link">
+					<img src="../Public/ertong/images/13.png"/>
+					<a href="#f1"><img class="f1 link-button" src="../Public/muqinjie/images/100.png"/></a>
+					<a href="#f2"><img class="f2 link-button" src="../Public/muqinjie/images/100.png"/></a>
+					<a href="#f3"><img class="f3 link-button" src="../Public/muqinjie/images/100.png"/></a>
+					<a href="#f4"><img class="f4 link-button" src="../Public/muqinjie/images/100.png"/></a>
+					<a href="#f5"><img class="f5 link-button" src="../Public/muqinjie/images/100.png"/></a>
+					<a href="#top"><img class="top link-button" src="../Public/muqinjie/images/100.png"/></a>
+					
+				</div>
+			</div>
+		</div>
+	</body>
+	
+
+	<script type="text/javascript"> 
+	$(function() { 
+		$("img").lazyload({
+			 placeholder : "__PUBLIC__/images/nopic.png", //加载图片前的占位图片
+			 effect      : "fadeIn", //加载图片使用的效果(淡入)
+			 skip_invisible : false,
+			 threshold : 200
+		});
+	}); 
+
+	</script>
+</html>

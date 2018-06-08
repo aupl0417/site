@@ -1,0 +1,38 @@
+<form data-url="__URL__/save_prohibit" data-id="#form" id="form" class="form-horizontal vform">
+    {:W('Widget/buildform',array(array(
+    'field'		=>array(
+    
+    array(
+    'formtype'		=>'textarea',
+    'label'			=>'冻结原因',
+    'name'			=>'reason',
+    ),
+
+    array(
+    'formtype'		=>'hidden',
+    'name'			=>'ids',
+    'value'			=>$rs,
+    ),
+    array(
+    'formtype'		=>'html',
+    'label'			=>' ',
+    'html'			=>'<button type="button" class="btn btn-primary btn-150px send-save"><i class="fa fa-check"></i> 确认冻结</button>'
+    ),
+    ),
+    )))}
+</form>
+<script>
+    $(document).ready(function() {
+        $(".send-save").click(function() {
+            var d=$(this).closest('form').data();
+            ajax_post_form({
+                formid:d.id
+            },function(ret){
+                valert(ret);
+                if(ret.status=='success'){
+                    ref();
+                }
+            });
+        })
+    });
+</script>

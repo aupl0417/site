@@ -1,0 +1,274 @@
+<div class="clearfix">
+	<div class="pull-right text-gray" onclick="$(this).closest('tr').toggleClass('hide');"><i class="fa fa-times-circle-o fa-2x"></i></div>	
+</div>
+
+<div class="p20 box">
+	<div class="row">
+		<div class="col-xs-12 auth-text">
+			<div class="border-d ft18 md10 p10 strong">用户信息</div>
+			<div>用户ID：{$info.uid}</div>
+			<div>用户名：{$info.user.nick}</div>
+			
+			
+
+			<div>状态：{$info.status_name}</div>			
+			<div>入驻时间：{$info.atime}</div>
+			<div class="md20"></div>
+			<div class="border-d ft18 md10 p10 strong">基本信息</div>
+			<div class="row">
+				<if condition="$info[type] eq 1">
+					<div class="col-xs-12">
+						<div>用户开店类型：个人开店</div>
+						<div>店铺名称：{$info.shop_name}</div>
+						<div>姓名：{$info.name}</div>
+						<div>联系电话：{$info.mobile}</div>
+						<div>身份证号：{$info.id_no}</div>
+						<div>联系地址：{$area[$info[province]]}{$area[$info[city]]}{$area[$info[district]]}{$area[$info[town]]}{$info.street}</div>
+						<div>
+							<ul style="display:flex;flex-direction:row">
+								<li style="width:20%;margin-right:5%">
+									<i></i>
+									<a href="{$info.id_pic1}" class="image-zoom">
+										<img src="{$info.id_pic1}" alt="" width="100%">
+									</a>
+									<div style="text-align: center;">法人身份证正面</div>
+								</li>
+								<li style="width:20%;margin-right:5%">
+									<i></i>
+									<a href="{$info.id_pic2}" class="image-zoom">
+									<img src="{$info.id_pic2}" alt="" width="100%">
+									</a>
+									<div style="text-align: center;">法人身份证反面</div>
+								</li>
+								<li style="width:20%;margin-right:5%">
+									<i></i>
+									<a href="{$info.id_pic3}" class="image-zoom">
+									<img src="{$info.id_pic3}" alt="" width="100%">
+									</a>
+									<div style="text-align: center;">法人手持身份证</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				<else/>
+					<div class="col-xs-12">
+						<div>用户开店类型：企业开店</div>
+						<div>店铺名称：{$info.shop_name}</div>
+						<div>公司名称：{$info.company_name}</div>
+						<div>法人姓名：{$info.name}</div>
+						<div>联系电话：{$info.mobile}</div>
+						<div>法人身份证号：{$info.id_no}</div>
+						<div>社会信用代码：{$info.credit_code}</div>
+						<div>联系地址：{$area[$info[province]]}{$area[$info[city]]}{$area[$info[district]]}{$area[$info[town]]}{$info.street}</div>
+						<div>
+							<ul style="display:flex;flex-direction:row">
+								<li style="width:20%;margin-right:5%">
+									<i></i>
+									<a href="{$info.id_pic1}" class="image-zoom">
+										<img src="{$info.id_pic1}" alt="" width="100%">
+									</a>
+									<div style="text-align: center;">法人身份证正面</div>
+								</li>
+								<li style="width:20%;margin-right:5%">
+									<i></i>
+									<a href="{$info.id_pic2}" class="image-zoom">
+										<img src="{$info.id_pic2}" alt="" width="100%">
+									</a>
+									<div style="text-align: center;">法人身份证反面</div>
+								</li>
+								<li style="width:20%;margin-right:5%">
+									<i></i>
+									<a href="{$info.id_pic3}" class="image-zoom">
+										<img src="{$info.id_pic3}" alt="" width="100%">
+									</a>
+									<div style="text-align: center;">法人手持身份证</div>
+								</li>
+								<li style="width:20%;margin-right:5%">
+									<i></i>
+									<a href="{$info.business_pic}" class="image-zoom">
+										<img src="{$info.business_pic}" alt="" width="100%">
+									</a>
+									<div style="text-align: center;">营业执照</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</if>
+			</div>
+			<div class="md20"></div>
+			<div class="ft18 md10 p10 strong">提现银行卡</div>
+			<div class="row">
+				
+				<div class="col-xs-12">
+					<div>银行卡：
+						<volist name="banks" id="vo">
+							<if condition="$vo[id] eq $info[bank]">
+								{$vo.bank_name}
+							</if>
+						</volist>
+					</div>
+					<div>户主名：{$info.bank_user}</div>
+					<div>开户行：{$area[$info[bank_province]]}{$area[$info[bank_city]]}{$info.bank_open}</div>
+					<div>卡号：{$info.bank_no}</div>
+				</div>
+			</div>
+			
+			<div class="md20"></div>
+			<div class="border-d ft18 md10 p10 strong">选择套餐</div>
+			
+			<div class="row">
+				<div class="col-xs-12">
+					<div>
+						选择套餐：
+						<volist name="info.package.package_select" id="vo">
+							<if condition="$vo eq 1">
+								金积分
+							<elseif condition="$vo eq 4"/>
+								银积分
+							<elseif condition="$vo eq 2"/>
+								现金
+							</if>
+						</volist>
+					</div>
+				</div>
+			</div>
+			<div class="md20"></div>
+			<div class="border-d ft18 md10 p10 strong">汇款凭证</div>
+			
+			<div class="row">
+				<div class="col-xs-12">
+					<div>转账银行：{$info.package.bank}</div>
+					<div>卡号：{$info.package.bank_account}</div>
+					<div>户名：{$info.package.bank_user_name}</div>
+					<div>转账金额：{$info.package.pay_price}</div>
+					<div>
+						<ul class="list-unstyled lzx-photo-ul">
+							<li style="width:20%;margin-right:5%">
+								<i></i>
+								<a href="{$info.package.voucher}" class="image-zoom">
+									<img src="{$info.package.voucher}" alt="" style="width:100%;">
+								</a>
+								<div style="text-align:center;">付款凭证</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<div class="ft18 strong p10 border-d mt20 md20">雇员审核</div>
+	
+	<div class="row">
+		<div class="col-xs-12">
+			<div>当前状态：{$info.status_name}</div>
+			<notempty name="info.package.examine_remark">
+			<div>上次审核备注：{$info.package.examine_remark}</div>
+			</notempty>
+		</div>
+	</div>
+	
+	<form data-url="__URL__/ajax_examine" data-id="#form_{$info.id}" id="form_{$info.id}" class="form-horizontal vform" onsubmit="return submit_form($(this))">
+		<table class="no-bg no-bordered">
+			<tr>
+				<td width="30%" class="text-right strong">审核状态</td>
+				<td width="70%" >
+					<label class="mr20"><input type="radio" class="i-red-square" name="status" value="3" > 通过</label>
+					<label ><input type="radio" class="i-red-square" name="status" value="4" > 驳回</label>
+				</td>
+			</tr>
+			<tr>
+				<td width="30%" class="text-right strong">驳回原因(驳回必填)：</td>
+				<td width="70%" >
+					<textarea name="examine_remark" placeholder="请输入备注" class="form-control"></textarea>
+				</td>
+				
+			</tr>	
+			<tr>
+				<td width="30%" class="text-right strong"></td>
+				<td width="70%">
+					<button type="submit" class="btn btn-danger btn-150px">提交</button>
+				</td>
+				
+			</tr>			
+		</table>
+		<input type="hidden" name="id" value="{$info.id}">
+	</form>
+</div>
+<div class="clearfix">
+	<div class="pull-right text-gray" onclick="$(this).closest('tr').toggleClass('hide');"><i class="fa fa-times-circle-o fa-2x"></i></div>	
+</div>
+
+<script>
+image_zoom();
+function submit_form(obj){
+	var formid='#'+obj.attr('id');
+	var data = getFormJson(formid);
+
+	
+	if(data.status != 4 && data.status != 3){
+		valert({status:'warning',msg:'请选择审核状态'});
+		return false;
+	}
+	
+	if(data.status == 4 && data.examine_remark == ''){
+		valert({status:'warning',msg:'不通过必须填写备注！'});
+		return false;
+	}
+	
+	
+	
+	ajax_post_form({
+		formid:formid,
+	},function(ret){
+		valert(ret);
+		if(ret.status=='success'){
+			var tag='#item-{$info.id}';
+			var url='__URL__/show_examine/id/{$info.id}';
+			loadurl({tag:tag,url:url});
+		}		
+	});
+	
+	return false;
+}
+
+function submit_open(obj){
+	var formid='#'+obj.attr('id');
+	var data = getFormJson(formid);
+
+	if(data.status==4 && data.remark==''){
+		valert({status:'warning',msg:'请输入原因'});
+		obj.find('#remark').focus();
+		return false;
+	}
+	
+	ajax_post_form({
+		formid:formid,
+	},function(ret){
+		valert(ret);
+		if(ret.status=='success'){
+			var tag='#item-{$rs.id}';
+			var url='__URL__/view/id/{$rs.id}';
+			loadurl({tag:tag,url:url});
+		}		
+	});
+	
+	return false;
+}
+/*
+$('.logs-add').click(function(){
+	var d=$(this).closest('form').data();
+	ajax_post_form({
+		formid:d.id
+	},function(ret){
+		valert(ret);
+		if(ret.status=='success'){
+			var tag='#item-{$rs.id}';
+			var url='__URL__/view/id/{$rs.id}';
+			loadurl({tag:tag,url:url});
+		}
+	});
+
+});
+*/
+</script>

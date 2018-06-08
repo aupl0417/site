@@ -1,0 +1,91 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body mt10">
+	<include file="Public:nav_statistic" />
+    <div class="container">
+        <include file="Public:side_statistic" />
+
+        <div class="w960 fl">
+            <ol class="breadcrumb pd10 bor_der bor_r0 mt0 mb20">
+                <li><a href="/">数据统计</a> </li>
+                <li><a href="">实时统计</a></li>
+                <li><a href="">实时访客</a></li>
+            </ol>
+
+            <div class="ptb10 solid_b mb35">
+                <span class="fs16">访客列表</span>
+                <span class="pull-right text_77 mt5 mr10">更新时间：{:date('Y-m-d H:i:s',time())}</span>
+            </div>
+            
+            <div class="clearfix mb10 fs14">
+                <span class="mr10 fl">最近<span class="plr5 text_yellow">5</span>条访问记录 </span>
+                <a href = "{:U('/statistic/realtimeVisit')}"><div class="btn btn-primary btn-xs btn-trans btn_m fl mt-1">点击刷新</div></a>
+            </div>
+
+            <table class="bg_white mt-1">
+                <thead class="no-border">
+                    <tr class="bg_f1">
+                        <th class="text-center">序号</th>
+                        <th class="text-center"> 访问时间</th>
+                        <th class="text-center">  入店来源</th>
+                        <th class="text-center" width="20%"> 被访页面</th>
+                        <th class="text-center" width="20%"> 访客位置</th>
+                        <th class="text-center"> 访客编号</th>
+                    </tr>
+                </thead>
+                <tbody class="no-border-y text-center">
+					<volist name="visitList" id="vo">
+                    <tr>
+                        <td class="ptb15">{$vo.no}</td>
+                        <td class="ptb15">{$vo.lastTime}</td>
+                        <td class="ptb15">{$vo.source}</td>
+                        <td class="ptb15 text-left text_blue" style="word-break: break-all;">{$vo.sourceUrl}</td>
+                        <td class="ptb15 text-left text_blue" style="word-break: break-all;">{$vo.visitUrl}</td>
+                        <td class="ptb15">{$vo._id}</td>
+                    </tr>
+					</volist>
+                </tbody>
+             </table>
+             <div class="text-right">
+                <ul class="pagination">
+                    <li class="prev <empty name="page.prevPage">disabled</empty>"><a href="{:U('/statistic/realtimeVisit',array('p'=>$page['prevPage']))}" <empty name="page.prevPage">onclick="return false;"</empty>><span class="fa fa-angle-left"></span>&nbsp;上一页</a></li>
+					<volist name="page.page" id="vo">
+					<li <if condition="$vo.active eq 1">class="active"</if>><a href="{:U('/statistic/realtimeVisit',array('p'=>$vo['p']))}">{$vo.p}</a></li>
+					</volist>
+                    
+                    <li class="next  <empty name="page.nextPage">disabled</empty>"><a href="{:U('/statistic/realtimeVisit',array('p'=>$page['nextPage']))}" <empty name="page.nextPage">onclick="return false;"</empty>>下一页&nbsp;<span class="fa fa-angle-right"></span></a></li>
+                </ul>
+                <div class="pull-right mt25 ml10 clearfix w190">
+                    <span class="pull-left mr5">跳到</span>
+                    <select class="form-control pull-left mt-8" style="width:60px;height:31px" onchange = "window.location.href=''+this.value+''">
+						<for start="1" end="$page.totalPage" comparison="elt">
+						<option value = "{:U('/statistic/realtimeVisit',array('p'=>$i))}" <if condition="$page.nowPage eq $i">selected="selected"</if>>{$i}</option>
+						</for>
+                    </select>
+                    <span class="pull-left ml15">共{$page.totalPage}页</span>
+                </div>
+            </div>
+                        
+
+        </div>
+
+    </div>
+</div>
+
+</block>
+
+<block name="css"></block>
+<block name="script">
+
+<script src="__NEW_DESIGN__flatdream/js/jquery.js"></script>
+<script src="__NEW_DESIGN__flatdream/js/jquery.pushmenu/js/jPushMenu.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.nanoscroller/jquery.nanoscroller.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.sparkline/jquery.sparkline.min.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.ui/jquery-ui.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.gritter/js/jquery.gritter.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/behaviour/core.js"></script>
+<script src="__NEW_DESIGN__flatdream/js/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.flot/jquery.flot.js"></script>
+
+</block>

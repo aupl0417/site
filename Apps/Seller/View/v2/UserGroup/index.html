@@ -1,0 +1,76 @@
+<extend name="Seller@Public:base" />
+<block name="body">
+    <div class="centent_body">
+        <!-- to do your html codeing -->
+        <div class="revision_bg">
+            <div class="container ptb_size_lg clearfix">
+                <!-- 左侧导航 -->
+                <include file="Public:sideNav" />
+                <!-- 左侧导航结束 -->
+
+                <div class="revisionRight pd15" style="width: 1020px"><!-- 右侧内容 -->
+                    <div class="clearfix revisionOrderTab" data-url="">
+                        <a class="fr btn btn-primary" href="{:U('/userGroup/create')}">创建账户组</a>
+                        <a class="orderOption active" href="javascript:;">权限组管理</a>
+                    </div>
+                    <div class="bg-warning pd10 letter-spacing1 mb20">
+                        <i class="fa fa-exclamation-circle fs16 fl text_yellow"></i>
+                        <p class="ml20 mb0">小提示，您当前最多可创建<strong class="text_yellow"> {$shop_info.max_sub_group} </strong>个子账号组。</p>
+                    </div>
+                    <div class="content">
+                        <empty name="data.list">
+                            {:W('Common/Builder/nors', array('param' => array('text' => $data['msg'])))}
+                            <else />
+                            <volist name="data.list" id="vo">
+                                <div class="alert solid_b">
+                                    <a href="javascript:;" data-id="{$vo.id}" class="fr text_yellow fs14 del-addr">删除</a>
+                                    <a href="{:U('/userGroup/edit', ['id' => $vo['id']])}" class="fr text_blue fs14 mr10">修改</a>
+                                    <strong class="fs14 mr10">{$vo.group_name}</strong> <span class="fs14 mr10" style="color: #b8b8b8">|</span> <span style="color: #b8b8b8">{$vo.auths}</span>
+                                </div>
+                            </volist>
+                        </empty>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <!-- my codeing over -_-   -->
+
+    </div>
+</block>
+
+<block name="css">
+
+</block>
+
+<block name="script">
+    <!-- to do your javascript codeing -->
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $(".del-addr").click(function() {
+                var d	=	$(this).data();
+                vmodal({
+                    title:'删除提示',
+                    msg:'您真的要删除吗?',
+                    class:'text-center',
+                    confirm:1,
+                    footer:false,
+                    width:'600px',
+                },function(ret) {
+                    $(".modal-ok").click(function() {
+                        ajax_post({
+                            url:'__SELF__?ret=/SellerSubAccount/delGroup',
+                            data:{id:d.id},
+                        },function(ret) {
+                            talert({status:ret.code,msg:ret.msg});
+                            if(ret.code == 1) {
+                                setTimeout("ref()", 1000);
+                            }
+                        })
+                    })
+                })
+            })
+        });
+    </script>
+</block>

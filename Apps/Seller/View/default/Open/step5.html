@@ -1,0 +1,81 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body">
+	<include file="Public:nav" />
+	<div class="container mb30">
+		<include file="Public:side" />
+		<div class="w980 fl">
+			<div class="bor_der">
+				<div class="bg_f1 clearfix fs14 text_44 tle_R">
+					<a class="fl plr15 line40 ml-1 active" href="javascript:;">店铺资料设置</a>
+				</div>
+				{:W('Common/Builder/form', [['data' => $keyList, 'run' => '/run/authRun']])}
+				<!-- 主体部分 -->
+				<eq name="btn" value="1">
+					<div class="text-center pd10">
+						<a class="btn btn-info" href="{:U('/open/step4')}"><i class="fa fa-mail-reply"></i>上一步</a><a class="btn btn-success ml20" href="{:U('/open/step6')}"><i class="fa fa-mail-forward"></i>下一步</a>
+					</div>
+				</eq>
+			</div>
+		</div>
+	</div>
+</div>
+</block>
+<block name="css"></block>
+<block name="script">
+<script type="text/javascript">
+	$(document).ready(function(){
+		checkform({
+			formid:"#formadd",
+			rules:{
+				shop_name:{
+					required:true,
+					minlength:5,
+					maxlength:20,
+					remote:'{:U("/open/check")}',
+				},
+				type_id:{
+					required:true,
+				},
+				about:{
+					required:true,
+					minlength:30,
+					maxlength:500,
+				},
+				inventory_type:{
+					required:true,
+				}
+			},
+			messages:{
+				shop_name:{
+					required:'店铺名称不能为空',
+					minlength:'店铺名称不能少于5个字符',
+					maxlength:'店铺名称不能大于20个字符',
+					remote:'店铺名称不可用',
+				},
+				type_id:{
+					required:'店铺类型不能为空',
+				},
+				about:{
+					required:'店铺描述不能为空',
+					minlength:'店铺描述不能小于30个汉字',
+					maxlength:'店铺描述不能大于500个字符',
+				},
+				inventory_type:{
+					required:'库存积分结算方式不能为空',
+				}
+			},
+		},function(res) {
+			if(res.code == 1) {
+				talert({status:res.code,msg:'提交成功，即将进入下一步。'});
+				var url	=	'{:U("/open/step6")}';
+				setTimeout(function() {
+					gourl({url:url});
+				}, 1000);
+			} else {
+				talert({status:res.code,msg:res.msg});
+			}
+		});
+	});
+</script>
+</block>

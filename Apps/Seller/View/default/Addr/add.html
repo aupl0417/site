@@ -1,0 +1,171 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body">
+	<include file="Public:nav" />
+	<div class="container mb30">
+		<include file="Public:side" />
+		<div class="w980 fl">
+			<div class="bor_der">
+				<div class="bg_f1 clearfix fs14 text_44 tle_R">
+					<a class="fl plr15 line40 ml-1 active" href="javascript:;">{$title}地址</a>
+				</div>
+				
+				<!-- 主体部分 -->
+				{:W('Common/Builder/form', [['data' => $keyList, 'run' => '/run/authRun']])}
+			</div>
+		</div>
+	</div>
+</div>
+</block>
+<block name="css"></block>
+<block name="script">
+<script>
+clickDisabled();
+$(document).ready(function() {
+	$('.chinaCity').change(function() {
+		checkForms();
+	})
+})
+$(function() {
+	var header	=	'{$header}';
+	if(header != '') {
+		ACTION = header;
+	}
+	checkform({
+		formid:"#formadd",
+		headers : {Action : ACTION},
+		rules:{
+			linkname:{
+				required:true,
+			},
+			mobile:{
+				required:true,
+				isMobile:true,
+			},
+			province:{
+				required:true,
+			},
+			city:{
+				required:true,
+			},
+			district:{
+				required:true,
+			},
+			town:{
+				required:true,
+			},
+			postcode:{
+				number:true,
+				rangelength:[5,6],
+			},
+			street:{
+				required:true,
+				rangelength:[5,120]
+			},
+			tel:{
+				//tel:true,
+			},
+		},
+		messages:{
+			linkname:{
+				required:'收货人姓名不能为空',
+			},
+			mobile:{
+				required:'收货人手机号不能为空',
+				isMobile1:'手机号码格式错误！',
+			},
+			province:{
+				required:'省份不能为空',
+			},
+			city:{
+				required:'城市不能为空',
+			},
+			district:{
+				required:'地区不能为空',
+			},
+			town:{
+				required:'城镇不能为空',
+			},
+			postcode:{
+				number:'邮编为数字类型',
+				rangelength:'邮编长度为5-6位',
+			},
+			street:{
+				required:'收货详细地址不能为空',
+				rangelength:'详细地址长度介于5-120位之间',
+			},
+			tel:{
+				//tel:'请输入正确的电话号码格式！'
+			},
+		}
+	},function(ret) {
+		if(false == checkDistricut()) {
+			return;
+		}
+		talert({status:ret.code,msg:ret.msg});
+		if(ret.code == 1) {
+			setTimeout(function() {
+				gourl({url:"{:U('/addr')}"});
+			}, 1000);
+		}
+	})
+})
+
+function checkForms() {
+	checkform({
+		formid:"#formadd",
+		rules:{
+			province:{
+				required:true,
+			},
+			city:{
+				required:true,
+			},
+			district:{
+				required:true,
+			},
+			town:{
+				required:true,
+			},
+		},
+		messages:{
+			province:{
+				required:'收货省份不能为空',
+			},
+			city:{
+				required:'收货城市不能为空',
+			},
+			district:{
+				required:'收货地区不能为空',
+			},
+			town:{
+				required:'收货城镇不能为空',
+			},
+		},
+	});
+}
+
+function checkDistricut() {
+	var province	=	$("select[name='province']").val();
+	var city		=	$("select[name='city']").val();
+	var district	=	$("select[name='district']").val();
+	var town		=	$("select[name='town']").val();
+	if(province == '' || province == undefined || province == 0) {
+		talert({status:0,msg:'省份不能为空！'});
+		return false;
+	}
+	if(city == '' || city == undefined || city == 0) {
+		talert({status:0,msg:'城市不能为空！'});
+		return false;
+	}
+	if(district == '' || district == undefined || district == 0) {
+		talert({status:0,msg:'区县不能为空！'});
+		return false;
+	}
+	//if(town == '' || town == undefined || town == 0) {
+		//talert({status:0,msg:'乡镇不能为空！'});
+		//return false;
+	//}
+}
+</script>
+</block>

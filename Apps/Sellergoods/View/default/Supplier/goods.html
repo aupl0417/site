@@ -1,0 +1,541 @@
+<include file="Index/header" />
+<div class="content-wrap">
+    <div class="create-content">
+        <div class="main-card">
+			<form method="get" action="" class="p10 bg-gray md20">
+				<div class="pl10 row mt10">
+					<div class="col-xs-2">
+						<div class="input-group">
+							<span class="input-group-addon">关键词</span>
+							<input type="text" class="form-control" name="q" placeholder="请输入商品名称" value="{$_GET['q']}">
+						</div>
+					</div>
+					<div class="col-xs-3">
+						<div class="input-group">
+							<span class="input-group-addon">价格从</span>
+							<input type="text" class="form-control" name="s_price" placeholder="宝贝最低价" value="{$_GET['s_price']}">
+							<span class="input-group-addon">至</span>
+							<input type="text" class="form-control" name="e_price" placeholder="宝贝最高价" value="{$_GET['e_price']}">
+							<span class="input-group-addon">元</span>
+						</div>
+					</div>
+					<div class="col-xs-2">
+						<div class="input-group">
+							<span class="input-group-addon">状态</span>
+							<select type="text" class="form-control" name="status">
+								<option value="1" <if condition="$_GET['status'] eq 1">selected="selected"</if>>出售中</option>
+								<option value="2" <if condition="$_GET['status'] eq 2">selected="selected"</if>>待上架</option>
+								<!--
+								<option value="3" <if condition="$_GET['status'] eq 3">selected="selected"</if>>主图缺失</option>
+								<option value="4" <if condition="$_GET['status'] eq 4">selected="selected"</if>>违规</option>-->
+							</select>
+						</div>
+					</div>
+					<div class="col-xs-2">
+						<div class="input-group">
+							<span class="input-group-addon">交易类型</span>
+							<select type="text" class="form-control" name="scoreType">
+								<option value="1" <if condition="$_GET['scoreType'] eq 1">selected="selected"</if>>金积分</option>
+								<option value="4" <if condition="$_GET['scoreType'] eq 4">selected="selected"</if>>银积分</option>
+								<option value="2" <if condition="$_GET['scoreType'] eq 2">selected="selected"</if>>现金</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-xs-2">
+						<button class="btn btn-primary btn-120px" type="submit"><i class="fa fa-search"></i> 搜索</button>
+					</div>
+				</div>
+			</form>	
+			<div class="clearfix">	
+				<ul class="nav nav-tabs border-d">
+					<li class="{:($_GET['status']==1)?'active':''} ml20">
+						<a href="{:U('/Supplier/goods',array('status'=>1,'shop_category_id'=>$_GET['shop_category_id']))}">出售中</a>
+					</li>
+					<li class="{:$_GET['is_best']==1?'active':''}">
+						<a href="{:U('/Supplier/goods',array('is_best'=>1,'shop_category_id'=>$_GET['shop_category_id']))}">橱窗中</a>
+					</li>
+					<li class="{:$_GET['status']==2?'active':''}">
+						<a href="{:U('/Supplier/goods',array('status'=>2,'shop_category_id'=>$_GET['shop_category_id']))}">待上架</a>
+					</li>
+					<!--
+					<li class="{:$_GET['status']==3?'active':''}">
+						<a href="{:U('/Supplier/goods',array('status'=>3,'shop_category_id'=>$_GET['shop_category_id']))}">主图缺失</a>
+					</li>
+					<li class="{:$_GET['status']==4?'active':''}">
+						<a href="{:U('/Supplier/goods',array('status'=>4,'shop_category_id'=>$_GET['shop_category_id']))}">违规</a>
+					</li>
+					-->
+				</ul>	
+			</div>
+			<div class="content pd10">
+				<div class="bg-warning pd10 letter-spacing1">
+					<i class="fa fa-exclamation-circle fs16 fl text_yellow"></i>
+					<p class="ml20 mb0">小提示，修改了商品信息需要重新审核。</p>
+				</div>
+			</div>
+			
+            <div class="">
+            	<notempty name="data">
+            		<form id="form-edit">
+				<div class="p20">
+					<switch name="Think.get.status">
+						<case value="1">
+							<div class="btn btn-primary btn-trans btn-rad" onclick="goods_offline()">批量下架</div>
+							<div class="btn btn-primary btn-trans btn-rad" onclick="category_control()">批量修改分类</div>
+							<div class="btn btn-primary btn-trans btn-rad" onclick="addMoreBest()">批量设置橱窗</div>
+							<div class="btn btn-primary btn-trans btn-rad" onclick="express_tpl()">批量修改运费模板</div>
+							<div class="btn btn-danger btn-trans btn-rad" onclick="delMoreBest()">批量移除橱窗</div>
+							<div class="btn btn-danger btn-trans btn-rad" onclick="deleteGoods()">批量删除</div>
+						</case>
+						<default />
+							<empty name="Think.get.is_best">
+								<eq name="Think.get.status" value="2">
+								<div class="btn btn-primary btn-trans btn-rad" onclick="goods_online()">批量上架</div>
+								</eq>
+								<div class="btn btn-primary btn-trans btn-rad" onclick="category_control()">批量修改分类</div>
+								<div class="btn btn-primary btn-trans btn-rad" onclick="express_tpl()">批量修改运费模板</div>
+								<div class="btn btn-danger btn-trans btn-rad" onclick="deleteGoods()">批量删除</div>
+							</empty>
+					</switch>
+
+					<eq name="Think.get.is_best" value="1">
+						<div class="btn btn-primary btn-trans btn-rad" onclick="goods_offline()">批量下架</div>
+						<div class="btn btn-primary btn-trans btn-rad" onclick="category_control()">批量修改分类</div>
+						<div class="btn btn-primary btn-trans btn-rad" onclick="express_tpl()">批量修改运费模板</div>
+						<div class="btn btn-danger btn-trans btn-rad" onclick="delMoreBest()">批量移除橱窗</div>
+						<div class="btn btn-danger btn-trans btn-rad" onclick="deleteGoods()">批量删除</div>
+					</eq>
+				</div>	            		
+                <table class="tm no-border">
+                	<thead class="no-border">
+                        <tr class="subject">
+                            <th class="text-center" width="5%" title="全选"><input name="all_choice" id="checkedAll" class="i-red-square" type="checkbox"> </th>
+							<th class="" width="5%">宝贝图片</th>
+                            <th class="" width="20%">宝贝名称</th>
+                            <th class="" width="6%">价格</th>
+							<th class="text-center" width="8%">商品库存</th>
+							<th class="text-center" width="8%">销售数量</th>
+							<th class="text-center" width="8%">交易类型</th>
+
+							<th class="">所属分类</th>
+
+                            <th class="text-center" width="10%">创建时间</th>
+                            <th class="text-center" width="5%">状态</th>
+							<th class="text-center" width="8%">审核状态</th>
+                            <th class="text-center" width="5%">操作</th>
+                        </tr>
+                    </thead>
+                        <tbody class="no-border-y goods-list">
+                            <foreach name="data.list" item="vo">
+                                <tr>
+                                    <td class="text-center"><input type="checkbox" class="ids i-red-square" name="ids[]" value="{$vo.id}" /></td>
+									<td class="">
+										<a href="javascript:;" url="{:DM('item')}{:U('/index/index', ['id' => $vo['attr_list'][0]['id']])}">
+											<img src="{$vo.images}" width="50px" />
+										</a>
+									</td>
+                                    <td class="flex-start flex-fdr flex-aifs">
+										<textarea required="true" rangelength="[20,80]" maxlength="80" data-title="{$vo.goods_name}" data-id="{$vo.id}" class=" bor_no goods_name flex-f1" rows="5">{$vo.goods_name}</textarea>
+										<i class="fa fa-pencil fa-fw  text_77"></i><if condition="$vo.is_best eq 1"><img src="__IMAGES__/icon-hot.png"></if>
+									</td>
+									<td class="strong"><input type="text" class="strong text_44 input_80 plr5 bor_no changeSku" value="{$vo.price}" data-url="{:U('/goods/sku', ['id' => $vo['id']])}"/></td>
+									<td class="text-center"><span class="text_red">{$vo.num}</span><lt name="vo.num" value="10"><strong class="text_red ml10">库存不足</strong></lt></td>
+									<td class="text-center">{$vo.sale_num}</td>
+									<td class="text-center">{$scoreType[$vo[score_type]]}</td>
+
+									<td class="">
+										<empty name="vo.my_category_name">
+											
+										<else/>
+											<foreach name="vo.my_category_name" item="v">
+												<div><span onclick="delete_category({$vo.id},{$key})"><i class="fa fa-times text-danger"></i></span>{$v}</div>
+											</foreach>
+										</empty>
+									</td>
+
+                                    <td class="text-center">{$vo.atime}</td>
+                                    <td class="text-center">
+									<switch name="vo.status"> 
+										<case value="1"><div class="text-success">销售中</div></case>    
+										<case value="2"><div class="text-info">待上架</div></case>   
+										<case value="3"><div class="text-default">缺少主图</div></case>   
+										<case value="4"><div class="text-danger">违规</div></case>
+										<case value="5"><div class="text-danger">异常</div></case>
+										<default />禁止上架
+									</switch>
+									</td>
+									<td class="text-center">
+										<switch name="vo.examine_status">
+											<case value="1"><div class="text-default">未提交</div></case>
+											<case value="2"><div class="text-info">待审核</div></case>
+											<case value="3"><div class="text-success">已通过</div></case>
+											<case value="4"><div class="text-danger">已驳回</div></case>
+											<default />禁止上架
+										</switch>
+										<if condition="$vo.examine_status eq 4">
+											{$vo.examine_reason}
+										</if>
+									</td>
+                                    <td class="text-center link-blue">
+										<a href="{:U('/Supplier/goods_edit', ['id' => $vo['id']])}">编辑</a>
+                                       
+                                    </td>
+                                </tr>
+
+                            </foreach>
+                        </tbody>
+                </table>
+				<div class='p20'>
+					<div class="page-box">
+						{:page_html($data['pageinfo'])}
+					</div>
+				</div>
+					</form>
+				<else />
+					<div class="text-center nors">
+						<img src="../Public/images/no-find.png" alt="找不到记录！" />
+					</div>
+				</notempty>
+            </div>
+
+        </div>
+    </div>
+</div>
+<js href="__JS__/jquery-ui-1.10.3.custom/development-bundle/ui/jquery.ui.core.js" />
+<js href="__JS__/jquery-ui-1.10.3.custom/development-bundle/ui/jquery.ui.widget.js" />
+<js href="__JS__/jquery-ui-1.10.3.custom/development-bundle/ui/jquery.ui.mouse.js" />
+<js href="__JS__/jquery-ui-1.10.3.custom/development-bundle/ui/jquery.ui.sortable.js" />
+<script>
+	//编辑商品名称
+	$("textarea.goods_name").bind({
+		focusout:function() {
+			var obj = $(this);
+			var title	=	obj.val();
+			var d	=	obj.data();
+			if(title.length < 2 || title.length > 80) {
+                talert({status:0,msg:'商品名称应在2-80位'});
+                return false;
+			}
+			if(title == d.title) {
+				return false;
+			}
+
+			api({
+				data:{apiurl:'/SellerGoodsManage/goods_name_edit',goods_id:d.id,goods_name:title,is_openid:1}
+			},function(ret){
+				ret.status = ret.code;
+				talert(ret);
+				if(ret.code == 1){
+					obj.data('title',title);
+				}
+			});
+		}
+	});
+	//编辑商品属性
+	$(".changeSku").focus(function() {
+		var d	=	$(this).data();
+		vmodal({
+			title:d.title,
+			url:d.url,
+			width:"80%"
+		});
+	})
+	//全选
+	function choice(){
+		$('input[name="all_choice"]').on('ifChanged', function(){
+			$('input[name="ids[]"]').iCheck('toggle');
+		});
+	}
+
+	//批量修改运费模板
+	function express_tpl(){
+		var ids	=	'';
+		$(".ids").each(function() {
+			if($(this).is(":checked") == true) {
+				ids	+=	$(this).val() + ',';
+			}
+		})
+		if(ids == "" ){
+			talert({status:0,msg:'请至少选择一项宝贝'});
+			return false;
+		}
+		vmodal({title:'选择运费模板',url:'/Goods/change_tpl',width:'900px'})
+	}
+
+	//打开类目操作页面
+	function category_control(){
+		var num = $(".ids:checked").length;
+		if(num >0){
+			vmodal({title:'类目操作',url:'/Goods/category_control',width:'900px'})
+		}else{
+			talert({status:0,msg:'请先勾选需要操作的宝贝'});
+		}
+	}
+
+	//批量追加分类
+	function express_category(){
+		var ids	=	'';
+		$(".ids").each(function() {
+			if($(this).is(":checked") == true) {
+				ids	+=	$(this).val() + ',';
+			}
+		})
+		if(ids == "" ){
+			talert({status:0,msg:'请至少选择一项宝贝'});
+			return false;
+		}
+		vmodal({title:'请选择要追加的分类',url:'/Goods/change_category',width:'900px'})
+	}
+	
+	//批量上架
+	function goods_online(){
+		var ids	=	'';
+		$(".ids").each(function() {
+			if($(this).is(":checked") == true) {
+				ids	+=	$(this).val() + ',';
+			}
+		})
+		if(ids == "" ){
+			talert({status:0,msg:'请至少选择一项宝贝上架'});
+			return false;
+		}
+		ids = ids.substr(0,ids.length-1);
+		
+		api({
+			data:{apiurl:'/SellerGoodsManage/set_goods_online',id:ids,is_openid:1}
+		},function(ret){
+			ret.status = ret.code;
+			talert(ret);
+			if(ret.code == 1){
+				setTimeout(function(){
+					ref();
+				},1000);
+			}
+		});
+	}
+	
+	//批量下架
+	function goods_offline(){
+		var ids	=	'';
+		$(".ids").each(function() {
+			if($(this).is(":checked") == true) {
+				ids	+=	$(this).val() + ',';
+			}
+		})
+		if(ids == "" ){
+			talert({status:0,msg:'请至少选择一项宝贝下架'});
+			return false;
+		}
+		ids = ids.substr(0,ids.length-1);
+		
+		api({
+			data:{apiurl:'/SellerGoodsManage/set_goods_offline',id:ids,is_openid:1}
+		},function(ret){
+			ret.status = ret.code;
+			talert(ret);
+			if(ret.code == 1){
+				setTimeout(function(){
+					ref();
+				},1000);
+			}
+		});
+	}
+
+    $(function() {
+		choice();
+    });
+ 
+    function up_goods(w_no){
+        vmodal({
+            title:"确认上架",
+            msg:"<h4>您真的要上架此商品吗？</h4>",
+            class:'text-center',
+            confirm:1,
+            width:'650px',
+        },function(ret){
+            $(".modal-ok").click(function(){
+				api({
+					data:{apiurl:'/SellerGoodsManage/set_goods_online',id:w_no,is_openid:1}
+				},function(ret){
+ 
+                    talert(ret);
+                    if(ret.code == 1){
+                        setTimeout(function(){
+                            ref();
+                        },1000);
+                    }
+				});
+            });
+        });
+    }
+	
+	function down_goods(w_no){
+        vmodal({
+            title:"确认下架",
+            msg:"<h4>您真的要下架此商品吗？</h4>",
+            class:'text-center',
+            confirm:1,
+            width:'650px',
+        },function(ret){
+            $(".modal-ok").click(function(){
+				api({
+					data:{apiurl:'/SellerGoodsManage/set_goods_offline',id:w_no,is_openid:1}
+                },function(ret){
+                    ret.status = ret.code;
+                    talert(ret);
+                    if(ret.code == 1){
+                        setTimeout(function(){
+                            ref();
+                        },1000);
+                    }
+                });
+            });
+        });
+    }
+
+	//删除分类
+	function delete_category(s_id,goods_category_id){
+        vmodal({
+            title:"确认删除",
+            msg:"<h4>您真的要删除此分类吗？</h4>",
+            class:'text-center',
+            confirm:1,
+            width:'650px',
+        },function(ret){
+            $(".modal-ok").click(function(){
+				api({
+					data:{apiurl:'/SellerGoodsManage/delete_goods_category',id:s_id,shop_category_id:goods_category_id,is_openid:1}
+                },function(ret){
+                    ret.status = ret.code;
+                    talert(ret);
+                    if(ret.code == 1){
+                        setTimeout(function(){
+                            ref();
+                        },1000);
+                    }
+                });
+            });
+        });
+    }
+	
+	//批量修改分类
+	function update_category(){
+		var ids	=	'';
+		$(".ids").each(function() {
+			if($(this).is(":checked") == true) {
+				ids	+=	$(this).val() + ',';
+			}
+		})
+		if(ids == "" ){
+			talert({status:0,msg:'请至少选择一项宝贝'});
+			return false;
+		}
+		vmodal({title:'请选择分类',url:'/Goods/update_category',width:'900px'})
+	}
+	
+	//批量删除分类
+	function batch_delete_category(s_id,goods_category_id){
+		var ids	=	'';
+		$(".ids").each(function() {
+			if($(this).is(":checked") == true) {
+				ids	+=	$(this).val() + ',';
+			}
+		})
+		if(ids == "" ){
+			talert({status:0,msg:'请至少选择一项宝贝'});
+			return false;
+		}
+		vmodal({title:'选择要删除的分类',url:'/Goods/batch_delete_category',width:'900px'})
+    }
+
+    //批量添加宝贝橱窗
+	function addMoreBest(){
+		var num = $(".ids:checked").length;
+		if(num >0){
+			var ids = $(".ids:checked").map(function(){
+				return $(this).val();
+			}).get().join(',');
+			api({
+				data:{apiurl:'/SellerGoodsManage/set_best',id:ids,is_openid:1}
+			},function(ret){
+				talert({status:ret.code,msg:ret.msg});
+				if(ret.code==1){
+					setTimeout(function(){
+						parent.ref();
+					},1000);
+				}
+			});
+		}else{
+			talert({status:0,msg:'请先勾选需要添加橱窗的宝贝'});
+		}
+	}
+	//批量删除宝贝橱窗
+	function delMoreBest(){
+		var num = $(".ids:checked").length;
+		if(num >0){
+			var ids = $(".ids:checked").map(function(){
+				return $(this).val();
+			}).get().join(',');
+			api({
+				data:{apiurl:'/SellerGoodsManage/cancel_best',id:ids,is_openid:1}
+			},function(ret){
+				talert({status:ret.code,msg:ret.msg});
+				if(ret.code==1){
+					setTimeout(function(){
+						parent.ref();
+					},1000);
+				}
+			});
+		}else{
+			talert({status:0,msg:'请先勾选需要移除橱窗的宝贝'});
+		}
+	}
+	
+	/**
+	 * 删除商品
+	 */
+	function deleteGoods() {
+		var ids = getIds();
+		if (ids == false) return false;
+		vmodal({
+			title:'删除提示',
+			msg:'<p class="text-center">您真的要删除选中的商品吗？</p>',
+			confirm:true,
+			width:600,
+			footer:false,
+		}, function () {
+			$(".modal-ok").click(function () {
+                api({
+                    data:{apiurl:'/SellerGoods/goods_delete',id:ids,is_openid:1}
+                },function(ret){
+                    talert({status:ret.code,msg:ret.msg});
+                    if(ret.code==1){
+                        setTimeout(function(){
+                            parent.ref();
+                        },1000);
+                    }
+                });
+            });
+        });
+    }
+
+    /**
+	 * 获取IDS
+	 *
+     * @returns {*}
+     */
+    function getIds() {
+        var num = $(".ids:checked").length;
+        if (num > 0) {
+            var ids = $(".ids:checked").map(function(){
+                return $(this).val();
+            }).get().join(',');
+            return ids;
+		}
+        talert({status:0,msg:'请先勾选需要移除橱窗的宝贝'});
+        return false;
+    }
+	
+</script>
+</body>
+</html>

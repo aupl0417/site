@@ -1,0 +1,115 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			修改资料
+		</div>
+	</div>
+	
+</header>
+
+
+<section>
+	<form >
+	<div class="line-box-m hover row" onclick="edit_face()">
+		<div class="col-30">头像</div>
+		<div class="col-70 text-right">
+			<img id="face" src="../Public/Images/people_bg.jpg" class="img-circle face mr20" alt="face" width="50" height="50">
+		</div>
+		<div class="clearfix"></div>
+	</div>
+	
+	<div class="line-box hover row" onclick="edit_sex()">
+		<div class="col-30">性别</div>
+		<div class="col-70 text-right" id="sex" value=""  >
+			未知
+		</div>
+	</div>
+
+	<div class="line-box noicon hover row">
+		<div class="col-30">生日</div>
+		<div class="col-70 text-right"><input  class="fr col-45" name="birthday" id="birthday" type="date" value="" /></div>
+	</div>
+
+	<div class="p10">
+		<div class="btn btn-lg btn-danger btn-block" onclick="submit_form()">提交</div>
+	</div>
+	</form>
+</section>
+
+<include file="Public:d_layer" />
+<script>
+fixBar(1);
+$(function(){
+ 	ajax_post({
+ 		url:'/Api/api',
+ 		data:{apiurl:'/User/userinfo',is_openid:1},
+ 	},function(ret){
+ 		if( ret.code == 1 ){
+			// console.log(ret);
+			var info = ret.data;
+			if( info.face != '' ){
+				$('.page.active #face').attr('src',info.face);
+			}
+			if( info.sex == 1 ){
+				sex = '男';
+			}else if( info.sex == 2 ){
+				sex = '女';
+			}else{
+				sex = '保密';
+			}
+			$('.page.active #sex').html(sex);
+			$('.page.active #sex').attr('value',info.sex);
+			$('.page.active #birthday').val(info.birthday);
+		}
+	});
+});
+
+// $(document).ready(function() {   
+// 	$("#birthday").datetimepicker({
+// 		format : 'yyyy-mm-dd'
+// 	});
+	
+// });
+function submit_form(){
+	data = {apiurl:'/User/change_information'};
+	data.face = $('.page.active #face').attr('src');
+	data.sex = $('.page.active #sex').attr('value');
+	if( $('.page.active #birthday').val() != '' ){
+		data.birthday = $('.page.active #birthday').val();
+	}
+	data.is_openid = 1;
+	data.no_sign = 'name,sex,face,birthday,email,qq';
+	ajax_post({
+		url:'/Api/api',
+		data:data,
+	},function(ret){
+		valert(ret);
+		if( ret.code == 1 ){
+			closeWin();
+			setTimeout(function(){
+				openWin({name:'setting_userinfo',url:'/Setting/userinfo',ref:true});
+			},1000);
+			
+		}
+	});
+}
+
+function edit_face(){
+	vmodal({
+		title:'修改头像',
+		url:'__URL__/edit_face',
+		is_footer:false,
+	});
+}
+function edit_sex(){
+	vmodal({
+		title:'选择性别',
+		url:'__URL__/edit_sex',
+		is_footer:false,
+	});
+}
+
+</script>

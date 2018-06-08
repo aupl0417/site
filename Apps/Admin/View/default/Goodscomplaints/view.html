@@ -1,0 +1,106 @@
+<div class="p20 box">
+	<div class="row">
+		<div class="col-xs-6 auth-text">
+			<div class="row">
+				<div class="col-xs-2 text-center">
+					<img src="{:myurl($rs['goods_images'],100)}">
+				</div>
+				<div class="col-xs-10">
+					<div class="ft16 md20">{$rs['goods_name']}</div>
+					<div>举报类型：{$type[$rs['type']]}</div>
+					<div>举报内容：{$rs.content}</div>
+					<notempty name="rs.images">
+						<php>
+							$images	=	explode(',',rtrim($rs['images'], ','));
+						</php>
+						<div>
+							<volist name="images" id="vo">
+								<a class="image-zoom mr10" href="{$vo}" title="大图">
+									<img src="{:myurl($vo, 60)}" alt="图片">
+								</a>
+							</volist>
+						</div>
+					</notempty>
+					<div>举报时间时间：{$rs.atime}</div>
+					<div>最后操作时间：{$rs.etime}</div>
+					<div>举报用户：{$rs.nick}</div>
+					<div>被举报店铺：{$rs.shop_name}</div>
+					<div>回复状态：{:status($rs['status'],array(0=>array('已删除'),1=>array('待回复','btn-danger'),2=>array('已回复','btn-success')))}</div>
+					<notempty name="rs.employee_id">
+						<div>操作雇员：{:M('admin')->where(['id' => $rs['employee_id']])->cache(true)->getField('name')}</div>
+						<div>操作状态：
+							{:status($rs['down_weights'],array(0=>array('未做处理'),1=>array('降权处理','btn-danger'),2=>array('下架处理','btn-warning')))}
+						</div>
+						<div>操作时间：{$rs.reply_time}</div>
+						<div>回复内容：{$rs.reply_content}</div>
+					</notempty>
+				</div>
+			</div>
+			
+
+		</div>
+		<div class="col-xs-6">
+		</div>
+	</div>
+	<eq name="rs.status" value="1">
+		<div class="ft18 strong p10 border-d md20">回复用户</div>
+			<form data-url="__URL__/replay" data-id="#form_{$rs.id}" id="form_{$rs.id}" class="form-horizontal vform">
+					{:W('Widget/buildform',array(array(
+						'field'		=>array(
+							array(
+								'formtype'		=>'radio',
+								'label'			=>'处理',
+								'name'			=>'down_weights',
+								'data'			=>array(array(0,'不做处理'),array(1,'降权处理'),array(2,'下架处理')),
+								'field'			=>array(0,1),
+								'value'			=>$rs['down_weights'],
+								'is_need'		=>1,
+								'tips'			=>'取消违规将会取消扣分',
+							),
+							array(
+								'formtype'		=>'textarea',
+								'label'			=>'回复内容',
+								'name'			=>'replay_content',
+								'is_need'		=>1,
+							),
+							array(
+								'formtype'		=>'hidden',
+								'name'			=>'id',
+								'value'			=>$rs['id'],
+							),
+							array(
+								'formtype'		=>'html',
+								'label'			=>' ',
+								'html'			=>'<button type="button" class="btn btn-primary btn-150px logs-add"><i class="fa fa-check"></i> 提交</button>'
+							),
+
+
+						),
+					)))}
+			</form>
+		</div>
+	</eq>
+</div>
+<div class="clearfix">
+	<div class="pull-right text-gray" onclick="$(this).closest('tr').toggleClass('hide');"><i class="fa fa-times-circle-o fa-2x"></i></div>	
+</div>
+
+<script>
+image_zoom();
+$('.logs-add').click(function(){
+	var d=$(this).closest('form').data();
+	ajax_post_form({
+		formid:d.id
+	},function(ret){
+		valert(ret);
+		if(ret.status=='success'){
+			var tag='#item-{$rs.id}';
+			var url='__URL__/view/id/{$rs.id}';
+			var from_goods='{$_GET.from_goods}';
+			if(from_goods!='') loadurl({tag:'#item-'+from_goods,url:url});
+			else loadurl({tag:tag,url:url});
+		}
+	});
+
+});
+</script>

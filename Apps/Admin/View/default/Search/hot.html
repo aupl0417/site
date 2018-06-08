@@ -1,0 +1,39 @@
+<include file="Public:header" />
+<div class="navbar-fixed-top">
+	<div class="pull-right">
+		<div class="btn btn-primary btn-rad btn-trans m10" onclick="ref()"><i class="fa fa-refresh"></i> 刷新</div>
+	</div>
+	
+	<ul class="nav-box2" data-page="__SELF__">
+		<li><a href="{:U('/search/hot', ['pro' => 'goods'])}">商品热搜(所有)</a></li>
+		<li><a href="{:U('/search/hot', ['pro' => 'shop'])}">商家热搜(所有)</a></li>
+		<li><a href="{:U('/search/hot', ['pro' => 'demo'])}">demo(所有)</a></li>
+		<li><a href="__SELF__?type=currnum">本周热搜</a></li>
+		<li><a href="__SELF__?type=lastnum">上周热搜</a></li>
+	</ul>
+</div>
+<div class="m20">
+	<form id="formlist" name="formlist">
+		<div class="block-flat">
+			<div class="content">		
+				<table>
+					<thead>
+						<tr>
+							<th nowrap="nowrap" width="500" class="text-center">关键词</th>
+							<th nowrap="nowrap" class="text-center">搜索次数</th>
+						</tr>
+					</thead>
+					<tbody id="sort-0">
+						<volist name="data" id="vo">
+							<tr>
+								<td style="word-break:break-all"><span>{$key}</span></td>
+								<td style="word-break:break-all"><span>{$vo}</span></td>
+							</tr>
+						</volist>
+					</tbody>
+				</table>			
+			</div>
+		</div>
+	</form><!--/form-->
+	<div class="clearfix h50px"></div>
+</div>

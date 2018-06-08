@@ -1,0 +1,55 @@
+<include file="Public:header" />
+		<div class="page-group">
+			<div id="page-orders-close" class="page" data-page_num="{$pagelist.pageinfo.page}">
+				<!-- 标题栏 -->
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left back" data-no-cache="true"></a>
+					<h1 class="title">关闭订单</h1>
+					<a class="icon iconfont icon-category pull-right ml5 ac-menu" onclick="top_menu()"></a>
+				</header>
+
+				<!-- 浮动导航 -->
+				<include file="Public:fixed-menu" />
+				
+			
+		
+				<!-- 这里是页面内容区 -->		
+				<div class="content">
+					<form name="form-close-orders" id="form-close-orders" onsubmit="return false;">
+						<div class="list-block media-list">
+							<ul>
+								<li>
+									<div class="item-content">
+										<div class="item-inner">
+											<div class="item-title-row">
+												<div class="item-title">订单号</div>
+												<div class="item-after">{$_GET.s_no}</div>
+											</div>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class="item-content">
+										<div class="item-inner">
+											<div class="item-title-row">
+												<div class="item-title" style="min-width:4rem">关闭原因</div>
+												<div class="item-input">
+													<textarea id="reason" name="reason" placeholder="请输入关闭原因，不超过100字" maxlength="100" rows="8"></textarea>
+												</div>
+											</div>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+						<input type="hidden" name="s_no" id="s_no" value="{$_GET.s_no}" />
+						<div class="button button-big button-fill button-danger m5 btn-submit">关闭订单</div>
+					</form>
+				</div><!--/content-->
+				
+			</div>
+		</div>	
+		
+
+<include file="Public:script" />
+<include file="Public:footer" />

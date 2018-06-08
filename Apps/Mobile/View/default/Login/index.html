@@ -1,0 +1,86 @@
+<include file="Public:header" />
+		<div class="page-group">
+			<div id="page-login" class="page bg-white">
+				<!-- 标题栏 -->
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left back" href="/"></a>
+					<h1 class="title">登录</h1>
+					<a class="icon iconfont icon-category pull-right ml5 ac-menu" onclick="top_menu()"></a>
+				</header>
+
+				<!-- 浮动导航 -->
+				<include file="Public:fixed-menu" />
+
+				<!-- 这里是页面内容区 -->
+				<div class="content-padded" data-distance="100" data-p="1">
+					<div class="login-logo" style="padding: 2.0rem">
+						<!--<i class="iconfont icon-tubiaozhizuomoban"></i>-->
+						<img width="150" src="../Public/images/logo-300-300.png">
+					</div>
+
+					<div class="list-block">
+						<form onsubmit="return false" id="form-login">
+						<ul>
+							<li>
+								<div class="item-content">
+									<div class="item-media"><i class="icon iconfont icon-wode"></i></div>
+									<div class="item-inner">
+										<div class="item-input">
+											<input type="text" placeholder="请输入昵称或手机号码" name="username" max="80">
+										</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="item-content">
+									<div class="item-media"><i class="icon iconfont icon-mima2"></i></div>
+									<div class="item-inner">
+										<div class="item-input">
+											<input type="password" placeholder="请输入登录密码" class="" maxlength="25" name="password">
+										</div>
+									</div>
+								</div>
+							</li>
+							<li class="code hide" data_id="0">
+								<div class="item-content ">
+									<div class="item-media"><i class="icon iconfont icon-mima2"></i></div>
+									<div class="item-inner">
+										<div class="item-input">
+											<input type="text" placeholder="请输入验证码" class="" maxlength="5" name="code">
+										</div>
+									</div>
+								</div>
+								<div class="item-right">
+									<a href="javascript:void(0)" class="verify" title="点击图片更换验证码">
+										<img src="/Login/code/h/40" alt="验证码" class="verifyimg" style="height:2.2rem;">
+									</a>
+								</div>
+							</li>
+						</ul>
+						<input type="hidden" name="ref_url" value="{$_GET.ref_url}" />
+						</form>
+					</div>
+
+					<div class="clearfix md5"></div>
+
+					<div class="button button-big button-fill button-danger md2 btn-login">登录</div>
+
+
+					<div class="row hide">
+						<div class="col-50">
+							<a href="/Login/forget"><span class="icon icon-left"></span> 忘记密码</a>
+						</div>
+						<div class="col-50 text-right">
+							<a href="/Login/register">免费注册  <span class="icon icon-right"></span></a>
+						</div>
+					</div>
+
+
+				</div>
+			</div>
+		</div>
+
+
+
+<include file="Public:script" />
+<include file="Public:footer" />

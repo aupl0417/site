@@ -1,0 +1,55 @@
+<!-- 关闭订单 -->
+<div class='pic-input'>
+	<table width="100%" cellspacing='0' >
+		<tr>
+			<td width='25%' class="text-center">关闭原因</td>
+			<td>
+				<textarea id="close-order-reason" name="reason" placeholder="关闭原因" maxlength="200" rows="10"></textarea>
+			</td>
+		</tr>
+	</table>
+</div>
+   
+<div class="line-box row noicon hover">
+	<div class="fl col-50 title" onclick="closeSure(1)">是</div>
+	<div class="fl col-50 title" onclick="closeSure(0)">否</div>
+</div>
+
+
+
+<script>
+
+
+function closeSure(is){
+	if(is == 1){
+		var s_no = '{$_GET.s_no}';
+		var reason = $('.page .active #close-order-reason').val();
+		if(reason == ''){
+			valert({msg:'请输入取消原因'});
+			return false;
+		}
+		ajax_post({
+			url:'/Api/api',
+			data:{
+				apiurl:'/Orders/orders_shop_close',
+				s_no:s_no,
+				reason:reason,
+				is_openid:1
+			},
+		},function(ret){
+			if(ret.code == 1){
+				valert({msg:'关闭成功'});
+				setTimeout(function(){
+					openWin({name:'orders',url:'/Orders/index',ref:true});
+				},  1000);
+			}else{
+				valert({msg:'关闭失败，请重试'});
+				return false;
+			}
+		});
+	}
+	
+	$('.page.active .vmodal .vmodal-footer').click();
+}
+
+</script>

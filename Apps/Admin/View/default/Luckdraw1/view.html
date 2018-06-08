@@ -1,0 +1,360 @@
+<div class="p20 box">
+    <div class="row">
+        <div class="col-xs-4">
+            <p>
+                游戏类型：{$rs.name}
+            </p>
+            <p>
+                游戏名称：{$rs.luckdraw_name}
+            </p>
+            <p>
+                游戏时间：{$rs.start_time} - {$rs.end_time}
+            </p>
+            <p>
+                位置数量：{$rs.position}
+            </p>
+            <p>
+                页面模板：{$rs.template}
+            </p>
+            <p>
+                优惠券可选面值：{$rs.coupons}
+            </p>
+            <p>
+                游戏规则：{$rs['rule']}
+            </p>
+        </div>
+        <div class="col-xs-4">
+            <img usemap="#map-{$rs.id}" width="400" height="400" src="{$rs['game_images']}">
+            <map name="map-{$rs.id}" id="map-{$rs.id}">
+
+            </map>
+        </div>
+        <div class="col-xs-4">
+        </div>
+    </div>
+</div>
+<div class="row mt20">
+    <div class="col-xs-12">
+        <switch name="rs.cid">
+            <case value="1">
+                <!--//转盘-->
+            </case>
+            <case value="2">
+                <!--//九宫格-->
+            </case>
+            <case value="3">
+                <!--//老虎机-->
+            </case>
+            <case value="4">
+                <!--//上下翻滚-->
+            </case>
+            <case value="5">
+                <!--//砸金蛋-->
+            </case>
+            <case value="6">
+                <!--//随机数-->
+            </case>
+            <case value="7">
+                <!--//刮刮乐-->
+            </case>
+        </switch>
+        <div class="tab-container">
+            <ul class="nav nav-tabs">
+                <for start="1" end="$rs['position']+1">
+                    <li <eq name="i" value="1">class="active"</eq>><a href="#group_{$rs.id}_{$i}" data-toggle="tab">位置{$i}</a></li>
+                </for>
+            </ul>
+            <div class="tab-content">
+                <for start="1" end="$rs['position']+1">
+                    <div class="tab-pane <eq name="i" value="1">active</eq>" id="group_{$rs.id}_{$i}">
+                        <form data-url="__URL__/post" data-id="#form_{$rs.id}_{$i}" id="form_{$rs.id}_{$i}" class="form-horizontal vform">
+                            {:W('Widget/buildform',array(array(
+                            'field'		=>array(
+                            array(
+                                'formtype'		=>'text',
+                                'name'			=>'probability',
+                                'label'			=>'中奖概率',
+                                'value'			=>$prize[$i]['probability'],
+                                'tips'          =>'单位为万分比'
+                            ),
+                            array(
+                                'formtype'		=>'text',
+                                'name'			=>'max_winning',
+                                'label'			=>'最大中奖数',
+                                'value'			=>$prize[$i]['max_winning'],
+                                'tips'          =>'单位为天，为0时则不限'
+                            ),
+                            array(
+                                'formtype'		=>'hidden',
+                                'name'			=>'sort',
+                                'value'			=>$i,
+                            ),
+                            array(
+                                'formtype'		=>'hidden',
+                                'name'			=>'id',
+                                'value'			=>$prize[$i]['id'],
+                            ),
+                            array(
+                                'formtype'		=>'hidden',
+                                'name'			=>'luckdraw_id',
+                                'value'			=>$rs['id'],
+                            ),
+                            array(
+                                'label'			=>'奖品类型',
+                                'formtype'      =>'select',
+                                'name'          =>'type_id',
+                                'value'         =>$prize[$i]['type_id'],
+                                'field'	        =>array('id','name'),
+                                'data'	        =>CURD(array('table'=>'luckdraw1_prize_category','field'=>'id,name')),
+                            ),
+                            array(
+                                'label'			=>'奖励积分',
+                                'formtype'      =>'text',
+                                'name'          =>'value',
+                                'value'         =>$prize[$i]['value'],
+                            ),
+                            array(
+                                'formtype'		=>'html',
+                                'label'			=>' ',
+                                'html'			=>'<div class="choose-coupons-box"><button data-id="'.$rs['id'].'" data-sort="'.$i.'" type="button" class="btn btn-info btn-rad btn-trans choose-coupons">选择代金券</button><div class="coupons_lists mt10">'.$prize[$i]['coupons'].'</div></div>'
+                            ),
+                            array(
+                                'formtype'		=>'html',
+                                'label'			=>' ',
+                                'html'			=>'<div class="choose-coupon-box"><button data-id="'.$rs['id'].'" data-sort="'.$i.'" type="button" class="btn btn-info btn-rad btn-trans choose-coupon">选择优惠券</button><div class="coupon_list mt10">'.$prize[$i]['coupons'].'</div></div>'
+                            ),
+                            array(
+                                'formtype'		=>'html',
+                                'label'			=>' ',
+                                'html'			=>'<button type="button" class="btn btn-primary btn-rad btn-trans btn-submit"><i class="fa fa-check"></i> 提交</button>'
+                            ),
+                            ),
+                            )))}
+                        </form>
+                    </div>
+                </for>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="p20 box">
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="ft18 strong p10 border-d md20">今天（奖品类型）</div>
+            <div class="row">
+                <volist name="rs.winning.today" id="vo">
+                    <div class="col-xs-3">
+                        <p class="text-center">{$vo.name}</p>
+                        <p class="text-center">{$vo.value} ({:bcdiv($vo['value'], $winning['today'], 4) * 100}%)</p>
+                    </div>
+                </volist>
+            </div>
+            <div class="ft18 strong p10 border-d md20">昨天（奖品类型）</div>
+            <div class="row">
+                <volist name="rs.winning.yesterday" id="vo">
+                    <div class="col-xs-3">
+                        <p class="text-center">{$vo.name}</p>
+                        <p class="text-center">{$vo.value} ({:bcdiv($vo['value'], $winning['yesterday'], 4) * 100}%)</p>
+                    </div>
+                </volist>
+            </div>
+            <div class="ft18 strong p10 border-d md20">所有（奖品类型）</div>
+            <div class="row">
+                <volist name="rs.winning.all" id="vo">
+                    <div class="col-xs-3">
+                        <p class="text-center">{$vo.name}</p>
+                        <p class="text-center">{$vo.value} ({:bcdiv($vo['value'], $winning['all'], 4) * 100}%)</p>
+                    </div>
+                </volist>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="ft18 strong p10 border-d md20">今天（机会类型）</div>
+            <div class="row">
+                <volist name="rs.isFree.today" id="vo">
+                    <div class="col-xs-4">
+                        <p class="text-center">{$vo.name}</p>
+                        <p class="text-center">{$vo.value} ({:bcdiv($vo['value'], $isFree['today'], 4) * 100}%)</p>
+                    </div>
+                </volist>
+            </div>
+            <div class="ft18 strong p10 border-d md20">昨天（机会类型）</div>
+            <div class="row">
+                <volist name="rs.isFree.yesterday" id="vo">
+                    <div class="col-xs-4">
+                        <p class="text-center">{$vo.name}</p>
+                        <p class="text-center">{$vo.value} ({:bcdiv($vo['value'], $isFree['yesterday'], 4) * 100}%)</p>
+                    </div>
+                </volist>
+            </div>
+            <div class="ft18 strong p10 border-d md20">所有（机会类型）</div>
+            <div class="row">
+                <volist name="rs.isFree.all" id="vo">
+                    <div class="col-xs-4">
+                        <p class="text-center">{$vo.name}</p>
+                        <p class="text-center">{$vo.value} ({:bcdiv($vo['value'], $isFree['all'], 4) * 100}%)</p>
+                    </div>
+                </volist>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div id="drawluck1_prize_{$rs.id}" style="height:400px;"></div>
+        </div>
+        <div class="col-xs-6">
+            <div id="drawluck1_isfree_{$rs.id}" style="height:400px;"></div>
+        </div>
+    </div>
+</div>
+<script>
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('drawluck1_prize_{$rs.id}'));
+
+    // 指定图表的配置项和数据
+    {:W('Echart/bar_echart',array('param' => $echart))}
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption({$echart['option']});
+
+
+    // 基于准备好的dom，初始化echarts实例
+    var myfChart = echarts.init(document.getElementById('drawluck1_isfree_{$rs.id}'));
+
+    // 指定图表的配置项和数据
+    {:W('Echart/bar_echart',array('param' => $fechart))}
+
+    // 使用刚指定的配置项和数据显示图表。
+    myfChart.setOption({$fechart['option']});
+
+    iCheckClass();
+    $(function(){
+        if( $('.mask span').text() <= 50 ){
+            $('.pie_right').css('transform','rotate('+($('.mask span').text()*3.6)+'deg)');
+        }else{
+            $('.pie_right').css('transform','rotate(180deg)');
+            $('.pie_left').css('transform','rotate('+(($('.mask span').text()-50)*3.6)+'deg)');
+        }
+
+        $('.btn-submit').click(function(){
+            var d=$(this).closest('form').data();
+            ajax_post_form({
+                formid:d.id
+            },function(ret){
+                valert(ret);
+                if(ret.status=='success'){
+                    var tag='#item-{$rs.id}';
+                    var url='__URL__/view/id/{$rs.id}';
+                    loadurl({tag:tag,url:url});
+                }
+            });
+        });
+
+        $(".choose-prize").click(function () {
+            var url = '{:U("/luckdraw1/getPrize")}';
+            var d   = $(this).data();
+            url += '?sort=' + d.sort + '&id=' + d.id;
+            vmodal({
+                url:url
+            })
+        });
+
+        $(".choose-coupons").click(function () {
+            var url = '{:U("/luckdraw1/getCoupons")}';
+            var d   = $(this).data();
+            url += '?sort=' + d.sort + '&id=' + d.id;
+            vmodal({
+                url:url
+            })
+        });
+
+        $(".choose-coupon").click(function () {
+            var url = '{:U("/luckdraw1/getCoupon")}';
+            var d   = $(this).data();
+            url += '?sort=' + d.sort + '&id=' + d.id;
+            vmodal({
+                url:url
+            })
+        });
+
+        $("select[name='type_id']").change(function () {
+            var fVal = $(this).closest('form').find('.f-value');
+            var form = $(this).closest('form');
+            var fChooseCoupons = $(this).closest('form').find('.choose-coupons-box');
+            var fChooseCoupon = $(this).closest('form').find('.choose-coupon-box');
+            fVal.find('input[name="value"]').attr('value', '');
+            $(this).closest('form').find('.choose-coupon-box div').html('');
+            $(this).closest('form').find('.choose-coupons-box div').html('');
+            if ($(this).val() == 3) {   //积分
+                form.find('.f-value').removeClass('hide');
+                fChooseCoupons.closest('.form-group').addClass('hide');
+                fChooseCoupon.closest('.form-group').addClass('hide');
+            } else if($(this).val() == 1) { //代金券
+                form.find('.f-value').addClass('hide');
+                fChooseCoupons.closest('.form-group').removeClass('hide');
+                fChooseCoupon.closest('.form-group').addClass('hide');
+            } else if($(this).val() == 2) { //优惠券
+                form.find('.f-value').addClass('hide');
+                fChooseCoupons.closest('.form-group').addClass('hide');
+                fChooseCoupon.closest('.form-group').removeClass('hide');
+            } else {
+                form.find('.f-value').addClass('hide');
+                fChooseCoupons.closest('.form-group').addClass('hide');
+                fChooseCoupon.closest('.form-group').addClass('hide');
+            }
+        });
+
+        var id   = "#" + $(".tab-content .active").attr('id');
+        var type = parseInt($(id).find('select[name="type_id"]').val());
+        switch (type) {
+            case 1:         //代金券
+                $(id).find('.choose-coupons-box').closest('.form-group').removeClass('hide');
+                $(id).find('.choose-coupon-box').closest('.form-group').addClass('hide');
+                $(id).find('.f-value').addClass('hide');
+                break;
+            case 2:         //优惠券
+                $(id).find('.choose-coupon-box').closest('.form-group').removeClass('hide');
+                $(id).find('.choose-coupons-box').closest('.form-group').addClass('hide');
+                $(id).find('.f-value').addClass('hide');
+                break;
+            case 3:         //积分
+                $(id).find('.choose-coupons-box').closest('.form-group').addClass('hide');
+                $(id).find('.choose-coupon-box').closest('.form-group').addClass('hide');
+                $(id).find('.f-value').removeClass('hide');
+                break;
+            default:         //谢谢
+                $(id).find('.choose-coupons-box').closest('.form-group').addClass('hide');
+                $(id).find('.choose-coupon-box').closest('.form-group').addClass('hide');
+                $(id).find('.f-value').addClass('hide');
+                break;
+        }
+
+        $(".nav-tabs a").click(function () {
+            var id = $(this).attr('href');
+            var type = parseInt($(id).find('select[name="type_id"]').val());
+            console.log(type);
+            switch (type) {
+                case 1:         //代金券
+                    $(id).find('.choose-coupons-box').closest('.form-group').removeClass('hide');
+                    $(id).find('.choose-coupon-box').closest('.form-group').addClass('hide');
+                    $(id).find('.f-value').addClass('hide');
+                    break;
+                case 2:         //优惠券
+                    $(id).find('.choose-coupon-box').closest('.form-group').removeClass('hide');
+                    $(id).find('.choose-coupons-box').closest('.form-group').addClass('hide');
+                    $(id).find('.f-value').addClass('hide');
+                    break;
+                case 3:         //积分
+                    $(id).find('.choose-coupons-box').closest('.form-group').addClass('hide');
+                    $(id).find('.choose-coupon-box').closest('.form-group').addClass('hide');
+                    $(id).find('.f-value').removeClass('hide');
+                    break;
+                default:         //谢谢
+                    $(id).find('.choose-coupons-box').closest('.form-group').addClass('hide');
+                    $(id).find('.choose-coupon-box').closest('.form-group').addClass('hide');
+                    $(id).find('.f-value').addClass('hide');
+                    break;
+            }
+        });
+
+
+    })
+</script>

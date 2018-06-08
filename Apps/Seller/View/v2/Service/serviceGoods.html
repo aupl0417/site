@@ -1,0 +1,68 @@
+<div class="content mt30">
+    <table class="no-border mb20 bg_f1"><!-- 类型说明 -->
+        <tbody class="no-border-y">
+        <tr class="text-center">
+            <td width="75%" style="padding:0">
+                <table class="no-border">
+                    <tbody class="no-border-y">
+                    <td width="10%"></td>
+                    <td width="33%">商品信息</td>
+                    <td width="12%">申请数量</td>
+                    <td width="10%">买家</td>
+                    <td width="12%">售后类型</td>
+                    <td width="18%">状态</td>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        </tbody>
+    </table><!-- 类型说明结束 -->
+
+
+    <table class="revisionTable table"><!-- 订单信息 -->
+        <tbody class="bg_white">
+        <tr class="text-center">
+            <td style="padding:0; width:75%">
+                <table class="no-border table-hover">
+                    <tbody class="no-border-y">
+                    <tr><!-- 同店铺第一个商品 -->
+                        <td width="10%">
+                            <a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', ['id' => $data['orders_goods']['attr_list_id']])}">
+                                <img src="{:myurl($data['orders_goods']['images_'], 80)}" class="img-thumbnail"></a>
+                        </td>
+                        <td valign="top" width="33%" class="text-left">
+                            <a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', ['id' => $data['orders_goods']['attr_list_id']])}">{$data.orders_goods.goods_name}</a>
+                            <div class="md5 text-gray mt5">颜色/尺码：{$data.orders_goods.attr_name}</div>
+                        </td>
+                        <td width="12%">
+                            <span class="text_yellow">× {$data.num}</span>
+                        </td>
+                        <td width="10%">{$data.user.nick}</td>
+                        <td width="12%">
+                            {$data.type_name}
+                        </td>
+                        <td width="18%">
+                            {$data.status_name}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        </tbody>
+    </table><!-- 订单信息结束 -->
+</div>
+
+<div class="row" style="border-top: solid 1px #F8F8F8">
+    <div class="col-sm-12">
+        <h4>申请理由</h4>
+        <p>
+            {$data.reason}
+        </p>
+        <notempty name="data.address">
+            <p>
+                {$data.address}
+            </p>
+        </notempty>
+    </div>
+</div>

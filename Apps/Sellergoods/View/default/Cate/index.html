@@ -1,0 +1,403 @@
+<include file="Index/header" />
+<div class="content-wrap">
+    <div class="create-content">
+        <div class="main-card">
+            <div class="pt10 pb10 plr20  row mg0">
+                <div class="btn btn-trans btn-sm btn-120px" onclick="addCate(this,1)">添加手工分类</div>
+                <div class="btn btn-trans btn-sm btn-120px" onclick="addAutoCate()">添加自动分类</div>
+                <div class="btn btn-trans btn-sm btn-120px" onclick="deleteMoreCate()">批量删除</div>
+                <div class="btn btn-primary btn-sm btn-120px" onclick="saveCate()">保存</div>
+            </div>
+            <div class="">
+                <table class="list-category">
+                        <tr class="bg_f1">
+                            <th width="10%" colspan="2">
+                                <input class="all_choice i-red-square" type="checkbox" id="all_choice" style="position:relative;top:2px;"/> 全选
+
+                            </th>
+                            <th width="40%">分类名称</th>
+                            <th width="17.5%" class="text-center">所属分类</th>
+                            <th width="17.5%" class="text-center">创建时间</th>
+                            <th width="15%" class="text-right">操作</th>
+                        </tr>
+                </table>
+
+                <table class="list-category ui-sortable list-category-content">
+                    <notempty name="list">
+
+                            <foreach name="list" item="vo">
+                                <tbody class=" f_list">
+                                <tr>
+                                    <td width="5%"><input type="checkbox" class="cate_choice i-red-square"/></td>
+                                    <!--<td width="5%">
+                                            <img src="../Public/images/1.jpg" src2="../Public/images/2.jpg" is_show="1" class="ico10" />
+
+                                    </td>-->
+                                    <td width="45%">
+                                        <input class="cate_name form-control" type="text" value="{$vo.category_name}" cate_id="{$vo.id}" sid="{$vo.sid}" old_value="{$vo.category_name}" onkeyup="checkValue(this)" />
+                                        <input type="hidden" class="cate_id" value="{$vo.id}"/>
+                                        <input type="hidden" class="old_cate_name" value="{$vo.category_name}"/>
+                                        <input type="hidden" class="old_cate_sid" value="{$vo.sid}"/>
+                                    </td>
+                                    <td width="17.5%" class="text-center">一级类目</td>
+                                    <td width="17.5%" class="text-center">{$vo.atime}</td>
+                                    <td width="15%" class="text-right">
+                                        <a href="{:U('/Goods/index',array('shop_category_id'=>$vo[id]))}">查看</a>
+                                        <a onclick="deleteCate(this)">删除</a>
+                                        <a onclick="saveCateName(this)" class="check_change ml10" style="display:none;">已更改</a>
+                                    </td>
+                                </tr>
+                                <tr >
+                                    <td colspan="6" style="padding:0;border:none;">
+                                    <table>
+                                        <tbody class="ui-sortable s_list">
+                                            <foreach name="vo.dlist" item="vol">
+                                                <tr>
+                                                    <td width="5%"><input type="checkbox" class="cate_choice i-red-square" /></td>
+                                                    <!--<td width="5%"></td>-->
+                                                    <td width="45%" style="padding-left:50px;">
+                                                        <input class="cate_name form-control" type="text" value="{$vol.category_name}" cate_id="{$vol.id}" sid="{$vol.sid}" old_value="{$vol.category_name}" onkeyup="checkValue(this)" />
+                                                        <input type="hidden" class="cate_id" value="{$vol.id}"/>
+                                                        <input type="hidden" class="old_cate_name" value="{$vol.category_name}"/>
+                                                        <input type="hidden" class="old_cate_sid" value="{$vol.sid}"/>
+                                                    </td>
+
+                                                    <td width="17.5%" class="text-center">
+                                                            <select class="cate_sid form-control" onchange="checkValue(this)">
+                                                                <foreach name="list" item="vole">
+                                                                    <option value="{$vole.id}" <if condition="$vole['id'] eq $vol['sid']">selected="selected"</if>/>{$vole.category_name}</option>
+                                                                </foreach>
+                                                            </select>
+                                                    </td>
+                                                    <td width="17.5%" class="text-center">{$vo.atime}</td>
+                                                    <td width="15%" class="text-right">
+                                                        <a href="{:U('/Goods/index',array('shop_category_id'=>$vol[id]))}">查看</a>
+                                                        <a onclick="deleteCate(this)">删除</a>
+                                                        <a onclick="saveCateName(this)" class="ml10 check_change" style="display:none;">已更改</a>
+                                                    </td>
+                                                </tr>
+                                            </foreach>
+                                        </tbody>
+                                        <tr>
+                                            <td width="5%"></td>
+                                            <!--<td width="5%"></td>-->
+                                            <td colspan="4" onclick="addCate(this,2)" class="add_cate"> 添加子类目<i class="fa fa-plus-circle fl"></i></td>
+                                        </tr>
+                                    </table>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </foreach>
+
+
+                    <else/>
+                        <tbody>
+                            <tr>
+                                <td class="text-center" colspan="8">没有分类</td>
+                            </tr>
+                        </tbody>
+                    </notempty>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+<js href="__JS__/jquery-ui-1.10.3.custom/development-bundle/ui/jquery.ui.core.js" />
+<js href="__JS__/jquery-ui-1.10.3.custom/development-bundle/ui/jquery.ui.widget.js" />
+<js href="__JS__/jquery-ui-1.10.3.custom/development-bundle/ui/jquery.ui.mouse.js" />
+<js href="__JS__/jquery-ui-1.10.3.custom/development-bundle/ui/jquery.ui.sortable.js" />
+<script>
+    $(function() {
+        $( ".ui-sortable" ).sortable({});
+        //$( ".ui-sortable" ).disableSelection();
+        //执行全选方法
+        allChoice();
+    });
+    //存在未保存内容提示
+    window.onbeforeunload = function(event) {
+        if($('.no_save').length > 0){
+            event.returnValue = '您输入的内容尚未保存，确定离开此页面吗？';
+        }
+    }
+    //添加自动分类
+    function addAutoCate(){
+        vmodal({
+            title:"添加自动分类",
+            class:'text-center',
+            url:'{:U('/Cate/autoCate')}'
+        });
+    }
+    //排序
+    $('body .ui-sortable').sortable({
+        stop: function(event, ui) {
+            var data = $('body .cate_name').map(function() { return $(this).attr("cate_id"); }).get().join(',');
+            api({
+                data:{apiurl:'/SellerGoodsManage/category_sort',is_openid:1,'ids':data}
+            },function(ret){
+                //talert({status:1,msg:ret.msg});
+            });
+        }
+    });
+
+    //全选
+    function allChoice(){
+
+        var checkAll = $('input#all_choice');
+        var checkboxes = $('input.cate_choice');
+        checkAll.on('ifChecked ifUnchecked', function(event) {
+            if (event.type == 'ifChecked') {
+                checkboxes.iCheck('check');
+            } else {
+                checkboxes.iCheck('uncheck');
+            }
+        });
+        checkboxes.on('ifChanged', function(event){
+            if(checkboxes.filter(':checked').length == checkboxes.length) {
+                checkAll.prop('checked', 'checked');
+            } else {
+                checkAll.removeProp('checked');
+            }
+            checkAll.iCheck('update');
+        });
+
+    }
+
+    //一级分类下拉
+    function showSecondCate(obj){
+        var new_src =  $(obj).attr('src2');
+        var old_src =  $(obj).attr('src');
+        if($(obj).attr('is_show') == 1){
+            $(obj).attr('is_show',0);
+            $(obj).closest('tr').next('tr').hide();
+        }else{
+            $(obj).attr('is_show',1);
+            $(obj).closest('tr').next('tr').show();
+        }
+        $(obj).attr('src',new_src);
+        $(obj).attr('src2',old_src);
+    }
+    //添加分类
+    function addCate(obj,level){
+        if(level == 1){
+            var html = '<tbody class="f_list">'+
+                        '<tr>'+
+                            '<td class="new_cate"><input type="checkbox" class="cate_choice i-red-square"/></td>'+
+
+                            '<td>' +
+                                '<input class="cate_name form-control" type="text" value="" old_value="" sid="0" cate_id="0"  onkeyup="checkValue(this)"/>' +
+                                '<input type="hidden" class="cate_id" value="0"/>'+
+                                '<input type="hidden" class="old_cate_name" value=""/>'+
+                                '<input type="hidden" class="old_cate_sid" value="0"/>'+
+                            '</td>'+
+                            '<td class="text-center">一级分类</td>'+
+                            '<td class="text-center"></td>'+
+                            '<td class="text-right">'+
+                                '<a onclick="deleteCate(this)">删除</a>'+
+                                '<a onclick="saveCateName(this)" class="ml10 check_change" style="display:none;">已更改</a> '+
+                            '</td>'+
+                        '</tr>'+
+                        '<tr>'+
+                            '<td colspan="6" style="padding:0;border:none;">'+
+                                '<table>'+
+                                    '<tbody class="ui-sortable s_list"></tbody>'+
+                                    '<tr>'+
+                                        '<td width="5%"></td>'+
+                                        '<td colspan="4" onclick="addCate(this,2)">添加子分类<i class="fa fa-plus-circle fl"></i></td>'+
+                                    '</tr>'+
+                                '</table>'+
+                            '</td>'+
+                        '</tr>'+
+                        '</tbody>';
+            $('.list-category-content').append(html);
+        }else if(level == 2){
+            sid = $(obj).closest('tbody.f_list').find('input.cate_name').first().attr('cate_id');
+            if(sid == 0){
+                talert({status:0,msg:'请先保存所属的一级分类'});
+                return false;
+            }
+            var html = '<tr>'+
+                            '<td width="5%" class="new_cate"><input type="checkbox" class="cate_choice i-red-square"/></td>'+
+
+                            '<td width="45%" style="padding-left:50px;">' +
+                                '<input class="cate_name form-control" type="text" value=""  old_value="" sid="'+sid+'" cate_id="0" onkeyup="checkValue(this)"/>' +
+                                '<input type="hidden" class="cate_id" value="0"/>'+
+                                '<input type="hidden" class="old_cate_name" value=""/>'+
+                                '<input type="hidden" class="old_cate_sid" value="'+sid+'"/>'+
+                            '</td>'+
+                            '<td width="17.5%" class="text-center">'+
+                                '<select class="cate_sid form-control" onchange="checkValue(this)">'+
+                                    <foreach name="list" item="vole">
+                                    '<option value="{$vole.id}">{$vole.category_name}</option>'+
+                                    </foreach>
+                                '</select>'+
+                            '</td>'+
+                            '<td width="17.5%" class="text-center"></td>'+
+                            '<td width="15%" class="text-right">'+
+                                '<a onclick="deleteCate(this)">删除</a>'+
+                                '<a onclick="saveCateName(this)" class="ml10 check_change" style="display:none;">已更改</a> '+
+                            '</td>'+
+                        '</tr>';
+            $(obj).closest('table').find('tbody.s_list').append(html);
+            $(obj).closest('table').find('select.cate_sid').last().val(sid);
+        }
+        //实例化样式
+        iCheckClass('.new_cate');
+        //执行全选方法
+        allChoice();
+        $(".new_cate").removeClass('new_cate');
+    }
+    //检查值是否有改变
+    function checkValue(obj){
+        var new_cate_name = $(obj).closest('tr').find('input.cate_name').val();
+        if(new_cate_name.length >15){
+            new_cate_name = new_cate_name.substring(0,15);
+            $(obj).closest('tr').find('input.cate_name').val(new_cate_name);
+        }
+        var old_cate_name = $(obj).closest('tr').find('input.old_cate_name').val();
+        var cate_sid = $(obj).closest('tr').find('select.cate_sid ').val();
+        if(!cate_sid){
+            cate_sid = 0;
+        }
+        var old_cate_sid = $(obj).closest('tr').find('input.old_cate_sid ').val();
+
+        if(new_cate_name != old_cate_name || cate_sid != old_cate_sid){
+            $(obj).closest('tr').find('td .check_change').addClass('no_save').show();
+        }else{
+            $(obj).closest('tr').find('td .check_change').removeClass('no_save').hide();
+        }
+    }
+    //保存分类名称
+    function saveCateName(obj){
+        return false;
+        var id = $(obj).parent().parent().find('td .cate_value').attr('cate_id');
+        var sid = $(obj).parent().parent().find('td .cate_value').attr('sid');
+        var category_name = $(obj).parent().parent().find('td .cate_value').val();
+        //新增
+        if(id == 0){
+            api({
+                data:{apiurl:'/SellerGoodsManage/category_add',is_openid:1,'category_name':category_name,'sid':sid,'no_sign':'sid'}
+            },function(ret){
+                if(ret.code == 1){
+                    talert({status:1,msg:ret.msg});
+                    $(obj).removeClass('no_save').hide();
+                    $(obj).parent().parent().find('td .cate_value').attr('old_value',category_name);
+                    $(obj).parent().parent().find('td .cate_value').attr('cate_id',ret.data.id);
+                }else{
+                    talert({status:0,msg:ret.msg});
+                }
+            });
+        //修改
+        }else{
+            api({
+                data:{apiurl:'/SellerGoodsManage/category_edit',is_openid:1,'id':id,'category_name':category_name,'sid':sid,'no_sign':'sid'}
+            },function(ret){
+                if(ret.code == 1){
+                    talert({status:1,msg:ret.msg});
+                    $(obj).removeClass('no_save').hide();
+                    $(obj).parent().parent().find('td .cate_value').attr('old_value',category_name);
+                }else{
+                    talert({status:0,msg:ret.msg});
+                }
+            });
+        }
+    }
+    //保存所有变更的分类信息
+    function saveCate(){
+        var str = $(".no_save").map(function(){
+            var cate_id = $(this).closest('tr').find('td .cate_name').attr('cate_id');
+            var cate_name = $(this).closest('tr').find('td .cate_name').val();
+            var cate_sid = $(this).closest('tr').find('td .cate_sid').val();
+            if(!cate_sid){
+                cate_sid = 0;
+            }
+            var str = cate_id+','+cate_name+','+cate_sid;
+            return str;
+        }).get().join('|');
+        if(str){
+            api({
+                data:{apiurl:'/SellerGoodsManage/category_all_edit',is_openid:1,'str':str,}
+            },function(ret){
+                talert({status:ret.code,msg:ret.msg});
+                $(".no_save").removeClass('no_save');
+                setTimeout(function(){
+                    parent.cate_reload();
+                },1000);
+            });
+        }else{
+            talert({status:1,msg:'操作成功'});
+        }
+
+    }
+    //删除分类
+    function deleteCate(obj){
+        vmodal({
+            title:"删除分类",
+            msg:"您真的要删除吗？",
+            class:'text-center',
+            confirm:1,
+        },function(ret){
+            $(".modal-ok").click(function(){
+                var id = $(obj).closest('tr').find('td .cate_id').val();
+                var sid = $(obj).closest('tr').find('td .old_cate_sid').val();
+                if(id == 0){
+                    $('#ajax-modal').modal('hide');
+                    if(sid == 0){
+                        $(obj).closest('tr').next('tr').remove();
+                    }
+                    $(obj).closest('tr').remove();
+                }else{
+                    api({
+                        data:{apiurl:'/SellerGoodsManage/category_delete',is_openid:1,'id':id}
+                    },function(ret){
+                        talert({status:ret.code,msg:ret.msg});
+                        if(ret.code==1){
+                            setTimeout(function(){
+                                parent.cate_reload();
+                            },1000);
+                        }
+                    });
+                }
+
+            });
+        });
+    }
+    //批量删除
+    function deleteMoreCate(){
+        var num = $(".cate_choice:checked").length;
+        if(num>0){
+            var id = $(".cate_choice:checked").map(function(){
+                return $(this).closest('tr').find('td .cate_id').val();
+            }).get().join(',');
+            vmodal({
+                title:"批量删除分类",
+                msg:"您真的要删除吗？",
+                class:'text-center',
+                confirm:1,
+            },function(ret){
+                $(".modal-ok").click(function(){
+                    api({
+                        data:{apiurl:'/SellerGoodsManage/category_more_delete',is_openid:1,'id':id}
+                    },function(ret){
+                        talert({status:ret.code,msg:ret.msg});
+                        if(ret.code==1){
+                            setTimeout(function(){
+                                parent.cate_reload();
+                            },1000);
+                        }
+                    });
+                });
+            });
+        }else{
+            talert({status:0,msg:'请先勾选需要删除的分类'});
+        }
+
+    }
+
+    //刷新左侧分类
+    function updateLeftCate(){
+        $('#leftupload', window.parent.document).click();
+    }
+</script>
+</body>
+</html>

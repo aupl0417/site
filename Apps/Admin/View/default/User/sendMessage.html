@@ -1,0 +1,101 @@
+<div class="p20 box">
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="fl" width="60">
+                <img src="{:myurl($rs['face'],50)}" width="60" class="img-circle">
+            </div>
+            <div style="margin-left:70px">
+                <div>用户姓名：<span class="ft18 strong">{$rs.name}</span></div>
+                <div>用户昵称：{$rs.nick}</div>
+                <div>认证状态：{:status($rs['is_auth'], [1 => ['已认证', 'btn-success'], 0 => ['未认证']])}</div>
+                <div>用户等级：{:status($rs['level_id'], [1 => ['消费商会员'], 3 => ['创客会员', 'btn-success'], 4 => ['创投会员', 'btn-info']])}</div>
+                <div>用户状态：{:status($rs['status'], [0 => ['已禁用'], 1 => ['正常', 'btn-success']])}</div>
+                <div>手机号码：{$rs.mobile}</div>
+                <div>邮箱地址：{$rs.email}</div>
+                <div>注册时间：{$rs.atime}</div>
+            </div>
+        </div>
+    </div>
+</div>
+<form data-url="__URL__/sendSave" data-id="#form_{$rs.id}" id="form_{$rs.id}" class="form-horizontal vform">
+    {:W('Widget/buildform',array(array(
+    'field'		=>array(
+    array(
+    'formtype'		=>'select',
+    'name'			=>'system_tpl',
+    'label'			=>'通知模板',
+    'data'			=>$tpl,
+    'field'			=>array('id','tpl_name'),
+    'tips'  		=>'手机通知及站内系统通知模板',
+    ),
+    array(
+    'formtype'		=>'select',
+    'name'			=>'message_tpl',
+    'label'			=>'短信模板',
+    'data'			=>$smsTpl,
+    'field'			=>array('id','tpl_name'),
+    'tips'  		=>'手机短信模板',
+    ),
+    array(
+    'formtype'		=>'select',
+    'name'			=>'email_tpl',
+    'label'			=>'邮件模板',
+    'data'			=>$mailTpl,
+    'field'			=>array('id','tpl_name'),
+    'tips'  		=>'邮件通知模板',
+    ),
+    array(
+    'formtype'		=>'text',
+    'name'			=>'title',
+    'label'			=>'推送标题',
+    'tips'          =>'仅限安卓客户端',
+    ),
+    array(
+    'formtype'		=>'textarea',
+    'label'			=>'消息内容',
+    'name'			=>'content',
+    'tips'          =>'消息内容不为空时所选模板无效',
+    ),
+    /*array(
+    'formtype'		=>'text',
+    'name'			=>'url',
+    'label'			=>'url',
+    'tips'          =>'用户需要连接过去的URL，可不填写',
+    ),*/
+    array(
+    'formtype'		=>'checkbox',
+    'name'			=>'notice_type',
+    'label'			=>'通知类型',
+    'data'          =>[['message' , '短信'], ['system' , '系统'], ['email' , '邮件'], ['pushs' , '推送']],
+    //'data'          =>[['message' , '短信'], ['system' , '系统'], ['email' , '邮件']],
+    'field'			=>array(0,1),
+    'tips'          =>'请选择以上通知类型，不选则视为全部',
+    ),
+    array(
+    'formtype'		=>'hidden',
+    'name'			=>'uid',
+    'value'			=>$rs['id'],
+    ),
+    array(
+    'formtype'		=>'html',
+    'label'			=>' ',
+    'html'			=>'<button type="button" class="btn btn-primary btn-150px send-save"><i class="fa fa-check"></i> 立即发送</button>'
+    ),
+    ),
+    )))}
+</form>
+<script>
+    $(document).ready(function() {
+        $(".send-save").click(function() {
+            var d=$(this).closest('form').data();
+            ajax_post_form({
+                formid:d.id
+            },function(ret){
+                valert(ret);
+                if(ret.status=='success'){
+                    ref();
+                }
+            });
+        })
+    });
+</script>

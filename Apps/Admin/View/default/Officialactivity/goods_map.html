@@ -1,0 +1,66 @@
+<div class="row">
+	<div class="col-xs-3">
+		<label><input type="checkbox" class="i-red-square" name="{$param.name}[map_type][]" value="speed" {:in_array("speed",$param["value"]["map_type"])?"checked":""}> 商品好评率</label>
+	</div>
+	<div class="col-xs-2 text-right">		
+		<label style="line-height:35px">好评率>=</label>
+	</div>
+	<div class="col-xs-3 text-right">		
+		<div class="input-group">
+            <input type="text" id="{$param.name}[fraction]" name="{$param.name}[fraction]" placeholder="请输入好评率" value="{$param.value.fraction}" class="form-control">
+            <span class="input-group-addon">%</span>
+        </div>	
+		
+	</div>	
+</div>
+
+<div class="row">
+	<div class="col-xs-3">
+		<label><input type="checkbox" class="i-red-square" name="{$param.name}[map_type][]" value="price" {:in_array("price",$param["value"]["map_type"])?"checked":""}> 活动价在规定范围之内</label>
+	</div>
+	<div class="col-xs-2 text-right">		
+		<label style="line-height:35px">价格区间</label>
+	</div>
+	<div class="col-xs-2 text-right">		
+		<input type="text" id="{$param.name}[s_price]" name="{$param.name}[s_price]" placeholder="价格从" value="{$param.value.s_price}" class="form-control" style="">
+	</div>	
+	<div class="col-xs-2 text-right">		
+		<input type="text" id="{$param.name}[e_price]" name="{$param.name}[e_price]" placeholder="至" value="{$param.value.e_price}" class="form-control" style="">
+	</div>	
+</div>
+
+<div class="row">
+	<div class="col-xs-3">
+		<label><input type="checkbox" class="i-red-square" name="{$param.name}[map_type][]" value="discount" {:in_array("discount",$param["value"]["map_type"])?"checked":""}> 活动价不得高于原价(x折)</label>
+	</div>
+	<div class="col-xs-2 text-right">		
+		<label style="line-height:35px"><=原价</label>
+	</div>
+	<div class="col-xs-3 text-right">		
+		<div class="input-group">
+            <input type="text" id="{$param.name}[discount_ratio]" name="{$param.name}[discount_ratio]" placeholder="请输入折扣" value="{$param.value.discount_ratio}" class="form-control">
+            <span class="input-group-addon">折</span>
+        </div>	
+		
+	</div>	
+</div>
+
+
+<div class="row">
+	<div class="col-xs-3">
+		<label><input type="checkbox" class="i-red-square" name="{$param.name}[map_type][]" value="sale" {:in_array("sale",$param["value"]["map_type"])?"checked":""}> 累计交易笔数在规定范围之内</label>
+	</div>
+	<div class="col-xs-2 text-right">		
+		<label style="line-height:35px">交易笔数>=</label>
+	</div>
+	<div class="col-xs-3 text-right">		
+		<input type="text" id="{$param.name}[sale_num]" name="{$param.name}[sale_num]" placeholder="请输入商品累计交易笔数" value="{$param.value.sale_num}" class="form-control" style="">
+	</div>		
+</div>
+
+<div>
+	<label><input type="checkbox" class="i-red-square" name="{$param.name}[map_type][]" value="is_between" checked disabled> 商品不含区间价格</label>	
+</div>
+<div>
+	<label><input type="checkbox" class="i-red-square" name="{$param.name}[map_type][]" value="is_free" {:in_array("is_free",$param["value"]["map_type"])?"checked":""}> 商品包邮</label>	
+</div>

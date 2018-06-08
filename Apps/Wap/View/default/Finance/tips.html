@@ -1,0 +1,24 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin({ref:true})"></i>
+		</div>
+		<div class="title">
+			提示
+		</div>
+		<div class="r">
+			
+		</div>
+	</div>
+</header>
+<section>
+	<div class="tips">
+		<div class="text text-success md10">付款成功！</div>
+		<div class="btn btn-danger" onclick="openWin({name:'finance_orders_view',url:'/Finance/view/f_no/{$_GET.f_no}',close:true})">查看理财详情</div>		
+	</div>
+</section>
+
+
+<script>
+	fixBar(1);	
+</script>

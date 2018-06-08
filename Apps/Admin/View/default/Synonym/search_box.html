@@ -1,0 +1,31 @@
+<form method="get" action="__URL__/" role="form" class="hover-shadow hover-search p10 md10">
+
+	<table class="no-bordered">
+		<tr>
+			<td width="230" class="p0" valign="top">
+				<a href="__URL__/add" class="btn btn-trans btn-rad btn-primary mt8"><i class="fa fa-plus"></i> 新增记录</a>
+				<a href="javascript:void(0);" onclick="add_data()" class="btn btn-trans btn-rad btn-primary mt8"><i class="fa fa-plus"></i> 批量新增</a>
+			</td>		
+			<notempty name="search_fields">
+			<td class="p0">
+				{:W('Widget/searchform',array($search_fields,I('get.'),$fcfg['search_col']))}
+			</td>
+			<td width="100" class="p0" valign="top"><button type="submit" class="btn btn-rad btn-trans btn-primary btn-block mt8"><i class="fa fa-search"></i> 搜索</button></td>
+			</notempty>
+		</tr>
+	</table>
+	
+	
+
+</form>
+<div class="clearfix"></div>
+<script>
+	//营业额查询
+	function add_data(){
+		vmodal({
+			title:'批量添加',
+			url:'__URL__/batch_add',
+			width:'60%',
+		});
+	}
+</script>

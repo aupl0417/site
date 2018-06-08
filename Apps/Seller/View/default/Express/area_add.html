@@ -1,0 +1,161 @@
+
+<form id="form_area" class="form-horizontal vform" onsubmit="return area_form()">
+									<div class="row md10 express-set">
+										<div class="col-xs-4">
+											<div class="input-group">
+												<span class="input-group-addon">默认运费</span>
+												<input type="text" class="form-control" id="first_unit" name="first_unit" value="1">
+												<span class="input-group-addon">{:$_GET['unit']==1?'件':'kg'}内</span>
+											</div>
+										</div>
+										<div class="col-xs-2 pl0">
+											<div class="input-group">
+												<input onBlur="checkExpressMax(this)" type="text" class="form-control" id="first_price" name="first_price" value="10">
+												<span class="input-group-addon">元</span>
+											</div>
+										</div>
+										<div class="col-xs-3 pl0">
+											<div class="input-group">
+												<span class="input-group-addon">每增加</span>
+												<input type="text" class="form-control" id="next_unit" name="next_unit" value="1">
+												<span class="input-group-addon">{:$_GET['unit']==1?'件':'kg'}</span>
+											</div>
+										</div>
+										<div class="col-xs-3 pl0">
+											<div class="input-group">
+												<span class="input-group-addon">增加运费</span>
+												<input onBlur="checkExpressMax(this)" type="text" class="form-control" id="next_price" name="next_price" value="8">
+												<span class="input-group-addon">元</span>
+											</div>
+										</div>
+									</div><!--/row-->
+
+			{:W('Common/Builder/buildform',array(array(
+				'field'		=>array(		
+					array(
+						'formtype'		=>'checkbox',
+						'name'			=>'city_ids',
+						'is_need'		=>true,
+						'field'			=>array('id','a_name'),
+						'level'			=>2,
+						'tpl'			=>'city',
+						'data'			=>get_category(array('table'=>'area','level'=>2,'field'=>'id,sid,a_name','cache_name'=>'express_select_area')),
+						'col'			=>array('','col-xs-12')
+					),
+				
+
+				),
+			),$rs))}
+<div class="p20 text-center">
+	<button type="submit" class="btn btn-primary btn-150px"><i class="fa fa-check"></i> 提交</button>
+</div>			
+</form>			
+
+
+<script>
+iCheckClass('#form_area');
+checkbox_select_all();
+
+var type=$('.vaction').html();
+
+
+var use_ids=new Array();
+$('.'+type+' .express_area [data-name="city_ids"]').each(function(index){
+	use_ids[index]=$(this).val();
+});
+
+use_ids=use_ids.join(',');
+
+if(use_ids!=''){
+	use_ids=use_ids.split(',');	
+	for(i=0;i<use_ids.length;i++){
+		//$('#form_area input[type="checkbox"][value="'+use_ids[i]+'"]').iCheck('check');
+		$('#form_area input[type="checkbox"][value="'+use_ids[i]+'"]').iCheck('disable');
+	}
+}
+
+
+function area_form(){
+	var size=$('input[type="checkbox"]:checked').size();
+	var type=$('.vaction').html();
+	var tag='.'+$('.vaction').html()+' .express_area';
+	var data=getFormJson('#form_area');
+	if(data.first_unit==''){
+		talert({msg:'请设置好默认运费'});
+		$('#form_area #first_unit').focus();
+		return false;		
+	}
+	
+	if(data.first_price==''){
+		talert({msg:'请设置好默认运费'});
+		$('#form_area #first_price').focus();
+		return false;		
+	}
+
+	if(data.next_unit==''){
+		talert({msg:'请设置好默认运费'});
+		$('#form_area #next_unit').focus();
+		return false;		
+	}
+
+	if(data.next_price==''){
+		talert({msg:'请设置好默认运费'});
+		$('#form_area #next_price').focus();
+		return false;		
+	}	
+	if(size==0){
+		talert({msg:'请选择城市！'});
+		return false;
+	}
+	
+	var area=new Array();
+	var city_ids=new Array();
+	$('#form_area input[type="checkbox"]:checked').each(function(index){
+		if($(this).data('layer')==1) area[index]='<strong class="ft14 text-black">'+$(this).data('name')+'</strong>';
+		else area[index]=$(this).data('name');		
+		city_ids[index]=$(this).val();
+
+	});
+	
+
+	
+	
+	var html='<div class="box md10 p10">';
+		html+='<div class="action"><div class="btn btn-info" data-type="'+type+'" onclick="area_edit($(this))">修改</div> <div class="btn btn-primary" onclick="area_delete($(this))">删除</div></div>';
+		html+='<h5>默认运费'+data.first_unit+'<span class="unit">{:$_GET['unit']==1?'件':'kg'}</span>内'+data.first_price+'元，每增加'+data.next_unit+'<span class="unit">{:$_GET['unit']==1?'件':'kg'}</span>，增加运费'+data.next_price+'元</h5>';
+		html+='<div class="text-gray">'+area.join(',')+'</div>';
+
+		
+		html+='<input type="hidden" name="'+type+'_city_ids[]" value="'+city_ids.join(',')+'" data-name="city_ids">';
+		html+='<input type="hidden" name="'+type+'_first_unit[]" value="'+data.first_unit+'" data-name="first_unit">';
+		html+='<input type="hidden" name="'+type+'_first_price[]" value="'+data.first_price+'" data-name="first_price">';
+		html+='<input type="hidden" name="'+type+'_next_unit[]" value="'+data.next_unit+'" data-name="next_unit">';
+		html+='<input type="hidden" name="'+type+'_next_price[]" value="'+data.next_price+'" data-name="next_price">';
+		html+='</div>';		
+		//alert(html);
+		
+	$(tag).append(html);
+	
+	$('#ajax-modal').modal('hide');
+		
+	
+	//不提交表单，用脚本处理结果
+	return false;
+}
+
+function checkExpressMax(th){
+	var value = $(th).val();
+	if(isNaN(value) || value == ''){
+		$(th).val('');
+		return false;
+	}
+	var price = parseFloat(value);
+	if(price >= 100){
+		$(th).val(99.99);
+	}else if(price < 0){
+		$(th).val('');
+	}else{
+		$(th).val(price);
+	}
+}
+</script>

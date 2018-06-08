@@ -1,0 +1,88 @@
+<include file="Public:header" />
+<include file="nav" />
+
+<notempty name="pagelist.list">
+<div class="m20">
+	<include file="search_box" />
+
+	<form id="formlist" name="formlist">
+	<div class="block-flat">
+		<div class="header hide">			
+			<h4>共{$pagelist.allpage}页，{$pagelist.allnum}条记录</h4>			
+		</div>
+		<div class="content">		
+			<include file="widget_pagelist" />
+			<div class="clearfix"></div>
+			<div class="hrow">
+				<div class="hcol-5 text-center">
+					{$pagelist.page.page}
+				</div>
+				<div class="hcol-1 text-center">
+					<div class="page-total">共 {$pagelist.allnum} 条记录，共 {$pagelist.allpage} 页</div>
+				</div>
+			</div>
+
+		</div>
+		
+	</div>
+	
+	</form><!--/form-->
+
+	<div class="clearfix h50px"></div>
+	
+</div>
+
+
+<div class="navbar-fixed-bottom border-t">
+	<div class="buttom-bar bg-white-50">
+
+			<div class="pull-right">
+				<div class="input-group pull-right">
+					<select id="gopage" name="gopage" class="form-control">
+						<option value="1">跳转</option>
+						{$pagelist.page.gopage}
+					</select>					
+				</div>			
+			</div>
+
+			
+	</div>
+</div>	
+
+<else />
+<div class="m20">
+	<include file="search_box" />
+	<div class="text-center nors">
+		<div class="nors-tips md20">暂无记录！</div>
+	</div>
+</div>
+</notempty>
+
+
+
+<include file="Public:copyright" />
+<include file="Public:js" />
+<script>
+$(document).ready(function(){
+	$('.item-view').click(function(){
+		var d=$(this).data();
+		var url='__URL__/view/id/'+d.id;
+		var tag='#item-'+d.id;
+
+		$(this).closest('tr').next().toggleClass('hide');
+		if($(tag).html()=='') loadurl({tag:tag,url:url});
+	});	
+	
+	$('#gopage').change(function(){
+		var url=$('#gopage').val();
+		location.href=url;
+	});
+	$('.go-page').click(function(){
+		var url=$('#gopage').val();
+		location.href=url;
+	});	
+});
+
+
+</script>
+<include file="Public:footer" />

@@ -1,0 +1,75 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			拒绝退款
+		</div>
+		<div class="r">
+		</div>
+	</div>
+</header>
+<section>	
+	<form id="form-refund-reject">
+		<div class="line-box hover row" onclick="openWin({name:'seller_refund_view',url:'/SellerRefund/view/r_no/{$_GET.r_no}'})">
+			<div class="col-30">
+				退款单号
+			</div>
+			<div class="col-70 text-right b">
+				{$_GET.r_no}
+			</div>
+		</div>
+		<div class="line-box hover row" onclick="openWin({name:'seller_orders_view',url:'/SellerOrders/view/s_no/{$_GET.s_no}'})">
+			<div class="col-30">
+				订单号
+			</div>
+			<div class="col-70 text-gray text-right">
+				{$_GET.s_no}
+			</div>
+		</div>
+		<div class="line-box-m noicon row">
+			<div class="col-30">拒绝原因</div>
+			<div class="col-70">
+				<textarea id="reason" name="reason" placeholder="请输入拒绝原因" maxlength="100" rows="5"></textarea>
+			</div>
+			<div class="clearfix"></div>
+		</div>		
+		<div class="p10">
+			<div class="btn btn-lg btn-danger btn-block" onclick="refund_reject()">提交</div>
+		</div>
+		<input type="hidden" name="apiurl" value="/SellerRefund2/reject">
+		<input type="hidden" name="is_openid" value="1">
+		<input type="hidden" name="s_no" value="{$_GET.s_no}">		
+		<input type="hidden" name="r_no" value="{$_GET.r_no}">		
+	</form>
+</section>
+
+
+
+<script>
+	fixBar(1);
+	
+	function refund_reject(){
+		var data=getFormJson('#form-refund-reject');
+		if(data.reason==''){
+			valert({msg:'请输入拒绝原因！'});
+			$('.page.active #reason').focus();
+			return false;
+		}
+		
+		ajax_post({
+			url:'/Api/api',
+			data:data
+		},function(ret){
+			if(ret.code==1){
+				closeWin({ref:true});
+			}else{
+				valert(ret);
+			}
+		});		
+	}
+
+	
+
+</script>

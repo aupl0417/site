@@ -1,0 +1,35 @@
+<div class="box p20">
+    <div class="row">
+        <div class="col-xs-6">
+            <p>
+                游戏名称：{$rs.luck_name}
+            </p>
+            <p>
+                抽奖编号：{$rs.l_no}
+            </p>
+            <p>
+                抽奖用户：{$rs.nick}
+            </p>
+            <p>
+                是否免费：{:status($rs['is_winning'], [['免费'], ['唐宝购买', 'btn-success']])}
+            </p>
+            <p>
+                是否中奖：{:status($rs['is_winning'], [['未中奖'], ['已中奖', 'btn-success']])}
+            </p>
+            <p>
+                状态：{:status($rs['status'], [['未发放'], ['已派送', 'btn-info'], ['已领取', 'btn-success']])}
+            </p>
+            <eq name="rs.is_winning" value="1">
+                <lt name="rs.type_id" value="3">
+                    <notempty name="rs.intro.shop_name">
+                        <p>所属店铺：{$rs.intro.shop_name}</p>
+                    </notempty>
+                    <p>使用方法：满 {$rs.intro.min_price} 减 {$rs.intro.price}</p>
+                    <p>使用时间：{$rs.intro.sday} - {$rs.intro.eday}</p>
+                    <else />
+                    <p>积分：{$rs.intro.score}</p>
+                </lt>
+            </eq>
+        </div>
+    </div>
+</div>

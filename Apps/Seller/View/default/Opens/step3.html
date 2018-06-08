@@ -1,0 +1,262 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body">
+	<include file="Public:nav" />
+	<div class="container mb30">
+		<include file="Public:side" />
+		<div class="w980 fl">
+			<div class="bor_der">
+				<div class="bg_f1 clearfix fs14 text_44 tle_R">
+					<a class="fl plr15 line40 ml-1 active" href="javascript:;">添加主营类目</a>
+				</div>
+				<include file="step" />
+				
+				<div class="pd10 solid_b">
+					<h5 class="strong">选择类目</h5>
+					
+					<div class="header">							
+						<h3><a href="javascript:;" data-url="{:U('/opens/category')}" data-title="添加类目" class="btn btn-primary opreating">添加类目</a></h3>
+					</div>
+						<notempty name="cate">
+						
+							<table class="table table-bordered table-advance table-hover mb30">
+								<tbody>
+									<tr>
+										<th class="col-xs-10 text-center" style="vertical-align: middle;">类目</th>
+										<th class="col-xs-2 text-center" style="vertical-align: middle;">操作 </th>
+									</tr>
+									<tr class="countTr">
+										<td style="vertical-align: middle;" class="text-center col-xs-2">{$cate}</td>
+										<td style="vertical-align: middle;" class="text-center col-xs-1">
+											<a href="javascript:;" data-url="{:U('/opens/category')}" data-title="添加类目" class="btn btn-primary opreating">修改</a>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						<else />
+							{:W('Common/Builder/nors', array('param' => array('text' => '还未添加分类！')))}
+						</notempty>
+				</div>
+				<div class="pd10">
+					<switch name="info">
+						<case value="brand">
+							<h5 class="strong">选择品牌</h5>
+							<div class="header">							
+								<h3>
+									<a href="javascript:;" data-url="{:U('/opens/addCheckInfo', array('type' => 'brand'))}" data-title="添加品牌" class="btn btn-primary opreating btn-brandAdd disabled">添加品牌</a>
+								</h3>
+							</div>
+							<empty name="brand.code">
+								<table class="table table-bordered table-advance table-hover mb30">
+									<tbody>
+										<tr>
+											<th class="col-xs-2 text-center" style="vertical-align: middle;">品牌名称</th>
+											<th class="col-xs-2 text-center" style="vertical-align: middle;">品牌LOGO</th>
+											<th class="col-xs-2 text-center" style="vertical-align: middle;">品牌所有者</th>
+											<th class="col-xs-2 text-center" style="vertical-align: middle;">品牌类型</th>
+										</tr>
+										<volist name="brand" id="vo">
+											<tr class="countBrand">
+												<td style="vertical-align: middle;" class="text-center col-xs-2">{$vo.b_name}</td>
+												<td class="text-center">
+													<a class="image-zoom" href="{$vo['b_logo']}" title="大图">
+														<img src="{:myurl($vo['b_logo'], 100)}" />
+													</a>
+												</td>
+												<td style="vertical-align: middle;" class="text-center col-xs-1">{$vo.b_master}</td>
+												<td style="vertical-align: middle;" class="text-center col-xs-1">
+													<a href="javascript:;" data-url="{:U('/opens/addCheckInfo', array('type' => 'brand', 'id' => $vo['id']))}" data-title="修改品牌" class="btn btn-primary btn-ml plr20 btn_m opreating">修改</a>
+												</td>
+											</tr>
+										</volist>
+									</tbody>
+								</table>
+							<else />
+								{:W('Common/Builder/nors', array('param' => array('text' => '还未添加品牌！')))}
+							</empty>
+						</case>
+						<case value="product">
+							<notempty name="product">
+								<table class="table table-bordered table-advance table-hover mb30">
+									<tbody>
+										<tr>
+											<th class="col-xs-5 text-center" style="vertical-align: middle;">产品图片</th>
+											<th class="col-xs-5 text-center" style="vertical-align: middle;">其他相关资质</th>
+											<th class="col-xs-2 text-center" style="vertical-align: middle;">操作</th>
+										</tr>
+										<tr>
+											<td>
+											<php>$pImg = explode(',', trim($product['pro_images'], ','));</php>
+											<volist name="pImg" id="vo">
+												<a class="image-zoom" href="{$vo}" title="大图">
+													<img src="{:myurl($vo, 100)}" />
+												</a>
+											</volist>
+											</td>
+											<td>
+												<php>$cImg = explode(',', trim($product['cert_images'], ','));</php>
+												<volist name="cImg" id="vo">
+													<a class="image-zoom" href="{$vo}" title="大图">
+														<img src="{:myurl($vo, 100)}" />
+													</a>
+												</volist>
+											</td>
+											<td style="vertical-align: middle;" class="text-center col-xs-1">
+												<a href="javascript:;" data-url="{:U('/opens/addCheckInfo', array('type' => 'product', 'id' => $product['id']))}" data-title="修改产品信息" class="btn btn-primary btn-ml plr20 btn_m opreating">修改</a>
+											</td>
+										</tr>
+										<tr>
+											<td colspan="3">
+												{$product.intro}
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							<else />
+								{:W('Common/Builder/nors', array('param' => array('text' => '还未添加产品信息！')))}
+							</notempty>
+						</case>
+						<default />
+							<h5 class="strong">选择品牌或添加产品信息</h5>
+							<div class="header">							
+								<h3>
+									<a href="javascript:;" data-url="{:U('/opens/addCheckInfo', array('type' => 'brand'))}" data-title="添加品牌" class="btn btn-primary opreating btn-brandAdd disabled">添加品牌</a>
+									<a href="javascript:;" data-url="{:U('/opens/addCheckInfo', array('type' => 'product'))}" data-title="添加产品信息" class="btn btn-primary opreating btn-brandAdd disabled ml10">添加产品信息</a>
+								</h3>
+							</div>
+					</switch>
+				</div>
+				<!-- 
+				<eq name="account.type" value="1">
+					<div class="pd10 solid_t">
+						<h5 class="strong">设置银行信息</h5>
+						{:W('Common/Builder/form', [['data' => $keyList, 'name' => 'shopBankInfo', 'clickClass' => 'shopInfo-btn-submit', 'run' => '/opens/addBank']])}
+					</div>
+				</eq> -->
+				<div class="pd10 solid_t">
+					<div class="form-group text-right" style=" margin-bottom:0;">
+						<a class="btn btn-primary btn-next mr20" href="{:U('/opens/step2')}"><i class="fa fa-reply"></i>上一步</a><a class="btn btn-primary <eq name="next" value="0">disabled</eq> btn-next" href="{:U('/opens/step4')}"><i class="fa fa-share"></i>下一步</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</block>
+<block name="css">
+<script src="__FLATDREAM__/js/bootstrap.datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script src="__FLATDREAM__/js/bootstrap.datetimepicker/js/bootstrap-datetimepicker.zh-CN.js"></script>
+<link rel="stylesheet" href="__FLATDREAM__/js/bootstrap.datetimepicker/css/bootstrap-datetimepicker.css" />
+<script type="text/javascript" src="/Public/Webuploader/js/webuploader.js"></script>
+<link rel="stylesheet" type="text/css" href="/Public/Webuploader/css/webuploader.css">
+<link rel="stylesheet" type="text/css" href="/Public/CSS/flatdream/js/jquery.icheck/skins/square/_all.css">
+<style type="text/css">
+.alert-default .icon i {
+	color: #d8d8d8;
+}
+
+.hover {
+	cursor: pointer;
+}
+</style>
+</block>
+<block name="script">
+<script>
+$(document).ready(function() {
+	var maxBrand	=	'{$shopType.max_brand}';
+	var brandCount	=	$(".countBrand").size();
+	if((parseInt(maxBrand)) == 0 || (parseInt(brandCount) < parseInt(maxBrand))) {
+		$(".btn-brandAdd").removeClass('disabled');
+	} else {
+		$(".btn-brandAdd").addClass('disabled');
+	}
+	//模态框操作
+	$(".opreating").click(function() {
+		var d 	=	$(this).data();
+		vmodal({
+			title:d.title,
+			url:d.url,
+		});
+	});
+	$(".shopInfo-btn-submit").click(function() {
+		var type	=	$("input[name='type_id']").val();
+		if(type == '') {
+			talert({status:0,msg:'开店类型不能为空！'});
+			return false;
+		}
+		var img	=	$("input[name='bank_license']").val();
+		if(img == '') {
+			talert({status:0,msg:'银行开户许可证不能为空！'});
+			return false;
+		}
+// 		var tax_cert	=	$("input[name='tax_cert']").val();
+// 		if(tax_cert == '') {
+// 			talert({status:0,msg:'纳税资格证不能为空！'});
+// 			return false;
+// 		}
+	});
+	<eq name="account.type" value="1">
+		/*checkform({
+			formid:"#shopBankInfo",
+			rules:{
+				bank_id:{
+					required:true,
+				},
+				bank_account:{
+					required:true,
+					number:true,
+				},
+				bank_name:{
+					required:true,
+					rangelength:[2,10],
+				},
+				bank_no:{
+					required:true,
+				},
+				province:{
+					required:true,
+				},
+				city:{
+					required:true,
+				},
+				district:{
+					required:true,
+				},
+			},
+			messages:{
+				bank_id:{
+					required:'开户所在行必须',
+				},
+				bank_account:{
+					required:'开户银行账号不能为空',
+					number:'开户银行账号为数字类型',
+				},
+				bank_name:{
+					required:'开户名',
+					rangelength:'开户名长度介于2-10位之间',
+				},
+				bank_no:{
+					required:'支行联号不能为空',
+				},
+				province:{
+					required:'省份不能为空',
+				},
+				city:{
+					required:'城市不能为空',
+				},
+				district:{
+					required:'地区不能为空',
+				},
+			},
+		},function(res) {
+			talert({status:res.code,msg:res.msg});
+			if(res.code == 1) {
+				setTimeout(function() {
+					ref();
+				}, 1000);
+			}
+		});*/ 
+	</eq>
+});
+</script>
+</block>

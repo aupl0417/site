@@ -1,0 +1,517 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body mt10">
+	<include file="Public:nav_statistic" />
+    <div class="container">
+		<include file="Public:side_statistic" />
+
+        <div class="w960 fl">
+            <ol class="breadcrumb pd10 bor_der bor_r0 mt0 mb20">
+                <li><a href="/">数据统计 </a> </li>
+                <li><a href="">流量分析</a></li>
+                <li><a href="">访客分析</a></li>
+            </ol>
+
+
+            <div class="ptb10 solid_b mb20">
+                <span class="fs16">时段分布</span>
+            </div>
+
+            <div class="mb35">
+                <div class="mb10">
+                    <strong class="fs14 text_black mr20">选择时间</strong>
+                    <a class="text_yellow plr20 <if condition='$con[hour_type] eq 1'>btn btn-primary btn-xs </if>" onclick = "select_change('hour','type',1)">昨天</a>
+                    <a class="text_yellow plr20 <if condition='$con[hour_type] eq 2'>btn btn-primary btn-xs </if>" onclick = "select_change('hour','type',2)">最近一周</a>
+                    <a class="text_yellow plr20 <if condition='$con[hour_type] eq 3'>btn btn-primary btn-xs </if>" onclick = "select_change('hour','type',3)">最近一个月</a>
+                    <a class="text_yellow plr20 <if condition='$con[hour_type] eq 4'>btn btn-primary btn-xs </if>" onclick = "select_change('hour','type',4)">最近三个月</a>
+                    <div class="pull-right btn-group btn-group-sm mt-5">
+                        <button type="button" class="btn btn-primary plr20 <if condition='$con[hour_terminal] neq 1'> btn-trans</if>" onclick = "select_change('hour','terminal',1)">全部</button>
+                        <button type="button" class="btn btn-primary plr20 <if condition='$con[hour_terminal] neq 2'> btn-trans</if>" onclick = "select_change('hour','terminal',2)">pc端</button>
+                        <button type="button" class="btn btn-primary plr20 <if condition='$con[hour_terminal] neq 3'> btn-trans</if>" onclick = "select_change('hour','terminal',3)">手机端</button>
+                    </div>
+                </div>
+                <div class="mt15">
+                    <div id="site_statistics2" style="height: 300px; position: relative; padding: 0px;"></div>
+                </div>
+  
+            </div>
+
+
+            <div class="mb35">
+                <div class="ptb10 solid_b mb20">
+                    <span class="fs16">地域分布</span>
+                </div>
+                <div class="mb10">
+                    <strong class="fs14 text_black mr20">选择时间</strong>
+                    <a class="text_yellow plr20 <if condition='$con[city_type] eq 1'>btn btn-primary btn-xs </if>" onclick = "select_change('city','type',1)">昨天</a>
+                    <a class="text_yellow plr20 <if condition='$con[city_type] eq 2'>btn btn-primary btn-xs </if>" onclick = "select_change('city','type',2)">最近一周</a>
+                    <a class="text_yellow plr20 <if condition='$con[city_type] eq 3'>btn btn-primary btn-xs </if>" onclick = "select_change('city','type',3)">最近一个月</a>
+                    <a class="text_yellow plr20 <if condition='$con[city_type] eq 4'>btn btn-primary btn-xs </if>" onclick = "select_change('city','type',4)">最近三个月</a>
+                    <div class="pull-right btn-group btn-group-sm mt-5">
+                        <button type="button" class="btn btn-primary plr20 <if condition='$con[city_terminal] neq 1'> btn-trans</if>" onclick = "select_change('city','terminal',1)">全部</button>
+                        <button type="button" class="btn btn-primary plr20 <if condition='$con[city_terminal] neq 2'> btn-trans</if>" onclick = "select_change('city','terminal',2)">pc端</button>
+                        <button type="button" class="btn btn-primary plr20 <if condition='$con[city_terminal] neq 3'> btn-trans</if>" onclick = "select_change('city','terminal',3)">手机端</button>
+                    </div>
+                </div>
+                <div class="tab-container tab_li_sty">
+                    <ul class="nav nav-tabs solid_b">
+                        <li class="active"><a class="strong" href="#dsaffasd" data-toggle="tab">访客数分布</a></li>
+                        <li class=""><a href="#lkajfao" class="strong" data-toggle="tab">支付买家数分布</a></li>
+                    </ul>
+                    <div class="tab-content mb0 ptb10 plr20 mt-1" style="border:1px solid #ddd">
+                        <div class="tab-pane active" id="dsaffasd">
+                            <div class="row mt10">
+                                <div class="col-xs-6">
+                                    <div id="main_map" style="width:474px;height:300px;"></div>
+                                </div>
+                                <div class="col-xs-6">
+                                   <table class="bg_white hover no-border">
+                                        <thead class="no-border">
+                                            <tr class="text_77">
+                                                <th>地域</th>
+                                                <th class="text-center"> 访客数</th>
+                                                <th class="text-center">访客数占比</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="no-border-y">
+											<volist name = "city_list.data" id="vo" offset="0" length='5'>
+												<tr>
+													<td class="ptb15">{$vo.city}</td>
+													<td class="ptb15 text-center">{$vo.uv}</td>
+													<td class="ptb15 text-center">{$vo.uv_percen}%</td>
+												</tr>
+											</volist>
+                                        </tbody>
+                                     </table>  
+                                </div>
+                            </div>               
+                        </div>
+                        <div class="tab-pane" id="lkajfao">
+                            <div class="row mt10">
+                                <div class="col-xs-6">
+									<div id="main_map2" style="width:474px;height:300px;"></div>
+                                   
+                                </div>
+                                <div class="col-xs-6">
+                                   <table class="bg_white hover no-border">
+                                        <thead class="no-border">
+                                            <tr class="text_77">
+                                                <th>地域</th>
+                                                <th class="text-center"> 访客数</th>
+                                                <th class="text-center">支付买家数占比</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="no-border-y">
+											<volist name = "city_list.data" id="vo" offset="0" length='5'>
+												<tr>
+													<td class="ptb15">{$vo.city}</td>
+													<td class="ptb15 text-center">{$vo.uv}</td>
+													<td class="ptb15 text-center">{$vo.buy_user_percen}%</td>
+												</tr>
+											</volist>
+                                        </tbody>
+                                     </table>  
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+  
+            </div>
+
+
+            <div class="mb35">
+                <div class="ptb10 solid_b mb20">
+                    <span class="fs16">特征分布</span>
+                </div>
+                <div class="mb10">
+                    <strong class="fs14 text_black mr20">选择时间</strong>
+                    <a class="text_yellow plr20 <if condition='$con[feature_type] eq 1'>btn btn-primary btn-xs </if>" onclick = "select_change('feature','type',1)">昨天</a>
+                    <a class="text_yellow plr20 <if condition='$con[feature_type] eq 2'>btn btn-primary btn-xs </if>" onclick = "select_change('feature','type',2)">最近一周</a>
+                    <a class="text_yellow plr20 <if condition='$con[feature_type] eq 3'>btn btn-primary btn-xs </if>" onclick = "select_change('feature','type',3)">最近一个月</a>
+                    <a class="text_yellow plr20 <if condition='$con[feature_type] eq 4'>btn btn-primary btn-xs </if>" onclick = "select_change('feature','type',4)">最近三个月</a>
+                    <div class="pull-right btn-group btn-group-sm mt-5">
+                        <button type="button" class="btn btn-primary plr20 <if condition='$con[feature_terminal] neq 1'> btn-trans</if>" onclick = "select_change('feature','terminal',1)">全部</button>
+                        <button type="button" class="btn btn-primary plr20 <if condition='$con[feature_terminal] neq 2'> btn-trans</if>" onclick = "select_change('feature','terminal',2)">pc端</button>
+                        <button type="button" class="btn btn-primary plr20 <if condition='$con[feature_terminal] neq 3'> btn-trans</if>" onclick = "select_change('feature','terminal',3)">手机端</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <blockquote class="pd0 pl10 mt10 mb10 fs14 strong">会员等级</blockquote>
+                        <table class="bg_white no-border hover">
+                            <thead class="no-border">
+                                <tr class="text_77">
+                                    <th>会员等级</th>
+                                    <th class="text-center">访客数 </th>
+                                    <th class="text-center">占比</th>
+                                    <th class="text-center">下单转化率</th>
+                                </tr>
+                            </thead>
+                            <tbody class="no-border-y solid_b text-center">
+								<volist name = "level_list.data" id="vo">
+                                <tr>
+                                    <td class="ptb15 text-left">{$vo.level_name}</td>
+                                    <td class="ptb15">{$vo.uv}</td>
+                                    <td class="ptb15">{$vo.uv_percen}%</td>
+                                    <td class="ptb15">{$vo.uv_order_percen}%</td>
+                                </tr>
+								</volist>
+                               
+                            </tbody>
+                         </table>
+                    </div>
+                    <div class="col-xs-6">
+                        <blockquote class="pd0 pl10 mt10 mb10 fs14 strong">消费层次</blockquote>
+                        <table class="bg_white no-border hover">
+                            <thead class="no-border">
+                                <tr class="text_77">
+                                    <th>消费金额</th>
+                                    <th class="text-center">下单用户数 </th>
+                                    <th class="text-center">占比</th>
+                                    <th class="text-center">下单转化率</th>
+                                </tr>
+                            </thead>
+                            <tbody class="no-border-y no-border-x text-center">
+								<volist name = "money_list.data" id="vo">
+                                <tr>
+                                    <td class="ptb15 text-left">{$vo.title}</td>
+                                    <td class="ptb15">{$vo.order_user}</td>
+                                    <td class="ptb15">{$vo.order_user_percen}%</td>
+                                    <td class="ptb15">{$vo.uv_order_percen}%</td>
+                                </tr>
+								</volist>
+                            </tbody>
+                         </table>
+                    </div>
+                        
+                </div>
+            </div>
+
+            <div class="mb35">
+                <div class="ptb10 solid_b mb20">
+                    <span class="fs16">行为分布</span>
+                </div>
+                <div class="mb10">
+                    <strong class="fs14 text_black mr20">选择时间</strong>
+                    <a class="text_yellow plr20 <if condition='$con[behavior_type] eq 1'>btn btn-primary btn-xs </if>" onclick = "select_change('behavior','type',1)">昨天</a>
+                    <a class="text_yellow plr20 <if condition='$con[behavior_type] eq 2'>btn btn-primary btn-xs </if>" onclick = "select_change('behavior','type',2)">最近一周</a>
+                    <a class="text_yellow plr20 <if condition='$con[behavior_type] eq 3'>btn btn-primary btn-xs </if>" onclick = "select_change('behavior','type',3)">最近一个月</a>
+                    <a class="text_yellow plr20 <if condition='$con[behavior_type] eq 4'>btn btn-primary btn-xs </if>" onclick = "select_change('behavior','type',4)">最近三个月</a>
+                    <div class="pull-right btn-group btn-group-sm mt-5">
+                        <button type="button" class="btn btn-primary plr20 <if condition='$con[behavior_terminal] neq 1'> btn-trans</if>" onclick = "select_change('behavior','terminal',1)">全部</button>
+                        <button type="button" class="btn btn-primary plr20 <if condition='$con[behavior_terminal] neq 2'> btn-trans</if>" onclick = "select_change('behavior','terminal',2)">pc端</button>
+                        <button type="button" class="btn btn-primary plr20 <if condition='$con[behavior_terminal] neq 3'> btn-trans</if>" onclick = "select_change('behavior','terminal',3)">手机端</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <blockquote class="pd0 pl10 mt10 mb10 fs14 strong">搜索关键词</blockquote>
+                        <table class="bg_white no-border hover">
+                            <thead class="no-border">
+                                <tr class="text_77">
+                                    <th>关键词</th>
+                                    <th class="text-center">搜索数 </th>
+                                    <th class="text-center">占比</th>
+                                    <th class="text-center">下单转化率</th>
+                                </tr>
+                            </thead>
+                            <tbody class="no-border-y solid_b text-center">
+								<volist name = "search_list.data" id="vo">
+                                <tr>
+                                    <td class="ptb15 text-left">{$vo.keyword}</td>
+                                    <td class="ptb15">{$vo.num}</td>
+                                    <td class="ptb15">{$vo.num_percen}%</td>
+                                    <td class="ptb15">{$vo.uv_order_percen}%</td>
+                                </tr>
+								</volist>
+                                
+                            </tbody>
+                         </table>
+                    </div>
+                    <div class="col-xs-6">
+                        <blockquote class="pd0 pl10 mt10 mb10 fs14 strong">浏览量分布</blockquote>
+                        <table class="bg_white no-border hover">
+                            <thead class="no-border">
+                                <tr class="text_77">
+                                    <th>浏览量 </th>
+                                    <th class="text-center">访客数 </th>
+                                    <th class="text-center">占比</th>
+                                </tr>
+                            </thead>
+                            <tbody class="no-border-y solid_b text-center">
+								<volist name = "pv_list.data" id="vo">
+                                <tr>
+                                    <td class="ptb15 text-left">{$vo.title}</td>
+                                    <td class="ptb15">{$vo.uv}</td>
+                                    <td class="ptb15">{$vo.uv_percen}%</td>
+                                </tr>
+								</volist>
+                            </tbody>
+                         </table>
+                    </div>
+                        
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+<form action="" method="post" class="hide page_select">
+	<foreach name="con" item="vo" key="key">
+		<input type="hidden" name="{$key}" value="{$vo}"/>
+	</foreach>	
+</form>
+</block>
+
+<block name="css"></block>
+<block name="script">
+
+<script src="__NEW_DESIGN__flatdream/js/jquery.js"></script>
+<script src="__NEW_DESIGN__flatdream/js/jquery.pushmenu/js/jPushMenu.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.nanoscroller/jquery.nanoscroller.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.sparkline/jquery.sparkline.min.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.ui/jquery-ui.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.gritter/js/jquery.gritter.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/behaviour/core.js"></script>
+<script src="__NEW_DESIGN__flatdream/js/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.flot/jquery.flot.js"></script>
+
+<script src="__NEW_DESIGN__js/amcharts.js" type="text/javascript"></script>
+<script src="__NEW_DESIGN__js/serial.js" type="text/javascript"></script>
+<script src="__NEW_DESIGN__js/pie.js"></script>
+
+<script type="text/javascript" src="__NEW_DESIGN__js/echarts.js"></script>
+
+<script type="text/javascript">
+	 // 路径配置
+    require.config({
+        paths: {
+            echarts: 'http://echarts.baidu.com/build/dist'
+        }
+    });
+    // 使用
+    require(
+            [
+                'echarts',
+                'echarts/chart/map', // 使用柱状图就加载bar模块，按需加载
+                'echarts/chart/pie'
+            ],
+            function (ec) {
+                // 基于准备好的dom，初始化echarts图表
+                var myChart_map = ec.init(document.getElementById('main_map'));
+                var myChart_map2 = ec.init(document.getElementById('main_map2'));
+
+                var itemStyle = {
+                    normal:{label:{
+                        show:true,
+                        formatter:'{b}',
+                        textStyle: {fontSize: 10,fontWeight : 'bold'}
+                    }},
+                    emphasis:{label:{show:true}}
+                };
+
+				//访客数据
+                var option_map = {
+                    title : {
+                        text: '访客数',
+                        subtext: '',
+                        x:'center'
+                    },
+                    tooltip : {
+                        trigger: 'item'
+                    },
+                    dataRange: {
+                        min: 0,
+                        max: 2500,
+                        x: 'left',
+                        y: 'bottom',
+                        text:['高','低'],           // 文本，默认为数值文本
+                        calculable : false
+                    },
+                    series : [
+                        {
+                            name: 'uv',
+                            type: 'map',
+                            mapType: 'china',
+                            roam: false,
+							itemStyle:{
+								normal:{label:{show:true}},
+								emphasis:{label:{show:true}}
+							},
+                            itemStyle: itemStyle,
+                            data:[
+								<volist name = "city_list.data" id = "vo">
+									 {name: '{$vo.city}',value: {$vo.uv}},
+								</volist>
+                               
+                            ]
+                        }
+                    ]
+                };
+
+				//支付用户数据
+				var option_map2 = {
+                    title : {
+                        text: '支付用户数',
+                        subtext: '',
+                        x:'center'
+                    },
+                    tooltip : {
+                        trigger: 'item'
+                    },
+                    dataRange: {
+                        min: 0,
+                        max: 2500,
+                        x: 'left',
+                        y: 'bottom',
+                        text:['高','低'],           // 文本，默认为数值文本
+                        calculable : false
+                    },
+                    series : [
+                        {
+                            name: 'uv',
+                            type: 'map',
+                            mapType: 'china',
+                            roam: false,
+							itemStyle:{
+								normal:{label:{show:true}},
+								emphasis:{label:{show:true}}
+							},
+                            itemStyle: itemStyle,
+                            data:[
+								<volist name = "city_list.data" id = "vo">
+									 {name: '{$vo.city}',value: {$vo.buy_user_total}},
+								</volist>
+                            ]
+                        }
+                    ]
+                };
+
+
+                // 为echarts对象加载数据
+                myChart_map.setOption(option_map);
+                myChart_map2.setOption(option_map2);
+            }
+    );
+
+
+  $(document).ready(function(){
+    function showTooltip(x, y, contents) {
+      $("<div id='tooltip'>" + contents + "</div>").css({
+        position: "absolute",
+        display: "none",
+        top: y + 5,
+        left: x + 5,
+        border: "1px solid #000",
+        padding: "5px",
+        'color':'#fff',
+        'border-radius':'2px',
+        'font-size':'11px',
+        "background-color": "#000",
+        opacity: 0.80
+      }).appendTo("body").fadeIn(200);
+    } 
+
+    function randValue() {
+      return (Math.floor(Math.random() * (1 + 50 - 20))) + 10;
+    }
+
+    var pageviews = [
+		<volist name = "hour_list" id="vo" key="key">
+			[{$key},{$vo}],
+		</volist>
+    ];
+   
+
+    if ($('#site_statistics2').size() != 0) {
+      $('#site_statistics_loading').hide();
+      $('#site_statistics_content').show();
+      var plot_statistics2 = $.plot($("#site_statistics2"), [{
+        data: pageviews,
+        label: "Unique Visits"
+      }
+      ], {
+        series: {
+          bars: {
+            show: true,
+            barWidth: 0.6,
+            lineWidth: 0,
+            fill: true,
+            hoverable: true,
+            fillColor: {
+              colors: [{
+                opacity: 1
+              }, {
+                opacity: 1
+              }
+              ]
+            } 
+          },
+          shadowSize: 2
+        },
+        legend:{
+          show: false
+        },
+        grid: {
+        labelMargin: 10,
+           axisMargin: 500,
+          hoverable: true,
+          clickable: true,
+          tickColor: "rgba(0,0,0,0.15)",
+          borderWidth: 0
+        },
+        colors: ["#c81623", "#FFFFFF", "#52e136"],
+        xaxis: {
+          ticks: 11,
+          tickDecimals: 0
+        },
+        yaxis: {
+          ticks: 6,
+          tickDecimals: 0
+        }
+      });
+            
+      $("#site_statistics2").bind("plothover", function (event, pos, item) {
+      
+        var str = "(" + pos.x.toFixed(2) + ", " + pos.y.toFixed(2) + ")";
+
+        if (item) {
+          if (previousPoint != item.dataIndex) {
+            previousPoint = item.dataIndex;
+            $("#tooltip").remove();
+            var x = item.datapoint[0],
+            y = item.datapoint[1];
+            showTooltip(item.pageX, item.pageY,
+            item.series.label + "" + x + " = " + y + "%");
+          }
+        } else {
+          $("#tooltip").remove();
+          previousPoint = null;
+        }
+      }); 
+    }
+
+    });
+	
+	//页面页码切换
+	function select_change(type,name,new_val){
+		var old_val = $('.page_select input[name="'+type+'_'+name+'"]').val();
+		if(old_val != new_val){
+			$('.page_select input[name="'+type+'_'+name+'"]').val(new_val);
+			
+			if(name !== 'page'){
+				$('.page_select input[name="'+type+'_page"]').val(1);
+			}
+			$('.page_select').submit();
+		}
+	}
+	
+	
+	
+</script>
+
+</block>

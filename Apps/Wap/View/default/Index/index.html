@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>唐人街</title>
+		<meta name="keywords" content="唐人街" />
+		<meta name="description" content="唐人街" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<link href="../Public/Css/style.css" media="screen" rel="stylesheet" type="text/css">
+		<link href="../Public/Css/Animate/animate.min.css" media="screen" rel="stylesheet" type="text/css">
+		<link href="../Public/Js/Banner/css/styles.css" media="screen" rel="stylesheet" type="text/css">
+		
+		<link href="../Public/Js/alertPopShow/common.css" media="screen" rel="stylesheet" type="text/css">
+		<link href="../Public/Css/custom.css" media="screen" rel="stylesheet" type="text/css">
+		
+		<!--焦点图-->
+		<!--<link rel="stylesheet" href="../Public/Js/responsiveslides/lrtk.css">-->
+		
+		<!--焦点图-->
+		<link rel="stylesheet" href="../Public/Js/bxslider/jquery.bxslider.css">
+		
+		<script src="../Public/Js/jquery-2.1.1.min.js"></script>		
+		<script src="../Public/Js/template-native.js"></script>
+		<script src="../Public/Js/jquery.form.js"></script>
+		<script src="../Public/Js/alertPopShow/alertPopShow.js"></script>
+		<script src="../Public/Js/iscroll-probe.js"></script>
+		<script src="../Public/Js/jquery.countdown.min.js"></script>
+		<script src="../Public/Js/global.js"></script>
+		
+		<!--新引入的样式-->
+		<link href="../Public/Css/rem.css" media="screen" rel="stylesheet" type="text/css">
+		<script src="../Public/Js/rem.js"></script>
+		<!--焦点图-->
+		<!--<script src="../Public/Js/responsiveslides/responsiveslides.min.js"></script>-->
+		
+		<!--焦点图-->
+		<script type="text/javascript" src="../Public/Js/bxslider/jquery.bxslider.min.js"></script>
+	</head>
+<body>	
+	<div id="ajax_tips"></div>
+	<div id="ajax_post_tips"></div>
+	<div class="pages">
+	
+		
+	</div>
+	
+	<!--右下角刷新按钮-->
+	<div class="rb-menu-box hide">
+		<div><i class="icons icons-30px i-top" onclick="gotop()"></i></div>
+		<div><i class="icons icons-30px i-ref" onclick="winRef()"></i></div>
+	</div>
+	
+	<script>
+		openWin({name:'ucenter',url:'/Seller/index'});
+
+/*
+		var first_page='{$_GET['url']?$_GET['url']:'/Index/home'}';
+		var page_name = 'home';
+		if(first_page !='/Index/home') page_name='{:str_replace('/','_',$_GET['url'])}';
+		
+		var reg =/^.*\/Goods\/view\/.*$/;
+		if(first_page.match(reg)){
+			openWin({
+				name:'goods_view',
+				url:first_page,
+				is_animate:false,
+			});
+		}else{
+			openWin({
+				name:page_name,
+				url:first_page,
+				is_animate:false,
+			});
+		} 
+*/
+	</script>
+	
+</body>
+</html>

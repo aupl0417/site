@@ -1,0 +1,50 @@
+<div class="type-list" data-field="{$_GET.field}">
+	<div class="line-box hover noicon" data-id="5" onclick="select_type($(this))">
+		<div class="row">
+			<div class="col-20">非常好</div>
+			<div class="col-60"><img src="../Public/Images/star-5.png" class="m5"></div>
+		</div>
+	</div>
+	<div class="line-box hover noicon" data-id="4" onclick="select_type($(this))">
+		<div class="row">
+			<div class="col-20">很好</div>
+			<div class="col-60"><img src="../Public/Images/star-4.png" class="m5"></div>
+		</div>
+	</div>
+	<div class="line-box hover noicon" data-id="3" onclick="select_type($(this))">
+		<div class="row">
+			<div class="col-20">一般</div>
+			<div class="col-60"><img src="../Public/Images/star-3.png" class="m5"></div>
+		</div>
+	</div>
+	<div class="line-box hover noicon" data-id="2" onclick="select_type($(this))">
+		<div class="row">
+			<div class="col-20">很差</div>
+			<div class="col-60"><img src="../Public/Images/star-2.png" class="m5"></div>
+		</div>
+	</div>
+	<div class="line-box hover noicon" data-id="1" onclick="select_type($(this))">
+		<div class="row">
+			<div class="col-20">非常差</div>
+			<div class="col-60"><img src="../Public/Images/star-1.png" class="m5"></div>
+		</div>
+	</div>
+
+</div>
+
+<script>
+
+	function select_type(obj){
+		obj.closest('.type-list').find('.line-box.selected').removeClass('selected').addClass('noicon');
+		obj.removeClass('noicon').addClass('selected');
+	}
+	
+	$('.page.active .vmodal .vmodal-success').unbind();
+	$('.page.active .vmodal .vmodal-success').click(function(){
+		var field=$('.page.active .type-list').data('field');
+		var score=$('.page.active .type-list .line-box.selected').data('id');
+		$('.page.active [data-v="'+field+'"] .b').html(score);
+		$('.page.active [name="'+field+'"]').val(score);
+	});
+
+</script>

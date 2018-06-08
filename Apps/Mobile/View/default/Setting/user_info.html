@@ -1,0 +1,66 @@
+<include file="Public:header" />
+		<div class="page-group">
+			<div id="page-ucenter" class="page" data-page_num="{$pagelist.pageinfo.page}">
+				<!-- 标题栏 -->
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left back"></a>
+					<h1 class="title">个人资料</h1>
+				</header>
+				<!-- 浮动导航 -->
+				<include file="Public:fixed-menu" />
+				<!-- 这里是页面内容区 -->		
+				<div class="content">
+					<div class="user_info-header">
+						<div class="level-images">
+							<img src="../Public/images/level-{$user.u_level}.png" alt="等级logo">
+							
+							<eq name="user.auth" value="1">
+								<div>已通过实名认证</div>
+							<else />
+								<div>还未通过实名认证</div>
+							</eq>							
+						</div>					
+
+					</div>
+					<div class="list-block">
+						<ul>
+							<li class="item-content">
+								<div class="item-media"><i class="icon iconfont icon-denglu"></i></div>
+								<div class="item-inner">
+									<div class="item-title">昵称</div>
+									<div class="item-after">{$user.u_nick}</div>
+								</div>
+							</li>
+							<li class="item-content">
+								<div class="item-media"><i class="icon iconfont icon-wode"></i></div>
+								<div class="item-inner">
+									<div class="item-title">姓名</div>
+									<div class="item-after">{$user.u_name}</div>
+								</div>
+							</li>
+							<li class="item-content">
+								<div class="item-media"><i class="icon iconfont icon-qiyewenjian"></i></div>
+								<div class="item-inner">
+									<div class="item-title">企业名称</div>
+									<div class="item-after">{$user.u_companyName}</div>
+								</div>
+							</li>
+							<li class="item-content">
+								<div class="item-media"><i class="icon iconfont icon-shoujishuma"></i></div>
+								<div class="item-inner">
+									<div class="item-title">电话</div>
+									<div class="item-after">{$user.u_tel}</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div><!--/content-->	
+				
+			</div>		
+
+		
+		</div>	
+		
+
+<include file="Public:script" />
+<include file="Public:footer" />

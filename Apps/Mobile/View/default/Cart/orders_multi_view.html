@@ -1,0 +1,154 @@
+<include file="Public:header" />
+		<div class="page-group">
+			<div id="page-cart-orders-multi" class="page">
+				<!-- 标题栏 -->
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left" href="/Cart" data-no-cache="true"></a>
+					<h1 class="title">支付</h1>
+					<a class="button button-link button-nav pull-right" href="/Orders" data-no-cache="true">我的订单</a>
+				</header>
+
+				<!-- 浮动导航 -->
+				<include file="Public:fixed-menu" />
+
+				<nav class="bar bar-tab">
+					<div class="cart-footer">
+						<div class="m">
+							<div>实付金额(含运费)：<span class="text-red"> <img class="icon-price" src="../Public/images/icon_{$rs.score_type}.png">{$rs.pay_price}</span></div>
+							<!--<div class="text-gray ft05">奖励 <span class="total_score">{$rs.score}</span> 积分</div>-->
+						</div>
+						<div class="r">
+							<div class="btn-submit">立即付款</div>
+						</div>
+					</div>
+				</nav>		
+				
+				
+				
+				
+				<!-- 这里是页面内容区 -->		
+				<div class="content">
+					<div class="list-block media-list">
+						<ul>
+							<li>
+								<div class="item-content">
+									<div class="item-media">
+										<i class="iconfont icon-jilu"></i>									
+									</div>
+									<div class="item-inner">
+										<div class="item-title-row">
+											<div class="item-title">合并订单号</div>
+											<div class="item-after">{$rs.o_no}</div>
+										</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="item-content">
+									<div class="item-media">
+										<i class="iconfont icon-zhaobudaojieguo"></i>									
+									</div>
+									<div class="item-inner">
+										<div class="item-title-row">
+											<div class="item-title">订单信息</div>
+											<div class="item-after">{$rs.shop_num}个商家，共{$rs.goods_num}件商品</div>
+										</div>
+									</div>
+								</div>
+							</li>
+							<!--<li>-->
+								<!--<div class="item-content">-->
+									<!--<div class="item-media">-->
+										<!--<i class="iconfont icon-jifen-copy"></i>									-->
+									<!--</div>-->
+									<!--<div class="item-inner">-->
+										<!--<div class="item-title-row">-->
+											<!--<div class="item-title">奖励积分</div>-->
+											<!--<div class="item-after">{$rs.score}分</div>-->
+										<!--</div>-->
+									<!--</div>-->
+								<!--</div>-->
+							<!--</li>-->
+							<li>
+								<div class="item-content">
+									<div class="item-media">
+										<i class="iconfont icon-fukuan"></i>									
+									</div>
+									<div class="item-inner">
+										<div class="item-title-row">
+											<div class="item-title">应付金额</div>
+											<div class="item-after"><span class="text-red"><img class="icon-price" src="../Public/images/icon_{$rs.score_type}.png">{$rs.pay_price}</span></div>
+										</div>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>			
+					
+					<!--账户信息-->
+					<div class="clearfix"></div>
+					<div class="list-block media-list pay-type hide">
+						<ul>					
+							<notempty name="paytype">
+								<li class="bg-gray p5 tips">
+									<i class="iconfont icon-jifen1"></i> 请选择支付方式
+								</li> 
+								<volist name="paytype" id="vo" key="k">
+									<if condition="$k eq 1">
+										<li data-value="{$vo.pg_id}" class="selected">
+											<div class="item-content">
+												<div class="item-media">
+													<i class="iconfont {$vo.iconfont} text-yellow"></i>
+												</div>
+												<div class="item-inner">
+													<div class="item-title-row">
+														<div class="item-title">{$vo.pg_name}</div>
+														<div class="item-after"></div>
+													</div>
+												</div>
+											</div>
+										</li>
+									<else />
+										<li data-value="{$vo.pg_id}">
+											<div class="item-content">
+												<div class="item-media">
+													<i class="iconfont {$vo.iconfont} text-yellow"></i>
+												</div>
+												<div class="item-inner">
+													<div class="item-title-row">
+														<div class="item-title">{$vo.pg_name}</div>
+														<div class="item-after"></div>
+													</div>
+												</div>
+											</div>
+										</li>
+									</if>
+								</volist>
+							</notempty>
+						</ul>
+					</div>					
+					
+					
+					<div class="clearfix md5"></div>
+
+					<input type="hidden" name="o_no" id="o_no" value="{$rs.o_no}" />
+					
+					
+				</div>
+			</div>
+			
+			<!--popup 收银台-->
+			<div class="popup popup-cashier">
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left close-popup" data-no-cache="true" data-popup=".popup-cashier"></a>
+					<h1 class="title">付款</h1>
+					<a class="icon iconfont icon-guanbi1 pull-right ml5 ac-menu close-popup" data-popup=".popup-cashier"></a>
+				</header>				
+				
+				<div class="content">
+				</div>
+			</div>
+
+		</div>
+<include file="Public:script" />
+<include file="Public:footer" />

@@ -1,0 +1,69 @@
+<include file="Public:header" />
+<include file="nav" title="新增记录" />
+<div class="m20 p20 bg-white">
+
+	<form class="form-horizontal vform" id="formadd" name="formadd" data-url="__URL__/add_save">
+		{:W('Widget/form',array($fcfg['id']))}
+
+					
+        <div class="clearfix md70"></div>
+		<div class="navbar-fixed-bottom border-t">
+			<div class="p10 bg-white-50 text-center">
+				<button type="button" class="btn btn-lg btn-rad btn-trans btn-default" onclick="back()"><i class="fa fa-mail-reply"></i> 返回</button>
+				<button type="submit" class="btn btn-lg btn-rad btn-trans btn-primary"><i class="fa fa-check"></i> 提交</button>					
+			</div>
+		</div>
+		<div class="hide vform-action"></div>
+	</form>
+	<div class="clearfix"></div>
+</div>
+
+
+<include file="Public:copyright" />
+<include file="Public:js" />
+
+<script>
+function select_goods(obj){
+	var field=obj.attr('name');
+	$('.vform-action').html(field);
+	vmodal({
+		title:'选择商品',
+		url:'/SelectItem/goods',
+		width:'95%',
+	});
+}
+
+function select_shop(obj){
+	var field=obj.attr('name');
+	$('.vform-action').html(field);
+	vmodal({
+		title:'选择店铺',
+		url:'/SelectItem/shop',
+		width:'95%',
+	});
+}
+
+
+iCheckClass();
+checkform({
+	formid:'#formadd',
+},function(ret){
+	valert(ret);
+	if(ret.status=='success'){
+		vmodal({
+			msg:'<div class="text-center"><h4 class="md20 text-success"><i class="fa fa-check"></i> 添加成功!</h4><div class="btn btn-lg btn-trans btn-rad btn-primary continue">继续添加记录</div> <div class="btn btn-lg btn-trans btn-rad btn-default closewin">返回列表</div></div>',
+		},function(){
+			$('.continue').click(function(){
+				ref();
+			});
+			
+			$('.closewin').click(function(){
+				gourl({url:'__URL__'});
+			});
+
+		});
+	}	
+});
+
+</script>
+<include file="Public:footer" />

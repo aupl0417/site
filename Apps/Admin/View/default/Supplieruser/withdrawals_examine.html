@@ -1,0 +1,123 @@
+<div class="clearfix">
+	<div class="pull-right text-gray" onclick="$(this).closest('tr').toggleClass('hide');"><i class="fa fa-times-circle-o fa-2x"></i></div>	
+</div>
+
+<div class="p20 box">
+	<div class="row">
+		
+	</div>
+	<div class="ft18 strong p10 border-d mt20 md20">提现审核</div>
+	
+	<div class="row">
+		<div class="col-xs-12">
+			<div>当前状态：{$info.status_name}</div>
+			<notempty name="info.examine">
+			<div>上次审核备注：{$info.package.examine_remark}</div>
+			</notempty>
+		</div>
+	</div>
+	
+	<form data-url="__URL__/ajax_withdrawals_examine" data-id="#form_{$info.id}" id="form_{$info.id}" class="form-horizontal vform" onsubmit="return submit_form($(this))">
+		<table class="no-bg no-bordered">
+			<tr>
+				<td width="30%" class="text-right strong">审核状态</td>
+				<td width="70%" >
+					<label class="mr20"><input type="radio" class="i-red-square" name="status" value="2" > 通过</label>
+					<label ><input type="radio" class="i-red-square" name="status" value="3" > 驳回</label>
+				</td>
+			</tr>
+			<tr>
+				<td width="30%" class="text-right strong">驳回原因(驳回必填)：</td>
+				<td width="70%" >
+					<textarea name="reason" placeholder="请输入备注" class="form-control"></textarea>
+				</td>
+				
+			</tr>	
+			<tr>
+				<td width="30%" class="text-right strong"></td>
+				<td width="70%">
+					<button type="submit" class="btn btn-danger btn-150px">提交</button>
+				</td>
+				
+			</tr>			
+		</table>
+		<input type="hidden" name="id" value="{$info.id}">
+	</form>
+</div>
+<div class="clearfix">
+	<div class="pull-right text-gray" onclick="$(this).closest('tr').toggleClass('hide');"><i class="fa fa-times-circle-o fa-2x"></i></div>	
+</div>
+
+<script>
+image_zoom();
+function submit_form(obj){
+	var formid='#'+obj.attr('id');
+	var data = getFormJson(formid);
+
+	
+	if(data.status != 2 && data.status != 3){
+		valert({status:'warning',msg:'请选择审核状态'});
+		return false;
+	}
+	
+	if(data.status == 3 && data.reason == ''){
+		valert({status:'warning',msg:'驳回必须填写原因！'});
+		return false;
+	}
+	
+	
+	
+	ajax_post_form({
+		formid:formid,
+	},function(ret){
+		valert(ret);
+		if(ret.status=='success'){
+			var tag='#item-{$info.id}';
+			var url='__URL__/withdrawals_examine/id/{$info.id}';
+			loadurl({tag:tag,url:url});
+		}		
+	});
+	
+	return false;
+}
+
+function submit_open(obj){
+	var formid='#'+obj.attr('id');
+	var data = getFormJson(formid);
+
+	if(data.status==4 && data.remark==''){
+		valert({status:'warning',msg:'请输入原因'});
+		obj.find('#remark').focus();
+		return false;
+	}
+	
+	ajax_post_form({
+		formid:formid,
+	},function(ret){
+		valert(ret);
+		if(ret.status=='success'){
+			var tag='#item-{$rs.id}';
+			var url='__URL__/view/id/{$rs.id}';
+			loadurl({tag:tag,url:url});
+		}		
+	});
+	
+	return false;
+}
+/*
+$('.logs-add').click(function(){
+	var d=$(this).closest('form').data();
+	ajax_post_form({
+		formid:d.id
+	},function(ret){
+		valert(ret);
+		if(ret.status=='success'){
+			var tag='#item-{$rs.id}';
+			var url='__URL__/view/id/{$rs.id}';
+			loadurl({tag:tag,url:url});
+		}
+	});
+
+});
+*/
+</script>

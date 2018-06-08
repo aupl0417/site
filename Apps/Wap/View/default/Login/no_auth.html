@@ -1,0 +1,24 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			提示
+		</div>
+		<div class="r">
+			
+		</div>
+	</div>
+</header>
+<section>
+	<div class="tips">
+		<div class="text-gray md10">您还未通过实名认证。</div>
+		<div class="btn btn-danger" onclick="openWin({name:'auth',url:'/Auth/index',close:true})">去认证</div>		
+	</div>
+</section>
+
+
+<script>
+	fixBar(1);	
+</script>

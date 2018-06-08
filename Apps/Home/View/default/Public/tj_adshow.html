@@ -1,0 +1,14 @@
+<!-- Pc广告显示统计 -->
+<script type="text/javascript">
+$(function(){
+	ajax_post({
+		headers:{Action:'{:enCryptRestUri("/Tj/ad_show")}'},
+		data:{
+			ads:'{:json_encode($_ads)}',
+		},
+		url:'/run/index',
+	},function(ret){
+
+	});
+});
+</script>

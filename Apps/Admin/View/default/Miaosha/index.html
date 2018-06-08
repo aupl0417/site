@@ -1,0 +1,53 @@
+<include file="Public:header" />
+<include file="nav" />
+
+<div class="m20">
+	<div class="block-flat">
+		<div class="header">
+			<div class="pull-right"><a href="/Officialactivity/edit/id/{$activity.id}" class="btn btn-danger btn-trans">修改</a></div>
+			<h3>招商规则</h3>
+		</div>
+		<div class="content">
+			<div class="row">
+				<div class="col-xs-1 text-right">
+					<img src="{:myurl($activity['icon'],100)}">
+				</div>
+				<div class="col-xs-11">
+					{$activity.content|html_entity_decode}
+				</div>
+			</div>			
+		</div>
+	</div>	
+	<div class="block-flat">
+		<div class="header">
+			<h3>活动流程</h3>
+		</div>
+		<div class="content">
+			{$activity.step_content|html_entity_decode}
+		</div>
+	</div>	
+	<div class="block-flat">
+		<div class="header">
+			<h3>商家管理规则</h3>
+		</div>
+		<div class="content">
+			{$activity.seller_content|html_entity_decode}
+		</div>
+	</div>	
+
+</div>	
+
+
+
+
+
+<include file="Public:copyright" />
+<include file="Public:js" />
+<script>
+$(document).ready(function(){
+
+	
+
+});
+</script>
+<include file="Public:footer" />

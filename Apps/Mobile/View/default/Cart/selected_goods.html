@@ -1,0 +1,256 @@
+<include file="Public:header" />
+		<div class="page-group">
+			<div id="page-cart-next" class="page">
+				<!-- 标题栏 -->
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left back" href="/"></a>
+					<h1 class="title">确认订单</h1>
+					<a class="icon iconfont icon-category pull-right ml5 ac-menu" onclick="top_menu()"></a>
+				</header>
+
+				<!-- 浮动导航 -->
+				<include file="Public:fixed-menu" />
+				
+				<nav class="bar bar-tab">
+					<div class="cart-footer">
+						<div class="m">
+							<div>共  <span class="text-red">{$list.goods_num}</span> 件商品，总金额：<span class="text-red"> <img class="icon-price" src="../Public/images/icon_{$list.list.0.goods.0.score_type}.png"><span class="pay_price">{$list.pay_price}</span></span></div>
+							<!--<div class="text-gray ft05">奖励 <span class="total_score">{$list.total_score}</span> 积分</div>-->
+						</div>
+						<div class="r">
+							<div class="btn-submit">提交订单</div>
+						</div>
+					</div>
+				</nav>					
+		
+				<!-- 这里是页面内容区 -->		
+				<div class="content">
+					<notempty name="list.list">
+						<form id="form-cart" name="form-cart" onsubmit="return false;">
+						<input type="hidden" name="address_id" id="address_id" value="{$list.address.id}">
+						<!--收货地址-->						
+						<div class="list-block media-list select-address">
+							<ul>	
+								<notempty name="list.address">
+								<li>
+									<a href="/Cart/address?selected_goods=yes" class="item-content item-link" data-no-cache="true">
+									<div class="item-media"><i class="ft15 iconfont icon-shouhuodizhi"></i></div>
+									<div class="item-inner">
+										<div class="item-title-row">
+											<div class="item-title"><strong>{$list.address.linkname}</strong>，{$list.address.mobile}<notempty name="list.address.tel">/{$list.address.tel}</notempty></div>
+										</div>
+										<div class="item-text">{$list.address.province_name} {$list.address.city_name} {$list.address.district_name} {$list.address.town_name} {$list.address.street}</div>
+									</div>
+									</a>
+								</li>	
+								<else />	
+								<li>
+									<a href="/Cart/address" class="item-content item-link" data-no-cache="true">
+									<div class="item-media"><i class="ft15 iconfont icon-shouhuodizhi"></i></div>
+									<div class="item-inner">
+										<div class="item-title">还未添加地址</div>
+									</div>
+									</a>
+								</li>
+								</notempty>
+							</ul>
+						</div>
+						
+						
+						<div class="clearfix cart-address-line md5"></div>
+						<!--订购商品-->	
+						<volist name="list.list" id="vo">
+						<div class="list-block media-list shop-list" id="{$vo.express_tpl_id}" data-goods_price="{$vo.total_price}" data-total_score="{$vo.total_score}" data-pay_price="{$vo.pay_price}">
+							<input type="hidden" name="express_tpl_id" value="{$vo.express_tpl_id}" />
+							<input type="hidden" name="express_type" value="{$vo.express.value}" />
+							<input type="hidden" name="coupon_id" id="coupon_id" value="" data-price="0">
+							<ul>
+								<li>
+									<a href="javascript:;" data-url="/Shop/index/shop_id/{$vo.shop_id}" class="item-content item-link">
+										<div class="item-media"><i class="icon iconfont icon-dianpu1"></i></div>
+										<div class="item-inner">
+											<div class="item-title-row">
+												<div class="item-title">{$vo.shop.shop_name}</div>
+											</div>
+										</div>
+									</a>
+								</li>						
+								<volist name="vo.goods" id="gl">
+								<li class="goods-item" data-total_price="{$gl.total_price}" data-total_score="{$gl.score}" data-score_ratio="{$gl.score_ratio}" data-goods_id="{$gl.goods_id}" data-category_id="{$gl.category_id}">
+									<div class="item-content">									
+										<div class="item-media">
+											<a href="/Goods/view/id/{$gl.attr_list_id}"><img class="lazyload" data-sizes="auto" data-src="{:myurl($gl['images'],150)}" alt="商品主图" src="../Public/images/nopic.gif" width="60"></a>
+										</div>
+										<div class="item-inner">
+											<a href="/Goods/view/id/{$gl.attr_list_id}">
+											<div class="item-title-row">
+												<div class="item-title">{$gl.goods_name}</div>
+												<div class="item-after">
+													<img class="icon-price" src="../Public/images/icon_{$gl.score_type}.png">{$gl.price}
+												</div>
+											</div>
+											<div class="item-subtitle">
+												<div class="pull-right text-gray">x{$gl.num}</div>
+												<div class="ft05">{$gl.attr_name}</div>																		
+											</div>
+											<neq name="gl.status" value="1">
+											<div class="item-text">
+												<div class="text-red ft05">{$gl.status_name}</div>
+											</div>
+											</neq>
+											</a>
+										</div>
+									</div>
+								</li>
+								</volist>
+								<li class="open-popup" data-popup=".popup-express" id="express" data-express_tpl_id="{$vo.express_tpl_id}" data-express_type="{$vo.express.value}" data-total_price="{$vo.total_price}">
+									<div class="item-content item-link">
+										<div class="item-inner">
+											<div class="item-title-row">
+												<div class="item-title">配送方式</div>
+												<div class="item-after">
+													<span data-value="{$vo.express.value}">{$vo.express.name}</span>
+												</div>
+											</div>
+										</div>
+									</div>
+								</li>
+								<gt name="vo.is_sale" value="0">
+								<li class="open-popup" data-popup=".popup-sale" id="is_sale">
+									<div class="item-content item-link">
+										<div class="item-inner">
+											<div class="item-title-row">
+												<div class="item-title text-red">店铺促销</div>
+												<div class="item-after">
+													选择
+												</div>
+											</div>
+										</div>
+									</div>
+									<ul class="coupon-data hide">
+										<volist name="vo.coupon" id="cl">
+										<li data-coupon_id="{$cl.id}" data-price="{$cl.price}" data-use_type="{$cl.use_type}" data-link_id="{$cl['category_id'] ? $cl['category_id'] : $cl['goods_id']}">
+											<div class="item-content">
+												<div class="item-media"><i class="icon iconfont icon-youhuiquan text-red"></i></div>
+												<div class="item-inner">
+													<div class="item-title-row">
+														<div class="item-title">{$cl.title} [#{$cl.short_code}][<span class="text-red"><img class="icon-price" src="../Public/images/icon_{$list.list.0.goods.0.score_type}.png">{$cl.price}</span>]</div>
+													</div>
+												</div>
+											</div>
+										</li>	
+										</volist>
+									</ul>									
+								</li>	
+								</gt>								
+								<div class="express_list hide">
+								<volist name="vo.express_type" id="el">
+								<li data-express_type="{$el.value}">
+									<div class="item-content item-link">
+										<div class="item-media">
+											<i class="iconfont icon-fahuo"></i>
+										</div>
+										<div class="item-inner">
+											<div class="item-title-row">
+												<div class="item-title"><span data-value="{$el.value}">{$el.name}</span></div>
+											</div>
+										</div>
+									</div>
+								</li>								
+								</volist>
+								</div>
+								<li>
+									<div class="item-content">
+										<div class="item-inner">
+											<div class="item-title label">买家留言</div>
+											<div class="item-input">
+												<input type="text" name="remark" placeholder="选填：对本次交易的说明">
+											</div>
+										</div>
+									</div>
+								</li>	
+								<li>
+									<div class="item-content">
+										<div class="item-inner">
+											<div class="item-title-row">
+												<div class="item-title">
+													<div class="ft06" style="line-height: 1.1rem;">商品 <span class="goods_price"><img class="icon-price" src="../Public/images/icon_{$list.list.0.goods.0.score_type}.png">{$vo.total_price}</span>，运费 <img class="icon-price" src="../Public/images/icon_{$list.list.0.goods.0.score_type}.png"><span class="express_price">{$vo.express_price}</span>，奖励<span class="score text-red"> {$vo.total_score} </span>乐兑宝，优惠 <img class="icon-price" src="../Public/images/icon_{$list.list.0.goods.0.score_type}.png"><span class="sale_price">0</span></div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</li>	
+								<li>
+									<div class="item-content">
+										<div class="item-inner">
+											<div class="item-title-row">
+												<div class="item-title">
+													<div class="">共{$vo.goods_num}件商品</div>
+												</div>
+												<div class="item-after">
+													小计 <span class="text-red"> <img class="icon-price" src="../Public/images/icon_{$list.list.0.goods.0.score_type}.png"><span class="pay_price">{$vo.pay_price}</span></span>
+												</div>
+											</div>
+										</div>
+									</div>
+								</li>									
+							</ul>							
+						</div>	
+						<div class="clearfix md5"></div>
+						</volist>	
+						</form>
+						
+					<else />
+						<div class="nors text-center">
+							<div><i class="iconfont icon-gouwuchekong ft3"></i></div>
+							 暂无商品加入购物车！
+						</div>		
+					</notempty>
+				</div>			
+				
+			</div>		
+
+
+
+			<!--配送方式-->
+			<div class="popup popup-express popup-top30">
+				<div class="close-popup btn-close">
+					<i class="iconfont icon-guanbi1"></i>
+				</div>
+				
+				<div class="content-block-title"><i class="icon iconfont icon-xiangxia"></i> 选择配送方式</div>
+				
+				<div class="list-block media-list">
+					<ul>
+					</ul>
+				</div>	
+			</div>
+
+		
+			<!--优惠-->
+			<div class="popup popup-sale popup-top30">
+				<div class="close-popup btn-close">
+					<i class="iconfont icon-guanbi1"></i>
+				</div>
+				
+				<div class="content-block-title"><i class="icon iconfont icon-xiangxia"></i> 请选择促销活动</div>
+				<div class="p5 ft06 text-gray hide">
+					<span class="text-red"><i class="iconfont icon-weibiaoti1"></i> 提示：</span>使用乐兑官方优惠券，不支持唐宝付款，且商家发货后将不支持退款！
+				</div>
+				<div class="list-block media-list">
+					<ul>
+					</ul>
+				</div>
+				
+				<div class="goods-footer fixed-bottom">
+					<div class="cart-btn close-popup">
+						<div class="btn-buy">确定</div>
+					</div>
+				</div>					
+			</div>		
+		
+		</div>	
+		
+
+<include file="Public:script" />
+<include file="Public:footer" />

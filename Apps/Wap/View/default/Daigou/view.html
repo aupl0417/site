@@ -1,0 +1,98 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin({ref:true})"></i>
+		</div>
+		<div class="title">
+			代购详情
+		</div>
+		<div class="r">
+		</div>
+	</div>
+</header>
+<section>	
+	<div class="load-body">数据加载中……</div>
+</section>
+
+<script id="tpl_daigou_view" type="text/html">
+	<div class="line-box hover noicon row">
+		<div class="col-30 b">代购编号</div>
+		<div class="col-70 text-gray b"><%= data.d_no %></div>
+	</div>
+	<div class="line-box hover noicon row">
+		<div class="col-30">申请时间</div>
+		<div class="col-70 text-gray"><%= data.atime %></div>
+	</div>
+	<div class="line-box hover noicon row">
+		<div class="col-30">商品名称</div>
+		<div class="col-70 text-gray"><%= data.goods_name %></div>
+	</div>
+	<% if(data.attr_name != '') { %>
+	<div class="line-box hover noicon row">
+		<div class="col-30">规格颜色</div>
+		<div class="col-70 text-gray"><%= data.attr_name %></div>
+	</div>
+	<% } %>
+	<div class="line-box-m hover noicon row">
+		<div class="col-30">商品链接</div>
+		<div class="col-70 text-gray" style="word-break:break-all;"><%= data.url %></div>
+		<div class="clearfix"></div>
+	</div>
+	<div class="line-box hover noicon row">
+		<div class="col-30">代购数量</div>
+		<div class="col-70 text-gray"><%= data.num %></div>
+	</div>
+	<div class="line-box hover noicon row">
+		<div class="col-30">代购价格</div>
+		<div class="col-70 text-gray"><%= data.price %></div>
+	</div>
+	<div class="line-box hover noicon row">
+		<div class="col-30">预估价格</div>
+		<div class="col-70 text-gray cost_price"><%= data.cost_price %></div>
+	</div>
+	<div class="line-box-m hover noicon row">
+		<div class="col-30">留言备注</div>
+		<div class="col-70 text-gray"><%= data.remark %></div>
+		<div class="clearfix"></div>
+	</div>
+	<div class="line-box hover noicon row">
+		<div class="col-30">审核状态</div>
+		<div class="col-70 text-gray cost_price"><%= data.status_name %></div>
+	</div>
+	<% if(data.reason != '') { %>
+	<div class="line-box-m hover noicon row">
+		<div class="col-30">审核备注</div>
+		<div class="col-70 text-gray"><%= data.reason %></div>
+		<div class="clearfix"></div>
+	</div>
+	<% } %>
+	<% if(data.thumbnail.length > 0){ %>
+		<div class="line-box-m hover noicon row">
+			<div class="col-30">商品截图</div>
+			<div class="col-70 text-gray">
+				<div style="height:75px;display:bolck">
+					<% for(j = 0;j < data.thumbnail.length; j++){ %>
+						<img class='fl m5' width='50' height="50" src="<%= data.thumbnail[j] %>" />
+					<% } %>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+	<% } %>
+	<% if(data.attr_list_id > 0) { %>
+		<div class="p10">
+			<div class="btn btn-lg btn-block btn-danger" onclick="openWin({name:'goods_view',url:'/Goods/view/id/<%= data.attr_list_id %>'})">查看商品</div>
+		</div>
+	<% } %>
+</script>
+
+<script>
+	fixBar(1);
+	ajax_post({
+		url:'/Api/api',
+		data:{apiurl:'/Daigou/wapView',is_openid:1,id:'{$_GET.id}'}
+	},function(ret){
+		var html=template('tpl_daigou_view',{data:ret.data});
+		$('.page.active section').html(html);
+	});
+</script>

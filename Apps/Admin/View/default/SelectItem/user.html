@@ -1,0 +1,166 @@
+<form method="get" action="/Goods/" role="form" id="ajax_search" class="hover-shadow hover-search p10 md10" onsubmit="return ajax_search()">
+
+	<table class="no-bordered">
+		<tr>
+			<td class="p0">
+				<table class="no-bordered no-bg">
+					<tr>
+						<td>
+							<select id="level_id" name="level_id" class="form-control " style="">
+								<option value="">请选择会员级别</option>
+								<option value="1">消费商会员</option>
+								<option value="3">创客会员</option>
+								<option value="4">创投会员</option>
+							</select>
+						</td>
+						<td>
+							<select id="type" name="type" class="form-control " style="">
+								<option value="">请选择会员类型</option>
+								<option value="0">个人会员</option>
+								<option value="1">企业会员</option>
+							</select>
+						</td>
+						<td>
+							<select id="is_auth" name="is_auth" class="form-control " style="">
+								<option value="">请选择认证</option>
+								<option value="-1">认证失败</option>
+								<option value="0">未认证</option>
+								<option value="1">认证通过</option>
+								<option value="2">认证中</option>
+							</select>
+						</td>
+						<td><input type="text" id="nick" name="nick" placeholder="请输入昵称" value="" class="form-control " style=""></td>
+						<td><input type="text" id="name" name="name" placeholder="请输入姓名" value="" class="form-control " style=""></td>
+						<td><input type="text" id="mobile" name="mobile" placeholder="请输入手机号码" value="" class="form-control " style=""></td>
+					</tr>
+				</table>
+			</td>
+			<td width="100" class="p0" valign="top"><button type="submit" class="btn btn-rad btn-trans btn-primary btn-block mt8"><i class="fa fa-search"></i> 搜索</button></td>
+		</tr>
+	</table>
+
+</form>
+
+<notempty name="pagelist.list">
+
+			{:W('Widget/listable',array(array(
+				'data'	=>$pagelist['list'],
+				'items'	=>array(
+					array(
+						'title'	=> '选择',
+						'type'	=> 'html',
+						'html'	=> '<input type="radio" name="id" id="id" class="i-red-square" value="[id]" />',
+						'td_attr'	=> 'width="60" class="text-center"',	
+						'norder'	=> 1,
+					),
+					array(
+						'title'	=> 'ID',
+						'field'	=> 'id',
+						'td_attr'	=> 'width="100" class="text-center"',	
+						'norder'	=> 1,
+					),
+					array(
+						'title'	=> '头像',
+						'field'	=> 'face',
+						'td_attr'	=> 'width="100" class="text-center"',
+						'function'	=> 'return images($val["face"],60);',
+						'norder'	=> 1,
+					),
+					array(
+						'title'	=> '等级',
+						'field'	=> 'level_id',
+						'td_attr'	=> 'width="150" class="text-center"',
+						'function'	=> 'return \\'<img src="\\'.myurl($val[\\'user_level\\'][\\'icon\\'],30).\\'"> \\'.$val[\\'user_level\\'][\\'level_name\\'];',
+						'norder'	=> 1,
+					),					
+					array(
+						'title'	=> '昵称',
+						'field'	=> 'nick',			
+						'norder'	=> 1,
+					),					
+					array(
+						'title'	=> '姓名',
+						'field'	=> 'name',			
+						'norder'	=> 1,
+					),					
+					array(
+						'title'	=> '手机',
+						'field'	=> 'mobile',		
+						'norder'	=> 1,
+					),					
+					array(
+						'title'	=> '认证',
+						'field'	=> 'is_auth',		
+						'norder'	=> 1,
+						'td_attr'	=> 'width="100" class="text-center"',
+						'function'	=> 'return status($val[\\'is_auth\\'],[[\\'未认证\\',\\'btn-block\\'],[\\'认证通过\\',\\'btn-block btn-success\\'],[\\'认证中\\',\\'btn-block btn-warning\\'],\\'-1\\'=>[\\'认证失败\\',\\'btn-block btn-danger\\']]);',
+					),					
+					array(
+						'title'	=> '用户类型',
+						'field'	=> 'type',		
+						'norder'	=> 1,
+						'td_attr'	=> 'width="100" class="text-center"',
+						'function'	=> 'return status($val[\\'type\\'],[[\\'个人会员\\',\\'btn-block\\'],[\\'企业会员\\',\\'btn-block btn-info\\']]);',
+					),					
+				
+				),
+			)))}
+			
+			<div class="p10 page-box">
+				{:page_html($pagelist['pageinfo'])}
+			</div>
+			
+		<div class="p10 text-center">
+			<div class="btn btn-150px btn-primary" onclick="select_ok($(this))">确定选择</div>
+		</div>			
+<else />
+	<div class="text-center nors">找不到记录！</div>
+</notempty>
+<script>
+	iCheckClass('#ajax-modal');
+	$('.page-box a').click(function(event){
+		event.preventDefault();
+		var url = $(this).attr('href');
+		//alert(url);
+		ajax_load('#ajax-modal .modal-body',url);
+	});
+	
+	function ajax_search(){
+		var data = getFormJson('#ajax_search');
+		var param =$.param(data);
+		//alert(param);
+		var url='/SelectItem/user?'+param;
+		ajax_load('#ajax-modal .modal-body',url);
+
+		return false;
+	}
+	
+	function select_ok(obj){
+		var size = $('#ajax-modal input[name="id"]:checked').size();
+		if(size==0){
+			valert({status:'warning',msg:'请选择记录！'});
+			return false;
+		}
+		
+		var id=$('#ajax-modal input[name="id"]:checked').val();
+		var field=$('.vform-action').html();
+		$('#'+field).val(id);
+		
+		var obj = $('#ajax-modal input[name="id"]:checked').closest('tr');
+		var img = obj.find('img').attr('src');
+		var nick = obj.find('td').eq(4).html();
+		var level = obj.find('td').eq(3).html();
+		var	html = '<div class="crow"><div class="ccol-10"><img src="'+img+'" alt="图片"></div><div class="ccol-80 pl10"><h3 class="ft16">'+nick+'</h3>'+level+'</div></div><div class="clearfix"></div>';
+
+		//alert(html);
+		
+		if($('.f-'+field+' .col-xs-7 .box').size()>0){
+			$('.f-'+field+' .col-xs-7 .box').html(html);
+		}else{
+			html='<div class="box p10">'+html+'</div>';
+			$('.f-'+field+' .col-xs-7').append(html);
+		}
+		
+		$('#ajax-modal').modal('hide');
+	}
+</script>

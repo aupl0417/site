@@ -1,0 +1,83 @@
+<div class="goods_list">
+	<empty name="pagelist.list">
+		<div class="nors text-center ft16">暂无报名商品记录！</div>
+	<else />
+		<div class="crow ft16 md10 border-d">
+			<div class="ccol-10 text-center">
+				主图
+			</div>
+			<div class="ccol-65">
+				<div class="pl20">标題</div>
+			</div>
+			<div class="ccol-25 text-right">
+				<div class="pr20">活动图片</div>
+			</div>				
+			<div class="clearfix md10"></div>
+		</div>		
+	<volist name="pagelist.list" id="vo">
+		<div class="goods-item" onclick="goods_select($(this))" data-id="{$vo.id}">
+			<div class="crow">
+				<div class="ccol-10">
+					<img src="{:myurl($vo['goods']['images'],80)}" alt="主图" class="max100">
+				</div>
+				<div class="ccol-65">
+					<div class="pl10">
+						<div class="md5 ft16">{$vo.subject}</div>
+						<div class="text-gray">{$vo.goods.goods_name}</div>
+						<div class="text-danger">￥<span class="price">{$vo.price}</span></div>
+					</div>
+				</div>
+				<div class="ccol-25 text-right">
+					<volist name="vo.images" id="img">
+					<img src="{:myurl($img,80,80,1,'',2)}" alt="主图" class="max100">
+					</volist>
+				</div>				
+				<div class="clearfix"></div>
+			</div>
+		</div>
+	</volist>
+	
+	<div class="row">
+		<div class="col-xs-9 pages">{$pagelist.page.page}</div>
+		<div class="col-xs-3 text-gray text-right pages-total" style="line-height:45px;">{$pagelist.page.total}</div>
+	</div>
+	</empty>
+</div>
+
+
+<script>
+$('#ajax-modal .modal-footer .btn-submit').removeClass('hide').html('确定选择').unbind().click(function(){
+	if($('.goods_list .goods-item.active').size()==0){
+		valert({msg:'请选择商品！'});
+	}else{
+		var obj=$('.goods_list .goods-item.active');
+		var d=obj.data();
+		$('#form-hide #join_id').val(d.id);
+		
+		var data = getFormJson('#form-hide');
+		ajax_post({
+			url:'__URL__/floor_goods_add',
+			data:data,
+		},function(ret){
+			valert(ret);
+			if(ret.status=='success'){
+				$('.goods[data-floor_id="'+data.floor_id+'"][data-i="'+data.sort+'"]').html(ret.html).data({id:data.join_id});
+				$('#ajax-modal').modal('hide');
+			}
+		});
+
+	}	
+});
+
+//选择宝贝
+function goods_select(obj){
+	obj.addClass('active').siblings().removeClass('active');	
+}
+
+function page(p){
+	var url='__URL__/select_goods?{$query}'+'&p='+p;
+	loadurl({tag:'.goods_list',url:url});
+}
+
+
+</script>

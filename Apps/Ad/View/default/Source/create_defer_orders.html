@@ -1,0 +1,380 @@
+<include file="Public:header" />
+
+<div class="container bg_white mt30">
+<form id="ad-create-orders">
+	<!-- position_id -->
+	<input type="hidden" name="position_id"  value="{$data.id}" />
+    <!--  -->
+    <input type="hidden" name="nosign"  value="">
+
+    <input type="hidden" name="sucai_id"  id="sucai_id" value="{$sucai.id}">
+
+    <input type="hidden" name="goods_id"  id="goods_id" value="{$goods.id}" />
+
+    <input name="sort" type="hidden" value="{$sort}" />
+    
+    <div class="clearfix">
+        <div class="mt20 mb20">
+            <span class="ml10 fs14 strong fl">资源位详情</span>
+            <a class="layui-btn layui-btn-primary fr mr10" href="{:U('/Source')}">返回资源位</a>
+        </div>
+    </div>
+    <div class="mb20 clearfix">
+        <div class="col-xs-4">
+            <div class="ad-img-box">
+                <a href="{$data.images}" class="image-zoom">
+                    <img src="{:myurl($data['images'],['w' => 388,'h' => 277])}" width="388" height="277" alt="" class="img-thumbnail">
+                </a>
+            </div>
+        </div>
+        <div class="col-xs-8 text_77">
+            <div class="ad-info">
+                <div class="row">
+                    <div class="media">
+                        <div class="media-left">
+                            <div class="w80 text-right">名　　称：</div>
+                        </div>
+                        <div class="media-body">{$data.position_name}</div>
+                    </div>
+                    <div class="media">
+                        <div class="media-left">
+                            <div class="w80 text-right">尺　　寸：</div>
+                        </div>
+                        <div class="media-body"> {$data.width} x {$data.height} (px)</div>
+                    </div>
+                    <gt name="data.background_width" value="0">
+                    <div class="media">
+                        <div class="media-left">
+                            <div class="w80 text-right">背景尺寸：</div>
+                        </div>
+                        <div class="media-body"> {$data.background_width} x {$data.background_height} (px)</div>
+                    </div>
+                    </gt>
+                    <div class="media">
+                        <div class="media-left">
+                            <div class="w80 text-right">素材要求：</div>
+                        </div>
+                        <div class="media-body">
+                            <a href="#" class="text_blue">查看广告素材审核规范</a>
+                        </div>
+                    </div>
+                    <div class="media">
+                        <div class="media-left">
+                            <div class="w80 text-right">投放类目：</div>
+                        </div>
+                        <div class="media-body pdr10">
+                        	<foreach name="data.category_name" item="v">
+								<span class="mr10">{$v}</span>
+                        	</foreach>
+                        	
+                        </div>
+                    </div>
+                    <div class="media">
+                        <div class="media-left">
+                            <div class="w80 text-right">
+                                资源介绍：
+                            </div>
+                        </div>
+                        <div class="media-body">{$data.content|default="暂无介绍内容"}</div>
+                    </div>
+                    <div class="media">
+                        <div class="media-left">
+                            <div class="w80 text-right">
+                                设　　备：
+                            </div>
+                        </div>
+                        <div class="media-body"><span class="text_red">
+                            <switch name="data.device">
+                                <case value="1">PC端</case>
+                                <case value="2">移动端</case>
+                                <default />未知
+                            </switch>
+                            
+                        </span></div>
+                    </div>
+                    <div class="media">
+                        <div class="media-left">
+                            <div class="w80 text-right lh30">
+                                价　　格：
+                            </div>
+                        </div>
+                        <div class="media-body fs22"><span class="text_red">{$data.price}</span> 元/天</div>
+                    </div>
+                    
+                </div>
+            </div>
+
+        </div>
+        
+    </div>
+    <hr/>
+    <div class="clearfix">
+        <div class="mt20 mb20">
+            <span class="ml10 fs14 strong">投放时间段<span class="ml5 text-gray">灰色时间段为不可选，最多可选最近三个月的投放时间</span></span>
+        </div>
+    </div>
+    
+    <!--选择投放时间段结束-->
+    <div class="pd10 mb20">
+        <div class="row" id="calendar-list">
+        	<!-- 投放时间表 -->
+        	<for statr="0" end="3">
+				<div class="col-xs-4">
+					<div class="strong text-center">{$calendar[$i].year} 年 {$calendar[$i].month} 月</div>
+					{$calendar[$i].cal}
+				</div>
+			</for>
+			<input name="days" type="hidden" value="" />
+        </div>
+    </div>
+    
+    <hr/>
+
+    <!--  -->
+    <div class="mb20 mt20">
+        <div class="clearfix">
+            <span class="plr20 pb7 fs14 strong fl">投放信息</span>
+        </div>
+    </div>
+
+
+    <div class="over form-horizontal" >
+        <div class="form-group">
+            <label class="col-sm-4 control-label">投放位置<span class="text_red">*</span></label>
+            <div class="col-sm-7">
+                <div class="clearfix" id="allPlace-select">
+                    <for statr="0" end="$data.num" id="key">
+                        <a onclick="window.location.href='{:U("Source/create_defer_orders",['sort'=>$i,'a_no'=>$ad['a_no']])}'" class="place-change layui-btn layui-btn-small <if condition='$i neq $sort'>layui-btn-primary </if>">位置{$i+1}</a>
+                    </for>
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-4 control-label">推广标题<span class="text_red">*</span></label>
+            <div class="col-sm-7">
+                <input type="text" maxlength="15" name="name" value="{$ad.name}" class="form-control" placeholder="请输入推广标题，15个字以内例：真功夫">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-4 control-label">投放素材<span class="text_red">*</span></label>
+            <div class="col-sm-7">
+                <a  href="javascript:;" data-type="vmodal" data-title="投放素材选择" data-url="{:U('/Source/choose_sucai',['size' => $data['width'] . 'x' . $data['height']])}" data-val=""  class="layui-btn layui-btn-small" href="#">点击选择素材</a>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-4 control-label"></label>
+            <div class="col-sm-7">
+                <table class="table table-bordered table-advance table-hover">
+                    <tbody class="">
+                        <tr>
+                            <th class="col-xs-2 text-center" style="vertical-align: middle;">素材图片</th>
+                            <th class="col-xs-3 text-center" style="vertical-align: middle;">素材名称</th>
+                            <th class="col-xs-2 text-center" style="vertical-align: middle;">素材尺寸</th>
+                            <th class="col-xs-3 text-center" style="vertical-align: middle;">投放类目</th>
+                        </tr>
+                        <tr class="countBrand" id="choose-sucai">
+                            <notempty name="sucai">
+                                <td class="text-center img">
+                                    <a class="image-zoom" href="#" onclick="bigImage($(this))" data-url="{$sucai['images']}" title="大图">
+                                        <img src="{:myurl($sucai['images'],70,70)}" />
+                                    </a>
+                                </td>
+                                <td style="vertical-align: middle;" class="text-center col-xs-1">{$sucai.sucai_name}</td>
+                                <td style="vertical-align: middle;" class="text-center col-xs-1">{$sucai.width}x{$sucai.height}</td>
+                                <td style="vertical-align: middle;" class="text-center col-xs-1">{$sucai.category_name}</td>
+                            <else/>
+                                <td colspan="6" class="text-center text_red">请选择一个素材</td>
+                            </notempty>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-4 control-label">推广类型<span class="text_red">*</span></label>
+            <div class="col-sm-7 line32">
+                <label class="square mr10 fs12 fl mt8"><input type="radio" name="type" <notempty name="goods">checked="checked"</notempty> value="0" onclick="goodDisplay(this,'show')"><span></span></label>
+                <span class="fl mr10">推广宝贝</span>
+                <label class="square mr10 fs12 fl mt8"><input type="radio" name="type" <empty name="goods">checked="checked"</empty>  value="1" onclick="goodDisplay(this,'hide')"><span></span></label>
+                <span class="fl mr10">推广店铺</span>
+            </div>
+        </div>
+
+        <div class="form-group" id="xuan-goods-id" <empty name="goods">style="display:none;"</empty>>
+            <label class="col-sm-4 control-label">选择宝贝<span class="text_red">*</span></label>
+            <div class="col-sm-7" style="">
+            	<a href="javascript:;" data-type="vmodal" data-title="商品选择" data-url="{:U('/Source/choose_goods',['device' => $data['device']])}" data-val="" class="layui-btn layui-btn-small  chooseGoods">点击选择宝贝</a>
+            	<table class="table table-bordered table-advance table-hover mb30 mt10">
+		            <tbody class="">
+		            	<tr>
+							<th class="col-xs-2 text-center" style="vertical-align: middle;">商品图片</th>
+							<th class="col-xs-5 text-center" style="vertical-align: middle;">商品名称</th>
+							<th class="col-xs-1 text-center" style="vertical-align: middle;">商品价格</th>
+							<th class="col-xs-1 text-center" style="vertical-align: middle;">奖励积分</th>
+							<th class="col-xs-1 text-center" style="vertical-align: middle;">库存数量</th>
+						</tr>
+						<tr class="countBrand" id="choose-goods">
+                            <notempty name="goods">
+                                <td class="text-center img">
+                                    <a class="image-zoom" href="#" onclick="bigImage($(this))" data-url="{$goods['images']}" title="大图">
+                                        <img src="{$goods['images']}" width="60" />
+                                    </a>
+                                </td>
+                                <td style="vertical-align: middle;" class="text-center col-xs-1">{$goods.goods_name}</td>
+                                <td style="vertical-align: middle;" class="text-center col-xs-1">
+                                    {$goods.price}
+                                </td>
+                                <td style="vertical-align: middle;" class="text-center col-xs-1">{$goods['score_ratio'] * $goods['price'] * 100}</td>
+                                <td style="vertical-align: middle;" class="text-center col-xs-1">{$goods.num}</td>
+                            <else/>
+                                <td colspan="5" class="text-center text_red">请选择一个宝贝</td>
+                            </notempty>
+						</tr>
+		            </tbody>
+		        </table>
+		        
+                
+            </div>
+        </div>
+ 
+    </div>
+    <hr/>
+    
+    <div class="mb10 form-horizontal">
+        <div class="form-group">
+            <label class="col-sm-4 control-label"> </label>
+            <div class="col-sm-6">
+                <div class="fs16">
+                    <div class="mr50 mt10">
+                         单价 <span class="fs16 strong text_red" value="{$data.price}">{$data.price}</span>元/天
+                        ,投放 <span class="fs16 strong text_blue" value="0" id="ad-num">0</span> 天
+                        ,合计 <span class="fs16 strong text_red" value="0" id="ad-money">0</span> 元
+                    </div>
+                    <div class="mr50 mt10 mb10"><a class="layui-btn layui-btn-big layui-btn-danger mt10" onclick="submitForm()">提交广告订单</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+</form>
+</div>
+
+<script>
+
+// 是否选择商品
+function goodDisplay(th,str){
+	if($(th).prop('checked') == true){
+		if(str == 'show'){
+			$('#xuan-goods-id').show();
+		}
+		if(str == 'hide'){
+            $('#xuan-goods-id').hide();
+            
+		}
+	}
+}
+// 日历
+$(function(){
+	$('#calendar-list tbody td').on('click', function(){
+		// 已被使用 过期 今天 都不能选
+		if(! $(this).hasClass('isuse') && ! $(this).hasClass('expire') && ! $(this).hasClass('today') && $(this).hasClass('hover') ){
+			if($(this).hasClass('active')){
+				$(this).removeClass('active');
+			}else{
+				$(this).addClass('active');
+			}
+			allCount();
+		}
+	});
+});
+// 计算
+function allCount(){
+	var price = '{$data.price}';
+	var days = [];
+	var i = 0;
+	$('#calendar-list tbody td').each(function(x,y){
+		if($(this).hasClass('active')){
+			days.push($(this).data('day'));
+			i++;
+		}
+	});
+	// 投放天数
+	$('#ad-num').html(i);
+	$('#ad-num').attr('value', i);
+	// 投放总价
+	var money = price * i;
+	$('#ad-money').html(money);
+	$('#ad-money').attr('value', money);
+	// 记录投放天数
+	$('#calendar-list').find('input[name="days"]').val(days);
+}
+function submitForm(){
+	var data = getFormJson('#ad-create-orders');
+	
+	if(data.days == ''){
+        layerMsg('请选择投放时间段');
+		return false;
+	}
+	if(data.sucai_id == undefined || data.sucai_id == ''){
+		layerMsg('请选择要投放的素材');
+		return false;
+	}
+	if(data.name == ''){
+		layerMsg('请输入推广标题');
+		return false;
+	}
+	if(data.type == '0'){
+		if(data.goods_id == undefined || data.goods_id == ''){
+			layerMsg('请选择一个宝贝');
+			return false;
+		}
+	}
+
+	// 是否选择了商品
+	if(data.type != 0){
+        $('#ad-create-orders').find('input[name="nosign"]').val('{:enCryptRestUri("goods_id")}');
+	}else{
+        $('#ad-create-orders').find('input[name="nosign"]').val('');
+    }
+	ajax_post_form({
+		formid: '#ad-create-orders',
+		url: '/run/authRun',
+		headers:{Action:'{:enCryptRestUri("/Ad/createOrders")}'},
+	},function(ret){
+		if(ret.code == 1){
+            layerMsg(ret.msg,{skin:'my-layer-success'},function(){
+                gourl({url:'{:U("My/index")}'});
+            });
+		}else{
+            layerMsg(ret.msg);
+        }
+	});
+	
+}
+
+function getFormJson(form) {
+	var o = {};
+	var a = $(form).serializeArray();
+	$.each(a, function () {
+		if (o[this.name] !== undefined) {
+			if (!o[this.name].push) {
+				o[this.name] = [o[this.name]];
+			}
+			o[this.name].push(this.value || '');
+		} else {
+			o[this.name] = this.value || '';
+		}
+	});
+	return o;
+}
+
+</script>
+
+<include file="Public:footer" />

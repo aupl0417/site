@@ -1,0 +1,140 @@
+
+<form class="form-horizontal vform" id="form-goods-add" data-url="__URL__/add_next">
+	<div class=" plr15 pb5">
+			<blockquote class="pd0 pl10 mb0 fs14 strong">选择分类</blockquote>
+	</div>
+	<div class="active" id="step1">
+
+		<div class="m20 plr15 mg15">
+			<div class="row select-category">
+				<div class="col-xs-4">
+					<div class="b md10">一级类目</div>
+					<div class="box first-dir"></div>
+				</div>
+				<div class="col-xs-4">
+					<div class="b md10">二级类目</div>
+					<div class="box second-dir"></div>	
+				</div>
+				<div class="col-xs-4">
+					<div class="b md10">三级类目</div>
+					<div class="box three-dir"></div>	
+				</div>
+			</div>
+		</div>
+
+		<div class="bg_f1 ptb10 plr15 mg15 mb20">您当前选择的是：
+			<span class="selected1"></span>
+		</div>
+
+		<div class="mg15 text-center">
+			<!-- <div class="btn btn-primary plr20">同意协议并发布商品</div> -->
+			<button type="button" data-step="9" data-wizard="#wizard1"
+					class="btn btn-primary wizard-next">
+					修改分类<i class="fa fa-caret-right"></i>
+			</button>
+		</div>
+	</div>
+
+</form>
+
+<script id="tpl_first_category" type="text/html">
+	<ul>
+	{{each data as val i}}
+		<li onclick="select_first($(this))" data-id="{{val.id}}">{{val.category_name}}</li>
+	{{/each}}
+	</ul>
+</script>
+
+<script id="tpl_second_category" type="text/html">
+	<ul>
+	{{each data as val i}}
+		<li onclick="select_second($(this))" data-id="{{val.id}}">{{val.category_name}}</li>
+	{{/each}}
+	</ul>
+</script>
+
+<script id="tpl_three_category" type="text/html">
+	<ul>
+	{{each data as val i}}
+		<li onclick="select_three($(this))" data-id="{{val.id}}">{{val.category_name}}</li>
+	{{/each}}
+	</ul>
+</script>
+<script>
+var category={:$goods_category?json_encode($goods_category):'""'};
+var first_category;
+var second_category;
+$(document).ready(function(){
+	if(category!=''){
+		var html=template('tpl_first_category',{data:category});
+		$('.first-dir').html(html);
+	}
+});
+	
+	function select_first(obj){
+		$('.second-dir').html('');
+		$('.three-dir').html('');
+		
+		var id=obj.data('id');
+		obj.addClass('active').siblings().removeClass('active');
+		var data;
+		for(i=0;i<category.length;i++){
+			if(id==category[i].id){
+				data=category[i].dlist;
+				break;
+			}
+		}
+		
+		var html=template('tpl_second_category',{data:data});
+		$('.second-dir').html(html);
+	}
+	
+	function select_second(obj){
+		$('.three-dir').html('');
+		
+		var id=obj.data('id');
+		obj.addClass('active').siblings().removeClass('active');
+		var data;
+		for(i=0;i<category.length;i++){
+			for(j=0;j<category[i].dlist.length;j++){
+				if(id==category[i].dlist[j].id){
+					data=category[i].dlist[j].dlist;
+					break;
+				}				
+			}
+
+		}
+		
+		var html=template('tpl_three_category',{data:data});
+		$('.three-dir').html(html);		
+	}
+	
+	function select_three(obj){
+		obj.addClass('active').siblings().removeClass('active');
+		
+		var first = $('.first-dir li.active').text();
+		var second = $('.second-dir li.active').text();
+		var three = $('.three-dir li.active').text();
+		
+		var html = first+' > '+second+' > '+three;
+		$('.selected1').html(html);
+	}
+
+
+    $("body .wizard-next").click(function(e){
+      var step= $(this).data("step");
+	  if(step==9){
+		var sid=$('.three-dir li.active').data('id');
+		if($('.three-dir li.active').size()==0){
+			talert({status:'warning',msg:'请选择完整类目（第三级类目）！'});
+			return false;
+		}
+		
+		$('.selected').html($('.selected1').text());
+		$('#category_id').val(sid);
+		attr_set(sid);
+		param_set(sid);
+		$('#ajax-modal').modal('hide');
+	  }
+    });
+</script>

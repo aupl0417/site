@@ -1,0 +1,70 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			个人信息
+		</div>
+		<div class="r" onclick="openWin({name:'tips',url:'/Index/tips_app'})">
+			<div class="text">编辑</div>
+		</div>
+	</div>
+</header>
+<section>
+
+	<div class="line-box noicon hover row">
+		<div class="col-30 text-left">头像</div>
+		<div class="col-70 text-right"><img class="lh2-25px" src="../Public/Images/people_a.png" id="face" /></div>
+	</div>
+
+	<div class="clearfix"></div>
+	<div class="line-box noicon hover row">
+		<div class="col-30 text-left">账号</div>
+		<div class="col-70 text-right font-color1" id="name"></div>
+	</div>
+	<div class="clearfix"></div>
+	<div class="line-box noicon hover row">
+		<div class="col-30 text-left">姓名</div>
+		<div class="col-70 text-right font-color1" id="nick"></div>
+	</div>
+	<div class="clearfix"></div>
+	<div class="line-box noicon hover row">
+		<div class="col-30 text-left">性别</div>
+		<div class="col-70 text-right font-color1" id="sex"></div>
+	</div>
+	<div class="clearfix"></div>
+	<div class="line-box noicon hover row">
+		<div class="col-30 text-left">生日</div>
+		<div class="col-70 text-right font-color1" id="birthday"></div>
+	</div>
+	<div class="clearfix"></div>
+</section>
+<script>
+fixBar(1);
+$(function(){
+	ajax_post({
+		url:'/Api/api',
+		data:{apiurl:'/User/userinfo',is_openid:1},
+	},function(ret){
+		if( ret.code == 1 ){
+			// console.log(ret);
+			var info = ret.data;
+			if( info.face != '' ) $('#face').attr('src',info.face);
+			$('.page.active #name').html(info.nick);
+			$('.page.active #nick').html(info.name);
+			if( info.sex == 1 ){
+				sex = '男';
+			}else if( info.sex == 2 ){
+				sex = '女';
+			}else{
+				sex = '保密';
+			}
+			$('.page.active #sex').html(sex);
+
+			$('.page.active #birthday').html(info.birthday);
+		}
+	});
+});
+
+</script>

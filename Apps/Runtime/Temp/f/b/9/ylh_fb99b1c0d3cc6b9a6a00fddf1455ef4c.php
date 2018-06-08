@@ -1,0 +1,3 @@
+<?php
+//000000003600a:3:{s:5:"atime";i:1509688129;s:5:"token";s:32:"76955b6f79a93c1730fb84b31e3625b0";s:4:"data";a:7:{s:5:"appid";s:1:"4";s:10:"access_key";s:32:"e807f1fcf82d132f9bb018ca6738a19f";s:10:"secret_key";s:32:"f4b89fd253b7d2082906ffb46f5e4793";s:9:"sign_code";s:32:"3baa7d716b0fd789a2e91e89b07c50da";s:9:"device_id";s:26:"7b8djt15o2pc83p9130rnr4ho0";s:4:"sign";s:32:"1112a0977301c57c3e03752c12bd2e90";s:8:"terminal";s:1:"1";}}
+?>

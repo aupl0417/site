@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>唐人街</title>
+		<meta name="keywords" content="唐人街" />
+		<meta name="description" content="唐人街" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<link href="../Public/Css/style.css" media="screen" rel="stylesheet" type="text/css">
+		<link href="../Public/Css/Animate/animate.min.css" media="screen" rel="stylesheet" type="text/css">
+		<link href="../Public/Js/Banner/css/styles.css" media="screen" rel="stylesheet" type="text/css">
+		
+		<link href="../Public/Js/alertPopShow/common.css" media="screen" rel="stylesheet" type="text/css">
+		<link href="../Public/Css/custom.css" media="screen" rel="stylesheet" type="text/css">
+		
+		<!--焦点图-->
+		<!--<link rel="stylesheet" href="../Public/Js/responsiveslides/lrtk.css">-->
+		
+		<!--焦点图-->
+		<link rel="stylesheet" href="../Public/Js/bxslider/jquery.bxslider.css">
+		
+		<script src="../Public/Js/jquery-2.1.1.min.js"></script>		
+		<script src="../Public/Js/template-native.js"></script>
+		<script src="../Public/Js/jquery.form.js"></script>
+		<script src="../Public/Js/alertPopShow/alertPopShow.js"></script>
+		<script src="../Public/Js/iscroll-probe.js"></script>
+		<script src="../Public/Js/jquery.countdown.min.js"></script>
+		<script src="../Public/Js/global.js"></script>
+		
+		<!--焦点图-->
+		<!--<script src="../Public/Js/responsiveslides/responsiveslides.min.js"></script>-->
+		
+		<!--焦点图-->
+		<script type="text/javascript" src="../Public/Js/bxslider/jquery.bxslider.min.js"></script>
+	</head>
+
+<!--
+<script type="text/javascript" src="../Public/Js/jquery-1.7.2.min.js"></script>-->
+<!--抽奖样式-->
+<link href="../Public/Js/luckDraw/style.css" media="screen" rel="stylesheet" type="text/css">
+
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="history.go(-1)"></i>
+		</div>
+		<div class="title">
+			我的中奖列表
+		</div>
+		<div class="r">
+			<if condition =" $_SESSION['user'] neq ''">
+			<else/>
+			<div onclick = "user_login()">登录</div>
+			</if>
+		</div>
+	</div>
+</header>
+
+<div id = "zhezhao" onclick = "tips_cancel()"></div>
+<div class = "body_a">
+	<div class = "luck_list_bg">
+		
+		<div class = "nav">
+			<span class ="active">全部</span>
+			<span>转盘送壕礼</span>
+		</div>
+		<div class = "list">
+			<table width="100%">
+				<tr>
+					<th>时间</th>
+					<th>来源</th>
+					<th>奖品</th>
+					<th>状态</th>
+				</tr>
+				<tbody id = "winning_list">
+					<tr>
+						<td colspan="4">暂无信息</td>
+					</tr>
+					
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+<script id="tpl_my_winner" type="text/html">
+	<% for(i=0;i<data.length;i++){ %>
+		<tr>
+			<td><%= data[i].day %></td>
+			<td><%= data[i].ac_type%></td>
+			<td><%= data[i].prize_name %></td>
+			<td>
+				<a href = "<%= data[i].award_url %>">
+				<% if(data[i].is_deliver == 2){ %>
+				已发放
+				<% }else if(data[i].is_receive == 1){ %>
+				点击领取</a>
+				<% }else if(data[i].is_receive == 2){%>
+				已领取
+				<% }else{%>
+				已过期
+				<% }%>
+				</a>
+			</td>
+		</tr>
+	<% } %>
+	
+</script>
+<script>
+	$(function(){
+		ajax_post({
+			url:'/Api/api',
+			data:{apiurl:'/Luckdraw/get_my_winner',is_openid:1,pagesize:20,p:1}
+		},function(ret){
+			if(ret.code == 1){
+				var html = template('tpl_my_winner', {data:ret.data.list});
+				$("#winning_list").html(html);
+			}else{
+				valert(ret);
+			}
+		});
+		$("#user_login").css('margin-left','-'+($("#user_login").width()/2)+'px');
+		$("#user_login").css('margin-top','-'+($("#user_login").height()/2)+'px');
+	});
+	$(".nav span").click(function(){
+		var ac_type = $(this).index();
+		$(this).addClass('active').siblings('span').removeClass('active');
+		ajax_post({
+			url:'/Api/api',
+			data:{apiurl:'/Luckdraw/get_my_winner',is_openid:1,pagesize:20,p:1,ac_type:ac_type,no_sign:'ac_type'}
+		},function(ret){
+			if(ret.code == 1){
+				var html = template('tpl_my_winner', {data:ret.data.list});
+				$("#winning_list").html(html);
+			}else{
+				valert(ret);
+			}
+		});
+	});
+	//取消
+	function tips_cancel(str){
+		if(str != null){
+			valert({msg:str});
+		}
+		
+		$("#zhezhao").hide();
+		$("#no_chance_tips").hide();
+		$("#luck_tips").hide();
+		$("#user_login").hide();
+	}
+</script>
+<if condition =" $_SESSION['user'] neq ''">
+<else/>
+	<div id = "user_login">
+		<form id="form-login" class="p10">
+			<div class="login-box">
+				<input name="username" id="username" placeholder="昵称/手机号码">
+
+				<input type="password" name="password" id="password" placeholder="登录密码">
+				
+				<div class="btn btn-danger btn-lg btn-block md20" onclick="login()">登录</div>
+				<div class="fl" onclick="window.location.href='{$url}/Login/register'">
+					还没有账号，去注册
+				</div>
+				<div class="fr" onclick="window.location.href='{$url}/Login/forget'">
+					忘记密码
+				</div>	
+			</div>
+			<input type="hidden" name="apiurl" value="/Erp/check_login">
+		</form>
+	</div>
+	<script>
+		function user_login(){
+			$("#zhezhao").show();
+			$("#user_login").show();
+		}
+		function login(){
+			var data=getFormJson('#form-login');
+			ajax_post({
+				url:'/Api/api',
+				data:data,
+			},function(ret){
+				if(ret.code==1) {
+					//openWin({name:'ucenter',url:'/Ucenter/index',close:true,ref:true});
+					location.reload(true);
+				}else{
+					valert(ret);
+				}
+			});
+		}
+		
+	</script>
+</if>

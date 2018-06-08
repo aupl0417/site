@@ -1,0 +1,194 @@
+<extend name="Seller@Public:base" />
+<block name="body">
+    <div class="centent_body">
+        <!-- to do your html codeing -->
+        <div class="revision_bg">
+            <div class="container ptb_size_lg clearfix">
+                <!-- 左侧导航 -->
+                <include file="Supplier:sideNav" />
+                <!-- 左侧导航结束 -->
+
+                <div class="revisionRight pd15" style="width: 1020px"><!-- 右侧内容 -->
+                    <!--<div class="clearfix revisionOrderTab" data-url="">-->
+                        <!--<a class="orderOption active" href="javascript:;">订单评价</a>-->
+                    <!--</div>-->
+
+
+
+                    <div class="row">
+                        <div class="col-sm-6" style="border-right: solid 1px #F8F8F8">
+                            <h4>商家信息</h4>
+                            <p>
+                                <a href="{:U('/Supplier/setting')}"><img class="fl mr15" width="100" src="{:myurl($supplier_info[logo],120)}"></a>
+                                <a href="{:U('/Supplier/setting')}" class="ab text-center set_shop" style="left: 15px; top: 110px;">设置店标</a>
+                            </p>
+
+							<p>
+								店铺名称： <strong class="text_yellow">{$info.shop_name}</strong>
+							</p>
+							<if condition="$info[type] eq 1">
+								<p>
+									店铺类型： <strong class="text_yellow">个人店</strong>
+								</p>
+							<else/>
+								<p>
+									店铺类型： <strong class="text_yellow">企业店</strong>
+								</p>
+							</if>
+                            <p>
+                                套餐类型：
+								<volist name="info.packages" id="vo">
+									<if condition="$vo eq 1">
+										<strong class="text_yellow">金积分</strong>
+									<elseif condition="$vo eq 4"/>
+										<strong class="text_yellow">银积分</strong>
+									<elseif condition="$vo eq 2"/>
+										<strong class="text_yellow">现金</strong>
+									</if>
+								</volist>
+								
+								
+                            </p>
+                            <p><strong class="text_yellow"><a href="{:U('Supplier/info')}">店铺资料</a></strong></p>
+                            
+                            <div class="clear"></div>
+                            <p class="text-center mt20 hide">
+                                <a class="text_blue" href="{:U('/setting')}"><strong>店铺设置</strong></a>
+                                <span class="plr5">|</span>
+                                <a class="text_blue" href="{$shop.shop_url}" target="_blank"><strong>查看我的店铺</strong></a>
+                            </p>
+                        </div>
+
+                        <div class="col-sm-3" style="border-left: solid 1px #F8F8F8">
+                            <h4>昨日店铺数据</h4>
+                            <p>
+                                订单数 (<strong class="text_yellow">{$total.sale_total.num}</strong>)
+                            </p>
+                            <p>
+                                销售额 (<strong class="text_yellow">{$total.sale_total.money}</strong>)
+                            </p>
+                            <p>
+                                商品数 (<strong class="text_yellow">{$total.sale_total.goods_num}</strong>)
+                            </p>
+                            <p>
+                                买家数 (<strong class="text_yellow">{$total.sale_total.buyer}</strong>)
+                            </p>
+                            <p>
+                                客单数 (<strong class="text_yellow">{$total.sale_total.price}</strong>)
+                            </p>
+                            <p class="hide">
+                                退款数 (<strong class="text_yellow">{$total.sale_total.refund}</strong>)
+                            </p>
+
+                        </div>
+                        <div class="col-sm-3">
+                            <h4>营业额</h4>
+                            <p style="color:#fbc819;font-size:20px;margin:20px 10px;">
+                                {$supplier_info.money}
+                            </p>
+                            <p>
+                                <a href="{:U('/SupplierTurnover')}" class="btn btn-sm  btn-rad btn-trans">明细</a>
+                                <a href="{:U('/SupplierTurnover/withdrawals')}" class="btn btn-sm  btn-rad btn-trans">提现</a>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="row pd10 mt30" style="border-top: solid 1px #F8F8F8">
+                        <div class="col-md-4 col-sm-4">
+                            <h4>订单管理</h4>
+                            <p>
+                                <a href="{:U('/SupplierOrders/index', ['sid' => 2])}">待发货 (<strong class="text_yellow"><notempty name="total[orders_count][2]">{$total[orders_count][2]}<else/>0</notempty></strong>)</a>
+                            </p>
+                            <p>
+                                <a href="{:U('/SupplierOrders/index', ['sid' => 1])}">待付款 (<strong class="text_yellow"><notempty name="total[orders_count][1]">{$total[orders_count][1]}<else/>0</notempty></strong>)</a>
+                            </p>
+                            <p class="hide">
+                                <a href="{:U('/orders/index', ['sid' => 4])}">待评价 (<strong class="text_yellow">{$total.orders.4}</strong>)</a>
+                            </p>
+                            <p class="hide">
+                                <a href="{:U('/refund')}">退款中 (<strong class="text_yellow">{$total.orders.20}</strong>)</a>
+                            </p>
+                        </div>
+                        <div class="col-md-4 col-sm-4" style="border-left: solid 1px #F8F8F8;border-right: solid 1px #F8F8F8">
+                            <h4>商品管理</h4>
+                            <p>
+                                <a target="_blank" href="{:DM('sell')}/Index/supplier_index?url=/Supplier/goods/status/1">出售中 (<strong class="text_yellow"><notempty name="total[goods_count][1]">{$total[goods_count][1]}<else/>0</notempty></strong>)</a>
+                            </p>
+                            <p>
+                                <a target="_blank" href="{:DM('sell')}/Index/supplier_index?url=/Supplier/goods/status/2">待上架 (<strong class="text_yellow"><notempty name="total[goods_count][2]">{$total[goods_count][2]}<else/>0</notempty></strong>)</a>
+                            </p>
+                            <p>
+                                <a target="_blank" href="{:DM('sell')}/Index/supplier_index?url=/Supplier/goods/is_best/1">橱窗中 (<strong class="text_yellow"><notempty name="total[goods_count][best_num]">{$total[goods_count][best_num]}<else/>0</notempty></strong>)</a>
+                            </p>
+							
+                            <p class="hide">
+                                <a target="_blank" href="{:DM('sell')}?url=/goods/index/status/4">违规中 (<strong class="text_yellow"><notempty name="goods_count[4]">{$goods_count.4}<else/>0</notempty></strong>)</a>
+                            </p>
+                        </div>
+                        <div class="col-md-4 col-sm-4 hide">
+                            <h4>违规记录</h4>
+                            <p>
+                                一般违规商品数量 (<strong class="text_yellow">{$total.illegl.1}</strong>)
+                            </p>
+                            <p>
+                                严重违规商品数量 (<strong class="text_yellow">{$total.illegl.2}</strong>)
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="row pd10 text-center mt30 hide" style="border-top: solid 1px #F8F8F8">
+                        <div class="col-md-2 col-sm-2 pd20">
+                            <a class="hover_bg" href="{:U('/orders/index', ['sid' => 2])}">
+                                <img class="mg15" src="__NEW_DESIGN__images/sell_1.png">
+                                <p class="mb20">订单发货</p>
+                            </a>
+                        </div>
+                        <div class="col-md-2 col-sm-2 pd20">
+                            <a class="hover_bg" href="{:U('/refund')}">
+                                <img class="mg15" src="__NEW_DESIGN__images/sell_2.png">
+                                <p class="mb20">退货管理</p>
+                            </a>
+                        </div>
+                        <div class="col-md-2 col-sm-2 pd20">
+                            <a class="hover_bg" href="{:U('/refund')}">
+                                <img class="mg15" src="__NEW_DESIGN__images/sell_3.png">
+                                <p class="mb20">退款列表</p>
+                            </a>
+                        </div>
+                        <div class="col-md-2 col-sm-2 pd20">
+                            <a class="hover_bg" href="{:DM('ad')}">
+                                <img class="mg15" src="__NEW_DESIGN__images/sell_4.png">
+                                <p class="mb20">广告位购买</p>
+                            </a>
+                        </div>
+                        <div class="col-md-2 col-sm-2 pd20">
+                            <a class="hover_bg" href="{:U('/activity')}">
+                                <img class="mg15" src="__NEW_DESIGN__images/sell_5.png">
+                                <p class="mb20">促销管理 </p>
+                            </a>
+                        </div>
+                        <div class="col-md-2 col-sm-2 pd20">
+                            <a class="hover_bg" href="{:U('/brand')}">
+                                <img class="mg15" src="__NEW_DESIGN__images/sell_6.png">
+                                <p class="mb20">我的品牌</p>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <!-- my codeing over -_-   -->
+
+    </div>
+</block>
+
+<block name="css">
+
+</block>
+
+<block name="script">
+    <!-- to do your javascript codeing -->
+
+</block>

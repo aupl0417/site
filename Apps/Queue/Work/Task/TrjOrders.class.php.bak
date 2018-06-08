@@ -1,0 +1,56 @@
+<?php
+/**
+ * ----------------------------------------
+ * 唐人街任务处理
+ * ----------------------------------------
+ * Author: Lazycat <673090083@qq.com>
+ * ----------------------------------------
+ * 2016-11-1
+ * -----------------------------------------
+ */
+class TrjOrders
+{
+    public $worker;
+
+    /*
+    private $type = array(
+        'buyer_add_orders',			//关闭超时未付款的订单
+        'buyer_confirm_orders',		//买家长时间未确认收货，默认自动确认收货
+        'seller_send_express',		//未发货退款，卖家长时间未响应，默认同意退款
+        'buyer_refund_add',			//已发货，退款，卖家长时间未响应，默认同意退款
+        'seller_not_accept',		//退款被拒绝后买家长时间未响应，默认取消退款
+        'buyer_refund_edit',		//修改退款后卖家长时间未响应，默认为同意退款
+        'seller_accept',			//卖家同意退货，买家长时间未响应默认取消退款
+        'buyer_send_express',		//买家寄回退货，卖家长时间未确认，默认无异议自动退款
+        'buyer_rate',               //超时未评价订单
+        'orders_error',				//执行出错的队列
+        'goods_images',             //商品主图搬家
+        'goods_attr_list_images',	//库存主图搬家
+    );
+    */
+
+    /**
+     * @param string $args['type'] 入列类型,即上面注释的类型
+     * @param string $args['val'] 要处理的订单号或退款单号
+     */
+    public function run($args){
+        //file_put_contents('/tmp/'.$args['type'].'_'.$args['val'].'.txt',$args['type'].'_'.$args['val']);
+        $res = curl_post(APIURL.'/Cron/job',['val' => $args['val'],'type' => $args['type']]);
+        $res = json_decode($res,true);
+        //file_put_contents('/tmp/do_'.$args['type'].'_'.$args['val'].'.txt',var_export($res,true));
+        if($res['code'] != 1) return ['code' => 0];
+        return ['code' => 1];
+    }
+
+
+    public function _exit(){
+        $pid = posix_getpid();
+        if($pid > 0) swoole_process::kill($pid);
+    }
+
+    public function get_pid(){
+        $pid = posix_getpid();
+        return $pid;
+    }
+}
+

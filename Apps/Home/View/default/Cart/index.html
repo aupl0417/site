@@ -1,0 +1,93 @@
+	<notempty name="list.list">
+
+	<div class="p10">
+		全部商品 ({$total.cart})
+	</div><!--/nav-box-->
+	<hr style="border: 1px solid #333;" class="mt0 md10" />
+	<form method="post" action="{$Think.config.sub_domain.cart}{:U('/Index/confirm_order')}" role="form" id="formlist">
+	
+	<!--cart list-->
+	<div class="cart-list">
+	<volist name="list.list" id="vo">
+		<div class="pl10 pr10">
+				<label><input type="checkbox" class="i-red-square" data-type="select-all" data-tag="#s-{$vo.sellerid}"> 店铺：{$vo.shop_name}</label> 
+				<notempty name="vo.qq"><a href="http://wpa.qq.com/msgrd?v=3&uin={$vo.qq}&site=qq&menu=yes" target="_blank"><img src="http://wpa.qq.com/pa?p=1:{$vo.qq}:4" border="0" /></a></notempty>
+				<notempty name="vo.wang"><a href="http://amos1.taobao.com/msg.ww?v=2&amp;uid={$vo.wang}&amp;s=2" target="_blank" title="{$vo.wang}"><img alt="点击这里给我发消息" src="http://amos1.taobao.com/online.ww?v=2&amp;uid={$vo.wang}&amp;s=2" align="absBottom" border="0"></a></notempty>
+		
+		</div>
+		<div id="s-{$vo.sellerid}">
+			<volist name="vo.dlist" id="dl">		
+			<table class="no-bordered cart-item" style="margin-left:2px;" id="{$dl.id}" data-id="{$dl.id}" data-pid="{$dl.productsid}" data-sellerid="{$dl.sellerid}">
+				<tr>
+					<td width="40">
+						<input type="checkbox" class="i-red-square" id="id[]" name="id[]" value="{$dl.id}">
+						<input type="hidden" id="num" name="num{$dl.id}" value="{$dl.num}">
+						<input type="hidden" id="money_all" name="money_all{$dl.id}" value="{$dl.money_all}">					
+					</td>
+					<td width="60">
+						<a href="{$Think.config.sub_domain.detail}{:U('/Index/index',array('id'=>$dl['productsid']))}" target="_blank">
+							<div class="img-box-60">
+								<img src="{:myurl($dl['images'],60)}" alt="{$dl.name}">
+							</div>
+						</a>
+					</td>
+					<td>
+						<div class="lh2-20px"><a href="{$Think.config.sub_domain.detail}{:U('/Index/index',array('id'=>$dl['productsid']))}" target="_blank">{$dl.name}</a></div>
+						<div class="strong">￥{$dl.price}</div>
+					</td>
+				</tr>
+			</table>
+			
+			</volist>
+		</div>
+		<hr style="border: 1px solid #333;" class="mt10 md10" />
+	</volist>
+	</div>
+
+	<div class="clearfix md10 p10">
+		<div class="fl"><label><input type="checkbox" class="i-red-square" data-type="select-all" data-tag=".cart-list"> 全选</label></div>
+		<div class="fr">合计: <span class="ft16 c_red strong">¥ <span class="allprice">0.00</span></span></div>
+				
+		<button type="submit" class="btn btn-primary btn-block btn-lg m0 btn-checkout" disabled>去结算</button>		
+	</div>
+
+
+
+	</form>
+	
+	<else />
+		<div class="nors text-center">
+			<div class="md20"><img src="__IMAGES__/cart-empty.jpg"></div>
+			<div class="">购物车为空，赶紧行动吧。<a href="{$Think.config.sub_domain.search}"><small class="text-danger">去购物&gt;<small></small></small></a></div>
+		</div>
+	</notempty>
+
+	
+<script>
+iCheckClass();
+checkbox_select_all();
+	$('.cart-item input[type="checkbox"]').on('ifChanged',function(){
+		cart_total();
+	});
+
+function cart_total(){	
+	var allnum=0;
+	var allprice=0;
+	$('.cart-list .cart-item [type="checkbox"]:checked').each(function(){
+		var num=parseInt($(this).closest('.cart-item').find('input[id="num"]').val());		
+		allnum=allnum+num;
+		
+		var money_all=parseFloat($(this).closest('.cart-item').find('input[id="money_all"]').val());
+		allprice=allprice+money_all;
+	});
+	
+	//$('.allnum').html(allnum);
+	$('.allprice').html(allprice);
+	
+	if(allnum>0){
+		$('.btn-checkout').addClass('active').removeAttr('disabled');
+	}else{
+		$('.btn-checkout').removeClass('active').attr('disabled',true);
+	}
+}
+</script>

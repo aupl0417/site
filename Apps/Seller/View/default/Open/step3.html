@@ -1,0 +1,285 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body">
+	<include file="Public:nav" />
+	<div class="container mb30">
+		<include file="Public:side" />
+		<div class="w980 fl">
+			<div class="bor_der">
+				<div class="bg_f1 clearfix fs14 text_44 tle_R">
+					<a class="fl plr15 line40 ml-1 active" href="javascript:;">登记联系人信息</a>
+				</div>
+				<!-- 主体部分 -->
+				{:W('Common/Builder/form', [['data' => $keyList, 'run' => '/run/authRun']])}
+				<eq name="btn" value="1">
+					<div class="text-center pd10">
+						<a class="btn btn-info" href="{:U('/open/step2')}"><i class="fa fa-mail-reply"></i>上一步</a><a class="btn btn-success ml20" href="{:U('/open/step4')}"><i class="fa fa-mail-forward"></i>下一步</a>
+					</div>
+				</eq>
+			</div>
+		</div>
+	</div>
+</div>
+</block>
+<block name="css"></block>
+<block name="script">
+<script>
+$(document).ready(function() {
+	checkform({
+		formid:"#formadd",
+		headers:{Action : '{$headers}'},
+		rules:{
+			linkname:{
+				required:true,
+				minlength:2,
+				maxlength:16,
+			},
+			mobile:{
+				required:true,
+				isMobile:true,
+			},
+			tel:{
+				// required:true,
+				isTel:true,
+			},
+			email:{
+				required:true,
+				email:true,
+			},
+			qq:{
+				required:true,
+				number:true,
+				rangelength:[5,13],
+			},
+			type_id:{
+				required:true,
+			},
+			op_linkname:{
+				minlength:2,
+				maxlength:16,
+			},
+			op_mobile:{
+				isMobile:true,
+			},
+			op_tel:{
+				isTel:true,
+				//required:true,
+			},
+			op_email:{
+				email:true,
+			},
+			cs_linkname:{
+				minlength:2,
+				maxlength:16,
+			},
+			cs_mobile:{
+				isMobile:true,
+			},
+			cs_tel:{
+				isTel:true,
+				//required:true,
+			},
+			cs_email:{
+				email:true,
+			},
+			fc_linkname:{
+				minlength:2,
+				maxlength:16,
+			},
+			fc_mobile:{
+				isMobile:true,
+			},
+			fc_tel:{
+				isTel:true,
+				//required:true,
+			},
+			fc_email:{
+				email:true,
+			},
+			tc_linkname:{
+				minlength:2,
+				maxlength:16,
+			},
+			tc_mobile:{
+				isMobile:true,
+			},
+			tc_tel:{
+				isTel:true,
+				//required:true,
+			},
+			tc_email:{
+				email:true,
+			},
+			rf_linkname:{
+				required:true,
+				minlength:2,
+				maxlength:16,
+			},
+			rf_mobile:{
+				required:true,
+				isMobile:true,
+			},
+			rf_tel:{
+				isTel:true,
+				required:true,
+				isTel:true,
+			},
+			rf_email:{
+				required:true,
+				email:true,
+			},
+			rf_province:{
+				required:true,
+			},
+			rf_city:{
+				required:true,
+			},
+			rf_district:{
+				required:true,
+			},
+			rf_street:{
+				required:true,
+				minlength:2,
+				maxlength:60,
+			},
+			rf_postcode:{
+				minlength:6,
+				maxlength:6,
+				number:true,
+			},
+		},
+		messages:{
+			linkname:{
+				required:'店铺负责人姓名不能为空',
+				minlength:'店铺负责人姓名不能少于2个汉字',
+				maxlength:'店铺负责人姓名不能大于16个汉字',
+			},
+			mobile:{
+				required:'店铺负责人手机号码不能为空',
+				isMobile:'店铺负责人手机号码不正确',
+			},
+			tel:{
+				// required:'店铺负责人电话号码不能为空',
+				isTel:'运营负责人电话号码格式不正确,正确格式为020-8888888',
+			},
+			email:{
+				required:'店铺负责人邮箱不能为空',
+				email:'店铺负责人邮箱格式不正确',
+			},
+			qq:{
+				required:'店铺负责人QQ不能为空',
+				number:'店铺负责人QQ为数字类型',
+				rangelength:'店铺负责人QQ长度介于5~13位之间',
+			},
+			type_id:{
+				required:'店铺类型不能为空',
+			},
+			op_linkname:{
+				minlength:'运营负责人姓名不能少于2个汉字',
+				maxlength:'运营负责人姓名不能大于16个汉字',
+			},
+			op_mobile:{
+				isMobile:'运营负责人手机号码不正确',
+			},
+			op_tel:{
+				isTel:'运营负责人电话号码格式不正确,正确格式为020-8888888',
+				//isTel:true,
+				//required:true,
+			},
+			op_email:{
+				email:'运营负责人邮箱格式不正确',
+			},
+			cs_linkname:{
+				minlength:'售后负责人姓名不能少于2个汉字',
+				maxlength:'售后负责人姓名不能大于16个汉字',
+			},
+			cs_mobile:{
+				isMobile:'售后负责人手机号码不正确',
+			},
+			cs_tel:{
+				isTel:'售后负责人电话号码格式不正确,正确格式为020-8888888',
+				//required:true,
+			},
+			cs_email:{
+				email:'售后负责人邮箱格式不正确',
+			},
+			fc_linkname:{
+				minlength:'财务负责人姓名不能少于2个汉字',
+				maxlength:'财务负责人姓名不能大于16个汉字',
+			},
+			fc_mobile:{
+				isMobile:'财务负责人手机号码不正确',
+			},
+			fc_tel:{
+				isTel:'财务负责人电话号码格式不正确,正确格式为020-8888888',
+				//required:true,
+			},
+			fc_email:{
+				email:'财务负责人邮箱格式不正确',
+			},
+			tc_linkname:{
+				minlength:'技术负责人姓名不能少于2个汉字',
+				maxlength:'技术负责人姓名不能大于16个汉字',
+			},
+			tc_mobile:{
+				isMobile:'技术负责人手机号码不正确',
+			},
+			tc_tel:{
+				isTel:'技术负责人电话号码格式不正确,正确格式为020-8888888',
+				//required:true,
+			},
+			tc_email:{
+				email:'技术负责人邮箱格式不正确',
+			},
+			rf_linkname:{
+				required:'退货联系人姓名不能为空',
+				minlength:'退货联系人姓名不能少于2个汉字',
+				maxlength:'退货联系人姓名不能大于16个汉字',
+			},
+			rf_mobile:{
+				required:'退货联系人手机号码不能为空',
+				isMobile:'退货联系人手机号码不正确',
+			},
+			rf_tel:{
+				isTel:'退货联系人电话号码格式不正确',
+				required:'退货联系人电话不能为空',
+				isTel:'店铺负责人电话号码不正确,正确格式为020-8888888',
+			},
+			rf_email:{
+				required:'退货联系人邮箱不能为空',
+				email:'退货联系人邮箱格式不正确',
+			},
+			rf_province:{
+				required:'退货省份不能为空',
+			},
+			rf_city:{
+				required:'退货城市不能为空',
+			},
+			rf_district:{
+				required:'退货地区不能为空',
+			},
+			rf_street:{
+				required:'退货详细地址不能为空',
+				minlength:'退货详细地址为2-60个字',
+				maxlength:'退货详细地址为2-60个字',
+			},
+			rf_postcode:{
+				minlength:'退货邮编由6个数字组成',
+				maxlength:'退货邮编由6个数字组成',
+				number:'退货邮编由数字组成',
+			},
+		},
+	},function(res) {
+		if(res.code == 1) {
+			talert({status:res.code,msg:'提交成功，即将进入下一步。'});
+			var url	=	'{:U("/open/step4")}';
+			setTimeout(function() {
+				gourl({url:url});
+			}, 1000);
+		} else {
+			talert({status:res.code,msg:res.msg});
+		}
+	});
+});
+</script>
+</block>

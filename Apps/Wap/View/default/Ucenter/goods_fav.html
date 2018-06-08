@@ -1,0 +1,121 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			商品收藏
+		</div>
+		<div class="r">
+		</div>
+	</div>
+</header>
+<section>
+	<div class="pagelist">
+		<div class="load-body">数据加载中……</div>
+	</div>
+	<div class="p10 load-more" onclick="shopfav_loadmore()">
+		<div class="btn btn-lg btn-block btn-danger btn-trans">加载更多……</div>
+	</div>
+</section>
+
+<include file="Public:d_layer" />
+
+<script id="tpl_goods_fav_list" type="text/html">
+    <% for (var i = 0; i < data.length; i ++) { %>
+		<div class="line-box-m hover" id="<%= data[i].id %>">
+			<div class="action">
+					<div class="action-btn action-btn-edit" style="height:95px;line-height:95px;" onclick="openWin({name:'goods_view',url:'<%= data[i].attr_list[0].detail_url%>'})">浏览</div>
+					<div class="action-btn action-btn-delete" style="height:95px;line-height:95px;" onclick="goods_fav_delete($(this))" data-id="<%= data[i].id %>">删除</div>
+			</div>			
+			<div class="row" onclick="goods_fav_click($(this))">
+				<div class="col-15"><img src="<%= data[i].goods.images %>" alt="<%= data[i].goods.goods_name %>"></div>
+				<div class="col-85">
+					<div class="pl10 pr10">
+						<div class="goods_name lh2-18px"><%= data[i].goods.goods_name %></div>
+						<div class="text-gray">累计售出：<%= data[i].goods.sale_num %> 件</div>
+						<div><span class="text-danger">￥<%= data[i].goods.price%></span><span class="text-gray">，奖励 <%= (data[i].goods.score_ratio * 100*data[i].goods.price).toFixed(2) %> 积分</span></div>
+					</div>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+    <% } %>
+</script>
+<script>
+	fixBar(1);
+	
+	var goods_fav_data={apiurl:'/Fav/goods_list',is_openid:1,imgsize:160,no_sign:'p,pagesize,imgsize'};
+	
+	goods_fav_pagelist(goods_fav_data);
+	
+	function goods_fav_pagelist(data,param){
+		var d=$('.page.active section').data();
+		var p=1;
+		if(d.p!=undefined){
+			p=d.p;
+		}
+		
+		if(d.allpage!=undefined && d.p>d.allpage){
+			$('.page.active .load-more').html('已无记录可加载！');
+			return false;
+		}
+		
+		data.p=p;		
+		ajax_post({
+			url:'/Api/api',
+			data:data,
+		},function(ret){
+			if(ret.code==1){			
+				var html = template('tpl_goods_fav_list', {data:ret.data.list});			
+		
+				if(p==1){
+					$('.page.active .pagelist').html(html);
+				}else{
+					$('.page.active .pagelist').append(html);
+				}
+				p++;
+				$('.page.active section').data({p:p,allpage:ret.data.allpage});
+				
+				if(ret.data.allpage>1){
+					$('.page.active .load-more').addClass('active');
+				}
+			}else if(ret.code==3){
+				$('.page.active .pagelist').html(no_data_text);
+			}
+		});	
+	}
+	
+	//更多
+	function goods_fav_loadmore(){
+		goods_fav_pagelist(goods_fav_data);
+	}
+	
+	//删除店铺关注	
+	function goods_fav_delete(obj){
+		var d=obj.data();
+		vmodal({
+			title:'删除收藏商品',
+			msg:'<div class="text-center p10">真的要删除收藏的商品吗？</div>',
+		},function(){
+			$('.page.active .vmodal .vmodal-success').unbind();
+			$('.page.active .vmodal .vmodal-success').click(function(){
+				ajax_post({
+					url:'/Api/api',
+					data:{apiurl:'/Fav/goods_delete',is_openid:1,id:d.id},
+				},function(ret){
+					valert(ret);
+					if(ret.code==1){
+						$('.page.active #'+d.id).remove();
+					} 
+				});
+			});
+		});
+	}
+	
+	//点击触发删除按钮
+	function goods_fav_click(obj){
+		obj.closest('.pagelist').find('.action.active').removeClass('active');
+		obj.closest('.line-box-m').find('.action').addClass('active');
+	}
+</script>

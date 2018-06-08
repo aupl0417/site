@@ -1,0 +1,32 @@
+<form enctype="multipart/form-data" id="form-upload" data-url="__URL__/upload">
+<div class="p10">
+	<div class="btn btn-lg btn-danger btn-block" id="choose-image" >选择图片</div>
+</div>
+<input style="display:none" id="imageData" name="imageData" type="file" value="" />
+
+</form>
+
+<script>
+	// 一进来就触发点击
+	$('.page.active #imageData').click();
+	// 选择图片后,上传
+	$('.page.active #imageData').change(function(){
+		ajax_post_form({
+			formid:'#form-upload',
+		},function(ret){
+			if(ret.code==1){
+				// 替换内容
+				$('.page.active #form-rate-goods-{$_GET.id}').find('.upload_images').eq({$_GET.sort}).attr('src',ret.url);
+				$('.page.active #form-rate-goods-{$_GET.id}').find('.upload_images').eq({$_GET.sort}).data('url',ret.url);
+				$('.page.active .vmodal .vmodal-footer').click();
+			}
+		});
+	});
+	// 点击按钮来触发点击
+	/*$('#choose-image').on('click',function(){
+		$('.page.active #imageData').click();
+	});*/
+	$("#choose-image").click(function() {
+		$('.page.active #imageData').click();
+	});
+</script>

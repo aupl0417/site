@@ -1,0 +1,113 @@
+<table border="0" cellpadding="0" cellspacing="0" class=" table mb20">
+    <thead class=" table-bordered bg_f1">
+    <tr>
+        <th width="40%" class="text-center"><strong>商品</strong></th>
+        <th width="20%" class="text-center"><strong>评价人</strong></th>
+        <th width="10%" class="text-center"><strong>购买数量</strong></th>
+        <th width="15%" class="text-center"><strong>单价</strong></th>
+        <th width="15%" class="text-center"><strong>评分</strong></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>
+            <div class="row">
+                <div class="col-xs-3">
+                    <a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', ['id' => $data['attr_list_id']])}" target="_blank">
+                        <img src="{:myurl($data['orders_goods']['images'], 80)}">
+                    </a>
+                </div>
+                <div class="col-xs-9">
+                    <a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', ['id' => $data['attr_list_id']])}" target="_blank">
+                        {$data.orders_goods.goods_name}																			</a>
+                    <br>
+                    {$data.orders_goods.attr_name}																				<br>
+                    [ {$data.atime} ]
+                </div>
+            </div>
+        </td>
+        <td class="text-center v-center" style="vertical-align: middle">
+            <if condition="$data.is_anonymous eq 1">匿名用户<else/><a class="text_44" target="_blank" href="{:DM('oauth2')}{:U('Im/check',['receiver' => $data['user']['nick']])}"><img class="mr5" width="12" src="/Public/images/icon-im.png">{$data.user.nick}</a></if>
+        </td>
+        <td class="text-center v-center" style="vertical-align: middle">
+            {$data['orders_goods']['num']}
+        </td>
+        <td class="text-center v-center" style="vertical-align: middle">
+            <span class="text_yellow">{$data['orders_goods']['price']}</span> 元
+        </td>
+        <td class="text-center v-center" style="vertical-align: middle">
+            <span class="text_green">
+                <switch name="data.rate">
+                    <case value="-1"><span class="text_yellow"></case>
+                    <case value="0"><span class="text_yellow"></case>
+                    <case value="1"><span class="text_green"></case>
+                </switch>
+                {$data.rate_name}
+                </span>
+            </span>
+        </td>
+    </tr>
+    <tr class="">
+        <td colspan="6">
+            <p>评价内容：{$data.content}</p>
+            <notempty name="data.images">
+                <p>评价晒单：</p>
+                <php>
+                    $images = explode(',', rtrim($data['images'], ','));
+                </php>
+                <ul class="images-select-box">
+                    <volist name="images" id="pic">
+                        <li id="" data-path="{$pic}" class="text-center" style="width: 80px">
+                            <div class="li-img-box" style="width: 60px;height: 60px">
+                                <a href="{$pic}" class="image-zoom" title="大图">
+                                    <img src="{:myurl($pic, 60)}">
+                                </a>
+                            </div>
+                        </li>
+                    </volist>
+                </ul>
+            </notempty>
+            <notempty name="data.reply">
+                <div class="clear"></div>
+                <volist name="data.reply" id="vo">
+                    <eq name="key" value="0">
+                        <p>商家回复：{$vo.content} [ <span class="text_yellow">{$vo.atime}</span> ]</p>
+                        <else />
+                        <p>我的回复：{$vo.content} [ <span class="text_yellow">{$vo.atime}</span> ]</p>
+                    </eq>
+                </volist>
+            </notempty>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<eq name="data.reply_count" value="0">
+{:W('Common/Builder/form', [['data' => $keyList, 'run' => '/run/authRun']])}
+</eq>
+
+<script>
+    checkform({
+        formid:"#formadd",
+        headers : {Action : '{$header}'},
+        rules:{
+            content:{
+                required:true,
+                minlength:5,
+                maxlength:500,
+            }
+        },
+        messages:{
+            content:{
+                required:'回复内容不能为空',
+                minlength:'回复内容必须在5-500个汉字之间',
+                maxlength:'回复内容必须在5-500个汉字之间',
+            }
+        }
+    },function(res) {
+        talert({status:res.code,msg:res.msg});
+        if(res.code == 1) {
+            setTimeout("ref()", 1000);
+        }
+    });
+</script>

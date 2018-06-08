@@ -1,0 +1,31 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin({ref:true})"></i>
+		</div>
+		<div class="title">
+			提示
+		</div>
+	</div>
+</header>
+<section>
+	<div class="p10 text-center">
+		<div class="md10"><img src="../Public/Images/i-tips.png" alt="提示"></div>
+		<div class="md20">订单支付失败！</div>
+		
+		<div class="row">
+			<div class="col-50">
+				<div class="btn btn-danger btn-block m10" onclick="closeWin()">返回首页</div>
+			</div>
+			<div class="col-50">
+				<div class="btn btn-danger btn-block m10" onclick="openWin({name:'goods',url:'/Goods/index'})">继续购物</div>
+			</div>
+		</div>
+	</div>
+	
+
+</section>
+<script>
+fixBar(1);
+
+</script>

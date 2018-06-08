@@ -1,0 +1,147 @@
+<include file="header" />
+
+    <div class="centent_body">
+        <div class="ticket-main-wrap service-ticket-create">
+    
+            <ul class="sidebar">
+                <li class="menu-header">我的工单</li>
+                <li class="menu-item sidebar-current">
+                    <i class="fa fa-list-ul fl"></i><a href="{:U('/Workorder/index')}">工单列表</a>
+                </li>
+                <li class="menu-item">
+                    <i class="fa fa-plus-circle fl"></i><a href="{:U('/Workorder/create')}">创建工单</a>
+                </li>
+            </ul><!-- left over -->
+
+            <div class="content-wrap">
+                <p class="breadcrumb pd0 plr20">
+                    <span>我的工单</span>
+                    <span class="divider">/</span>
+                    <span class="active">工单详情</span>
+                </p>
+                <div class="create-content">
+                    
+                    <div class="main-card mb30">
+                        <div class="main-card-title">
+                            <p>工单号：{$data.data.w_no}</p>
+                            <div class="plr20 mt20 row mg0">
+                            
+                            <div class="col-sm-1 pr0 pull-right text-right">
+                                <button class="btn btn-primary btn-rad plr20 btn-trans btn_m" onclick="ref()" type="button"><i class="fa fa-refresh"></i></button>
+                            </div>
+                        </div>
+                        </div>
+                        
+                        <div class="row plr20 mb20 mt20">
+                            <div class="col-xs-12 mb20">
+                                
+                                <span class="col-xs-2">创建时间：{$data.data.atime}</span>
+                                <span class="col-xs-1">状态：{$data.data.status_name}</span>
+                                <span class="ml20"><if condition="$ko eq 0">标题：{$data.data.title}</if></span>
+                            </div>
+                            <!-- <div class="col-xs-12">
+                                <span class="ml30 ">{$data.data.content}</span>
+                            </div> -->
+                        </div>
+                        
+                        
+
+                    </div>
+
+                    
+                    <div class="row plr20 mb20 mt20">
+                        <ul class="timeline">
+                            <foreach name="data.logs" key="ko" item="vo">
+                                <li class="">
+                                    <i class="fa fa-clock-o"></i>
+                                    <span class="date" style="width:100px">{$vo.atime}</span>
+                                    <div class="content" style="margin-left:105px;min-height:90px;">
+                                        <div class="row">
+                                            <div class="col-xs-2 text-center">
+                                                <img width="45" src="{$vo.user_face}{$vo.work_face}<if condition='$vo["user_face"] eq "" and $vo["work_face"] eq "" '>/Public/images/icon-idcard-n.png</if>">
+                                                <div>{$vo.user_nick}{$vo.work_nick}</div>
+                                            </div>
+                                            <div class="col-xs-10">{$vo.content}</div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </foreach>
+                            
+                        </ul>
+
+                    </div>
+                    <div class="main-card">
+                        <div class="main-card-title">
+                            
+                        </div>
+
+                        <div class="main-card-content">
+                            <form class="ui-ctrl ui-form" id="workorder-handle">                        
+                                <div class="row form-horizontal group-border-dashed">
+                                    
+                                    <div class="form-group">
+                                        <label class="col-sm-2 col-sm-offset-1 fs14 pt0 text-right"><span class="text_red">*</span>提交留言：</label>
+                                        <div class="col-sm-5 pl0">
+                                            <textarea name="content" rows="10" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    
+                                    <!--  -->
+                                    <input name="w_no" type="hidden" value="{$data.data.w_no}" />
+                                    
+                                     <div class="form-group">
+                                        <div class="col-sm-1  col-sm-offset-3 pd0">
+                                            <div class="btn btn-primary btn_m btn-block" onclick="subForm()">提交</div>
+                                        </div>
+                                    </div>     
+                                </div>
+                                
+                            </form>
+                        </div>
+
+
+                    </div>
+                    <div class="row plr20 mb20 mt20">
+
+                        <div class="col-sm-1 ml20" onclick="gourl({url:'{:U('/Workorder/index')}'})"><div class="btn btn-primary">返回列表</div></div>
+                    </div>
+
+                </div>
+            </div><!-- right over -->
+            
+
+
+
+        </div>
+    </div>
+<!-- 模态框 -->
+<include file="Common@Public:modal" />
+
+
+<script>
+
+function subForm(){
+
+    var data = getFormJson('#workorder-handle');
+    
+    if(data.content == undefined || data.content == ''){
+        talert({msg:'请填写留言内容'});
+        return false;
+    }
+
+    ajax_post_form({
+        formid: '#workorder-handle',
+        url: '/run/authRun',
+        headers:{Action:'{:enCryptResturi("/Workorder/handle")}'},
+    },function(ret){
+        // console.log(ret);
+        talert({status:ret.code,msg:ret.msg});
+        if(ret.code == 1){
+            ref();
+        }
+    });
+}
+</script>
+
+</body>
+</html>

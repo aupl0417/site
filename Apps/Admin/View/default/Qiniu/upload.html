@@ -1,0 +1,32 @@
+<include file="Public:header" />
+<include file="nav" />
+<css href="__JS__/upload/css/fileinput.css" />
+	
+<div class="m20 p20">
+	<form enctype="multipart/form-data">
+        <div class="form-group">
+            <input id="file-5" class="file" type="file" multiple >
+        </div>
+		
+		<div class="navbar-fixed-bottom hide">
+			<div class="p20 bg-white-50">
+				<button type="submit" class="btn btn-primary btn-rad btn-trans"><i class="fa fa-cloud-upload"></i> 上传图片</button>
+			</div>
+		</div>
+	</form>
+</div>
+
+<include file="Public:copyright" />
+<include file="Public:js" />
+<js href="__JS__/upload/js/fileinput.js" />
+<js href="__JS__/upload/js/fileinput_locale_zh.js" />
+<script>
+$("#file-5").fileinput({uploadUrl:'__URL__/upload_save',previewFileType:'any',maxFileSize:1000});
+/*
+$("#file-5").on('fileuploaded', function(event, data, previewId, index) {
+	location.href="__URL__/";
+});
+*/
+</script>
+
+<include file="Public:footer" />

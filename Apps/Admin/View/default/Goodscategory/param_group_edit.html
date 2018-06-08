@@ -1,0 +1,50 @@
+<form data-url="__URL__/param_group_edit_save" id="form_create" class="form-horizontal">
+<div class="vform">
+
+			{:W('Widget/buildform',array(array(
+				'field'		=>array(
+					array(
+						'formtype'		=>'text',
+						'label'			=>'分组名称',
+						'name'			=>'group_name',
+						'is_need'		=>true,
+					),
+					array(
+						'formtype'		=>'radio',
+						'label'			=>'状态',
+						'name'			=>'status',
+						'data'			=>array(array(1,'启用'),array(0,'停用')),
+						'field'			=>array(0,1),
+						'value'			=>1,
+					),
+					array(
+						'formtype'		=>'hidden',
+						'name'			=>'category_id',
+					),					
+					array(
+						'formtype'		=>'hidden',
+						'name'			=>'id',
+					),
+
+
+				),
+			),$rs))}
+
+<div class="p20 text-center">
+	<button type="submit" class="btn btn-primary btn-150px"><i class="fa fa-check"></i> 提交</button>
+</div>
+<!--token-->
+</div>
+</form>
+<script>
+iCheckClass();
+checkform({
+	formid:'#form_create',
+},function(ret){
+	valert(ret);
+	if(ret.status=='success'){
+		ref();
+	}
+});
+
+</script>

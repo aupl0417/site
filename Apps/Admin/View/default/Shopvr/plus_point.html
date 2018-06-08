@@ -1,0 +1,69 @@
+<div class="clearfix">
+	<div class="pull-right text-gray" onclick="$(this).closest('tr').toggleClass('hide');"><i class="fa fa-times-circle-o fa-2x"></i></div>	
+</div>
+
+<div class="p20 box">
+	<div class="ft18 strong p10 border-d">扣分信息</div>
+	<div class="row p10">
+		<div class="col-xs-6">已扣分：{$rs.point}</div>
+		<div class="col-xs-6">已抵消：{$rs.plus_point}</div>
+		
+		
+	</div>
+	
+	
+	
+	<div class="ft18 strong p10 mt10">抵消扣分</div>
+	<form data-url="__URL__/ajax_plus_point" data-id="#form_{$rs.id}" id="form_{$rs.id}" class="form-horizontal vform" onsubmit="return submit_open($(this))">
+			{:W('Widget/buildform',array(array(
+				'field'		=>array(	
+					
+					array(
+						'formtype'		=>'text',
+						'label'			=>'抵消分值',
+						'name'			=>'plus_point',
+						‘value’			=>$rs['plus_point']
+					),
+					array(
+						'formtype'		=>'hidden',
+						'name'			=>'id',
+						'value'			=>$rs['id'],
+					),
+					
+					array(
+						'formtype'		=>'html',
+						'label'			=>' ',
+						'html'			=>'<button type="submit" class="btn btn-primary btn-150px logs-add"><i class="fa fa-check"></i> 提交</button>'
+					),
+
+				),
+			)))}
+	
+	
+	</form>
+	
+	
+</div>
+<div class="clearfix">
+	<div class="pull-right text-gray" onclick="$(this).closest('tr').toggleClass('hide');"><i class="fa fa-times-circle-o fa-2x"></i></div>	
+</div>
+
+<script>
+image_zoom();
+
+function submit_open(obj){
+	var formid='#'+obj.attr('id');
+	var data = getFormJson(formid);
+	if(!data.plus_point){
+		valert({status:'warning',msg:'请填写分值'});
+		return false;
+	}
+	ajax_post_form({
+		formid:formid,
+	},function(ret){
+		valert(ret);
+	});
+	return false;
+}
+
+</script>

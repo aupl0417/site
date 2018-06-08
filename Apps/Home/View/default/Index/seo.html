@@ -1,0 +1,135 @@
+<!-- iframe 需要把css和js单独加进来 -->
+
+<link rel="shortcut icon" href="__NEW_DESIGN__/images/favicon.ico"/>
+
+<!-- Bootstrap core CSS -->
+<link rel="stylesheet" href="__NEW_DESIGN__/flatdream/js/bootstrap/dist/css/bootstrap.css">
+<link rel="stylesheet" href="__NEW_DESIGN__/flatdream/js/jquery.gritter/css/jquery.gritter.css"/>
+<link rel="stylesheet" href="__NEW_DESIGN__/flatdream/fonts/font-awesome-4/css/font-awesome.min.css">
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+<script src="../assets/js/html5shiv.js"></script>
+<script src="../assets/js/respond.min.js"></script>
+<![endif]-->
+<link rel="stylesheet" type="text/css" href="__NEW_DESIGN__/flatdream/js/jquery.nanoscroller/nanoscroller.css"/>
+<link rel="stylesheet" type="text/css" href="__NEW_DESIGN__/flatdream/js/jquery.codemirror/lib/codemirror.css">
+<link rel="stylesheet" type="text/css" href="__NEW_DESIGN__/flatdream/js/jquery.codemirror/theme/ambiance.css">
+<link rel="stylesheet" type="text/css" href="__NEW_DESIGN__/flatdream/js/jquery.vectormaps/jquery-jvectormap-1.2.2.css" media="screen"/>
+<!-- talert 弹框css -->
+<link href="/Public/CSS/flatdream/js/jquery.magnific-popup/dist/magnific-popup.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="/Public/Jquery/toastr/toastr.css" />
+
+<link rel="stylesheet" type="text/css" href="__NEW_DESIGN__/flatdream/css/style.css"/>
+<!-- 定义样式 -->
+<link rel="stylesheet" type="text/css" href="__NEW_DESIGN__/css/common.css">
+<link rel="stylesheet" type="text/css" href="__NEW_DESIGN__/css/css.css">
+<link rel="stylesheet" type="text/css" href="__NEW_DESIGN__/css/other.css">
+
+<!-- jq -->
+
+<script src="__NEW_DESIGN__/flatdream/js/jquery.js"></script>
+
+
+
+<form id="form-seo" class="form-horizontal vform" method="post" action="__URL__/seoSave" style="width:800px;">
+	<div class="row md10" id="form-list">
+		<div class="form-group">
+			<div class="col-xs-12 text-center">
+				<h4>页面标识 <php>echo $url[0],'-',$url[1],'-',$url[2]; </php></h4>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-xs-3">设置标题<span class="text_red">*</span></label>
+			<div class="col-xs-9">
+				<div class="input-group">
+					<textarea rows="3" name="title" placeholder="请输入标题" class="form-control" maxlength="80">{$one.title|default=""}</textarea>
+				</div>
+				<div class="text_red">不超过80个字符,关键词用 | 或 _ 隔开</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-xs-3">设置Keywords<span class="text_red">*</span></label>
+			<div class="col-xs-9">
+				<div class="input-group">
+					<textarea rows="4" name="keywords" placeholder="请输入Keywords" class="form-control" maxlength="100">{$one.keywords|default=""}</textarea>
+				</div>
+				<div class="text_red">不超过100个字符，多个关键词用半角逗号隔开，建议不超过8个关键词</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="control-label col-xs-3">设置Description<span class="text_red">*</span></label>
+			<div class="col-xs-9">
+				<div class="input-group">
+					<textarea rows="5" name="description" placeholder="请输入Description" class="form-control" maxlength="200">{$one.description|default=""}</textarea>
+				</div>
+				<div class="text_red">不超过200个字符，对页面内容进行描述</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-xs-3 control-label">是否启用<span class="text_red">*</span></label>
+			<div class="col-xs-1 mt7">
+				<label class="square fl mr5">
+					<input type="radio" name="active" value="1" <if condition="isset($one['id']) and $one.active eq 1">checked="checked"</if> <empty name="one.id">checked="checked"</empty> />
+					<span></span>
+				</label>
+				<strong>是</strong>
+			</div>
+			<div class="col-xs-1 mt7">
+				<label class="square fl mr5">
+					<input type="radio" name="active" value="0" <if condition="isset($one['id']) and $one.active eq 0">checked="checked"</if> />
+					<span></span>
+				</label>
+				<strong>否</strong>
+			</div>
+		</div>
+		
+		
+		
+	</div>
+
+	<if condition="$one.id neq null">
+		<input type="hidden" name="id" value="{$one.id}" />
+	</if>
+
+	<input type="hidden" name="modules" value="{$url[0]}" />
+	<input type="hidden" name="controller" value="{$url[1]}" />
+	<input type="hidden" name="action" value="{$url[2]}" />
+
+	<div class="p20 text-center">
+		<button type="button" class="btn btn-danger btn-150px" onclick="seoSave()">确定提交</button>
+	</div>
+</form>
+<!-- 用来标记参数长度 -->
+
+<input type="hidden" id="paramLength" value="{$paramLength}" />
+
+
+
+<script>
+
+function seoSave(form){
+	var form = '#form-seo';
+	var title = $(form).find('textarea[name="title"]').val();
+	if(title == ''){
+		window.parent.valert({msg:'请填写标题'});
+		return false;
+	}
+	var keywords = $(form).find('textarea[name="keywords"]').val();
+	if(keywords == ''){
+		window.parent.valert({msg:'请填写Keywords关键词'});
+		return false;
+	}
+	var description = $(form).find('textarea[name="description"]').val();
+	if(description == ''){
+		window.parent.valert({msg:'请填写description描述'});
+		return false;
+	}
+	
+
+	$('#form-seo').submit();
+}
+
+
+
+
+</script>

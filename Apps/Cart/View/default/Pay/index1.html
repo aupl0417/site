@@ -1,0 +1,220 @@
+<extend name="Home@Public:base" />
+<block name="body">
+    <div class="centent_body">
+        <div class="container">
+
+            <div class="box p20 md20">
+                <div class="pull-right">
+                    应付金额：<span class="ft16 text-yellow strong text-danger">¥ <span class="money_pay">{$data.pay_price}</span></span> 元 （若有改价，<a href="javascript:ref()">请刷新</a>）
+                </div>
+                <div class="md10">合并订单编号：<span class="ft16 strong text-danger">{$data.o_no}</span> <a href="javascript:void()" class="ml20" onclick="$('.orders-sinfo').slideToggle()">订单详情 <i class="fa fa-chevron-circle-down"></i></a></div>
+
+                <div class="clearfix"></div>
+                <div class="md20 orders-sinfo" style="max-height:300px;overflow:auto;">
+                    <table class="md10">
+                        <thead>
+                        <tr style="background-color:#f5f5f5;">
+                            <th width="150" class="text-center">卖家店铺</th>
+                            <th width="150" class="text-center">订单编号</th>
+                            <th>商品名称</th>
+                            <th width="100" class="text-center">款数</th>
+                            <th width="150" class="text-center">金额</th>
+                            <th width="150" class="text-center">唐宝支付</th>
+                        </tr>
+                        </thead>
+                        <tbody class="tm">
+                        <volist name="data.orders_shop" id="vo">
+                            <tr>
+                                <td class="text-center strong" width="150" ><div class="lh-25px">{$vo.seller.shop_name}</div></td>
+                                <td class="text-center" width="150">{$vo.s_no}</td>
+                                <td>
+                                    <div class="pay-orders-cart-info">
+                                        <volist name="vo.orders_goods" id="dl">
+                                            <div>{$dl.goods_name}</div>
+                                        </volist>
+                                    </div>
+                                </td>
+                                <td class="text-center">{$vo.goods_num}</td>
+                                <td class="text-center">{$vo.pay_price}</td>
+                                <td class="text-center"><notempty name="vo.tangpay">{:ceil($vo['tangpay'] * 100)}<else />{:ceil($vo['pay_price'] * 100)}</notempty> 唐宝</td>
+                            </tr>
+                        </volist>
+                        </tbody>
+                    </table>
+                    <div>收货地址：{$data.province} {$data.city} {$data.district} {$data.town} , <notempty name="data.postcode">{$data.postcode} (邮编) ，</notempty> {$data.linkname}(收)，{$data.mobile} <notempty name="data.tel"> / {$data.tel} </notempty> </div>
+                </div>
+
+
+                <div><gt name="data.shop_num" value="1">共合并了 <span class="text-yellow strong">{$data.shop_num}</span> 个订单</gt></div>
+
+                <div class="clearfix md20"></div>
+
+                <notempty name="not_seller">
+                    <div class="p50 nors md20">
+                        <h1 class="text-danger text-center"><i class="fa fa-warning"></i> 无法支付该订单</h1>
+                        <div class="md20 ft26 text-center">以下卖家库存积分不足无法出售商品，请先联系卖家购买库存积分！</div>
+                        <div class="md20 ft18 text-gray text-center">如果您是多个订单合并支付，建议您取消库存积分不足的商家订单再进行逐一单个订单支付</div>
+                        <volist name="not_seller" id="vo">
+
+                            <div class="box p20 m20 clearfix">
+                                <div class="pull-right text-success">
+                                    <i class="fa fa-check"></i> 已发送短信通知卖家
+                                </div>
+
+                                <div class="ft18">
+                                    店铺：<a href="{:shop_url($vo['id'],$vo['domain'])}">{$vo.shop_name}</a>
+                                    <notempty name="vo.qq"><a href="http://wpa.qq.com/msgrd?v=3&uin={$vo.qq}&site=qq&menu=yes" target="_blank"><img src="http://wpa.qq.com/pa?p=1:{$vo.qq}:4" border="0" /></a></notempty>
+                                    <notempty name="vo.wang"><a href="http://amos1.taobao.com/msg.ww?v=2&amp;uid={$vo.wang}&amp;s=2" target="_blank" title="{$vo.wang}"><img alt="点击这里给我发消息" src="http://amos1.taobao.com/online.ww?v=2&amp;uid={$vo.wang}&amp;s=2" align="absBottom" border="0"></a></notempty>
+                                </div>
+
+                            </div>
+                        </volist>
+                        <div class="text-center">
+                            <a href="{:DM('my')}{:U('/orders')}" class="btn btn-rad btn-trans btn-info">查看订单</a>　<a href="{:DM('www')}" class="btn btn-rad btn-trans btn-info">继续购物</a>
+                        </div>　
+                    </div>
+
+                    <else />
+                    <h4>支付方式</h4>
+                    <hr class="mt10" />
+                    <?php
+                        if (C('cfg.site')['is_pay'] == 0) {
+                    ?>
+                        <div class="text-center fs20 text_red pd30">{:C('cfg.site')['is_pay_tips']}</div>
+                    <?php
+                        } else {
+                    ?>
+                    <form target="_blank" method="post" action="{:U('/Payment/index')}">
+                        <div class="pay-tools row pd15">
+                            <div class="pays-box">
+                                <notempty name="payType">
+                                    {//:dump($payType)}
+                                    <volist name="payType" id="vo">
+                                        <div class="pay-item col-xs-4 <eq name='vo.pg_id' value='1'>active</eq>" data-value="{$vo.pc_code}" data-type="{$vo.pg_id}">
+                                            <div class="row">
+                                                <div class="col-xs-2 text-right">
+                                                    <img class="mt10" width="24" height="24" src="{$vo.pg_logo}" alt="{$vo.pg_name}">
+                                                </div>
+                                                <div class="col-xs-10">
+                                                    <h4 class="md10">{$vo.pg_name}
+                                                        <span class="fs14">
+                                                            <switch name="vo.pg_id">
+                                                                <case value="1">余额：<span class="strong text-danger">{$account.a_freeMoney}</span> 元</case>
+                                                                <case value="2">余额：<span class="strong text-danger">{$account.a_tangBao}</span> 个</case>
+                                                            </switch>
+                                                        </span>
+                                                    </h4>
+                                                    <div class="text-gray">{$vo.pc_desc}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </volist>
+                                </notempty>
+                            </div>
+
+                        </div>
+                        <div class="acount-pay">
+                            <div class="p20">
+                                {:W('Common/Builder/buildform',array(array(
+                                'field'		=>array(
+                                    array(
+                                        'formtype'		=>'hidden',
+                                        'name'			=>'o_no',
+                                        'value'			=>$data['o_no'],
+                                    ),
+                                    array(
+                                        'formtype'		=>'hidden',
+                                        'name'			=>'paytype',
+                                        'value'			=>1,
+                                    ),
+                                ),
+                                )))}
+                            </div>
+
+                            <div class="p20 text-center">
+                                <button type="button" class="btn btn-lg btn-danger btn-150px pay_submit hide">付款</button>
+                                <button type="submit" class="btn btn-lg btn-danger btn-150px pay_submit">立即支付</button>
+                            </div>
+
+                        </div>
+
+                        <div class="alipay-pay hide">
+                            <div class="p20 text-center">
+                                <a href="/Alipay/group_pay/o_no/{$data.o_no}" target="_blank" class="btn btn-lg btn-danger btn-150px">付款</a>
+                            </div>
+                        </div>
+
+                    </form>
+                    <?php } ?>
+                </notempty>
+            </div>
+
+
+            <div class="md20 box p20" style="line-height:23px">
+                <div class="ft16 md10">付款遇到问题：</div>
+                <div class="ft14 strong">1.选择唐人街收银台担保交易，有何保障？</div>
+                <div class="md20">答：在唐人街进货时，付款选择唐人街收银台做担保交易，货款并未直接付给卖家，而是付款到唐人街收银台，您收到货物签收无误后，再次确认收货时，订单款项才会结算给卖家，相当于货到付款哦。
+                </div>
+
+                <div class="ft14 strong">2.没有网银怎么办？</div>
+                <div class="md20">答：如果没有网银，您可以通过支付宝、银联等第三方支付平台来付款。</div>
+
+                <div class="ft14 strong">3、我有网上银行，不知道怎么操作？</div>
+                <div class="md20">答：可能是由于银行的数据没有即时传输，请您不要担心，稍后刷新页面查看。如较长时间仍显示未付款，可联系唐人街客服为您解决。</div>
+
+                <a href="{:DM('faq')}" class="btn btn-rad btn-trans btn-primary" target="_blank"><i class="fa fa-hand-o-left"></i> 更多帮助</a> <a href="{:DM('my')}" class="btn btn-rad btn-trans btn-default" target="_blank">进入我的唐人街 <i class="fa fa-hand-o-right"></i></a>
+            </div>
+        </div>
+    </div>
+</block>
+<block name="css"></block>
+<block name="script">
+    <script>
+        var timer;
+        $(document).ready(function() {
+            $('.pay-tools .pay-item').click(function(){
+                $(this).addClass('active').siblings().removeClass('active');
+                $('#paytype').val($(this).data('type'));
+                
+                /*
+                if($(this).data('value')=='alipay'){
+                    $('.acount-pay').addClass('hide');
+                    $('.alipay-pay').removeClass('hide');
+                }else{
+                    $('.acount-pay').removeClass('hide');
+                    $('.alipay-pay').addClass('hide');
+                }
+                */
+            });
+
+            $(".pay_submit").click(function(){
+                timer = setInterval(function () {
+                    checkPay();
+                }, 3000);
+                vmodal({
+                    title:'正在付款',
+                    msg:'<h4>付款中...</h4><a href="javascript:;" class="btn btn-rad btn-trans btn-primary" onclick="checkPay(1);">支付成功</a> <div class="btn btn-rad btn-trans btn-default" onclick="clearInterval(timer);" data-dismiss="modal">支付失败</div>',
+                    class:'text-center',
+                });
+            })
+        });
+
+        /**
+         * 检测是否已经支付成功
+         */
+        function checkPay(gotoerror) {
+            ajax_post({
+                url : '{:U("/DtpayReturn/multi_orders_check")}',
+                data: {o_no : '{$_GET.ordersid}'},
+            }, function (res) {
+                if (res.code == 1) {
+                    window.location.href = '{:U("/DtpayReturn/success")}';
+                } else {
+                    if (gotoerror == 1) {
+                        window.location.href = '{:U("/DtpayReturn/error")}';
+                    }
+                }
+            });
+        }
+    </script>
+</block>

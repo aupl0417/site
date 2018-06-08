@@ -1,0 +1,108 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin({ref:true})"></i>
+		</div>
+		<div class="title">
+			确认收货
+		</div>
+		<div class="r">
+			
+		</div>
+	</div>
+</header>
+<section>
+	<form id="form-orders-comfirm">
+		<div class="orders-view md10">
+		</div>
+	
+		<div class="line-input row hover">
+			<div class="col-4 ft14">安全密码</div>
+			<div class="col-4x3">
+				<input type="password" name="password_pay" id="password_pay" placeholder="请输入安全密码" maxlength="6" >
+			</div>
+		</div>
+
+		<div class="line-box nobg noicon text-gray hide no_pay_password">
+			<div class="col-100">尚未设置安全密码,&nbsp;&nbsp;<span class="text-danger" onclick="openWin({name:'user_spp',url:'/User/spp',logined:true,ref:true})">马上去设置</span></div>
+		</div>
+		
+		<div class="p10 text-danger">
+			提示：请确定您已收到货且无异议，否则可能会财货两空。
+		</div>
+		<div class="p10">
+			<div class="btn btn-lg btn-block btn-danger md10" onclick="orders_confirm()">确认收货</div>
+		</div>	
+		<input type="hidden" name="apiurl" id="apiurl" value="/Erp/orders_confirm">
+		<input type="hidden" name="is_openid" id="is_openid" value="1">
+		<input type="hidden" name="s_no" id="s_no" value="{$_GET.s_no}">
+	</form>
+</section>
+
+
+<script id="tpl_orders_confirm" type="text/html">
+	<div class="line-box noicon row">
+		<div class="col-4">订单号</div>
+		<div class="col-4x3 text-right text-gray"><%= data.s_no%></div>
+	</div>
+	<div class="line-box noicon row">
+		<div class="col-4">订单金额</div>
+		<div class="col-4x3 text-right text-danger ft14 b">￥<%= data.pay_price%></div>
+	</div>
+</script>
+
+
+<script>
+	fixBar(1);
+	
+	var data={};
+	data.account={apiurl:'/Erp/account',is_openid:1};
+	data.orders={apiurl:'/Orders/orders_shop_view',is_openid:1,s_no:'{$_GET.s_no}'}
+	
+	ajax_post({
+		url:'/Api/apis',
+		data:data,
+	},function(ret){
+		if(ret.account.code==1){			
+			if(ret.account.data.a_payPwd=='') $('.page.active .no_pay_password').removeClass('hide');
+		}
+		
+		if(ret.orders.code==1){
+			if(ret.orders.data.status > 3) {
+				var html = '<div class="p10 text-danger text-center strong">当前状态不可收货！</div>';
+				$("section #form-orders-comfirm").html(html);
+			} else {
+				var html = template('tpl_orders_confirm', {data:ret.orders.data});
+				$('.page.active .orders-view').html(html);
+			}
+		}		
+	});		
+	
+
+	
+	function orders_confirm(){
+		var data=getFormJson('#form-orders-comfirm');	
+		if(data.password_pay==''){
+			valert({msg:'请输入安全密码！'});
+			$('.page.active #password_pay').focus();
+			return false;
+		}
+		ajax_post({
+			url:'/Api/api',
+			data:data,
+		},function(ret){
+			if(ret.code==1){
+				if(ret.data.luckdraw == 1) {
+					openWin({name:'Luckdraw_index',url:'/Luckdraw/index',close:true});
+				} else {
+					openWin({name:'orders_rate',url:'/Orders/rate/s_no/'+ret.data.s_no,close:true});
+				}
+			}else{
+				valert(ret);
+			}
+		});		
+		
+	}
+
+	
+</script>

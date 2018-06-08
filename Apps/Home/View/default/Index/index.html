@@ -1,0 +1,348 @@
+<extend name="Home@Public:base" />
+<block name="body">
+	<!-- 加入广告展示统计 -->
+	<include file="Home@Public:tj_adshow" />
+	<div class="centent_body">
+	{:W('Common/Ad/index')}
+		<!-- 购物车右侧侧边栏 -->
+		{:W('Common/Side/allRight')}
+
+		<!-- 监听栏 -->
+		<div id="left_ladder" class="fix left_ladder dn">
+			<a class="re db" href="javascript:void(0);">
+				<span class="line34 text-center bg_white db fs14">1F</span>
+				<div class="line34 text-center bg_white text_red ab">服装</div>
+			</a>
+			<a class="re db" href="javascript:void(0);">
+				<span class="line34 text-center bg_white db fs14">2F</span>
+				<div class="line34 text-center bg_white text_red ab">食品</div>
+			</a>
+			<a class="re db" href="javascript:void(0);">
+				<span class="line34 text-center bg_white db fs14">3F</span>
+				<div class="line34 text-center bg_white text_red ab">美妆</div>
+			</a>
+			<a class="re db" href="javascript:void(0);">
+				<span class="line34 text-center bg_white db fs14">4F</span>
+				<div class="line34 text-center bg_white text_red ab">珠宝</div>
+			</a>
+			<a class="re db" href="javascript:void(0);">
+				<span class="line34 text-center bg_white db fs14">5F</span>
+				<div class="line34 text-center bg_white text_red ab">鞋包</div>
+			</a>
+			<a class="re db" href="javascript:void(0);">
+				<span class="line34 text-center bg_white db fs14">6F</span>
+				<div class="line34 text-center bg_white text_red ab">母婴</div>
+			</a>
+			<a class="re db" href="javascript:void(0);">
+				<span class="line34 text-center bg_white db fs14">7F</span>
+				<div class="line34 text-center bg_white text_red ab">数码</div>
+			</a>
+			<a class="re db" href="javascript:void(0);">
+				<span class="line34 text-center bg_white db fs14">8F</span>
+				<div class="line34 text-center bg_white text_red ab">家居</div>
+			</a>
+			<a class="re db" href="javascript:void(0);" >
+				<span class="line34 text-center bg_white db fs14">↑</span>
+				<div class="line34 text-center bg_white text_red ab" onclick="$('body,html').animate({scrollTop:0},1000)">顶部</div>
+			</a>
+		</div>
+
+		<!-- 大标题类目 -->
+		
+		<div class="category mt20">
+			<div class="container re">
+				<div class="fl re">
+					<!-- 菜单 -->
+					{:W('Common/Side/menu')}
+				</div>
+				<a href="{:DM('www')}"><span class="hover_red active_text_red">首页</span></a>
+				{:W('Common/Side/nav')}
+		
+				<div class="ab bg_white right_notice">
+					<div class="fr w215">
+						<div class="solid_b pd7 text-center ajax_user">
+							<img class="mg10 bor_der" style="border-radius:100px" width="80" height="80" data-original="{$_SESSION['user']['face']}">
+							<h5>嗨，你好！</h5>
+							<p>
+								<empty name="Think.session.user">
+									<a href="{:DM('user', '/login')}" class="btn btn-xs btn-danger btn_m plr20 mr15">登录</a>
+									<a href="{:DM('user', '/register')}" class="btn btn-xs btn-danger btn_m plr20">注册</a>
+								<else />
+									<a href="{:DM('my')}" class="btn btn-rad btn-xs btn-danger btn_m plr20">{$Think.session.user.nick}</a>
+								</empty>
+							</p>
+						</div>
+						<div class="tab-container tab_li_sty tab_size">
+							<ul class="nav nav-tabs solid_b plr5">
+								<li class="active"><a href="#news" data-toggle="tab">新闻</a></li>
+								<li><a href="#gonggao" data-toggle="tab">公告</a></li>
+								<li><a href="#guize" data-toggle="tab">规则</a></li>
+							</ul>							
+							<div class="tab-content mb0 pd10">
+								<div data-param="num=3" data-type="async" data-box="work-box" data-head="{:enCryptRestUri('/Index/getNew')}" class="tab-pane over active work-box" id="news" style="height:180px"></div>
+								<div data-param="p=1&pagesize=3" data-type="async" data-box="news-box" data-head="{:enCryptRestUri('/Index/getNews')}" class="tab-pane over news-box" id="gonggao" style="height:180px"></div>
+								<div data-param="num=3" data-type="async" data-box="faq-box" data-head="{:enCryptRestUri('/Index/getFaq')}" class="tab-pane over faq-box" id="guize" style="height:180px"></div>
+							</div>
+						</div>				
+					</div>
+				</div>	
+			</div>
+			<div class="mt-3" style="border-bottom:3px solid #c81623"></div>	
+		</div>
+
+		<!-- 首页轮播 -->
+		<div class="re over bg_red" style="height:432px;width:100%">
+			<div id="carousel-example-klioj" class="carousel slide" data-ride="carousel">
+				<ol class="carousel-indicators slider-btn">
+					<foreach name="slider.ads" key="key" item="vo">
+						<li data-target="#carousel-example-klioj" data-slide-to="{$key}"<eq name="key" value="0"> class="active"></eq></li>
+					</foreach>
+					<!-- <li data-target="#carousel-example-klioj" data-slide-to="0" class="active"></li>
+					<li data-target="#carousel-example-klioj" data-slide-to="1" class=""></li>
+					<li data-target="#carousel-example-klioj" data-slide-to="2" class=""></li> -->
+				</ol>
+				<div class="carousel-inner slider-images" role="listbox">
+					<foreach name="slider.ads" key="key" item="vo">
+						<eq name="key" value="0">
+							<div class="item active">
+								<a target="_balnk" style="width:100%;display:block;height:435px;background:url({$vo.images});background-position:center center" href="{:DM('click')}?act={:enCryptRestUri($vo['id'])}"></a>
+							</div>
+						<else/>
+							<div class="item">
+								<a target="_balnk" style="width:100%;display:block;height:435px;background:url({$vo.images});background-position:center center" href="{:DM('click')}?act={:enCryptRestUri($vo['id'])}"></a>
+							</div>
+						</eq>
+						
+					</foreach>
+					<!-- <div class="item active">
+						<img data-original="__NEW_DESIGN__images/shop/banner_1920.jpg">
+					</div>
+					<div class="item">
+						<img data-original="__NEW_DESIGN__images/shop/banner_1920.jpg">
+					</div>
+					<div class="item">
+						<img data-original="__NEW_DESIGN__images/shop/banner_1920.jpg">
+					</div> -->
+				</div>
+				<a class="left carousel-control" href="#carousel-example-klioj" role="button" data-slide="prev">
+					<span class="fa glyphicon-chevron-left fa-chevron-left" aria-hidden="true"></span>
+				</a>
+				<a class="right carousel-control" href="#carousel-example-klioj" role="button" data-slide="next">
+					<span class="fa glyphicon-chevron-right fa-chevron-right" aria-hidden="true"></span>
+				</a>
+			</div>
+		</div>
+
+		<!-- 主体内容 -->
+		<div class="container mt10">
+			<div class="row mlr_5 mb20">
+				<volist name="recommend.ads" id="vo">
+					<a target="_blank" class="col_5 plr5" href="{:DM('click')}?act={:enCryptRestUri($vo['id'])}"><div class="index_img_a"><img title="{$vo.name}" data-original="{$vo.images}"></div></a>
+				</volist>
+			</div>
+
+			<div class="mb20">
+				<h4 class="text_red">乐兑精选</h4>
+				<table class="table table-bordered table-striped mb0">
+					<tbody class="tbody_td">
+						<tr>
+							<!-- 左侧 -->
+							<volist name="featured1.ads" id="ads" offset="0" length="1">
+								<td rowspan="2" class="over hover_img_b">
+									<a target="_blank" href="{:DM('click')}?act={:enCryptRestUri($ads['id'])}" class="db index_img_bl re">
+										<img title="{$ads.name}" data-original="{$ads.images}">
+									</a>
+								</td>
+							</volist>
+							<!-- 上面4个 -->
+							<volist name="featured2.ads" id="ads" offset="0" length='4'>
+								<td class="over hover_img_b">
+									<a target="_blank" href="{:DM('click')}?act={:enCryptRestUri($ads['id'])}" class="db index_img_b re">
+										<!-- <div class="ab ">
+											<h4 class="text_over text_44">RIO锐欧鸡尾酒</h4>
+											<h5 class="text_over text_77">Hello Kitty限量预调洋酒</h5>
+										</div> -->
+										<img title="{$ads.name}" data-original="{$ads.images}">
+									</a>
+								</td>
+							</volist>
+						</tr>
+					
+						<tr>
+							<!-- 下面4个 -->
+							<volist name="featured2.ads" id="ads" offset="4" length='4'>
+								<td class="over hover_img_b">
+									<a target="_blank" href="{:DM('click')}?act={:enCryptRestUri($ads['id'])}" class="db index_img_b re">
+										<!-- <div class="ab">
+											<h4 class="text_over text_44">Ochirly欧时力</h4>
+											<h5 class="text_over text_77">新女装清新印花蓬蓬裙</h5>
+										</div> -->
+										<img title="{$ads.name}" data-original="{$ads.images}">
+									</a>
+								</td>
+							</volist>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<style>
+				.floor-public h4 a{padding:0px 14px;-moz-border-radius: 15px;-webkit-border-radius: 15px;border-radius: 15px;font-size: 12px;line-height: 18px;}
+			
+				.floor1 h4{color:rgb(240,29,70);}
+				.floor1 h4 a{border:1px solid rgb(240,29,70);color:rgb(240,29,70)}
+				.floor1 .index_tab ul{border-bottom: 1px solid rgb(240,29,70);}
+				.floor1 .tab-container .nav .active a{border-color: rgb(240,29,70);background: rgb(240,29,70);}
+				.floor1 table.w1000 h6{color:rgb(240,29,70)}
+				.floor1 .my_love:hover{border-color:rgb(240,29,70)}
+				
+				.floor2 h4{color:rgb(248,129,0);}
+				.floor2 h4 a{border:1px solid rgb(248,129,0);color:rgb(248,129,0)}
+				.floor2 .index_tab ul{border-bottom: 1px solid rgb(248,129,0);}
+				.floor2 .tab-container .nav .active a{border-color: rgb(248,129,0);background: rgb(248,129,0);}
+				.floor2 table.w1000 h6{color:rgb(248,129,0)}
+				.floor2 .my_love:hover{border-color:rgb(248,129,0)}
+				
+				.floor3 h4{color:rgb(214,13,23);}
+				.floor3 h4 a{border:1px solid rgb(214,13,23);color:rgb(214,13,23)}
+				.floor3 .index_tab ul{border-bottom: 1px solid rgb(214,13,23);}
+				.floor3 .tab-container .nav .active a{border-color: rgb(214,13,23);background: rgb(214,13,23);}
+				.floor3 table.w1000 h6{color:rgb(214,13,23)}
+				.floor3 .my_love:hover{border-color:rgb(214,13,23)}
+				
+				.floor4 h4{color:rgb(112,15,248);}
+				.floor4 h4 a{border:1px solid rgb(112,15,248);color:rgb(112,15,248)}
+				.floor4 .index_tab ul{border-bottom: 1px solid rgb(112,15,248);}
+				.floor4 .tab-container .nav .active a{border-color: rgb(112,15,248);background: rgb(112,15,248);}
+				.floor4 table.w1000 h6{color:rgb(112,15,248)}
+				.floor4 .my_love:hover{border-color:rgb(112,15,248)}
+				
+				.floor5 h4{color:rgb(175,162,8);}
+				.floor5 h4 a{border:1px solid rgb(175,162,8);color:rgb(175,162,8)}
+				.floor5 .index_tab ul{border-bottom: 1px solid rgb(175,162,8);}
+				.floor5 .tab-container .nav .active a{border-color: rgb(175,162,8);background: rgb(175,162,8);}
+				.floor5 table.w1000 h6{color:rgb(175,162,8)}
+				.floor5 .my_love:hover{border-color:rgb(175,162,8)}
+				
+				.floor6 h4{color:rgb(234,7,236);}
+				.floor6 h4 a{border:1px solid rgb(234,7,236);color:rgb(234,7,236)}
+				.floor6 .index_tab ul{border-bottom: 1px solid rgb(234,7,236);}
+				.floor6 .tab-container .nav .active a{border-color: rgb(234,7,236);background: rgb(234,7,236);}
+				.floor6 table.w1000 h6{color:rgb(234,7,236)}
+				.floor6 .my_love:hover{border-color:rgb(234,7,236)}
+
+				.floor7 h4{color:rgb(28,81,249);}
+				.floor7 h4 a{border:1px solid rgb(28,81,249);color:rgb(28,81,249)}
+				.floor7 .index_tab ul{border-bottom: 1px solid rgb(28,81,249);}
+				.floor7 .tab-container .nav .active a{border-color: rgb(28,81,249);background: rgb(28,81,249);}
+				.floor7 table.w1000 h6{color:rgb(28,81,249)}
+				.floor7 .my_love:hover{border-color:rgb(28,81,249)}
+
+				.floor8 h4{color:rgb(34,175,1);}
+				.floor8 h4 a{border:1px solid rgb(34,175,1);color:rgb(34,175,1)}
+				.floor8 .index_tab ul{border-bottom: 1px solid rgb(34,175,1);}
+				.floor8 .tab-container .nav .active a{border-color: rgb(34,175,1);background: rgb(34,175,1);}
+				.floor8 table.w1000 h6{color:rgb(34,175,1)}
+				.floor8 .my_love:hover{border-color:rgb(34,175,1)}
+			</style>
+			<!-- 1F -->
+			<include file="Ads:floor1" />
+			
+			
+			<!-- 2F -->
+			<include file="Ads:floor2" />
+
+			<!-- 3F -->
+			<include file="Ads:floor3" />
+
+
+			<!-- 4F -->
+			<include file="Ads:floor4" />
+			
+
+			<!-- 5F -->
+			<include file="Ads:floor5" />
+
+			<!-- 6层 -->
+			<include file="Ads:floor6" />
+
+			<!-- 7层 -->
+			<include file="Ads:floor7" />
+
+			
+			<!-- 8层 -->
+			<include file="Ads:floor8" />
+		</div>					
+	</div>
+</block>
+
+<block name="script">
+<script>
+$(document).ready(function(){
+	//顶部，静态化时需要用到
+	ajax_topbar();
+	
+	//其他接口
+	$("[data-type='async']").each(function() {
+		var d	=	$(this).data();
+		var html=	'';
+		var data={};
+		if(d.param != undefined) {
+			data = d.param;
+		}
+		ajax_post({
+			url: '/run',
+			data:data,
+			headers : {Action : d.head},
+		},function(res) {
+			if(res.code == 1) {
+				$("." + d.box).html(template(d.box, {data:res.data}));
+			} else {
+				$("." + d.box).html('<div class="nors text-center text_77 mt30 mb30 pd30">暂无数据</div>');
+			}
+		});
+	});
+	
+	//广告
+	$("[data-type='ads']").each(function() {
+		var d	=	$(this).data();
+		var ac	=	d.api == 'ad' ? '{:enCryptRestUri("/Index/getAd")}' : '{:enCryptRestUri("/Index/getAds")}';
+		var box	=	d.box.split(',');
+		ajax_post({
+			url:'/run',
+			data:d.param,
+			headers:{Action : ac},
+		},function(res) {
+			if(res.code == 1) {
+				for(var i = 0; i < box.length; i++) {
+					$("." + box[i]).html(template(box[i], {data:res.data}));
+				}
+			} else {
+				$("." + d.box).html('<div class="nors text-center text_77 mt30 mb30 pd30">暂无数据</div>');
+			}
+		});
+	});
+	
+
+});
+</script>
+
+<!-- work新闻 -->
+<script id="work-box" type="text/html">
+{{each data as val i}}
+	<a target="_blank" href="{:DM('news')}{:U('/view')}?id={{val.id}}"><p class="text_over mb0 line22">{{val.name}}</p></a>
+{{/each}}
+</script>
+<!-- 新闻 -->
+<script id="news-box" type="text/html">
+{{each data as val i}}
+	<a target="_blank" href="{{val.n_url}}"><p class="text_over mb0 line22">{{val.n_title}}</p></a>
+{{/each}}
+</script>
+<!-- 帮助 -->
+<script id="faq-box" type="text/html">
+{{each data as val i}}
+	<a target="_blank" href="{:DM('faq')}{:U('/view')}?id={{val.id}}"><p class="text_over mb0 line22">{{val.name}}</p></a>
+{{/each}}
+</script>
+<script src="__NEW_DESIGN__js/cart.js"></script>
+</block>

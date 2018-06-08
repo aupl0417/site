@@ -1,0 +1,209 @@
+<div class="clearfix">
+	<div class="pull-right text-gray" onclick="$(this).closest('tr').toggleClass('hide');"><i class="fa fa-times-circle-o fa-2x"></i></div>	
+</div>
+
+	<div class="box p20">		
+		<div class="ft18 strong p10 border-d mt20 md20">评论详情</div>
+		<div class="content">
+			<div class="row md20 auth-text">
+				<div class="col-xs-6">
+					<div style="margin-left:70px">
+						<div>ID：{$rs.orders_goods_comment.id}</div>
+						<div>提交时间：{$rs.orders_goods_comment.atime}</div>							
+						<div>状态：
+							<if condition="$rs['orders_goods_comment']['status'] eq '1'">
+								<div class="btn btn-xs btn-rad btn-trans m0 btn-success">已生效</div>
+							<else />
+								<div class="btn btn-xs btn-rad btn-trans m0 ">未生效{$rs.orders_goods_comment.status}</div>
+							</if>
+						</div>
+						<div>商品属性：{$rs.attr_list.attr_name}</div>
+					</div>
+				</div>
+				
+				<div class="col-xs-6">
+					<div>评价得分：
+						<if condition="$rs['orders_goods_comment']['rate'] eq '1'">
+							<div class="btn btn-xs btn-rad btn-trans m0 btn-success">好评</div>
+						<elseif condition="$rs['orders_goods_comment']['rate'] eq '0'"/>
+							<div class="btn btn-xs btn-rad btn-trans m0 ">中评</div>
+						<else />
+							<div class="btn btn-xs btn-rad btn-trans m0 ">差评</div>
+						</if>
+					</div>
+					<div>评价是否匿名：
+						<if condition="$rs.orders_goods_comment.is_anonymous eq '1'">
+							<div class="btn btn-xs btn-rad btn-trans m0 btn-success">是</div>
+						<else />
+							<div class="btn btn-xs btn-rad btn-trans m0 ">否</div>
+						</if>
+					</div>
+					<div style="word-break:break-all;">评价内容：{$rs.orders_goods_comment.content}</div>
+
+				</div>					
+			</div>
+
+			<notempty name="rs['orders_goods_comment']['images']">
+			<div class="ft18 strong p10 border-d md20">评论图片</div>
+			<div class="row">
+				<volist name="rs['orders_goods_comment']['images']" id="images">
+					<a href="{$images}" target="_blank" style="margin-left:20px"><img src="{:myurl($images,200)}"></a>
+				</volist>
+			</div>
+			</notempty>
+			<div class="clearfix md20"></div>
+		</div>	
+		<div class="ft18 strong p10 border-d mt20 md20">申诉详情</div>
+		<div class="content">
+			<div class="row md20 auth-text">
+				<div class="col-xs-6">
+					<div style="margin-left:70px">
+						<div>ID：{$rs.id}</div>
+						<div>提交时间：{$rs.atime}</div>
+						<div>订单号：{$rs.s_no}</div>
+					</div>
+				</div>
+				
+				<div class="col-xs-6">
+					<div>审核时间：{$rs.dotime}</div>
+					<div>审核状态：{$rs.result}</div>
+					<div style="word-break:break-all;">留言备注：{$rs.remark}</div>
+					<if condition="$rs.status eq 3">
+						<div style="word-break:break-all;">拒绝原因：{$rs.reason}</div>
+					</if>
+				</div>					
+			</div>
+			<notempty name="rs['images']">
+			<div class="ft18 strong p10 border-d md20">图片</div>
+			<div class="row">
+				<volist name="rs['images']" id="images">
+					<a href="{$images}" target="_blank" style="margin-left:20px"><img src="{:myurl($images,200)}"></a>
+				</volist>
+			</div>
+			</notempty>
+			<div class="clearfix md20"></div>
+		</div>	
+		<div class="ft18 strong p10 border-d mt20 md20">刷单原因</div>
+		<div class="content">
+			<div class="row md20 auth-text" style="margin-left:70px">
+					<div>{$rs.orders_apply_reason.reason}</div>
+			</div>
+		</div>
+		<if condition="$rs.status eq 1">
+			<div class="ft18 strong p10 border-d md20">审核</div>
+			<form data-url="/Ordesappeal/add_appeal" data-id="#form_26" id="form_26" class="form-horizontal vform" id="daigou">
+				<div class="form-group f-status">
+					<label class="control-label col-xs-3">审核结果<span class="required" aria-required="true">*</span></label>
+					<div class="col-xs-7">
+						<div class="input-group">
+							<div>
+								<select name="status" class="form-control " style="">
+									<option value="">请选择审核结果</option>
+									<option value="2">审核通过</option>
+									<option value="0">审核不通过</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="form-group f-reason">
+					<label class="control-label col-xs-3">拒绝理由</label>
+					<div class="col-xs-7">
+						<div class="input-group">
+							<div>
+								<textarea name="reason" placeholder="请输入审核不通过的理由，若是审核通过则无需填写。" class="form-control " style=""></textarea>
+							</div>
+						</div>
+					</div>
+				</div>
+
+<!-- 				<div class="form-group">
+					<label class="control-label col-xs-3">是否发送短信通知 <span class="required" aria-required="true">*</span></label>
+					<div class="col-xs-7">
+						<div class="input-group">
+							<div>
+								<label class=" mr10" style=""><input type="checkbox" class="i-red-square" name="is_sms" value="1"> 是</label>
+							</div>
+						</div>
+					</div>
+				</div> -->
+				<input type="hidden" name="id" value="{$rs.id}">
+				<input type="hidden" name="c_id" value="{$rs.c_id}">
+				<div class="form-group f-">
+					<label class="control-label col-xs-3"> </label>
+					<div class="col-xs-7">
+						<div class="input-group">
+							<div>
+								<button type="button" class="btn btn-primary btn-150px logs-add"><i class="fa fa-check"></i> 提交</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="clearfix"></div>		
+			</form>
+		</if>
+		
+	<notempty name="rs.orders_apply_logs">
+		<ul class="timeline">
+			<volist name="rs.orders_apply_logs" id="vo">
+			<li>
+				<i class="fa fa-clock-o"></i>
+				<span class="date">
+					{$vo.atime}
+				</span>
+				<div class="content">
+					<div class="row">
+						<div class="col-xs-2 text-center">
+							<notempty name="vo.a_uid" >
+							<img width="60" src="{:myurl($vo['admin']['face'],60)}" class="img-circle">
+							<div>{$vo.username}</div>
+							<else />
+							<img width="60" src="{:myurl($vo['user']['face'],60)}" class="img-circle">
+							<div>{$vo.username}</div>
+							</notempty>
+						</div>
+						<div class="col-xs-5">备注：{$vo.reason|nl2br}
+						<div class="col-xs-5">结果：{$vo.remark|nl2br}
+						<br />
+						<notempty name="vo.images">
+							<div class="mt10">
+								<volist name="vo.images" id="vo">
+									<a href="{$vo}" class="image-zoom mr10" title="大图">
+										<img src="{:myurl($vo, 100)}">
+									</a>
+								</volist>
+							</div>
+						</notempty>
+						</div>
+					</div>
+
+				</div>
+			</li>
+			</volist>
+		</ul>
+	</notempty>
+	</div>
+	
+
+<div class="clearfix">
+	<div class="pull-right text-gray" onclick="$(this).closest('tr').toggleClass('hide');"><i class="fa fa-times-circle-o fa-2x"></i></div>	
+</div>
+
+<script>
+
+image_zoom();
+$('.logs-add').click(function(){
+	var d=$(this).closest('form').data();
+	ajax_post_form({
+		formid:d.id
+	},function(ret){
+		valert(ret);
+		if(ret.status=='success'){
+			var tag='#item-{$rs.id}';
+			var url='__URL__/view/id/{$rs.id}';
+			loadurl({tag:tag,url:url});
+		}
+	});
+});
+</script>

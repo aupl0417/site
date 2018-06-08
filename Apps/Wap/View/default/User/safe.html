@@ -1,0 +1,59 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			账户安全
+		</div>
+	</div>
+</header>
+
+<section>
+	<div class="line-box hover row" onclick="openWin({name:'user_ep',url:'/User/ep',logined:true,ref:true})">
+		修改登录密码
+	</div>
+
+	<div class="line-box hover row hide set-password" onclick="openWin({name:'user_spp',url:'/User/spp',logined:true})">
+		设置安全密码
+	</div>
+	<div class="line-box hover row hide edit-password" onclick="openWin({name:'user_epp',url:'/User/epp',logined:true})">
+		修改安全密码
+	</div>
+
+	<div class="line-box noicon hover row" onclick="openWin({name:'tips',url:'/Index/tips_app'})">
+		<div class="col-50">修改手机号</div>
+		<div class="col-50 text-right" id="mobile">***********</div>
+	</div>
+</section>
+
+
+<script>
+fixBar(1);
+$(function(){
+	ajax_post(
+		{
+			url:'/Api/apis',
+			data:{
+				user:{apiurl:'/User/userinfo',is_openid:1},
+				account:{apiurl:'/Erp/account',is_openid:1}
+			},
+		},
+		function(ret){
+			
+			if(ret.user.code == 1){
+				var mobile = ret.user.data.mobile;
+				mobile = mobile.substring(0,3) + '****' + mobile.substring(7);
+				$('#mobile').html(mobile);
+			}
+			if(ret.account.code==1){
+				if(ret.account.data.a_payPwd!='') $('.page.active .edit-password').removeClass('hide');
+				else $('.page.active .set-password').removeClass('hide');
+			}
+		}
+	);
+});
+
+
+
+</script>

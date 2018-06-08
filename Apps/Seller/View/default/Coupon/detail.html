@@ -1,0 +1,153 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body">
+	<include file="Public:nav" />
+	<div class="container mb30">
+		<include file="Public:side" />
+		<div class="w980 fl">
+			<div class="bor_der">
+				<div class="bg_f1 clearfix fs14 text_44 tle_R">
+					<a class="fl plr15 line40 ml-1 active" href="javascript:;">{$seo['title']}</a>
+				</div>
+				<!-- 主体部分 -->
+				<div class="pd10">
+					<table class="table table-bordered table-advance table-hover mb30">
+						<tbody>
+							<tr>
+								<th class="col-xs-2 text-right" style="vertical-align: middle;">创建时间</th>
+								<td class="col-xs-10" style="vertical-align: middle;">{$data.atime}</td>
+							</tr>
+							<tr>
+								<th class="col-xs-2 text-right" style="vertical-align: middle;">批次</th>
+								<td class="col-xs-10" style="vertical-align: middle;">{$data.b_no}</td>
+							</tr>
+							<tr>
+								<th class="col-xs-2 text-right" style="vertical-align: middle;">面值</th>
+								<td class="col-xs-10" style="vertical-align: middle;">{$data.price}</td>
+							</tr>
+							<tr>
+								<th class="col-xs-2 text-right" style="vertical-align: middle;">需消费金额</th>
+								<td class="col-xs-10" style="vertical-align: middle;">{$data.min_price}</td>
+							</tr>
+							<tr>
+								<th class="col-xs-2 text-right" style="vertical-align: middle;">发行数量</th>
+								<td class="col-xs-10" style="vertical-align: middle;">
+									<gt name="data.num" value="0">
+									{$data.num}
+									<else />
+									不限
+									</gt>
+								</td>
+							</tr>
+							<tr>
+								<th class="col-xs-2 text-right" style="vertical-align: middle;">单个用户可领取数量</th>
+								<td class="col-xs-10" style="vertical-align: middle;">
+									<gt name="data.max_num" value="0">
+										{$data.max_num}
+									<else />
+										不限
+									</gt>
+								</td>
+							</tr>
+							<tr>
+								<th class="col-xs-2 text-right" style="vertical-align: middle;">已领取数量</th>
+								<td class="col-xs-10" style="vertical-align: middle;">{$data.get_num}</td>
+							</tr>
+							<tr>
+								<th class="col-xs-2 text-right" style="vertical-align: middle;">已使用数量</th>
+								<td class="col-xs-10" style="vertical-align: middle;">{$data.use_num}</td>
+							</tr>
+							<tr>
+								<th class="col-xs-2 text-right" style="vertical-align: middle;">生效时间</th>
+								<td class="col-xs-10" style="vertical-align: middle;">{$data.sday}</td>
+							</tr>
+							<tr>
+								<th class="col-xs-2 text-right" style="vertical-align: middle;">失效时间</th>
+								<td class="col-xs-10" style="vertical-align: middle;">{$data.eday}</td>
+							</tr>
+							<tr>
+								<th class="col-xs-2 text-right" style="vertical-align: middle;">当前状态</th>
+								<td class="col-xs-10" style="vertical-align: middle;">
+									<eq name="data.status" value="1">
+										<span class="text_blue">可领取</span>
+									<else />
+										<span class="text_yellow">已过期</span>
+									</eq>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="pd10 solid_t">
+					<h5 class="strong">参与记录</h5>
+					<notempty name="data.use.list">
+						<table class="table table-bordered table-advance table-hover" style="margin-bottom:0;">
+							<tbody>
+								<tr>
+									<th class="col-xs-3 text-center" style="vertical-align: middle;">领取时间</th>
+									<th class="col-xs-2 text-center" style="vertical-align: middle;">领取用户</th>
+									<th class="col-xs-1 text-center" style="vertical-align: middle;">是否已使用</th>
+								</tr>
+								<volist name="data.use.list" id="vo">
+									<tr>
+										<td class="text-center" style="vertical-align: middle;">{$vo.atime}</td>
+										<td class="col-xs-1 text-center text_yellow" style="vertical-align: middle;">{:hiddenChineseStr($vo['nick'])}</td>
+										<td class="col-xs-1 text-center" style="vertical-align: middle;">
+										<eq name="vo.is_use" value="1">
+										已使用
+										<else />
+										<span class="text_yellow">未使用</span>
+										</eq>
+										</td>
+									</tr>
+								</volist>
+							</tbody>
+						</table>
+					<else />
+						{:W('Common/Builder/nors', array('param' => array('text' => '暂无用户领取')))}
+					</notempty>
+					<notempty name="data['use']['page']['page']">
+						<div class="clearfix mb20 pr10 text-center">
+							<div class="col-xs-12 text-center">
+								{$data['use']['page']['page']}
+							</div>
+						</div>
+					</notempty>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</block>
+<block name="css"></block>
+<block name="script">
+<script>
+$(document).ready(function() {
+	checkform({
+		formid:"#formadd",
+		rules:{
+			domain:{
+				required:true,
+				isEnglish:true,
+				minlength:5,
+				maxlength:10,
+				remote:'{:U("/domain/check")}',
+			},
+		},
+		messages:{
+			domain:{
+				required:'域名不能为空',
+				minlength:'域名最少5位字符',
+				maxlength:'域名最长10位字符',
+				remote:'域名已被使用',
+			},
+		},
+	},function(res) {
+		talert({status:res.code,msg:res.msg});
+		if(res.code == 1) {
+			setTimeout("ref()", 1000);
+		}
+	});
+});
+</script>
+</block>

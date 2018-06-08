@@ -1,0 +1,67 @@
+	<form data-url="__URL__/floor_edit_save" id="form_floor_add" class="form-horizontal vform">
+			{:W('Widget/buildform',array(array(
+				'field'		=>array(	
+					array(
+						'formtype'		=>'text',
+						'label'			=>'楼层名称',
+						'name'			=>'floor_name',
+						'is_need'		=>1,
+					),
+					array(
+						'formtype'		=>'text',
+						'label'			=>'展现商品数量',
+						'name'			=>'num',
+						'is_need'		=>1,
+					),
+				
+					array(
+						'formtype'		=>'hidden',
+						'name'			=>'id',
+					),					
+				),
+			),$rs))}
+	
+			<div class="p10 text-center">
+				<button type="submit" class="btn btn-primary btn-150px">提交</button>
+			</div>
+	</form>
+
+<script>
+	$(document).ready(function(){
+
+		checkform({
+			formid:"#form_floor_add",
+				rules:{
+					floor_name:{
+						required:true,
+					},
+					num:{
+						required:true,
+					},
+				},
+				messages:{
+					floor_name:{
+						required:'请输入楼层名称！',
+					},				
+					num:{
+						required:'请输入展现商品数量！',
+					},			
+				},
+			
+		}, function(ret) {
+			valert(ret);
+			if(ret.status=='success'){
+				setTimeout(function(){
+					ref();
+				},1000);
+			}
+
+		});
+			
+	});
+	
+
+	function clear_input(obj){
+		obj.closest('.input-group').find('input').val('');
+	}
+</script>	

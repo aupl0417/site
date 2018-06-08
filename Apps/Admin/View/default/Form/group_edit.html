@@ -1,0 +1,56 @@
+<form data-url="__URL__/group_edit_save" id="form_create" class="form-horizontal">
+<div class="vform">
+	{:W('Widget/buildform',array(array(
+		'field'		=>array(
+			array(
+				'formtype'		=>'text',
+				'label'			=>'分组名称',
+				'name'			=>'group_name',
+				'is_need'		=>true,
+				'value'			=>$rs['active'],
+			),
+			array(
+				'formtype'		=>'radio',
+				'label'			=>'状态',
+				'name'			=>'active',
+				'data'			=>array(array(1,'启用'),array(0,'停用')),
+				'field'			=>array(0,1),
+				'value'			=>$rs['active'],
+			),
+			array(
+				'formtype'		=>'textarea',
+				'label'			=>'备注',
+				'name'			=>'remark',
+				'value'			=>$rs['remark'],
+			),
+			array(
+				'formtype'		=>'hidden',
+				'name'			=>'id',
+				'value'			=>$rs['id'],
+			),
+			array(
+				'formtype'		=>'hidden',
+				'name'			=>'formtpl_id',
+				'value'			=>$rs['formtpl_id'],
+			),
+
+		),
+	),$rs))}
+<div class="p20 text-center">
+	<button type="submit" class="btn btn-primary btn-150px"><i class="fa fa-check"></i> 提交</button>
+</div>
+<!--token-->
+</div>
+</form>
+<script>
+iCheckClass();
+checkform({
+	formid:'#form_create',
+},function(ret){
+	valert(ret);
+	if(ret.status=='success'){
+		ref();
+	}
+});
+
+</script>

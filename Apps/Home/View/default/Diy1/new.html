@@ -1,0 +1,59 @@
+<div class="pt20 mb20 clearfix">
+	<div class="new_brand_l">
+		<p class="fs20 strong">乐兑 · 新品</p>
+		<div class="bor_der clearfix">
+
+			<div class="fl re">
+				<div class="ad-box" style="display:block; height:100%;">
+				<if condition="session('admin.id') gt 0 && $_GET['diy'] eq 'yes'">
+				<div class="ad-edit-box hide"><a data-type="modal" data-url="{:U('/ad/add', ['id' => $newOne['id']])}" data-title="{$newOne['position_name']}" href="javascript:;" class="btn btn-danger btn-ad">编辑广告位</a></div>
+				</if>
+				<volist name="newOne.ads" id="ads">
+					<a target="_blank" href="{:DM('click')}?act={:enCryptRestUri($ads['id'])}" class="di fl over solid_r"style="width:340px;height:448px">
+						<img class="tion_big" width="340" height="448" data-original="{$ads.images}" src="{$ads.images}">
+					</a>
+				</volist>
+				</div>	
+			</div>
+			
+			<div class="fl pl25 pr25 ad-box solid_last">
+				<if condition="session('admin.id') gt 0 && $_GET['diy'] eq 'yes'">
+				<div class="ad-edit-box hide"><a data-type="modal" data-url="{:U('/ad/add', ['id' => $newTwo['id']])}" data-title="{$newTwo['position_name']}" href="javascript:;" class="btn btn-danger btn-ad">编辑广告位</a></div>
+				</if>
+				<volist name="newTwo.ads" id="ads">
+					<a target="_blank" href="{:DM('click')}?act={:enCryptRestUri($ads['id'])}" class="db over solid_b" style="width:258px;height:224px">
+						<img class="tion_big mt20" width="258" height="200" data-original="{$ads.images}" src="{$ads.images}">
+					</a>
+				</volist>
+			</div>	
+		</div>
+	</div>
+
+	<div class="new_brand_r">
+		<p class="fs20 strong">乐兑 · 品牌盛宴</p>
+		<div class="bor_der clearfix">
+			
+			<div class="fl re">
+				<div class="ad-box">
+				<if condition="session('admin.id') gt 0 && $_GET['diy'] eq 'yes'">
+				<div class="ad-edit-box hide"><a data-type="modal" data-url="{:U('/ad/add', ['id' => $brandOne['id']])}" data-title="{$brandOne['position_name']}" href="javascript:;" class="btn btn-danger btn-ad">编辑广告位</a></div>
+				</if>
+				<volist name="brandOne.ads" id="ads">
+					<a target="_blank" href="{:DM('click')}?act={:enCryptRestUri($ads['id'])}" class="di fl over solid_r"style="width:363px;height:448px">
+						<img class="tion_big" width="363" height="448" data-original="{$ads.images}" src="{$ads.images}">
+					</a>
+				</volist>
+				</div>	
+			</div>
+			
+			<div class="new_brand_r_logo ad-box">
+				<if condition="session('admin.id') gt 0 && $_GET['diy'] eq 'yes'">
+				<div class="ad-edit-box hide"><a data-type="modal" data-url="{:U('/ad/add', ['id' => $brandTwo['id']])}" data-title="{$brandTwo['position_name']}" href="javascript:;" class="btn btn-danger btn-ad">编辑广告位</a></div>
+				</if>
+				<volist name="brandTwo.ads" id="ads">
+				<a target="_blank" href="{:DM('click')}?act={:enCryptRestUri($ads['id'])}"><img data-original="{$ads.images}" src="{$ads.images}"></a>
+				</volist>
+			</div>	
+		</div>
+	</div>
+</div>

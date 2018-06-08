@@ -1,0 +1,315 @@
+<include file="Home@Public:header" />
+<header>		
+	<div class="container">
+		<div class="row mg0">
+			<div class="col-xs-2 pd0"><a href="{:DM('www')}"><img src="__NEW_DESIGN__images/dt_logo.png"></a></div>
+			<div class="col-xs-2 pr0 pt20"><div class="pt5 pl15 mt20 fs20 strong solid_l">欢迎注册</div></div>
+		</div>
+	</div>		
+</header>
+<div class="centent_body">
+	<div style="border-bottom:2px solid #fbc819">
+		<div class="container text-right pb5">
+			<a href="{:U('/login')}">已有账户</a>？
+			<a href="{:U('/login')}">立即登录</a>
+		</div>
+	</div>
+	<div class="login_img">
+		<div class="container pt40 pb40" >
+			<div class="row">
+				<div class="col-xs-8 text-center">
+					<div class="pt40 pb40">
+						<a href="javascript:;"><img src="__NEW_DESIGN__images/banner-img1.png" alt=""></a>
+					</div>
+				</div>
+				<div class="col-xs-4 pl0">
+					<!-- 注册 -->
+					<div class="register_name">
+					    <div class="tab-container">
+							<ul class="nav nav-tabs" style="border:none">
+								<li class="text-center" style="width: 100%"><a href="#gfdhdhf" style="font-size:16px;width: 100%" data-toggle="tab">供货商注册</a></li>
+							</ul>
+							<div class="tab-content mb0 bor_no pd0">
+								<div class="tab-pane active" id="gfdhdhf">
+									<form id="person" class="row mg0 mt20 form-horizontal group-border-dashed" data-url="{:U('/Register/supplier_register')}" style="border-radius: 0px;">
+										<div class="form-group">
+											<label class="col-sm-3 control-label pr0">用户名：</label>
+											<div class="col-sm-9">
+												<input name="username" type="text" class="form-control" placeholder="6-20位字符，汉字、字母、数字下划线组合">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-3 control-label pr0">图形验证：</label>
+											<div class="col-sm-9">
+												<div class="row mgt0">
+													<div class="col-xs-7 pr10">
+														<div class="">
+															<input type="text" id="vcode" class="form-control" name="vcode" placeholder="图形验证码" value="" maxlength="5">
+														</div>
+													</div>
+													<div class="col-xs-5 pl0">
+														<a href="javascript:void(0)" data-url="{:U('/verify/index', ['h' => 40])}" class="verify" title="点击图片更换验证码">
+															<img src="{:U('/verify/index', ['h' => 40])}" alt="验证码" class="verifyimg" style="height:35px;">
+														</a>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-3 control-label pr0">手机号：</label>
+											<div class="col-sm-9">
+												<input name="mobile" type="text" class="form-control" placeholder="手机号码">
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label class="col-sm-3 control-label pr0">验证码：</label>
+											<div class="col-sm-9">
+												<div class="input-group mb0">
+													<input name="smscode" type="text" placeholder="短信验证码" class="form-control">
+													<span class="input-group-btn">
+														<button onclick="sendMsg($(this), 'person')"; class="btn btn-default" type="button">发送验证码</button>
+													</span>
+												</div>
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label class="col-sm-3 control-label pr0">设置密码：</label>
+											<div class="col-sm-9">
+												<input name="password" id="password" type="password" class="form-control" placeholder="8-20位字符，建议字母、数字及符号组合">
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-3 control-label pr0">确认密码：</label>
+											<div class="col-sm-9">
+												<input name="password2" type="password" class="form-control" placeholder="请再次输入密码">
+											</div>
+										</div>
+										<!--
+ 										<div class="form-group">
+											<label class="col-sm-3 control-label pr0">分享人：</label>
+											<div class="col-sm-9">
+												<input id="ref" name="ref" type="text" class="form-control ref" placeholder="请输入分享人的手机号码">
+											</div>
+											<div class="tips-form">
+												<label class="col-sm-3 control-label pr0"></label>
+												<div class="col-sm-9">
+												</div>
+											</div>
+										</div>
+										-->
+										<div class="form-group">
+											<label class="col-sm-3 control-label pr0"></label>
+											<div class="col-sm-9">
+												<label class="square mr3 fl fs12"><input name="protocol" type="checkbox"><span></span></label>
+												<span class="text_77">我已经阅读并同意</span><a target="_blank" href="{:DM('faq', '/view')}?id=4">《乐兑用户注册协议》</a>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-sm-3 control-label pr0"></label>
+											<div class="col-sm-9">
+												<button class="btn btn-primary btn-block btn-lg btn-person">马上注册</button>
+											</div>
+										</div>
+									</form>						
+								</div>
+							</div>
+
+						</div>
+					</div>	
+
+					<!-- 注册 -->			
+				</div>
+			</div>
+		</div>	
+	</div>
+	
+</div>
+	<include file="Home@Public:footer" />
+	<include file="Home@Public:js" />
+	<script>
+	$(document).ready(function() {
+	/*	$('.ref').focusout(function() {
+			var id	=	$(this).val();
+			if(id == '' || id == undefined) {
+				$(this).val('乐兑');
+				id	=	$(this).val();
+			}
+			var that	=	$(this);
+			ajax_post({
+				url:'/run',
+				data:{code:id},
+				headers : {Action : '{:enCryptRestUri("/Get/ref")}'},
+			},function(ret) {
+				if(ret.code == 1) {
+					var html = '<div style="clear:both;" class="alert alert-success mt10"><strong>分享人：</strong>'+ret.data.u_nick;
+					if(ret.data.u_tel != null) {
+						html += '<br /><strong>手机号：</strong>'+ret.data.u_tel.substring(0,3)+"****"+ret.data.u_tel.substring(7,11);
+					}
+					html += '</div>';
+					that.parent().parent().find(".tips-form .col-sm-9").html(html);
+				} else {
+					talert({status:ret.code,msg:'分享人不存在！'});
+					that.parent().parent().find(".tips-form .col-sm-9").empty();
+				}
+			});
+		});
+		
+		$('.btn-person').click(function(){
+			var id = $('.ref').val();
+			if(id == '' || id == undefined) {
+				$('.ref').val('乐兑');
+			}
+		});
+		$('.btn-company').click(function(){
+			var id = $('.ref').val();
+			if(id == '' || id == undefined) {
+				$('.ref').val('乐兑');
+			}
+		});
+*/
+	/*
+		$("input[name='username']").blur(function(){
+			if($(this).val() != ''){
+				ajax_post({
+					url:'/Register/checkUsername',
+					data:{username:$(this).val()},
+					//headers : {Action : '{:enCryptRestUri("/Get/check_username")}'},
+				},function(ret) {
+					if(ret.code != 1) {
+						talert({status:ret.code,msg:ret.msg});
+					}
+				});
+			}
+		});
+		*/
+	})
+	
+	checkform({
+			formid:"#person",
+			headers : {Action : '{:enCryptRestUri("/Register/person")}'},
+			rules:{
+				username:{
+					required:true,
+					rangelength:[6,20],
+                    remote:'{:U("/register/checkUsername")}',
+				},
+				password:{
+					required:true,
+					rangelength:[8,20]
+				},
+				password2:{
+					required:true,
+					equalTo:'#person #password',
+				},
+				mobile:{
+					required:true,
+					isMobile:true,
+					remote:'{:U("/register/checkMobile")}',
+				},
+				smscode:{
+					required:true,
+					rangelength:[6,6]
+				},
+				vcode:{
+					required:true,
+					rangelength:[4,5],
+					isEnglish:true,
+				},
+				protocol:{
+					required:true,
+				},
+			},
+			messages:{
+				username:{
+					required:'用户名必须填写',
+					rangelength:'用户名介于6-20位之间',
+                    remote:'此用户名不能使用'
+				},
+				password:{
+					required:'密码不能为空',
+					rangelength:'密码长度8-20位，建议使用字母/数字/符号组合',
+				},
+				password2:{
+					required:'确认密码不能为空',
+					equalTo:'密码不一致！',
+				},
+				mobile:{
+					required:'手机号不能为空',
+					isMobile1:'手机号码格式错误！',
+					remote:'手机号码已被使用'
+				},
+				smscode:{
+					required:'短信验证码不能为空',
+					rangelength:'验证码长度为6位！'
+				},
+				vcode:{
+					required:'图形验证码不能为空',
+					rangelength:'验证码长度为4~5位！',
+					isEnglish:'图形验证码必须为英文字符或阿拉伯数字',
+				},
+				protocol:{
+					required:'请选阅读乐兑用户注册协议',
+				},
+			}
+		},function(ret) {
+			talert({status:ret.code,msg:ret.msg});
+			if(ret.code == 1) {
+                setOutTime = setInterval(function() {
+                    gourl({url:'{$ref}'});
+                }, 2000);
+
+			}else{
+			    $(".verify img").click();
+			}
+		});
+
+	
+	var miaoshu	=	180;
+	var setOutTime;
+	function sendMsg(obj, type) {
+		var mobile 	= $("#"+type+" input[name='mobile']").val();
+		var vcode	= $("#"+type+" input[name='vcode']").val();
+		if(mobile == '' || mobile == undefined) {
+			talert({status:0,msg:'手机号不能为空'});
+			return;
+		}
+		if(vcode == '' || vcode == undefined) {
+			talert({status:0,msg:'图形验证码不能为空'});
+			return;
+		}
+
+		var ac	=	"{:enCryptRestUri('/Register/ajax_send_msg')}";
+		$.ajax({
+			type:'post',
+			url:'/Register/ajax_send_msg',
+			data:{mobile:mobile,vcode:vcode},
+			headers : {'Accept-Action' : ac},
+			dataType:'json',
+			success:function(ret) {
+				if(ret.code == 1) {
+					setOutTime = setInterval(function() {
+						setTime(obj);
+					}, 1000);
+				} else {
+					var d=$(".verify").data();
+					$('.verify img').attr('src', d.url+'?' + Math.random());
+					talert({status:ret.code,msg:ret.msg});
+				}
+			}
+		})
+	}
+	function setTime(obj) {
+		if(miaoshu > 0) {
+			$(obj).addClass('disabled').html("请在"+miaoshu+"秒后重新获取");
+			miaoshu--;
+		} else {
+			window.clearInterval(setOutTime);
+			$(obj).removeClass('disabled').html("获取验证码");
+			miaoshu = 180;
+		}
+	}
+	</script>
+</body>
+</html>

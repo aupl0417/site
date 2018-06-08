@@ -1,0 +1,24 @@
+		if(empty($_SESSION['user'])){
+			Vendor('LoginSDK.YlhSDK#class');
+
+			$options=array(
+				'UID'			=>I('get.uid'),
+				'APP_SCOPE'		=>I('get.scope'),
+				'APP_KEY'		=>'101138195',
+				'APP_SECRET'	=>'bf701490797ea7390333be017fbe786a',
+				'CALLBACK'		=>'http://'
+			);
+			$auth=new \YlhSDK($options);		
+			$token = $auth->getAccessToken(I('get.code'));
+
+			if($token['openid']){
+				//用户登录
+
+
+
+				$_SESSION['user']=$user;
+			}else{
+				echo '获取用户失败！';
+				exit;
+			}
+		}

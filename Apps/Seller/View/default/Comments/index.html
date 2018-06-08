@@ -1,0 +1,276 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body">
+	<include file="Public:nav" />
+	<div class="container mb30">
+		<include file="Public:side" />
+		<div class="w980 fl">
+			<div class="bor_der">
+				<div class="bg_f1 clearfix fs14 text_44 tle_R">
+					<a class="fl plr15 line40 ml-1 active" href="javascript:;">评价管理</a>
+				</div>
+				
+				<!-- 主体部分 -->
+		                <div class="pd15 solid_b">
+		                    
+		                    <p class="text_black">
+		                        评价计分：<span class="text-muted">评价积分的计算方法，具体为：“好评”加一分，“中评”零分，“差评”扣一分。</span>
+		                    </p>
+		                    <p class="text_black line24">
+		                        计分规则（含匿名评价）：<br>
+		                        <span class="text-muted">
+		                            （1）每个自然月中，相同买家和卖家之间的评价计分不得超过6分（以商城订单创建的时间计算）。超出计分规则范围的评价将不计分。<br>
+		                            （解释：每个自然月同买卖家之间评价计分在[-6,+6]之间，每个自然月相同买卖家之间总分不超过6分，也就是说总分在-6和+6之间，<br>
+		                            例如买家先给卖家6个差评，再给1个好评和1个差评，则7个差评都会生效计分。）<br>
+		                            （2）若14天内（以商城订单创建的时间计算）相同买卖家之间就同一个商品进行评价，多个好评只计一分，多个差评只记-1分。</span>
+		                    </p>
+		                </div>
+		
+		                <div class="pd15">
+		                    <div class="row mb20">
+		                        <div class="col-xs-4">
+		                            <blockquote class="pd0 pl10 mt10 mb10 fs14 strong">个人信息</blockquote>
+		                            <div class="bor_der">
+		                                <div class="pd15">
+		                                
+		                                	<div class="mb10">
+		                                        店铺类型：{$shop_info.type_name}
+		                                    </div>
+		                                    <div class="mb10">
+		                                        会员名：{$shop_info.nick}
+		                                    </div>
+		                                    <div class="mb10">
+		                                        地址：{$shop_info.province_name}  {$shop_info.city_name}　{$shop_info.district_name}  {$shop_info.town_name}
+		                                    </div>
+		                                    <div class="mb10">
+		                                        注册时间：{$shop_info.atime}
+		                                    </div>
+		                                    <div class="mb10">
+		                                        认证信息：
+		                                        <img src="__NEW_DESIGN__images/YX-icon-img.png" alt="" class="mr3">
+		                                        <img src="__NEW_DESIGN__images/SJ-icon-img.png" alt="" class="mr3">
+		                                        <img src="__NEW_DESIGN__images/RZ-icon-img.png" alt="" class="mr3">
+		                                    </div>
+		                                    
+		                                    <div class="over">
+		                                        <!-- 店铺等级：{$shop_info.shop_level} -->
+		                                        <!-- <img src="__NEW_DESIGN__images/dpdj-icon-img.png" alt="" class="mr3"> -->
+		                                    </div>
+		                                </div>
+		                            </div>
+		                        </div>
+		                        <div class="col-xs-8 pl0">
+		                            <div class="title pd0 mt10 mb10 fs14 strong">
+		                                店铺动态评分：
+		                            </div>
+		                            <div class="bor_der">
+		                                <div class="pd15">
+		                                    <div class="mb10">
+		                                        宝贝与描述相符<br>
+		                                        <php> $f_desc = ($shop_info['fraction_desc']/5) * 100 . '%'; </php>
+		                                        <span class="near-star">
+		                                            <span class="rate-stars" style="width:{$f_desc};"></span><!--评分-->
+		                                        </span>
+		                                            {$shop_info.fraction_desc}分<!-- （400人打分） -->
+		                                        <div class="rate-graph pull-right">
+		                                            <div class="graph-scroller"><span style="width:{$f_desc};"><em>{$shop_info.fraction_desc}</em></span></div>
+		                                        </div>
+		                                    </div>
+		                                    <div class="mb10">
+		                                        卖家的服务态度<br>
+		                                        <php> $f_service = ($shop_info['fraction_desc']/5) * 100 . '%'; </php>
+		                                        <span class="near-star">
+		                                            <span class="rate-stars" style="width:{$f_service};"></span><!--评分-->
+		                                        </span>
+		                                            {$shop_info.fraction_service}分<!-- （400人打分） -->
+		                                        <div class="rate-graph pull-right">
+		                                            <div class="graph-scroller"><span style="width:{$f_service}"><em>{$shop_info.fraction_service}</em></span></div>
+		                                        </div>
+		                                    </div>
+		                                    <div class="mb5">
+		                                        卖家的发货速度<br>
+		                                        <php> $f_speed = ($shop_info['fraction_desc']/5) * 100 . '%'; </php>
+		                                        <span class="near-star">
+		                                            <span class="rate-stars" style="width:{$f_speed};"></span><!--评分-->
+		                                        </span>
+		                                            {$shop_info.fraction_speed}分
+		                                        <div class="rate-graph pull-right">
+		                                            <div class="graph-scroller"><span style="width:{$f_speed};"><em>{$shop_info.fraction_speed}</em></span></div>
+		                                        </div>
+		                                    </div>
+		                                    <div class="mb5">
+		                                        综合评分<br>
+		                                        <php> $f_z = ($shop_info['fraction']/5) * 100 . '%'; </php>
+		                                        <span class="near-star">
+		                                            <span class="rate-stars" style="width:{$f_speed};"></span><!--评分-->
+		                                        </span>
+		                                            {$shop_info.fraction}分
+		                                        <div class="rate-graph pull-right">
+		                                            <div class="graph-scroller"><span style="width:{$f_z};"><em>{$shop_info.fraction}</em></span></div>
+		                                        </div>
+		                                    </div>
+		                                </div>
+		                            </div>
+		                        </div>
+		                    </div>
+		                    
+		                    
+		                </div>
+		
+		                <div class="tab-container bor_top_no">
+		                    <ul class="nav nav-tabs solid_t bg_f1 solid_b ml-1">
+		                        <li class="active"><a class="pd10" href="#fdssdfg" data-toggle="tab">我收到的评价</a></li>
+		                        <!-- <li><a href="#gds" data-toggle="tab">我收到的评价</a></li> -->
+		                    </ul>
+		                    <div class="tab-content mb0 bor_no pd15">
+		                        <div class="tab-pane active" id="fdssdfg">
+		                            <!-- <div class="mb20">
+		                                <select class="form-control mr20 inline-block" style="width: 120px">
+		                                    <option>所有评价</option>
+		                                </select>
+		                                <select class="form-control mr20 inline-block" style="width: 120px">
+		                                    <option>所有评价</option>
+		                                </select>
+		                            </div> -->
+		                            <notempty name="data.code">
+										{:W('Common/Builder/nors', array('param' => array('text' => $data['msg'])))}
+									<else />
+			                            <div class="mb10">
+			                                <div class="ptb10 plr15">
+			                                    <table border="0" cellpadding="0" cellspacing="0" class=" table mb20">
+			                                        <thead class=" table-bordered bg_f1">
+			                                            <tr>
+			                                                <th width="40%" class="text-center"><strong>商品</strong></th>
+			                                                <th width="20%" class="text-center"><strong>评价人</strong></th>
+															<th width="10%" class="text-center"><strong>购买数量</strong></th>
+															<th width="10%" class="text-center"><strong>单价</strong></th>
+			                                                <th width="10%" class="text-center"><strong>评分</strong></th>
+															<th width="10%" class="text-center"><strong>操作</strong></th>
+			                                            </tr>
+			                                        </thead>
+			                                        <tbody>
+														
+				                                        <volist name="data.list" id="vo">
+				                                            <tr>
+				                                                <td>
+																	<div class="row">
+																		<div class="col-xs-3">
+																			<a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', ['id' => $vo['attr_list_id']])}" target="_blank">
+																				<img src="{:myurl($vo['orders_goods']['images_'], 80)}">
+																			</a>
+																		</div>
+																		<div class="col-xs-9">
+																			<a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', ['id' => $vo['attr_list_id']])}" target="_blank">
+																				{$vo.orders_goods.goods_name}
+																			</a>
+																			<br />
+																			{$vo.orders_goods.attr_name}
+																			<br />
+																			[ {$vo.atime} ]
+																		</div>
+																	</div>
+				                                                </td>
+				                                                <td class="text-center v-center" style="vertical-align: middle">
+																	<if condition="$vo.is_anonymous eq 1">匿名用户<else/><a class="text_44" target="_blank" href="{:DM('oauth2')}{:U('Im/check',['receiver' => $vo['user']['nick']])}"><img class="mr5" width="12" src="/Public/images/icon-im.png">{$vo.user.nick}</a></if>
+				                                                </td>
+				                                                <td class="text-center v-center" style="vertical-align: middle">
+																	{$vo.orders_goods.num}
+				                                                </td>
+																<td class="text-center v-center" style="vertical-align: middle">
+																	<span class="text_yellow">{$vo.orders_goods.price}</span> 元
+																</td>
+																<td class="text-center v-center" style="vertical-align: middle">
+																	<switch name="vo.rate">
+																		<case value="-1"><span class="text_yellow"></case>
+																		<case value="0"><span class="text_yellow"></case>
+																		<case value="1"><span class="text_green"></case>
+																	</switch>
+																	{$vo.rate_name}
+																	</span>
+																</td>
+																<td class="text-center v-center" style="vertical-align: middle">
+																	<a href="javascript:;" class="openDeteil">详情</a>
+																	<eq name="vo.reply_count" value="0">
+																		<div data-id="{$vo.id}" class="btn btn-xs btn-rad btn-trans mt5 btn-block btn-success reply-comment">回复</div>
+																	</eq>
+																</td>
+				                                            </tr>
+															<tr class="hide">
+																<td colspan="6">
+																	<p>评价内容：{$vo.content}</p>
+																	<notempty name="vo.images">
+																		<p>评价晒单：</p>
+																		<php>
+																			$images = explode(',', rtrim($vo['images'], ','));
+																		</php>
+																		<ul class="images-select-box">
+																			<volist name="images" id="pic">
+																			<li id="" data-path="{$pic}" class="text-center" style="width: 80px">
+																				<div class="li-img-box" style="width: 60px;height: 60px">
+																					<a href="{$pic}" class="image-zoom" title="大图">
+																						<img src="{:myurl($pic, 60)}">
+																					</a>
+																				</div>
+																			</li>
+																			</volist>
+																		</ul>
+																	</notempty>
+
+
+																	<notempty name="vo.reply">
+																		<div class="clear"></div>
+																		<volist name="vo.reply" id="re">
+																			<eq name="key" value="0">
+																				<p>我的回复：{$re.content} [ <span class="text_yellow">{$re.atime}</span> ]</p>
+																				<else />
+																				<p>买家回复：{$re.content} [ <span class="text_yellow">{$re.atime}</span> ]</p>
+																			</eq>
+																		</volist>
+																	</notempty>
+																</td>
+															</tr>
+			                                            </volist>
+			                                        </tbody>
+			                                    </table>
+		                                        <div class="text-center">
+													{:paresePageAction($data['page']['page'], '/SellerRate/rate_goods_list')}
+													<div class="clear"></div>
+												</div>
+			                                </div>
+			                            </div>
+			                    	</notempty>
+		                        </div>
+		                    </div>
+		                </div>
+			</div>
+		</div>
+	</div>
+</div>
+</block>
+<block name="css"></block>
+<block name="script">
+	<script>
+		$(function () {
+			$('.openDeteil').click(function () {
+				var box =	$(this).closest('tr').next();
+				box.toggle(function () {
+							box.addClass("hide");
+						},
+						function () {
+							box.removeClass("hide");
+						}
+				)
+			});
+
+			$('.reply-comment').click(function () {
+				//to do your coding
+				var d = $(this).data();
+				vmodal({
+					url:'{:U("/comments/reply")}?id=' + d.id,
+					width:'1000px',
+					title:'回复评论'
+				});
+			});
+		});
+	</script>
+</block>

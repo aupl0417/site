@@ -1,0 +1,80 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			分享管理
+		</div>
+		<div class="r">
+			<div class="text" onclick="openWin({name:'agent_reward',url:'/Upgrade/agent_reward'})">奖励明细</div>
+		</div>
+	</div>
+</header>
+<section>
+	<div class="line-box noicon row  md10">
+		<div class="col-100 text-center">
+			当前分享&nbsp;<span id="dang_qian">0人</span>
+		</div>
+	</div>
+
+	<div class="line-box noicon hover row" onclick="openWin({name:'team',url:'/Team/list/title/普通/level/1',ref:true})">
+			<div class="col-85">普通</div>
+			<div class="col-15 text-right" id="pu_tong">0</div>
+	</div>
+
+	<div class="line-box noicon hover row" onclick="openWin({name:'team',url:'/Team/list/title/创业/level/2',ref:true})">
+			<div class="col-85">创业</div>
+			<div class="col-15 text-right" id="chuang_ye">0</div>
+	</div>
+
+	<div class="line-box noicon hover row" onclick="openWin({name:'team',url:'/Team/list/title/代理/level/0',ref:true})">
+			<div class="col-85">代理</div>
+			<div class="col-15 text-right" id="dai_li">0</div>
+	</div>
+
+	<script id="list_all" type="text/html">
+	    <% for (var i = 0; i < data.length; i ++) { %>
+			<div class="line-box nobg noicon">
+				<div class="fl title"><%= data.nick %></div>
+				<div class="fr text-success ft16"><%= data.atime %></div>
+			</div>
+	    <% } %>
+	</script>
+
+</section>
+
+<script>
+fixBar(1);
+$(document).ready(function(){
+	ajax_post(
+		{
+			url:'/Api/api',
+			data:{apiurl:'/Team/team_total',is_openid:1},
+		},
+		function(ret){
+			// console.log(ret);
+			// alert(JSON.stringify(ret));
+			if(ret.code == 1){
+				var all 		= ret.data.level_total;
+				var pu_tong 	= parseInt(all[0].user_num);
+				var chuang_ye 	= parseInt(all[1].user_num);
+				var xian_ji 	= parseInt(all[2].user_num);
+				var qu_ji 		= parseInt(all[3].user_num);
+				var shi_ji 		= parseInt(all[4].user_num);
+				var sheng_ji 	= parseInt(all[5].user_num);
+
+				var dai_li 		= xian_ji + qu_ji + shi_ji + sheng_ji;
+				var dang_qian 	= pu_tong + chuang_ye + dai_li;
+
+				$('#dang_qian').html(dang_qian + '人');
+				$('#pu_tong').html(pu_tong);
+				$('#chuang_ye').html(chuang_ye);
+				$('#dai_li').html(dai_li);
+			}
+		}
+	);
+});
+
+
+</script>

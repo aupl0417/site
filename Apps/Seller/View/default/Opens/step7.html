@@ -1,0 +1,226 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body">
+	<include file="Public:nav" />
+	<div class="container mb30">
+		<include file="Public:side" />
+		<div class="w980 fl">
+			<div class="bor_der">
+				<div class="bg_f1 clearfix fs14 text_44 tle_R">
+					<a class="fl plr15 line40 ml-1 active" href="javascript:;">设置结算方式</a>
+				</div>
+				<include file="step" />
+				<div class="pd10">
+					<div class="row pd30">
+						<if condition="$_SESSION['user']['type'] eq 1">
+						<div class="col-md-6 col-sm-6">
+							<div data-id="1" class="block block-color <eq name="data.inventory_type" value="1">success<else />danger</eq> hover" title="选择">
+								<div class="header hover" title="选择库存积分分发方式">
+									<div class="actions">
+										<eq name="data.inventory_type" value="1">
+											<a class="close-down" style="font-size:20px;" href="javascript:;"><i class="fa fa-check-circle"></i></a>
+										<else />
+											<a class="close-down" style="font-size:20px;" href="javascript:;"><i class="fa fa-circle"></i></a>
+										</eq>
+									</div>
+									<h3>库存积分分发方式</h3>
+								</div>
+								<div class="content pd10" style="background:#f0f0f0;">
+									<p>选择库存积分分发的结算方式，买家确认收货后货款将实时结算到商家的账户上。当商家库存积分不足时，买家无法支付订单。商家购买足够库存积分后将提醒买家再次支付。</p>
+								</div>
+							</div>
+						</div>
+						</if>
+						<div class="col-md-6 col-sm-6">
+							<div data-id="0" class="block block-color <eq name="data.inventory_type" value="0">success<else />danger</eq> hover" title="选择">
+								<div class="header hover" title="选择扣除货款方式">
+									<div class="actions">
+										<eq name="data.inventory_type" value="0">
+											<a class="close-down" style="font-size:20px;" href="javascript:;"><i class="fa fa-check-circle"></i></a>
+										<else />
+											<a class="close-down" style="font-size:20px;" href="javascript:;"><i class="fa fa-circle"></i></a>
+										</eq>
+									</div>
+									<h3>扣除货款方式</h3>
+								</div>
+								<div class="content pd10" style="background:#f0f0f0;">
+									<p>选择扣除货款的结算方式，买家确认收货后货款结算到商家账户上的时间暂定为10天。扣除部分订单交易金额作为库存积分的代付款，将余下的货款结算给商家。</p>
+								</div>
+							</div>
+						</div> 
+					</div>
+					
+					
+					{:W('Common/Builder/form', [['data' => $keyList, 'run' =>'/opens/setInventory']])}
+				</div>
+				
+				<notempty name="data.inventory_type">
+					<div class="pd10 solid_t">
+						<div class="form-group text-right" style=" margin-bottom:0;">
+							<a class="btn btn-primary btn-next mr20" href="{:U('/opens/step6')}"><i class="fa fa-reply"></i>上一步</a><a class="btn btn-primary btn-next" href="{:U('/opens')}">进入日志页</a>
+						</div>
+					</div>
+				<else />
+				<div class="pd10 solid_t">
+					<div class="form-group text-right" style=" margin-bottom:0;">
+						<a class="btn btn-primary btn-next mr20" href="{:U('/opens/step6')}"><i class="fa fa-reply"></i>上一步</a>
+					</div>
+				</div>
+				</notempty>
+				
+			</div>
+		</div>
+	</div>
+</div>
+</block>
+<block name="css">
+<style type="text/css">
+.alert-default .icon i {
+	color: #d8d8d8;
+}
+
+.hover {
+	cursor: pointer;
+}
+</style>
+</block>
+<block name="script">
+<script>
+	$(document).ready(function() {
+		$(".btn-submit").click(function() {
+			var type	=	$("input[name='type']").val();
+			if(type == '') {
+				talert({
+					status : 0,
+					msg : '结算方式不能为空！'
+				});
+				return false;
+			}
+		});
+		checkform({
+			formid : "#formadd",
+			rules : {
+				inventory_type:{
+					required:true,
+				},
+				mobile : {
+					required : true,
+					isMobile : true,
+				},
+				smscode : {
+					required : true,
+					rangelength : [ 6, 6 ],
+					number : true,
+				},
+				vcode : {
+					required : true,
+					rangelength : [ 4, 5 ],
+				},
+			},
+			messages : {
+				inventory_type:{
+					required:'结算方式不能为空',
+				},
+				mobile : {
+					required : '手机号码不能为空',
+					isMobile : '手机号码格式不正确',
+				},
+				smscode : {
+					required : '短信验证码不能为空',
+					rangelength : '短信验证码为6位数字类型',
+					number : '短信验证码为6位数字类型',
+				},
+				vcode : {
+					required : '图形验证码不能为空',
+					rangelength : '图形验证码由4-5位数字字母组成',
+				},
+			},
+		}, function(res) {
+			
+			if (res.code == 1) {
+				talert({
+					status : res.code,
+					msg : '提交成功！系统即将自动跳转！'
+				});
+				setTimeout(function() {
+					gourl({url:"{:U('/opens')}"});
+				}, 1000);
+			} else {
+				talert({
+					status : res.code,
+					msg : res.msg
+				});
+			}
+		});
+		$('.verify').click(function() {
+			var d = $(this).data();
+			$('.verify img').attr('src', d.url + '?' + Math.random());
+		});
+		
+		$(".block").click(function() {
+			$('.block').removeClass('success').addClass('danger');
+			$('.block i.fa').removeClass('fa-check-circle').addClass('fa-circle');
+			$(this).find('i.fa').removeClass('fa-circle').addClass('fa-check-circle');
+			$(this).removeClass('danger').addClass('success');
+			$("input[name='inventory_type']").val($(this).data('id'));
+		});
+		
+	});
+	var miaoshu	=	180;
+	var setOutTime;
+	function sendMsg(obj) {
+		var mobile = $("input[name='mobile']").val();
+		var vcode = $("input[name='vcode']").val();
+		if (vcode == '' || vcode == undefined) {
+			talert({
+				status : 0,
+				msg : '图形验证码不能为空'
+			});
+			return;
+		}
+		if (mobile == '' || mobile == undefined) {
+			talert({
+				status : 0,
+				msg : '手机号不能为空'
+			});
+			return;
+		}
+		var ac = "{:enCryptRestUri('/Send/sms')}";
+		$.ajax({
+			type : 'post',
+			url : '/run',
+			data : {
+				mobile : mobile,
+				vcode : vcode
+			},
+			headers : {
+				'Accept-Action' : ac
+			},
+			dataType : 'json',
+			success : function(ret) {
+				if (ret.code == 1) {
+					setOutTime = setInterval(function() {
+						setTime(obj);
+					}, 1000);
+				} else {
+					var d = $(".verify").data();
+					$('.verify img').attr('src', d.url + '?' + Math.random());
+					talert({
+						status : ret.code,
+						msg : ret.msg
+					});
+				}
+			}
+		})
+	}
+	function setTime(obj) {
+		if (miaoshu > 0) {
+			$(obj).addClass('disabled').html("请在" + miaoshu + "秒后重新获取");
+			miaoshu--;
+		} else {
+			window.clearInterval(setOutTime);
+			$(obj).removeClass('disabled').html("获取验证码");
+			miaoshu = 180;
+		}
+	}
+</script> </block>

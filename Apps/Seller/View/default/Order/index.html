@@ -1,0 +1,381 @@
+<extend name="Home@Public:base" />
+<block name="body">
+    <div class="centent_body">
+        <include file="Public:navNew" />
+
+		<!-- to do your html codeing -->
+		<div class="revision_bg">
+			<div class="container ptb_size_lg clearfix">
+	            
+				<div class="revisionLeft"><!-- 左侧导航 -->
+					<div class="pd10 pt15 clearfix">
+						<img class="fl mr4" src="/Public/new_design/images/user.png">
+						<strong class="fl mt-1 fs16 mr5 text_black">买家中心</strong>
+						<a class="re" href="/notice.html">
+							<i class="fa fa-envelope-o fs14 fl mt5"></i>
+							<span class="ab bg_red news_red"></span>
+						</a>
+					</div>
+					<div class="pb10">
+						<div class="user_left_tle">
+							<a class="revisionRoad" href="/">信息总览</a>
+						</div>
+						<div class="user_left_tle">
+							<a class="revisionRoad" href="/">我的交易</a>
+							<div class="ad">
+								<a class="revisionRoadSon" href="">购物车</a>
+								<a class="revisionRoadSon active" href="">我的订单</a>
+								<a class="revisionRoadSon" href="" target="_blank">我的会员</a>
+								<a class="revisionRoadSon" href="">申请代购</a>
+								<a class="revisionRoadSon" href="">我的代购记录</a>
+							</div>
+						</div>
+						<div class="user_left_tle">
+							<a class="revisionRoad" href="/">我的权益</a>
+							<div class="ad">
+								<a class="revisionRoadSon" href="">售后管理</a>
+								<a class="revisionRoadSon" href="">退货管理</a>
+								<a class="revisionRoadSon" href="">我的优惠券</a>
+								<a class="revisionRoadSon" href="">可领取的优惠券</a>
+								<a class="revisionRoadSon" href="">消费金额累积升级</a>
+								<a class="revisionRoadSon" href="">商品咨询</a>
+							</div>
+						</div>
+						<div class="user_left_tle">
+							<a class="revisionRoad" href="/">评价管理</a>
+							<div class="ad">
+								<a class="revisionRoadSon" href="">我的评价</a>
+							</div>
+						</div>
+						<div class="user_left_tle">
+							<a class="revisionRoad" href="/">我的收藏</a>
+							<div class="ad">
+								<a class="revisionRoadSon" href="">收藏的商品</a>
+								<a class="revisionRoadSon" href="">收藏的商家</a>
+								<a class="revisionRoadSon" href="">我的足迹</a>
+							</div>
+						</div>
+						<div class="user_left_tle">
+							<a class="revisionRoad" href="/">基本资料</a>
+							<div class="ad">
+								<a class="revisionRoadSon" href="">基本资料</a>
+								<a class="revisionRoadSon" href="">修改密码</a>
+								<a class="revisionRoadSon" href="" target="_blank">认证中心</a>
+							</div>
+						</div>
+						<div class="user_left_tle">
+							<a class="revisionRoad" href="/">地址管理</a>
+							<div class="ad">
+								<a class="revisionRoadSon" href="">我的收货地址</a>
+								<a class="revisionRoadSon" href="">添加收货地址</a>
+							</div>
+						</div>
+						<div class="user_left_tle">
+							<a class="revisionRoad" href="/">资产管理</a>
+							<div class="ad">
+								<a class="revisionRoadSon" href="">我的资产</a>
+							</div>
+						</div>
+						<div class="user_left_tle">
+							<a class="revisionRoad" href="/">客户服务</a>
+							<div class="ad">
+								<a class="revisionRoadSon" href="">联系平台客服</a>
+								<a class="revisionRoadSon" href="">工单处理</a>
+							</div>
+						</div>
+						<div class="user_left_tle">
+							<a class="revisionRoad" href="/">积分中心</a>
+						</div>
+						<div class="user_left_tle hide">
+							<a class="revisionRoad" href="/">信用中心</a>
+						</div>
+					</div>
+				</div><!-- 左侧导航结束 -->
+
+				<div class="revisionRight pd15"><!-- 右侧内容 -->
+
+					<div class="clearfix revisionOrderTab" data-url="">
+						<a class="orderOption active" href="#">所有订单</a>
+						<a class="orderOption" href="#">待付款</a>
+						<a class="orderOption" href="#">待发货</a>
+						<a class="orderOption" href="#">已发货</a>
+						<a class="orderOption" href="#">已收货</a>
+						<a class="orderOption" href="#">已评价</a>
+						<div class="fr ml40 mb0" style="width:300px">
+							<div class="input-group input-group-sm mb0">
+								<input type="text" class="form-control" name="s_no" placeholder="输入订单号搜索">
+								<span class="input-group-btn">
+									<button class="btn btn-primary" type="submit">搜索</button>
+								</span>
+								<span class="input-group-btn">
+									<button id="hige_search" class="btn btn-default plr20" type="button">
+										高级搜索<i class="fa fa-angle-down ml5"></i>
+									</button>
+								</span>
+							</div>
+						</div>						
+					</div>
+
+					<table class="no-border mb20 bg_f1"><!-- 类型说明 -->
+						<tbody class="no-border-y">
+							<tr class="text-center">
+								<td width="75%" style="padding:0">
+									<table class="no-border">
+										<tbody class="no-border-y">
+											<td width="18%"></td>
+											<td width="30%">商品信息</td>
+											<td width="12%">单价</td>
+											<td width="10%">数量</td>
+											<td width="12%">运费</td>
+											<td width="18%">实付款</td>
+										</tbody>
+									</table>	
+								</td>
+								<td width="13%">状态</td>
+								<td width="12%">操作</td>
+							</tr>
+						</tbody>
+					</table><!-- 类型说明结束 -->
+
+					
+					<table class="revisionTable table"><!-- 订单信息 -->
+						<tbody class="bg_white">
+							<tr class="strong">
+								<td class="bg_f1" colspan="3">
+									<span class="text_yellow mr20">余额支付</span>
+									<span class="mr20"><span class="text_f1">订单号：</span>2016121909395132383800</span>
+									<span class="mr20">品牌测试旗舰店(自营) <span class="text_f1">2016-11-26 17:16:19</span></span>
+									<span class="mr20" style="display:inline-block">
+										<img class="fl mr5" height="16" src="/Public/new_design/images/contact_QQ.jpg">
+										<span class="text_f1">641952279</span>
+									</span>
+									<span class="fr text_yellow">总额：300.00</span>
+								</td>
+							</tr>
+							<tr class="text-center">
+								<td style="padding:0; width:75%">
+									<table class="no-border table-hover">
+										<tbody class="no-border-y">
+											<tr><!-- 同店铺第一个商品 -->
+												<td width="18%">
+													<a target="_blank" href="">
+													<img src="https://img.trj.cc/Fs_i4r1qTjBNUtwBs6cwmO7l7hmp?imageMogr2/thumbnail/!100x100r/gravity/Center/crop/100x100" class="img-thumbnail"></a>
+												</td>
+												<td valign="top" width="30%" class="text-left">
+													<a target="_blank" href="">毛衣女秋冬套头半高领羊绒衫 韩版百搭宽松羊毛衫 短款针织打底衫</a>
+													<div class="md5 text-gray mt5">颜色/尺码：默认</div>
+												</td>
+												<td width="12%">
+													<span class="text-d-lt">10.00</span><br><span class="text_yellow">(10.00)</span>
+												</td>
+												<td width="10%">×1</td>
+												<td width="12%">
+													<span class="text-d-lt">10.00</span><br><span class="text_yellow">(10.00)</span>
+												</td>
+												<td width="18%">
+													<span class="text-d-lt">20.00</span><br><span class="text_yellow">20.00</span><p class="mb0">含运费(10.00)</p>
+												</td>
+											</tr>
+											<tr><!-- 同店铺第二个商品 -->
+												<td width="18%">
+													<a target="_blank" href="">
+													<img src="https://img.trj.cc/Fs_i4r1qTjBNUtwBs6cwmO7l7hmp?imageMogr2/thumbnail/!100x100r/gravity/Center/crop/100x100" class="img-thumbnail"></a>
+												</td>
+												<td valign="top" width="30%" class="text-left">
+													<a target="_blank" href="">毛衣女秋冬套头半高领羊绒衫 韩版百搭宽松羊毛衫 短款针织打底衫</a>
+													<div class="md5 text-gray mt5">颜色/尺码：默认</div>
+												</td>
+												<td width="12%">
+													<span class="text-d-lt">10.00</span><br><span class="text_yellow">(10.00)</span>
+												</td>
+												<td width="10%">×1</td>
+												<td width="12%">
+													<span class="text-d-lt">10.00</span><br><span class="text_yellow">(10.00)</span>
+												</td>
+												<td width="18%">
+													<span class="text-d-lt">20.00</span><br><span class="text_yellow">20.00</span><p class="mb0">含运费(10.00)</p>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+								<td style="vertical-align: middle; width:13%" rowspan="1">
+									<div data-type="modal" data-title="确认收货" class="btn btn-primary btn-sm text-center btn_m btn-rad opreating">确认收货</div>
+									<a href="" class="btn btn-default btn-sm text-center btn_m btn-rad mt10">申请退款</a>
+								</td>
+								<td style="vertical-align: middle; width:12%" rowspan="1">
+									<p><a class="text_blue" href="" target="_blank">订单详情</a></p>
+									<p><a class="text_yellow" href="" target="_blank">物流信息</a></p>
+								</td>
+							</tr>
+						</tbody>
+					</table><!-- 订单信息结束 -->
+
+					<table class="revisionTable table"><!-- 订单信息 -->
+						<div class="pd10" style="background:#fff3f4;color:#cc0000;">
+							参与促销活动：
+							<span class="ml15">1、享受满150减50元优惠</span>
+							<span class="ml15">2、享受免18元邮费优惠</span>
+							<span class="ml15">3、享受唐宝支付8折优惠。</span>
+						</div>
+						<tbody class="bg_white">
+							<tr class="strong">
+								<td class="bg_f1" colspan="3">
+									<span class="text_yellow mr20">余额支付</span>
+									<span class="mr20"><span class="text_f1">订单号：</span>2016121909395132383800</span>
+									<span class="mr20">品牌测试旗舰店(自营) <span class="text_f1">2016-11-26 17:16:19</span></span>
+									<span class="mr20" style="display:inline-block">
+										<img class="fl mr5" height="16" src="/Public/new_design/images/contact_QQ.jpg">
+										<span class="text_f1">641952279</span>
+									</span>
+									<span class="fr text_yellow">总额：300.00</span>
+								</td>
+							</tr>
+							<tr class="text-center">
+								<td style="padding:0; width:75%">
+									<table class="no-border table-hover">
+										<tbody class="no-border-y">
+											<tr><!-- 同店铺第一个商品 -->
+												<td width="18%">
+													<a target="_blank" href="">
+													<img src="https://img.trj.cc/Fs_i4r1qTjBNUtwBs6cwmO7l7hmp?imageMogr2/thumbnail/!100x100r/gravity/Center/crop/100x100" class="img-thumbnail"></a>
+												</td>
+												<td valign="top" width="30%" class="text-left">
+													<a target="_blank" href="">毛衣女秋冬套头半高领羊绒衫 韩版百搭宽松羊毛衫 短款针织打底衫</a>
+													<div class="md5 text-gray mt5">颜色/尺码：默认</div>
+												</td>
+												<td width="12%">
+													<span class="text-d-lt">10.00</span><br><span class="text_yellow">(10.00)</span>
+												</td>
+												<td width="10%">×1</td>
+												<td width="12%">
+													<span class="text-d-lt">10.00</span><br><span class="text_yellow">(10.00)</span>
+												</td>
+												<td width="18%">
+													<span class="text-d-lt">20.00</span><br><span class="text_yellow">20.00</span><p class="mb0">含运费(10.00)</p>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+								<td style="vertical-align: middle; width:13%" rowspan="1">
+									<div data-type="modal" data-title="确认收货" class="btn btn-primary btn-sm text-center btn_m btn-rad opreating">确认收货</div>
+									<a href="" class="btn btn-default btn-sm text-center btn_m btn-rad mt10">申请退款</a>
+								</td>
+								<td style="vertical-align: middle; width:12%" rowspan="1">
+									<p><a class="text_blue" href="" target="_blank">订单详情</a></p>
+									<p><a class="text_yellow" href="" target="_blank">物流信息</a></p>
+								</td>
+							</tr>
+						</tbody>
+					</table><!-- 订单信息结束 -->
+
+					<table class="revisionTable table"><!-- 订单信息 -->
+						<tbody class="bg_white">
+							<tr class="strong">
+								<td class="bg_f1" colspan="3">
+									<span class="text_yellow mr20">余额支付</span>
+									<span class="mr20"><span class="text_f1">订单号：</span>2016121909395132383800</span>
+									<span class="mr20">品牌测试旗舰店(自营) <span class="text_f1">2016-11-26 17:16:19</span></span>
+									<span class="mr20" style="display:inline-block">
+										<img class="fl mr5" height="16" src="/Public/new_design/images/contact_QQ.jpg">
+										<span class="text_f1">641952279</span>
+									</span>
+									<span class="fr text_yellow">总额：300.00</span>	
+								</td>
+							</tr>
+							<tr class="text-center">
+								<td style="padding:0; width:75%">
+									<table class="no-border table-hover">
+										<tbody class="no-border-y">
+											<tr><!-- 同店铺第一个商品 -->
+												<td width="18%">
+													<a target="_blank" href="">
+													<img src="https://img.trj.cc/Fs_i4r1qTjBNUtwBs6cwmO7l7hmp?imageMogr2/thumbnail/!100x100r/gravity/Center/crop/100x100" class="img-thumbnail"></a>
+												</td>
+												<td valign="top" width="30%" class="text-left">
+													<a target="_blank" href="">毛衣女秋冬套头半高领羊绒衫 韩版百搭宽松羊毛衫 短款针织打底衫</a>
+													<div class="md5 text-gray mt5">颜色/尺码：默认</div>
+												</td>
+												<td width="12%">
+													<span class="text-d-lt">10.00</span><br><span class="text_yellow">(10.00)</span>
+												</td>
+												<td width="10%">×1</td>
+												<td width="12%">
+													<span class="text-d-lt">10.00</span><br><span class="text_yellow">(10.00)</span>
+												</td>
+												<td width="18%">
+													<span class="text-d-lt">20.00</span><br><span class="text_yellow">20.00</span><p class="mb0">含运费(10.00)</p>
+												</td>
+											</tr>
+											<tr><!-- 同店铺第2个商品 -->
+												<td width="18%">
+													<a target="_blank" href="">
+													<img src="https://img.trj.cc/Fs_i4r1qTjBNUtwBs6cwmO7l7hmp?imageMogr2/thumbnail/!100x100r/gravity/Center/crop/100x100" class="img-thumbnail"></a>
+												</td>
+												<td valign="top" width="30%" class="text-left">
+													<a target="_blank" href="">毛衣女秋冬套头半高领羊绒衫 韩版百搭宽松羊毛衫 短款针织打底衫</a>
+													<div class="md5 text-gray mt5">颜色/尺码：默认</div>
+												</td>
+												<td width="12%">
+													<span class="text-d-lt">10.00</span><br><span class="text_yellow">(10.00)</span>
+												</td>
+												<td width="10%">×1</td>
+												<td width="12%">
+													<span class="text-d-lt">10.00</span><br><span class="text_yellow">(10.00)</span>
+												</td>
+												<td width="18%">
+													<span class="text-d-lt">20.00</span><br><span class="text_yellow">20.00</span><p class="mb0">含运费(10.00)</p>
+												</td>
+											</tr>
+											<tr><!-- 同店铺第3个商品 -->
+												<td width="18%">
+													<a target="_blank" href="">
+													<img src="https://img.trj.cc/Fs_i4r1qTjBNUtwBs6cwmO7l7hmp?imageMogr2/thumbnail/!100x100r/gravity/Center/crop/100x100" class="img-thumbnail"></a>
+												</td>
+												<td valign="top" width="30%" class="text-left">
+													<a target="_blank" href="">毛衣女秋冬套头半高领羊绒衫 韩版百搭宽松羊毛衫 短款针织打底衫</a>
+													<div class="md5 text-gray mt5">颜色/尺码：默认</div>
+												</td>
+												<td width="12%">
+													<span class="text-d-lt">10.00</span><br><span class="text_yellow">(10.00)</span>
+												</td>
+												<td width="10%">×1</td>
+												<td width="12%">
+													<span class="text-d-lt">10.00</span><br><span class="text_yellow">(10.00)</span>
+												</td>
+												<td width="18%">
+													<span class="text-d-lt">20.00</span><br><span class="text_yellow">20.00</span><p class="mb0">含运费(10.00)</p>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+								<td style="vertical-align: middle; width:13%" rowspan="1">
+									<div data-type="modal" data-title="确认收货" class="btn btn-primary btn-sm text-center btn_m btn-rad opreating">确认收货</div>
+									<a href="" class="btn btn-default btn-sm text-center btn_m btn-rad mt10">申请退款</a>
+								</td>
+								<td style="vertical-align: middle; width:12%" rowspan="1">
+									<p><a class="text_blue" href="" target="_blank">订单详情</a></p>
+									<p><a class="text_yellow" href="" target="_blank">物流信息</a></p>
+								</td>
+							</tr>
+						</tbody>
+					</table><!-- 订单信息结束 -->
+
+				</div>
+
+	        </div>	
+		</div>
+        <!-- my codeing over -_-   -->
+
+    </div>
+</block>
+
+<block name="css">
+
+</block>
+
+<block name="script">
+    <!-- to do your javascript codeing -->
+</block>

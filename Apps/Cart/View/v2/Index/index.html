@@ -1,0 +1,342 @@
+<extend name="Home@Public:base" />
+<block name="body">
+    <div class="centent_body">
+        <!-- to do your html codeing -->
+        <div class="revision_bg">
+            <div class="container ptb_size_lg clearfix" style="/*width: 980px;*/">
+                <div class="pd15" style="background:#fff">
+                    <notempty name="data.code">
+                        {:W('Common/Builder/nors', array('param' => array('text' => $data['msg'])))}
+                        <else />
+                        <form id="formadd" class="form-horizontal" data-url="">
+                            <div class="clearfix revisionOrderTab" data-url="">
+                                <a class="orderOption active" href="javascript:;">全部商品 ( <span class="text_red">{$count.style_num}</span> )</a>
+                            </div>
+
+
+                            <div class="row pt10 pb10">
+                                <div class="col-md-12 col-sm-12">
+                                    <table class="no-border mb20 bg_f1"><!-- 类型说明 -->
+                                        <tbody class="no-border-y">
+                                        <tr class="text-center">
+                                            <td width="100%" style="padding:0">
+                                                <table class="no-border">
+                                                    <tbody class="no-border-y">
+                                                    <td width="5%">
+                                                        <label class="m0">
+                                                            <div class="icheckbox_square-red" aria-checked="false" aria-disabled="false" style="position: relative;">
+                                                                <input type="checkbox" class="i-red-square checkAll" />
+                                                                <ins class="iCheck-helper"></ins>
+                                                            </div>
+                                                        </label>
+                                                    </td>
+                                                    <td width="8%">商品信息</td>
+                                                    <td width="30%"></td>
+                                                    <td width="12%">单价</td>
+                                                    <td width="15%">数量</td>
+                                                    <td width="12%">金额</td>
+                                                    <td width="8%">积分基数</td>
+                                                    <td width="10%">操作</td>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table><!-- 类型说明结束 -->
+
+                                    <volist name="data" id="vo">
+                                        <table class="revisionTable table"><!-- 订单信息 -->
+                                            <tbody class="bg_white">
+                                            <tr class="">
+                                                <td class="bg_f1">
+                                                    <notempty name="vo.activity">
+                                                        <a href="javascript:;" data-html="true" data-popover="popover" data-original-title="商家促销信息" data-content='<volist name="vo.activity" id="ac" key="ackey">
+                                                                <p>{$ackey}、{$ac.desc}
+                                                                    <eq name="ac.type_id" value="2">
+                                                                        <volist name="ac.goods" id="acGoods">
+                                                                            <a href="{:DM('item')}{:U('/index/index', ['id' => $acGoods['attr_list'][0]['id']])}" target="_blank"><img src="{:myurl($acGoods['images'], 20)}"></a>
+                                                                        </volist>
+                                                                    </eq>
+                                                                </p>
+                                                            </volist>' data-placement="left" data-trigger="hover" class="fr text_red"><i class="fa fa-tags"></i> 促销信息</a>
+                                                    </notempty>
+
+                                                    <label class="m0">
+                                                        <div class="icheckbox_square-red" aria-checked="false" aria-disabled="false" style="position: relative;">
+                                                            <input class="i-red-square shopCheckAll" type="checkbox" />
+                                                            <ins class="iCheck-helper"></ins>
+                                                        </div>
+                                                    </label>
+                                                    <a href="{:shop_url($vo['shop']['id'], $vo['shop']['domain'])}" class="ml5 text_blue">{$vo.shop.shop_name}</a>
+                                                    <a href="{:DM('oauth2')}{:U('Im/check',['receiver' => $vo['seller_nick']])}" class="ml5" target="_blank">
+                                                        <img class="mr5" src="/Public/images/icon-im18.png">
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <volist name="vo.goods" id="goods">
+                                                <tr class="text-center" <neq name="goods.status" value="1">style="background: #f8f8f8;"</neq>>
+                                                    <td style="padding:0; width:75%">
+                                                        <table class="no-border table-hover">
+                                                            <tbody class="no-border-y">
+                                                            <tr><!-- 同店铺第一个商品 -->
+                                                                <td width="5%">
+                                                                    <div class="icheckbox_square-red" aria-checked="false" aria-disabled="false" style="position: relative;">
+                                                                        <input <neq name="goods.status" value="1">class="i-red-square disabled" disabled<else /> class="i-red-square ids" <eq name="goods.is_select" value="1">checked</eq></neq> name="ids[]" value="{$goods.id}" type="checkbox" />
+                                                                        <ins class="iCheck-helper"></ins>
+                                                                    </div>
+                                                                </td>
+                                                                <td width="8%">
+                                                                    <a target="_blank" href="{:DM('item')}{:U('/index/index', ['id' => $goods['attr_list_id']])}">
+                                                                        <img src="{$goods['images']}" class="img-thumbnail" style="width: 80px;"></a>
+                                                                </td>
+                                                                <td valign="top" width="30%" class="text-left">
+                                                                    <a target="_blank" href="{:DM('item')}{:U('/index/index', ['id' => $goods['attr_list_id']])}">{$goods.goods_name}</a>
+                                                                    <div class="md5 text-gray mt5">颜色/尺码：{$goods.attr_name}</div>
+                                                                    <neq name="goods.status" value="1"><div class="md5 mt5 text_red">当前商品已下架</div></neq>
+                                                                </td>
+                                                                <td width="12%">
+                                                                    ￥ <span class="text_red">{$goods.price}</span> 元
+                                                                </td>
+                                                                <td width="15%">
+                                                                    <div class="input-group no-margin pull-left" style="width:140px">
+                                                                        <span data-attr="{$goods.attr_list_id}" data-id="{$goods.id}" class="input-group-btn btn_bon">
+                                                                            <button type="button" class="btn btn-default btn-d"><i class="fa fa-minus"></i></button>
+                                                                        </span>
+                                                                        <input data-attr="{$goods.attr_list_id}" type="text" class="form-control text-center goods_num" style="border-left:none" placeholder="数量" value="{$goods.num}" data-num="{$goods.num}">
+                                                                        <span data-attr="{$goods.attr_list_id}" data-id="{$goods.id}" class="input-group-btn btn_top">
+                                                                            <button type="button" class="btn btn-default btn-a"><i class="fa fa-plus"></i></button>
+                                                                        </span>
+                                                                    </div>
+                                                                </td>
+                                                                <td width="12%">
+                                                                    ￥ <span class="text_red goods_total_price">{$goods.total_price}</span> 元
+                                                                </td>
+                                                                <td width="8%">
+                                                                    × <span class="text_red">{$goods.score_ratio}</span> 倍
+                                                                </td>
+                                                                <td width="10%">
+                                                                    <a onclick="addToFav('{$goods.goods_id}');" href="javascript:;" class="text_blue">关注商品</a>
+                                                                    <div class="mt5">
+                                                                        <a onclick="removeToCart('{$goods.id}');" href="javascript:;" class="text_blue">移除</a>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </volist>
+                                            </tbody>
+                                        </table><!-- 订单信息结束 -->
+                                    </volist>
+
+                                    <div class="text-right">
+                                        已选<strong class="text_red plr5 fs14 totalGoods">0</strong>件商品
+                                        <span class="plr20">合计（不含运费）：<strong class="text_red fs16 totalPrice">￥<span>0.00</span></strong></span>
+                                        <button type="button" class="btn btn-lg btn-rad btn-trans btn-danger btn-submit">立即结算</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </form>
+                    </notempty>
+                    <div class="row" style="border-top: solid 20px #F8F8F8"></div>
+                    {:W('Common/Side/like')}
+                </div>
+            </div>
+
+        </div>
+        <!-- my codeing over -_-   -->
+
+    </div>
+</block>
+
+<block name="css">
+    <link rel="stylesheet" type="text/css" href="/Public/CSS/flatdream/js/jquery.icheck/skins/square/_all.css">
+</block>
+
+<block name="script">
+    <!-- to do your javascript codeing -->
+    <script>
+        $(document).ready(function () {
+            writePrice();
+
+            /**
+             * 提交表单
+             */
+            $(".btn-submit").click(function () {
+                var ids = '';
+                $("input[name='ids[]']").each(function() {
+                    if($(this).is(":checked") == true) {
+                        ids += $(this).val() + ',';
+                    }
+                })
+                if(ids == '' || ids == undefined) {
+                    talert({status:0,msg:'请至少选择一款商品'});
+                    return;
+                }
+                ajax_post({
+                    url:'{:U("/run/authRun")}',
+                    data:{ids:ids},
+                },function(ret) {
+                    if(ret.code == 1) {
+                        gourl({url:'{:U("/confirm")}'});
+                    } else {
+                        talert({status:ret.code,msg:ret.msg});
+                    }
+                });
+            });
+
+
+            /**
+             * 选择所有
+             */
+            $(".checkAll").on('ifChecked ifUnchecked', function (event) {
+                if (event.type == 'ifChecked') {
+                    $('input[type="checkbox"]').iCheck('check');
+                } else {
+                    $('input[type="checkbox"]').iCheck('uncheck');
+                }
+                writePrice();
+            });
+
+            /**
+             * 选择店铺所有
+             */
+            $(".shopCheckAll").on('ifChecked ifUnchecked', function (event) {
+                if (event.type == 'ifChecked') {
+                    $(this).closest('tbody').find('input[type="checkbox"]').iCheck('check');
+                } else {
+                    $(this).closest('tbody').find('input[type="checkbox"]').iCheck('uncheck');
+                }
+                writePrice();
+            });
+
+
+            /**
+             * 写价格
+             */
+            $("input.ids").on('ifChecked ifUnchecked', function (event) {
+                writePrice();
+            });
+
+
+
+            /**
+             * 修改数量
+             **/
+            $(".goods_num").change(function () {
+                var num = ($(this).val());
+                var numPreg = /^[1-9][0-9]*$/;
+                if (numPreg.test(num) == false) {
+                    talert({status:0,msg:'购买数量不能小于1件且为整数'});
+                    $(this).val(1);
+                    return false;
+                }
+                var obj = $(this).closest('tbody');
+                changeGoodsNum({attr:$(this).data('attr'), type:3, num: num, obj: obj});
+            });
+
+            /**
+             * 减数量
+             */
+            $(".btn_bon").click(function () {
+                var num = parseInt($(this).next().val());
+                if (num <= 1) {
+                    talert({status:0,msg:'购买数量不能小于1件'});
+                    return false;
+                }
+                num -= 1;
+                $(this).next().val(num);
+                var obj = $(this).closest('tbody');
+                changeGoodsNum({attr:$(this).data('attr'), type:2, num: 1, obj: obj});
+            });
+
+            /**
+             * 加数量
+             */
+            $(".btn_top").click(function () {
+                var num = parseInt($(this).prev().val());
+                num += 1;
+                $(this).prev().val(num);
+                var obj = $(this).closest('tbody');
+                changeGoodsNum({attr:$(this).data('attr'), type:1, num: 1, obj: obj});
+            });
+        });
+
+
+        /**
+         * 修改商品数量
+         *
+         * @param params
+         */
+        function changeGoodsNum(params) {
+            ajax_post({
+                url:'{:U("/run/authRun")}',
+                data:{attr_list_id:params.attr,type:params.type,num:params.num},
+                headers : {Action : '{:enCryptRestUri("/Index/cartadd")}'},
+            },function(ret) {
+                if(ret.code == 1) {
+                    var goodsTotalPrice = ret.data.num * ret.data.price;
+                    params.obj.find('.goods_total_price').html(goodsTotalPrice.toFixed(2));
+                    writePrice();
+                }else{
+                    talert({status:ret.code,msg:ret.msg});
+                }
+            });
+        }
+
+
+        //移除购物车
+        function removeToCart(id) {
+            vmodal({
+                title:'删除提示',
+                msg:'您真的要删除吗?',
+                class:'text-center',
+                confirm:1,
+                footer:false,
+                width:600
+            },function(ret) {
+                $(".modal-ok").click(function() {
+                    ajax_post({
+                        url:'{:U("/run/authRun")}',
+                        data:{id:id},
+                        headers : {Action : '{:enCryptRestUri("/Index/del")}'},
+                    },function(ret) {
+                        talert({status:ret.code,msg:ret.msg});
+                        if(ret.code == 1) {
+                            ref();
+                        }
+                    })
+                })
+            })
+        }
+
+        //收藏商品
+        function addToFav(id) {
+            ajax_post({
+                url:'{:U("/run/authRun")}',
+                data:{goods_id:id},
+                headers : {Action : '{:enCryptRestUri("/Index/favgoods")}'},
+            },function(ret) {
+                talert({status:ret.code,msg:ret.msg});
+            })
+        }
+
+        /**
+         * 写入总金额
+         */
+        function writePrice() {
+            var i = 0;
+            var totalPrice = 0;
+            $("input.ids").each(function () {
+                if ($(this).is(':checked') == true) {
+                    i++;
+                    totalPrice += parseFloat($(this).closest('tbody').find('.goods_total_price').html());
+                }
+            });
+            $(".totalPrice").html('￥ ' + totalPrice.toFixed(2));
+            $(".totalGoods").html(i);
+        }
+    </script>
+</block>

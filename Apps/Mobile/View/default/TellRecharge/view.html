@@ -1,0 +1,237 @@
+<include file="Public:header" />
+	<div class="page-group">
+		<div id="page-recharge-view" class="page">
+			<!-- 标题栏 -->
+			<header class="bar bar-nav">
+				<a class="icon icon-left pull-left back" href="/"></a>
+				<a class="icon iconfont icon-category pull-right ml5 ac-menu" onclick="top_menu()" data-no-cache="true"></a>
+				<h1 class="title">充值详情</h1>
+			</header>
+			<!-- 浮动导航 -->
+			<include file="Public:fixed-menu" />
+			<!-- 这里是页面内容区 -->	
+			<div class="content">
+					<div class="list-block media-list">
+						<ul>
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title-row">
+											<div class="item-title">订单号</div>
+											<div class="item-after">{$res.s_no}</div>
+										</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title-row">
+											<div class="item-title">订单状态</div>
+											<div class="item-after">{$res.status_name}</div>
+										</div>
+									</div>
+								</div>
+							</li>
+							<notempty name="res.transtat_name">
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title-row">
+											<div class="item-title">受理状态</div>
+											<div class="item-after">{$res.transtat_name}</div>
+										</div>
+									</div>
+								</div>
+							</li>	
+							</notempty>	
+							<notempty name="res.return_status_name">
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title-row">
+											<div class="item-title">充值状态</div>
+											<div class="item-after">{$res.return_status_name}</div>
+										</div>
+									</div>
+								</div>
+							</li>	
+							</notempty>	
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title-row">
+											<div class="item-title">手机号</div>
+											<div class="item-after">{$res.mobile}</div>
+										</div>
+									</div>
+								</div>
+							</li>							
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title-row">
+											<div class="item-title">充值面额</div>
+											<div class="item-after">{$res.desc}</div>
+										</div>
+									</div>
+								</div>
+							</li>							
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title-row">
+											<div class="item-title">实付金额</div>
+											<div class="item-after">￥{$res.pay_price}</div>
+										</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title-row">
+											<div class="item-title">奖励积分</div>
+											<div class="item-after">{$res.score}分</div>
+										</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title-row">
+											<div class="item-title">充值时间</div>
+											<div class="item-after">{$res.atime}</div>
+										</div>
+									</div>
+								</div>
+							</li>
+							<if condition="$res['return_time'] neq '0000-00-00 00:00:00'">
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title-row">
+											<div class="item-title">到账时间</div>
+											<div class="item-after">{$res.return_time}</div>
+										</div>
+									</div>
+								</div>
+							</li>	
+							</if>	
+							<notempty name="res.trade_no">
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title-row">
+											<div class="item-title">第三方交易流水号</div>
+											<div class="item-after">{$res.trade_no}</div>
+										</div>
+									</div>
+								</div>
+							</li>	
+							</notempty>							
+						</ul>
+					</div>	
+					<if condition="$res['status'] eq 1">
+						<div class="p5">
+							<div class="row">
+								<div class="col-50"><a href="#" class="btn button-danger button-fill btn-lg btn-block btn-close"  data-s_no="{$res.s_no}">关闭订单</a></div>
+								<div class="col-50"><a href="#" class="btn button-danger button-fill btn-lg btn-block btn-pay"  data-s_no="{$res.s_no}" data-desc="{$res.desc}" data-type="{$res.type}" data-fare="{$res.fare}">立即付款</a></div>
+							</div>
+						</div>
+					<elseif condition="$res['status'] eq 2"/>
+						<notin name="res.transtat" value="1,3,4,10,18">
+							<div class="list-block">
+								<ul>
+									<li>
+										<div class="item-content">
+											<div class="item-inner">
+												<div class="item-title-row">
+													<span class="pull-right">长时间未到账，系统将在{$res.next_time}自动退款</span>
+												</div>
+											</div>
+										</div>
+									</li>
+								</ul>
+							</div>	
+						</notin>
+					</if>
+			</div>	
+		</div>	
+
+		<!--选择充值方式，和付款方式-->
+		<div class="popup popup-recharge">
+			<header class="bar bar-nav">
+				<a class="icon icon-left pull-left close-popup" data-no-cache="true"></a>
+				<h1 class="title">手机充值</h1>
+				<a class="icon iconfont icon-guanbi1 pull-right ml5 ac-menu close-popup"></a>
+			</header>				
+			
+			<div class="content">
+				<form name="form-pay" id="form-pay" onsubmit="return false">	
+					<notempty name="paytype">
+						<div class="list-block media-list pay-type">
+							<ul>
+								<li class="bg-gray p5 tips">
+									<i class="iconfont icon-jifen1"></i> 请选择支付方式
+								</li>
+								<volist name="paytype" id="vo" key="k">
+									<if condition="$k eq 1">
+										<li data-value="{$vo.pg_id}" class="selected">
+											<div class="item-content">
+												<div class="item-media">
+													<i class="iconfont {$vo.iconfont} text-yellow"></i>
+												</div>
+												<div class="item-inner">
+													<div class="item-title-row">
+														<div class="item-title">{$vo.pg_name}</div>
+														<div class="item-after"></div>
+													</div>
+												</div>
+											</div>
+										</li>	
+									<else />											
+										<li data-value="{$vo.pg_id}">
+											<div class="item-content">
+												<div class="item-media">
+													<i class="iconfont {$vo.iconfont} text-yellow"></i>
+												</div>
+												<div class="item-inner">
+													<div class="item-title-row">
+														<div class="item-title">{$vo.pg_name}</div>
+														<div class="item-after"></div>
+													</div>
+												</div>
+											</div>
+										</li>
+									</if>
+								</volist>
+							</ul>
+						</div>					
+					</notempty>
+				</form>
+			</div>
+			
+			<div class="goods-footer fixed-bottom">
+				<div class="cart-btn">
+					<div class="btn-buy btn-submit-pay">立即付款</div>
+				</div>
+			</div>		
+		</div>	
+		<!--popup 收银台-->
+		<div class="popup popup-cashier">
+			<header class="bar bar-nav">
+				<a class="icon icon-left pull-left close-popup" data-no-cache="true" data-popup=".popup-cashier"></a>
+				<h1 class="title">付款</h1>
+				<a class="icon iconfont icon-guanbi1 pull-right ml5 ac-menu close-popup" data-popup=".popup-cashier"></a>
+			</header>				
+			
+			<div class="content">
+			</div>
+		</div>		
+	</div>	
+		
+
+<include file="Public:script" />
+<include file="Public:footer" />

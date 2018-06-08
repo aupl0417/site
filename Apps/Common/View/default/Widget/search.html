@@ -1,0 +1,101 @@
+<div class="col-xs-6 mt5 pr0">	
+	
+	<form action="{:DM('s')}" method="get" class="search_goods_shop">
+
+		<div class="search_tle row mg0">
+			<ul id="hover_sub_name" class="col-xs-2 list hover_sub_name" >
+				<li class="plr10 solid_r db" style="height:32px" data-url="{:DM('s')}">
+					<span class="fs14">商品</span><i class="fa fa-caret-down fr mt8 fs16"></i>
+				</li>
+				<li class="plr10 bg_f1 dn fs14" data-url="{:DM('s','/Index/shop')}">
+					店铺
+				</li>
+			</ul>
+			<input name="keywords" class="col-xs-8 bor_no plr10 fs14" style="height:32px" type="text" placeholder="请输入店铺/商品的搜索关键字" value="{$_GET.keywords}" autocomplete="off">
+			<button class="col-xs-2 btn btn_m bg_red bor_no bor_r0 fs16 fr" style="height:34px;line-height:18px;color:white">搜索</button>
+		</div>
+
+
+	</form>
+
+	<div id="drop_down" class="ab pd15 bg_white drop_down">
+		<div class="media">
+			<div class="media-left">
+				<img class="media-object" src="__NEW_DESIGN__images/clock.png">
+			</div>
+			<div class="media-body"><span class="fs14 strong">最近搜索</span>
+				<div class="mt10 ml-3 ajax_search_near">
+				</div>
+			</div>
+		</div>
+		<div class="media">
+			<div class="media-left">
+				<img class="media-object" src="__NEW_DESIGN__images/host.png">
+			</div>
+			<div class="media-body mb15"><span class="fs14 strong">大家都在搜</span>
+				<div class="mt5 fs14">
+					<empty name="hot_keywords.code">
+						<volist name="hot_keywords" id="vo">
+						<a class="mr20 mb7" href="{:DM('s')}{:U('/Index/index',['keywords'=>$vo])}">{$vo}</a>
+						</volist>
+					</empty>				
+				</div>
+			</div>
+		</div>
+		<h5 class="text-right mb0 hide">
+			<a href="" class="text_77">更多</a>
+			<i class="fa fa-chevron-right text_77"></i>
+		</h5>
+	</div>
+
+
+</div>
+
+<script>
+
+	
+
+	
+	$(document).ready(function(){
+		$('#hover_sub_name li').click(function(){
+			var v0 = $('#hover_sub_name li').eq(0).find('.fs14').html();
+			var url0=$('#hover_sub_name li').eq(0).data('url');
+			
+			var v1 = $('#hover_sub_name li').eq(1).html();
+			var url1=$('#hover_sub_name li').eq(1).data('url');
+			
+			$('#hover_sub_name li').eq(0).data({url:url1}).find('.fs14').html(v1);
+			$('#hover_sub_name li').eq(1).data({url:url0}).html(v0);
+			//alert($('#hover_sub_name li').eq(0).data('url'));
+			$('.search_goods_shop').attr('action',$('#hover_sub_name li').eq(0).data('url'));
+		})	
+		
+		var ac='{$Think.const.ACTION_NAME}';
+		if(ac=='shop'){
+			$('#hover_sub_name li').eq(1).click();
+		}
+	
+	
+		var timer = true;
+		if( $('#drop_down .media-body >div').find("*").length !=0 ){
+        	$('#hover_sub_name').siblings('input.bor_no').mouseover(function(){
+				$('#drop_down').slideDown()
+				$(this).focus()
+				clearTimeout(timer)
+			});
+			$('#hover_sub_name').siblings('input.bor_no').mouseout(function(){
+				timer = setTimeout(function(){ 
+					$('#drop_down').hide()  
+				}, 200)
+			});
+			$('#drop_down').mouseover(function(){
+				clearTimeout(timer)
+			})
+			$('#drop_down').mouseout(function(){
+				timer = setTimeout(function(){ 
+					$('#drop_down').hide()  
+				}, 200)
+			})
+        }	
+	})
+</script>

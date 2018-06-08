@@ -1,0 +1,74 @@
+<form id="form-cart-item">
+	<div class="cart-item"></div>
+	<input type="hidden" name="apiurl" value="/Cart/add">
+	<input type="hidden" name="is_openid" value="1">
+	<input type="hidden" name="type" value="3">
+</form>
+<!--购物车单笔记录-->
+<script id="tpl_cart_item" type="text/html">
+	<div class="line-box-m row hover noicon">
+		<div class="col-15">
+			<img src="<%= data.attr_list.images %>" alt="商品图片">
+		</div>
+		<div class="col-85">
+			<div class="pl10 pr10">
+				<div class="lh2-18px"><%= data.goods.goods_name %></div>
+				<div class="row">
+					<div class="col-50 text-gray"><%= data.attr_name %></div>
+					<div class="col-50 text-right"><%= data.price %> x <span class="text-success"><%= data.num %></span> 件</div>
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+	<div class="line-box row noicon">
+		<div class="col-4">数量</div>
+		<div class="col-4x3">
+			<div class="row">
+				<div class="col-5" onclick="cart_item_dec($(this))">
+					<i class="icons icons-20px i-dec"></i>
+				</div>
+				<div class="col-5x3">
+					<input name="num" id="num" value="<%= data.num %>" placeholder="订购数量" style="text-align:center">
+				</div>
+				<div class="col-5 text-right" onclick="cart_item_add($(this))">
+					<i class="icons icons-20px i-add"></i>
+				</div>
+			</div>
+		</div>
+	</div>	
+	<input type="hidden" name="attr_list_id" value="<%= data.attr_list_id %>">
+</script>
+
+<script>
+	ajax_post({
+		url:'/Api/api',
+		data:{apiurl:'/Cart/cart_item',is_openid:1,id:{$_GET.id}},
+	},function(ret){
+		var html=template('tpl_cart_item',{data:ret.data});
+		$('.page.active .cart-item').html(html);
+	});
+	
+	function cart_item_add(obj){
+		var num=obj.closest('.line-box').find('#num').val();
+		if(num=='' || parseInt(num)<1){
+			obj.closest('.line-box').find('#num').val(1);
+			return true;
+		}
+		num=parseInt(num)+1;
+		obj.closest('.line-box').find('#num').val(num);
+		
+
+	}
+	function cart_item_dec(obj){
+		var num=obj.closest('.line-box').find('#num').val();
+		if(num=='' || parseInt(num)<1){
+			obj.closest('.line-box').find('#num').val(1);
+			return true;
+		}
+		num=parseInt(num)-1;
+		if(num<1) num=1;
+		obj.closest('.line-box').find('#num').val(num);
+	
+	}		
+</script>

@@ -1,0 +1,66 @@
+<div class="bg_f1">
+	<!-- 首页头部banner -->
+	<if condition="MODULE_NAME == 'Home' && ACTION_NAME == 'index' && CONTROLLER_NAME == 'Index'">
+		<!--<div id="index-top-banner" style="height: 100px; width: 100%; background: url('/Public/images/index-top-banner/2017newyear.jpg') center center">-->
+			<!--<div class="container" style="text-align: right">-->
+				<!--<a onclick="return $(this).closest('#index-top-banner').slideUp('slow');" title="关闭" href="javascript:;" class="fs16"><i class="fa fa-times-circle"></i> </a>-->
+			<!--</div>-->
+		<!--</div>-->
+	</if>
+	<div class="container text_77 line30">您好!
+		<span class="ajax_topbar">
+		<in name="Think.const.MODULE_NAME" value="Home,Faq,Search,Brand,Item">
+			<a class="text_black" href="{:DM('user', '/login')}">请登录</a>
+			<a class="text_black" href="{:DM('user', '/register')}">免费注册</a>
+		<else />
+			<empty name="Think.session.user">
+			<a class="text_black" href="{:DM('user', '/login')}">请登录</a>
+			<a class="text_black" href="{:DM('user', '/register')}">免费注册</a>
+			<else />
+			<a target="_blank" class="text_black" href="{:DM('seller')}"><span class="text_yellow">{$Think.session.user.nick}</span></a>
+			<a class="text_black" href="{:DM('user', '/logout')}">退出登录</a>
+			</empty>
+		</in>
+		</span>
+		<!--<div class="pull-right clearfix ad">-->
+			<!--<div class="re fl plr10 hover_title">-->
+				<!--<a target="_blank" class="text_77" href="{:DM('my')}">买家中心<i class="fa fa-caret-down ml5"></i></a>-->
+				<!--<div class="ab dn line20 hover_body">-->
+					<!--<a target="_blank" class="text_77" href="{:DM('my', '/orders')}"><p class="mb7">已买到的宝贝</p></a>-->
+					<!--<a target="_blank" class="text_77" href="{:DM('my', '/history')}"><p class="mb7">我的足迹</p></a>-->
+				<!--</div>					-->
+			<!--</div>-->
+			<!--<div class="re fl plr10 hover_title">-->
+				<!--<a target="_blank" class="text_77" href="{:DM('my','/fav')}"><i class="fa fa-star mr5 text_red"></i>收藏夹<i class="fa fa-caret-down ml5"></i></a>-->
+				<!--<div class="ab dn line20 hover_body">-->
+					<!--<a target="_blank" class="text_77" href="{:DM('my', '/fav')}"><p class="mb7">收藏的宝贝</p></a>-->
+					<!--<a target="_blank" class="text_77" href="{:DM('my', '/favshop')}"><p class="mb7">收藏的店铺</p></a>-->
+				<!--</div>					-->
+			<!--</div>-->
+			<!--<div class="re fl plr10">-->
+				<!--<a class="text_77" href="{:DM('s', '/category')}">商品分类</a>				-->
+			<!--</div>-->
+			<!--<div class="re fl plr10 hover_title">-->
+				<!--<a target="_blank" class="text_77" href="{:DM('seller')}">卖家中心<i class="fa fa-caret-down ml5"></i></a>-->
+				<!--<div class="ab dn line20 hover_body">-->
+					<!--<a target="_blank" class="text_77" href="{:DM('zhaoshang')}"><p class="mb7">免费开店</p></a>-->
+					<!--<a target="_blank" class="text_77" href="{:DM('seller', '/orders')}"><p class="mb7">已卖出的宝贝</p></a>-->
+					<!--<a target="_blank" class="text_77" href="{:DM('sell')}"><p class="mb7">出售中的宝贝</p></a>-->
+					<!--<a target="_blank" class="text_77" href="{:DM('ad')}"><p class="mb7">广告位购买</p></a>-->
+					<!--<a target="_blank" class="text_77" href="{:DM('seller', '/refund')}"><p class="mb7">退款列表</p></a>-->
+					<!--&lt;!&ndash; <a target="_blank" class="text_77" href="https://imweb.dtfangyuan.com:9443/download/index.html"><p class="mb7">大唐方圆</p></a> &ndash;&gt;-->
+				<!--</div>					-->
+			<!--</div>-->
+			<!--<div class="re fl plr10">-->
+				<!--<a target="_blank" class="text_red" href="https://www.dttx.com/apps">app下载</a>-->
+			<!--</div>-->
+			<!--<div class="re fl plr10 hover_title">-->
+				<!--<a class="text_77" href="javascript:;">联系客服<i class="fa fa-caret-down ml5"></i></a>-->
+				<!--<div class="ab dn line20 hover_body">-->
+					<!--<a class="text_77" href="{:DM('www', '/service')}"><p class="mb7">客服中心</p></a>-->
+					<!--<a class="text_77" href="{:DM('faq')}"><p class="mb0">帮助中心</p></a>-->
+				<!--</div>					-->
+			<!--</div>	-->
+		<!--</div>-->
+	</div>
+</div>

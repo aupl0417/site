@@ -1,0 +1,73 @@
+<div class="row">
+	<div class="col-xs-3">
+		<label><input type="checkbox" class="i-red-square" name="{$param.name}[map_type][]" value="speed" {:in_array("speed",$param["value"]["map_type"])?"checked":""}> 店铺物流服务</label>
+	</div>
+	<div class="col-xs-2 text-right">		
+		<label style="line-height:35px">动态评分>=</label>
+	</div>
+	<div class="col-xs-3 text-right">		
+		<input type="text" id="{$param.name}[fraction_speed]" name="{$param.name}[fraction_speed]" placeholder="请输入店铺物流服务动态评分" value="{$param.value.fraction_speed}" class="form-control" style="">
+	</div>	
+</div>
+
+<div class="row">
+	<div class="col-xs-3">
+		<label><input type="checkbox" class="i-red-square" name="{$param.name}[map_type][]" value="service" {:in_array("service",$param["value"]["map_type"])?"checked":""}> 店铺服务态度</label>
+	</div>
+	<div class="col-xs-2 text-right">		
+		<label style="line-height:35px">动态评分>=</label>
+	</div>
+	<div class="col-xs-3">		
+		<input type="text" id="{$param.name}[fraction_service]" name="{$param.name}[fraction_service]" placeholder="请输入店铺服务态度动态评分" value="{$param.value.fraction_service}" class="form-control" style="">
+	</div>	
+</div>
+
+<div class="row">
+	<div class="col-xs-3">
+		<label><input type="checkbox" class="i-red-square" name="{$param.name}[map_type][]" value="desc" {:in_array("desc",$param["value"]["map_type"])?"checked":""}> 店铺描述相符</label>
+	</div>
+	<div class="col-xs-2 text-right">		
+		<label style="line-height:35px">动态评分>=</label>
+	</div>
+	<div class="col-xs-3">		
+		<input type="text" id="{$param.name}[fraction_desc]" name="{$param.name}[fraction_desc]" placeholder="请输入店铺描述相符动态评分" value="{$param.value.fraction_desc}" class="form-control" style="">
+	</div>	
+</div>
+
+
+<div class="row">
+	<div class="col-xs-3">
+		<label><input type="checkbox" class="i-red-square" name="{$param.name}[map_type][]" value="goods" {:in_array("goods",$param["value"]["map_type"])?"checked":""}> 要求在线商品数在规定范围之内</label>
+	</div>
+	<div class="col-xs-2 text-right">		
+		<label style="line-height:35px">在售商品数量>=</label>
+	</div>
+	<div class="col-xs-3">		
+		<input type="text" id="{$param.name}[goods_num]" name="{$param.name}[goods_num]" placeholder="请输入在售商品数量" value="{$param.value.goods_num}" class="form-control" style="">
+	</div>		
+</div>
+
+<div>
+	<label><input type="checkbox" class="i-red-square" name="{$param.name}[map_type][]" value="" disabled> 未因出售假冒商品被限制参加日常营销活动(未启用)</label>	
+</div>
+<div>
+	<label><input type="checkbox" class="i-red-square" name="{$param.name}[map_type][]" value="" disabled> 要求店铺不在一般违规处罚90天处罚期内(未启用)</label>	
+</div>
+<div>
+	<label><input type="checkbox" class="i-red-square" name="{$param.name}[map_type][]" value="" disabled> 未因活动中扰乱市场秩序被限制参加营销活动(未启用)</label>	
+</div>
+<div>
+	<label><input type="checkbox" class="i-red-square" name="{$param.name}[map_type][]" value="" disabled> 未因严重违规行为处罚满12分被限制参加本年度营(未启用)</label>	
+</div>
+<div>
+	<label><input type="checkbox" class="i-red-square" name="{$param.name}[map_type][]" value="" disabled> 近30天店铺纠纷退款(未启用)</label>	
+</div>
+<div>
+	<label><input type="checkbox" class="i-red-square" name="{$param.name}[map_type][]" value="" disabled> 未因严重违规行为被限制参加营销活动(未启用)</label>	
+</div>
+<div>
+	<label><input type="checkbox" class="i-red-square" name="{$param.name}[map_type][]" value="" disabled> 未因一般违规行为被限制参加营销活动(未启用)</label>	
+</div>
+<div>
+	<label><input type="checkbox" class="i-red-square" name="{$param.name}[map_type][]" value="" disabled> 不在搜索全店屏蔽处罚期(未启用)</label>	
+</div>

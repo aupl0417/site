@@ -1,0 +1,87 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			收货地址
+		</div>
+		<div class="r" >
+		<div class="text" onclick="openWin({name:'address_new',url:'/Address/address_new',logined:true})">新增收货地址</div>
+		</div>
+	</div>
+</header>
+<section id="address-content">
+    <div class="load-body">数据加载中...</div>
+</section>
+
+<script id="address-list" type="text/html">
+	<% for(i=0;i<data.length;i++){ %>
+	<div class="line-box-m row hover noicon" id="<%= data[i].id %>">		
+		<div class="action animated address-btn-list">
+			<div class="action-btn action-btn-edit" onclick="openWin({name:'address_edit',url:'/Address/address_edit/id/<%= data[i].id %>',ref:true})">编辑</div>
+			<div class="action-btn action-btn-delete" onclick="address_delete(<%= data[i].id %>)">删除</div>
+		</div>
+		<div onclick="card_item_click(this)">
+			<div class="col-5x4 pl10">
+				<div class="bank_name"><%= data[i].linkname %>  <%= data[i].mobile %>  <% if(data[i].is_default == '1'){ %>&nbsp;(默认收货地址)<% } %> </div>
+				<div class="text-gray account"><%= data[i].province_name %> &nbsp; <%= data[i].city_name %> &nbsp; <%= data[i].district_name %> &nbsp; <%= data[i].town_name %> &nbsp; <%= data[i].street %></div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+	<% } %>
+</script>
+
+<include file="Public:d_layer" />
+
+<script>
+fixBar(1);
+$(function(){
+	ajax_post({
+		url:"/Api/api",
+		data:{
+			apiurl:'/Address/address_list',
+			is_openid:1,
+		},
+	},function(ret){
+		if( ret.code == 1 ){
+			// console.log(ret);
+			var html = template('address-list',{data:ret.data});
+			$('#address-content').html(html);
+		}else{
+			$('.load-body').html('没有找到收货地址');
+		}
+	});
+});
+
+function card_item_click(obj){
+	$('.address-btn-list').hide();
+	$(obj).parent().find('.address-btn-list').show();
+}
+
+function address_delete(id){
+	vmodal({
+		title:'是否确定删除',
+		msg:'<div class="text-center m10">真的要删除该条收货地址吗？</div>',
+	},function(){
+		$('.page.active .vmodal-success').unbind().click(function(){
+			ajax_post({
+				url:'/Api/api',
+				data:{
+					apiurl:'/Address/delete',
+					is_openid:1,
+					id:id,
+				},
+			},function(ret){
+				valert(ret);
+				if( ret.code == 1 ){
+					$('.page.active #'+id).remove();
+				}
+			});			
+		});
+		
+	});
+	
+}
+</script>

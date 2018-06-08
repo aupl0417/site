@@ -1,0 +1,35 @@
+<include file="Public:header" />
+<include file="nav" />
+
+<div class="m20">
+	<div class="row">
+		<volist name="tables" id="vo">
+		<div class="col-xs-3 md20">
+			<div class="box p20 text-center hover-shadow">
+				<h4>{$vo}</h4>
+				<a href="__URL__/index/table/{$vo}" class="btn btn-rad btn-trans btn-primary btn-sm">管理表单模板</a>
+				<div class="btn btn-rad btn-trans btn-info btn-sm" data-table="{$vo}" data-type="create">创建表单模板</div>
+			</div>
+		</div>
+		</volist>
+	</div><!--/list-group-->
+</div>
+
+
+<include file="Public:copyright" />
+<include file="Public:js" />
+<script>
+$(document).ready(function(){
+	$('[data-type="create"]').click(function(){
+		var d=$(this).data();
+		vmodal({
+			title:'创建表单',
+			url:'__URL__/form_create/table/'+d.table,
+		});	
+	});
+	
+});
+
+
+</script>
+<include file="Public:footer" />

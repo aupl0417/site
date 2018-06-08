@@ -1,0 +1,73 @@
+<div class="md20">
+	<div class="btn btn-sm btn-rad btn-trans btn-info" onclick="vmodal({title:'添加搜索表单字段',url:'__URL__/search_field_add/formtpl_id/{$_GET.formtpl_id}',width:'900px'})"><i class="fa fa-plus"></i> 添加搜索字段</div>
+	<div class="btn btn-sm btn-rad btn-trans btn-default" onclick="vmodal({title:'添加搜索表单字段',url:'__URL__/search_field_add_from_fields/formtpl_id/{$_GET.formtpl_id}',width:'900px'})"><i class="fa fa-plus"></i> 从表单模板中添加</div>
+</div>
+
+			{:W('Widget/listable',array(array(
+				'data'	=>$list,
+				'items'	=>array(
+					array(
+						'title'		=>'ID',
+						'field'		=>'id',
+						'td_attr'		=>'width="80" class="text-center"',
+					),
+					array(
+						'title'		=>'状态',
+						'type'		=>'active',
+						'field'		=>'active',
+						'td_attr'	=>'width="60" class="text-center"',
+						'data'		=>array(							
+							0	=>'<div class="btn btn-xs btn-rad btn-trans btn-default">锁定</div>',
+							1	=>'<div class="btn btn-xs btn-rad btn-trans btn-success">正常</div>',
+						),
+						
+					),					
+					array(
+						'title'		=>'标签名称',
+						'field'		=>'label',
+					),
+					array(
+						'title'		=>'字段名',
+						'field'		=>'name',
+					),
+					array(
+						'title'		=>'映射字段',
+						'field'		=>'map_field',
+					),
+					array(
+						'title'		=>'表单类型',
+						'field'		=>'formtype',
+					),				
+					array(
+						'title'		=>'匹配方式',
+						'type'		=>'active',
+						'field'		=>'search_type',
+						'td_attr'	=>'width="80" class="text-center"',
+						'data'		=>array(							
+							0	=>'<div class="btn btn-xs btn-rad btn-trans btn-default">完全匹配</div>',
+							1	=>'<div class="btn btn-xs btn-rad btn-trans btn-success">模糊匹配</div>',
+						),
+						
+					),					
+					array(
+						'title'		=>'操作',
+						'type'		=>'html',
+						'norder'	=>1,
+						'td_attr'	=>'class="text-center" width="150"',
+						'html'		=>'<div class="btn btn-sm btn-info btn-rad btn-trans" onclick="edit_search_field([id])">修改</div> <div class="btn btn-sm btn-danger btn-rad btn-trans" onclick="delete_search_field([id])">删除</div>',
+					),					
+					
+				),
+			)))}
+			
+<script>
+	$('#vtab7-content tbody').sortable({
+		stop: function(event, ui) {
+			var data = $('#vtab7-content tbody >tr').map(function() { return $(this).attr("id"); }).get();
+			ajax_post({
+				data:{ids:data},
+				url:'__URL__/setsort_search_field',
+			});		
+		}	
+	});	
+</script>			

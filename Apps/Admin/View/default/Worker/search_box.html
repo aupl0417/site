@@ -1,0 +1,28 @@
+<form method="get" action="__URL__/" role="form" class="hover-shadow hover-search p10 md10">
+
+	<table class="no-bordered">
+		<tr>
+			<td width="150" class="p0" valign="top">
+				<a href="__URL__/add" class="btn btn-trans btn-rad btn-primary mt8"><i class="fa fa-plus"></i> 新增记录</a>
+			</td>	
+			<td width="150" class="p0 hide" valign="top">
+				<eq name="status" value="1">
+					<div class="btn btn-success btn-trans btn-rad mt8"><i class="fa fa-check-circle"></i> 任务正常运行中</div>
+				<else />
+					<div class="btn btn-danger btn-trans btn-rad mt8"><i class="fa fa-times-circle"></i> 任务未运行</div>
+				</eq>
+			</td>		
+			<td></td>
+			<notempty name="search_fields">
+			<td class="p0">
+				{:W('Widget/searchform',array($search_fields,I('get.'),$fcfg['search_col']))}
+			</td>
+			<td width="100" class="p0" valign="top"><button type="submit" class="btn btn-rad btn-trans btn-primary btn-block mt8"><i class="fa fa-search"></i> 搜索</button></td>
+			</notempty>
+		</tr>
+	</table>
+	
+	
+
+</form>
+<div class="clearfix"></div>

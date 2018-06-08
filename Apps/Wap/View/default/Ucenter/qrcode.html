@@ -1,0 +1,45 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			推广码
+		</div>
+		<div class="r">
+		</div>
+	</div>
+</header>
+<section>
+	<div class="content p10 bg-white">
+		<div class="load-body">数据加载中……</div>
+	</div>
+</section>
+
+<script id="tpl_qrcode" type="text/html">
+	<div class="p20 text-center md10">
+		<img src="<%= data %>" alt="推广二维码">
+		<div>将此二维码给您的朋友扫一扫</div>
+	</div>
+	<div class="line-input border-0 row">
+			<div class="col-4">推广链接：
+			</div>
+			<div class="col-4x3">
+				<input value="{:C('sub_domain.wap').'/Index/index?url=/Login/register/ref/'.session('user.id')}">
+			</div>
+	</div>
+</script>
+<script>
+	fixBar(1);
+	ajax_get({
+		url:'__URL__/qrcode_',
+	},function(ret){
+		if(ret.code==1){
+			var html = template('tpl_qrcode', {data:ret.data});
+			$('.page.active .content').html(html);
+		}else if(ret.code==3){
+			$('.page.active .content').html(no_data_text);
+		}
+	});		
+
+</script>

@@ -1,0 +1,176 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="nav-tabs">
+			<div class="nav-tabs-item active">搜商品</div><div class="nav-tabs-item">搜店铺</div>
+		</div>
+		<div class="r">
+		</div>
+	</div>
+</header>
+<section class="tabs-content">
+	<!--搜商品-->
+	<div class="tabs-pane active">	
+		<div class="md10"></div>
+		<form id="form-search-goods" onsubmit="return false;">
+			<div class="line-box row noicon" style="padding:0 0 0 10px">
+				<div class="col-70">
+					<input id="q" name="q" placeholder="请输入商品关键词">
+				</div>
+				<div class="col-30 text-center bg-danger text-white ft14 b" onclick="search_goods()">搜商品</div>
+			</div>
+			<input type="hidden" name="shop_id" id="shop_id" value="{$_GET.shop_id}">
+		</form>
+		
+		<div class="line-box noicon nobg">
+			<div class="title">热搜词</div>
+		</div>
+		<div class="p10 box md10">
+			<div class="q-item">
+				<div class="hover" onclick="openWin({name:'goods',url:'/Goods/index/q/潮男短裤'})">潮男短裤</div>
+				<div class="hover" onclick="openWin({name:'goods',url:'/Goods/index/q/电风扇'})">电风扇</div>
+				<div class="hover" onclick="openWin({name:'goods',url:'/Goods/index/q/大码女装'})">大码女装</div>
+				<div class="hover" onclick="openWin({name:'goods',url:'/Goods/index/q/凉鞋'})">凉鞋</div>
+				<div class="hover" onclick="openWin({name:'goods',url:'/Goods/index/q/面膜'})">面膜</div>
+				<div class="hover" onclick="openWin({name:'goods',url:'/Goods/index/q/啤酒'})">啤酒</div>
+				<div class="hover" onclick="openWin({name:'goods',url:'/Goods/index/q/蚊帐'})">蚊帐</div>
+				<div class="hover" onclick="openWin({name:'goods',url:'/Goods/index/q/行车记录仪'})">行车记录仪</div>
+				<div class="hover" onclick="openWin({name:'goods',url:'/Goods/index/q/益智玩具'})">益智玩具</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		
+		<div class="line-box noicon nobg">
+			<div class="title">历史搜索</div>
+		</div>
+		<div class="search-goods-history">
+			<div class="load-body">暂无搜索历史记录！</div>
+		</div>
+	</div>
+	
+	<!--搜店铺-->
+	<div class="tabs-pane">	
+		<div class="md10"></div>	
+		<form id="form-search-shop" onsubmit="return false;">
+			<div class="line-box row noicon" style="padding:0 0 0 10px">
+				<div class="col-70">
+					<input id="q" name="q" placeholder="请输入店铺关键词">
+				</div>
+				<div class="col-30 text-center bg-danger text-white ft14 b" onclick="search_shop()">搜店铺</div>
+			</div>
+		</form>
+		
+		<div class="line-box noicon nobg">
+			<div class="title">热搜词</div>
+		</div>
+		<div class="p10 box md10">
+			<div class="q-item">
+				<div class="hover" onclick="openWin({name:'search_shop',url:'/Goods/shop/q/潮男短裤'})">潮男短裤</div>
+				<div class="hover" onclick="openWin({name:'search_shop',url:'/Goods/shop/q/电风扇'})">电风扇</div>
+				<div class="hover" onclick="openWin({name:'search_shop',url:'/Goods/shop/q/大码女装'})">大码女装</div>
+				<div class="hover" onclick="openWin({name:'search_shop',url:'/Goods/shop/q/凉鞋'})">凉鞋</div>
+				<div class="hover" onclick="openWin({name:'search_shop',url:'/Goods/shop/q/面膜'})">面膜</div>
+				<div class="hover" onclick="openWin({name:'search_shop',url:'/Goods/shop/q/啤酒'})">啤酒</div>
+				<div class="hover" onclick="openWin({name:'search_shop',url:'/Goods/shop/q/蚊帐'})">蚊帐</div>
+				<div class="hover" onclick="openWin({name:'search_shop',url:'/Goods/shop/q/行车记录仪'})">行车记录仪</div>
+				<div class="hover" onclick="openWin({name:'search_shop',url:'/Goods/shop/q/益智玩具'})">益智玩具</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		
+		<div class="line-box noicon nobg">
+			<div class="title">历史搜索</div>
+		</div>
+		<div class="search-shop-history">
+			<div class="load-body">暂无搜索历史记录！</div>
+		</div>
+	</div>	
+</section>
+
+<script id="tpl_goods_q" type="text/html">
+	<% for(i=0;i<data.length;i++){ %>
+	<div class="line-box hover" onclick="openWin({name:'goods',url:'/Goods/index/q/<%= data[i] %>'})">
+		<%= data[i] %>
+	</div>
+	<% } %>
+</script>
+
+<script id="tpl_shop_q" type="text/html">
+	<% for(i=0;i<data.length;i++){ %>
+	<div class="line-box hover" onclick="openWin({name:'search_shop',url:'/Goods/shop/q/<%= data[i] %>'})">
+		<%= data[i] %>
+	</div>
+	<% } %>
+</script>
+
+<script>
+	fixBar(1);
+	//进入页面将光标移动至搜索框
+	$(".pages .page.active #q").focus();
+	ajax_get({
+		url:'/Goods/goods_q'		
+	},function(ret){
+		if(ret.code==1){
+			var html=template('tpl_goods_q',{data:ret.data});
+			$('.page.active .search-goods-history').html(html);
+		}
+	});
+	
+	//搜商品
+	function search_goods(){
+		var data=getFormJson('#form-search-goods');
+		if(data.q==''){
+			valert({msg:'请输入搜索商品关键词！'});
+			return false;
+		}
+		//data.q = escape(data.q);
+		data.q = encodeURI(data.q);
+		var shop_id = data.shop_id ? '/shop_id/'+data.shop_id :'';
+		openWin({name:'goods',url:'/Goods/index/q/'+data.q + shop_id});
+	}
+
+	//搜店铺
+	function search_shop(){
+		var data=getFormJson('#form-search-shop');
+		if(data.q==''){
+			valert({msg:'请输入搜索店铺关键词！'});
+			return false;
+		}
+		//data.q = escape(data.q);
+		data.q = encodeURI(data.q);
+		openWin({name:'search_shop',url:'/Goods/shop/q/'+data.q});
+	}	
+	
+	$('.page.active .nav-tabs>div').each(function(index){
+		var obj=$(this);
+		obj.click(function(){
+			obj.closest('.nav-tabs').find('.nav-tabs-item.active').removeClass('active');
+			obj.addClass('active');
+			
+			$('.page.active .tabs-content .tabs-pane.active').removeClass('active');
+			$('.page.active .tabs-content .tabs-pane').eq(index).addClass('active');
+			
+			if(index==0){
+				ajax_get({
+					url:'/Goods/goods_q'		
+				},function(ret){
+					if(ret.code==1){
+						var html=template('tpl_goods_q',{data:ret.data});
+						$('.page.active .search-goods-history').html(html);
+					}
+				});			
+			}else{
+				ajax_get({
+					url:'/Goods/shop_q'		
+				},function(ret){
+					if(ret.code==1){
+						var html=template('tpl_shop_q',{data:ret.data});
+						$('.page.active .search-shop-history').html(html);
+					}
+				});				
+			}
+		});
+	});
+</script>

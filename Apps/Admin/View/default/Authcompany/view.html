@@ -1,0 +1,152 @@
+<div class="p20 box">
+	<div class="row">
+		<div class="col-xs-6 auth-text">
+			<div>用户ID：{$rs.uid}</div>
+			<div>用户名：{$rs.user.nick}</div>
+			<div>公司名称：<span class="ft18 strong text-danger">{$rs.company}</span></div>
+			<div>注册地址：{$rs.reg_address}</div>
+			<div>营业地址：{$rs.business_address}</div>
+			<div>法人证件类型：{$rs['legal_card_type']==1?'护照':'身份证'}</div>
+			<div>法人：<span class="ft18 strong text-danger">{$rs.legal}</span></div>
+			<div>法人证件号码：<span class="ft18 strong">{$rs.legal_card_no}</span></div>
+			<div>注册资本：{$rs.reg_capital}</div>
+			<div>实收资本：{$rs.paidin_capital}</div>
+			<div>企业类型：{$rs.comtype.type_name}</div>
+			<div>主营范围：{$rs.scope|nl2br}</div>
+			<div>注册日期：{$rs.reg_day}</div>
+			<div>到期日期：{$rs.end_day}</div>
+			<div>营业执照编号：<span class="ft18 strong">{$rs.license_code}</span></div>
+			<div>组织机构证编号：<span class="ft18 strong">{$rs.org_code}</span></div>
+			<div>税收登记证编号：<span class="ft18 strong">{$rs.tax_code}</span></div>
+			
+			<div>申请时间：{$rs.atime}</div>
+			<div>审核状态：
+				{:status($rs['status'],array(0=>array('等待审核','btn-default'),1=>array('审核通过','btn-success'),2=>array('拒绝审核','btn-danger')))}
+			</div>
+		</div>
+		<div class="col-xs-6">
+			<div>
+				法人证件正面照：
+			</div>
+			<div class="md20"><a class="image-zoom" href="{$rs.legal_pic}"><img src="{:myurl($rs['legal_pic'],200,100)}"></a></div>
+			<div>
+				法人证件背面照：
+			</div>
+			<div class="md20"><a class="image-zoom" href="{$rs.legal_pic2}"><img src="{:myurl($rs['legal_pic2'],200,100)}"></a></div>
+			<div>
+				法人手持证件照：
+			</div>
+			<div class="md20"><a class="image-zoom" href="{$rs.legal_pic3}"><img src="{:myurl($rs['legal_pic3'],200,100)}"></a></div>
+			<hr />
+			<notempty name="rs.license_pic">
+			<div>
+				营业执照照片：
+			</div>
+			<div class="md20"><a class="image-zoom" href="{$rs.license_pic}"><img src="{:myurl($rs['license_pic'],200,100)}"></a></div>
+			</notempty>
+			<notempty name="rs.org_pic">
+			<div>
+				组织机构代码证照片：
+			</div>
+			<div class="md20"><a class="image-zoom" href="{$rs.org_pic}"><img src="{:myurl($rs['org_pic'],200,100)}"></a></div>
+			</notempty>
+			<notempty name="rs.tax_pic">
+			<div>
+				税务登记证照片
+			</div>
+			<div class="md20"><a class="image-zoom" href="{$rs.tax_pic}"><img src="{:myurl($rs['tax_pic'],200,100)}"></a></div>
+			</notempty>
+			
+		</div>
+	</div>
+	<div class="ft18 strong p10 border-d md20">审核记录</div>
+	
+	<form data-url="__URL__/logs_add" data-id="#form_{$rs.id}" id="form_{$rs.id}" class="form-horizontal vform">
+			{:W('Widget/buildform',array(array(
+				'field'		=>array(	
+					array(
+						'formtype'		=>'radio',
+						'label'			=>'状态',
+						'name'			=>'status',
+						'data'			=>array(array(0,'等待审核'),array(1,'通过审核'),array(2,'拒绝审核')),
+						'field'			=>array(0,1),
+						'value'			=>$rs['status'],
+					),
+					array(
+						'formtype'		=>'textarea',
+						'label'			=>'原因',
+						'name'			=>'reason',
+						'tips'			=>'拒绝审核时必填',
+					),
+					array(
+						'formtype'		=>'hidden',
+						'name'			=>'auth_id',
+						'value'			=>$rs['id'],
+					),					
+					array(
+						'formtype'		=>'html',
+						'label'			=>' ',
+						'html'			=>'<button type="button" class="btn btn-primary btn-150px logs-add"><i class="fa fa-check"></i> 提交</button>'
+					),
+
+
+				),
+			)))}
+	
+	
+	</form>
+	<notempty name="rs.logs">
+	<ul class="timeline">
+		<volist name="rs.logs" id="vo">
+		<li>
+			<i class="fa fa-clock-o"></i>
+			<span class="date">
+				{$vo.atime}
+			</span>
+			<div class="content">
+				<div class="md20">审核状态：
+					{:status($vo['status'],array(0=>array('等待审核','btn-default'),1=>array('审核通过','btn-success'),2=>array('拒绝审核','btn-danger')))}
+				</div>
+				<notempty name="vo.reason">
+				<div class="md20 ft14">
+					原因：
+					{$vo.reason|nl2br}
+				</div>
+				</notempty>
+				<notempty name="vo.remark">
+				<div class="md20 ft14">
+					备注：
+					{$vo.remark|nl2br}
+				</div>
+				</notempty>
+				<small class="md10">
+					雇员ID：{$vo.a_uid}
+				</small>
+			</div>
+		</li>
+		</volist>
+	</ul>
+	</notempty>
+	
+</div>
+<div class="clearfix">
+	<div class="pull-right text-gray" onclick="$(this).closest('tr').toggleClass('hide');"><i class="fa fa-times-circle-o fa-2x"></i></div>	
+</div>
+
+<script>
+image_zoom();
+$('.logs-add').click(function(){
+	var d=$(this).closest('form').data();
+	ajax_post_form({
+		formid:d.id
+	},function(ret){
+		valert(ret);
+		if(ret.status=='success'){
+			var tag='#item-{$rs.id}';
+			var url='__URL__/view/id/{$rs.id}';
+			loadurl({tag:tag,url:url});
+		}
+	});
+
+});
+</script>

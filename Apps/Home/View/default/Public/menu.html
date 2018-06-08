@@ -1,0 +1,57 @@
+<div class="bg-gray box seller-menu">
+	<div class="menus">
+		<div class="menu-title"><i class="fa fa-angle-right"></i> 交易管理</div>
+		<ul>
+			<li><a href="">全部卖出交易</a></li>
+			<li><a href="">买家退款退货</a></li>
+			<li><a href="">信用管理</a></li>
+			<li><a href="">评价管理</a></li>
+			<li><a href="">发货管理</a></li>
+		</ul>
+	</div>
+	
+	<div class="menus">
+		<div class="menu-title"><i class="fa fa-angle-right"></i> 宝贝管理</div>
+		<ul>
+			<li><a href="{$Think.config.sub_domain.upload}" target="_blank">发布宝贝</a></li>
+			<li><a href="{$Think.config.sub_domain.sell}">出售中的宝贝</a></li>
+			<li><a href="{$Think.config.sub_domain.sell}{:U('/Index/index',array('sell_promise'=>1))}">橱窗推荐</a></li>
+			<li><a href="{$Think.config.sub_domain.sell}{:U('/Warehouse')}">仓库中的宝贝</a></li>
+			<li><a href="{$Think.config.sub_domain.sell}{:U('/Category')}">宝贝分类</a></li>
+			<li><a href="{$Think.config.sub_domain.sell}{:U('/Brand')}">品牌管理</a></li>
+		</ul>
+	</div>	
+	
+	<div class="menus">
+		<div class="menu-title"><i class="fa fa-angle-right"></i> 店铺管理</div>
+		<ul>
+			<eq name="Think.config.user.is_store" value="0"><li><a href="{$Think.config.sub_domain.mai}">免费开店</a></li></eq>
+			<li><a href="http://{$Think.config.user.id}.{$Think.config.domain}" target="_blank">查看店铺</a></li>
+			<li><a href="{$Think.config.sub_domain.siteadmin}" target="_blank">店铺装修</a></li>			
+			<li class="hide"><a href="">图片空间</a></li>
+			<li><a href="{$Think.config.sub_domain.mai}{:U('/Setting')}">店铺基本设置</a></li>
+			<li><a href="{$Think.config.sub_domain.express}">运费模板</a></li>
+		</ul>
+	</div>	
+	<div class="menus">
+		<div class="menu-title"><i class="fa fa-angle-right"></i> 营销中心</div>
+		<ul>
+			<li><a href="">促销设置</a></li>
+			<li><a href="">活动报名</a></li>
+			<li><a href="">广告购买</a></li>
+		</ul>
+	</div>	
+	<div class="menus">
+		<div class="menu-title"><i class="fa fa-angle-right"></i> 客户服务</div>
+		<ul>
+			<li><a href="{$Think.config.sub_domain.xiaobao}">消费者保障服务</a></li>
+			<li><a href="{:erp_url(C('cfg.erp')['domain']['u'].'/auth')}" target="_blank">乐兑认证</a></li>
+			<li><a href="">售后管理</a></li>
+			<li><a href="">举报管理</a></li>
+			<li><a href="">咨询/回复</a></li>
+			<li><a href="">申诉中心</a></li>
+			<li><a href="">店铺升级</a></li>
+		</ul>
+	</div>	
+	
+</div>

@@ -1,0 +1,61 @@
+			{:W('Widget/listable',array(array(
+				'data'	=>$pagelist['list'],
+				'item_view'=>1,				
+				'items'	=>array(
+	
+					array(
+						'title'		=>'ID',
+						'field'		=>'_id',
+						'td_attr'	=>'class="text-center"',
+					),				
+					array(
+						'title'		=>'接口名称(job_name)',
+						'field'		=>'job_name',
+						'td_attr'	=>'class="text-center"',
+					),				
+					array(
+						'title'		=>'订单号(val)',
+						'field'		=>'val',
+					),				
+				
+					array(
+						'title'		=>'接口(method)',
+						'field'		=>'method',
+					),
+					array(
+						'title'		=>'执行时间',
+						'field'		=>'dotime',
+					),
+					array(
+						'title'		=>'执行结果',
+						'type'		=>'active',
+						'field'		=>'code',
+						'td_attr'	=>'class="text-center"',
+						'data'		=>array(
+							'0'=>'<div class="btn btn-xs btn-rad btn-trans btn-danger m0 btn-block">0</div>',
+							'1'=>'<div class="btn btn-xs btn-rad btn-trans btn-success m0 btn-block">1</div>',
+							'100'=>'<div class="btn btn-xs btn-rad btn-trans btn-danger m0 btn-block">100</div>',
+							'200'=>'<div class="btn btn-xs btn-rad btn-trans btn-danger m0 btn-block">200</div>',
+							'1010'=>'<div class="btn btn-xs btn-rad btn-trans btn-danger m0 btn-block">1010</div>',
+						),
+					),
+					array(
+						'title'		=>'msg',
+						'field'		=>'msg',
+						'td_attr'	=>'class="text-center"',
+					),						
+					array(
+						'title'		=>'时间',
+						'field'		=>'atime',
+						'td_attr'		=>'class="text-gray text-center"',
+					),
+					array(
+						'title'		=>'操作',
+						'type'		=>'html',
+						'norder'	=>1,
+						'html'		=>'<div class="btn btn-default btn-sm btn-rad btn-trans btn-block btn-view m0" data-id="[_id]" data-url="__URL__/timed_task_view/id/[_id]">详情</div>',
+						'td_attr'	=>'width="80" class="text-center"',
+					),				
+					
+				),
+			)))}

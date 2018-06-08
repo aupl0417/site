@@ -1,0 +1,84 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			支付宝/财付通
+		</div>
+		<div class="r">
+			<div class="text" onclick="openWin({name:'card_add',url:'__URL__/card_add',authed:true})">添加</div>
+		</div>
+	</div>
+</header>
+<section>
+
+	<div class="account-list">
+		<div class="load-body">数据读取中……</div>
+	</div>
+</section>
+<include file="Public:d_layer" />
+<script id="tpl_cardalipay_list" type="text/html">
+    <% for (var i = 0; i < data.length; i ++) { %>
+		<div class="line-box-m row hover noicon" id="<%= data[i].id %>">			
+			<div class="action animated">
+				<div class="action-btn action-btn-edit" onclick="openWin({name:'card_edit',url:'__URL__/card_edit/id/<%= data[i].id %>'})">修改</div>
+				<div class="action-btn action-btn-delete" onclick="card_delete($(this))" data-id="<%= data[i].id %>">删除</div>
+			</div>
+			<div onclick="card_item_click($(this))">
+				<div class="col-5" style="max-width:40px">
+					<img src="<%= data[i].bank.logo %>" class="img-circle">
+				</div>
+				<div class="col-5x4 pl10">
+					<div class="bank_name"><%= data[i].bank.bank_name %></div>
+					<div class="text-gray account"><%= data[i].master %> , <%= data[i].account %></div>
+				</div>			
+			</div>
+			<div class="clearfix"></div>
+		</div>
+    <% } %>
+
+</script>
+
+<script>
+	fixBar(1);
+	
+	ajax_post({
+		url:'/Api/api',
+		data:{apiurl:'/Withdraw/card_list',is_openid:1,type:2,no_sign:'type'},
+	},function(ret){
+		if(ret.code==1){			
+			var html = template('tpl_cardalipay_list', {data:ret.data});	
+			$('.page.active .account-list').html(html);
+		}else if(ret.code==3){
+			$('.page.active .account-list').html(no_data_text);
+		}
+	});
+	
+	function card_item_click(obj){
+		obj.closest('.account-list').find('.action.active').removeClass('active');
+		obj.closest('.line-box-m').find('.action').addClass('active');
+	}
+	
+	function card_delete(obj){
+		vmodal({
+			title:'删除账号',
+			msg:'<div class="text-center p10">真的要删除吗？</div>',
+		},function(){
+			$('.page.active .vmodal-success').click(function(){
+				alert('kk');
+				ajax_post({
+					url:'/Api/api',
+					data:{apiurl:'/Withdraw/card_del',is_openid:1,id:obj.data('id')},
+				},function(ret){
+					valert(ret);
+					if(ret.code==1){			
+						$('.page.active .account-list #'+obj.data('id')).remove();
+					}
+				});				
+			});
+		});
+	}
+
+	
+</script>

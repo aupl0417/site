@@ -1,0 +1,53 @@
+<include file="Public:header" />
+		<div class="page-group">
+			<div id="page-scroll-hot" class="page" data-page_num="{$pagelist.pageinfo.page}">
+				<input type="hidden" name="p" id="p" value="2" />
+				<!-- 标题栏 -->
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left back" href="/"></a>
+					<h1 class="title">推荐</h1>
+					<a class="icon iconfont icon-category pull-right ml5 ac-menu" onclick="top_menu()"></a>
+				</header>
+
+				<!-- 浮动导航 -->
+				<include file="Public:fixed-menu" />
+
+				<!-- 这里是页面内容区 -->		
+				<div class="content infinite-scroll" data-distance="100" data-p="1">
+					<notempty name="pagelist.list">
+					<div class="list-container img-block">						
+						<volist name="pagelist.list" id="vo">
+						<div class="card facebook-card">
+							<a href="{$vo.url}">
+							<div class="card-content">
+								<img class="lazyload" data-sizes="auto" data-src="{$vo.images}" src="../Public/images/nopic_640x325.gif" width="100%" alt="{$vo.name}">
+							</div>
+							<div class="card-footer no-border">
+								{$vo.name}
+							</div>
+							</a>
+						</div>				
+							
+						</volist>
+					</div>
+					<!-- 加载提示符 -->
+					<div class="infinite-scroll-preloader">
+						<div class="preloader">
+						</div>
+					</div>
+					<else />
+							<div class="nors text-center">
+								<div><i class="iconfont icon-sousuowujieguo ft3"></i></div>
+								 找不到记录！
+							</div>
+					</notempty>					
+				</div>			
+				
+			</div>		
+
+		
+		</div>	
+		
+
+<include file="Public:script" />
+<include file="Public:footer" />

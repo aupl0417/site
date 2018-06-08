@@ -1,0 +1,244 @@
+<include file="Public:header" />
+<include file="nav" />
+<js href="__JS__/ECharts/echarts.min.js" />
+<notempty name="pagelist.list">
+<div class="m20">
+	<include file="search_box" />
+	
+
+	<form id="formlist" name="formlist">
+	<div class="block-flat">
+		<div class="content">		
+			<include file="widget_pagelist" />			
+			
+			<div class="clearfix"></div>
+			<div class="row">
+				<div class="col-xs-10 text-center">
+					{$pagelist.page.page}
+				</div>
+				<div class="col-xs-2 text-right">
+					<div class="page-total">共 {$pagelist.allnum} 条记录，共 {$pagelist.allpage} 页</div>
+				</div>
+			</div>
+
+		</div>
+		
+	</div>
+	
+	</form><!--/form-->
+
+	<div class="clearfix h50px"></div>
+	
+</div>
+
+
+<div class="navbar-fixed-bottom border-t">
+	<div class="buttom-bar bg-white-50">
+
+		<div class="row">
+			<div class="col-xs-3">
+				<button type="button" class="btn btn-info btn-rad btn-trans select-all"><i class="fa fa-location-arrow"></i> 全选 / 反选</button>
+				<button type="button" class="btn btn-primary btn-rad btn-trans delete-select"><i class="fa fa-times"></i> 删除选中记录</button>
+				<button type="button" data-param="{:http_build_query($_GET)}" class="btn btn-success btn-rad btn-trans send-select hide"><i class="fa fa-mail-forward"></i> 发送通知</button>
+				<button type="button" class="btn btn-info btn-rad btn-trans excel hide"><i class="fa fa-times"></i> 导出</button>
+				<a href="__URL__/clean_user" target="_blank" class="btn btn-info btn-rad btn-trans"> 清理用户</a>
+			</div>
+			<div class="col-xs-2">				
+				<div class="input-group">
+					<select id="toactive" name="toactive" class="form-control" >
+						<option value="0">停用</option>
+						<option value="1">正常</option>
+						<option value="2">黑名单</option>
+						<option value="3">冻结</option>
+					</select>
+					<div class="input-group-btn">
+						<div class="btn btn-rad btn-trans btn-default active-change">修改</div>
+					</div>
+				</div>				
+			</div>
+			<div class="col-xs-2 pull-right">
+				<div class="input-group pull-right">
+					<select id="gopage" name="gopage" class="form-control">
+						<option value="1">跳转</option>
+						{$pagelist.page.gopage}
+					</select>					
+				</div>			
+			</div>
+
+					
+		</div>
+			
+	</div>
+</div>	
+
+<else />
+<div class="m20">
+	<include file="search_box" />
+	<div class="text-center nors">
+		<div class="nors-tips md20">暂无记录！</div>
+		<a href="__URL__/add" class="btn btn-trans btn-lg btn-rad btn-primary"><i class="fa fa-plus"></i> 新增记录</a>		
+	</div>
+</div>
+</notempty>
+
+
+
+<include file="Public:copyright" />
+<include file="Public:js" />
+<script>
+$(document).ready(function(){
+	$('.btn-prohibit').each(function(){
+		var obj = $(this);
+		if(obj.data('status')==3){
+			obj.html("解冻用户");
+		}
+	});
+	$('.btn-prohibit').click(function(){
+		var obj = $(this);
+		if(obj.data('status')==3){
+			ajax_post({
+				data:{id:obj.data('id')},
+				url:'__URL__/get_reason',
+			},function(result){
+				if(result.status=='success'){
+					confirm_form({
+						formid:'#formlist',
+						furl:'__URL__/thaw_prohibit/ids/'+obj.data('id'),
+						script:'activeCall(ret)',
+						title:'解冻用户',
+						msg:'真的要解冻该用户吗？<br/>冻结原因：'+result.msg,
+						class:'text-center',
+						confirm:0
+					});
+				}
+			});
+		}else{
+			vmodal({
+				title:'冻结用户',
+				url:'__URL__/prohibit/ids/'+obj.data('id'),
+			});
+		}
+	});
+
+	$('.delete-select').click(function(){
+		if($('input[type="checkbox"]:checked').size()==0){
+			valert({status:'warning',msg:'请至少选择一项！'})
+			return false;
+		}else {
+			vmodal({
+				title:'删除用户',
+				url:'__URL__/delete_user',
+				width:'650px',
+			});
+		}
+	});
+
+	$(".send-message").click(function () {
+		var id = $(this).data('id');
+		vmodal({
+			title:'发送通知',
+			url:'__URL__/sendMessage/id/'+id,
+		});
+	});
+
+	$('.active-change').click(function(){
+		if($('input[type="checkbox"]:checked').size()==0){
+			valert({status:'warning',msg:'请至少选择一项！'})
+			return false;
+		}else {
+			if($('#toactive').val() == 3){
+				var ids = $('input[type="checkbox"]:checked').map(function(){
+					return $(this).val();
+				}).get().join(",");
+
+				vmodal({
+					title:'冻结用户',
+					url:'__URL__/prohibit/ids/'+ids,
+				});
+			}else{
+				confirm_form({
+					formid:'#formlist',
+					furl:'__URL__/active_change_select/toactive/'+$('#toactive').val(),
+					script:'activeCall(ret)',
+					title:'批量更改记录状态',
+					msg:'真的要改记录状态吗？',
+					class:'text-center',
+					confirm:1
+				});
+			}
+		}
+	});
+	
+	$('.sid-change').click(function(){
+		if($('input[type="checkbox"]:checked').size()==0){
+			valert({status:'warning',msg:'请至少选择一项！'})
+			return false;
+		}else if($('#tosid').val()==''){
+			valert({status:'warning',msg:'请选择一个分类'})
+			return false;			
+		}else {
+			confirm_form({
+				formid:'#formlist',
+				furl:'__URL__/sid_change_select/tosid/'+$('#tosid').val(),
+				script:'activeCall(ret)',
+				title:'批量记录归类',
+				msg:'真的要批量记录归类吗？',
+				class:'text-center',
+				confirm:1
+			});
+		}
+	});	
+
+	$(".send-select").click(function () {
+		var param = $(this).data('param');
+		vmodal({
+			title:'发送通知',
+			url:'__URL__/sendBatch/?'+param,
+		});
+	});
+
+	$('#gopage').change(function(){
+		var url=$('#gopage').val();
+		location.href=url;
+	});
+	$('.go-page').click(function(){
+		var url=$('#gopage').val();
+		location.href=url;
+	});	
+	
+	$('.excel').click(function(){
+		$('table thead th').each(function(){
+			alert($(this).find('strong').html());
+		});
+	});
+	
+
+});
+
+function callback(ret){
+	valert({status:ret.status,msg:ret.msg});
+	if(ret.status=='success'){
+		$('input[type="checkbox"]:checked').each(function(){
+			$('#'+$(this).val()).remove();
+		});
+		$('#ajax-modal').modal('hide');
+	}
+}
+
+function delCall(ret,tag){
+	valert({status:ret.status,msg:ret.msg});
+	if(ret.status=='success'){
+		$(tag).remove();
+		$('#ajax-modal').modal('hide');
+	}
+}
+function activeCall(ret){
+	valert({status:ret.status,msg:ret.msg});
+	if(ret.status=='success'){
+		setTimeout(function(){
+			ref();
+		},500);
+	}
+}
+</script>
+<include file="Public:footer" />

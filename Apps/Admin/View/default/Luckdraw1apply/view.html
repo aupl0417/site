@@ -1,0 +1,93 @@
+<div class="p20 box">
+    <div class="row">
+        <div class="col-xs-4">
+            <p>游戏名称：{$rs.luckdraw_name}</p>
+            <p>申请时间：{$rs.atime}</p>
+            <p>申请用户：{$rs.nick}</p>
+            <p>申请店铺：{$rs.shop_name}</p>
+            <p>申请状态：
+                {:status($rs['status'], [['已关闭'],['待审核'],['已通过'],['被拒绝']])}
+            </p>
+            <p>操作时间：{$rs.dotime|default="-"}</p>
+            <p>拒绝理由：{$rs.reason|default="-"}</p>
+        </div>
+        <div class="col-xs-8">
+            <notempty name="rs.coupons">
+                <volist name="rs.coupons" id="vo">
+                    <p>优惠信息{$i}：满 {$vo.min_price} 减 {$vo.price}</p>
+                </volist>
+            </notempty>
+        </div>
+    </div>
+    <eq name="rs.status" value="1">
+        <div class="ft18 strong p10 border-d md20">审核</div>
+        <form data-url="__URL__/post" data-id="#form_{$rs.id}" id="form_{$rs.id}" class="form-horizontal vform">
+            {:W('Widget/buildform',array(array(
+            'field'		=>array(
+            array(
+            'formtype'		=>'radio',
+            'name'			=>'status',
+            'label'			=>'审核结果',
+            'data'			=>[[2,'通过'],[3,'拒绝']],
+            'field'			=>array(0,1,2),
+            ),
+            array(
+            'formtype'		=>'textarea',
+            'label'			=>'拒绝理由',
+            'name'			=>'reason',
+            ),
+            array(
+            'formtype'		=>'hidden',
+            'name'			=>'id',
+            'value'			=>$rs['id'],
+            ),
+            array(
+            'formtype'		=>'html',
+            'label'			=>' ',
+            'html'			=>'<button type="button" class="btn btn-primary btn-150px logs-add"><i class="fa fa-check"></i> 提交</button>'
+            ),
+            ),
+            )))}
+        </form>
+    </eq>
+    <notempty name="rs.logs">
+        <div class="ft18 strong p10 border-d md20">审核日志</div>
+        <ul class="timeline">
+            <volist name="rs.logs" id="vo">
+                <li>
+                    <i class="fa fa-clock-o"></i>
+                    <span class="date">
+				        {$vo.atime}
+			        </span>
+                    <div class="content">
+                        <p>
+                            {:status($vo['status'], [[],[],['审核通过', 'btn-success'],['审核拒绝', 'btn-danger']])}
+                        </p>
+                        <h5>
+                            雇员：{$vo.a_nick}
+                        </h5>
+                        <div>
+                            理由：{$vo.reason|nl2br}
+                        </div>
+                    </div>
+                </li>
+            </volist>
+        </ul>
+    </notempty>
+</div>
+<script>
+    image_zoom();
+    $('.logs-add').click(function(){
+        var d=$(this).closest('form').data();
+        ajax_post_form({
+            formid:d.id
+        },function(ret){
+            valert(ret);
+            if(ret.status=='success'){
+                var tag='#item-{$rs.id}';
+                var url='__URL__/view/id/{$rs.id}';
+                loadurl({tag:tag,url:url});
+            }
+        });
+    });
+</script>

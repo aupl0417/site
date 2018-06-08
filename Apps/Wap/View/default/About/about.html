@@ -1,0 +1,38 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			关于我们
+		</div>
+		<div class="r">
+		</div>
+	</div>
+</header>
+<section>
+	<div class="content p10" style="line-height:22px">
+		<div class="load-body">数据加载中……</div>
+	</div>	
+</section>
+<footer class="footer border-t fixed-bottom text-center text-gray">
+	<div style="margin-top:8px;">Copyright © 2016</div>
+	<div>湖南大唐天下网络科技有限公司</div>
+</footer>
+<script>
+	fixBar();
+	
+	ajax_post({
+		url:'/Api/api',
+		data:{apiurl:'/Help/about'},
+	},function(ret){
+		if(ret.code==1){			
+			$('.page.active .content').html(ret.data.content);
+		}else if(ret.code==3){
+			$('.page.active .content').html(no_data_text);
+		}
+	});
+	
+
+	
+</script>

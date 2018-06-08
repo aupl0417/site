@@ -1,0 +1,788 @@
+
+	<switch name="re.type">
+		<case value="html">
+			<!--html-->
+			<div class="form-group f-{$re.name}">
+				<notempty name="re.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$re.textname} {$re['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+				<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+				{$re.html}
+				</div>
+			</div>
+		</case>
+	
+		<case value="input">
+			<!--input-->
+			<div class="form-group f-{$re.name}">
+				<notempty name="re.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$re.textname} {$re['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+				<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+					<div class="input-group">
+						{$re.button_left}
+						{$re.addon_left}
+						<div class="<if condition="$re['icon_left'] neq '' or $re['icon_right'] neq ''">input-icon</if>">
+							{$re.icon_left}
+							<input type="text" id="{$re.name}" class="form-control {$re.class}" name="{$re.name}" placeholder="{$re['placeholder']?$re['placeholder']:$re['textname']}" value="{$re.value}" {$re.attr}  />
+							{$re.icon_right}
+						</div>
+						{$re.addon_right}
+						{$re.button_right}
+					</div>
+					<div class="tips-form text-gray ft12 link-blue">{$re.tips}</div>
+					{:html_entity_decode($re['next'])}
+				</div>
+			</div>
+			
+		</case>
+		
+		
+		<case value="color">
+			<!--tag--> 
+			<div class="form-group f-{$re.name}">
+				<notempty name="re.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$re.textname} {$re['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+				<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+					<div class="input-group">
+						{$re.button_left}
+						{$re.addon_left}
+						<div class="<if condition="$vo['icon_left'] neq '' or $vo['icon_right'] neq ''">input-icon</if>">
+							{$re.icon_left}
+							<input type="text" id="{$re.name}" class="form-control minicolors {$re.class}" name="{$re.name}" placeholder="{$re['placeholder']?$re['placeholder']:$re['textname']}" data-control="hue" value="{$re.value}" {$re.attr}  />
+							{$re.icon_right}
+						</div>
+						{$re.addon_right}
+						{$re.button_right}
+					</div>
+					<div class="tips-form text-gray ft12 link-blue">{$re.tips}</div>
+				</div>
+			</div>
+			
+		</case>
+		
+		
+		<case value="tag">
+			<!--tag-->
+			<div class="form-group f-{$re.name}">
+				<notempty name="re.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$re.textname} {$re['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+				<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+					<div class="input-group">
+						{$re.button_left}
+						{$re.addon_left}
+						<div class="<if condition="$re['icon_left'] neq '' or $re['icon_right'] neq ''">input-icon</if>">
+							{$re.icon_left}
+							<input type="text" id="{$re.name}" class="form-control tag-input {$re.class}" name="{$re.name}" placeholder="{$re['placeholder']?$re['placeholder']:$re['textname']}" value="{$re.value}" {$re.attr}  />
+							{$re.icon_right}
+						</div>
+						{$re.addon_right}
+						{$re.button_right}
+					</div>
+					<div class="tips-form text-gray ft12 link-blue">{$re.tips}</div>
+				</div>
+			</div>
+			
+		</case>
+		
+		
+		<case value="date">
+			<!--date-->
+			<div class="form-group f-{$re.name}">
+				<notempty name="re.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$re.textname} {$re['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+				<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+					<div class="input-group">
+						{$re.button_left}
+						{$re.addon_left}
+						<div class="<if condition="$re['icon_left'] neq '' or $re['icon_right'] neq ''">input-icon</if>">
+							{$re.icon_left}
+							<input type="text" id="{$re.name}" class="form-control datepicker {$re.class}" name="{$re.name}" placeholder="{$re['placeholder']?$re['placeholder']:$re['textname']}" value="{$re.value}" {$re.attr} " data-date-format="yyyy-mm-dd"  />
+							{$re.icon_right}
+						</div>
+						{$re.addon_right}
+						{$re.button_right}
+					</div>
+					<div class="tips-form text-gray ft12 link-blue">{$re.tips}</div>
+				</div>
+			</div>
+			
+		</case>
+		
+		
+		
+	
+	
+		<case value="datetime">
+			<!--datetime-->
+			<div class="form-group f-{$re.name}">
+				<notempty name="re.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$re.textname} {$re['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+				<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+					<div class="input-group">
+						{$re.button_left}
+						{$re.addon_left}
+						<div class="<if condition="$re['icon_left'] neq '' or $re['icon_right'] neq ''">input-icon</if>">
+						{$re.icon_left}
+						<input type="text" id="{$re.name}" class="form-control datepicker {$re.class}" name="{$re.name}" placeholder="{$re['placeholder']?$re['placeholder']:$re['textname']}" value="{$re.value}" {$re.attr} " data-date-format="yyyy-mm-dd"  />
+						{$re.icon_right}
+					</div>
+					{$re.addon_right}
+					{$re.button_right}
+				</div>
+				<div class="tips-form text-gray ft12 link-blue">{$re.tips}</div>
+			</div>
+		</div>
+		
+	</case>
+
+
+
+	<case value="editor">
+		<!--editor-->
+		<div class="form-group f-{$re.name}">
+			<notempty name="re.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$re.textname} {$re['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+			<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+				<div class="input-group">
+					{$re.button_left}
+					{$re.addon_left}
+					<html:editor id="{$re.name}" name="{$re.name}" type="UEDITOR" style=" {$re['style']?$re['style']:'min-height:150px;'}">{$re.value|html_entity_decode}</html:editor>
+					{$re.addon_right}
+					{$re.button_right}
+				</div>
+				<div class="tips-form text-gray ft12 link-blue">{$re.tips}</div>
+			</div>
+		</div>
+		
+	</case>
+	<case value="editor-wang">
+		<!--editor-->
+		<div class="form-group f-{$re.name}">
+			<notempty name="re.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$re.textname} {$re['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+			<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+				<div class="input-group">
+					{$re.button_left}
+					{$re.addon_left}
+					<html:editor id="{$re.name}" name="{$re.name}" type="WANGEDIT" style=" {$re['style']?$re['style']:'min-height:150px;'}">{$re.value|html_entity_decode}</html:editor>
+					{$re.addon_right}
+					{$re.button_right}
+				</div>
+				<div class="tips-form text-gray ft12 link-blue">{$re.tips}</div>
+			</div>
+		</div>
+		
+	</case>
+	
+	
+	<case value="sku">
+		<!--images-->
+		<div class="form-group f-{$re.name}">
+			<notempty name="re.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$re.textname} {$re['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+			<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+				<div class="input-group">
+					{$re.button_left}
+					{$re.addon_left}
+
+
+					{:W('Widget/sku',array(array(
+						'vo'		=>$vo,
+					)))}
+
+					{$re.addon_right}
+					{$re.button_right}
+				</div>
+				<input type="hidden" name="_sku_" value="1">
+				<div class="tips-form text-gray ft12 link-blue">{$re.tips}</div>
+			</div>
+		</div>
+		
+	</case>
+
+	<case value="attr">
+		<!--attr-->
+		<div class="form-group f-{$re.name}">
+			<notempty name="re.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$re.textname} {$re['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+			<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+				<div class="input-group">
+					{:W('Widget/attr',array(array(
+						'vo'		=>$vo,
+						'goods_id'	=>$param['goods_id'],
+					)))}
+			</div>
+			</div>
+		</div>
+	</case>
+	
+	<case value="express">
+		<div class="form-group f-{$re.name}">
+			<notempty name="re.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$re.textname} {$re['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+			<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+				<div class="input-group">
+					{$re.button_left}
+					{$re.addon_left}
+
+					{:W('Widget/express_set',array(array(
+						'vo'	=>$vo,
+					)))}
+
+					{$re.addon_right}
+					{$re.button_right}
+				</div>
+				<input type="hidden" name="_express_{$re.name}" value="1">
+				<div class="tips-form text-gray ft12 link-blue">{$re.tips}</div>
+			</div>
+		</div>
+		
+	</case>
+	
+	<case value="radio-table">
+		<!--images--> 
+		<div class="form-group f-{$re.name}">
+			<notempty name="re.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$re.textname} {$re['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+			<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+				<div class="input-group">
+					{$re.button_left}
+					{$re.addon_left}
+
+						<div class="btn btn-rad btn-trans btn-primary" onclick="vmodal({iframe:'/RadioTable/index/table/{$re.data.table}/tpl/{$re.data.tpl}/sellerid/{$_GET.sellerid}',tag:'#ajax-modal2',width:'95%',title:'选择{$re.textname}',script:'$(\'.vform-action\').html(\'{$re.name}\')'})"><i class="fa fa-cloud-upload"></i> 选择{$re.textname}</div>
+						
+						<ul id="{$re.name}-list" class="list-rs mt10">
+							
+							<notempty name="re.value">	
+							<li class="rs p10 box" data-path="{$re.name}">
+								<div class="l-80px">
+									<notempty name="re.value.images">
+										<a class="image-zoom" href="{$re.value.images}" title="{$re.value.name}"><img src="{:myurl($re['value']['images'],60)}"></a>
+									</notempty>
+								</div>
+								<div class="r-80px">
+									<h4>{$re.value.name}</h4>
+									<div><div class="btn btn-rad btn-trans btn-xs btn-primary" onclick="$(this).parents().parent('li').remove();$('#{$re.name}').val('');"><i class="fa fa-times"></i> 删除</div></div>
+								</div>
+							</li>
+							</notempty>
+						</ul>									
+
+						
+						<input type="hidden" id="{$re.name}" name="{$re.name}" value="{$re.value.id}">
+
+
+					{$re.addon_right}
+					{$re.button_right}
+				</div>
+				<div class="tips-form text-gray ft12 link-blue">{$re.tips}</div>
+			</div>
+		</div>
+		
+	</case>
+	
+	<case value="images">
+		<!--images-->
+		<div class="form-group f-{$re.name}">
+			<notempty name="re.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$re.textname} {$re['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+			<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+				<div class="input-group">
+					{$re.button_left}
+					{$re.addon_left}
+
+						<div class="btn btn-rad btn-trans btn-primary upload" data-name="{$re.name}"><i class="fa fa-cloud-upload"></i> 上传图片</div>
+						<ul id="{$re.name}-list" class="images-select-box">
+							<notempty name="re.value">											
+								<li id="" data-path="{$re.value}" class="text-center">
+									<div class="li-img-box">
+										<a class="image-zoom" href="{$re.value}" title="{$re.value}"><img src="{:myurl($re['value'],250)}"></a>
+									</div>													
+									<div class="delete-images" onclick="$(this).parent('li').remove();$('#{$re.name}').val('');"><div class="selected-icon"><i class="fa fa-times"></i></div></div>												
+								</li>
+								
+							</notempty>
+						</ul>
+						<input type="hidden" id="{$re.name}" name="{$re.name}" value="{$re.value}">
+
+
+
+					{$re.addon_right}
+					{$re.button_right}
+				</div>
+				<div class="tips-form text-gray ft12 link-blue">{$re.tips}</div>
+			</div>
+		</div>
+		
+	</case>
+	
+	
+	<case value="images-more">
+		<!--images-->
+		<div class="form-group f-{$re.name}">
+			<notempty name="re.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$re.textname} {$re['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+			<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+				<div class="input-group">
+					{$re.button_left}
+					{$re.addon_left}
+
+						<div class="btn btn-rad btn-trans btn-primary" onclick="vmodal({iframe:'/UploadMore/index/field/{$re.name}',tag:'#ajax-modal2',width:'95%',title:'选择{$re.textname}',script:'$(\'.vform-action\').html(\'{$re.name}\')'})"><i class="fa fa-cloud-upload"></i> 上传图片</div>
+						<ul id="{$re.name}-list" class="images-select-box">
+							<volist name="re.value" id="img">										
+								<li id="" data-path="{$img}" class="text-center">
+									<div class="li-img-box">
+										<a class="image-zoom" href="{$img}" title="{$img}"><img src="{$img}?imageView2/2/w/250/h/250"></a>
+									</div>													
+									<div class="delete-images" onclick="$(this).parent('li').remove();"><div class="selected-icon"><i class="fa fa-times"></i></div></div>												
+									<input type="hidden" id="{$re.name}[]" name="{$re.name}[]" value="{$img}">
+								</li>
+								
+							</volist>
+						</ul>
+						
+
+
+
+					{$re.addon_right}
+					{$re.button_right}
+				</div>
+				<div class="tips-form text-gray ft12 link-blue">{$re.tips}</div>
+			</div>
+		</div>
+		
+	</case>					
+	
+	<!--普通上传图片表单-带预览-->
+	<case value="images-file">
+		<!--images-->
+		<div class="form-group f-{$re.name}">
+			<notempty name="re.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$re.textname} {$re['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+			<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+				<div class="input-group">
+					{$re.button_left}
+					{$re.addon_left}
+
+					<div class="fileinput fileinput-new" data-provides="fileinput">
+						<div class="fileinput-new thumbnail" style="width: 200px; height: 120px;">
+							<img src="{:$re['value']?myurl($re['value'],120):'../Public/images/upload-nopic.png'}" alt="上传图片">
+						</div>
+						<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; height: 120px;">
+						</div>
+						<div>
+							<span class="btn btn-primary btn-file btn-rad btn-trans">
+								<span class="fileinput-new">
+									选择图片
+								</span>
+								<span class="fileinput-exists">
+									重选
+								</span>
+								<input type="file" name="{$re.name}">
+							</span>
+							<a href="#" class="btn btn-primary btn-rad btn-trans fileinput-exists" data-dismiss="fileinput">
+								删除
+							</a>
+						</div>
+					</div>
+
+
+
+					{$re.addon_right}
+					{$re.button_right}
+				</div>
+				<input type="hidden" name="_images_{$re.name}" value="{$re.value}">
+				<div class="tips-form text-gray ft12 link-blue">{$re.tips}</div>
+			</div>
+		</div>
+		
+	</case>				
+
+	<case value="web-uploader">
+		<!--images-->
+		<div class="form-group f-{$re.name}">
+			<notempty name="re.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$re.textname} {$re['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+			<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+				<div class="input-group">
+					{$re.button_left}
+					{$re.addon_left}
+
+					<div id="uploader" data-url="{:U('/Upload/web_uploader',array('field'=>$re['name']))}">
+						<div class="queueList">
+							<div id="dndArea" class="placeholder">
+								<div id="filePicker"></div>
+								<p>或将照片拖到这里，单次最多可选300张</p>
+							</div>
+						</div>
+						<div class="statusBar" style="display:none;">
+							<div class="progress">
+								<span class="text">0%</span>
+								<span class="percentage"></span>
+							</div><div class="info"></div>
+							<div class="btns">
+								<div id="filePicker2"></div><div class="uploadBtn">开始上传</div>
+							</div>
+						</div>
+					</div>
+					<div class="web_uploader_{$re.name}"></div>
+
+
+						<ul id="{$re.name}-list" class="form-images-select magnific-popup-wrap">
+							<notempty name="re.value.0">
+								<volist name="re.value" id="dl">
+								<li id="" data-path="{$dl}" class="text-center"><div class="md10 the-box"><a class="zooming" href="{:myurl($dl)}" title="{$dl}" target="_blank"><img src="{:myurl($dl)}"></a></div><div class="btn btn-xs btn-danger md20" onclick=$('li[data-path="{$dl}"]').remove();><i class="fa fa-times"></i> 删除</div><input type="hidden" name="{$re.name}[]" value="{$dl}"></li>
+								</volist>
+							</notempty>
+						</ul>
+
+
+
+					{$re.addon_right}
+					{$re.button_right}
+				</div>
+				<div class="tips-form text-gray ft12 link-blue">{$re.tips}</div>
+			</div>
+		</div>
+		
+	</case>
+
+
+	
+	
+	<case value="password">
+		<!-- password-->
+		<div class="form-group f-{$re.name}">
+			<notempty name="re.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$re.textname} {$re['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+			<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+				<div class="input-group">
+					{$re.button_left}
+					{$re.addon_left}
+					<div class="<if condition="$re['icon_left'] neq '' or $re['icon_right'] neq ''">input-icon</if>">
+						{$re.icon_left}
+						<input type="password" id="{$re.name}" class="form-control {$re.class}" name="{$re.name}" placeholder="{$re['placeholder']?$re['placeholder']:$re['textname']}" value="{$re.value}" {$re.attr}  />
+						<input type="hidden" name="_password_{$re.name}" value="{$re.value}" >
+						{$re.icon_right}
+					</div>
+					{$re.addon_right}
+					{$re.button_right}
+				</div>
+				
+				<div class="tips-form text-gray ft12 link-blue">{$re.tips}</div>
+			</div>
+		</div>
+		
+	</case>
+	
+	
+	
+	
+	<case value="select">
+		<!-- select-->
+		<div class="form-group f-{$vo.name}">
+			<notempty name="re.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$re.textname} {$re['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+			<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+				<div class="input-group">
+					{$vo.button_left}
+					{$vo.addon_left}
+					<select id="{$re.name}" class="form-control {$re.class}" name="{$re.name}" {$vo.attr}  >
+						<notempty name="re.first_option">{$re.first_option}<else /><option value="">请选择{$re.textname}</option></notempty>
+						<notempty name="re.data">
+							<volist name="re.data" id="dl">
+							<option value="{$dl[$re['field'][0]]}" {$re['value']==$dl[$re['field'][0]]?'selected':''}>{$dl[$re['field'][1]]} {$re['field'][2]?$dl[$re['field'][2]]:''}</option>
+								<!-- <option value="{$dl.id}" <eq name="re.value" value="$dl['id']">selected</eq>>{$dl.name}</option>-->
+								<notempty name="dl.dlist">
+									<foreach name="dl.dlist" item="dlls">
+										<option value="{$dlls[$re['field'][0]]}" {$re['value']==$dlls[$re['field'][0]]?'selected':''}>　|——{$dlls[$re['field'][1]]}</option>
+										<!-- <option value="{$dlls.id}" <eq name="re.value" value="$dlls['id']">selected</eq>>&nbsp;&nbsp;&nbsp;&nbsp;|——{$dlls.name}</option> -->
+										<notempty name="dlls.dlist">
+											<foreach name="dlls.dlist" item="dllls">
+												<option value="{$dllls[$re['field'][0]]}" {$re['value']==$dllls[$re['field'][0]]?'selected':''}>　　　|——{$dllls[$re['field'][1]]}</option>
+												<!-- <option value="{$dllls.id}" <eq name="re.value" value="$dllls['id']">selected</eq>>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|——{$dllls.name}</option> -->
+											</foreach>
+										</notempty>
+									</foreach>
+								</notempty>
+							</volist>
+						</notempty>
+					</select>
+
+					{$vo.addon_right}
+					{$vo.button_right}
+				</div>
+				
+				<div class="tips-form text-gray ft12 link-blue">{$vo.tips|html_entity_decode}</div>
+			</div>
+		</div>
+		
+	</case>
+	
+	
+	
+	
+	
+	<case value="year">
+		<!-- year-->
+		<div class="form-group f-{$re.name}">
+			<notempty name="re.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$re.textname} {$re['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+			<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+			
+				<div class="input-group">
+					{$re.button_left}
+					{$re.addon_left}
+					<select id="{$re.name}" class="form-control {$re.class}" name="{$re.name}" {$re.attr}  >
+						<notempty name="re.first_option">{$re.first_option}<else /><option value="">请选择{$re.textname}</option></notempty>
+						<for start="$re.data.start" end="$re.data.end" >
+							<option value="{$i}" {$re['value']==$i?'selected':''}>{$i} 年</option>
+						</for>
+						
+					</select>
+
+					{$re.addon_right}
+					{$re.button_right}
+				</div>
+				
+				<div class="tips-form text-gray ft12 link-blue">{$re.tips}</div>
+			</div>
+		</div>
+		
+	</case>
+	
+	
+	
+	<case value="month">
+		<!-- month-->
+		<div class="form-group f-{$re.name}">
+			<notempty name="re.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$re.textname} {$re['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+			<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+			
+				<div class="input-group">
+					{$re.button_left}
+					{$re.addon_left}
+					<select id="{$re.name}" class="form-control {$re.class}" name="{$re.name}" {$re.attr}  >
+						<notempty name="re.first_option">{$re.first_option}<else /><option value="">请选择{$re.textname}</option></notempty>
+						<for start="1" end="13" >
+							<option value="{$i}" {$re['value']==$i?'selected':''}>{$i} 月</option>
+						</for>
+						
+					</select>
+
+					{$re.addon_right}
+					{$re.button_right}
+				</div>
+				
+				<div class="tips-form text-gray ft12 link-blue">{$re.tips}</div>
+			</div>
+		</div>
+		
+	</case>
+	
+	
+	<case value="day">
+		<!-- month-->
+		<div class="form-group f-{$re.name}">
+			<notempty name="re.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$re.textname} {$re['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+			<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+			
+				<div class="input-group">
+					{$re.button_left}
+					{$re.addon_left}
+					<select id="{$re.name}" class="form-control {$re.class}" name="{$re.name}" {$re.attr}  >
+						<notempty name="re.first_option">{$re.first_option}<else /><option value="">请选择{$re.textname}</option></notempty>
+						<for start="1" end="32" >
+							<option value="{$i}" {$re['value']==$i?'selected':''}>{$i} 日</option>
+						</for>
+						
+					</select>
+
+					{$re.addon_right}
+					{$re.button_right}
+				</div>
+				
+				<div class="tips-form text-gray ft12 link-blue">{$re.tips}</div>
+			</div>
+		</div>
+		
+	</case>
+	
+	
+	<case value="textarea">
+		<!--textarea-->
+		<div class="form-group f-{$re.name}">
+			<notempty name="re.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$re.textname} {$re['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+			<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+			
+				<div class="input-group">
+					{$re.addon_left}
+
+					<textarea id="{$re.name}" class="form-control {$re.class}" name="{$re.name}" placeholder="{$re.placeholder}" {$re.attr} {$re.style}>{$re.value}</textarea>
+					{$re.addon_right}
+
+				
+				</div>
+				
+				<div class="tips-form text-gray ft12 link-blue">{$re.tips}</div>
+			</div>
+		</div>
+		
+	</case>
+	
+	
+
+
+
+	<case value="radio">
+		<!--radio-->
+		<div class="form-group f-{$re.name}">
+			<notempty name="re.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$re.textname} {$re['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+			<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+			
+				<div class="input-group">
+					{$re.addon_left}
+					<volist name="re.data" id="dl">
+						<label class="{$re.class}" style="{$re.style}"><input type="radio" class="i-grey-square" name="{$re.name}" value="{$dl[$re['field'][0]]}" {$re['value']==$dl[$re['field'][0]]?'checked':''} {$re.attr} /> {$dl[$re['field'][1]]}</label>
+					</volist>
+					{$re.addon_right}
+				
+				</div>
+				
+				<div class="tips-form text-gray ft12 link-blue">{$re.tips}</div>
+			</div>
+		</div>
+		
+	</case>
+	
+	<!--开关式单选-->
+	<case value="radio-switch">					
+		<!--radio-->					
+		<div class="form-group f-{$re.name}">
+			<notempty name="re.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$re.textname} {$re['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+			<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+			
+				<div class="input-group">
+					{$re.addon_left}
+					
+					<label class="{$re.class}" style="{$re.style}">
+					<input type="checkbox" class="i-grey-square" id="{$re.name}" name="{$re.name}" value="1" {$re['value']==1?'checked':''} {$re.attr}>
+					</label>								
+					{$re.addon_right}
+				
+				</div>
+				<input type="hidden" name="_radio_switch_{$re.name}" value="1" />
+				<div class="tips-form text-gray ft12 link-blue">{$re.tips}</div>
+			</div>
+		</div>
+		
+	</case>
+
+	<case value="checkbox">
+		<!--checkbox-->
+		<div class="form-group f-{$re.name}">
+			<notempty name="re.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$re.textname} {$re['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+			<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+			
+				<div class="input-group">
+					{$re.addon_left}
+					<volist name="re.data" id="dl">
+						<label class="{$re.class}" style="{$re.style}"><input type="checkbox" class="i-grey-square" name="{$re.name}[]" value="{$dl[$re['field'][0]]}" {$dl[$re['field'][0]]|input_checked=$re['value'],'checked'} {$re.attr} <if condition="$key eq 0 and $re['is_need'] eq 1">required</if> /> {$dl[$re['field'][1]]}</label>
+					</volist>
+					{$re.addon_right}
+				
+				</div>
+				<input type="hidden" name="_checkbox_{$re.name}" value="1" />
+				<div class="tips-form text-gray ft12 link-blue">{$re.tips}</div>
+			</div>
+		</div>
+		
+	</case>
+
+
+	<case value="checkbox-more">
+		<!--checkbox_more-->
+		<div class="form-group f-{$re.name}">
+			<notempty name="re.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$re.textname} {$re['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+			<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+			
+				<div class="input-group box p10">
+					<div style="max-height:200px;overflow:auto;">
+					{$re.addon_left}
+					<volist name="re.data" id="dl">
+						<div class="md20">
+						<label class="{$re.class}" style="{$re.style}">
+							<empty name="dl.dlist">
+							<input type="checkbox" class="i-grey-square" name="{$re.name}[]" value="{$dl[$re['field'][0]]}" {$dl[$re['field'][0]]|input_checked=$re['value'],'checked'} {$re.attr} />
+							</empty>
+							<strong>{$dl[$re['field'][1]]}</strong>
+						</label>
+					
+						<!--子级-->
+						<neq name="dl.dlist" value="">
+							{:W('Widget/checkbox_more',array(array(
+								'data'	=>$dl['dlist'],
+								'vo'	=>$vo,
+							)))}
+						</neq>
+						</div>
+					</volist>
+					{$re.addon_right}
+					</div>
+				</div>
+				<input type="hidden" name="_checkbox_{$re.name}" value="1" />
+				<div class="tips-form text-gray ft12 link-blue">{$re.tips}</div>
+			</div>
+		</div>
+		
+	</case>
+
+	<!-----验证码----->
+	<case value="vcode">
+		<!--vcode-->
+		<div class="form-group f-{$re.name}">
+			<notempty name="re.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$re.textname} {$re['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+			<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+				<div class="input-group">
+					{$re.button_left}								
+					<div class="row">
+						<div class="col-xs-6 pr10">
+							{$re.addon_left}
+							<div class="<if condition="$re['icon_left'] neq '' or $re['icon_right'] neq ''">input-icon</if>">
+								{$re.icon_left}
+								<input type="text" id="{$re.name}" class="form-control {$re.class}" name="{$re.name}" placeholder="{$re['placeholder']?$re['placeholder']:$re['textname']}" value="{$re.value}" {$re.attr}  />
+								{$re.icon_right}
+							</div>
+							{$re.addon_right}
+						</div>
+						<div class="col-xs-6 pl0">
+							<a href="javascript:void(0)" class="verify" title="点击图片更换验证码" data-url="/Login/verify"><img src="/Login/verify" alt="验证码" class="verifyimg"></a>
+						</div>
+					</div>							
+					{$re.button_right}
+				</div>
+				<div class="tips-form text-gray ft12 link-blue">{$re.tips}</div>
+			</div>
+		</div>						
+
+	</case>
+
+	<case value="edit-area">
+		<!--textarea-->
+		<div class="form-group f-{$re.name}">
+			<notempty name="re.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$re.textname} {$re['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+			<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+			
+				<div class="input-group">
+					{$re.addon_left}
+
+					<textarea id="{$re.name}" class="form-control edit-area {$re.class}" name="{$re.name}" placeholder="{$re.placeholder}" {$re.attr} {$re.style|html_entity_decode}>{$re.value}</textarea>
+					{$re.addon_right}
+
+				
+				</div>
+				
+				<div class="tips-form text-gray ft12 link-blue">{$re.tips}</div>
+			</div>
+		</div>
+		
+	</case>				
+	
+	<case value="modal-category">
+		<div class="form-group f-{$vo.name}">
+			<notempty name="re.textname"><label class="{$param['col'][0]?$param['col'][0]:'col-xs-3'} control-label">{$re.textname} {$re['is_need']==1?'<span class="required">*</span>':''}</label></notempty>
+			<div class="{$param['col'][1]?$param['col'][1]:'col-xs-7'}">
+				<div class="input-group">
+					{$re.button_left}
+					{$re.addon_left}
+
+						<div class="btn btn-rad btn-trans btn-primary" onclick="sidChange();" ><i class="fa fa-cloud-upload"></i> {$re.textname}</div>
+						<input type="type" id="{$re.name}" name="{$re.name}" value="{$re.value}">
+					{$re.addon_right}
+					{$re.button_right}
+				</div>
+				<div class="tips-form text-gray ft12 link-blue">{$vo.tips}</div>
+			</div>
+		</div>
+	</case>
+</switch>

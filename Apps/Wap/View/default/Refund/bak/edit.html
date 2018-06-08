@@ -1,0 +1,112 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			退款编辑
+		</div>
+	</div>
+</header>
+<section id="refund-edit-content">
+
+	<form id="refund-edit-form">
+
+	<div class='pic-input'>
+		<table width="100%" cellspacing='0' >
+			<tr>
+				<td width='25%' class="text-center">编辑信息</td>
+				<td>
+					<textarea id="refund-edit-remark" name="reason" placeholder="请输入编辑信息" maxlength="200" rows="10"></textarea>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+	<div class='pic-input'>
+		<table width="100%" cellspacing='0'>
+			<tr>
+				<td width='25%' class="text-center">图片1</td>
+				<td>
+					<img id="images1" src="../Public/Images/up_load1.jpg" onclick="select_pic(1)">
+					<input type = "hidden" name = "images1" value = ""/>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+	<div class='pic-input'>
+		<table width="100%" cellspacing='0'>
+			<tr>
+				<td width='25%' class="text-center">图片2</td>
+				<td>
+					<img id="images2" src="../Public/Images/up_load1.jpg" onclick="select_pic(2)">
+					<input type = "hidden" name = "images2" value = ""/>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+	<div class='pic-input'>
+		<table width="100%" cellspacing='0'>
+			<tr>
+				<td width='25%' class="text-center">图片3</td>
+				<td>
+					<img id="images3" src="../Public/Images/up_load1.jpg" onclick="select_pic(3)">
+					<input type = "hidden" name = "images3" value = ""/>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="p10">
+        <div class="btn btn-lg btn-danger btn-block" onclick="refund_submit_edit()">提交编辑</div>
+    </div>
+
+    <input type="hidden" name="apiurl" value="/Refund/edit" />
+    <input type="hidden" name="r_no" value="{$_GET.r_no}" />
+    <input type="hidden" name="is_openid" value="1" />
+    <input type="hidden" name="no_sign" value="images,images1,images2,images3" />
+	</form>
+
+</section>
+
+
+<include file="Public:d_layer" />
+
+
+
+<script>
+fixBar(1);
+
+function select_pic(i){
+	vmodal({
+		title:'选择图片',
+		url:'__URL__/edit_pic/i/' + i,
+		is_footer:false,
+	});
+}
+
+function refund_submit_edit(){
+	var data = getFormJson('#refund-edit-form');
+	if(data.remark == ''){
+		valert({msg:'编辑信息不能为空'});
+		return false;
+	}
+	data.images = '';
+	if(data.images1 != ''){data.images += data.images1;}
+	if(data.images2 != ''){if(data.images == ''){data.images += data.images2;}else{data.images += ',' + data.images2;}}
+	if(data.images3 != ''){if(data.images == ''){data.images += data.images3;}else{data.images += ',' + data.images2;}}
+
+	ajax_post({
+		url:'/Api/api',
+		data:data,
+	},function(ret){
+		valert(ret);
+		if(ret.code == 1){
+			openWin({name:'refund',url:'/Refund/view/r_no/{$_GET.r_no}',ref:true});
+		}
+	});
+}
+
+
+</script>

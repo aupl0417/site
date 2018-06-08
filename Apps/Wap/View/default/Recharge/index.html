@@ -1,0 +1,44 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			账户充值
+		</div>
+		<div class="r">
+			<div class="text">充值明细</div>
+		</div>
+	</div>
+</header>
+<section>
+	<div class="line-input row">
+		<div class="col-4">充值金额</div>
+		<div class="col-4x3"><input id="money" name="money" placeholder="请输入要充值的金额"></div>
+	</div>
+	
+	<div class="line-box nobg noicon">
+		我的现金余额：<span class="text-success ac-cash"></span> 元，单笔充值金额不能超过20万
+	</div>
+	
+	<div class="p10">
+		<div class="btn btn-lg btn-danger btn-block" onclick="recharge()">确认</div>
+	</div>
+</section>
+
+<script>
+	fixBar(1);	
+
+	ajax_post({
+		url:'/Api/api',
+		data:{apiurl:'/Account/account',is_openid:1},
+	},function(ret){
+		if(ret.code==1){			
+			$('.page.active .ac-cash').html(ret.data.ac_cash);
+		}
+	});	
+	
+	function recharge(){
+		valert({msg:'该功能暂未开放！'});
+	}
+</script>

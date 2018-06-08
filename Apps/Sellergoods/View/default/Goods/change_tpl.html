@@ -1,0 +1,40 @@
+<div class="row">
+	<div class="col-md-offset-2 col-md-5">
+		<select name="express_tpl_id" class="form-control md10">
+			<foreach name="data" item="val">
+				 <option value ="{$val.id}">{$val.tpl_name}  </option>												
+			</foreach>
+		</select>
+	</div>
+	<div class="col-md-2">
+		<div class="btn btn-info" onclick="ok_tpl()">确认修改</div>	
+	</div>
+</div>	
+<script>
+	function ok_tpl(){
+		var ids	=	'';
+		$(".ids").each(function() {
+			if($(this).is(":checked") == true) {
+				ids	+=	$(this).val() + ',';
+			}
+		})
+		if(ids == "" ){
+			talert({status:0,msg:'请至少选择一项宝贝'});
+			return false;
+		}
+		ids = ids.substr(0,ids.length-1);
+		var tpl_id = $("select[name='express_tpl_id']").val();
+		
+		api({
+			data:{apiurl:'/SellerGoodsManage/set_express_tpl',id:ids,express_tpl_id:tpl_id,is_openid:1}
+		},function(ret){
+			ret.status = ret.code;
+			talert(ret);
+			if(ret.code == 1){
+				setTimeout(function(){
+					ref();
+				},1000);
+			}
+		});
+	}
+</script>

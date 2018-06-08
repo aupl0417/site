@@ -1,0 +1,301 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body mt10">
+	<include file="Public:nav_statistic" />
+    <div class="container">
+		<include file="Public:side_statistic" />
+        <div class="w960 fl">
+            <ol class="breadcrumb pd10 bor_der bor_r0 mt0 mb20">
+                <li><a href="/">数据统计 </a> </li>
+                <li><a href="">流量分析</a></li>
+                <li><a href="">流量地图</a></li>
+            </ol>
+            <div class="ptb10 solid_b mb20">
+                <span class="fs16">页面流量</span>
+            </div>
+            
+            <div class="mb20">
+                <div class="mb10">
+                    <strong class="fs14 text_black mr20">选择时间</strong>
+                    <a class="text_yellow plr20 <if condition='$con[residence_type] eq 1'>btn btn-primary btn-xs </if>" onclick = "select_change('residence','type',1)">昨天</a>
+                    <a class="text_yellow plr20 <if condition='$con[residence_type] eq 2'>btn btn-primary btn-xs </if>" onclick = "select_change('residence','type',2)">最近一周</a>
+                    <a class="text_yellow plr20 <if condition='$con[residence_type] eq 3'>btn btn-primary btn-xs </if>" onclick = "select_change('residence','type',3)">最近一个月</a>
+                    <a class="text_yellow plr20 <if condition='$con[residence_type] eq 4'>btn btn-primary btn-xs </if>" onclick = "select_change('residence','type',4)">最近三个月</a>
+                    <div class="pull-right btn-group btn-group-sm mt-5">
+                        <button type="button" class="btn btn-primary plr20 <if condition='$con[residence_terminal] neq 1'> btn-trans</if>" onclick = "select_change('residence','terminal',1)">全部</button>
+                        <button type="button" class="btn btn-primary plr20 <if condition='$con[residence_terminal] neq 2'> btn-trans</if>" onclick = "select_change('residence','terminal',2)">pc端</button>
+                        <button type="button" class="btn btn-primary plr20 <if condition='$con[residence_terminal] neq 3'> btn-trans</if>" onclick = "select_change('residence','terminal',3)">手机端</button>
+                    </div>
+                </div>
+
+                <table class="bg_white">
+                    <tbody class="solid_t">
+                        <tr>
+                            <td class="fs14 pd20">
+                                <p class="mb20 fs16">店铺首页</p>
+                                <h6 class="text_77">访客数 <span class="pull-right">{$page_data.uv_home}</span></h6>
+                                <h6 class="text_77">占比 <span class="pull-right"> {$page_data.uv_home_percen}%</span></h6>
+                            </td>
+                            <td class="fs14 pd20">
+                                 <p class="mb20 fs16">商品详情页</p>
+                                <h6 class="text_77">访客数 <span class="pull-right">{$page_data.uv_view}</span></h6>
+                                <h6 class="text_77">占比 <span class="pull-right"> {$page_data.uv_view_percen}%</span></h6>
+                            </td>
+                            <td class="fs14 pd20">
+                                 <p class="mb20 fs16">搜索结果页</p>
+                                <h6 class="text_77">访客数 <span class="pull-right">{$page_data.uv_search}</span></h6>
+                                <h6 class="text_77">占比 <span class="pull-right"> {$page_data.uv_search_percen}%</span></h6>
+                            </td>
+                            <td class="fs14 pd20">
+                                 <p class="mb20 fs16">商品分类页</p>
+                                <h6 class="text_77">访客数 <span class="pull-right">{$page_data.uv_list}</span></h6>
+                                <h6 class="text_77">占比 <span class="pull-right"> {$page_data.uv_list_percen}%</span></h6>
+                            </td>
+                            <td class="fs14 pd20">
+                                <p class="mb20 fs16">店铺其他页面</p>
+                                <h6 class="text_77">访客数 <span class="pull-right">{$page_data.uv_other}</span></h6>
+                                <h6 class="text_77">占比 <span class="pull-right"> {$page_data.uv_other_percen}%</span></h6>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>    
+            </div>
+
+
+            <div class="mb35">
+                <table class="bg_white mt-1">
+                    <thead class="no-border">
+                        <tr class="bg_f1">
+                            <th class="text-center">排名</th>
+                            <th class="text-center" width="30%"> 访问页面</th>
+                            <th class="text-center">  页面类型</th>
+                            <th class="text-center"> 访客数</th>
+                            <th class="text-center">  浏览量</th>
+                            <th class="text-center"> 平均页面停留时间</th>
+                        </tr>
+                    </thead>
+                    <tbody class="no-border-y text-center">
+						<volist name = "url_residence_list.list" id = "vo">
+                        <tr>
+                            <td class="ptb15">{$vo.no}</td>
+                            <td class="ptb15 text-left text_blue" style="word-break: break-all;">{$vo.url}</td>
+                            <td class="ptb15">{$vo.page_title}</td>
+                            <td class="ptb15">{$vo.uv} </td>
+                            <td class="ptb15">{$vo.pv} </td>
+                            <td class="ptb15">{$vo.avg_residence_time}秒</td>
+                        </tr>
+						</volist>
+                       
+                    </tbody>
+                 </table>
+                 <div class="text-right">
+                    <ul class="pagination">
+						<li class="prev <empty name="url_residence_list.page.prevPage">disabled</empty>">
+							<a <notempty name="url_residence_list.page.prevPage">onclick = "select_change('residence','page',{$url_residence_list.page.prevPage})"</notempty>><span class="fa fa-angle-left"></span>&nbsp;上一页</a>
+						</li>
+						
+						<volist name="url_residence_list.page.page" id="vo">
+						<li <if condition="$vo.active eq 1">class="active"</if>><a onclick="select_change('residence','page',{$vo.p})">{$vo.p}</a></li>
+						</volist>
+
+						<li class="next  <empty name="url_residence_list.page.nextPage">disabled</empty>">
+							<a <notempty name="url_residence_list.page.nextPage">onclick = "select_change('residence','page',{$url_residence_list.page.nextPage})"</notempty>>下一页&nbsp;<span class="fa fa-angle-right"></span></a>
+						</li>
+                    </ul>
+                    <div class="pull-right mt25 ml10 clearfix w190">
+                        <span class="pull-left mr5">跳到</span>
+                       
+						<select class="form-control pull-left mt-8" style="width:60px;height:31px" onchange = "select_change('residence','page',this.value)">
+							<for start="1" end="$url_residence_list.page.totalPage" comparison="elt">
+							<option value = "{$i}" <if condition="$url_residence_list.page.nowPage eq $i">selected="selected"</if>>{$i}</option>
+							</for>
+						</select>
+                        <span class="pull-left ml15">共{$url_residence_list.page.totalPage}页</span>
+                    </div>
+                </div>  
+            </div>
+
+
+            <div class="mb35">
+                <div class="ptb10 solid_b mb20">
+                    <span class="fs16">流量来源</span>
+                </div>
+                <div class="mb10">
+                    <strong class="fs14 text_black mr20">选择时间</strong>
+                    <a class="text_yellow plr20 <if condition='$con[come_type] eq 1'>btn btn-primary btn-xs </if>" onclick = "select_change('come','type',1)">昨天</a>
+                    <a class="text_yellow plr20 <if condition='$con[come_type] eq 2'>btn btn-primary btn-xs </if>" onclick = "select_change('come','type',2)">最近一周</a>
+                    <a class="text_yellow plr20 <if condition='$con[come_type] eq 3'>btn btn-primary btn-xs </if>" onclick = "select_change('come','type',3)">最近一个月</a>
+                    <a class="text_yellow plr20 <if condition='$con[come_type] eq 4'>btn btn-primary btn-xs </if>" onclick = "select_change('come','type',4)">最近三个月</a>
+                    <div class="pull-right btn-group btn-group-sm mt-5">
+                        <button type="button" class="btn btn-primary plr20 <if condition='$con[come_terminal] neq 1'> btn-trans</if>" onclick = "select_change('come','terminal',1)">全部</button>
+                        <button type="button" class="btn btn-primary plr20 <if condition='$con[come_terminal] neq 2'> btn-trans</if>" onclick = "select_change('come','terminal',2)">pc端</button>
+                        <button type="button" class="btn btn-primary plr20 <if condition='$con[come_terminal] neq 3'> btn-trans</if>" onclick = "select_change('come','terminal',3)">手机端</button>
+                    </div>
+                </div>
+                <table class="bg_white mt-1">
+                    <thead class="no-border">
+                        <tr class="bg_f1">
+                            <th class="text-center">排名</th>
+                            <th class="text-center" width="30%"> 访问页面</th>
+                            <th class="text-center">  页面类型</th>
+                            <th class="text-center"> 进入访客数</th>
+                            <th class="text-center">  进入浏览量</th>
+                            <th class="text-center"> 进入浏览量占比</th>
+                        </tr>
+                    </thead>
+                    <tbody class="no-border-y text-center">
+						<volist name = "url_come_list.list" id = "vo">
+                        <tr>
+                            <td class="ptb15">{$vo.no}</td>
+                            <td class="ptb15 text-left text_blue" style="word-break: break-all;">{$vo.url}</td>
+                            <td class="ptb15">{$vo.page_title}</td>
+                            <td class="ptb15">{$vo.uv} </td>
+                            <td class="ptb15">{$vo.pv} </td>
+                            <td class="ptb15">{$vo.pv_percen}%</td>
+                        </tr>
+						</volist>
+                       
+                    </tbody>
+                 </table>
+                 <div class="text-right">
+					<ul class="pagination">
+						<li class="prev <empty name="url_come_list.page.prevPage">disabled</empty>">
+							<a <notempty name="url_come_list.page.prevPage">onclick = "select_change('come','page',{$url_come_list.page.prevPage})"</notempty>><span class="fa fa-angle-left"></span>&nbsp;上一页</a>
+						</li>
+						
+						<volist name="url_come_list.page.page" id="vo">
+						<li <if condition="$vo.active eq 1">class="active"</if>><a onclick="select_change('come','page',{$vo.p})">{$vo.p}</a></li>
+						</volist>
+
+						<li class="next  <empty name="url_come_list.page.nextPage">disabled</empty>">
+							<a <notempty name="url_come_list.page.nextPage">onclick = "select_change('come','page',{$url_come_list.page.nextPage})"</notempty>>下一页&nbsp;<span class="fa fa-angle-right"></span></a>
+						</li>
+                    </ul>
+                    <div class="pull-right mt25 ml10 clearfix w190">
+                        <span class="pull-left mr5">跳到</span>
+                       
+						<select class="form-control pull-left mt-8" style="width:60px;height:31px" onchange = "select_change('come','page',this.value)">
+							<for start="1" end="$url_come_list.page.totalPage" comparison="elt">
+							<option value = "{$i}" <if condition="$url_come_list.page.nowPage eq $i">selected="selected"</if>>{$i}</option>
+							</for>
+						</select>
+                        <span class="pull-left ml15">共{$url_come_list.page.totalPage}页</span>
+                    </div>
+                </div>  
+            </div>
+
+
+            <div class="mb35">
+                <div class="ptb10 solid_b mb20">
+                    <span class="fs16">流量去向</span>
+                </div>
+                <div class="mb10">
+					<strong class="fs14 text_black mr20">选择时间</strong>
+                    <a class="text_yellow plr20 <if condition='$con[go_type] eq 1'>btn btn-primary btn-xs </if>" onclick = "select_change('go','type',1)">昨天</a>
+                    <a class="text_yellow plr20 <if condition='$con[go_type] eq 2'>btn btn-primary btn-xs </if>" onclick = "select_change('go','type',2)">最近一周</a>
+                    <a class="text_yellow plr20 <if condition='$con[go_type] eq 3'>btn btn-primary btn-xs </if>" onclick = "select_change('go','type',3)">最近一个月</a>
+                    <a class="text_yellow plr20 <if condition='$con[go_type] eq 4'>btn btn-primary btn-xs </if>" onclick = "select_change('go','type',4)">最近三个月</a>
+                    <div class="pull-right btn-group btn-group-sm mt-5">
+                        <button type="button" class="btn btn-primary plr20 <if condition='$con[go_terminal] neq 1'> btn-trans</if>" onclick = "select_change('go','terminal',1)">全部</button>
+                        <button type="button" class="btn btn-primary plr20 <if condition='$con[go_terminal] neq 2'> btn-trans</if>" onclick = "select_change('go','terminal',2)">pc端</button>
+                        <button type="button" class="btn btn-primary plr20 <if condition='$con[go_terminal] neq 3'> btn-trans</if>" onclick = "select_change('go','terminal',3)">手机端</button>
+                    </div>
+                </div>
+                <table class="bg_white mt-1">
+                    <thead class="no-border">
+                        <tr class="bg_f1">
+                            <th class="text-center">排名</th>
+                            <th class="text-center" width="30%"> 访问页面</th>
+                            <th class="text-center">  页面类型</th>
+                            <th class="text-center"> 离开访客数</th>
+                            <th class="text-center">  离开浏览量</th>
+                            <th class="text-center"> 离开浏览量占比</th>
+                        </tr>
+                    </thead>
+                    <tbody class="no-border-y text-center">
+						<volist name = "url_go_list.list" id = "vo">
+                        <tr>
+                            <td class="ptb15">{$vo.no}</td>
+                            <td class="ptb15 text-left text_blue" style="word-break: break-all;">{$vo.url}</td>
+                            <td class="ptb15">{$vo.page_title}</td>
+                            <td class="ptb15">{$vo.uv} </td>
+                            <td class="ptb15">{$vo.pv} </td>
+                            <td class="ptb15">{$vo.pv_percen}%</td>
+                        </tr>
+						</volist>
+                        
+                    </tbody>
+                 </table>
+                 <div class="text-right">
+					<ul class="pagination">
+						<li class="prev <empty name="url_go_list.page.prevPage">disabled</empty>">
+							<a <notempty name="url_go_list.page.prevPage">onclick = "select_change('go','page',{$url_go_list.page.prevPage})"</notempty>><span class="fa fa-angle-left"></span>&nbsp;上一页</a>
+						</li>
+						
+						<volist name="url_go_list.page.page" id="vo">
+						<li <if condition="$vo.active eq 1">class="active"</if>><a onclick="select_change('go','page',{$vo.p})">{$vo.p}</a></li>
+						</volist>
+
+						<li class="next  <empty name="url_go_list.page.nextPage">disabled</empty>">
+							<a <notempty name="url_go_list.page.nextPage">onclick = "select_change('go','page',{$url_go_list.page.nextPage})"</notempty>>下一页&nbsp;<span class="fa fa-angle-right"></span></a>
+						</li>
+                    </ul>
+                    <div class="pull-right mt25 ml10 clearfix w190">
+                        <span class="pull-left mr5">跳到</span>
+                       
+						<select class="form-control pull-left mt-8" style="width:60px;height:31px" onchange = "select_change('go','page',this.value)">
+							<for start="1" end="$url_go_list.page.totalPage" comparison="elt">
+							<option value = "{$i}" <if condition="$url_go_list.page.nowPage eq $i">selected="selected"</if>>{$i}</option>
+							</for>
+						</select>
+                        <span class="pull-left ml15">共{$url_go_list.page.totalPage}页</span>
+                    </div>
+                    
+                </div>  
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+<form action="" method="post" class="hide page_select">
+	<foreach name="con" item="vo" key="key">
+		<input type="hidden" name="{$key}" value="{$vo}"/>
+	</foreach>	
+</form>
+</block>
+
+<block name="css"></block>
+<block name="script">
+
+<script src="__NEW_DESIGN__flatdream/js/jquery.js"></script>
+<script src="__NEW_DESIGN__flatdream/js/jquery.pushmenu/js/jPushMenu.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.nanoscroller/jquery.nanoscroller.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.sparkline/jquery.sparkline.min.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.ui/jquery-ui.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.gritter/js/jquery.gritter.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/behaviour/core.js"></script>
+<script src="__NEW_DESIGN__flatdream/js/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.flot/jquery.flot.js"></script>
+
+<script src="__NEW_DESIGN__js/amcharts.js" type="text/javascript"></script>
+<script src="__NEW_DESIGN__js/serial.js" type="text/javascript"></script>
+<script src="__NEW_DESIGN__js/pie.js"></script>
+<script>
+	//页面页码切换
+	function select_change(type,name,new_val){
+		var old_val = $('.page_select input[name="'+type+'_'+name+'"]').val();
+		if(old_val != new_val){
+			$('.page_select input[name="'+type+'_'+name+'"]').val(new_val);
+			
+			if(name !== 'page'){
+				$('.page_select input[name="'+type+'_page"]').val(1);
+			}
+			$('.page_select').submit();
+		}
+	}
+</script>
+</block>

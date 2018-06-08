@@ -1,0 +1,10 @@
+<div class="menu-left" style="position:static;" data-url="__SELF__">
+	<h4>新闻中心</h4>
+	<ul class="list-unstyled">
+	<volist name="data" id="vo">
+		<li>
+			<a href="{:U('/index/index', array('id' => $vo['id']))}">{$vo.category_name}</a>
+		</li>
+	</volist>
+	</ul>
+</div>

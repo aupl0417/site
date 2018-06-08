@@ -1,0 +1,85 @@
+<include file="Public:header" />
+<include file="nav" title="设置默认SEO" />
+<div class="m20 p20 bg-white">
+
+	<form class="form-horizontal vform" id="formadd" name="formadd" data-url="__URL__/set_default_save">
+
+		<ul class="nav nav-tabs border-d">
+			<li class="active">
+				<a href="#tab87" data-toggle="tab">默认分组</a>
+			</li>
+		</ul>
+		<div class="tab-content tab-content-noborder">
+			<div class="tab-pane active" id="tab87">
+				<div class="form-group f-title">
+					<label class="control-label col-xs-3">标题 <span class="required" aria-required="true">*</span></label>
+					<div class="col-xs-7">
+						<div class="input-group">
+							<div>
+								<input type="text" id="title" name="title" placeholder="请输入标题" value="{$data.title}" class="form-control " style="" maxlength="80">
+							</div>
+						</div>
+						<div class="form-tips">建议不要超过80个字符，多个词之间请用半角“_”或“｜”隔开</div>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+				<div class="form-group f-keywords">
+					<label class="control-label col-xs-3">关键词</label>
+					<div class="col-xs-7">
+						<div class="input-group">
+							<div>
+								<textarea id="keywords" name="keywords" placeholder="请输入关键词" class="form-control " style="" rows="3" maxlength="100">{$data.keywords}</textarea>
+							</div>
+						</div>
+						<div class="form-tips">建议不要超过100个字符，多个词之间请用半角“,”隔开</div>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+				<div class="form-group f-description">
+					<label class="control-label col-xs-3">简介</label>
+					<div class="col-xs-7">
+						<div class="input-group">
+							<div>
+								<textarea id="description" name="description" placeholder="请输入简介" class="form-control " style="" rows="5" maxlength="200">{$data.description}</textarea>
+							</div>
+						</div>
+						<div class="form-tips">建议不要超过200个字符</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+        <div class="clearfix md70"></div>
+		<div class="navbar-fixed-bottom border-t">
+			<div class="p10 bg-white-50 text-center">
+				<button type="button" class="btn btn-lg btn-rad btn-trans btn-default" onclick="back()"><i class="fa fa-mail-reply"></i> 返回</button>
+				<button type="submit" class="btn btn-lg btn-rad btn-trans btn-primary"><i class="fa fa-check"></i> 提交</button>
+			</div>
+		</div>
+		<div class="hide vform-action"></div>
+	</form>
+	<div class="clearfix"></div>
+</div>
+
+
+<include file="Public:copyright" />
+<include file="Public:js" />
+
+<script>
+iCheckClass();
+checkform({
+	formid:'#formadd',
+},function(ret){
+	valert(ret);
+	if(ret.status=='success'){
+		setTimeout(function(){
+			back();
+		},1000);
+
+	}
+});
+
+
+</script>
+<include file="Public:footer" />

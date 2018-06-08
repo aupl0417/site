@@ -1,0 +1,99 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body">
+	<include file="Public:nav" />
+	<div class="container mb30">
+		<include file="Public:side" />
+		<div class="w980 fl">
+			<div class="bor_der">
+				<div class="bg_f1 clearfix fs14 text_44 tle_R orders-tab" data-url="__SELF__">
+					<a class="fl plr15 line40 ml-1" href="{:U('/activity')}">所有促销</a>
+					<a class="fl plr15 line40 ml-1" href="{:U('/activity/index', ['sid' => 0])}">未开始</a>
+					<a class="fl plr15 line40 ml-1" href="{:U('/activity/index', ['sid' => 1])}">进行中</a>
+					<a class="fl plr15 line40 ml-1" href="{:U('/activity/index', ['sid' => 2])}">已完成</a>
+					<a class="fl plr15 line40 ml-1" href="{:U('/activity/index', ['sid' => 3])}">已取消</a>
+				</div>
+				<!-- 主体部分 -->
+				<notempty name="data.list">
+					<div class="pd10">
+						<table class="table table-bordered table-advance table-hover" style="margin-bottom:0;">
+							<tbody>
+								<tr>
+									<th class="col-xs-2 text-center" style="vertical-align: middle;">活动类型</th>
+									<th class="col-xs-2 text-center" style="vertical-align: middle;">开始时间</th>
+									<th class="col-xs-2 text-center" style="vertical-align: middle;">结束时间</th>
+									<th class="col-xs-2 text-center" style="vertical-align: middle;">需消费/价格</th>
+									<th class="col-xs-2 text-center" style="vertical-align: middle;">状态</th>
+									<th class="col-xs-2 text-center" style="vertical-align: middle;">操作</th>
+								</tr>
+								<volist name="data.list" id="vo">
+									<tr>
+										<td class="text-center" style="vertical-align: middle;">{$vo.activity_name}</td>
+										<td class="text-center" style="vertical-align: middle;">{$vo.start_time}</td>
+										<td class="text-center" style="vertical-align: middle;">{$vo.end_time}</td>
+										<td class="text-center" style="vertical-align: middle;"><span class="text_yellow">{$vo.full_money} 元</span></td>
+										<td class="text-center" style="vertical-align: middle;">
+										<switch name="vo.status">
+											<case value="3"><span class="text_violet">已取消</span></case>
+											<case value="2"><span class="text_blue">已完成</span></case>
+											<case value="1"><span class="text_green">进行中</span></case>
+											<case value="0"><span class="text_yellow">未开始</span></case>
+										</switch>
+										</td>
+										<td class="text-center" style="vertical-align: middle;">
+											<a class="text_blue" href="{:U('/activity/detail', ['id' => $vo['id']])}">查看详情</a>
+											<a class="text_blue ml10" href="{:U('/activity/create', ['id' => $vo['id'], 'type' => $vo['type_id']])}">修改</a>
+											<eq name="vo.status" value="1">
+												<a class="text_yellow ml10 activity-cancel" href="javascript:;" data-id="{$vo.id}" data-title="确认取消活动" data-url="{:U('/activity/cancel')}">取消</a>
+											</eq>
+										</td>
+									</tr>
+								</volist>
+							</tbody>
+						</table>
+						<notempty name="data['page']['page']">
+							<div class="clearfix text-center">
+								<div class="col-xs-12 text-center">
+									{$data['page']['page']}
+								</div>
+							</div>
+						</notempty>
+					</div>
+				<else />
+					{:W('Common/Builder/nors', array('param' => array('text' => '<span><a class="text_yellow" href="/activity/type">立即发布</a></span>')))}
+				</notempty>
+			</div>
+		</div>
+	</div>
+</div>
+</block>
+<block name="css"></block>
+<block name="script">
+<script>
+$(document).ready(function() {
+	$(".activity-cancel").click(function() {
+		var d	=	$(this).data();
+		vmodal({
+			  title:d.title,
+			  msg:'取消活动后，活动将立即停止！',
+			  class:'text-center',
+			  confirm:1,
+			  footer:false,
+			  width:'600px',
+		  },function(ret) {
+			  $(".modal-ok").click(function() {
+				  ajax_post({
+					  url:d.url,
+					  data:{id:d.id},
+				  },function(ret) {
+					  talert({status:ret.code,msg:ret.msg});
+					  if(ret.code == 1) {
+						  setTimeout("ref()", 1000);
+					}
+				  })
+			 })
+		})
+	})
+});
+</script>
+</block>

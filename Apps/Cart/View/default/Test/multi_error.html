@@ -1,0 +1,34 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body">
+	<div class="container" style="margin:170px auto;">
+		<h2 class="text-center mb20 md20">该订单无法进行支付！</h2>
+		<volist name="shop" id="vo">
+			<notempty name="vo.error_msg">
+			<div class="alert alert-warning alert-white-alt2 rounded" style="margin: 0 15%;">
+				<div class="icon"><i class="fa fa-warning"></i></div>
+				<div class="row ft16">
+					<div class="col-xs-1 text-right">
+						<a href="{:shop_url($vo['shop']['id'],$vo['shop']['domain'])}" target="_blank"><img src="{:myurl($vo['shop']['shop_logo'],50)}" alt="店铺logo"></a>
+					</div>
+					<div class="col-xs-5">
+						<div class="ft18 strong"><a href="{:shop_url($vo['shop']['id'],$vo['shop']['domain'])}" target="_blank">{$vo.shop.shop_name}</a></div>
+						<div>昵称：{$vo.seller.nick}</div>
+					</div>
+					<div class="col-xs-6 text-right">
+						{$vo.error_msg}
+					</div>
+				</div>
+			</div>
+			<div class="md20 clearfix"></div>
+			</notempty>
+		</volist>
+		<div class="text-center">
+			<a href="{:DM('my', '/orders')}" class="btn btn-default btn-150px">查看订单</a><a href="{:DM('www')}" class="btn btn-danger btn-trans btn-150px ml20">继续购买</a>
+		</div>
+	</div>
+</div>
+</block>
+<block name="css"></block>
+<block name="script">
+</block>

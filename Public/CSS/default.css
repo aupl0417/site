@@ -1,0 +1,19 @@
+@charset "UTF-8";
+body{
+	font-family:"Microsoft YaHei",微软雅黑,宋体,黑体;
+	font-size: 12px;
+	margin: 0;
+	padding: 0;
+	background-color: transparent;
+}
+
+.w1200{
+	width: 1200px !important;
+	margin: auto;
+}
+
+ul,li{
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}

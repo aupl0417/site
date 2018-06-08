@@ -1,0 +1,306 @@
+<include file="Public:header" />
+<!-- 轮播 -->
+<!-- <div class="re bg_red">
+    <div id="carousel-example-klioj" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#carousel-example-klioj" data-slide-to="0" class=""></li>
+            <li data-target="#carousel-example-klioj" data-slide-to="1" class="active"></li>
+            <li data-target="#carousel-example-klioj" data-slide-to="2" class=""></li>
+        </ol>
+        <div class="carousel-inner" role="listbox">
+            <div class="item">
+                <img src="__NEW_DESIGN__/images/shop/banner_1920.jpg">
+            </div>
+            <div class="item active">
+                <img src="__NEW_DESIGN__/images/shop/banner_1920.jpg">
+            </div>
+            <div class="item">
+                <img src="__NEW_DESIGN__/images/shop/banner_1920.jpg">
+            </div>
+        </div>
+        <a class="left carousel-control" href="#carousel-example-klioj" role="button" data-slide="prev">
+            <span class="fa glyphicon-chevron-left fa-chevron-left" aria-hidden="true"></span>
+        </a>
+        <a class="right carousel-control" href="#carousel-example-klioj" role="button" data-slide="next">
+            <span class="fa glyphicon-chevron-right fa-chevron-right" aria-hidden="true"></span>
+        </a>
+    </div>
+</div> -->
+
+
+<!-- 主体 -->
+<div class="container">
+    <div class="mb50 mt30">
+    
+        <div class="clearfix mt20 mb5">
+            <div class="fl fs16"><i class="layui-icon " style="font-size: 20px; color: #1E9FFF;">&#xe60c;</i>&nbsp;账户一览</div>
+            <div class="fr fs16"><a href="{:U('My/index', ['status' => 3])}" class="layui-btn layui-btn-small">投放中的广告</a></div>
+        </div>
+        <div class="bor_der pd30 mt-1 mb10 bg-white">
+            <div class="row">
+                <div class="col-xs-1 pr0">
+                    <img class="img-circle mt10" width="80" src="{:myurl(session('user.face'),null, 80, 80)}">
+                </div>
+                <div class="col-xs-5 pt10">
+
+                    <div class="mb5"><strong class="fs18">{$Think.session.user.nick}</strong>，上次登录：{$Think.session.user.last_login_time|default="未知"}</div>
+                    <div>我有 <span class="fs16 text_red">{$tongji.status.3|default='0'}</span> 个广告投放中</div>
+                    <div>我上传了 <span class="fs16 text_green">{$tongji.sucai.all|default='0'}</span> 个素材，已审核通过 <span class="text_green">{$tongji.sucai.1|default='0'}</span> 个，待审核
+                        <span><span class="text_blue">{$tongji.sucai.0|default='0'}</span>个</span>
+                    </div>
+                </div>
+                <div class="col-xs-3 solid_r solid_l text-center">
+                    <div class="mb5">账户余额</div>
+                    <div class="fs20 mb10 strong">￥<span class="text_red">{$account.a_freeMoney|default="0"}</span></div>
+                    
+                    <a class="layui-btn layui-btn-danger" href="{:erp_url($cfg['erp']['domain']['pay'].'/assetCenter/recharge')}" target="_blank">去充值</a>
+                </div>
+                <div class="col-xs-3 text-center">
+                    <div class="mb5">广告累计消费</div>
+                    <div class="fs20 mb10 strong">￥<span class="text_red">{$tongji.money|default='0'}</span></div>
+                    
+                    <a class="layui-btn layui-btn-normal" href="{:U('/source')}" target="_blank">去投放广告</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <!-- 广告统计信息简单展示 -->
+    <div class="mb50 mt50">
+    
+        <div class="clearfix mt20 mb5">
+            <div class="fl fs16"><i class="layui-icon " style="font-size: 20px; color: #1E9FFF;">&#xe60a;</i>&nbsp;数据统计</div>
+
+            <div class="fr fs16"><a href="{:U('Tj/index')}" class="layui-btn layui-btn-small">历史投放效果</a></div>
+        </div>
+        <table class="bg_white">
+            <thead class="bg_f1">
+                <tr>
+                    <th class="text-center">展现量</th>
+                    <th class="text-center">点击量</th>
+                    <th class="text-center">点击率</th>
+                    <th class="text-center">成交（笔）</th>
+                    <th class="text-center">成交金额</th>
+                    <th class="text-center">转化率</th>
+                    <th class="text-center">时间</th>
+                </tr>
+            </thead>
+            <tbody class="">
+                <foreach name="tjTwoDay.list" item="vo">
+                <tr class="strong">
+                    <td class="text-center fs14">{$vo.show|default=0}</td>
+                    <td class="text-center fs14">{$vo.hit|default=0}</td>
+                    <td class="text-center fs14"><php> echo round(($vo['hit']/$vo['show']) * 100, 2); </php>%</td>
+                    <td class="text-center fs14">{$vo.orders|default=0}</td>
+                    <td class="text-center fs14">{$vo.orders_price|default=0}</td>
+                    <td class="text-center fs14"><php> echo round(($vo['order_user_num']/$vo['visit_user_num']) * 100, 2); </php>%</td>
+                    <td class="text-center small_xs"><php> echo date("Y/m/d",strtotime($vo['date'])); </php></td>
+                </tr>
+                </foreach>
+                
+                <empty name="tjTwoDay.list">
+                <tr>
+                    <td class="text-center h100" colspan="7"><span class="text_red">暂无数据</span></td>
+                </tr>
+                
+                </empty>
+            </tbody>
+        </table>
+    </div>
+    <div class="mb50">
+        <div class="clearfix mt20 mb5">
+            <div class="fl fs16"><i class="layui-icon " style="font-size: 20px; color: #1E9FFF;">&#xe629;</i>&nbsp;七日统计</div>
+        </div>
+        <div id="Tj7day" class="bor_der bg_white text-center" style="width: 100%; height: 400px;"><span class="text_red" style="line-height:400px;">暂无数据</span></empty></div>
+    </div>
+
+    <div class="mb50">
+        <!-- <h5>素材投放 <a href="{:U('Tj/sucai')}"><small class="pull-right">更多 <i class="fa fa-angle-double-right"></i></small></a></h5> -->
+        <div class="clearfix mt20 mb5">
+            <div class="fl fs16"><i class="layui-icon " style="font-size: 20px; color: #1E9FFF;">&#xe634;</i>&nbsp;素材投放</div>
+            <div class="fr fs16"><a href="{:U('Tj/sucai')}" class="layui-btn layui-btn-small">查看更多</a></div>
+        </div>
+        <table class="bg_white">
+            <thead>
+                <tr class="bg_f1">
+                    <th class="text-center">素材图片</th>
+                    <th class="text-center">展现图片</th>
+                    <th class="text-center">展现量</th>
+                    <th class="text-center">点击量</th>
+                    <th class="text-center">点击率</th>
+                    <th class="text-center">时间</th>
+                </tr>
+            </thead>
+            <tbody>
+                <foreach name="sucaiTwoDay.list" item="vo">
+                <tr>
+                    <td width="18%">
+                        <div class="amg" style="width:214px;height:60px">
+                            <img src="{:myurl($vo['images'],214,60)}">
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <p class="mb5">资源位：{$vo.position_name|default="未知"}</p>
+                        <span>链&nbsp;&nbsp;&nbsp;接：{$vo.position_url|default="无链接"}</span>
+                    </td>
+                    <td class="text-center">{$vo.show|default=0}</td>
+                    <td class="text-center">{$vo.hit|default=0}</td>
+                    <td class="text-center"><php> echo round(($vo['hit']/$vo['show']) * 100, 2); </php>%</td>
+                    <td class="text-center">{$vo.date}</td>
+                </tr>
+                </foreach>
+                
+                <empty name="sucaiTwoDay.list">
+                <tr>
+                    <td class="text-center h100" colspan="6"><span class="text_red">暂无数据</span></td>
+                </tr>
+                </empty>
+            </tbody>
+        </table>
+    </div>
+    <script src="/Public/new_design/js/amcharts.js" type="text/javascript"></script>
+    <script src="/Public/new_design/js/serial.js" type="text/javascript"></script>
+    <notempty name="data7day">
+    <script>
+        var chart;
+        var chartData = [];
+
+        AmCharts.ready(function () {
+            // generate some random data first
+            // generateChartData();
+
+            // SERIAL CHART
+            chart = new AmCharts.AmSerialChart();
+
+            chart.dataProvider = eval({:json_encode($data7day)});
+            // chart.dataProvider = chartData;
+            // console.log(chart.dataProvider);
+            chart.categoryField = "date";
+
+            // listen for "dataUpdated" event (fired when chart is inited) and call zoomChart method when it happens
+            // chart.addListener("dataUpdated", zoomChart);
+
+            chart.synchronizeGrid = true; // this makes all axes grid to be at the same intervals
+
+            // AXES
+            // category
+            var categoryAxis = chart.categoryAxis;
+            // categoryAxis.parseDates = true; // as our data is date-based, we set parseDates to true
+            categoryAxis.minPeriod = "DD"; // our data is daily, so we set minPeriod to DD
+            // categoryAxis.minorGridEnabled = true;
+            categoryAxis.axisColor = "#DADADA";
+            categoryAxis.twoLineMode = true;
+            categoryAxis.dateFormats = [{
+                period: 'fff',
+                format: 'JJ:NN:SS'
+            }, {
+                period: 'ss',
+                format: 'JJ:NN:SS'
+            }, {
+                period: 'mm',
+                format: 'JJ:NN'
+            }, {
+                period: 'hh',
+                format: 'JJ:NN'
+            }, {
+                period: 'DD',
+                format: 'DD'
+            }, {
+                period: 'WW',
+                format: 'DD'
+            }, {
+                period: 'MM',
+                format: 'MMM'
+            }, {
+                period: 'YYYY',
+                format: 'YYYY'
+            }];
+
+            // first value axis (on the left)
+            var valueAxis1 = new AmCharts.ValueAxis();
+            valueAxis1.axisColor = "#FF6600";
+            valueAxis1.axisThickness = 2;
+            chart.addValueAxis(valueAxis1);
+        
+            // second value axis (on the right)
+            var valueAxis2 = new AmCharts.ValueAxis();
+            valueAxis2.position = "right"; // this line makes the axis to appear on the right
+            valueAxis2.axisColor = "#B0DE09";
+            valueAxis2.gridAlpha = 0;
+            valueAxis2.axisThickness = 2;
+            chart.addValueAxis(valueAxis2);
+        
+            // third value axis (on the left, detached)
+            var valueAxis3 = new AmCharts.ValueAxis();
+            valueAxis3.offset = 50; // this line makes the axis to appear detached from plot area
+            valueAxis3.gridAlpha = 0;
+            valueAxis3.axisColor = "#FCD202";
+            valueAxis3.axisThickness = 2;
+            chart.addValueAxis(valueAxis3);
+        
+            // GRAPHS
+            // first graph
+            var graph1 = new AmCharts.AmGraph();
+            graph1.valueAxis = valueAxis1; // we have to indicate which value axis should be used
+            graph1.title = "展现量";
+            graph1.valueField = "show";
+            graph1.bullet = "round";
+            graph1.hideBulletsCount = 30;
+            graph1.bulletBorderThickness = 1;
+            chart.addGraph(graph1);
+        
+            // second graph
+            var graph2 = new AmCharts.AmGraph();
+            graph2.valueAxis = valueAxis2; // we have to indicate which value axis should be used
+            graph2.title = "点击量";
+            graph2.valueField = "hit";
+            graph2.bullet = "square";
+            graph2.hideBulletsCount = 30;
+            graph2.bulletBorderThickness = 1;
+            chart.addGraph(graph2);
+        
+            // third graph
+            var graph3 = new AmCharts.AmGraph();
+            graph3.valueAxis = valueAxis3; // we have to indicate which value axis should be used
+            graph3.valueField = "orders";
+            graph3.title = "下单量";
+            graph3.bullet = "triangleUp";
+            graph3.hideBulletsCount = 30;
+            graph3.bulletBorderThickness = 1;
+            chart.addGraph(graph3);
+
+            // CURSOR
+            var chartCursor = new AmCharts.ChartCursor();
+            chartCursor.cursorAlpha = 0.1;
+            chartCursor.fullWidth = true;
+            chartCursor.valueLineBalloonEnabled = true;
+            chart.addChartCursor(chartCursor);
+
+            // SCROLLBAR
+           // var chartScrollbar = new AmCharts.ChartScrollbar();
+            // chart.addChartScrollbar(chartScrollbar);
+
+            // LEGEND
+            var legend = new AmCharts.AmLegend();
+            // legend.marginLeft = 110;
+            legend.useGraphSettings = true;
+            chart.addLegend(legend);
+
+            // WRITE
+            chart.write("Tj7day");
+        });
+
+        // this method is called when chart is first inited as we listen for "dataUpdated" event
+        function zoomChart() {
+            // different zoom methods can be used - zoomToIndexes, zoomToDates, zoomToCategoryValues
+            chart.zoomToIndexes(10, 20);
+        }
+    </script>
+    </notempty>
+    <!-- 广告统计信息简单展示 -->
+</div>
+
+
+<include file="Public:footer" />
+

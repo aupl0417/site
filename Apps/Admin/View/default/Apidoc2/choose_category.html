@@ -1,0 +1,48 @@
+
+<form class="form-horizontal vform">
+	<div class="row md10 express-set">
+		<div class="col-xs-12">
+			<div class="input-group">
+				<span class="input-group-addon">rest2类目</span>
+				<select name="category" class="form-control " style="">
+					<!-- <optgroup label="请选择类目"></optgroup> -->
+					
+					<foreach name="category" item="value">
+						<optgroup label="{$value.category_name}">
+							<foreach name="value.child" item="vo">
+								<option value="{$vo.id}">{$vo.category_name}</option>
+							</foreach>
+						</optgroup>
+					</foreach>
+				</select>
+			</div>
+		</div>
+	</div>
+
+<div class="p20 text-center">
+	<button type="button" class="btn btn-info btn-rad btn-trans confirm-category"><i class="fa fa-check"></i>确定导入</button>
+</div>
+</form>
+
+
+<script>
+$(function(){
+	$('.confirm-category').on('click',function(){
+		var category = $('select[name="category"]').val();
+		if(category == ''){
+			valert({status:'warnning',msg:'请选择类目'});
+			return false;
+		}
+		ajax_post({
+			url:'__URL__/create_save',
+			data:{controller:'{$Think.GET.controller}','apis':'{$Think.GET.apis}',category:category},
+		},function(ret){
+			valert(ret);
+			if(ret.status == 'success'){
+				$('#ajax-modal').modal('hide');
+				ref();
+			}
+		});
+	});
+});
+</script>

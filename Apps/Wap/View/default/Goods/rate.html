@@ -1,0 +1,156 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			商品评价
+		</div>
+		<div class="r">
+		</div>
+	</div>
+</header>
+<section>	
+	<!--主菜单-->
+	<div class="row tabs">
+		<div class="col-25">
+			<div class="tabs-item active" data-active="1">
+				全部
+				(<span class="rate_num">0</span>)
+			</div>
+		</div>
+		<div class="col-25">
+			<div class="tabs-item">
+				好评
+				(<span class="rate_good">0</span>)
+			</div>
+		</div>		
+		<div class="col-25">
+			<div class="tabs-item">
+				中评
+				(<span class="rate_middle">0</span>)
+			</div>
+		</div>
+		<div class="col-25">
+			<div class="tabs-item">
+				差评
+				(<span class="rate_bad">0</span>)
+			</div>
+		</div>
+	</div>	
+	<div class="clearfix"></div>
+	<div class="tabs-content">
+		<div class="tabs-pane active">
+			<div class="pagelist"></div>
+			<div class="p10 load-more" onclick="goods_rate_pagelist($(this).closest('.tabs-pane'))">
+				<div class="btn btn-lg btn-block btn-danger btn-trans">加载更多……</div>
+			</div>	
+		</div>
+		<div class="tabs-pane" data-rate="1">
+			<div class="pagelist 1"></div>
+			<div class="p10 load-more" onclick="goods_rate_pagelist($(this).closest('.tabs-pane'),1)">
+				<div class="btn btn-lg btn-block btn-danger btn-trans">加载更多……</div>
+			</div>			
+		</div>
+		<div class="tabs-pane" data-rate="0">
+			<div class="pagelist 2"></div>
+			<div class="p10 load-more" onclick="goods_rate_pagelist($(this).closest('.tabs-pane'),0)">
+				<div class="btn btn-lg btn-block btn-danger btn-trans">加载更多……</div>
+			</div>			
+		</div>
+		<div class="tabs-pane" data-rate="-1">
+			<div class="pagelist 3"></div>
+			<div class="p10 load-more" onclick="goods_rate_pagelist($(this).closest('.tabs-pane'),-1)">
+				<div class="btn btn-lg btn-block btn-danger btn-trans">加载更多……</div>
+			</div>		
+		</div>
+
+		
+	</div>	
+
+</section>
+<script id="tpl_goods_rate_list" type="text/html">
+	<% for(i=0;i<data.length;i++){ %>
+	<div class="line-box-m hover noicon row">
+		<div class="col-10">
+			<img src="<%= data[i].user.face %>" class="img-circle" style="width:50px">
+		</div>
+		<div class="col-90">
+			<div class="pl10">
+				<div class="row">
+					<div class="col-60 b"><%= data[i].user.nick %></div>
+					<div class="col-40 text-right"><img src="../Public/Images/rate_<%= data[i].rate %>.png" alt="<%= data[i].rate_name %>"></div>
+				</div>
+				<div class=""><%= data[i].content %></div>
+				<div class="text-gray"><%= data[i].orders_goods.attr_name %></div>
+				<div class="text-gray"><%= data[i].atime %></div>
+				<% if(data[i].images){ %>
+					<div class="text-gray"></div>
+					<% for(j=0;j<data[i].images.length;j++){ %>
+						<% if(data[i].images[j]){ %>
+							<div class="fl m5"><img src="<%= data[i].images[j] %>" alt="晒单" /></div>
+						<% } %>
+					<% } %>
+				<% } %>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+	<% } %>
+</script>
+
+<script>
+fixBar(1);
+	
+
+var goods_rate_data={apiurl:'/Goods/goods_rate',goods_id:'{$_GET.goods_id}',no_sign:'p,pagesize,imgsize,rate'};
+goods_rate_pagelist($('.page.active .tabs-content .tabs-pane').eq(0));
+
+function goods_rate_pagelist(obj,rate){
+	var obj;
+	if(rate!==undefined) goods_rate_data.rate=rate;
+	else goods_rate_data.rate='';
+	pagelist({
+		obj:obj,
+		data:goods_rate_data,
+		success:function(ret){
+			var html=template('tpl_goods_rate_list',{data:ret.data.list});
+			
+				
+			if(obj.data('p')==2){
+				obj.find('.pagelist').html(html);
+				$('.page.active .rate_num').html(ret.count.rate_num);
+				$('.page.active .rate_good').html(ret.count.rate_good);
+				$('.page.active .rate_middle').html(ret.count.rate_middle);
+				$('.page.active .rate_bad').html(ret.count.rate_bad);
+			}else{
+				obj.find('.pagelist').append(html);
+			}			
+		},
+		error:function(ret){
+			obj.find('.pagelist').html(no_data_text);
+		},
+	});	
+}
+
+
+$('.page.active .tabs .tabs-item').each(function(index){
+	var obj=$(this);
+	var index;
+
+	
+	obj.click(function(){	
+		$(this).closest('.tabs').find('.tabs-item').removeClass('active');
+		$(this).addClass('active');
+		$('.page.active .tabs-content .tabs-pane').removeClass('active').eq(index).addClass('active');
+		
+		var init = $(this).data('init');
+		if(init != 1){
+			$(this).data({init:1});	
+			var tag=$('.page.active .tabs-content .tabs-pane').eq(index);
+			goods_rate_pagelist(tag,tag.data('rate'));
+		}
+	});
+});
+	
+</script>

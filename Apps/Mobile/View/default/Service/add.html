@@ -1,0 +1,131 @@
+<include file="Public:header" />
+		<div class="page-group">
+			<div id="page-service-add" class="page">
+				<!-- 标题栏 -->
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left back" data-no-cache="true"></a>
+					<h1 class="title">售后申请</h1>
+				</header>
+				<!-- 浮动导航 -->
+				<include file="Public:fixed-menu" />
+				<!-- 工具栏 -->
+
+				<nav class="bar bar-tab">
+					<div class="goods-footer">
+						<div class="cart-btn">
+							<div class="btn-buy btn-submit">提交申请</div>
+						</div>
+					</div>
+				</nav>			
+
+		
+				<!-- 这里是页面内容区 -->		
+				<div class="content">
+					<form name="form-add" id="form-add" onsubmit="return false;">
+						<div class="list-block media-list">
+							<ul>
+								<li>
+									<a href="/Orders/view/s_no/{$rs.s_no}" class="item-content item-link" data-no-cache="true">
+										<div class="item-inner">
+											<div class="item-title-row">
+												<div class="item-title">订单号</div>
+												<div class="item-after">{$rs.s_no}</div>
+												<input type="hidden" id="s_no" value="{$rs.s_no}" />
+											</div>
+										</div>
+									</a>
+								</li>
+								<li class="bg-gray2">
+									<a href="/Goods/view/id/{$rs.attr_list_id}" class="item-content">
+										<div class="item-media">
+											<img class="lazyload" data-sizes="auto" data-src="{:myurl($rs['images'],150)}" alt="商品主图" src="../Public/images/nopic.gif" width="60">
+										</div>
+										<div class="item-inner">
+											<div class="item-title-row">
+												<div class="item-title">{$rs.goods_name}</div>
+												<div class="item-after">
+													￥{$rs.price}
+												</div>
+											</div>
+											<div class="item-subtitle">
+												<div class="pull-right text-gray">x{$rs.num}</div>
+												<div class="ft05">{$rs.attr_name}</div>
+											</div>
+										</div>
+									</a>
+								</li>
+								<!--
+								<li>
+									<div class="item-content item-link {:$rs['can_num']>0 && $rs['can_price']>0?'open-popup':''}" data-popup=".popup-refundtype">
+										<div class="item-inner">
+											<div class="item-title-row">
+												<div class="item-title">售后类型</div>
+												<div class="item-after">换货</div>
+											</div>
+										</div>
+									</div>
+									<input type="hidden" name="type" id="type" value="1" />
+								</li>	
+								-->
+								<li id="li-num">
+									<div class="item-content">
+										<div class="item-inner">
+											<div class="item-title-row">
+												<div class="item-title" style="min-width:4rem">售后数量</div>		
+												<div class="item-input">
+													<input type="number" id="num" name="num" placeholder="请输入售后商品数量" value="1" data-max="{$rs.can_service_num}">
+												</div>
+												<div class="item-after">
+													<span class="ml03 text-gray ft05">最多可售后{$rs.can_service_num}件</span>
+												</div>
+												
+											</div>
+										</div>
+									</div>
+								</li>
+
+								<li>
+									<div class="item-content">
+										<div class="item-inner">
+											<div class="item-title-row">
+												<div class="item-title" style="min-width:4rem">售后描述</div>
+												<div class="item-input">
+													<textarea id="reason" name="reason" placeholder="请描述需要售后的内容，如换货或维修，不超过200字" maxlength="100" rows="8"></textarea>
+												</div>
+											</div>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class="item-content">
+										<div class="upload-box">
+											<div class="upload-action">
+												<div class="upload-btn">
+													<input id="imageData" name="imageData" type="file" value="" />
+													<img alt="上传图片" src="../Public/images/up_load.jpg" width="60">
+													<input type="hidden" id="images" name="images" />
+												</div>												
+											</div>
+											<div class="images-list">
+												
+											</div>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+						<div class="p5 text-gray ft05">
+							申请售后截止时间：{$rs.service_eday}
+						</div>
+						<input type="hidden" name="orders_goods_id" id="orders_goods_id" value="{$rs.id}" />
+					</form>	
+
+
+				</div><!--/content-->
+				
+			</div>		
+		</div>	
+		
+
+<include file="Public:script" />
+<include file="Public:footer" />

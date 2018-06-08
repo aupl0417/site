@@ -1,0 +1,70 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			找回密码
+		</div>
+	</div>
+</header>
+
+<section>
+	<form id="form-user" data-url="/Api/api">
+
+	<div class="line-box nobg noicon sm">
+		<span class="text-gray">请重新设置登录密码</span>
+	</div>
+	<div class="line-input row md20">
+		<div class="col-4">登录密码</div>
+		<div class="col-4x3"><input type="password" id="password" name="password" maxlength="20" placeholder="8-20位字母、数字及符号组合" maxlength="20"></div>
+	</div>
+	<div class="line-input row md20">
+		<div class="col-4">确认密码</div>
+		<div class="col-4x3"><input type="password" id="password2" maxlength="20" placeholder="再次填写密码" maxlength="20"></div>
+	</div>
+	<div class="p10">
+		<div class="btn btn-lg btn-danger btn-block" onclick="check_from()">确认</div>
+	</div>
+	
+	<input name="signcode" type="hidden" value="{$_GET.sign_code}" />
+	<input name="erp_uid" type="hidden" value="{$_GET.erp_uid}" />
+	<input type="hidden" name="apiurl" value="/Erp/forgot_password_step2" />
+	</form>
+</section>
+<script>
+	fixBar(1);
+	function check_from(){
+		if($('.page.active #password').val() == ''){
+			valert({msg:'请填写登录密码'});
+			$('.page.active #password').focus();
+			return false;
+		}
+		if($('.page.active #password2').val() == ''){
+			valert({msg:'请填写确认密码'});
+			$('.page.active #password2').focus();
+			return false;
+		}
+		if($('.page.active #password').val().length < 8 || $('.page.active #password2').val().length < 8){
+			valert({msg:'密码必须是8~20位之间的字母或数字组合且区分大小写'});
+			return false;
+		}
+		if( $('.page.active #password').val() != $('.page.active #password2').val() ){
+			valert({msg:'两次密码不一致'});
+			return false;
+		}
+
+		var data = getFormJson('#form-user');
+		ajax_post({
+			url:'/Api/api',
+			data:data,
+		},function(ret){
+			valert(ret);
+			if(ret.code == 1){
+				setTimeout(function(){
+					openWin({name:'login',url:'/Login/index'});
+				}, 1000);
+			}
+		});
+	}	
+</script>

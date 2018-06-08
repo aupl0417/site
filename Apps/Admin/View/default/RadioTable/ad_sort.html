@@ -1,0 +1,121 @@
+<include file="Public:header_" />
+
+<notempty name="pagelist.list">
+<form id="formlist" name="formlist">
+
+			{:W('Widget/listable',array(array(
+				'data'	=>$pagelist['list'],
+				'items'	=>array(
+					array(
+						'title'		=>'ID',
+						'field'		=>'id',
+						'td_attr'		=>'width="80" class="text-center"',
+					),
+					array(
+						'title'		=>'选择',
+						'type'		=>'html',
+						'html'		=>'<input type="checkbox" class="i-grey-square" name="id[]" id="id[]" value="[id]" data-id="[id]" data-images="[images]" data-name="[name]">',
+						'td_attr'	=>'width="60" class="text-center"',
+						'norder'	=>1,
+					),
+					array(
+						'title'		=>'页面截图',
+						'field'		=>'images',
+						'type'		=>'images',
+						'td_attr'	=>'class="text-center" width="80"',
+						'before'	=>'<a class="image-zoom" href="[images]" title="截图">',
+						'end'		=>'</a>',
+					),					
+					array(
+						'title'		=>'名称',
+						'field'		=>'name',
+						'before'	=>'<i class="fa fa-angle-right text-gray"></i>',
+					),
+					array(
+						'title'		=>'频道',
+						'field'		=>'modules',
+					),						
+					array(
+						'title'		=>'页面',
+						'type'		=>'html',
+						'html'		=>'<div class="md10 text-gray">[controller] > [action]</div><div class="text-info"><a href="[url]" target="_blank">[url]</a></div>',
+					),	
+
+					
+				),
+			)))}	
+	
+	
+			<div class="clearfix"></div>
+			<div class="hrow">
+				<div class="hcol-5 text-center">
+					{$pagelist.page.page}
+				</div>
+				<div class="hcol-1 text-center">
+					<div class="page-total">共 {$pagelist.allnum} 条记录，共 {$pagelist.allpage} 页</div>
+				</div>
+			</div>
+
+	
+	</form><!--/form-->
+
+	<div class="clearfix h50px"></div>
+
+	
+
+
+<div class="navbar-fixed-bottom border-t">
+	<div class="buttom-bar bg-white-50">
+		<button type="button" class="btn btn-primary btn-rad radio-select"><i class="fa fa-hand-o-up"></i> 选择一条记录，确定</button>
+		
+	</div>
+</div>	
+
+<else />
+<div class="m20">
+	<div class="text-center nors">
+		<div class="nors-tips md20">暂无记录！</div>
+	</div>
+</div>
+</notempty>
+
+
+
+<include file="Public:copyright" />
+<include file="Public:js" />
+<script>
+$(document).ready(function(){
+	$('.radio-select').click(function(){
+		var size=$('input[type="checkbox"]:checked').size();
+		if(size==0){
+			valert({status:'warning',msg:'请选择一条记录！'})
+			return false;
+		}else if(size>1){
+			valert({status:'warning',msg:'只能选择一条记录！'})
+			return false;		
+		}else{
+			var field=parent.$('.vform-action').html();
+			var tag='#'+field+'-list';
+			var d=$('input[type="checkbox"]:checked').data();
+			if(d.images){
+				var img='<img src="'+d.images+'?imageView2/2/w/60/h/60" style="max-width:100px;max-height:60px;">';
+			}			
+			
+			var html='<li class="rs p10 box" data-path="'+d.id+'" class="rs">'+
+						'<div class="l-80px text-center max-100">'+img+'</div>'+
+						'<div class="r-80px"><h4>'+d.name+'</h4>'+
+						'	<div><div class="btn btn-rad btn-trans btn-xs btn-primary" onclick="$(this).parents().parent(\'li\').remove();$(\'#'+field+'\').val(\'\');"><i class="fa fa-times"></i> 删除</div></div>'+
+						'</div>'+
+					'</li>';
+							
+			
+			parent.$('#'+field).val(d.id);
+			parent.$(tag).html(html);
+			parent.$('#ajax-modal2').modal('hide');
+		}
+	});
+});
+
+
+</script>
+<include file="Public:footer" />

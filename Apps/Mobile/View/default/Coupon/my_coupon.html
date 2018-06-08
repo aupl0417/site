@@ -1,0 +1,119 @@
+<include file="Public:header" />
+		<div class="page-group">
+			<div id="page-my-coupon" class="page">
+				<!-- 标题栏 -->
+				<header class="bar bar-nav bg-white">
+					<a class="icon icon-left pull-left back" href="/"></a>
+					<h1 class="title">我的优惠券</h1>
+					<a class="icon iconfont icon-category pull-right ml5 ac-menu" onclick="top_menu()"></a>
+				</header>
+
+				<!-- 浮动导航 -->
+				<include file="Public:fixed-menu" />
+				
+				<!-- 这里是页面内容区 -->		
+				<div class="content">
+					<div class="buttons-tab fixed-bar">
+						<a href="#tab1" class="tab-link button active">
+							可用优惠券
+						</a>
+						<a href="#tab2" class="tab-link button">
+							失效优惠券
+						</a>
+					</div>	
+					<div class="clearfix" style="height: 2.5rem;"></div>
+					<div class="tabs">
+						<div class="tab img-block infinite-scroll active" id="tab1" data-page_num="{$list.pageinfo.page}">
+							<input type="hidden" id="p" name="p" value="2" />
+							<notempty name="list.list">
+							<div class="list-block media-list list-block-coupon list-container">						
+								<ul>
+									<volist name="list.list" id="vo">
+									<li>
+										<eq name="vo.type" value="1">
+											<php>$url = '/Shop/index/shop_id/'.$vo['shop_id'];</php>
+										<else />
+											<eq name="vo.use_type" value="1">
+												<assign name="url" value="/Search/goods" />
+											<else />
+												<php>$url = '/Coupon/view/id/'.$vo['id'];</php>
+											</eq>
+										</eq>
+										<a href="{$url}" class="item-content3">
+											<div class="shop_logo">
+												<img class="lazyload img-circle border-1px" data-sizes="auto" data-src="{:myurl($vo['shop_logo'],44)}" alt="商品主图" src="../Public/images/nopic.gif">
+											</div>
+											<div class="shop_info">
+												<div class="shop_name">
+													<div class="pull-right num">({$vo.num}张)</div>
+													{:$vo['type']==1?$vo['shop_name']:$vo['type_name']}
+												</div>
+												<div class="text-gray ft05">
+													<div>{$vo.use_type_name} </div>
+													<div>{$vo.sday} ~ {$vo.eday}</div>
+												</div>
+											</div>
+											<div class="coupon">
+												<div class="price">￥<span>{$vo.price}</span></div>
+												<div class="text">满{$vo.min_price}可用</div>
+											</div>
+										</a>
+									</li>
+									</volist>
+								</ul>
+							</div>	
+							<else />
+								<div class="nors text-center">
+									<div><i class="iconfont icon-youhuiquan1 ft3"></i></div>
+									 没有优惠券！
+								</div>							
+							</notempty>
+						</div>
+						
+						<div class="tab img-block infinite-scroll" id="tab2" data-page_num="{$elist.pageinfo.page}">
+							<input type="hidden" id="p" name="p" value="2" />
+							<notempty name="elist.list">
+							<div class="list-block media-list list-block-coupon gray list-container">						
+								<ul>
+									<volist name="elist.list" id="vo">
+									<li>
+										<a href="javascript:;" data-url="/Shop/index/shop_id/{$vo.shop_id}" class="item-content3">
+											<div class="shop_logo">
+												<img class="lazyload img-circle border-1px" data-sizes="auto" data-src="{:myurl($vo['shop_logo'],45)}" alt="商品主图" src="../Public/images/nopic.gif">
+											</div>
+											<div class="shop_info">
+												<div class="shop_name">
+													<div class="pull-right num">({$vo.num}张)</div>
+													{:$vo['type']==1?$vo['shop_name']:$vo['type_name']}
+												</div>
+												<div class="text-gray ft05">
+													<div>{$vo.use_type_name}</div>
+													<div>{$vo.sday} ~ {$vo.eday}</div>
+												</div>
+											</div>
+											<div class="coupon">
+												<div class="price">￥<span>{$vo.price}</span></div>
+												<div class="text">满{$vo.min_price}使用</div>
+											</div>
+										</a>
+									</li>
+									</volist>
+								</ul>
+							</div>	
+							<else />
+								<div class="nors text-center">
+									<div><i class="iconfont icon-youhuiquan1 ft3"></i></div>
+									 没有优惠券！
+								</div>							
+							</notempty>							
+						</div>
+					</div>
+					
+				</div>			
+				
+			</div>
+		</div>	
+		
+
+<include file="Public:script" />
+<include file="Public:footer" />

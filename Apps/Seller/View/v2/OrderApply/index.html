@@ -1,0 +1,115 @@
+<extend name="Seller@Public:base" />
+<block name="body">
+    <div class="centent_body">
+        <!-- to do your html codeing -->
+        <div class="revision_bg">
+            <div class="container ptb_size_lg clearfix">
+                <!-- 左侧导航 -->
+                <include file="Public:sideNav" />
+                <!-- 左侧导航结束 -->
+
+                <div class="revisionRight pd15" style="width: 1020px"><!-- 右侧内容 -->
+
+                    <div class="clearfix revisionOrderTab" data-url="">						
+						<a class="orderOption" href="{:U('/Comments/index')}">我的评价</a>
+						<a class="orderOption" href="{:U('/Comments/index', ['is_shuadan' => 2])}">申诉评价</a>
+						<a class="orderOption" href="{:U('/Comments/index', ['is_shuadan' => 1])}">刷单评价</a>
+						<a class="orderOption active" href="{:U('/OrderApply/index')}">刷单申诉</a>
+                    </div>
+
+                    <div class="content">
+                        <table class="no-border mb20 bg_f1"><!-- 类型说明 -->
+                            <tbody class="no-border-y">
+                            <tr class="text-center">
+								<td width="20%">订单号</td>
+								<td width="15%">申诉时间</td>
+								<td width="">原因</td>
+                                <td width="12%">状态</td>
+                                <td width="12%">操作</td>
+                            </tr>
+                            </tbody>
+                        </table><!-- 类型说明结束 -->
+
+                        <empty name="data.list">
+                            {:W('Common/Builder/nors', array('param' => array('text' => $data['msg'])))}
+                            <else />
+                            <table class="revisionTable table"><!-- 订单信息 -->
+                                <tbody class="bg_white">
+                                <volist name="data.list" id="vo">
+                                    <tr class="text-center">
+
+                                        <td style="vertical-align: middle; width:20%" rowspan="1">
+											{$vo.s_no}
+                                        </td>
+                                        <td style="vertical-align: middle; width:15%" rowspan="1">
+											{$vo.atime}
+                                        </td>
+										<td style="vertical-align: middle;" rowspan="1">
+											{$vo.remark}
+                                        </td>
+										<td style="vertical-align: middle; width:12%" rowspan="1">
+                                            <div style="padding: 0 10px;">
+                                                <a href="javascript:;" class="btn btn-sm btn-primary btn-rad btn-trans btn-block m0">{$vo.status_name}</a>
+                                            </div>
+                                        </td>
+                                        <td style="vertical-align: middle; width:12%" rowspan="1">
+                                            <p><a class="text_blue" href="{:U('/OrderApply/detail', ['id' => $vo['id']])}">详情</a></p>
+											<eq name="vo.status" value="1">
+											<p><a href="javascript:;" data-id="{$vo.id}" class="text_blue cancel-appeal">取消申诉</a></p>
+											 </eq>
+                                        </td>
+                                    </tr>
+                                </volist>
+                                </tbody>
+                            </table><!-- 订单信息结束 -->
+                            <div class="mt30">
+                                <div class="page-box col-xs-12 text-center">
+                                    {:page_html($data['pageinfo'])}
+                                </div>
+                            </div>
+                        </empty>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- my codeing over -_-   -->
+
+    </div>
+</block>
+
+<block name="css">
+
+</block>
+
+<block name="script">
+    <!-- to do your javascript codeing -->
+	<script type="text/javascript">
+        $(document).ready(function(){
+            $(".cancel-appeal").click(function() {
+                var d	=	$(this).data();
+                vmodal({
+                    title:'取消提示',
+                    msg:'您真的要取消申诉吗?',
+                    class:'text-center',
+                    confirm:1,
+                    footer:false,
+                    width:'600px',
+                },function(ret) {
+                    $(".modal-ok").click(function() {
+                        ajax_post({
+                            url:'/run/authRun',
+                            data:{id:d.id},
+                            headers : {Action : '{:enCryptRestUri("/OrderApply/cancel")}'},
+                        },function(ret) {
+                            talert({status:ret.code,msg:ret.msg});
+                            if(ret.code == 1) {
+                                setTimeout("ref()", 1000);
+                            }
+                        })
+                    })
+                })
+            })
+        });
+    </script>
+</block>

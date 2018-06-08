@@ -1,0 +1,405 @@
+<include file="Public:header" />
+<include file="nav" />
+<js href="__JS__/ECharts/echarts.common.min.js" />
+	<div class="pd20">
+		<div class="bor_der pd15 m20 block-flat">
+			<h5 class="fs16 mt0">基础数据统计</h5>
+			<table class="bg_white table_dotted">
+				<tbody class="solid_t">
+					<tr>
+						<td class="fs14 pd30 hide">
+							<p class="mb20 fs14 text_77">支付宝付款累计总金额(元)</p>
+							<strong>{$result.total_alipay}</strong>
+						</td>
+						<td class="fs14 pd30 hide">
+							<p class="mb20 fs14 text_77">现金支付累计总金额(元)</p>
+							<strong>{$result.money_total}</strong>
+						</td>
+						<td class="fs14 pd30 hide">
+							<p class="mb20 fs14 text_77">唐宝支付累计总金额(个)</p>
+							<strong>{$result.total_tangbao}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">累计成交总金额(元)</p>
+							<strong>{$result.success_order_total}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">累计确认收货总金额(元)</p>
+							<strong>{$result.accept_total}</strong>
+						</td>
+						<td class="fs14 pd30 hide">
+							<p class="mb20 fs14 text_77">累计申请退款总金额(元)</p>
+							<strong>{$result.refund_total}</strong>
+						</td>
+						<td class="fs14 pd30 hide">
+							<p class="mb20 fs14 text_77">累计退款成功总额(元)</p>
+							<strong>{$result.refund_success_total}</strong>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		
+		<div class="bor_der pd15 m20 block-flat">
+			<h5 class="fs16 mt0">实时新增</h5>
+			<table class="bg_white table_dotted hide">
+				<tbody class="solid_t">
+					<tr>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日支付宝付款笔数</p>
+							<strong>{$totals_trans.0.alipay_num}</strong>
+							<h5 class="text_77">较前一日 <span class="{$ratio.alipay_num.color}">{$ratio.alipay_num.value}%  {$ratio.alipay_num.sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日支付宝付款总金额(元)</p>
+							<strong>{$totals_trans.0.day_alipay_total}</strong>
+							<h5 class="text_77">较前一日 <span class="{$ratio.day_alipay_total.color}">{$ratio.day_alipay_total.value}%  {$ratio.day_alipay_total.sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日现金支付笔数</p>
+							<strong>{$totals_trans.0.money_num}</strong>
+							<h5 class="text_77">较前一日 <span class="{$ratio.money_num.color}">{$ratio.money_num.value}%  {$ratio.money_num.sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日现金支付总金额(元)</p>
+							<strong>{$totals_trans.0.day_money_total}</strong>
+							<h5 class="text_77">较前一日 <span class="{$ratio.day_money_total.color}">{$ratio.day_money_total.value}%  {$ratio.day_money_total.sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日唐宝支付笔数</p>
+							<strong>{$totals_trans.0.tangbao_num}</strong>
+							<h5 class="text_77">较前一日 <span class="{$ratio.tangbao_num.color}">{$ratio.tangbao_num.value}%  {$ratio.tangbao_num.sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日唐宝支付总金额(个)</p>
+							<strong>{$totals_trans.0.day_tangbao_total}</strong>
+							<h5 class="text_77">较前一日 <span class="{$ratio.day_tangbao_total.color}">{$ratio.day_tangbao_total.value}%  {$ratio.day_tangbao_total.sign};</span></h5>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<style>
+				.flex-start{display: -webkit-flex; /* Safari */	display: flex;}
+				.flex-jcsb{justify-content:space-between;}
+				.flex-fb50{flex-basis:50%}
+			</style>
+			<div class="row mt30 flex-start flex-jcsb">
+				<div class="flex-fb50 hide">
+					<div class="box p20 m20">
+						<div id="main" style="width: 100%;height:400px;"></div>
+					</div>
+				</div>
+				<script type="text/javascript">
+					// 基于准备好的dom，初始化echarts实例
+					var myChart = echarts.init(document.getElementById('main'));
+					option = {
+						title : {
+							text: '上一天付款类型支付笔数占比',
+							x:'center'
+						},
+						tooltip : {
+							trigger: 'item',
+							formatter: "{a} <br/>{b} : {c} ({d}%)"
+						},
+						legend: {
+							orient: 'vertical',
+							left: 'left',
+							data: ['支付宝','现金','唐宝',]
+						},
+						series : [
+							{
+								name: '付款类型',
+								type: 'pie',
+								radius : '55%',
+								center: ['50%', '60%'],
+								data:[
+									{value:{$totals_trans.0.alipay_num}, name:'支付宝'},
+									{value:{$totals_trans.0.money_num}, name:'现金'},
+									{value:{$totals_trans.0.tangbao_num}, name:'唐宝'},
+								],
+								itemStyle: {
+									emphasis: {
+										shadowBlur: 10,
+										shadowOffsetX: 0,
+										shadowColor: 'rgba(0, 0, 0, 0.5)'
+									}
+								}
+							}
+						]
+					};
+					// 使用刚指定的配置项和数据显示图表。
+					myChart.setOption(option);
+				</script>
+				<div class="flex-fb50 hide">
+					<div class="box p20 m20">
+						<div id="main2" style="width: 100%;height:400px;"></div>
+					</div>
+				</div>
+				<script type="text/javascript">
+					// 基于准备好的dom，初始化echarts实例
+					var myChart2 = echarts.init(document.getElementById('main2'));
+					option2 = {
+						title : {
+							text: '上一天付款类型支付金额占比',
+							subtext: '唐宝换算成现金计算',
+							x:'center'
+						},
+						tooltip : {
+							trigger: 'item',
+							formatter: "{a} <br/>{b} : {c} ({d}%)"
+						},
+						legend: {
+							orient: 'vertical',
+							left: 'left',
+							data: ['支付宝','现金','唐宝',]
+						},
+						series : [
+							{
+								name: '付款类型',
+								type: 'pie',
+								radius : '55%',
+								center: ['50%', '60%'],
+								data:[
+									{value:{$totals_trans.0.day_alipay_total}, name:'支付宝'},
+									{value:{$totals_trans.0.day_money_total}, name:'现金'},
+									{value:{$totals_trans.0.day_tangbao_total}, name:'唐宝'},
+								],
+								itemStyle: {
+									emphasis: {
+										shadowBlur: 10,
+										shadowOffsetX: 0,
+										shadowColor: 'rgba(0, 0, 0, 0.5)'
+									}
+								}
+							}
+						]
+					};
+						
+
+					// 使用刚指定的配置项和数据显示图表。
+					myChart2.setOption(option2);
+				</script>
+			</div>
+			
+			<div class = "border">
+				<div class="flex flex-fdr border-b p10">
+					<div class="flex-f1">
+						<p class="mb20 text_77">上一日下单笔数</p>
+						<strong>{$totals_trans.0.order_num}</strong>
+						<h5 class="text_77">较前一日 <span class="{$ratio.order_num.color}">{$ratio.order_num.value}%  {$ratio.order_num.sign};</span></h5>
+					</div>
+					<div class="flex-f1">
+						<p class="mb20 text_77">上一日下单总金额(元)</p>
+						<strong>{$totals_trans.0.day_order_total}</strong>
+						<h5 class="text_77">较前一日 <span class="{$ratio.day_order_total.color}">{$ratio.day_order_total.value}%  {$ratio.day_order_total.sign};</span></h5>
+					</div>
+					<div class="flex-f1">
+						<p class="mb20 text_77">上一日下单平均单价(元)</p>
+						<strong>{$totals_trans.0.day_average_order}</strong>
+						<h5 class="text_77">较前一日 <span class="{$ratio.day_average_order.color}">{$ratio.day_average_order.value}%  {$ratio.day_average_order.sign};</span></h5>
+					</div>
+					<div class="flex-f1 flex flex-aic">
+						<strong class="flex-f1 text-success ft16">下单</strong>
+					</div>
+				</div>
+				<div class="flex flex-fdr border-b p10">
+					<div class="flex-f1">
+						<p class="mb20 text_77">上一日成交笔数</p>
+						<strong>{$totals_trans.0.order_success}</strong>
+						<h5 class="text_77">较前一日 <span class="{$ratio.order_success.color}">{$ratio.order_success.value}%  {$ratio.order_success.sign};</span></h5>
+					</div>
+					<div class="flex-f1">
+						<p class="mb20 text_77">上一日成交总金额(元)</p>
+						<strong>{$totals_trans.0.day_order_success_total}</strong>
+						<h5 class="text_77">较前一日 <span class="{$ratio.day_order_success_total.color}">{$ratio.day_order_success_total.value}%  {$ratio.day_order_success_total.sign};</span></h5>
+					</div>
+					<div class="flex-f1">
+						<p class="mb20 text_77">上一日成交平均单价(元)</p>
+						<strong>{$totals_trans.0.day_average_success_order}</strong>
+						<h5 class="text_77">较前一日 <span class="{$ratio.day_average_success_order.color}">{$ratio.day_average_success_order.value}%  {$ratio.day_average_success_order.sign};</span></h5>
+					</div>
+					<div class="flex-f1 flex flex-aic">
+						<strong class="flex-f1 text-success ft16">成交</strong>
+					</div>
+				</div>
+				<div class="flex flex-fdr p10">
+					<div class="flex-f1">
+						<p class="mb20 text_77">上一日确认收货笔数</p>
+						<strong>{$totals_trans.0.accept_num}</strong>
+						<h5 class="text_77">较前一日 <span class="{$ratio.accept_num.color}">{$ratio.accept_num.value}%  {$ratio.accept_num.sign};</span></h5>
+					</div>
+					<div class="flex-f1">
+						<p class="mb20 text_77">上一日确认收货总金额(元)</p>
+						<strong>{$totals_trans.0.day_accept_total}</strong>
+						<h5 class="text_77">较前一日 <span class="{$ratio.day_accept_total.color}">{$ratio.day_accept_total.value}%  {$ratio.day_accept_total.sign};</span></h5>
+					</div>
+					<div class="flex-f1">
+						<p class="mb20 text_77">上一日收货平均单价(元)</p>
+						<strong>{$totals_trans.0.day_average_accept}</strong>
+						<h5 class="text_77">较前一日 <span class="{$ratio.day_average_accept.color}">{$ratio.day_average_accept.value}%  {$ratio.day_average_accept.sign};</span></h5>
+					</div>
+					<div class="flex-f1 flex flex-aic">
+						<strong class="flex-f1 text-success ft16">确认收货</strong>
+					</div>
+				</div>
+			</div>
+			<br/>
+			<br/>
+			<br/>
+			<table class="bg_white table_dotted hide">
+				<tbody class="solid_t">
+					<tr>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日申请退款笔数</p>
+							<strong>{$totals_trans.0.refund_num}</strong>
+							<h5 class="text_77">较前一日 <span class="{$ratio.refund_num.color}">{$ratio.refund_num.value}%  {$ratio.refund_num.sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日申请退款总金额(元)</p>
+							<strong>{$totals_trans.0.day_refund_money}</strong>
+							<h5 class="text_77">较前一日 <span class="{$ratio.day_refund_money.color}">{$ratio.day_refund_money.value}%  {$ratio.day_refund_money.sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日申请退款平均单价(元)</p>
+							<strong>{$totals_trans.0.day_average_refund}</strong>
+							<h5 class="text_77">较前一日 <span class="{$ratio.day_average_refund.color}">{$ratio.day_average_refund.value}%  {$ratio.day_average_refund.sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日退款成功笔数</p>
+							<strong>{$totals_trans.0.refund_success_num}</strong>
+							<h5 class="text_77">较前一日 <span class="{$ratio.refund_success_num.color}">{$ratio.refund_success_num.value}%  {$ratio.refund_success_num.sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日退款成功总金额(元)</p>
+							<strong>{$totals_trans.0.refund_success_money}</strong>
+							<h5 class="text_77">较前一日 <span class="{$ratio.refund_success_money.color}">{$ratio.refund_success_money.value}%  {$ratio.refund_success_money.sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日退款成功平均单价(元)</p>
+							<strong>{$totals_trans.0.refund_success_average}</strong>
+							<h5 class="text_77">较前一日 <span class="{$ratio.refund_success_average.color}">{$ratio.refund_success_average.value}%  {$ratio.refund_success_average.sign};</span></h5>
+						</td>
+					</tr>
+					
+					
+					
+				</tbody>
+			</table>
+			<style>
+				.table_dotted tbody,.table_dotted tr,.table_dotted td{border:1px dashed #ccc !important;}
+			</style>	
+		</div>
+
+			
+		</div>
+
+	</div>
+
+
+
+<include file="Public:copyright" />
+<include file="Public:js" />
+<script>
+$(document).ready(function(){
+	$('.delete-select').click(function(){
+		if($('input[type="checkbox"]:checked').size()==0){
+			valert({status:'warning',msg:'请至少选择一项！'})
+			return false;
+		}else {
+			confirm_form({
+				formid:'#formlist',
+				furl:'__URL__/delete_select',
+				script:'callback(ret)',
+				title:'删除记录',
+				msg:'真的要删除吗？',
+				class:'text-center',
+				confirm:1
+			});
+		}
+	});
+
+	$('.active-change').click(function(){
+		if($('input[type="checkbox"]:checked').size()==0){
+			valert({status:'warning',msg:'请至少选择一项！'})
+			return false;
+		}else {
+			confirm_form({
+				formid:'#formlist',
+				furl:'__URL__/active_change_select/toactive/'+$('#toactive').val(),
+				script:'activeCall(ret)',
+				title:'批量更改记录状态',
+				msg:'真的要改记录状态吗？',
+				class:'text-center',
+				confirm:1
+			});
+		}
+	});
+	
+	$('.sid-change').click(function(){
+		if($('input[type="checkbox"]:checked').size()==0){
+			valert({status:'warning',msg:'请至少选择一项！'})
+			return false;
+		}else if($('#tosid').val()==''){
+			valert({status:'warning',msg:'请选择一个分类'})
+			return false;			
+		}else {
+			confirm_form({
+				formid:'#formlist',
+				furl:'__URL__/sid_change_select/tosid/'+$('#tosid').val(),
+				script:'activeCall(ret)',
+				title:'批量记录归类',
+				msg:'真的要批量记录归类吗？',
+				class:'text-center',
+				confirm:1
+			});
+		}
+	});	
+	
+	$('#gopage').change(function(){
+		var url=$('#gopage').val();
+		location.href=url;
+	});
+	$('.go-page').click(function(){
+		var url=$('#gopage').val();
+		location.href=url;
+	});	
+	
+	$('.btn-view').click(function(){
+		var d=$(this).data();
+		//alert(d.tag);
+		var tag='#view-'+d.id;
+		var item='#item-'+d.id;
+
+		$(tag).toggleClass('hide');
+		if($(item).html()=='') loadurl({tag:item,url:d.url});
+	});
+});
+
+function callback(ret){
+	valert({status:ret.status,msg:ret.msg});
+	if(ret.status=='success'){
+		$('input[type="checkbox"]:checked').each(function(){
+			$('#'+$(this).val()).remove();
+		});
+		$('#ajax-modal').modal('hide');
+	}
+}
+
+function delCall(ret,tag){
+	valert({status:ret.status,msg:ret.msg});
+	if(ret.status=='success'){
+		$(tag).remove();
+		$('#ajax-modal').modal('hide');
+	}
+}
+function activeCall(ret){
+	valert({status:ret.status,msg:ret.msg});
+	if(ret.status=='success'){
+		setTimeout(function(){
+			ref();
+		},500);
+	}
+}
+</script>
+<include file="Public:footer" />

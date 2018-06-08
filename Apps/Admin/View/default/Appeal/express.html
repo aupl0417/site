@@ -1,0 +1,18 @@
+<div class="ml40 pl20">
+    <div class="block-transparent">
+		<notempty name="rs.data.express">
+		<ul class="timeline">
+			<volist name="rs.data.express" id="vo">
+			<li>
+				<span class="date">{$vo.ftime}</span>
+				<div class="content">
+					<p><strong>{$vo.context}</strong></p>
+				</div>
+			</li>
+			</volist>
+		</ul>
+		<else/>
+			{:W('Common/Builder/nors', array('param' => array('text' => '暂无物流信息！')))}
+		</notempty>
+	</div>
+</div>

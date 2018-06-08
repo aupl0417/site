@@ -1,0 +1,53 @@
+<form data-url="__SELF__" id="form_create" class="form-horizontal">
+<div class="vform">
+
+			{:W('Widget/buildform',array(array(
+				'field'		=>array(
+					array(
+						'name'			=>	'id',
+						'formtype'		=>	'hidden',
+						'value'			=>	$data['id'],
+					),
+					array(
+						'formtype'		=>'text',
+						'label'			=>'证书名称',
+						'name'			=>'cert_name',
+						'is_need'		=>true,
+						'value'			=>$data['cert_name'],
+					),
+					array(
+						'formtype'		=>'radio',
+						'label'			=>'状态',
+						'name'			=>'status',
+						'data'			=>array(array(1,'启用'),array(0,'停用')),
+						'field'			=>array(0,1),
+						'value'			=>$data['status'],
+					),
+					array(
+						'formtype'		=>'hidden',
+						'name'			=>'category_id',
+						'value'			=>I('get.sid'),
+					),
+
+
+				),
+			),$rs))}
+
+<div class="p20 text-center">
+	<button type="submit" class="btn btn-primary btn-150px"><i class="fa fa-check"></i> 提交</button>
+</div>
+<!--token-->
+</div>
+</form>
+<script>
+iCheckClass();
+checkform({
+	formid:'#form_create',
+},function(ret){
+	valert(ret);
+	if(ret.status=='success'){
+		ref();
+	}
+});
+
+</script>

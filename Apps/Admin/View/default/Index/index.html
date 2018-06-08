@@ -1,0 +1,151 @@
+<include file="Public:header" />
+	<div class="left-box active">
+		<div class="logo"><a href="/" target="_top"><img src="../Public/images/logo.png" ></a></div>
+		<div class="left-menu"></div>
+
+	</div><!--/左侧菜单-->
+	
+	<div class="right-box">
+		<!--主菜单-->
+		<div class="top-box">
+			<div class="l mleft">
+			</div>
+			<div class="r">
+				<table class="no-border">
+					<tbody class="no-border-x no-border-y">
+					<tr>
+						<td class=" pt20"></td>
+						<td width="50"><img src="{:myurl(C('admin.face'))}" class="img-circle" width="40" height="40"></td>
+						<td width="200" class="ft16">{:C('admin.username')}，<a href="/Login/logout" target="_top">退出管理</a></td>
+					</tr>
+					</tbody>
+				</table>				
+			</div>
+		</div>
+		
+		<!--标签页-->
+		<div class="nav-box">
+			<ul class="nav-label">
+				<li class="ttip toggle-menu" title="关闭左侧菜单"><i class="fa fa-chevron-left ft18"></i></li>
+				<li class="ttip close-label" title="关闭所有标签"><i class="fa fa-times-circle ft18"></i></li>
+			</ul>
+		</div>
+		
+		<div class="views">
+
+		</div>
+	</div>
+<include file="Public:copyright" />
+<include file="Public:js" />
+
+<script id="topmenu" type="text/html">
+	<ul>
+		{{each menu as val i}}
+			<li onclick="smenu({{i}})" class="{{i==0?'active':''}}" data-id="{{val.id}}" data-index="{{i}}">{{val.name}}</li>
+		{{/each}}
+	</ul>
+</script>
+
+<script id="smenu" type="text/html">
+	{{each menu.dlist as val i}}
+	<div class="smenu-us">
+		<div class="smenu-first">
+			{{if val.url}}
+				{{if val.target!=''}}
+					<a href="{{val.url}}" target="{{val.target}}">{{val.name}}</a>
+				{{else}}
+				<a href="javascript:void(0)" onclick="">{{val.name}}</a>
+				{{/if}}
+			{{else}}
+				{{val.name}}
+			{{/if}}
+		</div>
+		<ul>
+			{{each val.dlist as ds j}}
+				<li id="{{ds.id}}" data-rootid="{{val.sid}}">
+					{{if ds.url}}
+						{{if ds.target!=''}}
+							<a href="{{ds.url}}" target="{{ds.target}}">{{ds.name}}</a>
+						{{else}}
+						<a href="javascript:void(0)" onclick="openWin({name:'{{ds.id}}',title:'{{ds.name}}',url:'{{ds.url}}',rootid:'{{val.sid}}'})">{{ds.name}}</a>
+						{{/if}}
+					{{else}}
+						{{ds.name}}
+					{{/if}}				
+				
+				</li>
+			{{/each}}
+		</ul>
+	</div>
+	<div class="clearfix"></div>
+	{{/each}}
+</script>
+
+<script>
+var menu={$list|json_encode};
+
+$(document).ready(function(){
+
+	var data={menu:menu};
+	var html = template('topmenu', data);
+	$('.top-box .mleft').html(html);	
+	//openWin({name:'main',title:'首页',url:'/Index/main'});
+	smenu(0);
+
+	$('.close-label').click(function(){
+		$('.nav-label li').each(function(index){
+			if(index>2){
+				var d=$(this).data();
+				closeWin({name:d.page});
+			}
+		});
+	});
+	
+	$('.toggle-menu').click(function(){
+		var obj=$(this);
+		$('.left-box').toggleClass('active');
+		if($('.left-box').hasClass('active')){
+			$('.right-box').css({'margin-left':'200px'});
+			obj.html('<i class="fa fa-chevron-left ft18"></i>');
+		}else{
+			$('.right-box').css({'margin-left':'0'});
+			obj.html('<i class="fa fa-chevron-right ft18"></i>');
+		}
+	});
+});	
+
+	function smenu(i){
+		var lmenu={menu:menu[i]};
+		
+		var html = template('smenu', lmenu);
+		$('.left-menu').html(html);	
+		if(menu[i].dlist[0].dlist[0].id) openWin({name:menu[i].dlist[0].dlist[0].id,title:menu[i].dlist[0].dlist[0].name,url:menu[i].dlist[0].dlist[0].url,rootid:menu[i].id})
+		//alert(html);
+		
+		//$('.mleft li').eq(i).addClass('active').siblings().removeClass('active');
+	}
+	
+	function smenu2(i){
+		var lmenu={menu:menu[i]};		
+		var html = template('smenu', lmenu);
+		$('.left-menu').html(html);		
+	}
+
+//定时刷新在线雇员，60秒刷一次
+
+window.setInterval(function(){
+	$.ajax({  
+		type: 'get',
+		url:'/Index/online_updatetime',
+		dataType: 'json',
+		success:function(ret){
+			if(ret.code == 0){
+				alert(ret.msg);
+				top.location.href='/Login';
+			}
+		}
+	});
+},60*1000);
+
+</script>
+<include file="Public:footer" />

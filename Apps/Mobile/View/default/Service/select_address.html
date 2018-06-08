@@ -1,0 +1,59 @@
+<include file="Public:header" />
+		<div class="page-group">
+			<div id="page-service-select-address" class="page" data-page_num="{$pagelist.pageinfo.page}">
+				<!-- 标题栏 -->
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left back" href="/"></a>
+					<h1 class="title">选择收货地址</h1>
+				</header>
+				<!-- 浮动导航 -->
+				<include file="Public:fixed-menu" />
+				<nav class="bar bar-tab">
+					<a href="/Cart/address_add" class="footer-btn footer-btn-default">新增收货地址</a>
+				</nav>						
+		
+				<!-- 这里是页面内容区 -->		
+				<div class="content infinite-scroll" data-distance="100" data-p="1">
+					<notempty name="pagelist.list">
+
+					<div class="list-block media-list">
+						<ul class="list-container">
+							<volist name="pagelist.list" id="vo">
+							<li id="address-{$vo.id}" data-id="{$vo.id}">
+								<a href="#" class="item-link item-content action" data-id="{$vo.id}">
+									<div class="item-media">
+										<i class="iconfont icon-shouhuodizhi ft1"></i>									
+									</div>
+									<div class="item-inner">
+										<div class="item-title-row">
+											<div class="item-title"><strong>{$vo.linkname}</strong>，{$vo.mobile}<notempty name="vo.tel">/{$vo.tel}</notempty></div>
+										</div>
+										<div class="item-text text-gray">{$vo.province} {$vo.city} {$vo.district} {$vo.town} {$vo.street}</div>
+									</div>
+								</a>
+							</li>
+							</volist>
+						</ul>
+					</div>
+
+					<!-- 加载提示符 -->
+					<div class="infinite-scroll-preloader">
+						<div class="preloader">
+						</div>
+					</div>
+					<else />
+							<div class="nors text-center">
+								<div><i class="iconfont icon-sousuowujieguo ft3"></i></div>
+								 找不到记录！
+							</div>
+					</notempty>					
+				</div>			
+				
+			</div>		
+
+		
+		</div>	
+		
+
+<include file="Public:script" />
+<include file="Public:footer" />

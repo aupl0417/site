@@ -1,0 +1,425 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">	
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>如何注册账号？_帮助中心 - 唐人街</title>
+	<meta name="keywords" content="唐人街,网上购物,积分购物,唐宝购物,男女服饰,男鞋女鞋,箱包皮具,美妆洗护,钟表,珠宝,配饰,母婴玩具">
+	<meta name="description" content="唐人街-引领全球消费的电商平台,提供数万个品牌优质商品，便捷、诚信服务，为您提供愉悦的网上购物体验。">	
+	<meta name="author" content="Mercury">
+	<!-- Bootstrap core CSS -->
+	<link rel="stylesheet" type="text/css" href="/Public/new_design/flatdream/js/bootstrap/dist/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="/Public/new_design/flatdream/js/jquery.gritter/css/jquery.gritter.css" />
+	<link rel="stylesheet" type="text/css" href="/Public/new_design/flatdream/fonts/font-awesome-4/css/font-awesome.min.css">
+	<link href="/Public/CSS/flatdream/js/jquery.magnific-popup/dist/magnific-popup.css" rel="stylesheet" />
+	<link rel="stylesheet" type="text/css" href="/Public/Jquery/toastr/toastr.css" />
+	
+	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!--[if lt IE 9]>
+	  <script src="../assets/js/html5shiv.js"></script>
+	  <script src="../assets/js/respond.min.js"></script>
+	<![endif]-->
+	<link rel="stylesheet" type="text/css" href="/Public/new_design/flatdream/js/jquery.nanoscroller/nanoscroller.css" />
+    <link rel="stylesheet" type="text/css" href="/Public/new_design/flatdream/js/jquery.codemirror/lib/codemirror.css">
+	<link rel="stylesheet" type="text/css" href="/Public/new_design/flatdream/js/jquery.codemirror/theme/ambiance.css">
+	<link rel="stylesheet" type="text/css" href="/Public/new_design/flatdream/js/jquery.vectormaps/jquery-jvectormap-1.2.2.css"  media="screen"/>
+
+	<link rel="stylesheet" type="text/css" href="/Public/new_design/flatdream/css/style.css"/>
+	<!-- 定义样式 -->
+	<link rel="stylesheet" type="text/css" href="/Public/new_design/css/common.css" >
+	<link rel="stylesheet" type="text/css" href="/Public/new_design/css/css.css">
+	<link rel="stylesheet" type="text/css" href="/Public/new_design/css/other.css">
+	<link rel="stylesheet" type="text/css" href="/Public/new_design/css/style.css">
+	<script src="/Public/new_design/flatdream/js/jquery.js"></script>
+	<script type="text/javascript" src="/Public/Jquery/jquery.lazyload.min.js"></script>
+	
+	
+	<script>
+		var ACTION	=	'MDAwMDAwMDAwMK5nk6K_jZvYxrmXpI-Ln24';
+	</script>
+</head>
+<body style="overflow-x:hidden">
+	<div id="ajax_tips"></div>
+	<!--[if lt IE 10]>
+	<div class="alert alert-warning md0 dn browser-low-tip">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true" onclick="close_browser_low_tip(this)">&times;</button>
+		<i class="fa fa-warning sign"></i><strong>浏览器版本过低！</strong> 请使用谷歌浏览器(Chrome)、火狐浏览器(FireFox)、360浏览器、搜狗浏览器、腾讯浏览器(TT)、IE10以上、苹果浏览器(Safari)等浏览器浏览本站才可体验最佳效果。
+	</div>
+	<script>		
+		if(!$.cookie('close_browser_low_tip')){
+			$(".browser-low-tip").show();
+		}
+		function close_browser_low_tip(obj){
+			if(confirm("不再弹出？")){
+				var date = new Date();
+				date.setTime(date.getTime() + (86400 * 1000));
+				$.cookie('close_browser_low_tip','1', { path: '/', expires: date });  
+				$(obj).parent().remove();
+			}
+		}
+	</script>
+	<![endif]-->
+	<link rel="stylesheet" href="/Apps/Faq/View/default/Public/css/css_002.css" />
+	<link rel="stylesheet" href="/Apps/Faq/View/default/Public/css/css.css" />
+
+	<style type="text/css">
+		ul{
+			padding-left: 0px;
+			margin-bottom: 0px;
+		}
+		.box{
+			padding: 0px;
+		}
+		a{
+			color: black;
+		}
+		h2{
+			font-size:18px;
+		}
+	</style>
+
+<header>	
+	<div class="bg_f1">
+	<!-- 首页头部banner -->
+		<div class="container text_77 line30">您好!
+		<span class="ajax_topbar">
+		<a class="text_black" href="http://user.ledui.com/login.html">请登录</a>
+			<a class="text_black" href="http://user.ledui.com/register.html">免费注册</a>
+				</span>
+		<div class="pull-right clearfix ad">
+			<div class="re fl plr10 hover_title">
+				<a target="_blank" class="text_77" href="http://my.ledui.com">买家中心<i class="fa fa-caret-down ml5"></i></a>
+				<div class="ab dn line20 hover_body">
+					<a target="_blank" class="text_77" href="http://my.ledui.com/orders.html"><p class="mb7">已买到的宝贝</p></a>
+					<a target="_blank" class="text_77" href="http://my.ledui.com/history.html"><p class="mb7">我的足迹</p></a>
+				</div>					
+			</div>
+			<div class="re fl plr10 hover_title">
+				<a target="_blank" class="text_77" href="http://my.ledui.com/fav.html"><i class="fa fa-star mr5 text_red"></i>收藏夹<i class="fa fa-caret-down ml5"></i></a>
+				<div class="ab dn line20 hover_body">
+					<a target="_blank" class="text_77" href="http://my.ledui.com/fav.html"><p class="mb7">收藏的宝贝</p></a>
+					<a target="_blank" class="text_77" href="http://my.ledui.com/favshop.html"><p class="mb7">收藏的店铺</p></a>
+				</div>					
+			</div>
+			<div class="re fl plr10">
+				<a class="text_77" href="http://s.ledui.com/category.html">商品分类</a>				
+			</div>
+			<div class="re fl plr10 hover_title">
+				<a target="_blank" class="text_77" href="http://seller.ledui.com">卖家中心<i class="fa fa-caret-down ml5"></i></a>
+				<div class="ab dn line20 hover_body">
+					<a target="_blank" class="text_77" href="http://zhaoshang.ledui.com"><p class="mb7">免费开店</p></a>
+					<a target="_blank" class="text_77" href="http://seller.ledui.com/orders.html"><p class="mb7">已卖出的宝贝</p></a>
+					<a target="_blank" class="text_77" href="http://sell.ledui.com"><p class="mb7">出售中的宝贝</p></a>
+					<a target="_blank" class="text_77" href="http://ad.ledui.com"><p class="mb7">广告位购买</p></a>
+					<a target="_blank" class="text_77" href="http://seller.ledui.com/refund.html"><p class="mb7">退款列表</p></a>
+					<!-- <a target="_blank" class="text_77" href="https://imweb.dtfangyuan.com:9443/download/index.html"><p class="mb7">大唐方圆</p></a> -->
+				</div>					
+			</div>
+			<div class="re fl plr10">
+				<a target="_blank" class="text_red" href="https://www.dttx.com/apps">app下载</a>
+			</div>
+			<div class="re fl plr10 hover_title">
+				<a class="text_77" href="javascript:;">联系客服<i class="fa fa-caret-down ml5"></i></a>
+				<div class="ab dn line20 hover_body">
+					<a class="text_77" href="http://www.ledui.com/service.html"><p class="mb7">客服中心</p></a>
+					<a class="text_77" href="http://faq.ledui.com"><p class="mb0">帮助中心</p></a>
+				</div>					
+			</div>	
+		</div>
+	</div>
+</div>
+	<div class="top-box bg-white line-red-2px">
+	<div class="container p10">
+		<div class="top-box-left">
+			<div class="logo">
+				<div><a href="http://www.ledui.com"><img src="/Apps/Faq/View/default/Public/images/logo_default.png" alt="唐人街商城logo"></a></div>
+				<div class="logo-channel"><a href="/"><span class="ft18 text-blue">帮助中心</span></a></div>
+			</div>
+		</div>
+		<div class="top-box-right">
+			
+		</div>
+		<div class="clearfix"></div>
+	</div>	
+</div>
+<div class="bg-gray2" data-type="help-sort" data-sid="">
+	<div class="container help-search-box" style="padding:30px 0px">
+		<form method="get" action="/Index/index">
+			<div class="help-input-box">
+				<div class="l">
+					<input id="q" name="q" placeholder="请输入搜索关键词">
+				</div>
+				<div class="r">
+					<button type="submit"><i class="fa fa-search"></i>搜索</button>
+				</div>				
+			</div>
+		</form>
+	</div>
+</div>
+	
+</header>
+<!--内容开始-->
+	
+	<div class="container mt20">
+	 <div class="row md20">
+			<div class="col-xs-3">
+			<ul class="itabs tabs-help">
+				<li class="active"><a href="javascript:void()">我是买家</a></li>
+				<li class=""><a href="javascript:void()">我是卖家</a></li>
+			</ul>
+
+			<div class="itabs-content tabs-help-content box">
+				<div class="itabs-pane active">
+					<div class="us">
+							<div class="us-name">账号管理</div>
+							<ul>
+							<li id="100330580"><a href="/index.html?cid=100330580">注册/登录</a></li><li id="100330533"><a href="/index.html?cid=100330533">忘记密码</a></li><li id="100330542"><a href="/index.html?cid=100330542">个人资料修改</a></li><li id="100330564"><a href="/index.html?cid=100330564">支付账户管理</a></li><li id="100330536"><a href="/index.html?cid=100330536">账号安全</a></li>							</ul>
+						</div><div class="us">
+							<div class="us-name">购买指南</div>
+							<ul>
+							<li id="100330584"><a href="/index.html?cid=100330584">积分</a></li><li id="100330579"><a href="/index.html?cid=100330579">支付方式</a></li><li id="19"><a href="/index.html?cid=19">购买商品</a></li><li id="100330549"><a href="/index.html?cid=100330549">购物车</a></li><li id="100330552"><a href="/index.html?cid=100330552">收货地址管理</a></li><li id="90"><a href="/index.html?cid=90">商品订单</a></li><li id="100330547"><a href="/index.html?cid=100330547">宝贝/店铺收藏</a></li>							</ul>
+						</div><div class="us">
+							<div class="us-name">退款/售后</div>
+							<ul>
+							<li id="100330576"><a href="/index.html?cid=100330576">售后服务</a></li><li id="24"><a href="/index.html?cid=24">退款管理</a></li>							</ul>
+						</div><div class="us">
+							<div class="us-name">维权凭证</div>
+							<ul>
+							<li id="100330571"><a href="/index.html?cid=100330571">维权凭证</a></li>							</ul>
+						</div>				</div>
+
+
+				<div class="itabs-pane ">
+					<div class="us">
+							<div class="us-name">创建店铺</div>
+							<ul>
+							<li id="39"><a href="/index.html?cid=39">开店流程</a></li>							</ul>
+						</div><div class="us">
+							<div class="us-name">店铺管理</div>
+							<ul>
+							<li id="100330555"><a href="/index.html?cid=100330555">店铺分类</a></li><li id="100330559"><a href="/index.html?cid=100330559">品牌申请</a></li><li id="100330566"><a href="/index.html?cid=100330566">广告位的购买</a></li>							</ul>
+						</div><div class="us">
+							<div class="us-name">宝贝管理</div>
+							<ul>
+							<li id="100330557"><a href="/index.html?cid=100330557">商品发布</a></li><li id="83"><a href="/index.html?cid=83">商品管理</a></li><li id="85"><a href="/index.html?cid=85">订单管理</a></li>							</ul>
+						</div><div class="us">
+							<div class="us-name">物流服务</div>
+							<ul>
+							<li id="100330586"><a href="/index.html?cid=100330586">物流配送</a></li><li id="63"><a href="/index.html?cid=63">运费模板</a></li>							</ul>
+						</div><div class="us">
+							<div class="us-name">客户服务</div>
+							<ul>
+							<li id="100330581"><a href="/index.html?cid=100330581">疑难解答</a></li><li id="68"><a href="/index.html?cid=68">规则与违规</a></li>							</ul>
+						</div><div class="us">
+							<div class="us-name">协议/规则/行业标准</div>
+							<ul>
+							<li id="101"><a href="/index.html?cid=101">规则/协议</a></li>							</ul>
+						</div>				</div>	
+			</div>
+		</div>
+		<div class="col-xs-9">
+			<div class="bg-white" style="min-height:500px;">
+				<div class="help-nav-title">
+					所有帮助 <i class="fa fa-angle-right"></i> <span id="second"></span> <i class="fa fa-angle-right"></i><span id="third"></span>  <i class="fa fa-angle-right"></i> 注册/登录</div>
+			
+				<div class="help-sub-title">
+										如何注册账号？				
+				</div>
+				
+				<div class="help-content">
+					<p><a name="OLE_LINK4"></a><span style="font-size: 16px; font-family: 宋体, SimSun;">如何注册账号？ </span></p><p><span style="font-size: 18px; font-family: 宋体, SimSun;">1<span style="font-size: 18px; font-family: 宋体;">、打开浏览器，输入网址</span><a name="OLE_LINK3"></a>（</span><a href="https://www.tangmall.net" style="font-size: 18px; text-decoration: underline; font-family: 宋体, SimSun;"><span style="font-size: 18px; text-decoration: underline; font-family: 宋体, SimSun;">https://www.tangmall.net</span></a><span style="font-size: 18px; font-family: 宋体, SimSun;">），进入唐人街官网；</span></p><p><span style="font-family: Calibri; font-size: 18px;"><br/>2<span style="font-family: 宋体;">、点击</span><span style="font-family: Calibri;">“</span><span style="font-family: 宋体;">注册</span><span style="font-family: Calibri;">”</span><span style="font-family: 宋体;">，跳转到注册页面；</span></span></p><p><img src="https://pic.tangmall.net/147218365810.png" title="1469869686.png" alt="商城页面点击注册.png"/></p><p><span style="font-size: 16px; font-family: 宋体, SimSun;">&nbsp;</span></p><p><span style="font-size: 18px; font-family: 宋体, SimSun;">3<span style="font-size: 18px; font-family: 宋体;">、根据实际情况，选择</span><span style="font-size: 18px; font-family: Calibri;">“</span><span style="font-size: 18px; font-family: 宋体;">个人用户</span><span style="font-size: 18px; font-family: Calibri;">”</span><span style="font-size: 18px; font-family: 宋体;">或</span><span style="font-size: 18px; font-family: Calibri;">“</span><span style="font-size: 18px; font-family: 宋体;">企业用户</span><span style="font-size: 18px; font-family: Calibri;">”</span><span style="font-size: 18px; font-family: 宋体;">如实选择注册用户与填写注册信息；</span></span></p><p><span style="font-size: 18px; font-family: 宋体, SimSun;"><img src="https://pic.tangmall.net/147218366010.png" title="1469869830.png" alt="1.填写注册.png"/></span></p><p><span style="font-size: 18px; font-family: 宋体, SimSun;">(1)<span style="font-size: 18px; font-family: 宋体;">个人用户信息框：</span></span></p><p><br/></p><p><span style="font-size: 16px; font-family: 宋体, SimSun;">&nbsp;<img src="https://pic.tangmall.net/14721836605.png" title="1469869839.png" alt="2.个人用户注册页面.png"/></span></p><p><span style="font-size: 18px; font-family: 宋体, SimSun;">(2)<span style="font-size: 18px; font-family: 宋体;">企业用户信息框：</span></span></p><p><img src="https://pic.tangmall.net/14721836615.png" title="1469869846.png" alt="3.企业用户注册页面.png"/></p><p><span style="font-size: 16px; font-family: 宋体, SimSun;">&nbsp;</span></p><p><span style="font-size: 18px; font-family: 宋体, SimSun;">4<span style="font-size: 18px; font-family: 宋体;">、填写完毕后，请在认真阅读后勾选</span><span style="font-size: 18px; font-family: Calibri;">“</span><span style="font-size: 18px; font-family: 宋体;">我已阅读并同意</span><span style="font-size: 18px; font-family: Calibri;">&lt;&lt;</span><span style="font-size: 18px; font-family: 宋体;">唐人街用户注册协议</span><span style="font-size: 18px; font-family: Calibri;">&gt;&gt;”</span><span style="font-size: 18px; font-family: 宋体;">，点击</span><span style="font-size: 18px; font-family: Calibri;">“</span><span style="font-size: 18px; font-family: 宋体;">立即注册</span><span style="font-size: 18px; font-family: Calibri;">”</span><span style="font-size: 18px; font-family: 宋体;">。</span></span></p><p><span style="font-size: 16px; font-family: 宋体, SimSun;">&nbsp;</span></p><p><span style="font-family: 宋体, SimSun;"><strong><span style="font-family: &#39;Times New Roman&#39;; font-size: 20px;">*<span style="font-family: 宋体;">会员注册信息填写说明：</span></span></strong></span></p><p><span style="font-size: 16px; font-family: 宋体, SimSun;">&nbsp;</span></p><p><span style="font-size: 18px; font-family: 宋体, SimSun;">&nbsp;1<span style="font-size: 18px; font-family: 宋体;">、个人用户注册：</span></span></p><p><span style="font-size: 18px; font-family: 宋体, SimSun;">（<span style="font-size: 18px; font-family: Calibri;">1</span><span style="font-size: 18px; font-family: 宋体;">）用户名：即唐人街的登录名，由中英文、数字或下划线组合而成，不能以数字或下划线开头，也不能以下划线结尾，长度为</span><span style="font-size: 18px; font-family: Calibri;">6-20</span><span style="font-size: 18px; font-family: 宋体;">个字符；</span></span></p><p><span style="font-size: 18px; font-family: 宋体, SimSun;">（<span style="font-size: 18px; font-family: Calibri;">2</span><span style="font-size: 18px; font-family: 宋体;">）设置和确认登录密码：唐人街的登录密码由英文、数字或符号组合构成，长度为</span><span style="font-size: 18px; font-family: Calibri;">8-20</span><span style="font-size: 18px; font-family: 宋体;">位。为了您的帐号安全，请尽量避免使用顺号或简易数字，如：</span><span style="font-size: 18px; font-family: Calibri;">12345678</span><span style="font-size: 18px; font-family: 宋体;">、</span><span style="font-size: 18px; font-family: Calibri;">88888888</span><span style="font-size: 18px; font-family: 宋体;">等；</span></span></p><p><span style="font-family: 宋体, SimSun;"><span style="font-family: Calibri; font-size: 18px;">（<span style="font-family: Calibri;">3</span><span style="font-family: 宋体;">）推荐</span><span style="font-family: Calibri;">ID</span><span style="font-family: 宋体;">号</span></span><span style="font-size: 18px; font-family: 宋体, SimSun;">：填写推荐人用户名或推广码，如没有推荐人或没有填写，可默认为大唐天下，推荐人信息一经确认，不得更改；</span></span></p><p><span style="font-size: 18px; font-family: 宋体, SimSun;">（<span style="font-size: 18px; font-family: Calibri;">4</span><span style="font-size: 18px; font-family: 宋体;">）身份证：本系统的个人会员目前只能通过身份证号进行注册。请填写本人真实有效的身份证号码，这是您操作唐人街账户，进行提现的重要凭证；一个身份证号只能绑定一个会员帐号，且不得更换；</span></span></p><p><span style="font-size: 18px; font-family: 宋体, SimSun;">（<span style="font-size: 18px; font-family: Calibri;">5</span><span style="font-size: 18px; font-family: 宋体;">）手机号：填写真实有效的手机号码，一个会员帐户只能绑定一个手机号；</span></span></p><p><span style="font-size: 18px; font-family: 宋体, SimSun;">（<span style="font-size: 18px; font-family: Calibri;">6</span><span style="font-size: 18px; font-family: 宋体;">）验证码：填写右侧显示的图文数字。</span></span></p><p><span style="font-size: 16px; font-family: 宋体, SimSun;">&nbsp;</span></p><p><span style="font-size: 16px; font-family: 宋体, SimSun;">&nbsp;</span></p><p><span style="font-size: 18px; font-family: 宋体, SimSun;">2<span style="font-size: 18px; font-family: 宋体;">、企业用户注册：</span></span></p><p><span style="font-size: 18px; font-family: 宋体, SimSun;">（<span style="font-size: 18px; font-family: Calibri;">1</span><span style="font-size: 18px; font-family: 宋体;">）用户名：即唐人街的登录名，由中英文、数字或下划线组合而成，不能以数字或下划线开头，且不能以下划线结尾，长度为</span><span style="font-size: 18px; font-family: Calibri;">6-20</span><span style="font-size: 18px; font-family: 宋体;">个字符；</span></span></p><p><span style="font-size: 18px; font-family: 宋体, SimSun;">（<span style="font-size: 18px; font-family: Calibri;">2</span><span style="font-size: 18px; font-family: 宋体;">）公司名称：公司营业执照上面的名称；</span></span></p><p><span style="font-size: 18px; font-family: 宋体, SimSun;">（<span style="font-size: 18px; font-family: Calibri;">3</span><span style="font-size: 18px; font-family: 宋体;">）设置和确认登录密码：唐人街的登录密码由英文、数字或符号组合构成，长度为</span><span style="font-size: 18px; font-family: Calibri;">8-20</span><span style="font-size: 18px; font-family: 宋体;">位。为了您的帐号安全，请尽量避免使用顺号或简易数字，如：</span><span style="font-size: 18px; font-family: Calibri;">12345678</span><span style="font-size: 18px; font-family: 宋体;">、</span><span style="font-size: 18px; font-family: Calibri;">88888888</span><span style="font-size: 18px; font-family: 宋体;">等；</span></span></p><p><span style="font-size: 18px; font-family: 宋体, SimSun;">（<span style="font-size: 18px; font-family: Calibri;">4</span><span style="font-size: 18px; font-family: 宋体;">）推荐</span><span style="font-size: 18px; font-family: Calibri;">ID</span><span style="font-size: 18px; font-family: 宋体;">号：</span>填写推荐人用户名或推广码，如没有推荐人或没有填写，可默认为大唐天下，推荐人信息一经确认，不得更换；<span style="font-size: 18px; font-family: 宋体;"></span></span></p><p><span style="font-size: 18px; font-family: 宋体, SimSun;">（<span style="font-size: 18px; font-family: Calibri;">5</span><span style="font-size: 18px; font-family: 宋体;">）营业执照号：三证合一的公司填写社会统一信用代码，若不是三证合一的公司则填写公司营业执照的注册编号；一个社会统一信用代码只能绑定一个企业会员帐号，且不得修改；</span></span></p><p><span style="font-size: 18px; font-family: 宋体, SimSun;">（<span style="font-size: 18px; font-family: Calibri;">6</span><span style="font-size: 18px; font-family: 宋体;">）手机号：填写真实有效的手机号码，一个会员帐户只能绑定一个手机号；</span></span></p><p><span style="font-size: 18px; font-family: 宋体, SimSun;">（<span style="font-size: 18px; font-family: Calibri;">7</span><span style="font-size: 18px; font-family: 宋体;">）验证码：填写右侧显示的图文数字。</span></span></p><p><br/></p>				</div>
+
+			
+			</div>
+		</div>
+	 </div>
+</div>
+	<!--内容结束-->
+<footer class="solid_t bg_f5">	
+	<div class="container mt30 mb30">
+		<div class="row mg0">
+			<div class="col-xs-3 pl40 ">
+				<img class="fl mr15" src="/Public/new_design/images/footer_1.png">
+				<p class="mb0 mt10 fs20 line30"><strong class="">正品保证</strong></p>
+				<p class="mb0 fs16 text_77">正品行货 放心选购</p>
+			</div>
+			<div class="col-xs-3 pl40 ">
+				<img class="fl mr15" src="/Public/new_design/images/footer_2.png">
+				<p class="mb0 mt10 fs20 line30"><strong class="">消费奖励</strong></p>
+				<p class="mb0 fs16 text_77">购物奖励积分</p>
+			</div>
+			<div class="col-xs-3 pl40 ">
+				<img class="fl mr15" src="/Public/new_design/images/footer_3.png">
+				<p class="mb0 mt10 fs20 line30"><strong class="">售后无忧</strong></p>
+				<p class="mb0 fs16 text_77">7天无理由退款</p>
+			</div>
+			<div class="col-xs-3 pl40 ">
+				<img class="fl mr15" src="/Public/new_design/images/footer_4.png">
+				<p class="mb0 mt10 fs20 line30"><strong class="">帮助中心</strong></p>
+				<p class="mb0 fs16 text_77">您的购物指南</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="bg_f0">
+		<div class="container pt20 pb20">
+			<div class="row mg0">
+				<div class="col-xs-2 pl40">
+					<h5><strong>新手指南</strong></h5>
+					<a href="http://faq.ledui.com/view.html?id=866" target="_blank"><p class="mb0 line22">注册流程</p></a>
+					<a href="http://faq.ledui.com/view.html?id=868" target="_blank"><p class="mb0 line22">登录流程</p></a>
+					<a href="http://faq.ledui.com/view.html?id=882" target="_blank"><p class="mb0 line22">商品查找</p></a>
+					<a href="http://faq.ledui.com/view.html?id=953" target="_blank"><p class="mb0 line22">购物流程</p></a>
+				</div>
+				<div class="col-xs-2 pl40">
+					<h5><strong>会员相关</strong></h5>
+					<a href="http://faq.ledui.com/view.html?id=884" target="_blank"><p class="mb0 line22">积分获取</p></a>
+					<a href="http://faq.ledui.com/view.html?id=826" target="_blank"><p class="mb0 line22">忘记密码</p></a>
+					<a href="http://faq.ledui.com/view.html?id=887" target="_blank"><p class="mb0 line22">后台管理</p></a>
+					<a href="http://faq.ledui.com/view.html?id=890" target="_blank"><p class="mb0 line22">商家入驻</p></a>
+					<a href="http://faq.ledui.com/view.html?id=893" target="_blank"><p class="mb0 line22">入驻流程</p></a>
+				</div>
+				<div class="col-xs-2 pl40">
+					<h5><strong>支付相关</strong></h5>
+					<a href="http://faq.ledui.com/view.html?id=961" target="_blank"><p class="mb0 line22">余额充值 </p></a>
+					<a href="http://faq.ledui.com/view.html?id=958" target="_blank"><p class="mb0 line22">唐宝支付 </p></a>
+					<a href="http://faq.ledui.com/view.html?id=958" target="_blank"><p class="mb0 line22">支付宝支付 </p></a>
+					<a href="http://faq.ledui.com/view.html?id=958" target="_blank"><p class="mb0 line22">余额支付 </p></a>
+				</div>
+				<div class="col-xs-2 pl40">
+					<h5><strong>物流配送</strong></h5>
+					<a href="http://faq.ledui.com/view.html?id=896" target="_blank"><p class="mb0 line22">配送方式 </p></a>
+					<a href="http://faq.ledui.com/view.html?id=898" target="_blank"><p class="mb0 line22">配送范围 </p></a>
+					<a href="http://faq.ledui.com/view.html?id=901" target="_blank"><p class="mb0 line22">收货验货 </p></a>
+				</div>
+				<div class="col-xs-4">
+					<div class="row">
+						<div class="col-xs-6">
+							<h5><strong>售后服务</strong></h5>
+							<a href="http://faq.ledui.com/view.html?id=908" target="_blank"><p class="mb0 line22">退换货政策</p></a>
+							<a href="http://faq.ledui.com/view.html?id=910" target="_blank"><p class="mb0 line22">退换货费用</p></a>
+							<a href="http://faq.ledui.com/view.html?id=911" target="_blank"><p class="mb0 line22">退换货申请</p></a>
+							<a href="http://faq.ledui.com/view.html?id=914" target="_blank"><p class="mb0 line22">退换货流程</p></a>
+						</div>
+						<div class="col-xs-6 pt10 text-center">
+							<img width="102" src="/Public/images/download_app.png">
+							<p class="mb0 text-center line24">APP购物更优惠</p>								
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<p class="text-center bg_black text_white mb0 line50">
+	Copyright © 2013 唐人街 All Rights Reserved ICP备案：湘ICP备16005109号-2 &nbsp;&nbsp;ICP证号：湘B2-20160118 &nbsp;&nbsp;
+		</p>
+</footer>
+
+
+<!--<script src="http://tongji.ledui.com/ShopCollect/index/r/MDAwMDAwMDAwMMN-i2LIeafYsZWwpZd6sJ2Wopuli4uzYZG5mZ2SY2bcu2hyY8h8cdexlLSlmXp-oZV8n6KLd5mqfbrHqJF5iNrEd3Zv/s/MDAwMDAwMDAwMLyjf6qxorDOv6q4qYGghqeViqNv/u/MDAwMDAwMDAwMK5pk6K_jZvXxqq0rZd3caGNfZZmf566bQ'"></script>-->
+<script>
+
+
+function seoSet(url){
+	vmodal({
+		title:'设置此页面SEO',
+		iframe:'http://www.ledui.com/index/seoSet/url/' + url,
+		width:'900px',
+	});
+}
+
+
+
+
+
+
+
+
+</script>
+
+<!--[if IE 8]>
+<script src="/Public/CSS/proui/js/helpers/excanvas.min.js"></script>
+<![endif]-->
+
+<script src="/Public/Jquery/jquery-validation/js/jquery.validate.js"></script><script src="/Public/Jquery/jquery-validation/js/localization/messages_zh.js"></script><script src="/Public/Jquery/artTemplate/dist/template.js"></script><script src="/Public/Jquery/toastr/toastr.js"></script><script src="/Public/Jquery/jquery.form.js"></script><script src="/Public/CSS/flatdream/js/jquery.gritter/js/jquery.gritter.js"></script><script src="/Public/CSS/flatdream/js/jquery.icheck/icheck.min.js"></script><script src="/Public/CSS/flatdream/js/bootstrap/dist/js/bootstrap.min.js"></script><script src="/Public/CSS/flatdream/js/jquery.niftymodals/js/jquery.modalEffects.js"></script><script src="/Public/CSS/flatdream/js/jquery.magnific-popup/dist/jquery.magnific-popup.min.js"></script><script src="/Public/CSS/flatdream/js/jasny.bootstrap/extend/js/jasny-bootstrap.min.js"></script><script src="/Public/Apps/global.js"></script><script type="text/javascript">
+$(document).ready(function() {
+    $("img").lazyload({
+         placeholder : "/Public/images/nopic.png", //加载图片前的占位图片
+         effect      : "fadeIn", //加载图片使用的效果(淡入)
+         skip_invisible : false,
+    });
+});
+
+function ajax_topbar(){
+	if($('.ajax_topbar').size()>0){
+		ajax_get({
+			url:'/Topbar/topbar',
+		},function(ret){
+			if($('.ajax_topbar').size()>0) $('.ajax_topbar').html(ret.topbar);
+			if($('.ajax_user').size()>0) $('.ajax_user').html(ret.user);
+			if($('.ajax_cart_num').size()>0) $('.ajax_cart_num').html(ret.cart);
+			
+			if($('.ajax_search_near').size()>0){
+				if(ret.keywords && ret.keywords!=''){
+					var html='';
+					$.each(ret.keywords,function(i,item){
+						html +='<a class="btn btn-sm btn-trans plr20" href="http://s.ledui.com/Index/index/keywords/'+item+'">'+item+'</a>';
+					});
+					/*
+					for(i=0;i<ret.keywords.length;i++){
+						if(i<10){
+							html +='<a class="btn btn-sm btn-trans plr20" href="http://s.ledui.com/Index/index/keywords/'+ret.keywords[i]+'">'+ret.keywords[i]+'</a>';
+						}
+					}
+					*/
+					$('.ajax_search_near').html(html);
+				}else{
+					$('.ajax_search_near').html('<div class="plr20">暂无搜索记录！</div>');
+				}
+			}
+		});
+	}
+}
+
+
+
+</script>
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+			itabs({});
+			$('.tabs-help-content .us-name').click(function(){
+				$(this).parent().toggleClass('active');
+			});
+			var d=$('[data-type="help-sort"]').data();
+			if(d.sid){
+				var index=$('.itabs-content li[id="'+d.sid+'"]').closest('.itabs-pane').index();
+				$('.itabs li').eq(index).addClass('active').siblings().removeClass('active');
+				$('.itabs-content .itabs-pane').eq(index).addClass('active').siblings().removeClass('active');
+				$('.itabs-content .itabs-pane').eq(index).find('.us').removeClass('active');
+				index=$('.itabs-content li[id="'+d.sid+'"]').addClass('active').closest('.us').addClass('active');
+			}
+		});	
+		
+		var category_id = 100330580;
+		if(category_id!=''){
+			$("#"+category_id).children('a').css('color','red').closest('.us').addClass('active');
+
+			var obj = $("#"+category_id).closest('.itabs-pane');
+			if(!obj.hasClass('active')){
+				obj.addClass('active').siblings().removeClass('active');
+				$(".tabs-help .active").removeClass('active').siblings().addClass('active');
+			}
+
+			$("#second").text($(".itabs > li.active a").text());
+			$("#third").text($(".us.active  .us-name").text());
+
+		}
+		
+		$(document).ready(function() {
+			//顶部，静态化时需要用到
+			ajax_topbar();
+		});			
+	</script>

@@ -1,0 +1,448 @@
+<div class="clearfix">
+	<div class="pull-right text-gray" onclick="$(this).closest('tr').toggleClass('hide');"><i class="fa fa-times-circle-o fa-2x"></i></div>	
+</div>
+
+<div class="p20 box">
+	<div class="row">
+		<div class="col-xs-5 auth-text">
+			<div>用户ID：{$rs.uid}</div>
+			<div>用户名：{$rs.user.nick}</div>
+			<div>用户类型：
+				<eq name="rs.user.type" value="1">
+					企业用户
+					<else />
+					个人用户
+				</eq>
+			</div>
+			<notempty name="rs.user.company"><div>公司名称：{$rs.user.company}</div></notempty>		
+			<div>操作步骤：
+				{:status($rs['step'],['',['店铺类型'],['品牌资质','btn-warning'],['行业资质','btn-danger'],['店铺设置','btn-info']])}
+			</div>
+
+			<div>审核状态：
+				{:status($rs['status'],[['提交资料中'],['等待审核','btn-warning'],['被拒绝','btn-danger'],['审核通过待寄合同','btn-info'],['未收到合同','btn-warning'],['升级成功','btn-success']])}
+			</div>			
+			<div>申请时间：{$rs.atime}</div>
+			<div class="md20"></div>
+			<div class="border-d ft18 md10 p10 strong">店铺信息</div>
+			<div class="row">
+				<div class="col-xs-2 text-right">
+					<a class="image-zoom" href="{$rs.shop_logo}"><img src="{:myurl($rs['shop_logo'],80)}" alt="店铺logo" class="border-1px"></a>
+				</div>
+				<div class="col-xs-10">
+					<eq name="is_same" value="1">
+						<div class="alert alert-warning alert-white-alt2 rounded">
+							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+							<div class="icon"><i class="fa fa-warning"></i></div>
+							<strong>提示：</strong> 该店铺名称已被使用！
+						</div>
+					</eq>
+					<div>店铺名称：<span class="ft18 strong text-danger">{$rs.shop_name}{$rs.shop_type.type_name}</span></div>
+					<div>店铺类型：{$rs.shop_type.type_name}</div>
+					<div>
+						分账模式：{:status($rs['inventory_type'],[['扣除货款'],['库存积分分发','btn-info']])}
+					</div>	
+					<div>
+						店铺简介：{$rs.about}
+					</div>						
+				</div>
+			</div>
+			<div class="md20"></div>
+			<div class="ft18 md10 p10 strong">经营类目</div>
+			<notempty name="rs.brand">
+			<table class="md20 no-bg">
+				<thead>
+					<tr>
+						<th width="120" class="text-center">品牌名称</th>
+						<th>经营类目</th>
+					</tr>
+				</thead>
+				<tbody>
+					<volist name="rs.brand" id="vo" key="nkey">
+					<tr>
+						<td class="text-center">{$vo.name}</td>
+						<td>
+							<ul>
+							{:W('Widget/brand_category',array($vo['second_category']))}
+							</ul>
+						</td>
+					</tr>
+					</volist>
+				</tbody>
+			</table>
+			<else />
+				<notempty name="rs.second_category">
+				<table class="md20 no-bg">
+					<thead>
+						<tr>
+							<th width="120" class="text-center">品牌名称</th>
+							<th>经营类目</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td class="text-center">无</td>
+							<td>
+								<ul>
+								{:W('Widget/brand_category',array($rs['second_category']))}
+								</ul>
+							</td>
+						</tr>
+					</tbody>
+				</table>					
+				<else />
+				<div class="text-center nors">暂无记录！</div>
+				</notempty>
+			</notempty>
+			
+			<div class="md20"></div>
+			<div class="border-d ft18 md10 p10 strong">店铺联系人</div>
+			
+			<div class="row">
+				<div class="col-xs-6">姓名：{$rs.linkname}</div>
+				<div class="col-xs-6">手机：{$rs.mobile}</div>
+				<div class="col-xs-6">电话：{$rs.tel}</div>
+				<div class="col-xs-6">QQ：{$rs.qq}</div>
+				<div class="col-xs-6">邮箱：{$rs.email}</div>
+				<div class="col-xs-6">城市：{$rs.province} {$rs.city} {$rs.district} {$rs.town}</div>
+				<div class="col-xs-6">地址：{$rs.street}</div>
+				
+				
+			</div>
+
+		</div>
+		<div class="col-xs-7 auth-text">
+			
+			<div class="ft18 md10 p10 strong">品牌资质</div>
+			<notempty name="rs.brand_cred">
+			<table class="md20 no-bg">
+				<thead>
+					<tr>
+						<th width="100" class="text-center">品牌logo</th>						
+						<th width="150" class="text-center">品牌名称</th>
+						<th>商标证号/受理书编号</th>
+						<th width="100" class="text-center">是否代理</th>
+					</tr>
+				</thead>
+				<tbody>
+					<volist name="rs.brand_cred" id="vo" key="vkey">
+					<tr>
+						<td class="text-center">
+							<a class="image-zoom" href="{$vo.logo}">
+							<img src="{:myurl($vo['logo'],60)}" alt="logo"></a>
+						</td>
+						<td class="text-center">{$vo.name}</td>
+						<td>
+							{$vo.code}
+						</td>
+						<td class="text-center">
+							{$vo['is_agent']==1?'代理品牌':'自有品牌'}
+						</td>						
+					</tr>
+					<tr>
+						<td class="text-center strong">品牌资质</td>
+						<td colspan="3" class="zhaoshang-cred">
+							<volist name="vo.cred" id="c">
+							<table class="no-bg no-bordered br-border">								
+								<tr>
+									<td width="200">{$c.cred.cred_name}</td>
+									<td>
+										<volist name="c.images" id="img">
+											<a class="image-zoom" href="{$img}"><img src="{:myurl($img,60)}" alt="品牌资质" class="m10 border-1px"></a>
+										</volist>
+									</td>
+								</tr>								
+							</table>
+							</volist>
+						</td>				
+					</tr>					
+					</volist>
+				</tbody>
+			</table>
+			<else />
+				<div class="text-center nors">暂无记录！</div>
+			</notempty>			
+			
+			<div class="ft18 md10 p10 strong">行业资质</div>
+			<notempty name="cred">
+			<table class="md20 no-bg">
+				<thead>
+					<tr>
+						<th width="100" class="text-center">资质名称</th>						
+						<th width="200" class="text-center">针对类目</th>
+						<th>资质图片</th>
+					</tr>
+				</thead>
+				<tbody>
+					<volist name="cred" id="vo">
+					<tr>
+						<td class="text-center">
+							{:$vo['is_need']>0?'<span class="text-danger">*</span>':''} {$vo.cred_name}
+						</td>
+						<td>
+							{:implode('、',$vo['category_name'])}
+						</td>
+						<td>
+							<volist name="vo.cred_images" id="img">
+								<a class="image-zoom" href="{$img}"><img src="{:myurl($img,60)}" alt="品牌资质" class="m10 border-1px"></a>
+							</volist>
+						</td>
+				
+					</tr>
+					<tr>
+			
+					</tr>					
+					</volist>
+				</tbody>
+			</table>
+			<else />
+				<div class="text-center nors">暂无记录！</div>
+			</notempty>	
+			
+		</div>
+	</div>
+	<div class="ft18 strong p10 border-d mt20 md20">审核记录</div>
+	<eq name="rs.status" value="1">
+	<form data-url="__URL__/logs_add" data-id="#form_{$rs.id}" id="form_{$rs.id}" class="form-horizontal vform" onsubmit="return submit_form($(this))">
+		<table class="no-bg no-bordered">
+			<tr>
+				<td width="30%" class="text-right strong">步骤（1）：店铺类型、品牌、经营类目</td>
+				<td width="200" class="text-center">
+					<label class="mr20"><input type="radio" class="i-red-square" name="step_1" id="step_1" value="1" checked > 合格</label>
+					<label ><input type="radio" class="i-red-square" name="step_1" id="step_1" value="0" checked > 不合格</label>
+				</td>
+				<td width="30%">
+					<textarea name="reason_1" id="reason_1" placeholder="请输入原因" class="form-control"></textarea>
+				</td>
+				<td width="20%"></td>
+			</tr>
+			<tr>
+				<td width="30%" class="text-right strong">步骤（2）：品牌资质</td>
+				<td width="200" class="text-center">
+					<label class="mr20"><input type="radio" class="i-red-square" name="step_2" id="step_2" value="1" checked > 合格</label>
+					<label ><input type="radio" class="i-red-square" name="step_2" id="step_2" value="0" checked > 不合格</label>
+				</td>
+				<td width="30%">
+					<textarea name="reason_2" id="reason_2" placeholder="请输入原因" class="form-control"></textarea>
+				</td>
+				<td width="20%"></td>
+			</tr>
+			<tr>
+				<td width="30%" class="text-right strong">步骤（3）：行业资质</td>
+				<td width="200" class="text-center">
+					<label class="mr20"><input type="radio" class="i-red-square" name="step_3" id="step_3" value="1" checked > 合格</label>
+					<label ><input type="radio" class="i-red-square" name="step_3" id="step_3" value="0" checked > 不合格</label>
+				</td>
+				<td width="30%">
+					<textarea name="reason_3" id="reason_3" placeholder="请输入原因" class="form-control"></textarea>
+				</td>
+				<td width="20%"></td>
+			</tr>
+			<tr>
+				<td width="30%" class="text-right strong">步骤（4）：店铺设置</td>
+				<td width="200" class="text-center">
+					<label class="mr20"><input type="radio" class="i-red-square" name="step_4" id="step_4" value="1" checked > 合格</label>
+					<label ><input type="radio" class="i-red-square" name="step_4" id="step_4" value="0" checked > 不合格</label>
+				</td>
+				<td width="30%">
+					<textarea name="reason_4" id="reason_4" placeholder="请输入原因" class="form-control"></textarea>
+				</td>
+				<td width="20%"></td>
+			</tr>
+			<tr>
+				<td width="30%" class="text-right strong">备注：</td>
+				<td width="30%" colspan="2">
+					<textarea name="remark" id="remark" placeholder="请输入备注" class="form-control"></textarea>
+				</td>
+				<td width="20%"></td>
+			</tr>	
+			<tr>
+				<td width="30%" class="text-right strong">是否发送短信通知：</td>
+				<td width="30%" colspan="2">
+					<label class=" mr20" style=""><input type="checkbox" class="i-red-square" name="is_sms" value="1" checked=""> 是</label>
+				</td>
+				<td width="20%"></td>
+			</tr>				
+			<tr>
+				<td width="30%" class="text-right strong"></td>
+				<td width="30%" colspan="2">
+					<button type="submit" class="btn btn-danger btn-150px">提交</button>
+				</td>
+				<td width="20%"></td>
+			</tr>			
+		</table>
+		
+		<input type="hidden" name="zhaoshang_upgrade_id" value="{$rs.id}">
+	
+	</form>
+	</eq>
+	
+	<eq name="rs.status" value="3">
+	<form data-url="__URL__/logs_open" data-id="#form_{$rs.id}" id="form_{$rs.id}" class="form-horizontal vform" onsubmit="return submit_open($(this))">
+			{:W('Widget/buildform',array(array(
+				'field'		=>array(	
+					array(
+						'formtype'		=>'radio',
+						'label'			=>'状态',
+						'name'			=>'status',
+						'data'			=>array(array(4,'未收到合同或合同不符合要求，拒绝开店'),array(5,'已收到合同，同意开店')),
+						'field'			=>array(0,1),
+						'value' 		=>2,
+					),
+					array(
+						'formtype'		=>'textarea',
+						'label'			=>'原因',
+						'name'			=>'remark',
+						'tips'			=>'拒绝时必填',
+					),
+					array(
+						'formtype'		=>'checkbox',
+						'label'			=>'是否发送短信通知',
+						'name'			=>'is_sms',
+						'field'			=>array(0,1),
+						'data'			=>array(1,'是'),
+						'value'			=>1,
+					),
+					array(
+						'formtype'		=>'hidden',
+						'name'			=>'zhaoshang_join_id',
+						'value'			=>$rs['id'],
+					),					
+					array(
+						'formtype'		=>'html',
+						'label'			=>' ',
+						'html'			=>'<button type="submit" class="btn btn-primary btn-150px logs-add"><i class="fa fa-check"></i> 提交</button>'
+					),
+
+
+				),
+			)))}
+			
+	
+	</form>
+	</eq>	
+	
+	<notempty name="rs.logs">
+	<ul class="timeline">
+		<volist name="rs.logs" id="vo">
+		<li>
+			<i class="fa fa-clock-o"></i>
+			<span class="date">
+				{$vo.atime}
+			</span>
+			<div class="content">
+				<div class="md20">审核状态：
+					{:status($vo['status'],[['提交资料中'],['等待审核','btn-warning'],['被拒绝','btn-danger'],['审核通过待寄合同','btn-info'],['未收到合同','btn-warning'],['升级成功','btn-success']])}
+				</div>
+				<notempty name="vo.content">
+				<div class="md20 ft14">
+					<div class="md10">{$vo['content']['step_1']==1?'<span class="btn btn-success btn-xs">合格</span>':'<span class="btn btn-danger btn-xs">不合格</span>'} 步骤（1）：店铺类型、品牌、经营类目：{$vo.content.reason_1}</div>
+					
+					<div class="md10">{$vo['content']['step_2']==1?'<span class="btn btn-success btn-xs">合格</span>':'<span class="btn btn-danger btn-xs">不合格</span>'} 步骤（2）：品牌资质：{$vo.content.reason_2}</div>
+					
+					<div class="md10">{$vo['content']['step_3']==1?'<span class="btn btn-success btn-xs">合格</span>':'<span class="btn btn-danger btn-xs">不合格</span>'} 步骤（3）：行业资质：{$vo.content.reason_3}</div>
+					
+					<div class="md10">{$vo['content']['step_4']==1?'<span class="btn btn-success btn-xs">合格</span>':'<span class="btn btn-danger btn-xs">不合格</span>'} 步骤（4）：店铺设置：{$vo.content.reason_4}</div>
+				</div>
+				</notempty>
+				<notempty name="vo.remark">
+				<div class="md20 ft14">
+					备注：
+					{$vo.remark|nl2br}
+				</div>
+				</notempty>
+				<small class="md10">
+					雇员ID：{$vo.a_uid}
+				</small>
+			</div>
+		</li>
+		</volist>
+	</ul>
+	</notempty>
+	
+</div>
+<div class="clearfix">
+	<div class="pull-right text-gray" onclick="$(this).closest('tr').toggleClass('hide');"><i class="fa fa-times-circle-o fa-2x"></i></div>	
+</div>
+
+<script>
+image_zoom();
+function submit_form(obj){
+	var formid='#'+obj.attr('id');
+	var data = getFormJson(formid);
+
+	if(data.step_1==0 && data.reason_1==''){
+		valert({status:'warning',msg:'请输入不合格原因！'});
+		obj.find('#reason_1').focus();
+		return false;
+	}
+	if(data.step_2==0 && data.reason_2==''){
+		valert({status:'warning',msg:'请输入不合格原因！'});
+		obj.find('#reason_2').focus();
+		return false;
+	}
+	if(data.step_3==0 && data.reason_3==''){
+		valert({status:'warning',msg:'请输入不合格原因！'});
+		obj.find('#reason_3').focus();
+		return false;
+	}
+	if(data.step_4==0 && data.reason_4==''){
+		valert({status:'warning',msg:'请输入不合格原因！'});
+		obj.find('#reason_4').focus();
+		return false;
+	}
+	
+	ajax_post_form({
+		formid:formid,
+	},function(ret){
+		valert(ret);
+		if(ret.status=='success'){
+			var tag='#item-{$rs.id}';
+			var url='__URL__/view/id/{$rs.id}';
+			loadurl({tag:tag,url:url});
+		}		
+	});
+	
+	return false;
+}
+
+function submit_open(obj){
+	var formid='#'+obj.attr('id');
+	var data = getFormJson(formid);
+
+	if(data.status==4 && data.remark==''){
+		valert({status:'warning',msg:'请输入原因'});
+		obj.find('#remark').focus();
+		return false;
+	}
+	
+	ajax_post_form({
+		formid:formid,
+	},function(ret){
+		valert(ret);
+		if(ret.status=='success'){
+			var tag='#item-{$rs.id}';
+			var url='__URL__/view/id/{$rs.id}';
+			loadurl({tag:tag,url:url});
+		}		
+	});
+	
+	return false;
+}
+/*
+$('.logs-add').click(function(){
+	var d=$(this).closest('form').data();
+	ajax_post_form({
+		formid:d.id
+	},function(ret){
+		valert(ret);
+		if(ret.status=='success'){
+			var tag='#item-{$rs.id}';
+			var url='__URL__/view/id/{$rs.id}';
+			loadurl({tag:tag,url:url});
+		}
+	});
+
+});
+*/
+</script>

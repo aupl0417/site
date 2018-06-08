@@ -1,0 +1,49 @@
+			{:W('Widget/listable',array(array(
+				'data'	=>$pagelist['list'],
+				'item_view'=>1,				
+				'items'	=>array(
+	
+					array(
+						'title'		=>'ID',
+						'field'		=>'_id',
+						'td_attr'	=>'class="text-center"',
+					),				
+			
+					array(
+						'title'		=>'group_no',
+						'field'		=>'group_no',
+						'td_attr'	=>'class="text-center"',
+					),
+					array(
+						'title'		=>'is_fix',
+						'field'		=>'is_fix',
+						'td_attr'	=>'class="text-center"',
+					),					
+					array(
+						'title'		=>'消息',
+						'type'		=>'active',
+						'field'		=>'msg',
+						'td_attr'	=>'class="text-center"',
+						'data'		=>array(
+							'订单更新成功！'=>'<div class="btn btn-xs btn-rad btn-trans btn-success m0 btn-block">订单更新成功！</div>',
+						),
+					),				
+					array(
+						'title'		=>'订单号(s_no)',
+						'field'		=>'s_no',
+					),	
+					array(
+						'title'		=>'时间',
+						'field'		=>'atime',
+						'td_attr'		=>'class="text-gray text-center"',
+					),
+					array(
+						'title'		=>'操作',
+						'type'		=>'html',
+						'norder'	=>1,
+						'html'		=>'<div class="btn btn-default btn-sm btn-rad btn-trans btn-block btn-view m0" data-id="[_id]" data-url="__URL__/erp_pays_view/id/[_id]">详情</div>',
+						'td_attr'	=>'width="80" class="text-center"',
+					),				
+					
+				),
+			)))}

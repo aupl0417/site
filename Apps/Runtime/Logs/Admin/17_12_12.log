@@ -1,0 +1,242 @@
+[ 2017-12-12T11:59:42+08:00 ] 127.0.0.1 /
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+NOTIC: [2] Illegal string offset 'DB_NAME' F:\wamp\www\site\ThinkPHP\Library\Think\Model.class.php 第 1461 行.
+NOTIC: [8] Uninitialized string offset: 0 F:\wamp\www\site\ThinkPHP\Library\Think\Model.class.php 第 1461 行.
+NOTIC: [2] Illegal string offset 'DB_NAME' F:\wamp\www\site\ThinkPHP\Library\Think\Model.class.php 第 1461 行.
+NOTIC: [8] Uninitialized string offset: 0 F:\wamp\www\site\ThinkPHP\Library\Think\Model.class.php 第 1461 行.
+SQL: SHOW FULL COLUMNS FROM `ylh_channel` [ RunTime:0.0010s ]
+SQL: SELECT `name`,`url`,`color`,`icon`,`is_new`,`target`,`sid` FROM `ylh_channel` WHERE `status` = 1 ORDER BY sort asc  [ RunTime:0.0000s ]
+NOTIC: [8] Undefined index: HTTPS F:\wamp\www\site\Apps\Common\Conf\dtpay.php 第 29 行.
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+
+[ 2017-12-12T11:59:42+08:00 ] 127.0.0.1 /favicon.ico
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001000s ]
+NOTIC: [8] Undefined index: HTTPS F:\wamp\www\site\Apps\Common\Conf\dtpay.php 第 29 行.
+
+[ 2017-12-12T11:59:42+08:00 ] 127.0.0.1 /Login
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+NOTIC: [8] Undefined index: HTTPS F:\wamp\www\site\Apps\Common\Conf\dtpay.php 第 29 行.
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+NOTIC: [2] Illegal string offset 'DB_NAME' F:\wamp\www\site\ThinkPHP\Library\Think\Model.class.php 第 1461 行.
+NOTIC: [8] Uninitialized string offset: 0 F:\wamp\www\site\ThinkPHP\Library\Think\Model.class.php 第 1461 行.
+NOTIC: [2] Illegal string offset 'DB_NAME' F:\wamp\www\site\ThinkPHP\Library\Think\Model.class.php 第 1461 行.
+NOTIC: [8] Uninitialized string offset: 0 F:\wamp\www\site\ThinkPHP\Library\Think\Model.class.php 第 1461 行.
+SQL: SHOW FULL COLUMNS FROM `ylh_config` [ RunTime:0.0010s ]
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined offset: 1 F:\wamp\www\site\Apps\Common\Common\function.php 第 2722 行.
+NOTIC: [2] Illegal string offset 'DB_NAME' F:\wamp\www\site\ThinkPHP\Library\Think\Model.class.php 第 1461 行.
+NOTIC: [8] Uninitialized string offset: 0 F:\wamp\www\site\ThinkPHP\Library\Think\Model.class.php 第 1461 行.
+NOTIC: [2] Illegal string offset 'DB_NAME' F:\wamp\www\site\ThinkPHP\Library\Think\Model.class.php 第 1461 行.
+NOTIC: [8] Uninitialized string offset: 0 F:\wamp\www\site\ThinkPHP\Library\Think\Model.class.php 第 1461 行.
+SQL: SHOW FULL COLUMNS FROM `ylh_config_sort` [ RunTime:0.0180s ]
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined offset: 1 F:\wamp\www\site\Apps\Common\Common\function.php 第 2722 行.
+SQL: SELECT `id`,`ac` FROM `ylh_config_sort` WHERE `active` = 1 AND `sid` > 0  [ RunTime:0.0010s ]
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined offset: 1 F:\wamp\www\site\Apps\Common\Common\function.php 第 2722 行.
+SQL: SELECT `id`,`name`,`value` FROM `ylh_config` WHERE `active` = 1 AND `sid` = 3  [ RunTime:0.0010s ]
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined offset: 1 F:\wamp\www\site\Apps\Common\Common\function.php 第 2722 行.
+SQL: SELECT `id`,`name`,`value` FROM `ylh_config` WHERE `active` = 1 AND `sid` = 4  [ RunTime:0.0010s ]
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined offset: 1 F:\wamp\www\site\Apps\Common\Common\function.php 第 2722 行.
+SQL: SELECT `id`,`name`,`value` FROM `ylh_config` WHERE `active` = 1 AND `sid` = 5  [ RunTime:0.0010s ]
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined offset: 1 F:\wamp\www\site\Apps\Common\Common\function.php 第 2722 行.
+SQL: SELECT `id`,`name`,`value` FROM `ylh_config` WHERE `active` = 1 AND `sid` = 7  [ RunTime:0.0000s ]
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined offset: 1 F:\wamp\www\site\Apps\Common\Common\function.php 第 2722 行.
+SQL: SELECT `id`,`name`,`value` FROM `ylh_config` WHERE `active` = 1 AND `sid` = 8  [ RunTime:0.0000s ]
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined offset: 1 F:\wamp\www\site\Apps\Common\Common\function.php 第 2722 行.
+SQL: SELECT `id`,`name`,`value` FROM `ylh_config` WHERE `active` = 1 AND `sid` = 9  [ RunTime:0.0010s ]
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined offset: 1 F:\wamp\www\site\Apps\Common\Common\function.php 第 2722 行.
+SQL: SELECT `id`,`name`,`value` FROM `ylh_config` WHERE `active` = 1 AND `sid` = 35  [ RunTime:0.0010s ]
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined offset: 1 F:\wamp\www\site\Apps\Common\Common\function.php 第 2722 行.
+SQL: SELECT `id`,`name`,`value` FROM `ylh_config` WHERE `active` = 1 AND `sid` = 36  [ RunTime:0.0010s ]
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined offset: 1 F:\wamp\www\site\Apps\Common\Common\function.php 第 2722 行.
+SQL: SELECT `id`,`name`,`value` FROM `ylh_config` WHERE `active` = 1 AND `sid` = 100827568  [ RunTime:0.0000s ]
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined offset: 1 F:\wamp\www\site\Apps\Common\Common\function.php 第 2722 行.
+SQL: SELECT `id`,`name`,`value` FROM `ylh_config` WHERE `active` = 1 AND `sid` = 100827575  [ RunTime:0.0000s ]
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined offset: 1 F:\wamp\www\site\Apps\Common\Common\function.php 第 2722 行.
+SQL: SELECT `id`,`name`,`value` FROM `ylh_config` WHERE `active` = 1 AND `sid` = 100827579  [ RunTime:0.0000s ]
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined offset: 1 F:\wamp\www\site\Apps\Common\Common\function.php 第 2722 行.
+SQL: SELECT `id`,`name`,`value` FROM `ylh_config` WHERE `active` = 1 AND `sid` = 100827585  [ RunTime:0.0010s ]
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined offset: 1 F:\wamp\www\site\Apps\Common\Common\function.php 第 2722 行.
+SQL: SELECT `id`,`name`,`value` FROM `ylh_config` WHERE `active` = 1 AND `sid` = 100827591  [ RunTime:0.0010s ]
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined offset: 1 F:\wamp\www\site\Apps\Common\Common\function.php 第 2722 行.
+SQL: SELECT `id`,`name`,`value` FROM `ylh_config` WHERE `active` = 1 AND `sid` = 100827592  [ RunTime:0.0000s ]
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined offset: 1 F:\wamp\www\site\Apps\Common\Common\function.php 第 2722 行.
+SQL: SELECT `id`,`name`,`value` FROM `ylh_config` WHERE `active` = 1 AND `sid` = 100827594  [ RunTime:0.0000s ]
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined offset: 1 F:\wamp\www\site\Apps\Common\Common\function.php 第 2722 行.
+SQL: SELECT `id`,`name`,`value` FROM `ylh_config` WHERE `active` = 1 AND `sid` = 100827595  [ RunTime:0.0010s ]
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined offset: 1 F:\wamp\www\site\Apps\Common\Common\function.php 第 2722 行.
+SQL: SELECT `id`,`name`,`value` FROM `ylh_config` WHERE `active` = 1 AND `sid` = 100827596  [ RunTime:0.0010s ]
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined offset: 1 F:\wamp\www\site\Apps\Common\Common\function.php 第 2722 行.
+SQL: SELECT `id`,`name`,`value` FROM `ylh_config` WHERE `active` = 1 AND `sid` = 100827597  [ RunTime:0.0010s ]
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined offset: 1 F:\wamp\www\site\Apps\Common\Common\function.php 第 2722 行.
+SQL: SELECT `id`,`name`,`value` FROM `ylh_config` WHERE `active` = 1 AND `sid` = 100827598  [ RunTime:0.0010s ]
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined offset: 1 F:\wamp\www\site\Apps\Common\Common\function.php 第 2722 行.
+SQL: SELECT `id`,`name`,`value` FROM `ylh_config` WHERE `active` = 1 AND `sid` = 100827599  [ RunTime:0.0010s ]
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined offset: 1 F:\wamp\www\site\Apps\Common\Common\function.php 第 2722 行.
+SQL: SELECT `id`,`name`,`value` FROM `ylh_config` WHERE `active` = 1 AND `sid` = 100827600  [ RunTime:0.0010s ]
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined offset: 1 F:\wamp\www\site\Apps\Common\Common\function.php 第 2722 行.
+SQL: SELECT `id`,`name`,`value` FROM `ylh_config` WHERE `active` = 1 AND `sid` = 100827601  [ RunTime:0.0010s ]
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined offset: 1 F:\wamp\www\site\Apps\Common\Common\function.php 第 2722 行.
+NOTIC: [8] Undefined index: HTTPS F:\wamp\www\site\Apps\Common\Common\function.php 第 3085 行.
+NOTIC: [8] Undefined index: HTTPS F:\wamp\www\site\Apps\Common\Common\function.php 第 3102 行.
+INFO: [ view_begin ] --START--
+NOTIC: [8] Undefined index: HTTPS F:\wamp\www\site\ThinkPHP\Library\Behavior\SeoBehavior.class.php 第 21 行.
+NOTIC: [2] Illegal string offset 'DB_NAME' F:\wamp\www\site\ThinkPHP\Library\Think\Model.class.php 第 1461 行.
+NOTIC: [8] Uninitialized string offset: 0 F:\wamp\www\site\ThinkPHP\Library\Think\Model.class.php 第 1461 行.
+NOTIC: [2] Illegal string offset 'DB_NAME' F:\wamp\www\site\ThinkPHP\Library\Think\Model.class.php 第 1461 行.
+NOTIC: [8] Uninitialized string offset: 0 F:\wamp\www\site\ThinkPHP\Library\Think\Model.class.php 第 1461 行.
+SQL: SHOW FULL COLUMNS FROM `ylh_seo` [ RunTime:0.0360s ]
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined offset: 1 F:\wamp\www\site\Apps\Common\Common\function.php 第 2722 行.
+SQL: SELECT `title`,`keywords`,`description` FROM `ylh_seo` WHERE `status` = 1 AND `url` = 'http://work.testleduimall.com/login' LIMIT 1   [ RunTime:0.2460s ]
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined offset: 1 F:\wamp\www\site\Apps\Common\Common\function.php 第 2722 行.
+INFO: Run Behavior\SeoBehavior [ RunTime:0.285017s ]
+INFO: [ view_begin ] --END-- [ RunTime:0.285017s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000000s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000000s ]
+NOTIC: [8] Undefined variable: tpl F:\wamp\www\site\Apps\Runtime\Cache\Admin\05a44131801c20d902e6ef3925fec24b.php 第 30 行.
+NOTIC: [2] Missing argument 2 for Admin\Widget\WidgetWidget::buildform() F:\wamp\www\site\Apps\Admin\Widget\WidgetWidget.class.php 第 746 行.
+NOTIC: [2] Missing argument 1 for Org\Util\BuildForm::__construct(), called in F:\wamp\www\site\Apps\Admin\Widget\WidgetWidget.class.php on line 748 and defined F:\wamp\www\site\ThinkPHP\Library\Org\Util\BuildForm.class.php 第 23 行.
+NOTIC: [8] Undefined variable: option F:\wamp\www\site\ThinkPHP\Library\Org\Util\BuildForm.class.php 第 24 行.
+NOTIC: [8] Undefined variable: data F:\wamp\www\site\Apps\Admin\Widget\WidgetWidget.class.php 第 749 行.
+NOTIC: [8] Undefined index: attr F:\wamp\www\site\ThinkPHP\Library\Org\Util\BuildForm.class.php 第 503 行.
+NOTIC: [8] Undefined index: value F:\wamp\www\site\ThinkPHP\Library\Org\Util\BuildForm.class.php 第 505 行.
+NOTIC: [8] Undefined index: label F:\wamp\www\site\ThinkPHP\Library\Org\Util\BuildForm.class.php 第 454 行.
+NOTIC: [8] Undefined index: class F:\wamp\www\site\ThinkPHP\Library\Org\Util\BuildForm.class.php 第 83 行.
+NOTIC: [8] Undefined index: style F:\wamp\www\site\ThinkPHP\Library\Org\Util\BuildForm.class.php 第 83 行.
+NOTIC: [8] Undefined index: attr F:\wamp\www\site\ThinkPHP\Library\Org\Util\BuildForm.class.php 第 83 行.
+NOTIC: [8] Undefined index: right F:\wamp\www\site\ThinkPHP\Library\Org\Util\BuildForm.class.php 第 477 行.
+NOTIC: [8] Undefined index: tips F:\wamp\www\site\ThinkPHP\Library\Org\Util\BuildForm.class.php 第 488 行.
+NOTIC: [8] Undefined index: attr F:\wamp\www\site\ThinkPHP\Library\Org\Util\BuildForm.class.php 第 503 行.
+NOTIC: [8] Undefined index: value F:\wamp\www\site\ThinkPHP\Library\Org\Util\BuildForm.class.php 第 505 行.
+NOTIC: [8] Undefined index: label F:\wamp\www\site\ThinkPHP\Library\Org\Util\BuildForm.class.php 第 454 行.
+NOTIC: [8] Undefined index: autocomplete F:\wamp\www\site\ThinkPHP\Library\Org\Util\BuildForm.class.php 第 212 行.
+NOTIC: [8] Undefined index: class F:\wamp\www\site\ThinkPHP\Library\Org\Util\BuildForm.class.php 第 212 行.
+NOTIC: [8] Undefined index: style F:\wamp\www\site\ThinkPHP\Library\Org\Util\BuildForm.class.php 第 212 行.
+NOTIC: [8] Undefined index: attr F:\wamp\www\site\ThinkPHP\Library\Org\Util\BuildForm.class.php 第 212 行.
+NOTIC: [8] Undefined index: right F:\wamp\www\site\ThinkPHP\Library\Org\Util\BuildForm.class.php 第 477 行.
+NOTIC: [8] Undefined index: tips F:\wamp\www\site\ThinkPHP\Library\Org\Util\BuildForm.class.php 第 488 行.
+NOTIC: [8] Undefined index: attr F:\wamp\www\site\ThinkPHP\Library\Org\Util\BuildForm.class.php 第 503 行.
+NOTIC: [8] Undefined index: value F:\wamp\www\site\ThinkPHP\Library\Org\Util\BuildForm.class.php 第 505 行.
+NOTIC: [8] Undefined index: label F:\wamp\www\site\ThinkPHP\Library\Org\Util\BuildForm.class.php 第 454 行.
+NOTIC: [8] Undefined index: class F:\wamp\www\site\ThinkPHP\Library\Org\Util\BuildForm.class.php 第 412 行.
+NOTIC: [8] Undefined index: style F:\wamp\www\site\ThinkPHP\Library\Org\Util\BuildForm.class.php 第 412 行.
+NOTIC: [8] Undefined index: attr F:\wamp\www\site\ThinkPHP\Library\Org\Util\BuildForm.class.php 第 412 行.
+NOTIC: [8] Undefined index: right F:\wamp\www\site\ThinkPHP\Library\Org\Util\BuildForm.class.php 第 477 行.
+NOTIC: [8] Undefined index: tips F:\wamp\www\site\ThinkPHP\Library\Org\Util\BuildForm.class.php 第 488 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.063003s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.063003s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001000s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.002000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.002000s ]
+
+[ 2017-12-12T11:59:43+08:00 ] 127.0.0.1 /Login/verify
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+NOTIC: [8] Undefined index: HTTPS F:\wamp\www\site\Apps\Common\Conf\dtpay.php 第 29 行.
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001000s ]
+NOTIC: [2] Illegal string offset 'DB_NAME' F:\wamp\www\site\ThinkPHP\Library\Think\Model.class.php 第 1461 行.
+NOTIC: [8] Uninitialized string offset: 0 F:\wamp\www\site\ThinkPHP\Library\Think\Model.class.php 第 1461 行.
+NOTIC: [2] Illegal string offset 'DB_NAME' F:\wamp\www\site\ThinkPHP\Library\Think\Model.class.php 第 1461 行.
+NOTIC: [8] Uninitialized string offset: 0 F:\wamp\www\site\ThinkPHP\Library\Think\Model.class.php 第 1461 行.
+SQL: SHOW FULL COLUMNS FROM `ylh_config` [ RunTime:0.0020s ]
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined offset: 1 F:\wamp\www\site\Apps\Common\Common\function.php 第 2722 行.
+NOTIC: [8] Undefined index: HTTPS F:\wamp\www\site\Apps\Common\Common\function.php 第 3085 行.
+NOTIC: [8] Undefined index: HTTPS F:\wamp\www\site\Apps\Common\Common\function.php 第 3102 行.
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000000s ]
+
+[ 2017-12-12T11:59:43+08:00 ] 127.0.0.1 /Login/qrcode
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000000s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000000s ]
+NOTIC: [8] Undefined index: HTTPS F:\wamp\www\site\Apps\Common\Conf\dtpay.php 第 29 行.
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000000s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000000s ]
+NOTIC: [2] Illegal string offset 'DB_NAME' F:\wamp\www\site\ThinkPHP\Library\Think\Model.class.php 第 1461 行.
+NOTIC: [8] Uninitialized string offset: 0 F:\wamp\www\site\ThinkPHP\Library\Think\Model.class.php 第 1461 行.
+NOTIC: [2] Illegal string offset 'DB_NAME' F:\wamp\www\site\ThinkPHP\Library\Think\Model.class.php 第 1461 行.
+NOTIC: [8] Uninitialized string offset: 0 F:\wamp\www\site\ThinkPHP\Library\Think\Model.class.php 第 1461 行.
+SQL: SHOW FULL COLUMNS FROM `ylh_config` [ RunTime:0.0010s ]
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined variable: table F:\wamp\www\site\ThinkPHP\Library\Think\Db\Driver.class.php 第 177 行.
+NOTIC: [8] Undefined offset: 1 F:\wamp\www\site\Apps\Common\Common\function.php 第 2722 行.
+NOTIC: [8] Undefined index: HTTPS F:\wamp\www\site\Apps\Common\Common\function.php 第 3085 行.
+NOTIC: [8] Undefined index: HTTPS F:\wamp\www\site\Apps\Common\Common\function.php 第 3102 行.
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001000s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001000s ]
+

@@ -1,0 +1,33 @@
+<div class="pt20 mb20">
+	<p class="fs20 strong text-center">乐兑 · 精品</p>
+	<div class="clearfix">
+		<div class="boutique_l">
+			<volist name="fineOne.ads" id="ads">
+			<a target="_blank" href="{:DM('click')}?act={:enCryptRestUri($ads['id'])}" class="db re mb30">
+				<img width="430" height="210" data-original="{$ads.background_images}">	<!-- background -->
+				<img width="210" height="230" data-original="{$ads.images}" class="ab tion_right" style="bottom:0;left:0">
+			</a>
+			</volist>
+			<volist name="fineTwo.ads" id="ads">
+			<a target="_blank" href="{:DM('click')}?act={:enCryptRestUri($ads['id'])}" class="db re mb30">
+				<img width="430" height="210" data-original="{$ads.background_images}">	<!-- background -->
+				<img width="240" height="200" data-original="{$ads.images}" class="ab tion_bottom" style="bottom:-40px;right:0">
+			</a>
+			</volist>
+		</div>	
+		<div class="boutique_c">
+			<volist name="fineThree.ads" id="ads">
+				<a target="_blank" href="{:DM('click')}?act={:enCryptRestUri($ads['id'])}">
+					<img width="270" height="450" data-original="{$ads.images}" class="tion_swing">
+				</a>
+			</volist>
+		</div>
+		<div class="boutique_r">
+			<volist name="fineFour.ads" id="ads">
+				<a target="_blank" href="{:DM('click')}?act={:enCryptRestUri($ads['id'])}" class="db mb30">
+					<img width="430" height="210" data-original="{$ads.images}" class="tion_top">
+				</a>
+			</volist>
+		</div>
+	</div>
+</div>

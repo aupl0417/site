@@ -1,0 +1,230 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body mt10">
+	<include file="Public:nav_statistic" />
+
+    <div class="container">
+		<include file="Public:side_statistic" />
+       
+
+        <div class="w960 fl">
+            <ol class="breadcrumb pd10 bor_der bor_r0 mt0 mb20">
+                <li><a href="/">数据统计</a> </li>
+                <li><a href="">实时统计</a></li>
+                <li><a href="">实时概况</a></li>
+            </ol>
+            <div class="ptb10 solid_b mb35">
+                <span class="fs16">实时总览</span>
+                <span class="pull-right text_77 mt5 mr10">更新时间：{:date('Y-m-d H:i:s',time())}</span>
+            </div>
+            <table class="bg_white mb20">
+                <tbody class="solid_t">
+                    <tr>
+                        <td class="fs14 pd20">
+                            <p class="mb15 fs16">
+                                访客数 
+                                <small class="fa fa-question-circle ml10 text_yellow" data-placement="top" data-toggle="tooltip" data-original-title="全店各页面的访问人数"></small>
+                            </p>
+                            <strong class="text_yellow">{$uv.todayNum}</strong>
+                            <h6 class="text_77 mt15">手机端占比 <span class="pull-right">{$uv.wapPercen}</span></h6>
+                            <h6 class="text_77 mb0">较前一日 <span class="pull-right">{$uv.changePercen}</span></h6>
+                        </td>
+                        <td class="fs14 pd20">
+                            <p class="mb15 fs16">
+                                浏览量 
+                                <small class="fa fa-question-circle ml10 text_yellow" data-toggle="tooltip" title="店铺各页面被查看的次数"></small>
+                            </p>
+                            <strong class="text_yellow">{$pv.todayNum}</strong>
+                            <h6 class="text_77 mt15">手机端占比 <span class="pull-right">{$pv.wapPercen}</span></h6>
+                            <h6 class="text_77 mb0">较前一日 <span class="pull-right">{$pv.changePercen}</span></h6>
+                        </td>
+                        <td class="fs14 pd20">
+                            <p class="mb15 fs16">
+                                支付金额 
+                                <small class="fa fa-question-circle ml10 text_yellow" data-toggle="tooltip" title="付款的总金额"></small>
+                            </p>
+                            <strong class="text_yellow">￥{$payPrice.todayNum}</strong>
+                            <h6 class="text_77 mt15">手机端占比 <span class="pull-right">{$payPrice.wapPercen}</span></h6>
+                            <h6 class="text_77 mb0">较前一日 <span class="pull-right">{$payPrice.changePercen}</span></h6>
+                        </td>
+                        <td class="fs14 pd20">
+                            <p class="mb15 fs16">
+                                支付订单数 
+                                <small class="fa fa-question-circle ml10 text_yellow" data-toggle="tooltip" title="宝贝被拍下的总次数"></small>
+                            </p>
+                            <strong class="text_yellow">{$payOrder.todayNum}</strong>
+                            <h6 class="text_77 mt15">手机端占比 <span class="pull-right">{$payOrder.wapPercen}</span></h6>
+                            <h6 class="text_77 mb0">较前一日 <span class="pull-right">{$payOrder.changePercen}</span></h6>
+                        </td>
+                        <td class="fs14 pd20">
+                            <p class="mb15 fs16">
+                                支付买家数 
+                                <small class="fa fa-question-circle ml10 text_yellow" data-toggle="tooltip" title="成功拍下并完成支付的人数"></small>
+                            </p>
+                            <strong class="text_yellow">{$orderBuyer.todayNum}</strong>
+                            <h6 class="text_77 mt15">手机端占比 <span class="pull-right">{$orderBuyer.wapPercen}</span></h6>
+                            <h6 class="text_77 mb0">较前一日 <span class="pull-right">{$orderBuyer.changePercen}</span></h6>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+            <div class="mb20 ptb10">
+                <div class="text-right mb20">
+					
+                    对比日：
+                    <select class="form-control w190 pull-right mt-8" onchange = "window.location.href='/Statistic/realtimeSurvey/selectDay/'+this.value">
+						<for start="0" end="7">
+							<php>$a = date('Y-m-d',time()-86400*$i)</php>
+							<option value="{$a}" <if condition="$selectDay eq $a">selected="selected"</if>>{$a}</option>
+						</for>
+                    </select>
+				
+                </div>
+                <div class="row">
+                    
+                    <div class="col-xs-6 mb20">
+                        <blockquote class="pd0 pl10 mt10 mb10 fs14 strong">访客数</blockquote>
+                        <div id="site_statistics1" style="height: 180px; padding: 0px; position: relative;"></div>
+                    </div>
+                    <div class="col-xs-6 mb20">
+                        <blockquote class="pd0 pl10 mt10 mb10 fs14 strong">支付金额</blockquote>
+                        <div id="site_statistics2" style="height: 180px; padding: 0px; position: relative;"></div>
+                    </div>
+                    <div class="col-xs-6 mb20">
+                        <blockquote class="pd0 pl10 mt10 mb10 fs14 strong">支付买家数</blockquote>
+                        <div id="site_statistics3" style="height: 180px; padding: 0px; position: relative;"></div>
+                    </div>
+                    <div class="col-xs-6 mb20">
+                        <blockquote class="pd0 pl10 mt10 mb10 fs14 strong">支付订单数</blockquote>
+                        <div id="site_statistics4" style="height: 180px; padding: 0px; position: relative;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</block>
+
+<block name="css"></block>
+<block name="script">
+<script src="__NEW_DESIGN__flatdream/js/jquery.js"></script>
+<script src="__NEW_DESIGN__flatdream/js/jquery.pushmenu/js/jPushMenu.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.nanoscroller/jquery.nanoscroller.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.sparkline/jquery.sparkline.min.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.ui/jquery-ui.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.gritter/js/jquery.gritter.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/behaviour/core.js"></script>
+<script src="__NEW_DESIGN__flatdream/js/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.flot/jquery.flot.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    function showTooltip(x, y, contents) {
+      $("<div id='tooltip'>" + contents + "</div>").css({
+        position: "absolute",
+        display: "none",
+        top: y + 5,
+        left: x + 5,
+        border: "1px solid #000",
+        padding: "5px",
+        'color':'#fff',
+        'border-radius':'2px',
+        'font-size':'11px',
+        "background-color": "#000",
+        opacity: 0.80
+      }).appendTo("body").fadeIn(200);
+    } 
+
+    function randValue() {
+      return (Math.floor(Math.random() * (1 + 50 - 20) ) ) + 10;
+    }
+	<volist name="hourData" id="v">
+    var pageviews{$v.no} = [
+		<volist name="v.data" id="vo" key="ke">
+		[{$ke-1}, {$vo}],
+		</volist>
+     
+    ];
+	</volist>
+
+    $.windowbox = function(obj,pageviews){ 
+      if ($(obj).size() != 0) {
+        var plot_statistics = $.plot($(obj), [{
+          data: pageviews,
+          label: "Sales"
+        }
+        ], {
+          series: {
+            lines: {
+              show: true,
+              lineWidth: 2, 
+              fill: true,
+              fillColor: {
+                colors: [{
+                  opacity: 0.25
+                }, {
+                  opacity: 0.25
+                }
+                ]
+              } 
+            },
+            points: {
+              show: true
+            },
+            shadowSize: 2
+          },
+          legend:{
+            show: false
+          },
+          grid: {
+          labelMargin: 10,
+             axisMargin: 500,
+            hoverable: true,
+            clickable: true,
+            tickColor: "rgba(0,0,0,0.15)",
+            borderWidth: 0
+          },
+          colors: ["#50ACFE", "#4A8CF7", "#52e136"],
+          xaxis: {
+            ticks: 11,
+            tickDecimals: 0
+          },
+          yaxis: {
+            ticks: 5,
+            tickDecimals: 0
+          }
+        });
+
+        var previousPoint = null;
+        $(obj).bind("plothover", function (event, pos, item) {
+          var str = "(" + pos.x.toFixed(2) + ", " + pos.y.toFixed(2) + ")";
+          if (item) {
+            if (previousPoint != item.dataIndex) {
+              previousPoint = item.dataIndex;
+              $("#tooltip").remove();
+              var x = item.datapoint[0].toFixed(2),
+              y = item.datapoint[1].toFixed(2);
+              showTooltip(item.pageX, item.pageY,
+              item.series.label + " of " + x + " = " + y);
+            }
+          } else {
+            $("#tooltip").remove();
+            previousPoint = null;
+          }
+        }); 
+      }
+    } 
+
+    $.windowbox('#site_statistics1',pageviews1);  
+    $.windowbox('#site_statistics2',pageviews2);  
+    $.windowbox('#site_statistics3',pageviews3); 
+    $.windowbox('#site_statistics4',pageviews4);  
+
+
+  });
+</script>
+
+</block>

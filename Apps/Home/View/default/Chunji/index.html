@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>活动页面</title>
+		<link rel="stylesheet" href="../Public/chunji/css/bootstrap.css" />
+		<link rel="stylesheet" href="../Public/chunji/css/style.css" />
+	</head>
+	<body>
+		<include file="Home@Public:header" />
+		<include file="Home@Public:top" />
+		<div class="mall-box" id="top">
+			<div class="mall_bg">
+				<img src="../Public/chunji/images/banner-img.jpg" alt="" />
+			</div>
+			<div class="bg-f91">
+			
+				<div class="container cont990">
+
+					<div class="clss-box">
+						<div class="pt30 pb30 text-center mb10">
+							<img src="../Public/chunji/images/clss-img.png" alt="" id="clss"/>
+						</div>
+						<div class="list-mid">
+						
+							
+							<volist name="goods_urls" id="vo" key="k" offset="0" length='16'>
+								<div class="list-li">
+									<a href="{$vo.goods_url}" target="_blank">
+										<div class="list-img">
+											<img src="../Public/chunji/images/clss-img{$k}.jpg" alt="" />
+										</div>
+										<div class="list-text">
+											{$vo.goods_name}
+										</div>
+										<div class="list-pic">
+											<i>活动价</i>
+											<span>{$vo.price}</span>
+											<span class="pull-right">立即抢购</span>
+										</div>
+									</a>
+								</div>
+							</volist>
+							
+							
+						</div>
+						<div style="clear: both;"></div>
+					</div>
+					<!--潮流时尚结束-->
+					<div class="wzyh-box">
+						<div class="pt30 pb30 text-center mb10">
+							<img src="../Public/chunji/images/wzyh-img.png" alt="" id="wzyh"/>
+						</div>
+						<div class="list-mid">
+							
+							<volist name="goods_urls" id="vo" key="k" offset="16" length='16'>
+								<div class="list-li">
+									<a href="{$vo.goods_url}" target="_blank">
+										<div class="list-img">
+											<img src="../Public/chunji/images/wzyh-img{$k}.jpg" alt="" />
+										</div>
+										<div class="list-text">
+											{$vo.goods_name}
+										</div>
+										<div class="list-pic">
+											<i>活动价</i>
+											<span>{$vo.price}</span>
+											<span class="pull-right">立即抢购</span>
+										</div>
+									</a>
+								</div>
+							</volist>
+						
+							
+						</div>
+						<div style="clear: both;"></div>
+					</div>
+					<!--味之诱惑结束-->
+					<div class="jjbb-box">
+						<div class="pt30 pb30 text-center mb10">
+							<img src="../Public/chunji/images/jjbb-img.png" alt="" id="jjbb"/>
+						</div>
+						<div class="list-mid">
+						
+							<volist name="goods_urls" id="vo" key="k" offset="32" length='8'>
+								<div class="list-li">
+									<a href="{$vo.goods_url}" target="_blank">
+										<div class="list-img">
+											<img src="../Public/chunji/images/bbjj-img{$k}.jpg" alt="" />
+										</div>
+										<div class="list-text">
+											{$vo.goods_name}
+										</div>
+										<div class="list-pic">
+											<i>活动价</i>
+											<span>{$vo.price}</span>
+											<span class="pull-right">立即抢购</span>
+										</div>
+									</a>
+								</div>
+							</volist>
+						
+							
+						</div>
+						<div style="clear: both;"></div>
+					</div>
+					<!--居家必备结束-->
+					<div class="jkmr-box">
+						<div class="pt30 pb30 text-center mb10">
+							<img src="../Public/chunji/images/jkmr-img.png" alt="" id="jkmr"/>
+						</div>
+						<div class="list-mid">
+						
+							<volist name="goods_urls" id="vo" key="k" offset="40" length='8'>
+								<div class="list-li">
+									<a href="{$vo.goods_url}" target="_blank">
+										<div class="list-img">
+											<img src="../Public/chunji/images/jkmr-img{$k}.jpg" alt="" />
+										</div>
+										<div class="list-text">
+											{$vo.goods_name}
+										</div>
+										<div class="list-pic">
+											<i>活动价</i>
+											<span>{$vo.price}</span>
+											<span class="pull-right">立即抢购</span>
+										</div>
+									</a>
+								</div>
+							</volist>
+							
+							
+							
+						</div>
+						<div style="clear: both;"></div>
+					</div>
+					
+					<div class="pb30 pt30"></div>
+					<!--健康美容结束-->
+				</div>
+			</div>
+			<div class="bg-069">
+					<div class="container cont990">
+						<div class="xpzk-box">
+							<div class="pt30 pb30 text-center mb10">
+								<img src="../Public/chunji/images/xpzk-img.png" alt="" id="xpzk"/>
+							</div>
+							<div class="list-mid">
+							
+								<volist name="goods_urls" id="vo" key="k" offset="48" length='8'>
+									<div class="list-li">
+										<a href="{$vo.goods_url}" target="_blank">
+											<div class="list-img">
+												<img src="../Public/chunji/images/xpzk-img{$k}.jpg" alt="" />
+											</div>
+											<div class="list-text">
+												{$vo.goods_name}
+											</div>
+											<div class="list-pic">
+												<i>活动价</i>
+												<span>{$vo.price}</span>
+												<span class="pull-right">立即抢购</span>
+											</div>
+										</a>
+									</div>
+								</volist>
+							
+								
+								
+							</div>
+							<div style="clear: both;"></div>
+						</div>
+						<!--健康美容结束-->
+						
+						<div class="hwzp-box">
+							<div class="pt30 pb30 text-center mb10">
+								<img src="../Public/chunji/images/hwzp-img.png" alt="" id="hwzp"/>
+							</div>
+							<div class="list-mid">
+								<volist name="goods_urls" id="vo" key="k" offset="56" length='8'>
+									<div class="list-li">
+										<a href="{$vo.goods_url}" target="_blank">
+											<div class="list-img">
+												<img src="../Public/chunji/images/hwzp-img{$k}.jpg" alt="" />
+											</div>
+											<div class="list-text">
+												{$vo.goods_name}
+											</div>
+											<div class="list-pic">
+												<i>活动价</i>
+												<span>{$vo.price}</span>
+												<span class="pull-right">立即抢购</span>
+											</div>
+										</a>
+									</div>
+								</volist>
+								
+								
+							</div>
+							<div style="clear: both;"></div>
+						</div>
+				
+						<!--海外珍品结束-->
+						
+						
+						<div class="qtzk-box">
+							<div class="pt30 pb30 text-center mb10">
+								<img src="../Public/chunji/images/qtzk-img.png" alt="" id="qtzk"/>
+							</div>
+							<div class="list-mid">
+								<volist name="goods_urls" id="vo" key="k" offset="64" length='8'>
+									<div class="list-li">
+										<a href="{$vo.goods_url}" target="_blank">
+											<div class="list-img">
+												<img src="../Public/chunji/images/qtzk-img{$k}.jpg" alt="" />
+											</div>
+											<div class="list-text">
+												{$vo.goods_name}
+											</div>
+											<div class="list-pic">
+												<i>活动价</i>
+												<span>{$vo.price}</span>
+												<span class="pull-right">立即抢购</span>
+											</div>
+										</a>
+									</div>
+								</volist>
+								
+								
+							</div>
+							<div style="clear: both;"></div>
+							<div class="pb30 pt30"></div>
+							
+						</div>
+				
+						<!--其他折扣结束-->
+					</div>
+					
+				</div>
+			
+			<div class="bg-2fe">
+				<div class="container cont990">
+					<div class="pt30 pb30 text-center mb10">
+						<img src="../Public/chunji/images/hdgz-img.png" alt="" />
+					</div>
+					<p class="fs14 c-white line24 ">
+							<strong>双倍积分消费规则及注意事项：</strong><br>
+							1、所有消费者在此活动专区内进行消费，都可以享受到双倍积分的奖励；<br>
+							2、消费者在此活动专区内消费后，所获得的消费积分奖励结算方式与平常购物时的结算方式一致（在点击确认收货后及时到账）。
+					</p>
+					<div class="pt30"></div>
+					<div class="pb30 text-center">
+						<a onclick="$('#right-nav').children().last().click()" style="cursor:pointer">
+							<img src="../Public/chunji/images/fhdb-img.png" alt="" />
+						</a>
+					</div>
+					<div class="pt30 pb30"></div>
+				</div>
+			</div>
+			<img src="../Public/chunji/images/fhdb-img-right.png" alt="" usemap="#Map" class="fix_right"/>
+            <map name="Map" id="right-nav">
+              <area shape="rect" coords="3,131,124,156" href="#clss">
+              <area shape="rect" coords="4,160,123,184" href="#wzyh">
+              <area shape="rect" coords="3,194,127,215" href="#jjbb">
+              <area shape="rect" coords="3,221,123,242" href="#jkmr">
+              <area shape="rect" coords="4,249,140,270" href="#xpzk">
+              <area shape="rect" coords="3,276,131,305" href="#hwzp">
+              <area shape="rect" coords="6,308,128,329" href="#qtzk">
+              <area shape="rect" coords="17,336,101,362" href="#top">
+            </map>
+		</div>
+	</body>
+	<script src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js" ></script>
+	<script>
+		
+$(function(){
+	$(function () {
+    $(window).scroll(function () {
+        t = $(document).scrollTop();
+        if (t > 300) {
+            $('.fix_right').show();
+        } else {
+            $('.fix_right').hide();
+        }
+    })
+});
+    $(".mall-box area").click(function(){
+        $("html,body").animate({ scrollTop:$($(this).attr("href")).offset().top + "px"},500);
+    });
+});
+
+	</script>
+</html>

@@ -1,0 +1,22 @@
+<div class="type-list">
+	<div class="line-box hover noicon" data-id="2" onclick="select_type($(this))">
+		支付宝
+	</div>
+	<div class="line-box hover noicon" data-id="3" onclick="select_type($(this))">
+		财付通
+	</div>
+</div>
+
+<script>
+
+	function select_type(obj){
+		obj.closest('.type-list').find('.line-box.selected').removeClass('selected').addClass('noicon');
+		obj.removeClass('noicon').addClass('selected');
+	}
+	
+	$('.page.active .vmodal-success').unbind();
+	$('.page.active .vmodal-success').click(function(){
+		$('.page.active .type').html($('.page.active .type-list .line-box.selected').html());
+		$('.page.active #type').val($('.page.active .type-list .line-box.selected').attr('data-id'));
+	});
+</script>

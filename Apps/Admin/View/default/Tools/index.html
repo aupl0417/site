@@ -1,0 +1,238 @@
+<include file="Public:header" />
+<include file="nav" />
+
+
+<div class="m20">
+	<div class="row">
+		<div class="col-xs-4">
+			<div class="block-flat">
+				<div class="header">
+					<h3>更新商品权重</h3>
+				</div>
+				<div class="content text-center" style="min-height:100px">
+
+					<div class="btn btn-150px btn-danger btn-lg m20" onclick="update_index($(this))" data-url="__URL__/goods_pr" data-title="更新商品权重" data-msg="真的要更新吗？"><i class="fa fa-refresh"></i> 更新</div>					
+				</div>
+			</div>
+		</div>
+		
+		<div class="col-xs-4">
+			<div class="block-flat">
+				<div class="header">
+					<h3>更新店铺权重</h3>
+				</div>
+				<div class="content text-center" style="min-height:100px">
+					<div class="btn btn-150px btn-danger btn-lg m20" onclick="update_index($(this))" data-url="__URL__/shop_pr" data-title="更新店铺权重" data-msg="真的要更新吗？"><i class="fa fa-refresh"></i> 更新</div>					
+				</div>
+			</div>
+		</div>	
+		<div class="col-xs-4">
+			<div class="block-flat">
+				<div class="header">
+					<h3>更新店铺在售商品数量</h3>
+				</div>
+				<div class="content text-center" style="min-height:100px">
+					<div class="btn btn-150px btn-danger btn-lg m20" onclick="update_index($(this))" data-url="__URL__/shop_goods_num" data-title="更新店铺在售商品数量" data-msg="真的要更新吗？"><i class="fa fa-refresh"></i> 更新</div>					
+				</div>
+			</div>
+		</div>	
+		<div class="col-xs-4">
+			<div class="block-flat">
+				<div class="header">
+					<h3>店铺商品均匀分布</h3>
+				</div>
+				<div class="content text-center" style="min-height:100px">
+					<div class="btn btn-150px btn-danger btn-lg m20" onclick="update_index($(this))" data-url="__URL__/avg_uptime" data-title="店铺商品均匀分布" data-msg="真的要更新吗？"><i class="fa fa-refresh"></i> 更新</div>					
+				</div>
+			</div>
+		</div>			
+	</div>
+	
+	<div class="alert alert-warning alert-white-alt2 rounded">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		<div class="icon"><i class="fa fa-warning"></i></div>
+		<div class="ft16 md10"><strong>商品权重计算规则</strong></div>
+		<div style="line-height:25px" class="clearfix">
+			<div>标题+分：默认+1分，长度10~20个字之间+15分，20个以上+20分；标题含有品牌+分；标题含有属性+分；标题含有参数+分；标题含类目+分</div>
+			<div>+综合评分</div>
+			<div>编号+分</div>
+			<div>包装模板+分</div>
+			<div>售后模板+分</div>
+			<div>包邮+分</div>
+			<div>橱窗推荐+10分</div>
+			<div>猜您喜欢+分</div>
+			<div>销量+分</div>
+			<div>人气+分</div>
+			<div>收藏+分</div>
+			<div class="text-danger">注：如果商品类目为“其它”，不计权重，即权重为0，所以想要靠前展现，请完善好商品资料。</div>
+		</div>
+	</div>	
+	<div class="alert alert-warning alert-white-alt2 rounded">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		<div class="icon"><i class="fa fa-warning"></i></div>
+		<div class="ft16 md10"><strong>店铺权重计算规则</strong></div>
+		<div style="line-height:25px">
+			<div>+综合评分</div>
+			<div>销量+分</div>
+			<div>收藏+分</div>
+			<div>在售商品数量+分</div>
+		</div>
+	</div>	
+	<div class="alert alert-warning alert-white-alt2 rounded">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		<div class="icon"><i class="fa fa-warning"></i></div>
+		<div class="ft16 md10"><strong>商品均匀分布规则</strong></div>
+		<div style="line-height:25px">
+			<div>为保证每个商家上传的商品都能靠前展现，且避免同个商家的商品连续堆在一起，所以采用了均匀上架功能来解决此问题。</div>
+			<div>每个商品上架周期按7天来计算，快下架的商品靠前排列</div>
+			
+			<div><strong>算法实现：</strong>每天分为24个时间段，即每个时间段为1小时，按人的上网习惯设置时间段商品分布占比</div>
+			<pre>
+        //时间段及商品分布占比，靠前的时间段为优先
+        $times = [
+            ['10:00',7],
+            ['11:00',7],
+            ['14:00',7],
+            ['15:00',7],
+            ['16:00',7],
+            ['17:00',7],
+            ['19:00',7],
+            ['20:00',7],
+            ['21:00',7],
+            ['22:00',7],
+            ['13:00',4],
+            ['12:00',4],
+            ['18:00',4],
+            ['23:00',3],
+            ['09:00',3],
+            ['00:00',2],
+            ['08:00',2],
+            ['07:00',2],
+            ['01:00',2],
+            ['02:00',1],
+            ['06:00',1],
+            ['03:00',1],
+            ['04:00',0.5],
+            ['05:00',0.5],
+        ];			
+			</pre>
+			<div>1、获取上架商品总数；如：上架商品有 $goods_num=1000 件</div>
+			<div>2、计算出每个时间段分布的商品数量（这个数量为7天内在这个时间段显示的商品总和）；</div>
+			<pre>
+	foreach($times as $k => $v){
+		$num = ceil(($v[1] / 100) * $goods_num);
+	}
+			</pre>
+			<div>3、计算7天内每天在这个时间段平均分布的商品数量；</div>
+			<pre>
+	$num7 = ceil($num / 7);
+			</pre>
+			<div>4、计算在这个时间段内每隔多久上架一款商品</div>
+			<pre>
+	$sec = intval(3600 / $num7); 
+			</pre>
+			
+			<div><strong>完整算法：</strong></div>
+			<pre>
+public function shop_avg_uptime($shop_id){			
+	//时间段及商品分布占比，靠前的时间段为优先
+	$times = [
+		['10:00',7],
+		['11:00',7],
+		['14:00',7],
+		['15:00',7],
+		['16:00',7],
+		['17:00',7],
+		['19:00',7],
+		['20:00',7],
+		['21:00',7],
+		['22:00',7],
+		['13:00',4],
+		['12:00',4],
+		['18:00',4],
+		['23:00',3],
+		['09:00',3],
+		['00:00',2],
+		['08:00',2],
+		['07:00',2],
+		['01:00',2],
+		['02:00',1],
+		['06:00',1],
+		['03:00',1],
+		['04:00',0.5],
+		['05:00',0.5],
+	];
+
+	$goods_num = M('goods')->where(['shop_id' => $shop_id,'status' => 1])->count();
+
+	$ids = M('goods')->where(['shop_id' => $shop_id,'status' => 1])->getField('id',true);
+
+	$n=0;
+	foreach($times as $k => $v){
+		$num = ceil(($v[1] / 100) * $goods_num);
+		$n +=$num;
+		if($n > $goods_num || $num == 0) break;
+
+		$ids_day = array_slice($ids,$k * $num,$num);
+
+		//7天同个时间段均匀分布
+		$num7 = ceil($num / 7);
+		for($i=1;$i<8;$i++){
+			if($num7 * $i > $num) {
+				$tmp = $num - ($num7 * ($i-1));
+				if($tmp < 1) break;
+
+				$ids_time = array_slice($ids_day,($i-1) * $num7,$tmp);
+				$num7 = $tmp;
+			}else{
+				$ids_time = array_slice($ids_day,($i-1) * $num7,$num7);
+			}
+
+
+			//1小时中均匀分布
+			$sec = intval(3600 / $num7);    //每隔$sec秒上架一款商品
+			//dump($sec);
+			foreach($ids_time as $key => $vl){
+				$day = strtotime(date('Y-m-d',time() - (86400 * $i)) . ' '.$v[0]);
+				$day = date('Y-m-d H:i:s',$day + $key * $sec);
+				//dump($day);
+				M('goods')->where(['id' => $vl])->save(['uptime' => $day]);
+				usleep(rand(5,20));
+			}
+		}
+
+	}			
+}
+			</pre>
+		</div>
+	</div>		
+</div>
+
+
+
+<include file="Public:copyright" />
+<include file="Public:js" />
+<script>
+$(document).ready(function(){
+	
+	
+
+});
+
+
+
+function update_index(obj){
+	var url=obj.data('url');
+	vmodal({
+		title:obj.data('title'),
+		msg:'<h4>'+obj.data('msg')+'</h4><div class="p10 text-center"><a href="'+url+'" target="_blank" class="btn btn-success btn-rad btn-trans mr10 modal-ok"><i class="fa fa-check"></i> 确定</a><button class="btn btn-rad btn-warning btn-trans modal-cancel" data-dismiss="modal"><i class="fa fa-times"></i> 取消</button></div>',
+		class:'text-center',
+		width:'650px',
+	},function(ret){
+		$('.modal-ok').unbind().click(function(){
+			$('#ajax-modal').modal('hide');
+		});
+	});	
+}
+</script>
+<include file="Public:footer" />

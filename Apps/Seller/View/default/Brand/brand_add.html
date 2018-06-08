@@ -1,0 +1,71 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body">
+	<include file="Public:nav" />
+	<div class="container mb30">
+		<include file="Public:side" />
+		
+		<div class="w980 fl">
+			<div class="bor_der">
+				<div class="bg_f1 clearfix fs14 text_44 tle_R">
+					<a class="fl plr15 line40 ml-1 active" href="javascript:;">{$seo['title']}</a>
+				</div>
+				{:W('Common/Builder/form', [['data' => $keyList, 'name' => 'brand_add', 'clickClass' => 'shopInfo-btn-submit', 'run' => '/run/authRun']])}
+				
+				<!-- 主体部分 -->
+				
+			</div>
+		</div>
+	</div>
+</block>
+<block name="css">
+<script type="text/javascript" src="/Public/Webuploader/js/webuploader.js"></script>
+<link rel="stylesheet" type="text/css" href="/Public/Webuploader/css/webuploader.css">
+<link rel="stylesheet" type="text/css" href="/Public/CSS/flatdream/js/jquery.icheck/skins/square/_all.css">
+</block>
+<block name="script">
+<script type="text/javascript">
+	$(document).ready(function(){
+		$(".btn-submit").click(function() {
+			if($("input[name='b_logo']").val() == '') {
+				talert({status:0,msg:'品牌logo不能为空'});
+				return false;
+			}
+			
+		});
+		
+		
+		checkform({
+			formid:"#brand_add",
+			rules:{
+				b_name:{
+					required:true,
+				},
+				b_master:{
+					required:true,
+				},
+				
+				about:{
+					required:true,
+				},
+				tag:{
+					required:true,
+				}	
+			},
+			messages:{
+				b_name:{
+					required:'品牌名称不能为空',
+				},
+				b_master:{
+					required:'品牌所有者',
+				},
+			},
+		},function(res) {
+			talert({status:res.code,msg:res.msg});
+			if(res.code == 1) {
+				setTimeout(gourl({url:'{:U("brand/my_brand/status/0")}'}),1000);
+			}
+		});
+	});
+</script>
+</block>

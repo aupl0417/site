@@ -1,0 +1,110 @@
+<include file="Public:header" />
+<div class="page-group" >
+    <div class="page" id="Message-index">
+		<!-- 标题栏 -->
+		<header class="bar bar-nav">
+			<a class="icon icon-left pull-left back" data-no-cache="true"></a>
+			<h1 class="title">消息通知</h1>
+			<a class="icon iconfont icon-category pull-right ml5 ac-menu" onclick="top_menu()"></a>
+		</header>
+
+		<!-- 浮动导航 -->
+		<include file="Public:fixed-menu" />
+
+        <!-- 这里是页面内容区 -->
+        <div class="content">
+			<div class="list-block media-list">
+				<ul>
+					<li>
+						<a href="/CNews" class="item-link item-content">
+							<div class="item-media"><img src="../Public/images/icon-msg-dttx.png" width="44"></div>
+							<div class="item-inner">
+								<div class="item-title-row">
+									<div class="item-title">C+商务系统公告</div>
+								</div>
+								<div class="item-subtitle text-gray">
+									<notempty name="c_news">
+										{$c_news.title|strip_tags|msubstr=0,26,'utf-8'}
+									<else />
+										暂无最新公告
+									</notempty>	
+								</div>
+							</div>
+						</a>
+					</li>
+					<li>
+						<a href="News" class="item-link item-content">
+							<div class="item-media"><img src="../Public/images/icon-msg-trj.png" width="44"></div>
+							<div class="item-inner">
+								<div class="item-title-row">
+									<div class="item-title">乐兑公告</div>
+								</div>
+								<div class="item-subtitle text-gray">
+									<notempty name="trj_news">
+										{$trj_news.name|strip_tags|msubstr=0,21,'utf-8'}
+									<else />
+										暂无最新公告
+									</notempty>	
+								</div>
+							</div>
+						</a>
+					</li>
+					<li>
+						<a href="/Notice/index" class="item-link item-content">
+							<div class="item-media"><img src="../Public/images/icon-msg-nitice.png" width="44"></div>
+							<div class="item-inner">
+								<div class="item-title-row">
+									<div class="item-title">系统通知</div>
+								</div>
+								<div class="item-subtitle text-gray">
+									<notempty name="trj_notice">
+										{$trj_notice.content|strip_tags|msubstr=0,26,'utf-8'}
+									<else />
+										暂无最新通知
+									</notempty>	
+								</div>
+							</div>
+						</a>
+					</li>
+				</ul>
+			</div>
+			<div class="clearfix md5"></div>
+			<!-- 商家消息列表 -->
+			<div class="list-block media-list message_list">
+				<ul>
+					<volist name='message_list' id="vo">
+						<li class="seller-message">
+							<div class="m-badge-delete delete-message" data-from_name="{:session('user.nick')}" data-to_name="{$vo.username}">删除</div>
+							<a href="#" class="item-content" onclick="sellerMessageInfo({shop_id:'{$vo.shop_id}',nick:'{$vo.username}',type:'1'})">
+								<div class="item-media">
+									<img class="img-circle border-1px" src="{$vo.shop_logo|default="/Public/images/nopic.png"}" width="44">
+									<!-- 已读未读 1为未读 -->
+				          			<span class="<if condition="$vo['status'] eq 1"> m-badge</if>"></span>
+								</div>
+
+								<div class="item-inner">
+									<div class="item-title-row">
+										<div class="item-title">
+											{$vo.username}<notempty name="vo.shop_name"> - {$vo.shop_name}</notempty>
+										</div>
+									</div>
+									<div class="item-subtitle text-gray">
+										{$vo.content.content|default="点击阅读消息。"}
+									</div>
+								</div>
+							</a>
+						</li>
+					</volist>
+				</ul>
+			</div>
+			
+        </div>
+    </div>
+</div>
+
+
+	  
+		
+
+<include file="Public:script" />
+<include file="Public:footer" />

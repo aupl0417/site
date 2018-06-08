@@ -1,0 +1,178 @@
+<include file="Public:header" />
+		<div class="page-group">
+			<div id="page-refund" class="page">
+				<!-- 标题栏 -->
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left back" href="/"></a>
+					<h1 class="title">退款列表</h1>
+					<a class="icon iconfont icon-category pull-right ml5 ac-menu" onclick="top_menu()"></a>
+				</header>
+
+				<!-- 浮动导航 -->
+				<include file="Public:fixed-menu" />
+				
+			
+		
+				<!-- 这里是页面内容区 -->		
+				<div class="content">
+					<div class="buttons-tab rate-tabs fixed-bar">
+						<a href="#tab1" class="tab-link button">
+							全部退款
+							<div class="count">{$alist.allnum|intval}</div>
+						</a>
+						<a href="#tab2" class="tab-link button active">
+							退款中
+							<div class="count">{$pagelist.allnum|intval}</div>
+						</a>
+					</div>					
+					
+					<div class="clearfix" style="height: 2.5rem;"></div>
+					<div class="tabs">
+						<div class="tab img-block infinite-scroll" id="tab1" data-page_num="{$alist.pageinfo.page}">	
+							<input type="hidden" id="p" name="p" value="2" />
+							<notempty name="alist.list">
+							<div class="list-container">
+								<volist name="alist.list" id="vo">
+								<div class="list-block media-list">						
+									<ul>	
+										<li>
+											<div class="item-content item-link">
+												<div class="item-media"><i class="icon iconfont icon-dianpu"></i></div>
+												<div class="item-inner">
+													<div class="item-title-row">
+														<div class="item-title"><a href="javascript:;" data-url="/Shop/index/shop_id/{$vo.shop_id}">{$vo.shop.shop_name}</a></div>
+														<div class="item-after"><a href="/Refund/view/r_no/{$vo.r_no}" data-no-cache="true"><span class="text-orange">{$vo.status_name}</span></a></div>
+													</div>
+												</div>
+											</div>
+										</li>
+										<li class="bg-gray2">
+											<div class="item-bottom p5 text-gray ft05">
+												退款金额 ￥{$vo['money'] + $vo['refund_express']}
+											</div>
+											<a href="/Refund/view/r_no/{$vo.r_no}" class="item-content">
+												<div class="item-media">
+													<img class="lazyload" data-sizes="auto" data-src="{:myurl($vo['orders_goods']['images'],150)}" alt="商品主图" src="../Public/images/nopic.gif" width="60">
+												</div>
+												<div class="item-inner">
+													<div class="item-title-row">
+														<div class="item-title">{$vo.orders_goods.goods_name}</div>
+													</div>
+													<div class="item-subtitle">														
+														<div class="ft05">{$vo.orders_goods.attr_name}</div>
+													</div>
+												</div>
+											</a>
+										</li>
+			
+										<li>
+											<a href="/Refund/view/r_no/{$vo.r_no}" class="item-content">
+												<div class="item-media"><i class="icon iconfont text-orange {:$vo['type']==1?'icon-tuihuo01':'icon-tuikuan'}"></i></div>
+												<div class="item-inner">
+													<div class="item-title-row">
+														<div class="item-title">{$vo.type_name}</div>														
+													</div>
+												</div>
+											</a>
+										</li>		
+									</ul>
+								</div>
+								<div class="clearfix md5"></div>
+								</volist>
+							</div>
+							<!-- 加载提示符 -->
+							<div class="infinite-scroll-preloader">
+								<div class="preloader">
+								</div>
+							</div>
+							<else />
+									<div class="nors text-center">
+										<div><i class="iconfont icon-tuihuo01 ft3"></i></div>
+										 暂无退款记录！
+									</div>
+							</notempty>					
+						</div><!--/tab-item-->
+							
+						<div class="tab active img-block infinite-scroll" id="tab2" data-page_num="{$pagelist.pageinfo.page}">		
+							<input type="hidden" id="p" name="p" value="2" />
+							<notempty name="pagelist.list">
+							<div class="list-container">
+								<volist name="pagelist.list" id="vo">
+								<div class="list-block media-list">						
+									<ul>	
+										<li>
+											<div class="item-content item-link">
+												<div class="item-media"><i class="icon iconfont icon-dianpu"></i></div>
+												<div class="item-inner">
+													<div class="item-title-row">
+														<div class="item-title"><a href="javascript:;" data-url="/Shop/index/shop_id/{$vo.shop_id}">{$vo.shop.shop_name}</a></div>
+														<div class="item-after"><a href="/Refund/view/r_no/{$vo.r_no}" data-no-cache="true"><span class="text-orange">{$vo.status_name}</span></a></div>
+													</div>
+												</div>
+											</div>
+										</li>
+										<li class="bg-gray2">
+											<div class="item-bottom p5 text-gray ft05">
+												退款金额 ￥{$vo['money'] + $vo['refund_express']}
+											</div>
+											<a href="/Refund/view/r_no/{$vo.r_no}" class="item-content">
+												<div class="item-media">
+													<img class="lazyload" data-sizes="auto" data-src="{:myurl($vo['orders_goods']['images'],150)}" alt="商品主图" src="../Public/images/nopic.gif" width="60">
+												</div>
+												<div class="item-inner">
+													<div class="item-title-row">
+														<div class="item-title">{$vo.orders_goods.goods_name}</div>
+													</div>
+													<div class="item-subtitle">														
+														<div class="ft05">{$vo.orders_goods.attr_name}</div>
+													</div>
+												</div>
+											</a>
+										</li>
+			
+										<li>
+											<a href="/Refund/view/r_no/{$vo.r_no}" class="item-content">
+												<div class="item-media"><i class="icon iconfont text-orange {:$vo['type']==1?'icon-tuihuo01':'icon-tuikuan'}"></i></div>
+												<div class="item-inner">
+													<div class="item-title-row">
+														<div class="item-title">{$vo.type_name}</div>														
+													</div>
+												</div>
+											</a>
+										</li>		
+									</ul>
+								</div>
+								<div class="clearfix md5"></div>
+								</volist>
+							</div>
+							<!-- 加载提示符 -->
+							<div class="infinite-scroll-preloader">
+								<div class="preloader">
+								</div>
+							</div>
+							<else />
+									<div class="nors text-center">
+										<div><i class="iconfont icon-tuihuo01 ft3"></i></div>
+										 暂无退款记录！
+									</div>
+							</notempty>					
+						</div><!--/tab-item-->							
+						
+						
+						
+					</div>
+					
+					
+				</div><!--/content-->
+				
+			</div>
+			
+		
+			
+			
+			
+		</div>	
+		
+
+<include file="Public:script" />
+<include file="Public:footer" />

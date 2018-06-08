@@ -1,0 +1,160 @@
+<div class="bg_f1 clearfix fs14 text_44 tle_R">
+	<a class="fl plr15 line40 ml-1 active" href="javascript:;">退款详情</a>
+</div>
+<div class="pd15">
+	<table class="table table-bordered table-advance table-hover mb10">
+		<tbody>
+			<tr style="background:#f9f9f9;">
+				<th class="col-lg-2 text-center">图片</th>
+				<th class="col-lg-2 text-center">商品</th>
+				<th class="col-lg-2 text-center">订单总额</th>
+				<th class="col-lg-1 text-center">退款总额</th>
+				<th class="col-lg-1 text-center">可退金额</th>
+				<th class="col-lg-1 text-center">退货数量</th>
+				<th class="col-lg-1 text-center">当前状态</th>
+				<th class="col-lg-1 text-center">申请时间</th>
+				<th class="col-lg-1 text-center">操作</th>
+			</tr>
+			<tr>
+				<td style="vertical-align: middle;">
+					<a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', array('id' => $data['orders_goods']['attr_list_id']))}" target="_blank"><img src="{$data['orders_goods']['images']}" class="img-thumbnail"></a>
+				</td>
+				<td style="vertical-align: middle;">
+					<a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', array('id' => $data['orders_goods']['attr_list_id']))}" target="_blank">{$data.orders_goods.goods_name}</a></br>{$data.orders_goods.attr_name}
+				</td>
+				<td style="vertical-align: middle;" class="text-center">{$data.orders_shop.pay_price}<br />含运费(<span class="text_yellow">{$data.orders_shop.express_price}</span>)</td>
+				<td style="vertical-align: middle;" class="text-center">{:number_format($data['money'] + $data['refund_express'], 2)}<br />含运费({$data['refund_express']})</td>
+				<td style="vertical-align: middle;" class="text-center">{:number_format(($data['orders_shop']['pay_price']) - ($data['orders_shop']['refund_price'] + $data['orders_shop']['refund_express']),2)}</td>
+				<td style="vertical-align: middle;" class="text-center"><notempty name="data.orders_goods">×{$data.num}</notempty></td>
+				<td style="vertical-align: middle;" class="text-center">{$data.status_name}</br>({$data.type_name})</td>
+				<td style="vertical-align: middle;" class="text-center">{$data.atime}</td>
+				<td style="vertical-align: middle;" class="text-center">
+					<switch name="data.status">
+						<case value="1">
+							<div data-type="modal" data-url="{:U('/refund/opreat', ['type' => 'agree', 'id' => $data['r_no'], 'sid' => $_GET['sid']])}" data-title="同意退款" class="btn btn-success btn-ml text-center btn_m w100 opreating">同意退款</div>
+							<eq name="data.orders_status" value="3">	<!-- 已发货的订单才能够拒绝退货 -->
+								<div data-type="modal" data-url="{:U('/refund/opreat', ['type' => 'refuse', 'id' => $data['r_no'], 'sid' => 2])}" data-title="拒绝退款" class="btn btn-primary btn-ml text-center btn_m mt10 opreating w100">拒绝退款</div>
+							</eq>
+						</case>
+						<case value="2">
+							<div class="btn btn-primary btn-ml text-center btn_m w100">等待买家操作</div>	<!-- 拒绝退款 -->
+						</case>
+						<case value="3">
+							<eq name="data.orders_status" value="3">	<!-- 已发货的订单才能够拒绝退货 -->
+								<div data-type="modal" data-url="{:U('/refund/opreat', ['type' => 'agree', 'id' => $data['r_no'], 'sid' => 2])}" data-title="同意退款" class="btn btn-success btn-ml text-center btn_m w100 opreating">同意退款</div>
+								<div data-type="modal" data-url="{:U('/refund/opreat', ['type' => 'refuse', 'id' => $data['r_no'], 'sid' => 2])}" data-title="拒绝退款" class="btn btn-primary btn-ml text-center btn_m mt10 opreating w100">拒绝退款</div>
+							<else />
+								<div data-type="modal" data-url="{:U('/refund/opreat', ['type' => 'agree', 'id' => $data['r_no']])}" data-title="同意退款" class="btn btn-success btn-ml text-center btn_m w100 opreating">同意退款</div>
+								<div data-type="modal" data-url="{:U('/refund/opreat', ['type' => 'refuse', 'id' => $data['r_no']])}" data-title="拒绝退款" class="btn btn-primary btn-ml text-center btn_m mt10 opreating w100">拒绝退款</div>
+							</eq>
+						</case>
+						<case value="4">
+							<div class="btn btn-primary btn-ml text-center btn_m w100">等待买家操作</div>	 <!-- 同意退款 -->
+						</case>
+						<case value="5">
+							<div data-type="modal" data-url="{:U('/refund/opreat', ['type' => 'receipt', 'id' => $data['r_no'], 'sid' => 2])}" data-title="已收到商品" class="btn btn-success btn-ml text-center btn_m w100 opreating">已收到商品</div>
+							<div data-type="modal" data-url="{:U('/refund/opreat', ['type' => 'appeal', 'id' => $data['r_no'], 'sid' => 2])}" data-title="未收到商品" class="btn btn-primary btn-ml text-center btn_m mt10 w100 opreating">未收到商品</div>
+						</case>
+						<case value="6">
+							<div class="btn btn-primary btn-ml text-center btn_m w100">卖家寄出商品</div>
+						</case>
+						<case value="10">
+							<div class="btn btn-primary btn-ml text-center btn_m w100">等待仲裁</div>
+						</case>
+						<case value="11">
+							<div class="btn btn-primary btn-ml text-center btn_m w100">卖家未收到商品申诉</div>
+						</case>
+						<case value="12">
+							<div class="btn btn-primary btn-ml text-center btn_m w100">买家未收到商品申诉</div>
+						</case>
+						<case value="20">
+							<div class="btn btn-success btn-ml text-center btn_m w100">退款已取消</div>
+						</case>
+						<case value="100">
+							<div class="btn btn-success btn-ml text-center btn_m w100">退款已完成</div>
+						</case>
+					</switch>
+					<a href="{:U('/orders/detail', ['id' => $data['s_no']])}" class="btn btn-info btn-ml text-center btn_m mt10 w100">查看订单</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<table class="table table-bordered table-advance table-hover">
+		<tbody>
+			<tr style="background:#f9f9f9;">
+				<th class="col-lg-1 text-left">退款理由</th>
+			</tr>
+			<tr>
+				<td class="text-break-all">
+					{$data.reason}
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<notempty name="data.images">
+		<table class="table table-bordered table-advance table-hover">
+			<tbody>
+				<tr style="background:#f9f9f9;">
+					<th class="col-lg-1 text-left">退款照片</th>
+				</tr>
+				<tr class="count">
+					<td>
+						<php>
+							$images	=	explode(',',rtrim($data['images'], ','));
+						</php>
+						<ul class="images-select-box">
+							<volist name="images" id="vo">
+								<li id="" data-path="{$vo}" class="text-center">
+									<div class="li-img-box">
+										<a href="{$vo}" class="image-zoom" title="大图">
+											<img src="{:myurl($vo, 100)}">
+										</a>
+									</div>
+								</li>
+							</volist>
+						</ul>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</notempty>
+</div>
+<div class="pd20 solid_t">
+	<div class="ml40 pl20">
+	    <div class="block-transparent">
+          <div class="header">
+            <h4>退款日志</h4>
+          </div>
+          <ul class="timeline">
+		      <volist name="data.logs" id="vo">
+		            <li>
+		              <i class="fa fa-angle-double-down"></i>
+		              <span class="date">{$vo.atime}</span>
+		              <div class="content text-break-all">
+		              	<p><strong><notempty name="vo.user.nick">{$vo.user.nick}<else />雇员操作</notempty></strong></p>
+		                <p>{$vo.remark}</p>
+		                <notempty name="vo.images">
+		                	<div class="mt10">
+								<volist name="vo.images" id="vo">
+									<a href="{$vo}" class="image-zoom mr10" title="大图">
+										<img src="{:myurl($vo, 100)}">
+									</a>
+								</volist>
+							</div>
+		                </notempty>
+		              </div>
+		            </li>
+	            </volist>
+          	</ul>
+        </div>
+	</div>
+</div>
+<notempty name="express">
+	<div class="pd20 solid_t" id="express">
+		<h4>物流信息</h4>
+		<div class="ml40 pl20">
+			<div data-type="modal" data-url="{:U('/tool/express', ['company' => $data['express_company_id'], 'code' => $data['express_code']])}" data-title="查看物流信息" class="btn btn-primary btn-ml plr20 mr20 opreating">查看物流信息</div>
+		</div>
+	</div>
+</notempty>

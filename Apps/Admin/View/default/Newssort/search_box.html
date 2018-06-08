@@ -1,0 +1,36 @@
+<form method="get" action="__URL__/" role="form" class="hover-shadow hover-search p10 md10">
+
+	<table class="no-bordered">
+		<tr>
+			<td width="150" class="p0">
+				<a href="__URL__/add" class="btn btn-trans btn-lg btn-rad btn-primary"><i class="fa fa-plus"></i> 新增记录</a>
+			</td>		
+			<td class="p0">
+				<table>
+					<tr>
+						<td>
+							<select id="active" name="active" class="form-control input-lg" >
+								<option value="">状态</option>
+								<option value="0">锁定</option>
+								<option value="1">正常</option>
+							</select>							
+						</td>					
+				
+						<td><input id="sday" name="sday" value="{$_GET.sday}" class="form-control input-lg" placeholder="时间(从)" data-type="between-datepick" data-var="maxDate" data-tag="#eday" />							
+						</td>
+						<td><input id="eday" name="eday" value="{$_GET.eday}" class="form-control input-lg" placeholder="时间(至)" data-type="between-datepick"data-var="minDate" data-tag="#sday" /></td>	
+						
+						<td><html:select options="fcfg['search_fields']" id="field" name="field" style="form-control input-lg" /></td>
+						<td><input id="q" name="q" value="{$_GET.q}" class="form-control input-lg" placeholder="请输入搜索关键词" /></td>		
+						
+					<tr>
+				</table>
+			</td>
+			<td width="100" class="p0"><button type="submit" class="btn btn-lg btn-rad btn-trans btn-primary btn-block"><i class="fa fa-search"></i> 搜索</button></td>
+		</tr>
+	</table>
+	
+	
+
+</form>
+<div class="clearfix"></div>

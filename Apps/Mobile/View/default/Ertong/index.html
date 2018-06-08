@@ -1,0 +1,182 @@
+<include file="Public:header" />
+<link rel="stylesheet" href="../Public/ertong/css/style.css">
+		<div class="page-group">
+			<div class="page" id="page-ertong-index">
+				<!-- 标题栏 -->
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left back" href="/"></a>
+					<h1 class="title">儿童节活动</h1>
+				</header>
+
+				<!-- 导航条 -->
+				<include file="Public:nav" />
+		
+				<!-- 这里是页面内容区 -->
+				<div class="content pull-to-refresh-content">
+					<!-- 默认的下拉刷新层 -->
+					<div class="pull-to-refresh-layer">
+						<div class="preloader"></div>
+						<div class="pull-to-refresh-arrow"></div>
+					</div>
+					
+					
+					<div class="bgimg"><img src="../Public/ertong/images/1.jpg"/></div>
+					<div class="bgimg"><img src="../Public/ertong/images/7.jpg"/></div>
+					
+					<!--学习用品-->
+					<div class="blue p5">
+						<h4><img src="../Public/ertong/images/2.png"/></h4>
+						<div class=" shadow">
+							
+							<div class="link-goods-l">
+								<div class="link-goods-r">
+									<div class="row bd-white pl5 pr5">
+										<volist name="goods" id="vo" offset="0" length='8'>
+										<div class="col-50 link-goods-item ">
+											<a href="{$vo.goods.url}" target="_blank">
+											<img class="lazyload" data-sizes="auto" data-src="{$vo.goods.images}" src="__PUBLIC__/images/nopic.png"  alt="{$vo.goods.goods_name}" width="100%">
+											<div class="goods_name">
+												{$vo.goods.goods_name|default='读取失败'}
+											</div>
+											<div class="goods_price row">
+												<div class="col-50">￥<span>{$vo.goods.price|default='0.00'}</span></div>
+												<div class="col-50 text-right"><img src="../Public/ertong/images/99.jpg"/></div>
+											</div>
+											</a>
+										</div>
+										</volist>
+									</div>
+								</div>
+							</div>
+							<div class="pt5"></div>
+						</div>
+					</div>
+					<div class="bgimg"><img src="../Public/ertong/images/8.jpg"/></div>
+					<!--儿童玩具-->
+					<div class="violet p5">
+						<h4><img src="../Public/ertong/images/3.png"/></h4>
+						<div class=" shadow">
+							
+							<div class="link-goods-l">
+								<div class="link-goods-r">
+									<div class="row bd-white pl5 pr5">
+										<volist name="goods" id="vo" offset="8" length='8'>
+										<div class="col-50 link-goods-item ">
+											<a href="{$vo.goods.url}" target="_blank">
+											<img class="lazyload" data-sizes="auto" data-src="{$vo.goods.images}" src="__PUBLIC__/images/nopic.png"  alt="{$vo.goods.goods_name}" width="100%">
+											<div class="goods_name">
+												{$vo.goods.goods_name|default='读取失败'}
+											</div>
+											<div class="goods_price row">
+												<div class="col-50">￥<span>{$vo.goods.price|default='0.00'}</span></div>
+												<div class="col-50 text-right"><img src="../Public/ertong/images/98.jpg"/></div>
+											</div>
+											</a>
+										</div>
+										</volist>
+									</div>
+								</div>
+							</div>
+							<div class="pt5"></div>
+						</div>
+					</div>
+					<!--儿童鞋服-->
+					<div class="green p5">
+						<h4><img src="../Public/ertong/images/4.png"/></h4>
+						<div class=" shadow">
+							
+							<div class="link-goods-l">
+								<div class="link-goods-r">
+									<div class="row bd-white pl5 pr5">
+										<volist name="goods" id="vo" offset="16" length='16'>
+										<div class="col-50 link-goods-item ">
+											<a href="{$vo.goods.url}" target="_blank">
+											<img class="lazyload" data-sizes="auto" data-src="{$vo.goods.images}" src="__PUBLIC__/images/nopic.png"  alt="{$vo.goods.goods_name}" width="100%">
+											<div class="goods_name">
+												{$vo.goods.goods_name|default='读取失败'}
+											</div>
+											<div class="goods_price row">
+												<div class="col-50">￥<span>{$vo.goods.price|default='0.00'}</span></div>
+												<div class="col-50 text-right"><img src="../Public/ertong/images/97.jpg"/></div>
+											</div>
+											</a>
+										</div>
+										</volist>
+									</div>
+								</div>
+							</div>
+							<div class="pt5"></div>
+						</div>
+					</div>
+					<!--零食-->
+					<div class="orange p5">
+						<h4><img src="../Public/ertong/images/5.png"/></h4>
+						<div class=" shadow">
+							
+							<div class="link-goods-l">
+								<div class="link-goods-r">
+									<div class="row bd-white pl5 pr5">
+										<volist name="goods" id="vo" offset="32" length='8'>
+										<div class="col-50 link-goods-item ">
+											<a href="{$vo.goods.url}" target="_blank">
+											<img class="lazyload" data-sizes="auto" data-src="{$vo.goods.images}" src="__PUBLIC__/images/nopic.png"  alt="{$vo.goods.goods_name}" width="100%">
+											<div class="goods_name">
+												{$vo.goods.goods_name|default='读取失败'}
+											</div>
+											<div class="goods_price row">
+												<div class="col-50">￥<span>{$vo.goods.price|default='0.00'}</span></div>
+												<div class="col-50 text-right"><img src="../Public/ertong/images/96.jpg"/></div>
+											</div>
+											</a>
+										</div>
+										</volist>
+									</div>
+								</div>
+							</div>
+							<div class="pt5"></div>
+						</div>
+					</div>
+					<!--运动户外-->
+					<div class="red p5">
+						<h4><img src="../Public/ertong/images/6.png"/></h4>
+						<div class=" shadow">
+							
+							<div class="link-goods-l">
+								<div class="link-goods-r">
+									<div class="row bd-white pl5 pr5">
+										<volist name="goods" id="vo" offset="40" length='8'>
+										<div class="col-50 link-goods-item ">
+											<a href="{$vo.goods.url}" target="_blank">
+											<img class="lazyload" data-sizes="auto" data-src="{$vo.goods.images}" src="__PUBLIC__/images/nopic.png"  alt="{$vo.goods.goods_name}" width="100%">
+											<div class="goods_name">
+												{$vo.goods.goods_name|default='读取失败'}
+											</div>
+											<div class="goods_price row">
+												<div class="col-50">￥<span>{$vo.goods.price|default='0.00'}</span></div>
+												<div class="col-50 text-right"><img src="../Public/ertong/images/95.jpg"/></div>
+											</div>
+											</a>
+										</div>
+										</volist>
+									</div>
+								</div>
+							</div>
+							<div class="pt5"></div>
+						</div>
+					</div>
+					
+					
+					<div class="bgimg link">
+						<a class="top" onclick="backToTop()">
+						<img src="../Public/ertong/images/9.jpg"/>
+						
+							
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>	
+		
+
+<include file="Public:script" />
+<include file="Public:footer" />

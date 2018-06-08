@@ -1,0 +1,476 @@
+<div class="clearfix">
+	<div class="pull-right text-gray" onclick="$(this).closest('tr').toggleClass('hide');"><i class="fa fa-times-circle-o fa-2x"></i></div>	
+</div>
+
+	<div class="box p20">
+		<div class="content">
+			<table class="bg_white table_dotted">
+				<tbody class="solid_t">
+					<tr>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天新增用户总数</p>
+							<strong>{$rs.member}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天累计用户总数</p>
+							<strong>{$rs.total_member}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天新增开店成功的店铺总数</p>
+							<strong>{$rs.open_store_success}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天新增申请开店的总数</p>
+							<strong>{$rs.open_store_user}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天强制关闭店铺总数</p>
+							<strong>{$rs.close_store}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天当天正常营业的店铺总数</p>
+							<strong>{$rs.normal_store}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天支付宝付款总数</p>
+							<strong>{$rs.alipay_num}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天当天支付宝付款总额</p>
+							<strong>
+								<empty name="rs.day_alipay_total">
+								0
+								<else/>
+								{$rs.day_alipay_total}
+								</empty>
+							</strong>
+						</td>
+					</tr>
+					<tr>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天累计支付宝付款总额</p>
+							<strong>
+								<empty name="rs.total_alipay">
+								0
+								<else/>
+								{$rs.total_alipay}
+								</empty>
+							</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天现金支付笔数</p>
+							<strong>{$rs.money_num}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天当天现金支付总额</p>
+							<strong>
+								<empty name="rs.day_money_total">
+								0
+								<else/>
+								{$rs.day_money_total}
+								</empty>
+							</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天累计现金支付总额</p>
+							<strong>
+								<empty name="rs.money_total">
+								0
+								<else/>
+								{$rs.money_total}
+								</empty>
+							</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天唐宝支笔数</p>
+							<strong>{$rs.tangbao_num}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天当天糖宝支付总额</p>
+							<strong>
+								<empty name="rs.day_tangbao_total">
+								0
+								<else/>
+								{$rs.day_tangbao_total}
+								</empty>
+							</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天累计糖宝支付总额</p>
+							<strong>
+								<empty name="rs.total_tangbao">
+								0
+								<else/>
+								{$rs.total_tangbao}
+								</empty>
+							</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天当天下单笔数</p>
+							<strong>{$rs.order_num}</strong>
+						</td>
+					</tr>
+					<tr>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天当天下单总金额</p>
+							<strong>
+								<empty name="rs.day_order_total">
+								0
+								<else/>
+								{$rs.day_order_total}
+								</empty>
+							</strong>
+						</td>					
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天当天下单平均单价</p>
+							<strong>
+								<empty name="rs.day_average_order">
+								0
+								<else/>
+								{$rs.day_average_order}
+								</empty>
+							</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天当天成交笔数</p>
+							<strong>{$rs.order_success}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天当天成交总金额</p>
+							<strong>
+								<empty name="rs.day_order_success_totals">
+								0
+								<else/>
+								{$rs.day_order_success_total}
+								</empty>
+							</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天当天成交平均单价</p>
+							<strong>
+								<empty name="rs.day_average_success_order">
+								0
+								<else/>
+								{$rs.day_average_success_order}
+								</empty>
+							</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天累计成交总金额</p>
+							<strong>
+								<empty name="rs.success_order_total">
+								0
+								<else/>
+								{$rs.success_order_total}
+								</empty>
+							</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天确认收货笔数</p>
+							<strong>{$rs.accept_num}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天确认收货总金额</p>
+							<strong>
+								<empty name="rs.day_accept_total">
+								0
+								<else/>
+								{$rs.day_accept_total}
+								</empty>
+							</strong>
+						</td>
+					</tr>
+					<tr>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天确认收平均单价</p>
+							<strong>
+								<empty name="rs.day_average_accept">
+								0
+								<else/>
+								{$rs.day_average_accept}
+								</empty>
+							</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天累计收货总金额</p>
+							<strong>
+								<empty name="rs.accept_total">
+								0
+								<else/>
+								{$rs.accept_total}
+								</empty>
+							</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天当天申请退款笔数</p>
+							<strong>{$rs.refund_num}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天当天申请退款总金额</p>
+							<strong>
+								<empty name="rs.day_refund_money">
+								0
+								<else/>
+								{$rs.day_refund_money}
+								</empty>
+							</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天当天申请退款平均单价</p>
+							<strong>
+								<empty name="rs.day_average_refund">
+								0
+								<else/>
+								{$rs.day_average_refund}
+								</empty>
+							</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天累计申请退款总额</p>
+							<strong>
+								<empty name="rs.refund_total">
+								0
+								<else/>
+								{$rs.refund_total}
+								</empty>
+							</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天当天退款成功笔数</p>
+							<strong>{$rs.refund_success_num}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天当天退款成功总金额</p>
+							<strong>
+								<empty name="rs.refund_success_money">
+								0
+								<else/>
+								{$rs.refund_success_money}
+								</empty>
+							</strong>
+						</td>
+					</tr>
+					<tr>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天当天退款成功平均单价</p>
+							<strong>
+								<empty name="rs.refund_success_average">
+								0
+								<else/>
+								{$rs.refund_success_average}
+								</empty>
+							</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天累计退款成功总额</p>
+							<strong>
+								<empty name="rs.refund_success_total">
+								0
+								<else/>
+								{$rs.refund_success_total}
+								</empty>
+							</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天当天新增商品数量</p>
+							<strong>{$rs.goods_num}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天当天新增违规商品数量</p>
+							<strong>{$rs.illegal_goods_num}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天当天在线出售商品总数</p>
+							<strong>{$rs.online_goods_num}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天当天新增评价笔数</p>
+							<strong>{$rs.comment_num}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天累计评价总数</p>
+							<strong>{$rs.comment_total_num}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天当天参与活动笔数</p>
+							<strong>{$rs.activity_num}</strong>
+						</td>
+					</tr>
+					<tr>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天当天参与活动并付款笔数</p>
+							<strong>{$rs.activity_pay_num}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天当天活动成交总金额</p>
+							<strong>
+								<empty name="rs.day_activity_money">
+								0
+								<else/>
+								{$rs.day_activity_money}
+								</empty>
+							</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天当天参与活动成交平均单价</p>
+							<strong>
+								<empty name="rs.day_average_activity">
+								0
+								<else/>
+								{$rs.day_average_activity}
+								</empty>
+							</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天活动累计成交笔数</p>
+							<strong>{$rs.activity_total_num}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天活动累计成交总金额</p>
+							<strong>
+								<empty name="rs.activity_total_money">
+								0
+								<else/>
+								{$rs.activity_total_money}
+								</empty>
+							</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天当天新增品牌推广数量</p>
+							<strong>{$rs.brand_num}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天当天新增品牌推广付款总额</p>
+							<strong>
+								<empty name="rs.day_brand_money">
+								0
+								<else/>
+								{$rs.day_brand_money}
+								</empty>
+							</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">累计品牌推广总数</p>
+							<strong>{$rs.brand_total_num}</strong>
+						</td>
+					</tr>
+					<tr>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">当前评价总数</p>
+							<strong>{$result.comment_total_num}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天当天被领取的优惠券数量</p>
+							<strong>{$rs.coupon_num}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天当天被领取的优惠券面值总额</p>
+							<strong>
+								<empty name="rs.day_coupon_total">
+								0
+								<else/>
+								{$rs.day_coupon_total}
+								</empty>
+							</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天累计被领优惠券数量</p>
+							<strong>{$rs.coupon_total_num}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天累计被领优惠券总额</p>
+							<strong>
+								<empty name="rs.coupon_total_money">
+								0
+								<else/>
+								{$rs.coupon_total_money}
+								</empty>
+							</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天当天被使用的优惠券数量</p>
+							<strong>{$rs.use_coupon_num}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天当天被使用的优惠券面值总额</p>
+							<strong>
+								<empty name="rs.use_coupon_money">
+								0
+								<else/>
+								{$rs.use_coupon_money}
+								</empty>
+							</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天累计被使用优惠券数量</p>
+							<strong>{$rs.use_coupon_total_num}</strong>
+						</td>
+					</tr>
+					<tr>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天累计被使用优惠券总额</p>
+							<strong>
+								<empty name="rs.use_coupon_total_money">
+								0
+								<else/>
+								{$rs.use_coupon_total_money}
+								</empty>
+							</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天当天新增广告投放笔数</p>
+							<strong>{$rs.ad_num}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天当天新增广告投放总金额</p>
+							<strong>
+								<empty name="rs.ad_money">
+								0
+								<else/>
+								{$rs.ad_money}
+								</empty>
+							</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天当天新增广告投放平均单价</p>
+							<strong>
+								<empty name="rs.ad_price_unit">
+								0
+								<else/>
+								{$rs.ad_price_unit}
+								</empty>
+							</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天累计广告投放笔数</p>
+							<strong>{$rs.ad_total_num}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天累计广告投放总金额</p>
+							<strong>
+								<empty name="rs.ad_total_money">
+								0
+								<else/>
+								{$rs.ad_total_money}
+								</empty>
+							</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天当天新增投放素材</p>
+							<strong>{$rs.sucai_num}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">前一天累计素材总数</p>
+							<strong>{$rs.sucai_total_num}</strong>
+						</td>
+					</tr>
+				</tbody>
+			</table>	
+		<div class="clearfix md20"></div>
+		</div>		
+	</div>
+	
+
+<div class="clearfix">
+	<div class="pull-right text-gray" onclick="$(this).closest('tr').toggleClass('hide');"><i class="fa fa-times-circle-o fa-2x"></i></div>	
+</div>

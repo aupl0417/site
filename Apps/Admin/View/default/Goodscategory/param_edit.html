@@ -1,0 +1,75 @@
+<form data-url="__URL__/param_edit_save" id="form_create" class="form-horizontal">
+<div class="vform">
+
+			{:W('Widget/buildform',array(array(
+				'field'		=>array(
+					array(
+						'formtype'		=>'text',
+						'label'			=>'参数名称',
+						'name'			=>'param_name',
+						'is_need'		=>true,
+					),
+					array(
+						'formtype'		=>'radio',
+						'label'			=>'状态',
+						'name'			=>'status',
+						'data'			=>array(array(1,'启用'),array(0,'停用')),
+						'field'			=>array(0,1),
+						'value'			=>1,
+						'is_need'		=>1,
+					),
+					array(
+						'formtype'		=>'radio',
+						'label'			=>'是否必填',
+						'name'			=>'is_need',
+						'data'			=>array(array(1,'是'),array(0,'否')),
+						'field'			=>array(0,1),
+						'value'			=>1,
+						'is_need'		=>1,
+					),					
+					array(
+						'formtype'		=>'radio',
+						'label'			=>'类型',
+						'name'			=>'type',
+						'data'			=>array(array(1,'单选'),array(2,'多选'),array(3,'文本')),
+						'field'			=>array(0,1),
+						'value'			=>3,
+						'is_need'		=>1,
+					),		
+					array(
+						'formtype'		=>'textarea',
+						'label'			=>'选项数据',
+						'name'			=>'options',
+						'tips'			=>'单选和多选是必填，各选项值用逗号隔开',
+					),					
+					array(
+						'formtype'		=>'hidden',
+						'name'			=>'group_id',
+					),
+					array(
+						'formtype'		=>'hidden',
+						'name'			=>'id',
+					),
+
+
+				),
+			),$rs))}
+
+<div class="p20 text-center">
+	<button type="submit" class="btn btn-primary btn-150px"><i class="fa fa-check"></i> 提交</button>
+</div>
+<!--token-->
+</div>
+</form>
+<script>
+iCheckClass();
+checkform({
+	formid:'#form_create',
+},function(ret){
+	valert(ret);
+	if(ret.status=='success'){
+		ref();
+	}
+});
+
+</script>

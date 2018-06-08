@@ -1,0 +1,49 @@
+			{:W('Widget/listable',array(array(
+				'data'	=>$pagelist['list'],
+				'item_view'=>1,				
+				'items'	=>array(
+	
+					array(
+						'title'		=>'ID',
+						'field'		=>'_id',
+						'td_attr'	=>'class="text-center"',
+					),				
+			
+					array(
+						'title'		=>'会员账号',
+						'field'		=>'nick',
+						'td_attr'	=>'class="text-center"',
+					),				
+					array(
+						'title'		=>'URL',
+						'field'		=>'url',
+					),				
+				
+					array(
+						'title'		=>'接口',
+						'field'		=>'apiurl',
+					),
+					array(
+						'title'		=>'执行时间',
+						'field'		=>'dotime',
+					),
+					array(
+						'title'		=>'IP',
+						'field'		=>'ip',
+						'td_attr'	=>'class="text-center"',
+					),						
+					array(
+						'title'		=>'时间',
+						'field'		=>'atime',
+						'td_attr'		=>'class="text-gray text-center"',
+					),
+					array(
+						'title'		=>'操作',
+						'type'		=>'html',
+						'norder'	=>1,
+						'html'		=>'<div class="btn btn-default btn-sm btn-rad btn-trans btn-block btn-view m0" data-id="[_id]" data-url="__URL__/erp_view/id/[_id]">详情</div>',
+						'td_attr'	=>'width="80" class="text-center"',
+					),				
+					
+				),
+			)))}

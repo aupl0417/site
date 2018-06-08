@@ -1,0 +1,208 @@
+<header class="header fixed-top">
+    <div>
+        <div class="l">
+            <i class="icons i-back" onclick="closeWin()"></i>
+        </div>
+        <div class="title">
+            付款
+        </div>
+        <div class="r">
+
+        </div>
+    </div>
+</header>
+<section>
+
+    <?php
+		if (C('cfg.site')['is_pay'] == 0) {
+	?>
+    <div class="load-body">{:C('cfg.site')['is_pay_tips']}</div>
+    <?php
+		} else {
+	?>
+
+    <form id="form-orders-pay" method="post" action="{:('/payment/index')}">
+        <div class="orders-view md10">
+        </div>
+        <div class="line-box row" onclick="select_paytype()">
+            <div class="col-4">支付方式</div>
+            <div class="col-4x3 text-right ft14 paytype">现金账户</div>
+        </div>
+        <div class="line-box nobg noicon text-gray">
+            现金账户：<span class="ac_score text-danger">0</span> 元 <span class="text-danger hide" onclick="openWin({name:'tips',url:'/Index/tips_app'})">充值</span>
+        </div>
+        <div class="clearfix"></div>
+        <div class="line-box nobg noicon text-gray">
+            唐宝账户：<span class="a_tangBao text-danger">0</span> 分 <span class="text-danger hide" onclick="openWin({name:'tips',url:'/Index/tips_app'})">充值</span>
+        </div>
+        <div class="clearfix"></div>
+        <div class="p10">
+            <button type="submit" class="btn btn-lg btn-block btn-danger md10 group-pays-submit" style="width: 100%;">立即支付</button>
+            <!--<div class="btn btn-lg btn-block btn-danger md10" onclick="orders_pay()">支付</div>-->
+        </div>
+        <input type="hidden" name="o_no" id="o_no" value="{$_GET.o_no}">
+        <input type="hidden" name="paytype" id="paytype" value="1">
+    </form>
+    <input type="hidden" name="snos" value="">
+    <?php } ?>
+
+</section>
+
+<include file="Public:d_layer" />
+
+<script id="tpl_cart_pay_view" type="text/html">
+    <div class="line-box noicon row">
+        <div class="col-4">订单号</div>
+        <div class="col-4x3 text-right text-gray"><%= data.o_no%></div>
+    </div>
+    <div class="line-box noicon row view-money">
+        <div class="col-4">应付金额</div>
+        <div class="col-4x3 text-right text-danger ft14 b">￥<%= data.pay_price%></div>
+    </div>
+    <div class="line-box noicon row view-tang hide">
+        <div class="col-4">应付唐宝</div>
+        <div class="col-4x3 text-right text-danger ft14 b"><%= data.tangpay %></div>
+    </div>
+</script>
+
+
+<script>
+    fixBar(1);
+    var timer;
+    $(function () {
+        $(".group-pays-submit").click(function () {
+            if ($('input[name="o_no"]').val() == '') {
+                valert({msg:'订单号不能为空！'});
+                return false;
+            }
+            if ($('input[name="paytype"]').val() == '') {
+                valert({msg:'支付类型不能为空！'});
+                return false;
+            }
+
+
+            timer = setInterval(function () {
+                checkPay();
+            }, 3000);
+
+            vmodal({
+                title:'正在付款',
+                cancel_text:'支付失败',
+                success_text:'支付成功',
+            }, function () {
+
+                $(".page.active .vmodal .vmodal-footer .vmodal-success").click(function () {    //支付成功
+                    clearInterval(timer);
+                    checkPay(1);
+                });
+
+                $(".page.active .vmodal .vmodal-footer .vmodal-cancel").click(function () {     //支付失败
+                    clearInterval(timer);
+                });
+            });
+
+        });
+    })
+    var data={};
+    data.account={apiurl:'/Erp/account',is_openid:1};
+    data.orders={apiurl:'/Orders/view',is_openid:1,o_no:'{$_GET.o_no}'};
+    data.cart_num = {apiurl:'/Cart/cart_total',is_openid:1};
+    data.payType = {apiurl:'/erp/get_erp_paytype'};
+    ajax_post({
+        url:'/Api/apis',
+        data:data,
+    },function(ret){
+        if(ret.account.code==1){
+            $('.page.active .ac_score').html(ret.account.data.a_freeMoney);
+            $('.page.active .a_tangBao').html(ret.account.data.a_tangBao);
+            if(ret.account.data.a_payPwd=='') $('.page.active .no_pay_password').removeClass('hide');
+        }
+
+        if(ret.orders.code==1){
+            ret.orders.data.tangpay	=	Math.round(ret.orders.data.tangpay * 100);
+            var html = template('tpl_cart_pay_view', {data:ret.orders.data});
+            var s_no = '';
+            for (i in ret.orders.data.orders_shop) {
+                s_no += ret.orders.data.orders_shop[i].s_no + ',';
+            }
+            if (s_no != '') $('input[name="snos"]').val(s_no);
+
+            $('.page.active .orders-view').html(html);
+        }
+
+        if (ret.payType.code == 1) {
+
+        }
+
+        //购物车数量
+        if(ret.cart_num.code==1 && ret.cart_num.data.num > 0){
+            $(".cart_total_num").removeClass('hide').html(ret.cart_num.data.num);
+        }else{
+            $(".cart_total_num").addClass('hide').html(0);
+        }
+    });
+
+
+    //支付状态
+    var pay_status;
+    var pay_status_tips;
+
+    function orders_pay(){
+        var data=getFormJson('.page.active #form-orders-pay');
+        if(data.paytype==3){
+            location.href='/Alipay/group_pay/o_no/{$_GET.o_no}';
+            return false;
+        }
+
+        if(data.password_pay==''){
+            valert({msg:'请输入安全密码！'});
+            return false;
+        }
+        ajax_post({
+            url:'/Api/api',
+            data:data,
+        },function(ret){
+            //if(ret.code==1){
+            pay_status=ret.data;
+            pay_status_tips=ret.msg;
+            openWin({name:'pay_success',url:'/Cart/pay_success',close:true});
+            //var html=template('pay_status',{data:ret.data});
+            //$('.page.active section').html(html);
+            //}else{
+            //	valert(ret);
+            //}
+        });
+
+    }
+
+    //选择付款方式
+    function select_paytype(){
+        vmodal({
+            title:'支付方式',
+            url:'__URL__/dt_select_paytype',
+        },function(){
+
+        });
+    }
+
+
+    /**
+     * 检测是否已经支付成功
+     */
+    function checkPay(gotoerror) {
+        var s_no = $('input[name="snos"]').val();
+        ajax_post({
+            url : '{:U("/payment/check")}',
+            data: {o_no : s_no},
+        }, function (res) {
+            if (res.code == 1) {
+                openWin({name:'pay_success',url:'/Cart/dt_pay_success',close:true});
+            } else {
+                if (gotoerror == 1) {
+                    openWin({name:'pay_success',url:'/Cart/dt_pay_error',close:true});
+                }
+            }
+        });
+    }
+
+</script>

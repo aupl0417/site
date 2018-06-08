@@ -1,0 +1,24 @@
+
+	<notempty name="list.data">
+	<ul class="timeline express">
+		<volist name="list.data" id="vo">
+		<li>
+			<span class="date">
+				{$vo.atime}
+			</span>
+			<div class="content">
+				{$vo.remark}
+				
+				<notempty name="vo.reason">
+					<div class="text-gray mt10">{$vo.reason}</div>
+				</notempty>
+			</div>
+		</li>
+		</volist>
+	</ul>
+	<else />
+	<div class="text-center nors p20">获取不到记录！</div>
+	</notempty>
+	
+
+

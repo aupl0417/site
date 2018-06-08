@@ -1,0 +1,552 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body mt10">
+
+    <include file="Public:nav_statistic" />
+
+    <div class="container">
+
+        <include file="Public:side_statistic" />
+
+        <div class="w960 fl">
+            <ol class="breadcrumb pd10 bor_der bor_r0 mt0 mb20">
+                <li><a href="/">数据统计 </a> </li>
+                <li><a href="">商品分析</a></li>
+                <li><a href="">商品概况</a></li>
+            </ol>
+
+
+            <div class="ptb10 solid_b mb20">
+                <span class="fs16">商品信息总况</span>
+            </div>
+
+            <div class="mb35">
+                <div class="mb10">
+                    <strong class="fs14 text_black mr20">选择时间</strong>
+                    <a class="text_yellow plr20 <if condition='$con[total_type] eq 1'>btn btn-primary btn-xs </if>" onclick = "select_change('total','type',1)">昨天</a>
+                    <a class="text_yellow plr20 <if condition='$con[total_type] eq 2'>btn btn-primary btn-xs </if>" onclick = "select_change('total','type',2)">最近一周</a>
+                    <a class="text_yellow plr20 <if condition='$con[total_type] eq 3'>btn btn-primary btn-xs </if>" onclick = "select_change('total','type',3)">最近一个月</a>
+                    <a class="text_yellow plr20 <if condition='$con[total_type] eq 4'>btn btn-primary btn-xs </if>" onclick = "select_change('total','type',4)">最近三个月</a>
+                    <div class="pull-right btn-group btn-group-sm mt-5">
+                        <button type="button" class="btn btn-primary plr20 <if condition='$con[total_terminal] neq 1'> btn-trans</if>" onclick = "select_change('total','terminal',1)">全部</button>
+                        <button type="button" class="btn btn-primary plr20 <if condition='$con[total_terminal] neq 2'> btn-trans</if>" onclick = "select_change('total','terminal',2)">pc端</button>
+                        <button type="button" class="btn btn-primary plr20 <if condition='$con[total_terminal] neq 3'> btn-trans</if>" onclick = "select_change('total','terminal',3)">手机端</button>
+                    </div>
+                </div>
+                <table class="bg_white mb20">
+                    <tbody class="solid_t">
+                        <tr>
+                            <td class="fs20 text_77">流量相关</td>
+                            <td class="fs14 pd20">
+                                <p class="mb15 fs16">
+                                    商品访客数 
+                                    <small class="fa fa-question-circle ml10 text_yellow" data-toggle="tooltip" title="" data-original-title=""></small>
+                                </p>
+                                <strong class="text_yellow">{$goods_data.uv}</strong>
+                                <h6 class="text_77 mt15">
+                                    环比增幅 
+                                    <span class="pull-right <if condition="$goods_data.uv_type eq 1">text_yellow<else/>text_green</if>"><i class="fa <if condition="$goods_data.uv_type eq 1">fa-long-arrow-up<else/>fa-long-arrow-down</if> mr5"></i>{$goods_data.uv_percen}%</span>
+                                </h6>
+                            </td>
+                            <td class="fs14 pd20">
+                                <p class="mb15 fs16">
+                                    商品浏览量 
+                                    <small class="fa fa-question-circle ml10 text_yellow" data-toggle="tooltip" title="" data-original-title="sad"></small>
+                                </p>
+                                <strong class="text_yellow">{$goods_data.pv}</strong>
+                                <h6 class="text_77 mt15">
+                                    环比增幅 
+                                    <span class="pull-right <if condition="$goods_data.pv_type eq 1">text_yellow<else/>text_green</if>"><i class="fa <if condition="$goods_data.pv_type eq 1">fa-long-arrow-up<else/>fa-long-arrow-down</if> mr5"></i>{$goods_data.pv_percen}%</span>
+                                </h6>
+                            </td>
+                            <td class="fs14 pd20">
+                                <p class="mb15 fs16">
+                                    被访问商品数 
+                                    <small class="fa fa-question-circle ml10 text_yellow" data-toggle="tooltip" title="" data-original-title="sad"></small>
+                                </p>
+                                <strong class="text_yellow">{$goods_data.visit_num}</strong>
+                                <h6 class="text_77 mt15">
+                                    环比增幅 
+                                    <span class="pull-right <if condition="$goods_data.visit_num_type eq 1">text_yellow<else/>text_green</if>"><i class="fa <if condition="$goods_data.visit_num_type eq 1">fa-long-arrow-up<else/>fa-long-arrow-down</if> mr5"></i>{$goods_data.visit_num_percen}%</span>
+                                </h6>
+                            </td>
+                            <td class="fs14 pd20"></td>
+                        </tr>
+                        <tr>
+                            <td class="fs20 text_77">访问质量</td>
+                            <td class="fs14 pd20">
+                                <p class="mb15 fs16">
+                                    平均停留时长 
+                                    <small class="fa fa-question-circle ml10 text_yellow" data-toggle="tooltip" title="" data-original-title="sad"></small>
+                                </p>
+                                <strong class="text_yellow">{$goods_data.avg_residence_time}</strong>
+                                <h6 class="text_77 mt15">
+                                    环比增幅 
+                                    <span class="pull-right <if condition="$goods_data.avg_residence_time_type eq 1">text_yellow<else/>text_green</if>"><i class="fa <if condition="$goods_data.avg_residence_time_type eq 1">fa-long-arrow-up<else/>fa-long-arrow-down</if> mr5"></i>{$goods_data.avg_residence_time_percen}%</span>
+                                </h6>
+                            </td>
+                            <td class="fs14 pd20">
+                                <p class="mb15 fs16">
+                                    详情跳出率 
+                                    <small class="fa fa-question-circle ml10 text_yellow" data-toggle="tooltip" title="" data-original-title="sad"></small>
+                                </p>
+                                <strong class="text_yellow">{$goods_data.jump}</strong>
+                                <h6 class="text_77 mt15">
+                                    环比增幅 
+                                    <span class="pull-right <if condition="$goods_data.jump_type eq 1">text_yellow<else/>text_green</if>"><i class="fa <if condition="$goods_data.jump_type eq 1">fa-long-arrow-up<else/>fa-long-arrow-down</if> mr5"></i>{$goods_data.jump_percen}%</span>
+                                </h6>
+                            </td>
+                            <td class="fs14 pd20"></td>
+                            <td class="fs14 pd20"></td>
+                        </tr>
+                        <tr>
+                            <td class="fs20 text_77">转化效果</td>
+                            <td class="fs14 pd20">
+                                <p class="mb15 fs16">
+                                    加购件数 
+                                    <small class="fa fa-question-circle ml10 text_yellow" data-toggle="tooltip" title="" data-original-title="加入购物车件数"></small>
+                                </p>
+                                <strong class="text_yellow">{$goods_data.into_cart}</strong>
+                                <h6 class="text_77 mt15">
+                                    环比增幅 
+                                    <span class="pull-right <if condition="$goods_data.into_cart_type eq 1">text_yellow<else/>text_green</if>"><i class="fa <if condition="$goods_data.into_cart_type eq 1">fa-long-arrow-up<else/>fa-long-arrow-down</if> mr5"></i>{$goods_data.into_cart_percen}%</span>
+                                </h6>
+                            </td>
+                            <td class="fs14 pd20">
+                                <p class="mb15 fs16">
+                                    支付件数 
+                                    <small class="fa fa-question-circle ml10 text_yellow" data-toggle="tooltip" title="" data-original-title="支付笔数"></small>
+                                </p>
+                                <strong class="text_yellow">{$goods_data.pay_num}</strong>
+                                <h6 class="text_77 mt15">
+                                    环比增幅 
+                                    <span class="pull-right <if condition="$goods_data.pay_num_type eq 1">text_yellow<else/>text_green</if>"><i class="fa <if condition="$goods_data.pay_num_type eq 1">fa-long-arrow-up<else/>fa-long-arrow-down</if> mr5"></i>{$goods_data.pay_num_percen}%</span>
+                                </h6>
+                            </td>
+                            <td class="fs14 pd20">
+                                <p class="mb15 fs16">
+                                    异常商品数 
+                                    <small class="fa fa-question-circle ml10 text_yellow" data-toggle="tooltip" title="" data-original-title="流量下跌或者支付下跌或者零支付的商品"></small>
+                                </p>
+                                <strong class="text_yellow">{$goods_data.abnormal}</strong>
+                                <h6 class="text_77 mt15">
+                                    环比增幅 
+                                    <span class="pull-right <if condition="$goods_data.abnormal_type eq 1">text_yellow<else/>text_green</if>"><i class="fa <if condition="$goods_data.abnormal_type eq 1">fa-long-arrow-up<else/>fa-long-arrow-down</if> mr5"></i>{$goods_data.abnormal_percen}%</span>
+                                </h6>
+                            </td>
+                            <td class="fs14 pd20">
+                                <p class="mb15 fs16">
+                                    商品收藏次数 
+                                    <small class="fa fa-question-circle ml10 text_yellow" data-toggle="tooltip" title="" data-original-title="被收藏的商品数"></small>
+                                </p>
+                                <strong class="text_yellow">{$goods_data.fav}</strong>
+                                <h6 class="text_77 mt15">
+                                    环比增幅 
+                                    <span class="pull-right <if condition="$goods_data.fav_type eq 1">text_yellow<else/>text_green</if>"><i class="fa <if condition="$goods_data.fav_type eq 1">fa-long-arrow-up<else/>fa-long-arrow-down</if> mr5"></i>{$goods_data.fav_percen}%</span>
+                                </h6>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+
+            <div class="mb35">
+                <div class="ptb10 solid_b mb20">
+                    <span class="fs16">商品销售趋势</span>
+                </div>
+                <div class="mb10">
+                    <strong class="fs14 text_black mr20">选择时间</strong>
+                    <a class="text_yellow plr20 <if condition='$con[trend_type] eq 1'>btn btn-primary btn-xs </if>" onclick = "select_change('trend','type',1)">昨天</a>
+                    <a class="text_yellow plr20 <if condition='$con[trend_type] eq 2'>btn btn-primary btn-xs </if>" onclick = "select_change('trend','type',2)">最近一周</a>
+                    <a class="text_yellow plr20 <if condition='$con[trend_type] eq 3'>btn btn-primary btn-xs </if>" onclick = "select_change('trend','type',3)">最近一个月</a>
+                    <a class="text_yellow plr20 <if condition='$con[trend_type] eq 4'>btn btn-primary btn-xs </if>" onclick = "select_change('trend','type',4)">最近三个月</a>
+                    <div class="pull-right btn-group btn-group-sm mt-5">
+                        <button type="button" class="btn btn-primary plr20 <if condition='$con[trend_terminal] neq 1'> btn-trans</if>" onclick = "select_change('trend','terminal',1)">全部</button>
+                        <button type="button" class="btn btn-primary plr20 <if condition='$con[trend_terminal] neq 2'> btn-trans</if>" onclick = "select_change('trend','terminal',2)">pc端</button>
+                        <button type="button" class="btn btn-primary plr20 <if condition='$con[trend_terminal] neq 3'> btn-trans</if>" onclick = "select_change('trend','terminal',3)">手机端</button>
+                    </div>
+                </div>
+                <div class="mb35">
+                    <div id="chartdiv" style="width: 100%; height: 400px;"></div>
+                </div>
+            </div>
+  
+
+            <div class="mb35">
+
+                <div class="ptb10 solid_b mb20">
+                    <span class="fs16">商品排行概览</span>
+                </div>
+                <div class="mb10">
+                    <strong class="fs14 text_black mr20">选择时间</strong>
+                    <a class="text_yellow plr20 <if condition='$con[rank_type] eq 1'>btn btn-primary btn-xs </if>" onclick = "select_change('rank','type',1)">昨天</a>
+                    <a class="text_yellow plr20 <if condition='$con[rank_type] eq 2'>btn btn-primary btn-xs </if>" onclick = "select_change('rank','type',2)">最近一周</a>
+                    <a class="text_yellow plr20 <if condition='$con[rank_type] eq 3'>btn btn-primary btn-xs </if>" onclick = "select_change('rank','type',3)">最近一个月</a>
+                    <a class="text_yellow plr20 <if condition='$con[rank_type] eq 4'>btn btn-primary btn-xs </if>" onclick = "select_change('rank','type',4)">最近三个月</a>
+                    <div class="pull-right btn-group btn-group-sm mt-5">
+                        <button type="button" class="btn btn-primary plr20 <if condition='$con[rank_terminal] neq 1'> btn-trans</if>" onclick = "select_change('rank','terminal',1)">全部</button>
+                        <button type="button" class="btn btn-primary plr20 <if condition='$con[rank_terminal] neq 2'> btn-trans</if>" onclick = "select_change('rank','terminal',2)">pc端</button>
+                        <button type="button" class="btn btn-primary plr20 <if condition='$con[rank_terminal] neq 3'> btn-trans</if>" onclick = "select_change('rank','terminal',3)">手机端</button>
+                    </div>
+                </div>
+
+                
+                    <div class="pull-right">
+                        <input type="text" class="form-control fl" placeholder="请输入商品名称" style="width:190px;border-color:#c81623" value="{$con[rank_keyword]}">
+                        <button class="btn btn_m btn-primary plr20" onclick="select_change('rank','keyword',$(this).prev().val())">搜索</button>
+                    </div>
+               
+                <div class="tab-container tab_li_sty mt-10">
+                    <ul class="nav nav-tabs solid_b">
+                        <li class="active"><a class="strong" href="#dsaffasd" data-toggle="tab">访客数</a></li>
+                        <li class=""><a href="#lkajfao" class="strong" data-toggle="tab">支付金额</a></li>
+                    </ul>
+                    <div class="tab-content pd0 mb0 bor_no">
+                        <div class="tab-pane active" id="dsaffasd">
+                           <table class="bg_white mt-1">
+                                <thead class="no-border">
+                                    <tr class="bg_f1">
+                                        <th class="text-center">排名</th>
+                                        <th class="text-center" width="32%"> 商品信息</th>
+                                        <th class="text-center"> 访客数</th>
+                                        <th class="text-center"> 浏览量</th>
+                                        <th class="text-center"> 支付金额(元）</th>
+                                        <th class="text-center"> 支付买家数</th>
+                                        <th class="text-center"> 支付转化率</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="no-border-y text-center">
+									<volist name="goods_uv_list.list" id="vo">
+                                    <tr>
+                                        <td class="ptb15">{$vo.no}</td>
+                                        <td class="ptb15 text-left  ">
+                                            <a target="_blank" href="">
+                                                <img class="fl mr10" width="60" height="60" src="{$vo.images}" style="max-width: 945px;">
+                                                <div class="text_44 mb0 w210 h34 over">{$vo.goods_name}</div>
+                                                <h6 class="mb0 text_over text_yellow">￥ {$vo.price}</h6>
+                                            </a>
+                                        </td>
+                                        <td class="ptb15">{$vo.uv}</td>
+                                        <td class="ptb15">{$vo.pv}</td>
+                                        <td class="ptb15">{$vo.buy_money}</td>
+                                        <td class="ptb15">{$vo.buyer}</td>
+                                        <td class="ptb15">{$vo.uv_buy_percen}%</td>
+                                    </tr>
+									</volist>
+                                </tbody>
+                             </table>
+                             <div class="text-right">
+                                <ul class="pagination">
+									<li class="prev <empty name="goods_uv_list.page.prevPage">disabled</empty>">
+										<a <notempty name="goods_uv_list.page.prevPage">onclick = "select_change('rank','p1',{$goods_uv_list.page.prevPage})"</notempty>><span class="fa fa-angle-left"></span>&nbsp;上一页</a>
+									</li>
+									
+									<volist name="goods_uv_list.page.page" id="vo">
+									<li <if condition="$vo.active eq 1">class="active"</if>><a onclick="select_change('rank','p1',{$vo.p})">{$vo.p}</a></li>
+									</volist>
+
+									<li class="next  <empty name="goods_uv_list.page.nextPage">disabled</empty>">
+										<a <notempty name="goods_uv_list.page.nextPage">onclick = "select_change('rank','p1',{$goods_uv_list.page.nextPage})"</notempty>>下一页&nbsp;<span class="fa fa-angle-right"></span></a>
+									</li>
+								</ul>
+								<div class="pull-right mt25 ml10 clearfix w190">
+									<span class="pull-left mr5">跳到</span>
+								   
+									<select class="form-control pull-left mt-8" style="width:60px;height:31px" onchange = "select_change('rank','p1',this.value)">
+										<for start="1" end="$goods_uv_list.page.totalPage" comparison="elt">
+										<option value = "{$i}" <if condition="$goods_uv_list.page.nowPage eq $i">selected="selected"</if>>{$i}</option>
+										</for>
+									</select>
+									<span class="pull-left ml15">共{$goods_uv_list.page.totalPage}页</span>
+								</div>
+                            </div>  
+                        </div>
+                        <div class="tab-pane" id="lkajfao">
+                            <div class="tab-pane active" id="dsaffasd">
+                           <table class="bg_white mt-1">
+                                <thead class="no-border">
+                                    <tr class="bg_f1">
+                                        <th class="text-center">排名</th>
+                                        <th class="text-center" width="32%"> 商品信息</th>
+                                        <th class="text-center"> 支付买家数</th>
+                                        <th class="text-center"> 支付转化率</th>
+                                        <th class="text-center"> 访客数</th>
+                                        <th class="text-center"> 浏览量</th>
+                                        <th class="text-center"> 支付金额(元）</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="no-border-y text-center">
+									
+									<volist name="goods_buy_list.list" id="vo">
+                                    <tr>
+                                        <td class="ptb15">{$vo.no}</td>
+                                        <td class="ptb15 text-left  ">
+                                            <a target="_blank" href="">
+                                                <img class="fl mr10" width="60" height="60" src="{$vo.images}" style="max-width: 945px;">
+                                                <div class="text_44 mb0 w210 h34 over">{$vo.goods_name}</div>
+                                                <h6 class="mb0 text_over text_yellow">￥ {$vo.price}</h6>
+                                            </a>
+                                        </td>
+                                        <td class="ptb15">{$vo.buyer}</td>
+                                        <td class="ptb15">{$vo.uv_buy_percen}%</td>
+                                        <td class="ptb15">{$vo.uv}</td>
+                                        <td class="ptb15">{$vo.pv}</td>
+                                        <td class="ptb15">{$vo.buy_money}</td>
+                                    </tr>
+                                    </volist>
+                                </tbody>
+                             </table>
+                             <div class="text-right">
+                                <ul class="pagination">
+									<li class="prev <empty name="goods_buy_list.page.prevPage">disabled</empty>">
+										<a <notempty name="goods_buy_list.page.prevPage">onclick = "select_change('rank','p2',{$goods_buy_list.page.prevPage})"</notempty>><span class="fa fa-angle-left"></span>&nbsp;上一页</a>
+									</li>
+									
+									<volist name="goods_buy_list.page.page" id="vo">
+									<li <if condition="$vo.active eq 1">class="active"</if>><a onclick="select_change('rank','p2',{$vo.p})">{$vo.p}</a></li>
+									</volist>
+
+									<li class="next  <empty name="goods_buy_list.page.nextPage">disabled</empty>">
+										<a <notempty name="goods_buy_list.page.nextPage">onclick = "select_change('rank','p2',{$goods_buy_list.page.nextPage})"</notempty>>下一页&nbsp;<span class="fa fa-angle-right"></span></a>
+									</li>
+								</ul>
+								<div class="pull-right mt25 ml10 clearfix w190">
+									<span class="pull-left mr5">跳到</span>
+								   
+									<select class="form-control pull-left mt-8" style="width:60px;height:31px" onchange = "select_change('rank','p2',this.value)">
+										<for start="1" end="$goods_buy_list.page.totalPage" comparison="elt">
+										<option value = "{$i}" <if condition="$goods_buy_list.page.nowPage eq $i">selected="selected"</if>>{$i}</option>
+										</for>
+									</select>
+									<span class="pull-left ml15">共{$goods_buy_list.page.totalPage}页</span>
+								</div>
+                            </div> 
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+<form action="" method="post" class="hide page_select">
+	<foreach name="con" item="vo" key="key">
+		<input type="hidden" name="{$key}" value="{$vo}"/>
+	</foreach>	
+</form>
+</block>
+
+<block name="css"></block>
+<block name="script">
+
+<script src="__NEW_DESIGN__flatdream/js/jquery.js"></script>
+<script src="__NEW_DESIGN__flatdream/js/jquery.pushmenu/js/jPushMenu.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.nanoscroller/jquery.nanoscroller.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.sparkline/jquery.sparkline.min.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.ui/jquery-ui.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.gritter/js/jquery.gritter.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/behaviour/core.js"></script>
+<script src="__NEW_DESIGN__flatdream/js/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.flot/jquery.flot.js"></script>
+
+<script src="__NEW_DESIGN__js/amcharts.js" type="text/javascript"></script>
+<script src="__NEW_DESIGN__js/serial.js" type="text/javascript"></script>
+<script src="__NEW_DESIGN__js/pie.js"></script>
+
+<script>
+   var chart;
+   var chartData = [];
+
+   AmCharts.ready(function () {
+       // generate some random data first
+       generateChartData();
+		console.log(chartData);
+       // SERIAL CHART
+       chart = new AmCharts.AmSerialChart();
+
+       chart.dataProvider = chartData;
+       chart.categoryField = "date";
+
+       // listen for "dataUpdated" event (fired when chart is inited) and call zoomChart method when it happens
+       chart.addListener("dataUpdated", zoomChart);
+
+       chart.synchronizeGrid = true; // this makes all axes grid to be at the same intervals
+
+       // AXES
+       // category
+       var categoryAxis = chart.categoryAxis;
+       categoryAxis.parseDates = true; // as our data is date-based, we set parseDates to true
+       categoryAxis.minPeriod = "DD"; // our data is daily, so we set minPeriod to DD
+       categoryAxis.minorGridEnabled = true;
+       categoryAxis.axisColor = "#DADADA";
+       categoryAxis.twoLineMode = true;
+       categoryAxis.dateFormats = [{
+            period: 'fff',
+            format: 'JJ:NN:SS'
+        }, {
+            period: 'ss',
+            format: 'JJ:NN:SS'
+        }, {
+            period: 'mm',
+            format: 'JJ:NN'
+        }, {
+            period: 'hh',
+            format: 'JJ:NN'
+        }, {
+            period: 'DD',
+            format: 'DD'
+        }, {
+            period: 'WW',
+            format: 'DD'
+        }, {
+            period: 'MM',
+            format: 'MMM'
+        }, {
+            period: 'YYYY',
+            format: 'YYYY'
+        }];
+
+       // first value axis (on the left)
+       var valueAxis1 = new AmCharts.ValueAxis();
+       valueAxis1.axisColor = "#FF6600";
+       valueAxis1.axisThickness = 2;
+       chart.addValueAxis(valueAxis1);
+
+       // second value axis (on the right)
+       var valueAxis2 = new AmCharts.ValueAxis();
+       valueAxis2.position = "right"; // this line makes the axis to appear on the right
+       valueAxis2.axisColor = "#FCD202";
+       valueAxis2.gridAlpha = 0;
+       valueAxis2.axisThickness = 2;
+       chart.addValueAxis(valueAxis2);
+
+       // third value axis (on the left, detached)
+       var valueAxis3 = new AmCharts.ValueAxis();
+       valueAxis3.offset = 50; // this line makes the axis to appear detached from plot area
+       valueAxis3.gridAlpha = 0;
+       valueAxis3.axisColor = "#B0DE09";
+       valueAxis3.axisThickness = 2;
+       chart.addValueAxis(valueAxis3);
+
+       // GRAPHS
+       // first graph
+       var graph1 = new AmCharts.AmGraph();
+       graph1.valueAxis = valueAxis1; // we have to indicate which value axis should be used
+       graph1.title = "商品访客数";
+       graph1.valueField = "uv";
+       graph1.bullet = "round";
+       graph1.hideBulletsCount = 30;
+       graph1.bulletBorderThickness = 1;
+       chart.addGraph(graph1);
+
+       // second graph
+       var graph2 = new AmCharts.AmGraph();
+       graph2.valueAxis = valueAxis2; // we have to indicate which value axis should be used
+       graph2.title = "访问商品数";
+       graph2.valueField = "visit_num";
+       graph2.bullet = "square";
+       graph2.hideBulletsCount = 30;
+       graph2.bulletBorderThickness = 1;
+       chart.addGraph(graph2);
+
+       // third graph
+       var graph3 = new AmCharts.AmGraph();
+       graph3.valueAxis = valueAxis3; // we have to indicate which value axis should be used
+       graph3.valueField = "pay_num";
+       graph3.title = "支付件数";
+       graph3.bullet = "triangleUp";
+       graph3.hideBulletsCount = 30;
+       graph3.bulletBorderThickness = 1;
+       chart.addGraph(graph3);
+
+       // CURSOR
+       var chartCursor = new AmCharts.ChartCursor();
+       chartCursor.cursorAlpha = 0.1;
+       chartCursor.fullWidth = true;
+       chartCursor.valueLineBalloonEnabled = true;
+       chart.addChartCursor(chartCursor);
+
+       // SCROLLBAR
+       var chartScrollbar = new AmCharts.ChartScrollbar();
+       chart.addChartScrollbar(chartScrollbar);
+
+       // LEGEND
+       var legend = new AmCharts.AmLegend();
+       legend.marginLeft = 110;
+       legend.useGraphSettings = true;
+       chart.addLegend(legend);
+
+       // WRITE
+       chart.write("chartdiv");
+   });
+
+   // generate some random data, quite different range
+   function generateChartData() {
+       var firstDate = new Date();
+       firstDate.setDate(firstDate.getDate() - 50);
+
+	   <volist name="trend_list.data" id="vo">
+			var newDate = '{$vo.year}-{$vo.month}-{$vo.day}';
+			var visit_num = '{$vo.visit_num}';
+			var pay_num = '{$vo.pay_num}';
+			var uv = '{$vo.uv}';
+			
+			 chartData.push({
+               date: newDate,
+               visit_num: visit_num,
+               pay_num: pay_num,
+               uv: uv,
+               //views: views
+           });
+		</volist>
+	   /*
+       for (var i = 0; i < 1; i++) {
+           // we create date objects here. In your data, you can have date strings
+           // and then set format of your dates using chart.dataDateFormat property,
+           // however when possible, use date objects, as this will speed up chart rendering.
+           var newDate = new Date(firstDate);
+           newDate.setDate(newDate.getDate() + i);
+
+           var visits = Math.round(Math.random() * 40) + 100;
+           var hits = Math.round(Math.random() * 80) + 500;
+           var views = Math.round(Math.random() * 6000);
+
+
+           chartData.push({
+               date: newDate,
+               visits: visits,
+               hits: hits,
+               views: views
+           });
+       }
+	   */
+   }
+
+   // this method is called when chart is first inited as we listen for "dataUpdated" event
+   function zoomChart() {
+       // different zoom methods can be used - zoomToIndexes, zoomToDates, zoomToCategoryValues
+       chart.zoomToIndexes(10, 20);
+   }
+   
+	//页面页码切换
+	function select_change(type,name,new_val){
+		var old_val = $('.page_select input[name="'+type+'_'+name+'"]').val();
+		if(old_val != new_val){
+			$('.page_select input[name="'+type+'_'+name+'"]').val(new_val);
+			
+			if(name !== 'page'){
+				$('.page_select input[name="'+type+'_page"]').val(1);
+			}
+			$('.page_select').submit();
+		}
+	}
+</script>
+
+</block>

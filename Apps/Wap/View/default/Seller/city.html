@@ -1,0 +1,53 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			选择城市
+		</div>
+		<div class="r">
+			
+		</div>
+	</div>
+</header>
+<section>
+	<div class="load-body">数据加载中……</div>
+</section>
+
+<script id="city_list_{$_GET.level}" type="text/html">
+	<div class="line-box sm nobg noicon text-gray">请选择城市：<span class="text-success select-city"></span></div>
+    <% for (var i = 0; i < data.length; i ++) { %>
+		<div class="line-box" onclick="select_city($(this))" data-page="{$_GET.page}" data-id="<%= data[i].id %>" data-name="<%= data[i].a_name%>">
+			<div class="title"><%= data[i].a_name%></div>
+		</div>
+    <% } %>
+
+</script>
+
+<script>
+	fixBar(1);
+	ajax_post({
+		url:'/Api/api',
+		data:{apiurl:'/Tools/city',sid:{$_GET['sid']?$_GET['sid']:0},'no_sign':'sid'},
+	},function(ret){
+		if(ret.code==1){			
+			var html = template('city_list_{$_GET.level}', {data:ret.data});
+			$('.page.active section').html(html);
+			hover('.page.active section');
+		}else if(ret.code==3){
+			$('.page.active section').html(no_data_text);
+		}
+	});
+	
+	function select_city(obj){
+		var d=obj.data();
+		$('.page.active .select-city').data(d).html(d.name);
+		$('.page#'+d.page+' #city').val(d.id);
+		
+		openWin({name:'select_district',url:'__URL__/district/sid/'+d.id+'/page/'+d.page});
+	}
+	
+
+	
+</script>

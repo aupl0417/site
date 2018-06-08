@@ -1,0 +1,169 @@
+<link rel="stylesheet" type="text/css" href="/Public/CSS/flatdream/js/jquery.icheck/skins/square/_all.css">
+<div class="pd10">
+    <!-- <div class="header">
+        <h3><a href="javascript:;" data-url="{:U('/opens/addCheckInfo', array('type' => 'brand'))}" data-title="添加品牌" class="btn btn-info opreating btn-brandAdd disabled">添加品牌</a></h3>
+    </div> -->
+    <div class="over form-horizontal">
+        <div class="form-group">
+            <div class="col-xs-3">
+                <input type="text" name="search-q" value="{$Think.get.q}" id="search-q" maxlength="15" class="form-control" placeholder="搜索商品，请输入商品关键字">
+            </div>
+            <div class="col-xs-2">
+                <button type="button" class="btn btn-primary btn-trans btn-rad" onclick="searchQ()">点击搜索</button>
+            </div>
+        </div>
+    </div>
+    <empty name="data.code">
+        <table class="table table-bordered table-advance table-hover mb30">
+            <tbody>
+            <tr>
+                <th class="col-xs-1 text-center" style="vertical-align: middle;">
+                    <input type="checkbox" class="i-red-square checkAll" id="checkAll"><label style="" id="labelCheckAll" for="checkAll"></label>
+                </th>
+                <th class="col-xs-2 text-center" style="vertical-align: middle;">商品图片</th>
+                <th class="col-xs-5 text-center" style="vertical-align: middle;">商品名称</th>
+                <th class="col-xs-1 text-center" style="vertical-align: middle;">商品价格</th>
+                <th class="col-xs-1 text-center" style="vertical-align: middle;">奖励积分</th>
+                <th class="col-xs-1 text-center" style="vertical-align: middle;">库存数量</th>
+            </tr>
+            <volist name="data.list" id="vo">
+                <tr class="countBrand">
+                    <td class="text-center" style="vertical-align: middle;">
+                        <input type="checkbox" <in name="vo.id" value="$chooseIds">checked</in> class="i-red-square" name="ids[]" value="{$vo.id}">
+                    </td>
+                    <td class="text-center img">
+                        <a class="image-zoom" href="javascript:;" onclick="bigImage($(this))" data-url="{$vo['images']}" title="大图">
+                            <img src="{$vo['images']}" width="60" />
+                        </a>
+                    </td>
+                    <td style="vertical-align: middle;" class="text-center col-xs-1">{$vo.goods_name}</td>
+                    <td style="vertical-align: middle;" class="text-center col-xs-1">
+                        {$vo.price}
+                    </td>
+                    <td style="vertical-align: middle;" class="text-center col-xs-1">{$vo['score_ratio'] * 100}%</td>
+                    <td style="vertical-align: middle;" class="text-center col-xs-1">{$vo.num}</td>
+                </tr>
+            </volist>
+            </tbody>
+        </table>
+        <div class="page-box text-center">
+            {:page_html($data['pageinfo'])}
+        </div>
+        <div class="text-center mt30">
+            <a href="javascript:;" class="btn btn-lg btn-rad btn-trans btn-primary " id="submitCheckbox">确定选择</a>
+        </div>
+        <else />
+        {:W('Common/Builder/nors', array('param' => array('text' => $data['msg'])))}
+    </empty>
+</div>
+
+<script>
+    iCheckClass();
+    $(document).ready(function () {
+        var maxNum = '{$Think.get.maxNum}' ? '{$Think.get.maxNum}' : 5;
+        var inputName = '{$Think.get.inputName}' ? '{$Think.get.inputName}' : 'goods';
+        var goodLists = $("input[name='"+inputName+"']").val();
+        //var url = '__SELF__';
+
+
+        /**
+         * 关闭模态框
+         */
+        $("#submitCheckbox").click(function () {
+            $("#ajax-modal").modal('hide');
+        });
+
+
+        /**
+         * 分页
+         */
+        $(".page-box a").click(function () {
+            var url = $(this).attr('href');
+            $(".modal-body").load(url);
+            return false;
+        });
+
+        /**
+         * 全选
+         */
+        var checkAll = $('input#checkAll');
+        var checkboxes = $('input[type="checkbox"]');
+        checkAll.on('ifChecked ifUnchecked', function(event) {
+            if (event.type == 'ifChecked') {
+                checkboxes.iCheck('check');
+            } else {
+                checkboxes.iCheck('uncheck');
+            }
+        });
+
+
+        /**
+         *
+         *  选择
+         */
+        $('input[type="checkbox"]').on('ifChecked ifUnchecked', function (event) {
+            var data = {id:$(this).val(), images:$(this).closest('tr').find('td .image-zoom').data('url')}
+            var goods = $("input[name='"+inputName+"']").val();
+            var goodsArr = goods.split(',');
+            if (event.type == 'ifChecked') {
+                //选中
+                if (goodsArr.length > maxNum) {
+                    talert({status:0,msg:'最多可选' + maxNum + '款商品'});
+                    //$(this).iCheck('uncheck');
+                    return false;
+                }
+                var index = $.inArray(data.id, goodsArr);
+                if (index >= 0) return false;
+                $("input[name='"+inputName+"']").val(goods + data.id+ ',');
+                var html = '<li id="'+inputName+ data.id +'" data-name="'+inputName+'" data-id="'+data.id+'" data-path="'+data.images+'" class="text-center">' +
+                                '<div class="li-img-box">' +
+                                    '<a href="javascript:;" title="商品图片">' +
+                                        '<img src="'+data.images+'">' +
+                                    '</a>' +
+                                '</div>' +
+                                '<div class="delete-images" onclick="reMoveGoods($(this));">' +
+                                    '<div class="selected-icon">' +
+                                        '<i class="fa fa-times"></i>' +
+                                    '</div>' +
+                                '</div>' +
+                            '</li>';
+                $("#images-list-" + inputName).append(html);
+            } else {
+                //删除选中
+                var index = $.inArray(data.id, goodsArr);
+                if (index >= 0) goodsArr.splice(index, 1);
+                $("#images-list-" + inputName + " #" + inputName+data.id).remove();
+                $("input[name='"+inputName+"']").val(goodsArr.toString());
+            }
+        })
+
+
+        /**
+         *  预选中
+         */
+        if (goodLists != '') {
+            var goodListsArr = goodLists.split(',');
+            $('input[type="checkbox"]').each(function () {
+                if ($.inArray($(this).val(), goodListsArr) >= 0) {
+                    $(this).iCheck('check');
+                }
+            });
+        }
+    });
+
+    /**
+     *
+     * 搜索
+     *
+     */
+    function searchQ() {
+        var keyword = $("#search-q").val();
+        //var url = '__SELF__?q=' + keyword;
+        var url = '/goods/choose/maxNum/{$Think.get.maxNum}/inputName/{$Think.get.inputName}.html';
+        if (keyword != '') {
+            url = url + '?q=' + keyword;
+        }
+        $(".modal-body").load(url);
+    }
+
+</script>

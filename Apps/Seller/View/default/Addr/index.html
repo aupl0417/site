@@ -1,0 +1,79 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body">
+	<include file="Public:nav" />
+	<div class="container mb30">
+		<include file="Public:side" />
+		<div class="w980 fl">
+			<div class="bor_der">
+				<div class="bg_f1 clearfix fs14 text_44 tle_R">
+					<a class="fl plr15 line40 ml-1 active" href="javascript:;">地址管理</a>
+				</div>
+
+				<!-- 主体部分 -->
+				<empty name="data.list">
+					{:W('Common/Builder/nors', array('param' => array('text' => $data['msg'])))}
+				<else />
+					<div class="row pd10">
+						<volist name="data" id="vo">
+							<div class="col-sm-6">
+								<div class="block-flat mb10" style="border-top:1px solid #efefef;height:175px;">
+									<div class="header">
+										<div class="actions">
+											<a class="refresh" href="{:U('/addr/add', ['id' => $vo['id']])}"><i class="fa fa-edit"></i></a>
+											<a data-id="{$vo.id}" class="close-down del-addr" href="javascript:;"><i class="fa fa-times"></i></a>
+										</div>
+										<h3>{$vo.linkname}</h3>
+									</div>
+									<div class="content">
+										<p>联系电话：{$vo.mobile|hiddenStr} {$vo.tel|hiddenStr}</p>
+										<p>收货地址：{$vo.province_name}{$vo.city_name}{$vo.district_name}{$vo.town_name}{$vo.street}{$vo.postcode}</p>
+									</div>
+								</div>
+							</div>
+						</volist>
+					</div>
+				</empty>
+				<div style='text-align:center;'>
+					<a href="{:U('/addr/add')}" class="btn btn-primary link-white">添加地址</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</block>
+<block name="css"></block>
+<block name="script"> <script type="text/javascript">
+	$(document).ready(function() {
+		$(".del-addr").click(function() {
+			var d = $(this).data();
+			vmodal({
+				title : '删除提示',
+				msg : '您真的要删除吗?',
+				class : 'text-center',
+				confirm : 1,
+			    footer:false,
+			    width:'600px',
+			}, function(ret) {
+				$(".modal-ok").click(function() {
+					ajax_post({
+						url : '/run/authRun',
+						data : {
+							id : d.id
+						},
+						headers : {
+							Action : '{:enCryptRestUri("/Addr/del")}'
+						},
+					}, function(ret) {
+						talert({
+							status : ret.code,
+							msg : ret.msg
+						});
+						if (ret.code == 1) {
+							setTimeout("ref()", 1000);
+						}
+					})
+				})
+			})
+		})
+	});
+</script> </block>

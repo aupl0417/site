@@ -1,0 +1,121 @@
+<div class="row md20 select-category">
+	<div class="col-xs-6">
+		<div class="b md10">一级类目</div>
+		<div class="box first-dir"></div>
+	</div>
+	<div class="col-xs-6">
+		<div class="b md10">二级类目</div>
+		<div class="box second-dir"></div>	
+	</div>
+</div>
+
+
+<script id="tpl_first_category" type="text/html">
+	<ul>
+	<% for(i=0;i<data.length;i++){ %>
+		<li onclick="select_first($(this))" data-id="<%= data[i].id %>"><%= data[i].category_name %></li>
+	<% } %>
+	</ul>
+</script>
+
+<script id="tpl_second_category" type="text/html">
+	<ul>
+	<% for(i=0;i<data.length;i++){ %>
+		<li onclick="select_second($(this))" data-id="<%= data[i].id %>"><%= data[i].category_name %></li>
+	<% } %>
+	</ul>
+</script>
+
+<script>
+	
+	var category;
+	var first_category;
+	var second_category;
+	api({
+		data:{apiurl:'/Zhaoshang/category'}
+	},function(ret){
+		if(ret.code==1){
+			category=ret.data;
+			var html=template('tpl_first_category',{data:ret.data});
+			$('.first-dir').html(html);
+		}
+	});
+	
+	function select_first(obj){
+		var id=obj.data('id');
+		obj.addClass('active').siblings().removeClass('active');
+		var data;
+		for(i=0;i<category.length;i++){
+			if(id==category[i].id){
+				data=category[i].dlist;
+				break;
+			}
+		}
+		
+		var html=template('tpl_second_category',{data:data});
+		$('.second-dir').html(html);
+	}
+	
+	function select_second(obj){
+		obj.addClass('active').siblings().removeClass('active');
+	}
+	
+	$('.modal-footer .pull-left .btn').click(function(){
+		select_li();
+		
+		$('#ajax-modal').modal('hide');
+	});
+	
+	function select_li(){
+		var tr_index={$_GET.index};
+		if($('.first-dir li.active').size()==0){
+			talert({status:'warning',msg:'请选择一级类目！'});
+			return false;
+		}
+		if($('.second-dir li.active').size()==0){
+			talert({status:'warning',msg:'请选择二级类目！'});
+			return false;
+		}
+		
+		var first_id=$('.first-dir li.active').data('id');
+		var second_id=$('.second-dir li.active').data('id');
+		
+		var first_name=$('.first-dir li.active').text();
+		var second_name=$('.second-dir li.active').text();
+		
+		var attr_id=first_id + '-' +second_id;
+		
+		
+		if($('.brand tbody tr').eq(tr_index).find('li[data-id="'+second_id+'"]').size()>0){
+			talert({status:'warning',msg:'请不要重复选择类目！'});
+			return false;
+		}
+		
+		//alert(tr_index);
+		var first_category=$('.brand tbody tr').eq(tr_index).find('input[name="first_category[]"]').val();
+		var second_category=$('.brand tbody tr').eq(tr_index).find('input[name="second_category[]"]').val();
+		
+		
+		if(first_category!='') var first_category=first_category.split(',');
+		else var first_category = new Array();
+		if(second_category!='') var second_category=second_category.split(',');
+		else var second_category = new Array();
+		
+		
+
+		if(in_array(first_id,first_category) <0) first_category.push(first_id);
+		if(in_array(second_id,second_category) <0) second_category.push(second_id);
+		
+		
+		//验证类目限制
+		var res=check_category_num(first_id,second_id);
+		if(res==false) return res;	
+
+		
+		$('.brand tbody tr').eq(tr_index).find('input[name="first_category[]"]').val(first_category.join(','));
+		$('.brand tbody tr').eq(tr_index).find('input[name="second_category[]"]').val(second_category.join(','));
+		
+		var html='<li data-id="'+second_id+'" data-first_id="'+first_id+'"><div class="action"><i class="fa fa-times text-danger" onclick="delete_select($(this))"></i></div>'+first_name + ' > ' + second_name+'</li>';
+		$('.brand tbody tr').eq(tr_index).find('ul').append(html);		
+	}
+</script>

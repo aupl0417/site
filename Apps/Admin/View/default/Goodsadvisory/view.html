@@ -1,0 +1,31 @@
+<div class="p20 box">
+	<div class="row auth-text">
+		<div class="col-xs-12">
+			<div class="p10">
+				<div class="row">
+					<div class="col-xs-2">
+						<img src="{:myurl($rs['images'],160)}">
+					</div>
+					<div class="col-xs-5">
+						<div>咨询用户：<span class="ft16">{$rs.nick}</span></div>
+						<div>咨询商家：{$rs.shop_name}</div>
+						<div>咨询商品：{$rs.goods_name}</div>
+						<div>咨询类型：<span class="ft16 text-danger">{$rs.type_name}</span></div>
+						<div>当前状态：{:status($rs['status'],[['已删除'],['未回复','btn-info'],['已回复','btn-success']])}</div>
+						<div>咨询者IP地址：{$rs.ip}</div>
+						<div>咨询内容：<span class="ft16 text-danger">{$rs.content}</span></div>
+					</div>
+					<eq name="rs.status" value="2">
+						<div class="col-xs-5">
+							<div>回复用户：<span class="ft16">{$rs.reply_nick}</span></div>
+							<div>回复时间：{$rs.reply_time}</div>
+							<div>修改次数：{$rs.edit_num}</div>
+							<div>回复者IP地址：{$rs.reply_ip}</div>
+							<div>回复内容：<span class="ft16 text-danger">{$rs.reply_content}</span></div>
+						</div>
+					</eq>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

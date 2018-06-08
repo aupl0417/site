@@ -1,0 +1,25 @@
+<li class="menu-item <if condition="$first_url eq '/Cate/index'">sidebar-current</if>">
+	<i class="fa fa-list-ul fl"></i><a onclick="url_frame(this,'{:U('/Cate')}')"><span >分类管理</span></a>
+</li>
+<li class="menu-item <if condition="$first_url eq '/Goods/index'">sidebar-current</if>">
+	<i class="fa fa-plus-circle fl"></i><a onclick="url_frame(this,'{:U('/Goods')}')"><span >宝贝管理</span></a>
+</li>
+<li class="menu-item">
+	<a onclick="url_frame(this,'{:U('/Goods/index',array('shop_category_id'=>0))}')">未分类</a>
+</li>
+<foreach name="cate_list" item="vo">
+	<li class="menu-item">
+		<a title="{$vo.category_name}" onclick="url_frame(this,'{:U('/Goods/index',array('shop_category_id'=>$vo[id]))}')">
+			<!--<img src="../Public/images/1.jpg" src2="../Public/images/2.jpg" is_show="1" class="ico10" onclick="showSecondCate(this,{$vo.id})"/>-->
+			<img class="ico15" src="../Public/images/5.png" src2="../Public/images/6.png" is_show="1" onclick="showSecondCate(this,{$vo.id})"/>
+			<span >{$vo.category_name} </span>
+		</a>
+	</li>
+	<foreach name="vo.dlist" item="vol">
+		<li class="menu-item s_{$vo.id}">
+			<a title="{$vol.category_name}" onclick="url_frame(this,'{:U('/Goods/index',array('shop_category_id'=>$vol[id]))}')">
+				<span >　{$vol.category_name}</span>
+			</a>
+		</li>
+	</foreach>
+</foreach>

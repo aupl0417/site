@@ -1,0 +1,29 @@
+<div class="cred-box-{$_GET.index}">
+<volist name="category" id="vo">
+<h4>{$vo.name}</h4>
+<table class="md20">
+	<thead>
+		<tr>
+			<th width="60" class="text-center">启用</th>
+			<th width="60" class="text-center">必填</th>
+			<th width="300">资质</th>
+			<th>介绍</th>
+		</tr>
+	</thead>
+	<tbody>
+		<volist name="vo.dlist" id="item">
+		<tr>
+			<td class="text-center"><input type="checkbox" class="i-red-square" name="{$shop_type}[is_select][]" id="{$shop_type}[is_select][]" value="{$item.id}" {:in_array($item["id"],$rs[$shop_type]["is_select"])?"checked":""}></td>
+			<td class="text-center"><input type="checkbox" class="i-red-square" name="{$shop_type}[is_need][]" id="{$shop_type}[is_need][]" value="{$item.id}" {:in_array($item["id"],$rs[$shop_type]["is_need"])?"checked":""}></td>
+			<td class="">{$item.cred_name}</td>
+			<td>{$item.about|nl2br}</td>
+		</tr>
+		</volist>
+	</tbody>
+</table>
+</volist>
+</div>
+
+<script>
+iCheckClass('.cred-box-{$_GET.index}');
+</script>

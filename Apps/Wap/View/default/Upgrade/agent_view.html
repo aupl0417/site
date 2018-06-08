@@ -1,0 +1,60 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			代理详情
+		</div>
+		<div class="r">
+			<div class="text" onclick="openWin({name:'agent_reward',url:'/Upgrade/agent_reward'})">提成明细</div>
+		</div>
+	</div>
+</header>
+<section>
+	<div class="load-body">数据加载中……</div>	
+</section>
+
+<script id="my_agent_view" type="text/html">
+	<div class="line-box noicon fr-gray fr-70">
+		<div class="fl title">代理地区</div>
+		<div class="fr"><%= data.city %></div>
+	</div>
+	<div class="line-box noicon fr-gray fr-70">
+		<div class="fl title">代理等级</div>
+		<div class="fr"><%= data.level.level_name%></div>
+	</div>
+	<div class="line-box noicon fr-gray fr-70">
+		<div class="fl title">流水号</div>
+		<div class="fr"><%= data.u_no %></div>
+	</div>
+	<div class="line-box noicon fr-gray fr-70">
+		<div class="fl title">购买时间</div>
+		<div class="fr"><%= data.upgrade_time %></div>
+	</div>
+	<div class="line-box noicon fr-gray fr-70">
+		<div class="fl title">金额</div>
+		<div class="fr"><%= data.money %></div>
+	</div>
+
+</script>
+
+<script>
+	fixBar(1);
+	
+	ajax_post({
+		url:'/Api/api',
+		data:{apiurl:'/UserUpgrade/view',is_openid:1,u_no:'{$_GET.u_no}'},
+	},function(ret){
+		if(ret.code==1){			
+			var html = template('my_agent_view', {data:ret.data});
+			$('.page.active section').html(html);
+			hover('.page.active section');
+		}else if(ret.code==3){
+			$('.page.active section').html(no_data_text);
+		}
+	});
+	
+
+	
+</script>

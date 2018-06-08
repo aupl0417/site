@@ -1,0 +1,151 @@
+<include file="Public:header" />
+		<div class="page-group">
+			<div id="page-register-person" class="page">
+				<!-- 标题栏 -->
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left back" href="/"></a>
+					<h1 class="title">个人注册</h1>
+				</header>
+		
+				<!-- 这里是页面内容区 -->		
+				<div class="content">
+					<form onsubmit="return false" id="form-register-person">
+					<div class="list-block">
+						<ul>
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title label">用户昵称</div>
+										<div class="item-input">
+											<input type="text" name="username" placeholder="6~20位之间的中文、字母、数字或下划线组合" maxlength="20">
+										</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="item-right">
+									<div class="switch-eye">
+										<i class="iconfont icon-Untitled-"></i>
+									</div>
+								</div>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title label">登录密码</div>
+										<div class="item-input">
+											<input type="password" name="password" placeholder="8~20位，区分大小写" maxlength="20" autocomplete="new-password">
+										</div>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>				
+					<div class="clearfix md5"></div>
+					<div class="list-block">
+						<ul>
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title label">手机号码</div>
+										<div class="item-input">
+											<input type="text" name="mobile" placeholder="请输入手机号码" maxlength="15">
+										</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="item-right" style="padding: 0.3rem 0">
+									<div class="smscode active">
+										获取验证码
+									</div>
+								</div>								
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title label">验证码</div>
+										<div class="item-input">
+											<input type="text" name="smscode" placeholder="6位短信验证码" maxlength="6">
+										</div>
+									</div>
+								</div>
+							</li>
+
+						</ul>
+					</div>		
+					<div class="clearfix md5"></div>
+					<div class="list-block">
+						<ul>
+<!-- 							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title label">分享人</div>
+										<div class="item-input">
+											<input type="text" name="ref" placeholder="分享人昵称或手机号码" maxlength="20">
+										</div>
+									</div>
+								</div>
+							</li> -->
+							<li class="ref_user hide">
+								<div class="item-content">
+									<div class="item-inner text-gray">
+										
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="item-right">
+									<div class="agreement open-popup" data-popup=".popup-agreement">
+										阅读用户协议 <i class="iconfont icon-qianjin"></i>
+									</div>
+								</div>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title label">是否同意</div>
+										<div class="item-input">											
+											<label class="label-switch">
+							                  	<input type="checkbox" name="is_accept" value="1">
+							                  	<div class="checkbox"></div>
+							                </label>										
+										</div>
+									</div>
+								</div>
+							</li>							
+						</ul>
+<!-- 						<div class="tips-block">
+							提示：分享人填写后不可更改
+						</div> -->						
+					</div>					
+					<div class="clearfix m5">
+						<div class="button button-big button-fill button-danger md2 btn-submit">注册</div>
+					</div>
+					</form>
+					
+					
+				</div><!--content-->
+			</div>	
+			
+			<div class="popup popup-agreement">
+				<header class="bar bar-nav">
+					<a class="button button-link button-nav pull-right close-popup">
+						关闭
+					</a>
+					<h1 class="title">用户注册协议</h1>
+				</header>
+				<div class="content">
+					<div class="content-inner">
+						<div class="content-block">
+							<div>
+								{$rs.content|html_entity_decode}
+							</div>
+							<p>
+								<a class="button close-popup">关闭</a>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>		
+			
+		</div>	
+		
+
+
+<include file="Public:script" />
+<include file="Public:footer" />

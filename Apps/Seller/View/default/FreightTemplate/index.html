@@ -1,0 +1,102 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body">
+	<include file="Public:nav" />
+	<div class="container mb30">
+		<include file="Public:side" />
+		<div class="w980 fl">
+			<div class="bor_der">
+				<div class="bg_f1 clearfix fs14 text_44 tle_R">
+					<a class="fl plr15 line40 ml-1 active" href="javascript:;">运费模板</a>
+				</div>
+				<notempty name="data.code">
+					{:W('Common/Builder/nors', array('param' => array('text' => $data['msg'])))}
+				<else />
+					<div class="solid_t mt-1 plr15 ptb10">
+						<foreach name="data" item="vo">
+							<div class="header p10">
+								<div class="pull-right">
+									<a href="{:U('freightTemplate/edit',array('id'=>$vo['id']))}" class="btn btn-info btn-rad btn-sm">修改</a>
+									<a href="javascript:delTemplate({$vo.id});" class="btn btn-primary btn-rad btn-sm">删除</a>
+								</div>
+								<div class="ft18 strong">{$vo.express_name} - {$vo.express_company.company}</div>	
+							</div>
+	
+							<div class="block-content">
+								
+								<table class="table table-bordered">
+									<thead>
+										<tr>
+											<th>运送到</th>
+											<th width="15%" class="text-center">起步({$vo.unit})</th>
+											<th width="15%" class="text-center">运费(元)</th>
+											<th width="15%" class="text-center">续加({$vo.unit})</th>
+											<th width="15%" class="text-center">加钱(元)</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td class="text-danger">默认地区</td>
+											<td class="text-center">{$vo.first_unit}</td>
+											<td class="text-center">{$vo.first_price}</td>
+											<td class="text-center">{$vo.next_unit}</td>
+											<td class="text-center">{$vo.next_price}</td>
+										</tr>
+										
+										<foreach name="vo.express_area" item="v">
+										<tr>
+											<td class="text_77">{$v.city_name}</td>
+											<td class="text-center">{$v.first_unit}</td>
+											<td class="text-center">{$v.first_price}</td>
+											<td class="text-center">{$v.next_unit}</td>
+											<td class="text-center">{$v.next_price}</td>
+										</tr>
+										</foreach>
+	
+									</tbody>
+								</table>
+							</div>
+						</foreach>
+					</div>
+				</notempty>
+				<div style='text-align:center;'>
+					<a href="{:U('/FreightTemplate/create')}" class="btn btn-primary link-white">添加运费模板</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</block>
+<block name="css"></block>
+<block name="script">
+<script>
+function delTemplate(id){
+	vmodal({
+		title:"删除运费模板",
+		// url:d.url,
+		msg:"您真的要删除吗？",
+	  	class:'text-center',
+	  	confirm:1
+	},function(ret){
+		var ac = '{:enCryptRestUri("/FreightTemplate/delete")}';
+		$(".modal-ok").click(function(){
+			ajax_post({
+			  	url:'{:U("/run/authRun")}',
+			  	data:{id:id},
+			  	headers : {Action : ac},
+		  	},function(ret) {
+			  	talert({status:ret.code,msg:ret.msg});
+			  	if(ret.code == 1){
+			   		ref(); 
+				}
+		  	})
+		});
+	});
+}
+
+
+
+</script>
+
+
+</block>

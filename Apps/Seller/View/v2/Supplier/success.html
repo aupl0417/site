@@ -1,0 +1,169 @@
+<extend name="Seller@Public:base" />
+<block name="body">
+    <div class="centent_body">
+        <!-- to do your html codeing -->
+        <div class="revision_bg">
+            <div class="container ptb_size_lg clearfix">
+                <!-- 左侧导航 -->
+                <include file="Public:sideNav" />
+                <!-- 左侧导航结束 -->
+
+                <div class="revisionRight pd15" style="width: 1020px"><!-- 右侧内容 -->
+
+                    <div class="clearfix revisionOrderTab" data-url="">
+                        <h4 class="pb10 solid_b">商家入驻>上传资料</h4>
+                    </div>
+                    <include file="supplier_nav" />
+
+
+
+
+					<div class="succeed-box">
+						<div class="fs34 text-center">
+							<img src="__NEW_DESIGN__images/icon_chenggong.png" alt="" class="mr10">您已开店成功！
+						</div>
+						<div class="mt20 fs14 text-center">
+							您的店铺名称为：
+							<if condition="$info[type] eq 1">
+							<span class="c-faa">{$info.shop_name}</span>
+							<!--<img src="images/icon_Business.png" alt="" class="mr10 ml5">-->个人店
+							<else/>
+							<span class="c-faa">{$info.shop_name}</span>
+							<!--<img src="images/icon_Business.png" alt="" class="mr10 ml5">-->企业店
+							</if>
+						</div>
+						<div class="mt30">
+							<div class="row ">
+								<div class="col-xs-4">
+								</div>
+								<div class="col-xs-4 pd0">
+									<div class="row">
+										<div class="col-xs-4">
+											<a href="{:DM('sell')}" class="btn my-btn-white"><img src="__NEW_DESIGN__images/icon_fabu.png" alt="" class="mr5">商品管理</a>
+										</div>
+
+										<div class="col-xs-4">
+											<a href="{:U('Supplier/setting')}" class="btn my-btn-white"><img src="__NEW_DESIGN__images/icon_zhuangxiu.png" alt="" class="mr5">店铺设置</a>
+										</div>
+
+										<div class="col-xs-4">
+											<a href="{:DM('seller')}" class="btn my-btn-white"><img src="__NEW_DESIGN__images/icon_my.png" alt="" class="mr5">个人中心</a>
+
+										</div>
+									</div>
+								</div>
+								<div class="col-xs-4">
+								</div>
+							</div>
+						</div>
+					</div>
+
+                    <include file="right" />
+
+                </div>
+
+            </div>
+        </div>
+        <!-- my codeing over -_-   -->
+
+    </div>
+</block>
+
+<block name="css">
+
+</block>
+
+<block name="script">
+    <!-- to do your javascript codeing -->
+    <Script>
+
+        //选择城市，读取下一级
+        function change_city(obj){
+            var sid = $(obj).val();
+            if(sid == 0){ return }
+            $.post("__URL__/ajax_citys", { "sid": sid },function(ret){
+                if(ret.code == 1){
+                    $(obj).closest('div').nextAll('div').children('select').html('<option value="0">请选择</option>');
+                    $(obj).closest('div').next('div').children('select').show().html(ret.html);
+                }else if(ret.code == 3){
+                    $(obj).closest('div').nextAll('div').children('select').hide().html('<option value="0">请选择</option>');
+                }else{
+                    talert({status:'warning',msg:ret.msg});
+                }
+            }, "json");
+        }
+
+
+        var upload_field;
+        //选择上传图片
+        function upload_img(obj){
+            $("#upload_img input[name='file']").click();
+            upload_field = $(obj);
+        }
+        //保存上传的图片
+        function upload(obj){
+            var formData = new FormData(document.getElementById("upload_img"));
+            $.ajax({
+                url:"__URL__/ajax_upload",
+                type:"post",
+                data:formData,
+                processData:false,
+                contentType:false,
+                success:function(ret){
+                    console.log(upload_field);
+                    if(ret.status == 'success'){
+                        upload_field.attr('src',ret.url).siblings('input').val(ret.url);
+                    }else{
+                        talert({status:ret.status,msg:ret.msg});
+                    }
+                    $(obj).val('');
+                },
+            });
+        }
+
+
+        //个人提交
+        function person_submit(){
+            var formData = new FormData(document.getElementById("person_info"));
+            //console.log('个人');
+            formData.append("type","1");
+            $.ajax({
+                url:"__URL__/ajax_upload_data_save",
+                type:"post",
+                data:formData,
+                processData:false,
+                contentType:false,
+                success:function(ret){
+                    if(ret.code == 1){
+                        gourl({url:'__URL__/change_package'});
+                    }else{
+                        talert({status:'warning',msg:ret.msg});
+                    }
+                },
+            });
+            return false;
+        }
+        //企业提交
+        function enterprise_submit(){
+            //console.log('企业');
+            var formData = new FormData(document.getElementById("enterprise_info"));
+            formData.append("type","2");
+            $.ajax({
+                url:"__URL__/ajax_upload_data_save",
+                type:"post",
+                data:formData,
+                processData:false,
+                contentType:false,
+                success:function(ret){
+					if(ret.code == 1){
+                        gourl({url:'__URL__/change_package'});
+                    }else{
+                        talert({status:'warning',msg:ret.msg});
+                    }
+                },
+            });
+            return false;
+        }
+    </Script>
+
+</block>

@@ -1,0 +1,138 @@
+<div class="p20 box">
+    <div class="text-center">
+        <h3>接收通知会员条件,如果全部为未选择，则发送至所有用户</h3>
+    </div>
+    <div class="row">
+        <div class="col-xs-6">
+            <div>
+                <div>会员状态：<span class="ft18 strong"><if condition="$status eq ''">未选择<else />{$statusName}</if></span></div>
+                <div>会员级别：<span class="ft18 strong"><if condition="$level eq ''">未选择<else />{$levelName}</if></span></div>
+                <div>会员类型：<span class="ft18 strong"><if condition="$type eq ''">未选择<else />{$typeName}</if></span></div>
+                <div>认证类型：<span class="ft18 strong"><if condition="$auth eq ''">未选择<else />{$authName}</if></span></div>
+                <div>开店类型：<span class="ft18 strong"><if condition="$shopName eq ''">未选择<else />{$shopName}</if></span></div>
+                <div>昵称包含：<span class="ft18 strong"><if condition="$nick eq ''">未选择<else />{$nick}</if></span></div>
+            </div>
+        </div>
+    </div>
+</div>
+<form data-url="__URL__/sendBatchSave" data-id="#form_send_batch" id="form_send_batch" class="form-horizontal vform">
+    {:W('Widget/buildform',array(array(
+    'field'		=>array(
+    array(
+    'formtype'		=>'select',
+    'name'			=>'system_tpl',
+    'label'			=>'通知模板',
+    'data'			=>$tpl,
+    'field'			=>array('id','tpl_name'),
+    'tips'  		=>'手机通知及站内系统通知模板',
+    ),
+    array(
+    'formtype'		=>'select',
+    'name'			=>'message_tpl',
+    'label'			=>'短信模板',
+    'data'			=>$smsTpl,
+    'field'			=>array('id','tpl_name'),
+    'tips'  		=>'手机短信模板',
+    ),
+    array(
+    'formtype'		=>'select',
+    'name'			=>'email_tpl',
+    'label'			=>'邮件模板',
+    'data'			=>$mailTpl,
+    'field'			=>array('id','tpl_name'),
+    'tips'  		=>'邮件通知模板',
+    ),
+    array(
+    'formtype'		=>'text',
+    'name'			=>'title',
+    'label'			=>'推送标题',
+    'tips'          =>'仅限安卓客户端',
+    ),
+    array(
+    'formtype'		=>'textarea',
+    'label'			=>'消息内容',
+    'name'			=>'content',
+    'tips'          =>'消息内容不为空时所选模板无效',
+    ),
+    /*array(
+    'formtype'		=>'text',
+    'name'			=>'url',
+    'label'			=>'url',
+    'tips'          =>'用户需要连接过去的URL，可不填写',
+    ),*/
+    array(
+    'formtype'		=>'checkbox',
+    'name'			=>'notice_type',
+    'label'			=>'通知类型',
+    'data'          =>[['message' , '短信'], ['system' , '系统'], ['email' , '邮件'], ['pushs' , '推送']],
+    //'data'          =>[['message' , '短信'], ['system' , '系统'], ['email' , '邮件']],
+    'field'			=>array(0,1),
+    'tips'          =>'请选择以上通知类型，不选则视为全部',
+    ),
+    array(
+    'formtype'		=>'hidden',
+    'name'			=>'status',
+    'value'			=>$status,
+    ),
+    array(
+    'formtype'		=>'hidden',
+    'name'			=>'type',
+    'value'			=>$type,
+    ),
+    array(
+    'formtype'		=>'hidden',
+    'name'			=>'shop_type',
+    'value'			=>$shop,
+    ),
+    array(
+    'formtype'		=>'hidden',
+    'name'			=>'level_id',
+    'value'			=>$level,
+    ),
+    array(
+    'formtype'		=>'hidden',
+    'name'			=>'is_auth',
+    'value'			=>$auth,
+    ),
+    array(
+    'formtype'		=>'hidden',
+    'name'			=>'nick',
+    'value'			=>$nick,
+    ),
+    array(
+    'formtype'		=>'html',
+    'label'			=>' ',
+    'html'			=>'<button type="button" class="btn btn-primary btn-150px send-batch-save"><i class="fa fa-check"></i> 立即发送</button>&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-success btn-150px send-batch-temp" style="margin-left: 20px"><i class="fa fa-check"></i> 临时发送</button>'
+    ),
+    ),
+    )))}
+</form>
+<script>
+    $(document).ready(function() {
+        $(".send-batch-save").click(function() {
+            var d=$(this).closest('form').data();
+            ajax_post_form({
+                formid:d.id
+            },function(ret){
+                valert(ret);
+                if(ret.status=='success'){
+                    ref();
+                }
+            });
+        });
+
+        /**
+         * 临时发送
+         */
+        $(".send-batch-temp").click(function () {
+            var message_tpl = $("#message_tpl").val();
+            if (message_tpl == '') {
+                valert({status:'warning', 'msg':'模板不能为空'});
+                return false;
+            }
+            var type = '{$_GET["shop_type"]}';
+            var url  = '__URL__/sendMessages/shop_type/' + type + '/tpl/' + message_tpl;
+            window.location.href = url;
+        });
+    });
+</script>

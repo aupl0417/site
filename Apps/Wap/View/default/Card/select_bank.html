@@ -1,0 +1,35 @@
+<div class="bank-list">
+</div>
+
+<script id="tpl_bank_list" type="text/html">
+    <% for (var i = 0; i < data.length; i ++) { %>
+		<div class="line-box row hover noicon" data-id="<%= data[i].id %>" onclick="select_bank($(this))">
+			<div class="col-5" style="width:35px;height:35px;padding-top:5px;"><img src="<%=data[i].logo %>" class="img-circle"></div>
+			<div class="col-5x4 pl10 select_bank_name"><%= data[i].bank_name %></div>
+		</div>
+    <% } %>
+
+</script>
+
+<script>
+	ajax_post({
+		url:'/Api/api',
+		data:{apiurl:'/Withdraw/bank'},
+	},function(ret){
+		if(ret.code==1){			
+			var html = template('tpl_bank_list', {data:ret.data});
+			$('.page.active .bank-list').html(html);
+			hover('.page.active .bank-list');
+		}
+	});
+	
+	function select_bank(obj){
+		obj.closest('.bank-list').find('.line-box.selected').removeClass('selected').addClass('noicon');
+		obj.removeClass('noicon').addClass('selected');
+	}
+	$('.page.active .vmodal-success').unbind();
+	$('.page.active .vmodal-success').click(function(){
+		$('.page.active .bank_name').html($('.page.active .bank-list .line-box.selected .select_bank_name').html());
+		$('.page.active #bank_id').val($('.page.active .bank-list .line-box.selected').attr('data-id'));
+	});
+</script>

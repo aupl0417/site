@@ -1,0 +1,130 @@
+<include file="Public:header" />
+<div class="container">
+    <include file="nav" />
+    
+    <div class="bor_der pd20 mb50 bg_white">
+        
+        <div class="row rs clearfix mb10">
+            <div class="col-xs-1 line30 text-right fs14">尺<span class="ml20">寸</span></div>
+            <div class="col-xs-11">
+           		<foreach name="size.size" item="vo">
+           			<a href="{:U('Sucai/index',['size' => $vo['value'], 't' => $t])}" class="w85 ml0 mr10 mb10 layui-btn layui-btn-small <if condition='$_GET["size"] eq $vo["value"]'>layui-btn-danger<else/> layui-btn-primary </if>">{$vo.name}</a>
+           		</foreach>
+            </div>
+        </div>
+    </div>
+    <div class="bor_der td_ptb20 solid_b">
+	    <table class="no-border td_ptb20">
+	        <thead class="no-border bg_white">
+		        <tr class="h50 lh50">
+		            <th class="text-center fs16">素材</th>
+		            <th class="text-center fs16">名称</th>
+		            <th class="text-center fs16">尺寸(px)</th>
+		            <th class="text-center fs16">投放类目</th>
+		            <th class="text-center fs16">状态</th>
+		            <th class="text-center fs16">提交时间</th>
+		            <th class="text-center fs16">操作</th>
+		        </tr>
+	        </thead>
+
+	        <tbody class="no-border-y bg_white">
+
+	        <notempty name="data.list">
+	        
+	        <foreach name="data.list" item="vo">
+	            <tr class="solid_b">
+	                <td class="text-center">
+	                    <a href="{$vo.images}" title="大图" class="image-zoom">
+	                        <img width="150" height="80" class="img-thumbnail" src="{:myurl($vo['images'],['w' => 150,'h' => 80])}" alt="tgret">
+	                    </a>
+	                </td>
+	                <td class="text-center"><div class="md5 ft14 md5"><a href="">{$vo.sucai_name}</a></div></td>
+	                <td class="text-center">{$vo.width}x{$vo.height}</td>
+	                <td class="text-center">{$vo.category_name}</td>
+	                <td class="text-center"><span class="text-success">{$vo.status_name}</span></td>
+	                <td class="text-center"><div class="">{$vo.atime}</div></td>
+	                <td class="text-center">
+	                	<switch name="vo.status">
+	                		<case value="1">
+	                			<a href="{:U('Source/index',['size' => $vo['width'] .'x'. $vo['height']])}" class="layui-btn layui-btn-small layui-btn-normal">投放广告</a>
+	                		</case>
+	                		<case value="0">
+								<a class="layui-btn layui-btn-small layui-btn-primary" href="{:U('/Sucai/edit',['id' => $vo['id']])}">修改</a>
+	                    		<a class="layui-btn layui-btn-small layui-btn-red" onclick="delSucai({$vo.id})">删除</a>
+	                		</case>
+	                		<case value="2">
+	                			<a class="layui-btn layui-btn-small layui-btn-red" onclick="delSucai({$vo.id})">删除</a>
+	                		</case>
+	                		<default/>
+	                	</switch>
+	                </td>
+	            </tr>
+	        </foreach>
+	        	<tr class="">
+	        		<td colspan="7" class="pd0">
+		        		<div>
+					        <div class="row mt20">
+		                        <div class="col-xs-10 text-right">
+		                            {:paresePageAction($data['page']['page'], '/Ad/position_list', isset($params) ? $params : "__ACTION__")}
+		                        </div>
+		                        <div class="col-xs-2 text-center"> {$data.page.total}</div>
+		                    </div>
+					    </div>
+	        		</td>
+	        	</tr>
+	        <else/>
+	        	<tr>
+	        		<td colspan="7">
+		        		<div class="mb20 text-center"  style="min-height:100px;line-height:100px;">
+					        <div class="clearfix">
+					            <span class="plr20 pb7 fs14 text_red">暂无记录</span>
+					        </div>
+					    </div>
+	        		</td>
+	        	</tr>
+	        </notempty>
+	        </tbody>
+	    </table>
+
+
+
+	</div>
+    
+            
+    
+</div>
+<script>
+
+function delSucai(id){
+	vmodal({
+		title:"删除素材",
+		// url:'{:U("/freightTemplate/create_area",array("express_id"=>$data["id"]))}',
+		msg:"您真的要删除吗？",
+	  	class:'text-center',
+	  	confirm:1,
+	},function(ret){
+		$(".modal-ok").click(function(){
+			var ac = '{:enCryptRestUri("/Ad/sucaiDelete")}';
+			// return false;
+			ajax_post({
+				url: '/run/authRun',
+				headers:{Action:ac},
+				data:{
+					id:id
+				}
+			},function(ret){
+				if(ret.code == 1){
+					layerMsg(ret.msg,{skin:'my-layer-success'},function(){
+						ref();
+					});
+				}else{
+					layerMsg(ret.msg);
+				}
+			});
+		});
+	});
+}
+
+</script>
+
+<include file="Public:footer" />

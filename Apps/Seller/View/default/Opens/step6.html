@@ -1,0 +1,116 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body">
+	<include file="Public:nav" />
+	<div class="container mb30">
+		<include file="Public:side" />
+		<div class="w980 fl">
+			<div class="bor_der">
+				<div class="bg_f1 clearfix fs14 text_44 tle_R">
+					<a class="fl plr15 line40 ml-1 active" href="javascript:;">完善店铺信息</a>
+				</div>
+				<include file="step" />
+				
+				<div class="pd10">
+					{:W('Common/Builder/form', [['data' => $keyList, 'run' => '/opens/shop']])}
+				</div>
+				<div class="pd10 solid_t">
+					<div class="form-group text-right" style=" margin-bottom:0;">
+						<a class="btn btn-primary btn-next mr20" href="{:U('/opens/step4')}"><i class="fa fa-reply"></i>上一步</a><a class="btn btn-primary <empty name="data.shop_name">disabled</empty> btn-next" href="{:U('/opens/step7')}"><i class="fa fa-share"></i>下一步</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</block>
+<block name="css"></block>
+<block name="script">
+<script>
+$(document).ready(function(){
+	checkform({
+		formid:"#formadd",
+		rules:{
+			shop_name:{
+				required:true,
+				minlength:2,
+				maxlength:20,
+				remote:'{:U("/opens/check")}',
+			},
+			mobile:{
+				required:true,
+				isMobile:true,
+			},
+			qq:{
+				required:true,
+				number:true,
+				rangelength:[5,13],
+			},
+			about:{
+				required:true,
+				rangelength:[30,150],
+			},
+			street:{
+				required:true,
+				rangelength:[2,120],
+			},
+			province:{
+				required:true,
+			},
+			city:{
+				required:true,
+			},
+			district:{
+				required:true,
+			},
+		},
+		messages:{
+			shop_name:{
+				required:'店铺名称不能为空',
+				minlength:'店铺名称不能少于2个字符',
+				maxlength:'店铺名称不能大于20个字符',
+				remote:'店铺名称不可用',
+			},
+			mobile:{
+				required:'店铺名称不能为空',
+				isMobile:'手机号码格式不正确'
+			},
+			qq:{
+				required:'腾讯QQ不能为空',
+				number:'腾讯QQ为数字类型',
+				rangelength:'腾讯QQ一般为5-13位',
+			},
+			about:{
+				required:'店铺描述不能为空',
+				rangelength:'店铺描述应在30-150个汉字之间',
+			},
+			street:{
+				required:'详细地址不能为空',
+				rangelength:'详细地址应在2-120个汉字之间',
+			},
+			province:{
+				required:'省份不能为空',
+			},
+			city:{
+				required:'城市不能为空',
+			},
+			district:{
+				required:'地区不能为空',
+			},
+			town:{
+				required:'乡镇不能为空',
+			},
+		},
+	},function(res) {
+		if(res.code == 1) {
+			talert({status:res.code,msg:'系统即将自动进入下一步！'});
+			setTimeout(function() {
+				gourl({url:"{:U('/opens/step7')}"})
+			}, 1000);
+		} else {
+			talert({status:res.code,msg:res.msg});
+		}
+	});
+});
+</script>
+</block>

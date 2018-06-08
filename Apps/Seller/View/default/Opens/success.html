@@ -1,0 +1,46 @@
+<div style="width:500px;margin:0 auto;">
+	<div class="pd30">
+		<h5 class="strong mb30"><i class="fa fa-check-circle text_green fs30 fl mt-8 mr5 "></i>您已开店成功！</h5>
+		<p>
+			店铺名称:<span class="text_blue">{$shop.shop_name}</span>
+		</p>
+		<p>
+			店铺类型:<span class="text_blue">{$shop.type}</span>
+		</p>
+		<p>
+			主营类目:<span class="text_blue">{$shop.cate}</span>
+		</p>
+		<p>
+			您的店铺地址为:<a class="text_blue" href="{$shop.domain}" target="_blank">{$shop.domain}</a> <a href="javascript:;" title="点我复制链接" class="btn-primary copy_btn">复制网址</a>
+		</p>
+		
+		<h5 class="strong mb30 mt30"><i class="fa fa-bell text_green fs30 fl mt-8 mr5 "></i>你现在可以进行以下操作</h5>
+		<div>
+			<!-- <a href="#" class="btn btn-success">装修店铺</a> -->
+			<a href="{:U('/goods/add')}" class="btn btn-success">发布商品</a>
+			<a href="{:U('/goods/import')}" class="btn btn-success ml10">导入商品</a>
+			<a href="{:U('/setting')}" class="btn btn-success ml10">完善店铺资料</a>
+			<a href="{:U('/domain')}" class="btn btn-success ml10">设置店铺域名</a>
+			<!-- <a href="#" class="btn btn-success ml30">绑定线下店铺</a> -->
+		</div>
+	</div>
+</div>
+<script src="/Public/js/jquery.zclip.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){  
+    if ( window.clipboardData ) {  
+        $('.copy_btn').click(function() {  
+            window.clipboardData.setData("Text", '{$shop.domain}');  
+            talert({status:1,msg:'拷贝成功,赶紧去推广吧。'});
+        });  
+    } else {
+        $(".copy_btn").zclip({  
+            path:'/Public/js/ZeroClipboard.swf',
+            copy:function(){return '{$shop.domain}';},  
+            afterCopy:function(){
+            	talert({status:1,msg:'拷贝成功，赶紧去推广吧。'});
+            }  
+        });  
+    }  
+});
+</script>

@@ -1,0 +1,71 @@
+<include file="Public:header" />
+<include file="Public:menu" />
+
+<div class="w1200 mt20 md20 bg-white box">
+	<div class="box-header">
+		招商品牌
+	</div>
+	
+	<div class="box-content brand-list">
+		<aside>
+			<volist name="category" id="vo">
+			<div class="us-box">
+				<div class="us"><a href="javascript:void(0)"><i class="fa fa-angle-down"></i> {$vo:category_name}</a></div>
+				<ul class="ds">
+					<volist name="vo:dlist" id="ds">
+						<li data-cid="{$ds:id}"><a href="{:U('/Brand/index',['cid'=>$ds->id])}">{$ds:category_name}</a></li>
+					</volist>
+				</ul>
+			</div>
+			</volist>
+		</aside>
+		<div class="line"></div>
+		<section>
+			<empty name="brand">
+				<div class="nors text-center">该类目下暂无招商品牌！</div>
+			<else />
+			<div class="row">
+			<volist name="brand" id="vo">
+				<div class="col-xs-3">
+					<div class="brand-item">
+						<div class="action">
+							<a href="/Joinshop" class="btn btn-block btn-danger m0">入驻</a>
+						</div>
+						{$vo:name}
+					</div>
+				</div>
+			</volist>
+			</div>
+			</empty>
+		</section>
+		<div class="clearfix"></div>
+	</div>
+
+</div>
+
+
+<include file="Public:copyright" />
+<include file="Public:js" />
+
+
+<script>
+$(document).ready(function(){
+	$('aside .us').click(function(){
+		$(this).parent().find('.ds').slideToggle();
+	});
+
+	
+
+	var cid='{$_GET.cid}';
+	if(cid!=''){
+		var obj=$('aside [data-cid="'+cid+'"]');
+		obj.addClass('active');
+		obj.closest('.us-box').find('.us').click();
+	}else{
+		$('aside .us').eq(0).click();
+		$('aside .us-box').eq(0).find('.ds li').eq(0).addClass('active');
+	}	
+});	
+</script>
+
+<include file="Public:footer" />

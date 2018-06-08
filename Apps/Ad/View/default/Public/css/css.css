@@ -1,0 +1,336 @@
+body{
+	font-family:"微软雅黑";
+	font-size:12px;
+	margin:0;
+	padding:0;
+	background:#fbfbfb;
+}
+a{text-decoration:none;color:#444}
+a:hover{
+	text-decoration:none;
+	color:#c81623;
+}
+input:focus{outline: none;}
+.container{
+	width: 1200px;
+	padding-left:0;
+	padding-right:0;
+}
+.mb10{
+	margin-bottom:10px; 
+}
+.bg-white{
+	background-color: #fff;
+}
+p{font-size:12px;line-height:17px}
+h1, h2, h3, h4, h5, h6,p{
+    font-family:"微软雅黑";
+}
+textarea {resize: none;}
+/*  重新定义按钮  */
+.btn_m{
+	margin-left:0!important;
+	margin-bottom:0!important;
+}
+.btn-danger {
+    color: #fff;
+    background-color: #c81623;
+    border-color: #c81623;
+}
+.btn-trans.btn-danger {
+    background-color: #fff;
+    border-color: #c81623;
+    color: #c81623;
+}
+.text_green{color:#36af0d}
+/*****  对齐   **/
+.media {	margin-top: 15px;}
+.media, .media-body {
+	overflow: hidden;
+	zoom: 1;
+}
+.media-body, .media-left, .media-right {
+	display: table-cell;
+	vertical-align: top;
+}
+.media-left, .media>.pull-left {	padding-right: 10px;}
+.media-body {width: 10000px;}
+.media-right, .media>.pull-right {padding-left: 10px;}
+.media-middle {vertical-align: middle;}
+/**  复选框  **/
+label input[type="checkbox"], 
+label input[type="radio"]{
+	opacity:0;
+	position:absolute;
+}
+label input[type="checkbox"]+span,
+label input[type="radio"]+span{
+	width:1.3em;
+	height:1.3em;
+	display:block;
+	border:1px solid #ccc;
+	position:relative;
+	background:white;
+}
+.radius input[type="checkbox"]+span,
+.radius input[type="radio"]+span{
+	border-radius:50%
+}
+.  input[type="checkbox"]+span:hover,
+.square input[type="radio"]+span:hover{
+	border: 2px solid #cc0000;
+}
+.radius input[type="checkbox"]+span:hover,
+.radius input[type="radio"]+span:hover{
+	border: 1px solid #cc0000;
+}
+.square input[type="checkbox"]:checked+span,
+.square input[type="radio"]:checked+span,
+.radius input[type="checkbox"]:checked+span,
+.radius input[type="radio"]:checked+span{
+	background:#cc0000;
+	border: 0;
+}
+.square input[type="checkbox"]:checked+span:after,
+.square input[type="radio"]:checked+span:after,
+.radius input[type="checkbox"]:checked+span:after,
+.radius input[type="radio"]:checked+span:after{
+	background-color: #cc0000;
+	border: 0px;
+	opacity: 1;
+	content: '';
+	position: absolute;
+	width: 10px;
+	height: 5px;
+	background: transparent;
+	top: 4px;
+	left: 3px;
+	border: 2px solid #fff;
+	border-top: none;
+	border-right: none;
+	-webkit-transform: rotate(-45deg);
+	-ms-transform: rotate(-45deg);
+	transform: rotate(-45deg);
+}
+
+/*****  定义基础样式   **/
+.ptb5{padding-top:5px;padding-bottom:5px}
+
+.bg_f0{background:#f0f0f0}
+.bg_f1{background:#f1f1f1}
+.bg_f5{background:#f5f5f5}
+.bg_99{background:#999}
+.bg_2b{background:#2b2b2b}
+
+.text_77{color:#777}
+.text_44{color:#444}
+.text_2b{color:#2b2b2b}
+
+.w210{width:210px}
+.w215{width:215px}
+.w225{width:225px}
+.w750{width:750px}
+.w980{width:980px}
+.h34{height:34px}
+.h40{height:40px}
+
+.mlr-7{margin-left:-7px;margin-right:-7px}
+.plr7{padding-left:7px;padding-right:7px}
+.opacity_bor .bor_hover{border-color:rgba(255,255,255,0)}
+.bor_der,.bor_hover{border:1px solid #ddd}
+.bor_hover:hover{
+	border-color:#c81623
+	/*box-shadow: 0px 0 10px #000;*/
+}
+
+
+
+
+/* 广告投放 */
+.hover_blue > a:hover, .hover_blue .active {
+    background: #f1f1f1;
+    color: #1B9AF7;
+}
+.solid_b_red {
+	border-bottom: 2px solid #c81623;
+}
+tr.strong th {
+	font-weight: bold;
+}
+table.bor_no td, table.bor_no th {
+	border: none !important;
+}
+.solid_b_box {
+	box-shadow: 0px 2px 2px 0px #ddd;
+}
+.mt50{
+	margin-top: 50px !important;
+}
+.w100 {
+	width: 100px !important;
+}
+.w80{
+	width: 80px;
+}
+.w85 {
+	width: 85px;
+}
+.ml100 {
+	margin-left: 100px;
+}
+.mb100{
+	margin-bottom: 100px;
+}
+.mr50{
+	margin-right: 50px;
+}
+.mb70{
+	margin-bottom: 70px;
+}
+.ml80 {
+	margin-left: 80px;
+}
+.td_ptb20 td {
+	padding: 20px 10px;
+}
+.ml0{
+	margin-left: 0 !important;
+}
+.ylpay-setting-menu li {
+	border-bottom: 1px dotted #dcdcdc;
+}
+.ylpay-setting-menu li.active div {
+	color: #1B9AF7;
+}
+.ylpay-setting-menu li:hover{
+    color: #c81623;
+    background: white;
+}
+.ad-info .media{
+	margin-top: 8px;
+}
+.solid-all-red{
+	border: 2px solid #cc0000;
+}
+
+
+.ad_header{
+	width: 100%;
+	height: auto;
+	background-color: #fff;
+}
+.ad_header .row{
+	width: 1200px;
+	height: 60px;
+	padding-left: 0;
+	padding-right: 0;
+	margin:0 auto;
+	border-radius: 1px;
+}
+.lh60{
+	line-height: 60px;
+}
+
+.bg_white1{
+	background-color: #f8f8f8;
+}
+.h38{
+	height: 38px;
+}
+.h20{
+	height: 20px;
+}
+.lh20{
+	line-height: 20px;
+}
+.h50{
+	height: 50px;
+}
+.lh30{
+	line-height: 30px;
+}
+.lh50{
+	line-height: 50px;
+}
+.h100{
+	height: 100px;
+}
+.h60{
+	height: 60px;
+}
+.h70{
+	height: 70px;
+}
+.lh70{
+	line-height: 70px;
+}
+.lh100{
+	line-height: 100px;
+}
+.lh150{
+	line-height: 150px;
+}
+.calendar .hover{
+
+}
+.calendar .active{
+	background-color: #3cb371;
+}
+.calendar .today{
+	background-color: #fdf5e6;
+}
+.calendar .expire{
+	background-color: gray;
+}
+
+
+.calendar .isuse{
+	background-color: gray;
+}
+
+
+
+/*.layui-btn-small{
+	height:30px;
+	line-height:30px;
+	padding:0 10px;
+	font-size:12px;
+	}
+.layui-btn-small i{
+	font-size:16px!important;
+}
+*/
+
+
+
+.layui-btn-red{
+	background-color:red;
+}
+
+body .my-layer-error{
+	background-color: #fe774d;
+	color:#fff;
+	border: none;
+	text-align: center;
+}
+
+body .my-layer-success{
+	background-color: #3cb371;
+	color:#fff;
+	border: none;
+	text-align: center;
+}
+
+.ffb{
+	filter:alpha(opacity=0);  /*支持 IE 浏览器*/
+	-moz-opacity:0.0; /*支持 FireFox 浏览器*/
+	opacity:0.0;  /*支持 Chrome, Opera, Safari 等浏览器*/
+}
+
+.ffbon{
+	background-color: #000;
+	filter:alpha(opacity=80);  /*支持 IE 浏览器*/
+	-moz-opacity:0.80; /*支持 FireFox 浏览器*/
+	opacity:0.80;  /*支持 Chrome, Opera, Safari 等浏览器*/
+	color: white;
+}

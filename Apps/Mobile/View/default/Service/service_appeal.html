@@ -1,0 +1,90 @@
+<include file="Public:header" />
+		<div class="page-group">
+			<div id="page-service-appeal" class="page">
+				<!-- 标题栏 -->
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left back" data-no-cache="true"></a>
+					<h1 class="title">提出申诉</h1>
+				</header>
+
+				<!-- 工具栏 -->
+
+				<nav class="bar bar-tab">
+					<div class="goods-footer">
+						<div class="cart-btn">
+							<div class="btn-buy btn-submit">提交申请</div>
+						</div>
+					</div>
+				</nav>
+				<!-- 浮动导航 -->
+				<include file="Public:fixed-menu" />
+		
+				<!-- 这里是页面内容区 -->		
+				<div class="content">
+					<notempty name="data">
+					<form name="form-rate" id="form-appeal" onsubmit="return false">
+						<div class="list-block media-list">
+							<ul>
+								<li>
+									<div class="item-content">
+										<div class="item-inner">
+											<div class="item-title-row">
+												<div class="item-title">售后单号</div>
+												<div class="item-after">
+													{$data.r_no}
+												</div>
+											</div>
+										</div>
+									</div>
+								</li>								
+								<li>
+									<div class="item-content">
+										<div class="item-inner">
+											<div class="item-title-row">
+												<div class="item-title" style="min-width:3rem">申诉原因</div>
+												<div class="item-input">
+													<textarea id="remark" name="remark" placeholder="请输入申诉原因，不超过200字" maxlength="200" rows="8"></textarea>
+												</div>
+											</div>
+										</div>
+									</div>
+								</li>	
+								<li>
+									<div class="item-content">
+										<div class="upload-box">
+											<div class="upload-action">
+												<div class="upload-btn">
+													<input id="imageData" name="imageData" type="file" value="" />
+													<img alt="上传图片" src="../Public/images/up_load.jpg" width="60">
+													<input type="hidden" id="images" name="images" />
+												</div>												
+											</div>
+											<div class="images-list">
+												
+											</div>
+										</div>
+									</div>
+								</li>								
+							</ul>
+						</div>
+						<div class="clearfix md5"></div>
+						<input type="hidden" name="s_no" value="{$data.s_no}" />
+						<input type="hidden" name="r_no" value="{$data.r_no}" />
+					</form>
+					<else />
+						<div class="nors text-center">
+							<div><i class="iconfont icon-zhongping ft3"></i></div>
+							页面错误！
+						</div>			
+					</notempty>									
+				</div><!--/content-->
+				
+			</div>
+			
+
+						
+		</div>	
+		
+
+<include file="Public:script" />
+<include file="Public:footer" />

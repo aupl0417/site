@@ -1,0 +1,564 @@
+<include file="Public:header" />
+		<div class="page-group">
+			<div id="page-orders-view" class="page" data-page_num="{$pagelist.pageinfo.page}" data-is_pay="{$_GET.is_pay}">
+				<!-- 标题栏 -->
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left back" data-no-cache="true"></a>
+					<h1 class="title">订单详情</h1>
+					<a class="icon iconfont icon-category pull-right ml5 ac-menu" onclick="top_menu()"></a>
+				</header>
+
+				<!-- 浮动导航 -->
+				<include file="Public:fixed-menu" />
+		
+				<!-- 这里是页面内容区 -->		
+				<div class="content">	
+					<div class="orders-status-box">
+						<switch name="rs.status">
+							<case value="1">
+								<div class="row">
+									<div class="col-60">
+										<div class="status-name">等待买家付款</div>
+										<div class="sub-text">{$rs.limit_time_name}</div>
+									</div>
+									<div class="col-40 text-center">
+										<i class="iconfont icon-fukuan"></i>
+									</div>
+								</div>
+							</case>
+							<case value="2">
+								<div class="row">
+									<div class="col-60">
+										<div class="status-name">买家已付款</div>
+										<div class="sub-text">等待卖家发货</div>
+									</div>
+									<div class="col-40 text-center">
+										<i class="iconfont icon-yifukuan"></i>
+									</div>
+								</div>
+							</case>		
+							<case value="3">
+								<div class="row">
+									<div class="col-60">
+										<div class="status-name">卖家已发货</div>
+										<div class="sub-text">{$rs.limit_time_name}</div>
+									</div>
+									<div class="col-40 text-center">
+										<i class="iconfont icon-fahuo"></i>
+									</div>
+								</div>
+							</case>				
+							<case value="4">
+								<div class="row">
+									<div class="col-60">
+										<div class="status-name">交易成功</div>
+										<div class="sub-text">已确认收货</div>
+									</div>
+									<div class="col-40 text-center">
+										<i class="iconfont icon-yishouhuo"></i>
+									</div>
+								</div>
+							</case>				
+							<case value="5">
+								<div class="row">
+									<div class="col-60">
+										<div class="status-name">交易成功</div>
+										<div class="sub-text">已评价</div>
+									</div>
+									<div class="col-40 text-center">
+										<i class="iconfont icon-zhongping"></i>
+									</div>
+								</div>
+							</case>				
+							<case value="6">
+								<div class="row">
+									<div class="col-60">
+										<div class="status-name">交易成功</div>
+										<div class="sub-text">订单已归档</div>
+									</div>
+									<div class="col-40 text-center">
+										<i class="iconfont icon-chanpin1"></i>
+									</div>
+								</div>
+							</case>				
+							<case value="10">
+								<div class="row">
+									<div class="col-60">
+										<div class="status-name">交易关闭</div>
+										<div class="sub-text"></div>
+									</div>
+									<div class="col-40 text-center">
+										<i class="iconfont icon-icon"></i>
+									</div>
+								</div>
+							</case>				
+							<case value="11">
+								<div class="row">
+									<div class="col-60">
+										<div class="status-name">交易关闭</div>
+										<div class="sub-text">已退款完成</div>
+									</div>
+									<div class="col-40 text-center">
+										<i class="iconfont icon-icon"></i>
+									</div>
+								</div>
+							</case>				
+							
+						</switch>
+					</div>
+					<!--收货地址-->
+					<div class="list-block media-list">
+						<ul>
+							<li>
+								<div class="item-content">
+									<div class="item-media"><i class="ft15 iconfont icon-shouhuodizhi"></i></div>
+									<div class="item-inner">
+										<div class="item-title-row">
+											<div class="item-title"><strong>{$rs.orders.linkname}</strong>，{$rs.orders.mobile}
+												<notempty name="rs.orders.tel">/{$rs.orders.tel}</notempty>
+											</div>
+										</div>
+										<div class="item-text">{$rs.orders.province_name} {$rs.orders.city_name} {$rs.orders.district_name} {$rs.orders.town_name} {$rs.orders.street}</div>
+									</div>
+								</div>
+							</li>
+							<notempty name="rs.remark">
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title-row">
+											<div class="item-title" style="min-width: 4rem;">买家留言</div>
+											<div class="item-text">{$rs.remark}</div>
+										</div>
+									</div>
+								</div>
+							</li>	
+							</notempty>	
+						
+							<notempty name="rs.express_code">
+							<li>
+								<neq name="rs.express_company_id" value="361">
+								<a href="/Orders/logistics_view/s_no/{$rs.s_no}" class="item-link item-content" data-no-cache="true">
+									<div class="item-media"><img class="lazyload" data-sizes="auto" data-src="{:myurl($rs['express_company']['logo'],150,50)}" alt="物流公司logo" src="../Public/images/nopic_100x33.gif" width="100"></div>
+									<div class="item-inner">
+										<div class="item-title-row">
+											<div class="item-title">{$rs.express_company.sub_name}</div>
+										</div>
+										<div class="item-subtitle"><span class="ft05">运单号：{$rs.express_code}</span></div>
+									</div>
+								</a>
+								<else />
+								<div class="item-content">
+									<div class="item-media"><img class="lazyload" data-sizes="auto" data-src="{:myurl($rs['express_company']['logo'],150,50)}" alt="物流公司logo" src="../Public/images/nopic.gif" width="100"></div>
+									<div class="item-inner">
+										<div class="item-title-row">
+											<div class="item-title">{$rs.sub_name}</div>
+										</div>
+										<div class="item-subtitle"><span class="ft05">运单号：{$rs.express_code}</span></div>
+									</div>
+								</div>								
+								</neq>
+							</li>		
+							</notempty>
+						</ul>
+					</div>					
+					
+					<div class="clearfix md5"></div>
+					<div class="list-block media-list">						
+						<ul class="list-container">	
+							<li>
+								<a href="javascript:;" data-url="/Shop/index/shop_id/{$rs.shop_id}" class="item-content item-link">
+									<div class="item-media"><i class="icon iconfont icon-dianpu1"></i></div>
+									<div class="item-inner">
+										<div class="item-title-row">
+											<div class="item-title">{$rs.shop.shop_name}</div>
+										</div>
+									</div>
+								</a>
+							</li>
+							
+							<volist name="rs.orders_goods" id="gl">
+								<li class="bg-gray2">			
+									<div class="item-bottom p5">
+										<if condition="$gl['refund_in'] eq 1">
+											<a href="/Refund/refund_goods_list/orders_goods_id/{$gl.id}" class="btn btn-md btn-white btn-plr06" data-no-cache="true">退款详情</a>
+										<elseif condition="$gl['refund_in'] eq 2"/>
+											<a href="/Refund/refund_goods_list/orders_goods_id/{$gl.id}" class="btn btn-md btn-white btn-plr06" data-no-cache="true">退款完成</a>										
+										</if>										
+										<if condition="$rs['status'] eq 2">
+											<eq name="gl.can_refund" value="1">
+												<a href="/Refund/refund_goods/orders_goods_id/{$gl.id}" class="btn btn-md btn-white btn-plr06 hide" data-no-cache="true">退款</a>
+											</eq>
+										<elseif condition="$rs['status'] eq 3"/>
+											<eq name="gl.can_refund" value="1">
+												<a href="/Refund2/refund_goods/orders_goods_id/{$gl.id}" class="btn btn-md btn-white btn-plr06 hide" data-no-cache="true">退款</a>
+											</eq>
+											
+											<!--是否还有运费可退-->
+											<if condition="$rs['can_refund_express'] eq 1 and $key eq 0 and $gl['can_refund'] eq 0">
+												<a href="/Refund2/refund_goods/orders_goods_id/{$gl.id}" class="btn btn-md btn-white btn-plr06 hide" data-no-cache="true">退运费</a>
+											</if>	
+										</if>
+										
+										
+										
+										<eq name="gl.service_in" value="1">
+											<a href="/Service/service_goods_list/orders_goods_id/{$gl.id}" class="btn btn-md btn-white btn-plr06" data-no-cache="true">售后详情</a>
+										</eq>										
+										<eq name="gl.can_service" value="1">
+											<a href="/Service/add/orders_goods_id/{$gl.id}" class="btn btn-md btn-white btn-plr06 hide" data-no-cache="true">售后</a>
+										</eq>											
+									</div>
+									
+									<a href="/Goods/view/id/{$gl.attr_list_id}" class="item-content">
+										<div class="item-media">
+											<img class="lazyload" data-sizes="auto" data-src="{:myurl($gl['images'],150)}" alt="商品主图" src="../Public/images/nopic.gif" width="80">
+										</div>
+										<div class="item-inner">
+											<div class="item-title-row">
+												<div class="item-title">
+													<eq name="gl.officialactivity_id" value="250">
+                                                       	<i class="iconfont icon-miaosha1 text-red"></i>
+                                                    </eq>
+													{$gl.goods_name}
+												</div>
+												<div class="item-after">
+													<img class="icon-price" src="../Public/images/icon_{$gl.score_type}.png">{$gl.price}
+												</div>
+											</div>
+											<div class="item-subtitle">
+												<div class="pull-right text-gray">x{$gl.num}</div>
+												<div class="ft05">{$gl.attr_name}</div>
+											</div>	
+											<div class="item-text">
+											</div>
+										</div>
+									</a>
+									
+									
+								</li>
+							</volist>		
+							<li>
+								<div class="item-content hide">
+									<div class="item-inner">
+										<div class="item-title-row">
+											<div class="item-title">
+												奖励积分
+											</div>
+											<div class="item-after">
+												{$rs.score} 分
+											</div>
+										</div>
+									</div>
+								</div>
+							</li>								
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title-row">
+											<div class="item-title">
+												商品总价 <gt name="rs.refund_price" value="0"><span class="ft05 text-gray">(已退<img class="icon-price" src="../Public/images/icon_{$rs.score_type}.png">{$rs.refund_price})</span></gt>
+											</div>
+											<div class="item-after">
+												<img class="icon-price" src="../Public/images/icon_{$rs.score_type}.png">{$rs.goods_price}
+											</div>
+										</div>
+									</div>
+								</div>
+							</li>							
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title-row">
+											<div class="item-title">
+												运费({$rs.express_type_name}) <gt name="rs.refund_express" value="0"><span class="ft05 text-gray">(已退<img class="icon-price" src="../Public/images/icon_{$rs.score_type}.png">{$rs.refund_express})</span></gt>
+											</div>
+											<div class="item-after">
+												<img class="icon-price" src="../Public/images/icon_{$rs.score_type}.png">{$rs.express_price_edit}
+											</div>
+										</div>
+									</div>
+								</div>
+							</li>							
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title-row">
+											<div class="item-title">
+												优惠
+											</div>
+											<div class="item-after">
+												<img class="icon-price" src="../Public/images/icon_{$rs.score_type}.png">{$rs.discount_price}
+											</div>
+										</div>
+									</div>
+								</div>
+							</li>							
+
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title-row">
+											<div class="item-title">
+												实付 
+											</div>
+											<div class="item-after">
+												<strong class="text-red"><img class="icon-price" src="../Public/images/icon_{$rs.score_type}.png">{$rs.pay_price}</strong>
+											</div>
+										</div>
+									</div>
+								</div>
+							</li>							
+						</ul>
+					</div>
+					
+					<eq name="rs.is_official_coupon" value="1">
+						<div class="p5 text-gray ft06 hide">
+							<span class="text-red"><i class="iconfont icon-weibiaoti1"></i> 提示：</span>当前订单使用了乐兑官方优惠券，不支持唐宝付款，且商家发货后将不支持退款！
+						</div>
+					<else />
+						<div class="clearfix md5"></div>
+					</eq>
+					<div class="ft05 text-gray bg-white p5 block">
+						<div>订单号：{$rs.s_no}</div>
+						<div>创建时间：{$rs.atime}</div>
+						<div>付款时间：{$rs.pay_time}</div>
+						
+						<neq name="rs.express_time" value="0000-00-00 00:00:00">
+						<div>发货时间：{$rs.express_time}</div>
+						</neq>
+						<neq name="rs.receipt_time" value="0000-00-00 00:00:00">
+						<div>收货时间：{$rs.receipt_time}</div>
+						</neq>
+						
+					</div>
+					
+					<switch name="rs.status">
+						<case value="1">
+							<div class="m5">
+								<div class="row">
+									<div class="col-50 hide">
+										<div class="btn btn-block btn-white btn-lg" onclick="sellerMessageInfo({shop_id:'{$rs.shop.id}',nick:'{$rs.seller.nick}'})"><i class="iconfont icon-kefu"></i> 联系卖家</div>
+									</div>
+									<div class="col-100">
+										<div class="btn btn-block btn-danger btn-trans btn-lg open-popup" data-s_no="{$rs.s_no}" data-score_type="{$rs.orders_goods.0.score_type}" data-price="{$rs.pay_price}" data-popup=".popup-paytype">立即付款</div>
+									</div>
+								</div>
+							</div>							
+						</case>
+						<case value="2">
+							<div class="m5 hide">
+								<div class="btn btn-block btn-white btn-lg" onclick="sellerMessageInfo({shop_id:'{$rs.shop.id}',nick:'{$rs.seller.nick}'})"><i class="iconfont icon-kefu"></i> 联系卖家</div>
+							</div>	
+						</case>
+						<case value="3">
+							<div class="m5">
+								<div class="row">
+									<div class="col-50 hide">
+										<div class="btn btn-block btn-white btn-lg" onclick="sellerMessageInfo({shop_id:'{$rs.shop.id}',nick:'{$rs.seller.nick}'})"><i class="iconfont icon-kefu"></i> 联系卖家</div>
+									</div>
+									<div class="col-100">
+										<div class="btn btn-block btn-danger btn-trans btn-lg open-popup" data-popup=".popup-receive">确认收货</div>
+									</div>
+								</div>
+							</div>	
+						</case>
+						<case value="4">
+							<eq name="rs.is_rate" value="1">
+							<div class="m5">
+								<div class="row hide">
+									<div class="col-50">
+										<div class="btn btn-block btn-white btn-lg" onclick="sellerMessageInfo({shop_id:'{$rs.shop.id}',nick:'{$rs.seller.nick}'})"><i class="iconfont icon-kefu"></i> 联系卖家</div>
+									</div>
+									<div class="col-50">
+										<a class="btn btn-block btn-danger btn-trans btn-lg" href="/Orders/rate/s_no/{$rs.s_no}">评价</a>
+									</div>
+								</div>
+							</div>
+							<else />
+							<div class="m5 hide">
+								<div class="btn btn-block btn-white btn-lg" onclick="sellerMessageInfo({shop_id:'{$rs.shop.id}',nick:'{$rs.seller.nick}'})"><i class="iconfont icon-kefu"></i> 联系卖家</div>
+							</div>
+							</eq>
+						</case>
+					</switch>					
+									
+					<notempty name="rs.love_goods">
+					<div class="md5"></div>
+					<div class="goods-content-box">
+						<div class="line-1px"></div>
+						<div class="ac-text">
+							<a><i class="iconfont icon-xihuanline text-red"></i> 你可能还想买</a>
+						</div>
+					</div>
+					
+					<div class="row img-block love-home list-container">
+						<volist name="rs.love_goods" id="vo">
+							<div class="col-50">
+								<a href="/Goods/view/id/{$vo.data.attr_list.0.id}" class="love-goods-item">
+									<div class="goods-images">
+										<img class="lazyload" data-sizes="auto" data-src="{:myurl($vo['data']['images'],320)}" src="../Public/images/nopic.gif" width="100%" alt="{$vo.data.goods_name}">
+									</div>
+									<div class="goods-name">{$vo.data.goods_name}</div>
+								</a>
+							</div>
+						</volist>
+					</div>				
+					</notempty>
+
+				</div><!--/content-->
+				
+			</div>
+			
+			
+			<!--popup 付款-->
+			<div class="popup popup-paytype">
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left close-popup" data-no-cache="true"></a>
+					<h1 class="title">确认付款</h1>
+					<a class="icon iconfont icon-guanbi1 pull-right ml5 ac-menu close-popup"></a>
+				</header>				
+				
+				<div class="content">
+					<form name="form-pay" id="form-pay" onsubmit="return false">
+						<!--账户信息-->
+						<div class="p5 ft05 text-gray hide"><i class="iconfont icon-weibiaoti1"></i> 如果余额不足时，请先到APP或PC端充值后再进行支付</div>
+						<div class="list-block">
+							<ul>
+								<li class="item-content">
+									<div class="item-inner">
+										<div class="item-title">订单编号</div>
+										<div class="item-after" id="order-no"></div>
+									</div>
+								</li>
+								<li class="item-content">
+									<div class="item-inner">
+										<div class="item-title">订单金额</div>
+										<div class="text-red item-after" style="color: #cc0000;" id="order-price"></div>
+									</div>
+								</li>
+							</ul>
+						</div>
+						<!--<div class="list-block media-list pay-type">-->
+							<!--<ul>-->
+								<!--<notempty name="paytype">-->
+	<!-- 							<li class="bg-gray p5 tips">
+									<i class="iconfont icon-jifen1"></i> 第三方支付
+								</li> -->
+								<!--<volist name="paytype" id="vo" key="k">-->
+									<!--<if condition="$k eq 1">-->
+										<!--<li data-value="{$vo.pg_id}" class="selected">-->
+											<!--<div class="item-content">-->
+												<!--<div class="item-media">-->
+													<!--<i class="iconfont {$vo.iconfont} text-yellow"></i>									-->
+												<!--</div>-->
+												<!--<div class="item-inner">-->
+													<!--<div class="item-title-row">-->
+														<!--<div class="item-title">{$vo.pg_name}</div>-->
+														<!--<div class="item-after"></div>-->
+													<!--</div>-->
+												<!--</div>-->
+											<!--</div>-->
+										<!--</li>-->
+									<!--<else />-->
+										<!--<li data-value="{$vo.pg_id}">-->
+											<!--<div class="item-content">-->
+												<!--<div class="item-media">-->
+													<!--<i class="iconfont {$vo.iconfont} text-yellow"></i>									-->
+												<!--</div>-->
+												<!--<div class="item-inner">-->
+													<!--<div class="item-title-row">-->
+														<!--<div class="item-title">{$vo.pg_name}</div>-->
+														<!--<div class="item-after"></div>-->
+													<!--</div>-->
+												<!--</div>-->
+											<!--</div>-->
+										<!--</li>								-->
+									<!--</if>-->
+								<!--</volist>-->
+								<!--</notempty>-->
+	<!---->
+							<!--</ul>-->
+						<!--</div>					-->
+						
+						
+						<div class="clearfix md5"></div>
+<!-- 						<div class="list-block pay_pass">
+							<ul>
+								<li>
+									<div class="item-content">
+										<div class="item-inner">
+											<div class="item-title label">安全密码</div>
+											<div class="item-input">
+												<input type="password" id="pay_password" name="pay_password" placeholder="请输入6位安全密码" maxlength="6" autocomplete="new-password">
+											</div>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div> -->
+						<input type="hidden" name="s_no" id="s_no" value="{$rs.s_no}" />
+					</form>
+				</div>
+				<div class="goods-footer fixed-bottom">
+					<div class="cart-btn">
+						<div class="btn-buy btn-submit-pay">立即付款</div>
+					</div>
+				</div>		
+			</div>					
+
+			<!--popup 收银台-->
+			<div class="popup popup-cashier">
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left close-popup" data-no-cache="true" data-popup=".popup-cashier"></a>
+					<h1 class="title">付款</h1>
+					<a class="icon iconfont icon-guanbi1 pull-right ml5 ac-menu close-popup" data-popup=".popup-cashier"></a>
+				</header>				
+				
+				<div class="content">
+				</div>
+			</div>	
+
+			
+			<!--popup 确认收货-->
+			<div class="popup popup-receive popup-top50" style="overflow: hidden;height:100%">
+				<div class="close-popup btn-close">
+					<i class="iconfont icon-guanbi1"></i>
+				</div>
+				
+				<form name="form-receive" id="form-receive" onsubmit="return false">
+			
+					<!--账户信息-->
+					<div class="clearfix md5"></div>
+					<div class="p5 ft05 text-gray"><i class="iconfont icon-weibiaoti1"></i> 请确定您已收到货且无异议，否则有可能财物两空！</div>
+					
+					<div class="clearfix md5"></div>
+					<div class="list-block hide">
+						<ul>
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title label">安全密码</div>
+										<div class="item-input">
+											<input type="password" id="pay_password" name="pay_password" placeholder="请输入6位安全密码" maxlength="6" autocomplete="new-password">
+										</div>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+					<input type="hidden" name="s_no" id="s_no" value="{$rs.s_no}" />
+				</form>
+				
+				<div class="goods-footer fixed-bottom">
+					<div class="cart-btn">
+						<div class="btn-buy btn-submit">确认收货</div>
+					</div>
+				</div>		
+			</div>					
+			
+		</div>	
+		
+
+<include file="Public:script" />
+<include file="Public:footer" />

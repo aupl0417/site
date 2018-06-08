@@ -1,0 +1,330 @@
+<include file="Public:header" />
+		<div class="page-group">
+			<div id="page-shop-index" class="page shop-goods-list" data-shop_id="{$_GET.shop_id}">
+				<!-- 标题栏 -->
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left back" href="/"></a>
+					<a class="search-bar" href="/Shop/category/shop_id/{$_GET.shop_id}"><i class="iconfont icon-sousuo_sousuo"></i> 搜索店铺内商品</a>
+					<a class="icon iconfont icon-category pull-right ml5 ac-menu" onclick="top_menu()"></a>
+				</header>
+
+				<!-- 浮动导航 -->
+				<include file="Public:fixed-menu" />
+				
+				<!-- 工具栏 -->
+				<nav class="bar bar-tab">
+					<a class="tab-item" href="/Shop/category/shop_id/{$_GET.shop_id}">
+						<span class="icon iconfont icon-chanpin1"></span>
+						<span class="tab-label">热门分类</span>
+					</a>
+					<a class="tab-item" href="/Shop/rate/shop_id/{$_GET.shop_id}">
+						<span class="icon iconfont icon-haoping"></span>
+						<span class="tab-label">用户评价</span>
+					</a>
+
+					<a class="tab-item" onclick="sellerMessageInfo({shop_id:'{$info.id}',nick:'{$info.nick}'})">
+						<span class="icon iconfont icon-kefu1"></span>
+						<span class="tab-label" >联系卖家</span>
+					</a>					
+				</nav>				
+				
+				<!-- 这里是页面内容区 -->		
+				<div class="content">
+					<!--店招-->
+					<div class="shop-header">
+						<div class="fav" id="ac-fav" data-shop_id="{$_GET.shop_id}">
+							<i class="iconfont icon-xihuan {:$info['is_fav']>0?'text-red':''}"></i> 关注
+						</div>
+						<div class="header-bg" style="background-image:url(../Public/images/header/{:rand(1,14)}.jpg);"></div>
+						<div class="shop-info-box">
+							<div class="logo">
+								<img class="lazyload img-circle border-1px bg-white" data-sizes="auto" data-src="{:myurl($info['shop_logo'],50)}" alt="店铺logo" src="../Public/images/nopic.gif" width="50" height="50">
+							</div>
+							<div class="shop-info">
+								<a href="/Shop/rate/shop_id/{$_GET.shop_id}">
+									<div class="shop-name">{$info.shop_name} <i class="iconfont icon-qianjin text-red"></i></div>
+									<div class="fav-num">{$info.fav_num}人关注</div>
+								</a>
+							</div>
+						</div>
+					</div>	
+					
+					<!--菜单-->
+					<div class="shop-menu">
+						<div class="row">
+							<div class="col-50">
+								<a href="/Shop/goods/shop_id/{$_GET.shop_id}">
+									{$info.goods_num}								
+									<div class="text">全部商品</div>
+								</a>
+							</div>
+							<div class="col-50 border-l">
+								<a href="/Shop/best/shop_id/{$_GET.shop_id}">
+									{$info.best_num}	
+									<div class="text">促销</div>		
+								</a>
+							</div>
+						</div>
+					</div>
+					
+					<!--店铺装修图片-->
+					<notempty name="shop_make">
+						<volist name="shop_make" id="vo">
+							<div class="p5 md5 bg-white img-block">
+								<eq name="vo.type" value="1">								
+									<!--焦点图-->
+									<div class="swiper-container" data-space-between='10'>
+										<div class="swiper-wrapper">
+											<volist name="vo.data" id="dl">
+											<div class="swiper-slide">
+												<a href="{$dl.url}"><img class="lazyload" data-sizes="auto" data-src="{$dl.image}" alt="{$dl.title}" src="../Public/images/nopic.gif" width="100%"></a>
+											</div>
+											</volist>							
+										</div>
+										<div class="swiper-pagination"></div>
+									</div>							
+								
+								<else />
+									<volist name="vo.data" id="dl">
+									<div><a href="{$dl.url}"><img class="lazyload border-1px" data-sizes="auto" data-src="{$dl.image}" src="../Public/images/nopic.gif" width="100%" alt="{$dl.title}"></a></div>
+									</volist>
+								</eq>
+							</div>
+						</volist>
+					</notempty>
+					
+					<!--厨窗商品-->
+					<notempty name="best">
+					<div class="list-block">
+						<ul>
+							<li>
+								<a href="/Shop/best/shop_id/{$_GET.shop_id}" class="item-content item-link">
+									<div class="item-media"><i class="icon iconfont icon-remen1"></i></div>
+									<div class="item-inner">
+										<div class="item-title">店长推荐</div>
+										<div class="item-after">更多</div>
+									</div>
+								</a>
+							</li>
+							
+						</ul>
+					</div>
+					<div class="bg-white p5 md5">
+						<div class="row img-block love-home ">
+							<volist name="best" id="vo">
+							<div class="col-50">
+								<a href="/Goods/view/id/{$vo.attr_list.0.id}" class="love-goods-item">
+									<div class="goods-images">
+										<img class="lazyload border-1px" data-sizes="auto" data-src="{:myurl($vo['images'],320)}" src="../Public/images/nopic.gif" width="100%" alt="{$vo.goods_name}">
+									</div>
+									<div class="goods-name">{$vo.goods_name}</div>
+									<div class="goods-info clearfix md5">
+										<div class="pull-right text-gray ft05">售出 {$vo.sale_num} 件</div>
+										<div class="price">￥{$vo.price}</div>
+										<div class="clearfix"></div>
+										<div class="pull-right text-gray ft05">
+											奖励 {:intval($vo['score_ratio']*$vo['price']*100)} 分
+										</div>										
+									</div>
+								</a>
+							</div>
+							</volist>
+						</div>						
+					</div>
+					</notempty>
+					
+					<!--所有商品-->
+					<div class="buttons-tab">
+						<a href="#tab1" class="tab-link button">
+							综合
+						</a>
+						<a href="#tab2" class="tab-link button active">
+							销量
+						</a>
+						<a href="#tab3" class="tab-link button">
+							人气
+						</a>
+						<a href="#tab4" class="tab-link button" data-order="price asc">
+							价格
+						</a>
+					</div>		
+					
+					
+					<div class="tabs">
+						<div class="tab img-block infinite-scroll" id="tab1" data-page_num="{$pagelist.pageinfo.page}">	
+							<input type="hidden" id="p" name="p" value="2" />
+							<notempty name="pagelist.list">	
+							<div class="p5">
+								<div class="row img-block love-home list-container">
+									<volist name="pagelist.list" id="vo">
+									<div class="col-50">
+										<a href="/Goods/view/id/{$vo.attr_list.0.id}" class="love-goods-item">
+											<div class="goods-images">
+												<img class="lazyload" data-sizes="auto" data-src="{:myurl($vo['images'],320)}" src="../Public/images/nopic.gif" width="100%" alt="{$vo.goods_name}">
+											</div>
+											<div class="goods-name">{$vo.goods_name}</div>
+											<div class="goods-info clearfix md5">
+												<div class="pull-right text-gray ft05">售出  {$vo.sale_num} 件</div>
+												<div class="price">￥{$vo.price}</div>
+												<div class="clearfix"></div>
+												<div class="pull-right text-gray ft05">
+													奖励  {:intval($vo['score_ratio']*$vo['price']*100)} 分
+												</div>										
+											</div>
+										</a>
+									</div>
+									</volist>
+								</div>
+							</div>
+							<!-- 加载提示符 -->
+							<div class="infinite-scroll-preloader">
+								<div class="preloader">
+								</div>
+							</div>
+							
+							<else />
+								<div class="nors text-center">
+									<div><i class="iconfont icon-sousuowujieguo ft3"></i></div>
+									 暂无商品！
+								</div>
+							</notempty>
+						</div>
+						
+						<!--好评-->
+						<div class="tab img-block infinite-scroll active" id="tab2" data-page_num="{$sale.pageinfo.page}">	
+							<input type="hidden" id="p" name="p" value="2" />
+							<notempty name="sale.list">							
+							<div class="p5">
+								<div class="row img-block love-home list-container">
+									<volist name="sale.list" id="vo">
+									<div class="col-50">
+										<a href="/Goods/view/id/{$vo.attr_list.0.id}" class="love-goods-item">
+											<div class="goods-images">
+												<img class="lazyload" data-sizes="auto" data-src="{:myurl($vo['images'],320)}" src="../Public/images/nopic.gif" width="100%" alt="{$vo.goods_name}">
+											</div>
+											<div class="goods-name">{$vo.goods_name}</div>
+											<div class="goods-info clearfix md5">
+												<div class="pull-right text-gray ft05">售出  {$vo.sale_num} 件</div>
+												<div class="price">￥{$vo.price}</div>
+												<div class="clearfix"></div>
+												<div class="pull-right text-gray ft05">
+													奖励  {:intval($vo['score_ratio']*$vo['price']*100)} 分
+												</div>										
+											</div>
+										</a>
+									</div>
+									</volist>
+								</div>
+							</div>
+							<!-- 加载提示符 -->
+							<div class="infinite-scroll-preloader">
+								<div class="preloader">
+								</div>
+							</div>
+							
+							<else />
+								<div class="nors text-center">
+									<div><i class="iconfont icon-sousuowujieguo ft3"></i></div>
+									 暂无商品！
+								</div>
+							</notempty>
+						</div>
+						
+						<!--中评-->
+						<div class="tab img-block infinite-scroll" id="tab3" data-page_num="{$view.pageinfo.page}">	
+							<input type="hidden" id="p" name="p" value="2" />
+							<notempty name="view.list">							
+							<div class="p5">
+								<div class="row img-block love-home list-container">
+									<volist name="view.list" id="vo">
+									<div class="col-50">
+										<a href="/Goods/view/id/{$vo.attr_list.0.id}" class="love-goods-item">
+											<div class="goods-images">
+												<img class="lazyload" data-sizes="auto" data-src="{:myurl($vo['images'],320)}" src="../Public/images/nopic.gif" width="100%" alt="{$vo.goods_name}">
+											</div>
+											<div class="goods-name">{$vo.goods_name}</div>
+											<div class="goods-info clearfix md5">
+												<div class="pull-right text-gray ft05">售出  {$vo.sale_num} 件</div>
+												<div class="price">￥{$vo.price}</div>
+												<div class="clearfix"></div>
+												<div class="pull-right text-gray ft05">
+													奖励  {:intval($vo['score_ratio']*$vo['price']*100)} 分
+												</div>										
+											</div>
+										</a>
+									</div>
+									</volist>
+								</div>
+							</div>
+							<!-- 加载提示符 -->
+							<div class="infinite-scroll-preloader">
+								<div class="preloader">
+								</div>
+							</div>
+							
+							<else />
+								<div class="nors text-center">
+									<div><i class="iconfont icon-sousuowujieguo ft3"></i></div>
+									 暂无商品！
+								</div>
+							</notempty>							
+						</div>
+						
+						<!--差评-->
+						<div class="tab img-block infinite-scroll" id="tab4" data-page_num="{$price.pageinfo.page}">	
+							<input type="hidden" id="p" name="p" value="2" />
+							<notempty name="price.list">							
+							<div class="p5">
+								<div class="row img-block love-home list-container">
+									<volist name="price.list" id="vo">
+									<div class="col-50">
+										<a href="/Goods/view/id/{$vo.attr_list.0.id}" class="love-goods-item">
+											<div class="goods-images">
+												<img class="lazyload" data-sizes="auto" data-src="{:myurl($vo['images'],320)}" src="../Public/images/nopic.gif" width="100%" alt="{$vo.goods_name}">
+											</div>
+											<div class="goods-name">{$vo.goods_name}</div>
+											<div class="goods-info clearfix md5">
+												<div class="pull-right text-gray ft05">售出  {$vo.sale_num} 件</div>
+												<div class="price">￥{$vo.price}</div>
+												<div class="clearfix"></div>
+												<div class="pull-right text-gray ft05">
+													奖励  {:intval($vo['score_ratio']*$vo['price']*100)} 分
+												</div>										
+											</div>
+										</a>
+									</div>
+									</volist>
+								</div>
+							</div>
+							<!-- 加载提示符 -->
+							<div class="infinite-scroll-preloader">
+								<div class="preloader">
+								</div>
+							</div>
+							
+							<else />
+								<div class="nors text-center">
+									<div><i class="iconfont icon-sousuowujieguo ft3"></i></div>
+									 暂无商品！
+								</div>
+							</notempty>							
+						</div>
+					</div>					
+					
+					
+					
+					
+					
+					
+					
+					
+				</div>			
+				
+			</div>		
+
+		
+		</div>	
+		
+
+<include file="Public:script" />
+<include file="Public:footer" />

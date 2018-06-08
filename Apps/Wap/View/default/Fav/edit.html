@@ -1,0 +1,92 @@
+<header class="header fixed-top">
+  <div>
+    <div class="l">
+      <i class="icons i-back" onclick="closeWin({ref:true})"></i>
+    </div>
+    <div class="title">
+      收藏
+    </div>
+    <div class="r">
+      <div class="text" onclick="deleteFav()">删除</div>     
+    </div>
+  </div>
+</header>
+<section>
+  <div class="pagelist">
+    <div class="load-body">数据加载中……</div>
+  </div>
+ <!--  <div class="p10 load-more" onclick="goods_loadmore()">
+    <div class="btn btn-lg btn-block btn-danger btn-trans">加载更多……</div>
+  </div> -->
+</section>
+
+
+
+<script id="fav_list_edit" type="text/html">
+  
+    <% for (var i = 0; i < data.length; i ++) { %>
+    <div class="line-box-m row hover noicon">
+
+      <div class="col-10 text-center" style="max-width:40px;line-height: 75px;"><i class="icons icons-20px i-checkbox" data-id="<%= data[i].id%>"></i></div>
+      <div class="col-20" style="max-width:70px"><img src="<%= data[i].goods.images %>" alt="<%= data[i].goods.goods_name %>"></div>
+      <div class="col-60 pl10">
+        <div class="goods_name"><%= data[i].goods.goods_name.substr(0,16) %>...</div>
+        <!-- <div class="text-gray"><%= data[i].sale_num %></div> -->
+        <div><span class="price"><%= data[i].goods.price%></span> 元</div>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <% } %>
+
+</script>
+
+
+<script>
+ fixBar(1);
+  
+  
+    ajax_post({
+      url:'/Api/api',
+      data:{apiurl:'/Fav/goods_list',is_openid:1},
+    },function(ret){
+      if(ret.code==1){      
+        var html = template('fav_list_edit', {data:ret.data.list});      
+        $('.page.active .pagelist').html(html);
+
+        $('.page.active .i-checkbox').click(function(){
+        var obj=$(this);
+        $(this).toggleClass('active');
+        
+      });
+       
+      }else if(ret.code==3){
+        $('.page.active .pagelist').html(no_data_text);
+      }
+    }); 
+  
+function deleteFav(){
+    var ids ="";
+    $(".i-checkbox.active").each(function(){
+      	ids += $(this).data("id")+",";
+    });
+    ids = ids.slice(0,-1);
+    //alert(ids);
+    ajax_post({
+      	url:'/Api/api',
+      	data:{apiurl:'/Fav/goods_delete',id:ids,is_openid:1},
+    },function(ret){
+      
+      	if(ret.code==1){
+	        valert(ret);      
+	        $(".i-checkbox.active").each(function(){
+	          	//$(this).parent().parent().remove();
+	          	$(this).parent().parent().fadeOut();
+	        });
+      	}else{
+      		valert({msg:'操作失败，请重试'});
+      	}
+    }); 
+
+}
+  
+</script>

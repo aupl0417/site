@@ -1,0 +1,46 @@
+								<form id="form-smsend" data-url="__URL__/sms_send_save" class="form-horizontal vform">
+								{:W('Admin/Widget/buildform',array(array(
+									'field'		=>array(
+										array(
+											'formtype'		=>'textarea',
+											'label'			=>'短信内容',
+											'name'			=>'content',
+											'is_need'		=>1,
+											'attr'			=>'maxlength="60"',
+											'value'			=>$_GET['day'].' '.$_GET['time'].'活动即将开始，请提前做好准备！',
+										),
+										array(
+											'formtype'		=>'hidden',
+											'name'			=>'id',
+										),
+									),
+								),$_GET))}	
+								
+								
+									<div class="p10 text-center">
+										<button type="submit" class="btn btn-danger btn-150px">提交</div>
+									</div>
+								</form>	
+
+<script>
+$(document).ready(function(){
+	checkform({
+		formid:"#form-smsend",
+		rules:{
+			content:{
+				required:true,
+			},
+		},
+		messages:{
+			content:{
+				required:'请输入短信内容！',
+			},				
+		
+		},
+	}, function(ret) {
+		valert(ret);
+	});	
+			
+});
+
+</script>	

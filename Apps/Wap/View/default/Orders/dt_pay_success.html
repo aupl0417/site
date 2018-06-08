@@ -1,0 +1,73 @@
+<header class="header fixed-top">
+    <div>
+        <div class="l">
+            <i class="icons i-back" onclick="closeWin({ref:true})"></i>
+        </div>
+        <div class="title">
+            提示
+        </div>
+        <div class="r">
+
+        </div>
+    </div>
+</header>
+<section>
+    <div class="pay_status">
+        <div class="line-box hover row noicon <% if(data[i].code==1){ %> md10 <% } %>">
+            <div class="col-30">支付状态</div>
+            <div class="col-70 text-right">
+                <div class="text-success">支付成功</div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-50">
+            <div class="btn btn-danger btn-block m10" onclick="openWin({name:'orders',url:'/Orders/index',close:true})">查看订单</div>
+        </div>
+        <div class="col-50">
+            <div class="btn btn-danger btn-block m10" onclick="openWin({name:'shop',url:'/Goods/index',close:true})">继续购物</div>
+        </div>
+    </div>
+</section>
+<!--
+<script id="tpl_pay_status" type="text/html">
+	<% for(i=0;i<data.length;i++){ %>
+		<div class="line-box hover row" onclick="openWin({name:'orders_view',url:'/Orders/view/s_no/<%= data[i].data.outTradeNo %>',close:true})">
+			<div class="col-30">订单号</div>
+			<div class="col-70 text-right text-gray"><%= data[i].data.outTradeNo %></div>
+		</div>
+		<div class="line-box hover row noicon <% if(data[i].code==1){ %> md10 <% } %>">
+			<div class="col-30">支付状态</div>
+			<div class="col-70 text-right">
+				<% if(data[i].code==1){ %>
+					<div class="text-success">支付成功</div>
+				<% }else{ %>
+					<div class="text-danger">支付失败</div>
+				<% } %>
+			</div>
+		</div>
+		<% if(data[i].code!=1){ %>
+		<div class="line-box hover row md10 noicon">
+			<div class="col-30">原因</div>
+			<div class="col-70 text-right">
+
+
+					<div class="text-danger"><%= data[i].msg %></div>
+
+			</div>
+		</div>
+		<% } %>
+	<% } %>
+</script>
+-->
+<script>
+    fixBar(1);
+
+    if(pay_status){
+        //var html=template('tpl_pay_status',{data:pay_status});
+        //$('.page.active .pay_status').html(html);
+    }else{
+        //$('.page.active section').html('<div class="load-body">'+pay_status_tips+'</div>');
+    }
+
+</script>

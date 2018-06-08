@@ -1,0 +1,34 @@
+<include file="Public:header" />
+<div class="page-group">
+    <div class="page" id="Seller-Message-info">
+        <!-- 标题栏 -->
+        <header class="bar bar-nav">
+  			<button class="button button-link button-nav pull-left">
+   				<a class="icon icon-left pull-left back-page"></a>
+  			</button>
+            <if condition="$shopInfo['id'] gt 0">
+                
+      			<button class="button button-link button-nav pull-right" onclick="intoShop({$shopInfo.id})">
+                    <i class="iconfont icon-dianpu1 ft1 text-red"></i>
+    		  	</button>
+
+            </if>
+            <notempty name="shopInfo.shop_name">
+                    <h1 class="title">{$shopInfo.shop_name|default=$reciver}</h1>
+                <else/>
+                    <h1 class="title">{$receiver}</h1>
+            </notempty>
+		</header>
+        <!-- 这里是页面内容区 -->
+        <div class="content" style="overflow: hidden;">
+        	<iframe src="{$iframeUrl}" id="myiframe" width="100%" height="100%" scrolling="no" frameborder="0"></iframe>
+        </div>
+    </div>
+</div>
+
+
+	  
+		
+
+<include file="Public:script" />
+<include file="Public:footer" />

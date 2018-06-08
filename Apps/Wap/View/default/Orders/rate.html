@@ -1,0 +1,285 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin({ref:true})"></i>
+		</div>
+		<div class="title">
+			评价
+		</div>
+		<div class="r">
+			
+		</div>
+	</div>
+</header>
+<section>
+	<div class="wait_rate_goods md10"></div>
+	<div class="wait_rate_shop"></div>
+</section>
+
+<include file="Public:d_layer" />
+
+<script id="tpl_wait_rate_goods" type="text/html">
+	<% for(i=0;i<data.length;i++){ %>
+	<form class="md10" id="form-rate-goods-<%= i %>" data-i="<%= i %>">
+		<div class="line-box-m row hover" onclick="openWin({name:'goods_view',url:'/Goods/view/id/<%= data[i].attr_list_id %>'})">
+			<div class="col-15"><img src="<%= data[i].images %>" alt="商品图片"></div>
+			<div class="col-85">
+				<div class="pl10 pr10">
+					<div class="lh2-18px"><%= data[i].goods_name %></div>
+					<div class="text-gray"><%= data[i].attr_name %></div>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="line-box row text-center noicon">
+			<div class="col-33" onclick="rate_select($(this))" data-v="1">
+				<div class="radio_rate active">好评</div>
+			</div>
+			<div class="col-33" onclick="rate_select($(this))" data-v="0">
+				<div class="radio_rate">中评</div>
+			</div>
+			<div class="col-33" onclick="rate_select($(this))" data-v="-1">
+				<div class="radio_rate">差评</div>
+			</div>
+		</div>
+		<div class="line-box-m noicon row">
+			<div class="col-30">评价内容</div>
+			<div class="col-70">
+				<textarea id="content" name="content" placeholder="请输入评价内容" maxlength="100" rows="5"></textarea>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="line-box-m hover row noicon">
+			<div class="col-30">评价图片</div>
+			<div class="col-70">
+				<div class="chooseImages" style="position: relative;display: inline-block;">
+					<input type="file" onclick="chooseImg('/orders/upload', '#form-rate-goods-', 0, <%= i %>)" id="images_0_0" name="images_0_0" style="width: 100px;height: 100px;opacity: 0.0;border: solid 1px #000;position: absolute;z-index: 9;" />
+					<img src="../Public/Images/up_load.jpg" data-url="" class="upload_images mr20" alt="" width="100" height="100">
+				</div>
+				<img src="../Public/Images/icon+.png" onclick="rateImagesAdd('/orders/upload', '#form-rate-goods-',$(this),<%= i %>)" class="mr20" alt="" width="100" height="100">
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="line-box-m noicon row">
+			<div class="col-30" style="margin-top:11px;">是否匿名</div>
+			<div class="col-70" id="anonymous-select">
+				<div class="fl text-center" style="width:50%" onclick="selectAnonymous($(this))" data-is="1">
+					<div class="radio_rate">是</div>
+				</div>
+				<div class="fl text-center" style="width:50%" onclick="selectAnonymous($(this))" data-is="0">
+					<div class="radio_rate">否</div>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+	</div>
+		<div class="line-box hover noicon">
+			<div class="md8"></div>
+			<div class="text-right"><div class="btn btn-xs btn-danger" onclick="rate_goods($(this))" data-i="<%= i %>">提交评价</div></div>
+		</div>
+		<input type="hidden" name="images" value="">
+		<input type="hidden" name="is_anonymous" value="">
+		<input type="hidden" name="orders_goods_id" value="<%= data[i].id %>">
+		<input type="hidden" name="apiurl" value="/Orders/goods_rate">
+		<input type="hidden" name="is_openid" value="1">
+		<input type="hidden" name="rate" value="1">
+		<input type="hidden" name="no_sign" value="images">
+	</form>
+	<% } %>
+</script>
+
+<script id="tpl_wait_rate_shop" type="text/html">
+	<form id="form-rate-shop">
+	<div class="line-box nobg noicon">
+		<div class="b title">对卖家的评价</div>
+	</div>
+	<div class="line-box-m hover" onclick="openWin({name:'shop',url:'/Shop/index/shop_id/<%= data.id %>'})">
+		<div class="row">
+			<div class="col-15"><img src="<%= data.shop_logo %>" class="img-circle" alt="店铺logo"></div>
+			<div class="col-85">
+				<div class="pl10 pr10">
+					<div class="b ft16"><%= data.shop_name %></div>
+					<div class="text-gray lh2-18px"><%= data.about %></div>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+	</div>
+	<div class="line-box row" onclick="rate_shop_select($(this))" data-v="fraction_desc">
+		<div class="col-30">商品描述</div>
+		<div class="col-70 text-right"><span class="b text-danger">5</span> 分</div>
+	</div>
+	<div class="line-box row" onclick="rate_shop_select($(this))" data-v="fraction_speed">
+		<div class="col-30">物流速度</div>
+		<div class="col-70 text-right"><span class="b text-danger">5</span> 分</div>
+	</div>
+	<div class="line-box row" onclick="rate_shop_select($(this))" data-v="fraction_service">
+		<div class="col-30">服务态度</div>
+		<div class="col-70 text-right"><span class="b text-danger">5</span> 分</div>
+	</div>
+	<div class="line-box-m noicon row">
+			<div class="col-30">评价内容</div>
+			<div class="col-70">
+				<textarea id="content" name="content" placeholder="请输入评价内容" maxlength="100" rows="5"></textarea>
+			</div>
+			<div class="clearfix"></div>
+	</div>
+	<div class="line-box hover noicon">
+			<div class="md8"></div>
+			<div class="text-right"><div class="btn btn-xs btn-danger" onclick="rate_shop($(this))">提交评价</div></div>
+	</div>	
+	
+	<input type="hidden" name="apiurl" value="/Orders/shop_rate">
+
+	<input type="hidden" name="is_openid" value="1">
+	<input type="hidden" name="s_no" value="<%= data.s_no %>">
+	<input type="hidden" name="no_sign" value="images">	
+	<input type="hidden" name="fraction_desc" value="5">	
+	<input type="hidden" name="fraction_speed" value="5">	
+	<input type="hidden" name="fraction_service" value="5">	
+	</form>
+</script>
+
+
+<script id="tpl_rate_finish" type="text/html">
+	<div class="load-body"><%= data %></div>
+</script>
+
+<script>
+	fixBar(1);
+	
+	ajax_post({
+		url:'/Api/apis',
+		data:{
+			goods:{apiurl:'/Orders/wait_rate_goods',is_openid:1,s_no:'{$_GET.s_no}'},
+			shop:{apiurl:'/Orders/rate_shop_info',is_openid:1,s_no:'{$_GET.s_no}'}
+		}
+	},function(ret){
+		if(ret.goods.code!=1 && ret.shop.code!=1){
+			var html=template('tpl_rate_finish',{data:'订单已评价！'});
+			$('.page.active section').html(html);
+		}
+		else{
+			if(ret.goods.code==1){
+				var html=template('tpl_wait_rate_goods',{data:ret.goods.data});
+				$('.page.active .wait_rate_goods').html(html);
+			}
+			if(ret.shop.code==1){
+				var html=template('tpl_wait_rate_shop',{data:ret.shop.data});
+				$('.page.active .wait_rate_shop').html(html);		
+			}
+		}
+	});
+	
+	//选择商品评价等级
+	function rate_select(obj){
+		var d=obj.data();
+		obj.closest('.line-box').find('.radio_rate.active').removeClass('active');
+		obj.find('.radio_rate').addClass('active');
+		obj.closest('form').find('[name="rate"]').val(d.v);
+	}
+	
+	//商品评价
+	function rate_goods(obj){
+		var d=obj.data();
+		var data=getFormJson('#form-rate-goods-'+d.i);
+		if(data.content==''){
+			valert({msg:'请输入评价内容！'});
+			return false;
+		}
+		if(data.is_anonymous==''){
+			valert({msg:'请选择是否匿名'});
+			return false;
+		}
+		var images = new Array;
+		$('#form-rate-goods-' + d.i).find('.upload_images').each(function (x,y){
+			var url = $(this).data('url');
+			if(url != undefined && url != ''){
+				images.push(url);
+			}
+		});
+		images = images.join();
+		if(images != ''){
+			data.images = images;
+		}
+		
+		ajax_post({
+			url:'/Api/api',
+			data:data
+		},function(ret){
+			valert(ret);			
+			if(ret.code==1){
+				$('.page.active #form-rate-goods-'+d.i).remove();
+				
+				if($('.page.active form').size()==0){
+					var html=template('tpl_rate_finish',{data:'评价成功！'});
+					$('.page.active section').html(html);				
+				}
+			}
+		});
+	}
+	
+	
+	
+	//选择评价星级
+	function rate_shop_select(obj){
+		var d=obj.data();
+		vmodal({
+			title:'选择评价星级',
+			url:'/Orders/rate_shop_level/field/'+d.v
+		});
+	}
+	
+	//店铺评价
+	function rate_shop(obj){
+		var data=getFormJson('#form-rate-shop');
+		if(data.content==''){
+			valert({msg:'请输入评价内容！'});
+			return false;
+		}
+
+		ajax_post({
+			url:'/Api/api',
+			data:data
+		},function(ret){
+			valert(ret);			
+			if(ret.code==1){
+				$('.page.active #form-rate-shop').remove();
+				if($('.page.active form').size()==0){
+					var html=template('tpl_rate_finish',{data:'评价成功！'});
+					$('.page.active section').html(html);				
+				}				
+			}
+		});		
+	}
+	
+	// 是否匿名评价
+	function selectAnonymous(obj){
+		var d=obj.data();
+		obj.closest('.line-box-m').find('.radio_rate.active').removeClass('active');
+		obj.find('.radio_rate').addClass('active');
+		obj.closest('form').find('[name="is_anonymous"]').val(d.is);
+	}
+	// 拍照晒单
+	function rateImages(i,sort){
+		/*vmodal({
+			title:'上传图片',
+			url:'__URL__/rate_upload_images/id/' + i + '/sort/' + sort,
+			is_footer:false,
+		});*/
+		// 一进来就触发点击
+		$('.page.active #imageData').click();
+		// 选择图片后,上传
+		$('.page.active #imageData').change(function(){
+			ajax_post_form({
+				formid:'#form-upload',
+			},function(ret){
+				if(ret.code==1){
+					// 替换内容
+					$('.page.active #form-rate-goods-' + i).find('.upload_images').eq(sort).attr('src',ret.url);
+					$('.page.active #form-rate-goods-' + i).find('.upload_images').eq(sort).data('url',ret.url);
+				}
+				$('.page.active #imageData').unbind();
+			});
+		});
+	}
+</script>

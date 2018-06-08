@@ -1,0 +1,159 @@
+<include file="Public:header" />
+		<div class="page-group">
+			<div id="page-recharge-list" class="page" data-page_num="{$flow.pageinfo.page}">
+				<input type="hidden" name="p" id="p" value="2" />
+				<!-- 标题栏 -->
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left back" href="/"></a>
+					<h1 class="title">充值记录</h1>
+					<a class="icon iconfont icon-category pull-right ml5 ac-menu" onclick="top_menu()"></a>
+				</header>
+
+				<!-- 浮动导航 -->
+				<include file="Public:fixed-menu" />
+				<!-- 这里是页面内容区 -->
+				<div class="content">
+					<div class="buttons-tab rate-tabs fixed-bar">
+						<a href="#tab1" class="tab-link button active">
+							充话费
+							<div class="count">{$fare.allnum|intval}</div>
+						</a>
+						<a href="#tab2" class="tab-link button">
+							充流量
+							<div class="count">{$flow.allnum|intval}</div>
+						</a>
+					</div>					
+					<div class="clearfix" style="height: 2.5rem;"></div>
+					<div class="tabs">
+						<div class="tab active img-block infinite-scroll" id="tab1" data-page_num="{$fare.pageinfo.page}">		
+							<input type="hidden" id="p" name="p" value="2" />
+							<notempty name="fare.list">
+								<div class="list-block media-list list-block-recharge list-container">						
+									<ul>
+										<volist name="fare.list" id="vo">
+											<li>
+												<a href="/TellRecharge/view/s_no/{$vo.s_no}" class="item-content3">
+													<switch name="vo.mobile_type">
+														<case value="1">
+															<div class="shop_logo">
+																<img class="lazyload" data-sizes="auto" alt="移动" src="../Public/images/move.png" width="40">
+															</div>
+														</case>
+														<case value="2">
+															<div class="shop_logo">
+																<img class="lazyload" data-sizes="auto" alt="联通" src="../Public/images/unicom.png" width="40">
+															</div>
+														</case>
+														<case value="3">
+															<div class="shop_logo">
+																<img class="lazyload" data-sizes="auto" alt="电信" src="../Public/images/telecom.png" width="40">
+															</div>
+														</case>	
+													</switch>
+													<div class="shop_info">
+														<div class="shop_name">
+															{$vo.mobile}
+														</div>
+														<div class="text-gray ft05">
+															<if condition="($vo['return_status'] eq 1) || ($vo['return_status'] eq 29)  || ($vo['status'] eq 3)  || ($vo['status'] eq 4) || ($vo['status'] eq 5)">
+																<div class="text-success">充值成功</div>
+															<else />
+																<div class="text-gray">{$vo.status_name}</div>
+															</if>
+															<div>{$vo.atime}</div>
+														</div>
+													</div>
+													<div class="recharge">
+														<div class="price"><span>{$vo.desc}</span></div>
+													</div>
+												</a>
+											</li>
+										</volist>
+									</ul>
+								</div>
+								<div class="clearfix md5"></div>
+								</volist>
+							<!-- 加载提示符 -->
+							<div class="infinite-scroll-preloader">
+								<div class="preloader">
+								</div>
+							</div>
+							<else />
+									<div class="nors text-center">
+										<div><i class="iconfont icon-sousuowujieguo ft3"></i></div>
+										 找不到记录！
+									</div>
+							</notempty>						
+						</div><!--/tab-item-->	
+
+						<div class="tab img-block infinite-scroll" id="tab2" data-page_num="{$flow.pageinfo.page}">
+							<input type="hidden" id="p" name="p" value="2" />
+							<notempty name="flow.list">
+								<div class="list-block media-list list-block-recharge list-container">						
+									<ul>
+										<volist name="flow.list" id="vo">
+											<li>
+												<a href="/TellRecharge/view/s_no/{$vo.s_no}" class="item-content3">
+													<switch name="vo.mobile_type">
+														<case value="1">
+															<div class="shop_logo">
+																<img class="lazyload" data-sizes="auto" alt="移动" src="../Public/images/move.png" width="40">
+															</div>
+														</case>
+														<case value="2">
+															<div class="shop_logo">
+																<img class="lazyload" data-sizes="auto" alt="联通" src="../Public/images/unicom.png" width="40">
+															</div>
+														</case>
+														<case value="3">
+															<div class="shop_logo">
+																<img class="lazyload" data-sizes="auto" alt="电信" src="../Public/images/telecom.png" width="40">
+															</div>
+														</case>	
+													</switch>
+													<div class="shop_info">
+														<div class="shop_name">
+															{$vo.mobile}
+														</div>
+														<div class="text-gray ft05">
+															<if condition="($vo['return_status'] eq 1) || ($vo['return_status'] eq 29)  || ($vo['status'] eq 3)  || ($vo['status'] eq 4) || ($vo['status'] eq 5)">
+																<div class="text-success">充值成功</div>
+															<else />
+																<div class="text-gray">{$vo.status_name}</div>
+															</if>
+															<div>{$vo.atime}</div>
+														</div>
+													</div>
+													<div class="recharge">
+														<div class="price"><span>{$vo.desc}</span></div>
+													</div>
+												</a>
+											</li>
+										</volist>
+									</ul>
+								</div>
+								<div class="clearfix md5"></div>
+								</volist>
+							</div>
+							<!-- 加载提示符 -->
+							<div class="infinite-scroll-preloader">
+								<div class="preloader">
+								</div>
+							</div>
+							<else />
+									<div class="nors text-center">
+										<div><i class="iconfont icon-sousuowujieguo ft3"></i></div>
+										 找不到记录！
+									</div>
+							</notempty>					
+						</div><!--/tab-item-->						
+					</div>
+				</div>
+			</div>	
+
+		
+		</div>	
+		
+
+<include file="Public:script" />
+<include file="Public:footer" />

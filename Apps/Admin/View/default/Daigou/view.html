@@ -1,0 +1,168 @@
+<div class="clearfix">
+	<div class="pull-right text-gray" onclick="$(this).closest('tr').toggleClass('hide');"><i class="fa fa-times-circle-o fa-2x"></i></div>	
+</div>
+
+	<div class="box p20">
+		<div class="content">
+			<div class="row md20 auth-text">
+				<div class="col-xs-4">
+					<div class="fl" width="60">
+						<img src="{:myurl($rs['shop']['shop_logo'],50)}" class="img-circle">
+					</div>
+					<div style="margin-left:70px">
+						<div>ID：{$rs.id}</div>
+						<div>提交时间：{$rs.atime}</div>							
+						<div>用户ID：{$rs.uid}</div>
+						<div style="word-break:break-all;">商品名称：{$rs.goods_name}</div>
+						<div>商品数量：{$rs.num}</div>
+					</div>
+					<notempty  name="rs.attr_list_id">
+					<div class="media">
+						<span class="pull-left">商品链接： </span>
+						<div class="media-body">
+							<a href="{:DM('item')}{:U('/goods/'.$rs['attr_list_id'])}" class="text_blue" target="_Blank" style="word-break: break-all;">http://item.h.com/goods/{$rs.attr_list_id}.html</a>
+						</div>
+					</div>
+					</notempty >
+				</div>
+
+				<div class="col-xs-4">
+					<div style="word-break:break-all;">商品属性：{$rs.attr_name}</div>
+					<div>商品价格：{$rs.price}</div>
+					<div>商品第三方平台链接：<a href="{:str_replace('&amp;', '&', $rs['url'])}" target="_Blank" style="word-break:break-all;">{:str_replace('&amp;', '&', $rs['url'])}</a></div>
+					<div style="word-break:break-all;">留言备注：{$rs.remark}</div>
+				</div>
+				
+				<div class="col-xs-4">
+					<div id="p_price"></div>
+					<div>商品ID：<a href="{:C('sub_domain.item')}/goods/{$rs.attr_list_id}" target="_blank">{$rs.goods_id}</a></div>
+					<div>审核时间：{$rs.dotime}</div>
+					<div>审核状态：{$rs.result}</div>
+					<if condition="$rs.status eq 3">
+						<div style="word-break:break-all;">拒绝原因：{$rs.reason}</div>
+					</if>
+				</div>					
+			</div>
+			<notempty name="rs['images']">
+			<div class="ft18 strong p10 border-d md20">图片</div>
+			<div class="row">
+				<volist name="rs['images']" id="images">
+					<a href="{$images}" target="_blank" style="margin-left:20px"><img src="{:myurl($images,200)}"></a>
+				</volist>
+			</div>
+			</notempty>
+			<div class="clearfix md20"></div>
+		</div>	
+
+		<if condition="$rs.status eq 1">
+			<div class="ft18 strong p10 border-d md20">审核</div>
+			<form data-url="/Daigou/audit_daigou" data-id="#form_26" id="form_26" class="form-horizontal vform" id="daigou">
+				<div class="form-group f-status">
+					<label class="control-label col-xs-3">审核结果<span class="required" aria-required="true">*</span></label>
+					<div class="col-xs-7">
+						<div class="input-group">
+							<div>
+								<select name="status" class="form-control " style="">
+									<option value="">请选择审核结果</option>
+									<option value="2">审核通过</option>
+									<option value="3">审核不通过</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group f-goods_name">
+					<label class="control-label col-xs-3">选择商品 <span class="required" aria-required="true">*</span></label>
+					<div class="col-xs-7">
+						<div class="input-group">
+							<div>
+								<input type="text" id="goods_name" placeholder="请选择商品" class="form-control" readonly="" value="">
+								<input type="hidden" id="goods_id" name="goods_id">
+							</div>
+							<span class="input-group-addon">选择商品</span>
+						</div>
+					</div>
+				</div>
+				
+				<div class="form-group f-reason">
+					<label class="control-label col-xs-3">拒绝理由</label>
+					<div class="col-xs-7">
+						<div class="input-group">
+							<div>
+								<textarea name="reason" placeholder="请输入审核不通过的理由，若是审核通过则无需填写。" class="form-control " style=""></textarea>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="control-label col-xs-3">是否发送短信通知 <span class="required" aria-required="true">*</span></label>
+					<div class="col-xs-7">
+						<div class="input-group">
+							<div>
+								<label class=" mr10" style=""><input type="checkbox" class="i-red-square" name="is_sms" value="1" checked=""> 是</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<input type="hidden" name="id" value="{$rs.id}">
+				<div class="form-group f-">
+					<label class="control-label col-xs-3"> </label>
+					<div class="col-xs-7">
+						<div class="input-group">
+							<div>
+								<button type="button" class="btn btn-primary btn-150px logs-add"><i class="fa fa-check"></i> 提交</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="clearfix"></div>		
+			</form>
+		</if>
+	</div>
+	
+
+<div class="clearfix">
+	<div class="pull-right text-gray" onclick="$(this).closest('tr').toggleClass('hide');"><i class="fa fa-times-circle-o fa-2x"></i></div>	
+</div>
+<script>
+	$(document).ready(function(){
+		$('.f-goods_name').click(function(){
+			vmodal({
+				title:'选择商品',
+				url:'__URL__/goods_list',
+				width:'900px',
+			});
+		});
+	});
+</script>
+<script>
+$().ready(function(){
+	var price = {$rs.price}*{$daigou_cost_ratio};
+	var p_price = price.toFixed(2);
+	if(!isNaN(p_price)){
+		if(p_price<{$daigou_min_cost}){
+			p_price = {$daigou_min_cost};
+		}
+		if(p_price>{$daigou_max_cost}){
+			p_price = {$daigou_max_cost};
+		}
+		p_price = "手续费用："+p_price;
+		$("#p_price").text(p_price);
+	}
+});
+image_zoom();
+$('.logs-add').click(function(){
+	var d=$(this).closest('form').data();
+	ajax_post_form({
+		formid:d.id
+	},function(ret){
+		valert(ret);
+		if(ret.status=='success'){
+			var tag='#item-{$rs.id}';
+			var url='__URL__/view/id/{$rs.id}';
+			loadurl({tag:tag,url:url});
+		}
+	});
+});
+</script>

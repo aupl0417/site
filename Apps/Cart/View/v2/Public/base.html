@@ -1,0 +1,30 @@
+<include file="Home@Public:header" />
+
+
+<header>
+    <include file="Home@Public:top" />
+
+    {:W('Common/Ad/index_new', array(130,'margin:auto;max-height:100px;'))}
+
+
+    <div class="container mt30 mb30">
+        <div class="row mg0">
+            <div class="col-xs-2 pl0"><a href="{:DM('www')}"><img src="__NEW_DESIGN__images/dt_logo.png"></a></div>
+            <div class="col-xs-8 pr0" style="height: 48px; line-height: 48px;">
+                <form action="{:DM('s')}" method="get" class="search_goods_shop fr">
+                    <div class="search_tle row mg0">
+                        <input name="keywords" class="col-xs-8 bor_no plr10 fs14" style="height:32px" type="text" placeholder="请输入店铺/商品的搜索关键字" value="" autocomplete="off">
+                        <button class="col-xs-2 btn btn_m bg_red bor_no bor_r0 fs16 fr" style="height:34px;line-height:18px;color:white">搜索</button>
+                    </div>
+                </form>
+
+            </div>
+            {:W('Common/Side/cart')}
+        </div>
+    </div>
+</header>
+
+
+<block name="body"></block>
+<include file="Home@Public:bottom" />
+

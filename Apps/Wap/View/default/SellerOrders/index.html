@@ -1,0 +1,196 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin({ref:true})"></i>
+		</div>
+		<div class="title">
+			我的订单
+		</div>
+		<div class="r">
+		</div>
+	</div>
+</header>
+<section>	
+	<!--主菜单-->
+	<div class="row tabs">
+		<div class="col-20">
+			<div class="tabs-item active" data-active="1">
+				全部
+				<div>(<span class="o_a">0</span>)</div>
+			</div>
+		</div>	
+		<div class="col-20">
+			<div class="tabs-item" data-active="1">
+				待付款
+				<div>(<span class="o_1">0</span>)</div>
+			</div>
+		</div>
+		<div class="col-20">
+			<div class="tabs-item">
+				待发货
+				<div>(<span class="o_2">0</span>)</div>
+			</div>
+		</div>		
+		<div class="col-20">
+			<div class="tabs-item">
+				待收货
+				<div>(<span class="o_3">0</span>)</div>
+			</div>
+		</div>
+		<div class="col-20">
+			<div class="tabs-item">
+				待评价
+				<div>(<span class="o_4">0</span>)</div>
+			</div>
+		</div>
+	</div>		
+	<div class="clearfix"></div>
+	<div class="tabs-content">
+		<div class="tabs-pane active" data-status="">
+			<div class="pagelist"></div>
+			<div class="p10 load-more" onclick="seller_orders_pagelist($(this).closest('.tabs-pane'))">
+				<div class="btn btn-lg btn-block btn-danger btn-trans">加载更多……</div>
+			</div>	
+		</div>
+		<div class="tabs-pane" data-status="1">
+			<div class="pagelist 1"></div>
+			<div class="p10 load-more" onclick="seller_orders_pagelist($(this).closest('.tabs-pane'),1)">
+				<div class="btn btn-lg btn-block btn-danger btn-trans">加载更多……</div>
+			</div>			
+		</div>
+		<div class="tabs-pane" data-status="2">
+			<div class="pagelist 2"></div>
+			<div class="p10 load-more" onclick="seller_orders_pagelist($(this).closest('.tabs-pane'),2)">
+				<div class="btn btn-lg btn-block btn-danger btn-trans">加载更多……</div>
+			</div>			
+		</div>
+		<div class="tabs-pane" data-status="3">
+			<div class="pagelist 3"></div>
+			<div class="p10 load-more" onclick="seller_orders_pagelist($(this).closest('.tabs-pane'),3)">
+				<div class="btn btn-lg btn-block btn-danger btn-trans">加载更多……</div>
+			</div>		
+		</div>
+		<div class="tabs-pane" data-status="4">
+			<div class="pagelist 4"></div>
+			<div class="p10 load-more" onclick="seller_orders_pagelist($(this).closest('.tabs-pane'),4)">
+				<div class="btn btn-lg btn-block btn-danger btn-trans">加载更多……</div>
+			</div>		
+		</div>
+		
+	</div>	
+
+</section>
+<script id="tpl_seller_orders" type="text/html">
+	<% for(i=0;i<data.length;i++){ %>
+	<div class="line-box hover row" onclick="openWin({name:'seller_orders_view',url:'/SellerOrders/view/s_no/<%= data[i].s_no %>'})">
+		<div class="col-70"><span class="b"><%= data[i].buyer.nick %></span></div>
+		<div class="col-30 text-right text-danger"><%= data[i].status_name %></div>	
+	</div>	
+	
+	<div class="line-box-m hover row noicon">
+		<% for(j=0;j<data[i].orders_goods.length;j++){ %>
+			<div class="col-20">
+				<div class="p5" onclick="openWin({name:'goods_view',url:'/Goods/view/id/<%= data[i].orders_goods[j].attr_list_id %>'})"><img src="<%= data[i].orders_goods[j].images %>" alt="商品图片"></div>
+			</div>
+			<% if(data[i].orders_goods.length==1){ %>
+			<div class="col-50">
+				<p><%= data[i].orders_goods[j].goods_name %></p>
+				<p><%= data[i].orders_goods[j].attr_name %></p>
+			</div>
+			<div class="col-30 text-right">
+				<p>￥<%= data[i].orders_goods[j].price %></p>
+				<p>x<%= data[i].orders_goods[j].num %></p>
+			</div>
+			<% }%>
+		<% } %>
+		<div class="clearfix"></div>
+	</div>
+	<div class="line-box noicon">
+		<div class="text-gray fl"><%= data[i].goods_num %> 款商品，运费<%= data[i].express_price_edit %>元，合计 <%= data[i].pay_price %> 元</div>
+	</div>
+	<div class="line-box md10 noicon">
+		<div class="fr">
+			<div class="md8"></div>
+			<% if(data[i].refund>0){ %>
+				<% if(data[i].status>3){ %>
+					<div class="btn btn-xs btn-primary" onclick="openWin({name:'seller_service',url:'/SellerService/index/s_no/<%= data[i].s_no %>'})">存在售后</div>
+				<% } else { %>
+					<div class="btn btn-xs btn-primary" onclick="openWin({name:'seller_refund',url:'/SellerRefund/item_list/s_no/<%= data[i].s_no %>'})">存在退款</div>
+				<% } %>
+			<% } %>
+			<% if(data[i].status==1){ %>
+				<div class="btn btn-xs btn-primary" onclick="openWin({name:'seller_orders_close',url:'/SellerOrders/close/s_no/<%= data[i].s_no %>'})">关闭</div>
+				<div class="btn btn-xs btn-danger" onclick="openWin({name:'orders_edit_price',url:'/SellerOrders/edit_price/s_no/<%= data[i].s_no %>'})">改价</div> 
+			<% }else if (data[i].status==2){ %>
+				<div class="btn btn-xs btn-danger" onclick="openWin({name:'orders_send_express',url:'/SellerOrders/send_express/s_no/<%= data[i].s_no %>',ref:true})">发货</div>
+			<% }else{ %>
+				<div class="btn btn-xs btn-primary" onclick="openWin({name:'seller_orders_view',url:'/SellerOrders/view/s_no/<%= data[i].s_no %>'})">详情</div>
+			<% } %>			
+			
+		</div>
+		<div class="clearfix"></div>
+	</div>
+
+	<% } %>
+</script>
+<include file="Public:d_layer" />
+<script>
+fixBar(1);
+	
+
+var seller_orders_data={apiurl:'/SellerOrders/orders_list',is_openid:1,status:'{$_GET.status}',no_sign:'p,pagesize,imgsize,status,action'};
+
+function seller_orders_pagelist(obj,status){
+	var obj;
+
+	if(status!==undefined) seller_orders_data.status=status;
+	
+	pagelist({
+		obj:obj,
+		data:seller_orders_data,
+		success:function(ret){
+			var html=template('tpl_seller_orders',{data:ret.data.list});			
+			
+			if(obj.data('p')==1){
+				obj.find('.pagelist').html(html);				
+
+			}else{
+				obj.find('.pagelist').append(html);
+			}
+			
+			$('.page.active .o_a').html(ret.data.count.all);
+			$('.page.active .o_1').html(ret.data.count[1]);
+			$('.page.active .o_2').html(ret.data.count[2]);
+			$('.page.active .o_3').html(ret.data.count[3]);
+			$('.page.active .o_4').html(ret.data.count[4]);
+		},
+		error:function(ret){
+			obj.find('.pagelist').html(no_data_text);
+			$('.page.active .o_a').html(ret.data.count.all);
+			$('.page.active .o_1').html(ret.data.count[1]);
+			$('.page.active .o_2').html(ret.data.count[2]);
+			$('.page.active .o_3').html(ret.data.count[3]);
+			$('.page.active .o_4').html(ret.data.count[4]);	
+		},
+	});	
+}
+
+
+$('.page.active .tabs .tabs-item').each(function(index){
+	var obj=$(this);
+	var index;
+	
+	obj.click(function(){	
+		$(this).closest('.tabs').find('.tabs-item').removeClass('active');
+		$(this).addClass('active');
+		$('.page.active .tabs-content .tabs-pane').removeClass('active').eq(index).addClass('active');
+		
+
+		var tag=$('.page.active .tabs-content .tabs-pane').eq(index);
+		seller_orders_pagelist(tag,tag.data('status'));
+	});
+});
+
+$('.page.active .tabs .tabs-item').eq({$_GET['status']?$_GET['status']:0}).click();
+
+</script>

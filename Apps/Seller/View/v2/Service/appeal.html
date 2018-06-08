@@ -1,0 +1,41 @@
+<extend name="Seller@Public:base" />
+<block name="body">
+    <div class="centent_body">
+        <!-- to do your html codeing -->
+        <div class="revision_bg">
+            <div class="container ptb_size_lg clearfix">
+                <!-- 左侧导航 -->
+                <include file="Public:sideNav" />
+                <!-- 左侧导航结束 -->
+
+                <div class="revisionRight pd15" style="width: 1020px"><!-- 右侧内容 -->
+                    <div class="clearfix revisionOrderTab" data-url="">
+                        <a class="orderOption active" href="javascript:;">申诉</a>
+                    </div>
+                    <div class="bg-warning pd10 letter-spacing1">
+                        <i class="fa fa-exclamation-circle fs16 fl text_yellow"></i>
+                        <p class="ml20 mb0">小提示，您当前正在发起申诉, 请如实填写申诉原因。</p>
+                    </div>
+
+                    <include file="serviceGoods" />
+
+                    <!-- 表单 -->
+                    <include file="Public:forms" />
+
+                </div>
+
+            </div>
+        </div>
+        <!-- my codeing over -_-   -->
+
+    </div>
+</block>
+
+<block name="css">
+
+</block>
+
+<block name="script">
+    <!-- to do your javascript codeing -->
+    {$form.js}
+</block>

@@ -1,0 +1,18 @@
+<include file="Public:header" />
+    <div class="page-group">
+        <div id="page-drawluck-index" class="page" data-date="{:date('Y-m-d')}">
+            <header class="bar bar-nav">
+                <a class="icon icon-left pull-left back" href="/"></a>
+                <a class="icon icon-gift pull-right" href="{:U('/drawluck/lists')}"></a>
+                <h1 class="title">{$data.luckdraw_name}</h1>
+            </header>
+            <div class="calendar-box">
+                <div id="my-calendar" data-toggle='date' />
+            </div>
+            <div class="sign-box">
+                <button class="button <eq name='res.code' value='1'>button-danger btn-sign<else />disabled</eq>" style="display: inline-block">立即签到</button>
+            </div>
+        </div>
+    </div>
+<include file="Public:script" />
+<include file="Public:footer" />

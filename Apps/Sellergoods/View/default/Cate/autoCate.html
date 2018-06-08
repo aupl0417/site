@@ -1,0 +1,158 @@
+<div class="auto-cate-nav clearfix">
+	<!--<div class = "fl">按品牌分类</div>-->
+	<div class = "fl active">按价格分类</div>
+</div>
+<div class="auto-cate-content">
+	<!--<div class="brand_cate" >-->
+		<!--<div class="btn btn-primary" onclick="autoBrandCate()">开始分类</div>-->
+		<!--<div class="brand_cate_list" style="display:none;">-->
+			<!--<div class="b_nav clearfix">-->
+				<!--<div class="fl">类目名称</div>-->
+				<!--<div class="fl">数量</div>-->
+			<!--</div>-->
+			<!--<div class="b_content">-->
+
+			<!--</div>-->
+			<!--<div class="b_footer mt20">-->
+				<!--<div class="ptb10 pl10">勾选后，将以这些条件自动在分类中添加对应的分类。</div>-->
+				<!--<div class="pb10 pl10"><a class="btn btn-primary" onclick="saveBrandCate()">保存</a></div>-->
+			<!--</div>-->
+		<!--</div>-->
+	<!--</div>-->
+	<div class="price_cate" style="">
+		<div class="head clearfix">
+			<div class="fl">设置价格</div>
+			<div class="fl">分类名称</div>
+			<div class="fl">操作</div>
+		</div>
+		<div class="cate_list">
+
+			<div class="list clearfix">
+				<div class="fl"><input type="input" value="" style="width:60px;" class="min_price"/> - <input type="input" value="" class="max_price" style="width:60px;"/> 元</div>
+				<div class="fl"><input type="input" value="" class="cate_name"/></div>
+				<div class="fl"><a onclick="delPriceCate(this)" style="cursor:pointer;">删除</a></div>
+			</div>
+		</div>
+		<div class="foot">
+			<div class="pt20 pl10">
+				<a class="btn btn-primary" onclick="addPirceCate()">添加新分类</a>
+				<a class="btn btn-primary" onclick="savePriceCate()">保存</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script id="brand-auto-list" type="text/html">
+	{{each data as value index}}
+	<div class="list clearfix">
+		<div class="wp10 fl pl10"><input type="checkbox" class="b_choice"/></div>
+		<div class="wp30 fl"><input type="input" class="b_cate_name form-control" value="{{value.b_name}}"/><input type="hidden" class="brand_id" value="{{value.id}}"/></div>
+		<div class="wp40 fl pl10"><a>宝贝数({{value.goods_num}})</a></div>
+	</div>
+	{{/each}}
+</script>
+
+<script type="text/javascript">
+	var is_save = 0;
+	$(function () {
+		$('.auto-cate-nav div').click(function(){
+			var Index = $(this).index();
+			//给菜单添加选择样式
+			$(this).addClass('active').siblings().removeClass('active');
+			//显示对应的div
+			$('.auto-cate-content').children('div').eq(Index).fadeIn().siblings('div').hide();
+		});
+	});
+	//按品牌查找分类
+	function autoBrandCate(){
+		api({
+			data:{apiurl:'/SellerGoodsManage/category_auto_brand',is_openid:1}
+		},function(ret){
+			if(ret.code==1){
+				var html = template('brand-auto-list',{data:ret.data});
+				$('.brand_cate_list .b_content').html(html);
+				$(".brand_cate_list").show();
+			}
+		});
+	}
+	//保存品牌分类
+	function saveBrandCate(){
+		if(is_save){
+			return false;
+		}
+		var num = $(".brand_cate .b_choice:checked").length;
+		if(num > 0) {
+			var cate_names  = $(".brand_cate .b_choice:checked").map(function(){
+
+				var cate_name =  $(this).parent().parent().find('div .b_cate_name').val();
+				var brand_id =  $(this).parent().parent().find('div .brand_id').val();
+				var str = brand_id+','+cate_name;
+				return str;
+				//return $(this).parent().parent().find('div .b_cate_name').val();
+			}).get().join('|');
+			is_save = 1;
+            api({
+                data:{apiurl:'/SellerGoodsManage/category_brand_adds',is_openid:1,'category_names':cate_names}
+            },function(ret){
+				talert({status:ret.code,msg:ret.msg});
+				is_save = 0;
+                if(ret.code==1){
+                    setTimeout(function(){
+						parent.cate_reload();
+                    },1000);
+                }
+            });
+
+		}else{
+            talert({status:0,msg:'请先勾选需要添加的分类'});
+        }
+
+
+
+	}
+	//添加新的价格分类
+	function addPirceCate(){
+		var html = '<div class="list clearfix">'+
+						'<div class="fl"><input type="input" value="" style="width:60px;" class="min_price"/> - <input type="input" value="" class="max_price" style="width:60px;"/> 元</div>'+
+						'<div class="fl"><input type="input" value="" class="cate_name"/></div>'+
+						'<div class="fl"><a onclick="delPriceCate(this)">删除</a></div>'+
+					'</div>';
+		$(".price_cate .cate_list").append(html);
+	}
+	//删除价格分类
+	function delPriceCate(obj){
+		$(obj).parent().parent().remove();
+	}
+	//保存价格分类
+	function savePriceCate(){
+		if(is_save){
+			return false;
+		}
+		var price_cates = $(".price_cate .cate_list .list .min_price").map(function(){
+			var min_price = $(this).val();
+			var max_price = $(this).parent().find('.max_price').val();
+			var cate_name = $(this).parent().parent().find('div .cate_name').val();
+			var str = min_price+','+max_price+','+cate_name;
+			return str;
+		}).get().join('|');
+		if(!price_cates){
+			talert({status:0,msg:'请至少填写一项'});
+			return false;
+		}
+		is_save = 1;
+		api({
+			data:{apiurl:'/SellerGoodsManage/category_price_adds',is_openid:1,'price_cates':price_cates}
+		},function(ret){
+			talert({status:ret.code,msg:ret.msg});
+			is_save = 0;
+			if(ret.code == 1){
+				setTimeout(function(){
+					parent.cate_reload();
+				},1000);
+			}
+		});
+	}
+</script>
+
+
+

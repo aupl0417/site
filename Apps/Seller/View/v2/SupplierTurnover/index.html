@@ -1,0 +1,90 @@
+<extend name="Seller@Public:base" />
+<block name="body">
+    <div class="centent_body">
+        <!-- to do your html codeing -->
+        <div class="revision_bg">
+            <div class="container ptb_size_lg clearfix">
+                <!-- 左侧导航 -->
+                <include file="Supplier:sideNav" />
+                <!-- 左侧导航结束 -->
+
+                <div class="revisionRight pd15" style="widtd: 1020px"><!-- 右侧内容 -->
+
+                    <div class="clearfix revisionOrderTab" data-url="">
+                        <h4 class="pb10 solid_b">营业额明细</h4>
+                    </div>
+                    <include file="supplier_nav" />
+
+
+                    <div class="tab-content tenants-tab-box">
+                        <div class="block-title">
+                            <ul class="nav nav-tabs tenants-nav-box bor_no pt0" data-toggle="tabs">
+                                <li class="active"><a href="{:U('/SupplierTurnover')}" class="c_black" >订单结算明细</a></li>
+                                <li><a href="{:U('/SupplierTurnover/withdrawals_list')}" class="c_black" >提现明细</a></li>
+                            </ul>
+                        </div>
+						
+						<div class="tab-pane active" id="example-tabs2-activity">
+							<notempty name="sale_list.data">
+							<table>
+								<tr>
+									<td>订单编号</td>
+									<td>下单时间</td>
+									<td>交易方式</td>
+									<td>成本价</td>
+									<td>加价倍数</td>
+									<td>返还比例</td>
+									<td>交易价(含运费)</td>
+									<td>返还乐兑宝</td>
+									<td>商家结算额(含运费)</td>
+								</tr>
+								<volist name="sale_list.data.list" id="vo">
+								<tr>
+									<td>{$vo.s_no}</td>
+									<td>{$vo.atime}</td>
+									<td>{$vo.score_type_name}</td>
+									<td>{$vo[orders_goods][0][price_purchase]}</td>
+									<td>{$vo[orders_goods][0][multiply]}</td>
+									<td>{$vo[orders_goods][0][score_ratio]}</td>
+									<td>{$vo.pay_price}</td>
+									<td>{$vo[orders_goods][0][score]}</td>
+									<td>+{$vo.settlement}</td>
+								</tr>
+								</volist>
+							</table>
+							<else/>
+								暂无信息
+							</notempty>
+						</div>
+						
+						
+						
+                    </div>
+
+
+<div style="text-align:center;">{$sale_list.data.page.page}</div>
+
+
+
+
+                    <include file="right" />
+
+                </div>
+
+            </div>
+        </div>
+        <!-- my codeing over -_-   -->
+
+    </div>
+</block>
+
+<block name="css">
+
+</block>
+
+<block name="script">
+    <!-- to do your javascript codeing -->
+    <Script>
+    </Script>
+
+</block>

@@ -1,0 +1,30 @@
+<h4 class="text-center mt30 pt30">您还没有店铺，欢迎加入我们，给您带来不一样的精彩！</h4>
+<eq name="account.type" value="0">
+	<div class="text-center pd30">
+		<a href="javascript:;" class="btn btn-primary" onclick="alertTips();">我要开店</a>
+	</div>
+	<div class="pd30" style="width:500px;margin:0 auto;">
+		<div class="bg-warning pd10 mb20">
+			<i class="fa fa-exclamation-circle fs16 fl text_yellow"></i>
+			<p class="ml20 mb0">您当前为个人会员身份，将创建个人店铺，推荐您认证为企业会员享受更多店铺特权。</p>
+			<i class="fa fa-exclamation-circle fs16 fl text_yellow"></i>
+			<p class="ml20 mb0">个人会员申请开店后，无法升级企业会员</p>
+		</div>
+		<p><a href="{:DM('faq', '/view')}?id=862" target="_blank" class="text_blue">个人开店与企业开店的区别？</a></p>
+		<p><a href="{:DM('faq', '/view')}?id=861" target="_blank" class="text_blue">企业开店的优势。</a></p>
+	</div>
+<else />
+<div class="text-center pd30">
+	<a href="{:U('/opens/protocol')}" class="btn btn-primary">我要开店</a>
+</div>
+</eq>
+<script>
+function alertTips() {
+	vmodal({
+		msg:'<h4>个人会员申请开店后，无法升级企业会员</h4><a href="{:U("/opens/protocol")}" class="btn btn-rad btn-trans btn-primary">继续开店</a> <div class="btn btn-rad btn-trans btn-default" data-dismiss="modal">容我考虑考虑</div>',
+		class:'text-center',
+		width:'600px',
+		footer:false,
+	});
+}
+</script>

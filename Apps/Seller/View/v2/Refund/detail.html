@@ -1,0 +1,304 @@
+<extend name="Seller@Public:base" />
+<block name="body">
+    <div class="centent_body">
+        <!-- to do your html codeing -->
+        <div class="revision_bg">
+            <div class="container ptb_size_lg clearfix">
+                <!-- 左侧导航 -->
+                <include file="Public:sideNav" />
+                <!-- 左侧导航结束 -->
+
+                <div class="revisionRight pd15" style="width: 1020px"><!-- 右侧内容 -->
+                    <div class="clearfix revisionOrderTab" data-url="">
+                        <a class="orderOption active" href="javascript:;">退款详情</a>
+                    </div>
+
+                    <div class="content mt30">
+                        <table class="no-border mb20 bg_f1"><!-- 类型说明 -->
+                            <tbody class="no-border-y">
+                            <tr class="text-center">
+                                <td width="75%" style="padding:0">
+                                    <table class="no-border">
+                                        <tbody class="no-border-y">
+                                        <td width="13%"></td>
+                                        <td width="30%">商品信息</td>
+                                        <td width="12%">退积分</td>
+                                        <td width="10%">退款数量</td>
+                                        <td width="12%">退款金额</td>
+                                        <td width="18%">退运费</td>
+                                        </tbody>
+                                    </table>
+                                </td>
+                                <td width="12%">
+                                    退款类型
+                                </td>
+                                <td width="13%">
+                                    退款状态
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table><!-- 类型说明结束 -->
+
+
+                        <table class="revisionTable table"><!-- 订单信息 -->
+                            <tbody class="bg_white">
+                            <tr class="text-center">
+                                <td style="padding:0; width:75%">
+                                    <table class="no-border table-hover">
+                                        <tbody class="no-border-y">
+                                        <tr><!-- 同店铺第一个商品 -->
+                                            <td width="13%">
+                                                <a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', ['id' => $data['orders_goods']['attr_list_id']])}">
+                                                    <img src="{:myurl($data['orders_goods']['images_'], 80)}" class="img-thumbnail"></a>
+                                            </td>
+                                            <td valign="top" width="30%" class="text-left">
+                                                <a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', ['id' => $data['orders_goods']['attr_list_id']])}">{$data.orders_goods.goods_name}</a>
+                                                <div class="md5 text-gray mt5">颜色/尺码：{$data.orders_goods.attr_name}</div>
+                                            </td>
+                                            <td width="12%">
+                                                <span class="text_yellow">{$data.score}</span>
+                                            </td>
+                                            <td width="10%">×{$data.num}</td>
+                                            <td width="12%">
+                                                {$data.money}
+                                            </td>
+                                            <td width="18%">
+                                                {$data.refund_express}
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                                <td width="12%" style="vertical-align: middle">
+                                    {$data.type_name}
+                                </td>
+                                <td width="13%" style="vertical-align: middle">
+                                    {$data.status_name}
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table><!-- 订单信息结束 -->
+                    </div>
+                    <div class="row" style="border-bottom: solid 1px #F0F0F0;border-top: solid 1px #F0F0F0; padding: 30px 0">
+                        <div class="col-md-4 col-sm-6 text-center">
+                            <h4>&nbsp;</h4>
+                            <switch name="data.status">
+                                <case value="1">
+                                    <eq name="data.orders_status" value="3">
+                                        <a href="{:U('/refund/agree', ['id' => $data['r_no'],'sid'=>2])}" title="同意退款" class="btn btn-sm btn-primary btn-rad btn-trans">同意退款</a>
+                                        <div class="mt5">
+                                            <a href="{:U('/refund/refuse', ['id' => $data['r_no'], 'sid' => 2])}" title="拒绝退款" class="btn btn-sm btn-primary btn-rad btn-trans">拒绝退款</a>
+                                        </div>
+                                        <else/>
+                                        <a href="{:U('/refund/agree', ['id' => $data['r_no']])}" title="同意退款" class="btn btn-sm btn-primary btn-rad btn-trans">同意退款</a>
+                                        <!--<div class="mt5">-->
+                                            <!--<a href="{:U('/refund/refuse', ['id' => $data['r_no']])}" title="拒绝退款" class="btn btn-sm btn-primary btn-rad btn-trans">拒绝退款</a>-->
+                                        <!--</div>-->
+                                    </eq>
+                                    <div class="mt5 text-gray countdown-box" data-remark="自动同意" data-time="{:str_replace('-', '/', $data['next_time'])}"></div>
+                                </case>
+                                <case value="2">
+                                    <div class="btn btn-sm btn-primary btn-rad btn-trans">等待买家操作</div>	<!-- 拒绝退款 -->
+                                    <div class="mt5 text-gray countdown-box" data-remark="自动取消" data-time="{:str_replace('-', '/', $data['next_time'])}"></div>
+                                </case>
+                                <case value="3">
+                                    <eq name="data.orders_status" value="3">
+                                        <a href="{:U('/refund/agree', ['type' => 'agree', 'id' => $data['r_no'],'sid'=>2])}" title="同意退款" class="btn btn-sm btn-primary btn-rad btn-trans">同意退款</a>
+                                        <div class="mt5">
+                                            <a href="{:U('/refund/refuse', ['id' => $data['r_no'], 'sid' => 2])}" title="拒绝退款" class="btn btn-sm btn-primary btn-rad btn-trans">拒绝退款</a>
+                                        </div>
+                                        <else/>
+                                        <a href="{:U('/refund/agree', ['id' => $data['r_no']])}" title="同意退款" class="btn btn-sm btn-primary btn-rad btn-trans">同意退款</a>
+                                        <!--<div class="mt5">-->
+                                            <!--<a href="{:U('/refund/refuse', ['id' => $data['r_no']])}" title="拒绝退款" class="btn btn-sm btn-primary btn-rad btn-trans">拒绝退款</a>-->
+                                        <!--</div>-->
+                                    </eq>
+                                    <div class="mt5 text-gray countdown-box" data-remark="自动同意" data-time="{:str_replace('-', '/', $data['next_time'])}"></div>
+                                </case>
+                                <case value="4">
+                                    <div class="btn btn-sm btn-primary btn-rad btn-trans">等待买家操作</div>	 <!-- 同意退款 -->
+                                    <div class="mt5 text-gray countdown-box" data-remark="自动取消" data-time="{:str_replace('-', '/', $data['next_time'])}"></div>
+                                </case>
+                                <case value="5">
+                                    <a href="{:U('/refund/receipt', ['id' => $data['r_no'], 'sid' => 2])}" title="已收到商品" class="btn btn-sm btn-primary btn-rad btn-trans">已收到商品</a>
+                                    <div class="mt5">
+                                        <a href="{:U('/refund/appeal', ['id' => $data['r_no'], 'sid' => 2])}" title="未收到商品" class="btn btn-sm btn-primary btn-rad btn-trans">未收到商品</a>
+                                    </div>
+                                    <div class="mt5 text-gray countdown-box" data-remark="自动收货" data-time="{:str_replace('-', '/', $data['next_time'])}"></div>
+                                </case>
+                                <case value="6">
+                                    <div class="btn btn-sm btn-primary btn-rad btn-trans">卖家寄出商品</div>
+                                </case>
+                                <case value="10">
+                                    <div class="btn btn-sm btn-primary btn-rad btn-trans">等待仲裁</div>
+                                </case>
+                                <case value="20">
+                                    <div class="btn btn-sm btn-primary btn-rad btn-trans">退款已取消</div>
+                                </case>
+                                <case value="100">
+                                    <div class="btn btn-sm btn-primary btn-rad btn-trans">退款已完成</div>
+                                </case>
+                            </switch>
+                        </div>
+                        <div class="col-md-4 col-sm-6" style="border-right: solid 1px #F0F0F0; border-left: solid 1px #F0F0F0">
+                            <h4>物流信息</h4>
+                            <notempty name="data.express_company_id">
+                                <div class="text-center mt30">
+                                    <eq name="data.express_company_id" value="361">
+                                        <a href="javascript:;" class="btn btn-sm btn-primary btn-rad btn-trans">无需物流</a>
+                                        <else />
+                                        <a data-type="modal" data-url="{:U('/tool/express', ['company' => $data['express_company_id'], 'code' => $data['express_code']])}" data-title="物流信息"  href="javascript:;" class="btn btn-sm btn-primary btn-rad btn-trans opreating">查看物流信息</a>
+                                    </eq>
+                                </div>
+                                <else />
+                                {:W('Common/Builder/nors', array('param' => array('text' => '暂无物流信息！')))}
+                            </notempty>
+                        </div>
+                        <div class="col-md-4 col-sm-6">
+                            <h4>申请退款照片</h4>
+                            <notempty name="data.images">
+                                <php>
+                                    $images	=	explode(',',rtrim($data['images'], ','));
+                                </php>
+                                <ul class="images-select-box">
+                                    <volist name="images" id="vo">
+                                        <li style="width: 100px;height: 100px;padding: 0;" id="" data-path="{$vo}" class="text-center">
+                                            <div style="width: 100px; height: 100px" class="li-img-box">
+                                                <a href="{$vo}" class="image-zoom" title="大图">
+                                                    <img style="width: 80px" src="{:myurl($vo, 80)}">
+                                                </a>
+                                            </div>
+                                        </li>
+                                    </volist>
+                                </ul>
+                                <else />
+                                {:W('Common/Builder/nors', array('param' => array('text' => $data['msg'])))}
+                            </notempty>
+                        </div>
+                    </div>
+
+                    <div class="row" style="padding: 30px 0">
+                        <div class="col-md-4 col-sm-6">
+                            <h4>订单信息</h4>
+                            <p>
+                                退款编号：{$data.r_no}
+                            </p>
+                            <p>
+                                申请时间：{$data.atime}
+                            </p>
+                            <p>
+                                买家昵称：{$data.user.nick}
+                            </p>
+                            <p class="word-break">
+                                申请理由：{$data.reason}
+                            </p>
+                        </div>
+                        <div class="col-md-8 col-sm-6" style="border-left: solid 1px #F0F0F0;">
+                            <h4>退款日志</h4>
+                            <notempty name="data.logs">
+                                <div class="pd20" id="express" style="max-height: 500px;overflow: auto;">
+                                    <div class="ml40 pl20">
+                                        <div class="block-transparent">
+                                            <ul class="timeline">
+                                                <volist name="data.logs" id="vo">
+                                                    <li>
+                                                        <i class="fa fa-angle-double-down green"></i>
+                                                        <span class="date">{$vo.atime}</span>
+                                                        <div class="content text-break-all">
+															<div class="ft16 md10">
+																<gt name="vo.uid" value="0">
+																	<if condition="$vo['uid'] eq $_SESSION['user']['id']">
+																	<span class="text_yellow">(<i class="fa fa-user"></i>自己)</span>
+																	<else />
+																	<span class="text-warning">(<i class="fa fa-user"></i>买家)</span>
+																	</if>
+																<else />
+																	<span class="text-danger">(<i class="fa fa-user"></i>乐兑客服)</span>
+																</gt>
+																{$vo.status_name}
+															</div>
+                                                            <!--<p><strong><notempty name="vo.user.nick">{$vo.user.nick}<else />雇员操作</notempty></strong></p>-->
+                                                            <p>{$vo.remark}</p>
+                                                            <notempty name="vo.images">
+                                                                <div class="mt10">
+                                                                    <volist name="vo.images" id="img">
+                                                                        <a href="{$img}" class="image-zoom mr10" title="大图">
+                                                                            <img src="{:myurl($img, 80)}">
+                                                                        </a>
+                                                                    </volist>
+                                                                </div>
+                                                            </notempty>
+															
+															<if condition="$vo['express_code'] neq '' or $vo['address'] neq '' or $vo['num'] gt 0 or $vo['money'] gt 0 or $vo['refund_express'] gt 0">
+															<div class="logs-sys-box">
+																<notempty name="vo.express_code"><div>物流公司：{$data.express_company}，运单号：{$vo.express_code}</div></notempty>
+																<notempty name="vo.address"><div>退货地址：{$vo.address}</div></notempty>
+																<div>
+																	<gt name="vo.num" value="0">退{$vo.num}件商品；</gt>
+																	<gt name="vo.money" value="0">退商品金额￥{$vo.money}；</gt>
+																	<gt name="vo.refund_express" value="0">退运费￥{$vo.refund_express}；</gt>
+																</div>
+															</div>
+															</if>															
+                                                        </div>
+                                                    </li>
+                                                </volist>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <else />
+                                {:W('Common/Builder/nors', array('param' => array('text' => $data['msg'])))}
+                            </notempty>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- my codeing over -_-   -->
+
+    </div>
+</block>
+
+<block name="css">
+
+</block>
+
+<block name="script">
+    <!-- to do your javascript codeing -->
+    <script>
+        $(document).ready(function () {
+		    $(".opreating").click(function() {
+                var d 	=	$(this).data();
+                vmodal({
+                    title:d.title,
+                    url:d.url,
+                });
+            });
+			
+            if ($('.countdown-box').size() > 0) {
+                var data = $('.countdown-box').data();
+                var timer	=	setInterval(function countDown(){
+                    var EndTime= new Date(data.time);
+                    var NowTime = new Date();
+                    var t =EndTime.getTime() - NowTime.getTime();
+                    var d=0;
+                    var h=0;
+                    var m=0;
+                    var s=0;
+                    if(t>=0){
+                        d=Math.floor(t/1000/60/60/24);
+                        h=Math.floor(t/1000/60/60%24);
+                        m=Math.floor(t/1000/60%60);
+                        s=Math.floor(t/1000%60);
+                    } else {
+                        setInterval(timer);
+                    }
+                    var html = d+"天"+h+"小时"+m+"分"+s+"秒后" + data.remark;
+                    $('.countdown-box').html(html);
+                },0);
+            }
+        });
+    </script>
+</block>

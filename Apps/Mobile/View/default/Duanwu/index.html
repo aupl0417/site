@@ -1,0 +1,154 @@
+<include file="Public:header" />
+<link rel="stylesheet" href="../Public/duanwu/css/style.css">
+		<div class="page-group">
+			<div class="page" id="page-duanwu-index">
+				<!-- 标题栏 -->
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left back" href="/"></a>
+					<h1 class="title">端午节活动</h1>
+				</header>
+
+				<!-- 导航条 -->
+				<include file="Public:nav" />
+		
+				<!-- 这里是页面内容区 -->
+				<div class="content pull-to-refresh-content">
+					<!-- 默认的下拉刷新层 -->
+					<div class="pull-to-refresh-layer">
+						<div class="preloader"></div>
+						<div class="pull-to-refresh-arrow"></div>
+					</div>
+					
+					
+					<div class="bgimg"><img src="../Public/duanwu/images/1.jpg"/></div>
+					<div class="bgimg"><img src="../Public/duanwu/images/2.jpg"/></div>
+					<div class="bgimg"><img src="../Public/duanwu/images/3.jpg"/></div>
+					<div class="bgimg">
+						<a href="{$goods[0][goods][url]}">
+							<img src="../Public/duanwu/images/5.jpg"/>
+						</a>
+					</div>
+					<div class="bgimg">
+						<a href="{$goods[1][goods][url]}">
+							<img src="../Public/duanwu/images/6.jpg"/>
+						</a>
+					</div>
+					<div class="bgimg">
+						<a href="{$goods[2][goods][url]}">
+							<img src="../Public/duanwu/images/7.jpg"/>
+						</a>
+					</div>
+					<div class="bgimg">
+						<a href="{$goods[3][goods][url]}">
+							<img src="../Public/duanwu/images/8.jpg"/>
+						</a>
+					</div>
+					<div class="bgimg">
+						<a href="{$goods[4][goods][url]}">
+							<img src="../Public/duanwu/images/9.jpg"/>
+						</a>
+					</div>
+					<div class="bgimg">
+						<a href="{$goods[5][goods][url]}">
+							<img src="../Public/duanwu/images/10.jpg"/>
+						</a>
+					</div>
+					<div class="bgimg">
+						<a href="{$goods[6][goods][url]}">
+							<img src="../Public/duanwu/images/11.jpg"/>
+						</a>
+					</div>
+					<div class="bgimg"><img src="../Public/duanwu/images/12.jpg"/></div>
+					<!--端午必备-->
+					<div class="green">
+						<div class="link-goods clearfix">
+							<volist name="goods" id="vo" offset="7" length='8'>
+								<div class="fl link-goods-item">
+									<img src = "../Public/duanwu/images/18.png" class="itl"/>
+									<img src = "../Public/duanwu/images/19.png" class="itr"/>
+									<img src = "../Public/duanwu/images/16.png" class="ibl"/>
+									<img src = "../Public/duanwu/images/17.png" class="ibr"/>
+									<a href="{$vo.goods.url}" target="_blank">
+									
+									<img class="lazyload" data-sizes="auto" data-src="{$vo.goods.images}" src="__PUBLIC__/images/nopic.png"  alt="{$vo.goods.goods_name}" width="100%">
+									<div class="goods_name">
+										{$vo.goods.goods_name|default='读取失败'}
+									</div>
+									<div class="goods_price clearfix">
+										<div class="fl"><span>{$vo.goods.price}</span></div>
+										<div class="fr">抢购</div>
+									</div>
+									</a>
+								</div>
+							</volist>
+						</div>
+					</div>
+					<div class="bgimg"><img src="../Public/duanwu/images/13.jpg"/></div>
+					<!--品牌精选-->
+					<div class="violet">
+						<div class="link-goods clearfix">
+							<volist name="goods" id="vo" offset="15" length='16'>
+								<div class="fl link-goods-item">
+									<img src = "../Public/duanwu/images/18.png" class="itl"/>
+									<img src = "../Public/duanwu/images/19.png" class="itr"/>
+									<img src = "../Public/duanwu/images/16.png" class="ibl"/>
+									<img src = "../Public/duanwu/images/17.png" class="ibr"/>
+									<a href="{$vo.goods.url}" target="_blank">
+									
+									<img class="lazyload" data-sizes="auto" data-src="{$vo.goods.images}" src="__PUBLIC__/images/nopic.png"  alt="{$vo.goods.goods_name}" width="100%">
+									<div class="goods_name">
+										{$vo.goods.goods_name|default='读取失败'}
+									</div>
+									<div class="goods_price clearfix">
+										<div class="fl"><span>{$vo.goods.price}</span></div>
+										<div class="fr">抢购</div>
+									</div>
+									</a>
+								</div>
+							</volist>
+						</div>
+					</div>
+					<div class="bgimg"><img src="../Public/duanwu/images/14.jpg"/></div>
+					<!--猜你喜欢-->
+					<div class="orange">
+						<div class="link-goods clearfix">
+							<volist name="goods" id="vo" offset="31" length='12'>
+								<div class="fl link-goods-item">
+									<img src = "../Public/duanwu/images/18.png" class="itl"/>
+									<img src = "../Public/duanwu/images/19.png" class="itr"/>
+									<img src = "../Public/duanwu/images/16.png" class="ibl"/>
+									<img src = "../Public/duanwu/images/17.png" class="ibr"/>
+									<a href="{$vo.goods.url}" target="_blank">
+									
+									<img class="lazyload" data-sizes="auto" data-src="{$vo.goods.images}" src="__PUBLIC__/images/nopic.png"  alt="{$vo.goods.goods_name}" width="100%">
+									<div class="goods_name">
+										{$vo.goods.goods_name|default='读取失败'}
+									</div>
+									<div class="goods_price clearfix">
+										<div class="fl"><span>{$vo.goods.price}</span></div>
+										<div class="fr">抢购</div>
+									</div>
+									</a>
+								</div>
+							</volist>
+						</div>
+					</div>
+					<div class="bgimg">
+						<a class="top">
+							<img src="../Public/duanwu/images/15.jpg"/>
+						</a>
+					</div>
+					
+					
+					
+					
+					
+					
+				
+				</div>
+			</div>
+		</div>	
+		
+
+<include file="Public:script" />
+<include file="Public:footer" />

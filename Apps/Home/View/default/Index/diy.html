@@ -1,0 +1,406 @@
+<extend name="Home@Public:base2" />
+<block name="body">
+	<!-- 加入广告展示统计 -->
+
+	<div class="centent_body">
+	{:W('Common/Ad/index')}
+		<!-- 购物车右侧侧边栏 -->
+		{:W('Common/Side/allRight')}
+
+		<!-- 监听栏 -->
+		<div id="left_ladder" class="fix left_ladder dn">
+			<a class="re db" href="javascript:;">
+				<span class="line34 text-center bg_white db fs14">1F</span>
+				<div class="line34 text-center bg_white text_red ab">美妆</div>
+			</a>
+			<a class="re db" href="javascript:;">
+				<span class="line34 text-center bg_white db fs14">2F</span>
+				<div class="line34 text-center bg_white text_red ab">服饰</div>
+			</a>
+			<a class="re db" href="javascript:;">
+				<span class="line34 text-center bg_white db fs14">3F</span>
+				<div class="line34 text-center bg_white text_red ab">文化</div>
+			</a>
+			<a class="re db" href="javascript:;">
+				<span class="line34 text-center bg_white db fs14">4F</span>
+				<div class="line34 text-center bg_white text_red ab">食品</div>
+			</a>
+			<a class="re db" href="javascript:;">
+				<span class="line34 text-center bg_white db fs14">5F</span>
+				<div class="line34 text-center bg_white text_red ab">手机</div>
+			</a>
+			<a class="re db" href="javascript:void(0);" >
+				<span class="line34 text-center bg_white db fs14">↑</span>
+				<div class="line34 text-center bg_white text_red ab" onclick="$('body,html').animate({scrollTop:0},1000)">顶部</div>
+			</a>
+		</div>
+		<!-- 大标题类目 -->
+		
+		<div class="category mt20">
+			<div class="container re">
+				<div class="fl re">
+					<!-- 菜单 -->
+					{:W('Common/Side/newmenu')}
+				</div>
+				<a href="{:DM('www')}"><span class="hover_red active_text_red">首页</span></a>
+				{:W('Common/Side/nav')}
+		
+				<div class="ab bg_white right_notice">
+					<div class="fr w215">
+						<div class="solid_b pd7">
+							<div class="clearfix">
+								<img class="mg10 mt5 ml25 bor_der pull-left" width="60" height="60" style="border-radius:100px" src="{:myurl($_SESSION['user']['face'], 60)}">
+								<h5 class="mt35">嗨，你好！</h5>	
+							</div>
+							
+							<p class="text-center mb5">
+								<empty name="Think.session.user">
+								<a class="btn btn-xs btn-danger btn_m plr20 mr15" href="{:DM('user', '/login')}">登录</a>
+								<a class="btn btn-xs btn-danger btn_m plr20" href="{:DM('user', '/register')}">注册</a>
+								<else />
+									<a href="{:DM('my')}" class="btn btn-rad btn-xs btn-danger btn_m plr20">{$Think.session.user.nick}</a>
+								</empty>
+							</p>
+						</div>
+						<div class="tab-container tab_li_sty tab_size width333"> 
+							<ul class="nav nav-tabs solid_b plr5">
+								<li class="active"><a href="#news" data-toggle="tab">新闻</a></li>
+								<li><a href="#gonggao" data-toggle="tab">公告</a></li>
+								<li><a href="#guize" data-toggle="tab">规则</a></li>
+							</ul>							
+							<div class="tab-content mb0 pd10">
+								<div data-param="num=3" data-type="async" data-box="work-box" data-head="{:enCryptRestUri('/Index/getNew')}" class="tab-pane over active work-box" id="news" style="height:70px"></div>
+								<div data-param="p=1&pagesize=3" data-type="async" data-box="news-box" data-head="{:enCryptRestUri('/Index/getNews')}" class="tab-pane over news-box" id="gonggao" style="height:70px"></div>
+								<div data-param="num=3" data-type="async" data-box="faq-box" data-head="{:enCryptRestUri('/Index/getFaq')}" class="tab-pane over faq-box" id="guize" style="height:70px"></div>
+							</div>
+						</div>
+						<table class="text-center bg_white solid_t table_td_style">
+							<tbody>
+								<tr>
+									<td width="33.333%">
+										<a href="javascript:;" onclick="alertNotLick('话费充值');">
+											<img src="__IMAGES__/ads1/right_notice_1.png">
+											<p class="mb5">话费充值</p>
+										</a>
+									</td>
+									<td width="33.333%">
+										<a href="javascript:;" onclick="alertNotLick('游戏充值');">
+											<img src="__IMAGES__/ads1/right_notice_2.png">
+											<p class="mb5">游戏充值</p>
+										</a>
+									</td>
+									<td width="33.333%">
+										<a href="javascript:;" onclick="alertNotLick('礼品卡');">
+											<img src="__IMAGES__/ads1/right_notice_3.png">
+											<p class="mb5">礼品卡</p>
+										</a>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<a href="javascript:;" onclick="alertNotLick('加油卡');">
+											<img src="__IMAGES__/ads1/right_notice_4.png">
+											<p class="mb5">加油卡</p>
+										</a>
+									</td>
+									<td>
+										<a href="javascript:;" onclick="alertNotLick('水电煤');">
+											<img src="__IMAGES__/ads1/right_notice_5.png">
+											<p class="mb5">水电煤</p>
+										</a>
+									</td>
+									<td>
+										<a href="javascript:;" onclick="alertNotLick('游戏点卡');">
+											<img src="__IMAGES__/ads1/right_notice_6.png">
+											<p class="mb5">游戏点卡</p>
+										</a>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<a href="javascript:;" onclick="alertNotLick('话费充值卡');">
+											<img src="__IMAGES__/ads1/right_notice_7.png">
+											<p class="mb5">话费充值卡</p>
+										</a>
+									</td>
+									<td>
+										<a href="javascript:;" onclick="alertNotLick('充值');" class="text_red fs16">更多</a>
+									</td>
+									<td></td>
+								</tr>
+							</tbody>
+						</table>
+						
+					</div>
+				</div>	
+			</div>
+			<div class="mt-3" style="border-bottom:3px solid #c81623"></div>	
+		</div>
+
+		<!-- 首页轮播 -->
+		<div class="re over bg_red" style="height:432px">
+			<div id="carousel-example-klioj" class="carousel slide" data-ride="carousel">
+				<ol class="carousel-indicators slider-btn">
+					<foreach name="slider.ads" key="key" item="vo">
+						<li data-target="#carousel-example-klioj" data-slide-to="{$key}"<eq name="key" value="0"> class="active"></eq></li>
+					</foreach>
+				</ol>
+				<div class="carousel-inner slider-images" role="listbox">
+					<foreach name="slider.ads" key="key" item="vo">
+						<eq name="key" value="0">
+							<div class="item active">
+								<a target="_balnk" style="width:100%;display:block;height:435px;background:url({$vo.images});background-position:center center" href="{:DM('click')}?act={:enCryptRestUri($vo['id'])}"></a>
+							</div>
+						<else/>
+							<div class="item">
+								<a target="_balnk" style="width:100%;display:block;height:435px;background:url({$vo.images});background-position:center center" href="{:DM('click')}?act={:enCryptRestUri($vo['id'])}"></a>
+							</div>
+						</eq>
+					</foreach>
+				</div>
+				<a class="left carousel-control" href="#carousel-example-klioj" role="button" data-slide="prev">
+					<span class="fa glyphicon-chevron-left fa-chevron-left" aria-hidden="true"></span>
+				</a>
+				<a class="right carousel-control" href="#carousel-example-klioj" role="button" data-slide="next">
+					<span class="fa glyphicon-chevron-right fa-chevron-right" aria-hidden="true"></span>
+				</a>
+			</div>
+		</div>
+
+		<!-- 主体内容 -->
+		<div class="container mt10">
+			<!-- 内容部分顶部4张图 -->
+			<include file="Diy1:main_top" />
+			
+			<!-- 新品 -->
+			<include file="Diy1:new" />
+			
+			<!-- 精品 -->
+			<include file="Diy1:fine" />
+			
+			
+			
+			<!-- 1F -->
+			<include file="Diy1:floor1" />
+			
+			
+			<!-- 2F -->
+			<include file="Diy1:floor2" />
+
+			<!-- 3F -->
+			<include file="Diy1:floor3" />
+
+
+			<!-- 4F -->
+			<include file="Diy1:floor4" />
+			
+
+			<!-- 5F -->
+			<include file="Diy1:floor5" />
+
+			
+		</div>					
+	</div>
+</block>
+
+<block name="script">
+<script>
+$(document).ready(function(){
+	//顶部，静态化时需要用到
+	ajax_topbar();
+	
+	//其他接口
+	$("[data-type='async']").each(function() {
+		var d	=	$(this).data();
+		var html=	'';
+		var data={};
+		if(d.param != undefined) {
+			data = d.param;
+		}
+		ajax_post({
+			url: '/run',
+			data:data,
+			headers : {Action : d.head},
+		},function(res) {
+			if(res.code == 1) {
+				$("." + d.box).html(template(d.box, {data:res.data}));
+			} else {
+				$("." + d.box).html('<div class="nors text-center text_77 mt30 mb30 pd30">暂无数据</div>');
+			}
+		});
+	});
+	
+	//广告
+	$("[data-type='ads']").each(function() {
+		var d	=	$(this).data();
+		var ac	=	d.api == 'ad' ? '{:enCryptRestUri("/Index/getAd")}' : '{:enCryptRestUri("/Index/getAds")}';
+		var box	=	d.box.split(',');
+		ajax_post({
+			url:'/run',
+			data:d.param,
+			headers:{Action : ac},
+		},function(res) {
+			if(res.code == 1) {
+				for(var i = 0; i < box.length; i++) {
+					$("." + box[i]).html(template(box[i], {data:res.data}));
+				}
+			} else {
+				$("." + d.box).html('<div class="nors text-center text_77 mt30 mb30 pd30">暂无数据</div>');
+			}
+		});
+	});
+});
+</script>
+<script>
+		$(window).scroll(function(e){
+			if( $(window).scrollTop() > 600){
+				$('#left_ladder').fadeIn();
+			}else{
+				$('#left_ladder').fadeOut();
+			};
+
+
+
+			for(i=0; i< $("#left_ladder a").length-1; i++){
+				$("#left_ladder a").eq(i).click(function(){
+					var num = $('.right_ladder').eq( $(this).index() ).offset().top - 20;
+					$('html,body').stop().animate( { scrollTop : num },300 );
+				})
+			}
+/*
+			a = -1;
+			$("#left_ladder a").each(function(){
+				if( $(this).index() != $(".right_ladder").length ){
+					var num = $('.right_ladder').eq( $(this).index() ).offset().top;
+					if( num - 400 < $(window).scrollTop()){
+						$("#left_ladder a").find('div').css('display','none');
+						$(this).find('div').css('display','block');
+						a = $(this).index();
+					}else if( $(window).scrollTop() < 1300){
+						$("#left_ladder a").find('div').css('display','none');
+					}
+				}
+			})
+*/
+			$("#left_ladder a").mouseover(function(){
+				$(this).find('div').css('display','block')
+			})
+
+			$("#left_ladder a").mouseout(function(){
+				if( $(this).index() == a ){
+					$(this).find('div').css('display','block')
+				}else{
+					$(this).find('div').css('display','none')
+				}
+			})
+	
+		});
+
+		$(function(){
+			var n = true;
+			$('#cart_hide').click(function(){
+				//console.log(n)
+				if(n){
+					$('#cart_right').stop().animate( { right : 0 },150 );
+					$(this).addClass('cart_in')
+					n = false;	
+				}else{
+					$('#cart_right').stop().animate( { right : -250 },150 );
+					$(this).removeClass('cart_in')
+					n = true;
+				}
+			})
+			$("#cart_right").mouseover(function(event){
+	             //return false;
+	             event.stopPropagation();
+	        });
+	        $("body").mouseover(function(event){
+	        	$('#cart_right').stop().animate( { right : -250 },150 );
+	        	$('#cart_hide').removeClass('cart_in')
+	        	n = true;
+	        });
+		})
+	</script>
+	
+	<script>
+		$('#hover_sub_name li.dn').click(function(){
+			t = $(this).siblings('.db').find('span').html();
+			//b = $(this).siblings('.db').attr('value');
+			$(this).siblings('.db').find('span').html( $(this).html() );
+			//$(this).siblings('.db').attr('value', $(this).attr('value') ) ;
+			$(this).html(t)
+			//$(this).attr('value', b )
+			
+		})
+		
+		$(document).ready(function(){
+			if( $('#drop_down .media-body >div').find("*").length !=0 ){
+	        	$('#hover_sub_name').siblings('input.bor_no').mouseover(function(){
+					$('#drop_down').slideDown()
+					$(this).focus()
+					clearTimeout(timer)
+				});
+				$('#hover_sub_name').siblings('input.bor_no').mouseout(function(){
+					timer = setTimeout(function(){ 
+						$('#drop_down').hide()  
+					}, 200)
+				});
+				$('#drop_down').mouseover(function(){
+					clearTimeout(timer)
+				})
+				$('#drop_down').mouseout(function(){
+					timer = setTimeout(function(){ 
+						$('#drop_down').hide()  
+					}, 200)
+				})
+	        }	
+		})
+		
+		//离开时
+		$(".ad-box").mouseleave(function() {
+			//$(this).removeClass('border-2');
+			$(this).find('.ad-edit-box').addClass('hide');
+		})
+		
+		$(".ad-box").mouseover(function() {
+			//$(this).addClass('border-2');
+			$(this).find('.ad-edit-box').removeClass('hide');
+		})
+		$(".btn-ad").click(function() {
+			var d 	=	$(this).data();
+			vmodal({
+				title:d.title,
+				url:d.url,
+				width:'900px',
+			});
+		});
+		
+		function alertNotLick(str) {
+			vmodal({
+				  title:'提示框',
+				  msg:str + '即将开放，敬请期待！',
+				  class:'text-center',
+				  width:'600px',
+			  });
+		}
+	</script> 
+<!-- work新闻 -->
+<script id="work-box" type="text/html">
+{{each data as val i}}
+	<a target="_blank" href="{:DM('news')}{:U('/view')}?id={{val.id}}"><p class="text_over mb0 line22">{{val.name}}</p></a>
+{{/each}}
+</script>
+<!-- 新闻 -->
+<script id="news-box" type="text/html">
+{{each data as val i}}
+	<a target="_blank" href="{{val.n_url}}"><p class="text_over mb0 line22">{{val.n_title}}</p></a>
+{{/each}}
+</script>
+<!-- 帮助 -->
+<script id="faq-box" type="text/html">
+{{each data as val i}}
+	<a target="_blank" href="{:DM('faq')}{:U('/view')}?id={{val.id}}"><p class="text_over mb0 line22">{{val.name}}</p></a>
+{{/each}}
+</script>
+<script src="__NEW_DESIGN__js/cart.js"></script>
+</block>

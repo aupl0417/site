@@ -1,0 +1,42 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin({ref:true})"></i>
+		</div>
+		<div class="title">
+			账户余额
+		</div>
+		<div class="r">
+			<div class="text" onclick="openWin({name:'cash_list',url:'/Account/cash_list'})">现金明细</div>
+		</div>
+	</div>
+</header>
+<section>
+	<div class="cash-box md20">
+		<div class="all_money">
+			0
+		</div>
+		<div>余额（元）</div>	
+	</div>
+	
+	<div class="p10">
+		<div class="btn btn-lg btn-block btn-danger btn-trans md10" onclick="openWin({name:'recharge',url:'/Recharge/index'})">充值</div>
+		<div class="btn btn-lg btn-block btn-danger md10" onclick="openWin({name:'withdraw',url:'/Withdraw/index'})">提现</div>
+	</div>
+</section>
+
+<script>
+	fixBar(1);
+	
+	ajax_post({
+		url:'/Api/api',
+		data:{apiurl:'/Account/account',is_openid:1},
+	},function(ret){
+		if(ret.code==1){			
+			$('.page.active .all_money').html(ret.data.ac_cash);
+		}
+	});
+	
+
+	
+</script>

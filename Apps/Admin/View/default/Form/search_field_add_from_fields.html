@@ -1,0 +1,47 @@
+<form data-url="__URL__/search_field_add_from_fields_save" id="form_create" class="form-horizontal vform">
+<table class="field-list">
+	<thead>
+		<th class="text-center">选择</th>
+		<th>注释</th>
+		<th>字段名</th>
+		<th>类型</th>
+	</thead>
+	<tbody>
+		<volist name="list" id="vo">
+		<tr>
+			<td class="text-center">
+				<in name="vo.name" value="$selected">
+				<i class="fa fa-check text-success"></i>
+				<else />
+				<input type="checkbox" id="id[]" name="id[]" value="{$vo.id}" class="i-red-square">
+				</in>
+			</td>
+			<td>{$vo.label}</td>
+			<td>{$vo.name}</td>
+			<td>[{$vo.formtype}] {:get_key_by_list(array('table'=>'formtpl_type','field'=>'formtype,type_name','key_val'=>$vo['formtype'],'cache_name'=>'formtpl_type'))}</td>
+		</tr>
+		</volist>
+	</tbody>
+	
+</table>
+
+<div class="p20 text-center">
+	<button type="submit" class="btn btn-primary btn-150px"><i class="fa fa-check"></i> 提交</button>
+</div>
+<!--token-->
+</form>
+<script>
+iCheckClass();
+$('.field-list tbody').sortable({});
+
+checkform({
+	formid:'#form_create',
+},function(ret){
+	valert(ret);
+	if(ret.status=='success'){
+		loadurl({tag:'#vtab7-content',url:'__URL__/formtpl_search_fields/formtpl_id/{$_GET.formtpl_id}'});
+		$('#ajax-modal').modal('hide');
+	}
+});
+
+</script>

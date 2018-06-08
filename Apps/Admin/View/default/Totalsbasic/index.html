@@ -1,0 +1,221 @@
+<include file="Public:header" />
+<include file="nav" />
+<js href="__JS__/ECharts/echarts.min.js" />
+	<div class="pd20">
+		<div class="bor_der pd15 m20 block-flat">
+			<h5 class="fs16 mt0">基础数据统计</h5>
+			<table class="bg_white table_dotted">
+				<tbody class="solid_t">
+					<tr>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">当前用户总数</p>
+							<strong>{$result.total_member}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">正常营业店铺总数</p>
+							<strong>{$result.normal_store}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">在线出售商品总数</p>
+							<strong>{$result.online_goods_num}</strong>
+						</td>
+						<td class="fs14 pd30 hide">
+							<p class="mb20 fs14 text_77">品牌推广总数</p>
+							<strong>{$result.brand_num}</strong>
+						</td>
+						<td class="fs14 pd30 hide">
+							<p class="mb20 fs14 text_77">当前评价总数</p>
+							<strong>{$result.comment_total_num}</strong>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+
+
+		<div class="bor_der pd15 m20 block-flat">
+			<h5 class="fs16 mt0">实时新增</h5>
+			<table class="bg_white table_dotted">
+				<tbody class="solid_t">
+					<tr>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日新增用户</p>
+							<strong>{$totals_basic.0.member}</strong>
+							<h5 class="text_77">较前一日 <span class="{$ratio.member.color}">{$ratio.member.value}%  {$ratio.member.sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日新增申请开店用户</p>
+							<strong>{$totals_basic.0.open_store_user}</strong>
+							<h5 class="text_77">较前一日 <span class="{$ratio.apply_open.color}">{$ratio.apply_open.value}%  {$ratio.apply_open.sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日新增开店成功店铺</p>
+							<strong>{$totals_basic.0.open_store_success}</strong>
+							<h5 class="text_77">较前一日 <span class="{$ratio.success_open.color}">{$ratio.success_open.value}%  {$ratio.success_open.sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日被强制关闭店铺</p>
+							<strong>{$totals_basic.0.close_store}</strong>
+							<h5 class="text_77">较前一日 <span class="{$ratio.close_store.color}">{$ratio.close_store.value}%  {$ratio.close_store.sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日新增商品数量</p>
+							<strong>{$totals_basic.0.goods_num}</strong>
+							<h5 class="text_77">较前一日 <span class="{$ratio.goods_num.color}">{$ratio.goods_num.value}%  {$ratio.goods_num.sign};</span></h5>
+						</td>
+					</tr>
+					<tr>
+						<td class="fs14 pd20 hide">
+							<p class="mb20 text_77">上一日新增违规商品数量</p>
+							<strong>{$totals_basic.0.illegal_goods_num}</strong>
+							<h5 class="text_77">较前一日 <span class="{$ratio.illegal_goods_num.color}">{$ratio.illegal_goods_num.value}%  {$ratio.illegal_goods_num.sign};</span></h5>
+						</td>
+						<td class="fs14 pd20 hide">
+							<p class="mb20 text_77">上一日新增品牌推广数量</p>
+							<strong>{$totals_promotion.0.brand_num}</strong>
+							<h5 class="text_77">较前一日 <span class="{$ratio.brand_num.color}">{$ratio.brand_num.value}%  {$ratio.brand_num.sign};</span></h5>
+						</td>
+						<td class="fs14 pd20 hide">
+							<p class="mb20 text_77">上一日新增品牌推广成交总额(元)</p>
+							<strong>{$totals_promotion.0.day_brand_money}</strong>
+							<h5 class="text_77">较前一日 <span class="{$ratio.day_brand_money.color}">{$ratio.day_brand_money.value}%  {$ratio.day_brand_money.sign};</span></h5>
+						</td>
+						<td class="fs14 pd20 hide">
+							<p class="mb20 text_77">上一日新增评价笔数</p>
+							<strong>{$totals_basic.0.comment_num}</strong>
+							<h5 class="text_77">较前一日 <span class="{$ratio.comment_num.color}">{$ratio.comment_num.value}%  {$ratio.comment_num.sign};</span></h5>
+						</td>
+						<td class="fs14 pd20 hide"></td>
+					</tr>
+				</tbody>
+			</table>
+			<style>
+				.table_dotted tbody,.table_dotted tr,.table_dotted td{border:1px dashed #ccc !important;}
+			</style>
+		</div>
+
+		<div class="clearfix"></div>
+
+		<div class="box p20 m20">
+			<div id="main" style="width: 100%;height:400px;"></div>
+		</div>
+		<script type="text/javascript">
+			// 基于准备好的dom，初始化echarts实例
+			var myChart = echarts.init(document.getElementById('main'));
+			// 指定图表的配置项和数据
+			{:W('Widget/base_total')}
+			// 使用刚指定的配置项和数据显示图表。
+			myChart.setOption(option);
+		</script>
+	</div>
+
+
+
+
+
+<include file="Public:copyright" />
+<include file="Public:js" />
+<script>
+$(document).ready(function(){
+	$('.delete-select').click(function(){
+		if($('input[type="checkbox"]:checked').size()==0){
+			valert({status:'warning',msg:'请至少选择一项！'})
+			return false;
+		}else {
+			confirm_form({
+				formid:'#formlist',
+				furl:'__URL__/delete_select',
+				script:'callback(ret)',
+				title:'删除记录',
+				msg:'真的要删除吗？',
+				class:'text-center',
+				confirm:1
+			});
+		}
+	});
+
+	$('.active-change').click(function(){
+		if($('input[type="checkbox"]:checked').size()==0){
+			valert({status:'warning',msg:'请至少选择一项！'})
+			return false;
+		}else {
+			confirm_form({
+				formid:'#formlist',
+				furl:'__URL__/active_change_select/toactive/'+$('#toactive').val(),
+				script:'activeCall(ret)',
+				title:'批量更改记录状态',
+				msg:'真的要改记录状态吗？',
+				class:'text-center',
+				confirm:1
+			});
+		}
+	});
+
+	$('.sid-change').click(function(){
+		if($('input[type="checkbox"]:checked').size()==0){
+			valert({status:'warning',msg:'请至少选择一项！'})
+			return false;
+		}else if($('#tosid').val()==''){
+			valert({status:'warning',msg:'请选择一个分类'})
+			return false;
+		}else {
+			confirm_form({
+				formid:'#formlist',
+				furl:'__URL__/sid_change_select/tosid/'+$('#tosid').val(),
+				script:'activeCall(ret)',
+				title:'批量记录归类',
+				msg:'真的要批量记录归类吗？',
+				class:'text-center',
+				confirm:1
+			});
+		}
+	});
+
+	$('#gopage').change(function(){
+		var url=$('#gopage').val();
+		location.href=url;
+	});
+	$('.go-page').click(function(){
+		var url=$('#gopage').val();
+		location.href=url;
+	});
+
+	$('.btn-view').click(function(){
+		var d=$(this).data();
+		//alert(d.tag);
+		var tag='#view-'+d.id;
+		var item='#item-'+d.id;
+
+		$(tag).toggleClass('hide');
+		if($(item).html()=='') loadurl({tag:item,url:d.url});
+	});
+});
+
+function callback(ret){
+	valert({status:ret.status,msg:ret.msg});
+	if(ret.status=='success'){
+		$('input[type="checkbox"]:checked').each(function(){
+			$('#'+$(this).val()).remove();
+		});
+		$('#ajax-modal').modal('hide');
+	}
+}
+
+function delCall(ret,tag){
+	valert({status:ret.status,msg:ret.msg});
+	if(ret.status=='success'){
+		$(tag).remove();
+		$('#ajax-modal').modal('hide');
+	}
+}
+function activeCall(ret){
+	valert({status:ret.status,msg:ret.msg});
+	if(ret.status=='success'){
+		setTimeout(function(){
+			ref();
+		},500);
+	}
+}
+</script>
+<include file="Public:footer" />

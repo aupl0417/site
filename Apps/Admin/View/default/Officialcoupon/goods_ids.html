@@ -1,0 +1,17 @@
+<notempty name="list">
+<ul class="goods-list mt10">
+	<volist name="list" id="vo">
+	<li data-id="{$vo.id}" class="hover-shadow">
+		<div class="goods-item-box">
+			<div><a href="{:C('sub_domain.item').'/goods/'.$vo['attr_list']['id']}" target="_blank"><img src="{:myurl($vo['images'],150)}" alt="商品主图"></a></div>
+			<div class="goods_name"><a href="{:C('sub_domain.item').'/goods/'.$vo['attr_list']['id']}" target="_blank">{$vo.goods_name}</a></div>
+			<div class="price">价格：<span class="text-danger">{$vo.price}</span></div>
+			<div class="num">库存：{$vo.num} 件</div>
+			<div class="shop_name"><i class="fa fa-home"></i> {$vo.shop.shop_name}</div>
+		</div>
+	</li>
+	</volist>
+</ul>
+</notempty>
+
+<div class="clearfix"></div>

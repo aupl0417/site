@@ -1,0 +1,68 @@
+<table class="no-border mb20 bg_f1"><!-- 类型说明 -->
+    <tbody class="no-border-y">
+    <tr class="text-center">
+        <td width="75%" style="padding:0">
+            <table class="no-border">
+                <tbody class="no-border-y">
+                <td width="13%"></td>
+                <td width="30%">商品信息</td>
+                <td width="12%">单价</td>
+                <td width="10%">数量</td>
+                <td width="12%">评价</td>
+                <td width="18%">买家</td>
+                </tbody>
+            </table>
+        </td>
+        <td width="13%">状态</td>
+        <td width="12%">操作</td>
+    </tr>
+    </tbody>
+</table><!-- 类型说明结束 -->
+
+<table class="revisionTable table"><!-- 订单信息 -->
+    <tbody class="bg_white">
+        <tr class="text-center">
+            <td style="padding:0; width:75%">
+                <table class="no-border table-hover">
+                    <tbody class="no-border-y">
+                    <tr><!-- 同店铺第一个商品 -->
+                        <td width="13%">
+                            <a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', ['id' => $data['attr_list_id']])}">
+                                <img src="{:myurl($data['orders_goods']['images'], 80)}" class="img-thumbnail"></a>
+                        </td>
+                        <td valign="top" width="30%" class="text-left">
+                            <a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', ['id' => $data['attr_list_id']])}">{$data.orders_goods.goods_name}</a>
+                            <div class="md5 text-gray mt5">颜色/尺码：{$data.orders_goods.attr_name}</div>
+                        </td>
+                        <td width="12%">
+                            <span class="text_yellow">{$data.orders_goods.price}</span>
+                        </td>
+                        <td width="10%">×{$data.orders_goods.num}</td>
+                        <td width="12%">
+                            {$data.rate_name}
+                        </td>
+                        <td width="18%">
+                            <a class="text_44" target="_blank" href="{:DM('oauth2')}{:U('Im/check',['receiver' => $data['user']['nick']])}"><img class="mr5" width="12" src="/Public/images/icon-im.png"> {$data.user.nick}</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+            <td style="vertical-align: middle; width:13%" rowspan="1">
+                <div style="padding: 0 10px;">
+                    <a href="javascript:;" class="btn btn-sm btn-primary btn-rad btn-trans btn-block m0">{$data.status_name}</a>
+                </div>
+            </td>
+            <td style="vertical-align: middle; width:12%" rowspan="1">
+                <p><a class="text_blue" href="{:U('/comments/detail', ['id' => $data['id']])}">详情</a></p>
+            </td>
+        </tr>
+    </tbody>
+</table><!-- 订单信息结束 -->
+
+<div class="row" style="border-top: solid 1px #F8F8F8">
+    <div class="col-sm-12">
+        <h4>评价内容</h4>
+        {$data.content}
+    </div>
+</div>

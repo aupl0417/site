@@ -1,0 +1,168 @@
+<div class="m20 text-center">
+	<h3>订单号:{$rs.s_no}</h3>
+</div>
+<div class="alert alert-warning alert-white-alt2 rounded">
+	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+	<div class="icon"><i class="fa fa-warning"></i></div>
+	<div class="ft16"><strong>提示!</strong> 手动退款操作仅限于erp已完成退款而商城未记录退款的数据！</div>
+</div>
+<div class="p20 box">
+	<div class="row">
+		<div class="col-xs-3">
+			<div class="fl" width="60">
+				<img src="{:myurl($rs['shop_logo'],50)}" class="img-circle">
+			</div>
+			<div style="margin-left:70px">
+				<div>店铺：<span class="ft18 strong">{$rs.shop_name}</span></div>
+				<div>卖家昵称：{$rs.seller_nick}</div>
+				<div>买家昵称：{$rs.buy_nick}</div>
+				<div>下单时间：{$rs.atime}</div>
+			</div>
+		</div>
+		<div class="col-xs-3">
+			<div class="fl" width="60">
+				<img src="{:myurl($rs['images'],50)}" class="img-circle">
+			</div>
+			<div style="margin-left:70px">
+				<div>商品名称：<span class="ft18 strong">{$rs.goods_name}</span></div>
+				<div>商品属性：{$rs.attr_name}</div>
+				<div>奖励积分：{$rs.score}</div>
+				<div>商品单价：{$rs.price}</div>
+				<div>商品数量：{$rs.num}</div>
+				<div>商品总额：{$rs.total_price}</div>
+			</div>
+		</div>
+		<div class="col-xs-3">
+			<div>当前商品历史退款金额：<span class="ft18 strong">{$rs.refund_price}</span></div>
+			<div>当前商品历史退积分：{$rs.refund_score}</div>
+			<div>当前商品历史退货数量：{$rs.refund_num}</div>
+			<div>当前商品历史售后数量：{$rs.service_num}</div>
+		</div>
+		<div class="col-xs-3">
+			<div>订单历史退款金额：<span class="ft18 strong">{$rs.orders_refund_price}</span></div>
+			<div>订单历史退运费：{$rs.orders_refund_express}</div>
+			<div>订单历史退积分：{$rs.orders_refund_score}</div>
+			<div>订单历史退货数量：{$rs.orders_refund_num}</div>
+			<div>订单历史售后：{$rs.orders_service_num}</div>
+		</div>
+	</div>
+</div>
+<div class="p20 box mt20">
+<form data-url="__URL__/refundSave" data-id="#form_{$rs.id}" id="form_{$rs.id}" class="form-horizontal vform">
+	{:W('Widget/buildform',array(array(
+		'field'		=>array(
+			array(
+				'formtype'		=>'select',
+				'name'			=>'type',
+				'label'			=>'退款类型',
+				'data'			=>[[1,'退货退款'],[2,'退款']],
+				'field'			=>array(0,1),
+			),
+			array(
+				'formtype'		=>'text',
+				'label'			=>'退款金额',
+				'name'			=>'price',
+			),
+			array(
+				'formtype'		=>'text',
+				'label'			=>'退运费金额',
+				'name'			=>'express_price',
+			),
+			array(
+				'formtype'		=>'text',
+				'label'			=>'退货数量',
+				'name'			=>'num',
+			),
+			array(
+				'formtype'		=>'images',
+				'label'			=>'申请退款截图',
+				'name'			=>'images1',
+				'tips'			=>'请将用户与客服的聊天记录截屏上传',
+			),
+			array(
+				'formtype'		=>'images',
+				'label'			=>'退款成功截图',
+				'name'			=>'images2',
+				'tips'			=>'请将雇员退款成功的页面截图上传',
+			),
+			array(
+				'formtype'		=>'select',
+				'name'			=>'express_company_id',
+				'label'			=>'快递公司',
+				'data'			=>$expressCompany,
+				'field'			=>array('id','company'),
+				'required'		=>1,
+			),
+			array(
+				'formtype'		=>'text',
+				'label'			=>'快递单号',
+				'name'			=>'express_code',
+			),
+			array(
+				'formtype'		=>'textarea',
+				'label'			=>'备注',
+				'name'			=>'remark',
+			),
+			array(
+				'formtype'		=>'hidden',
+				'name'			=>'id',
+				'value'			=>$rs['id'],
+			),					
+			array(
+				'formtype'		=>'html',
+				'label'			=>' ',
+				'html'			=>'<button type="button" class="btn btn-primary btn-150px refund-logs-add"><i class="fa fa-check"></i> 提交</button>'
+			),
+		),
+	)))}
+</form>
+</div>
+<script type="text/javascript">
+$(".refund-logs-add").click(function() {
+	var type = $("#form_{$rs.id}").find('select[name="type"]').val();
+	var price = $("#form_{$rs.id}").find('input[name="price"]').val();
+	var express_price = $("#form_{$rs.id}").find('input[name="express_price"]').val();
+	var num = $("#form_{$rs.id}").find('input[name="num"]').val();
+	var remark = $("#form_{$rs.id}").find('textarea[name="remark"]').val();
+	
+	if (type == '') {
+		valert({status:'warning', msg:'退款类型不能为空！'})
+		return false;
+	}
+	if (price == '' && express_price == '' && num == '') {
+		valert({status:'warning', msg:'金额、运费、数量必填一项！'})
+		return false;
+	}
+	if (isNaN(price) && price != '') {
+		valert({status:'warning', msg:'退款金额类型不正确！'})
+		return false;
+	}
+	if (isNaN(express_price) && express_price != '') {
+		valert({status:'warning', msg:'退运费类型不正确！'})
+		return false;
+	}
+	if (isNaN(num) && num != '') {
+		valert({status:'warning', msg:'退货数量类型不正确！'})
+		return false;
+	}
+	
+	if (remark == '') {
+		valert({status:'warning', msg:'备注不能为空！'})
+		return false;
+	}
+	
+	var d=$(this).closest('form').data();
+	ajax_post_form({
+		formid:d.id
+	},function(ret){
+		valert(ret);
+		if(ret.status=='success'){
+			ref();
+		}
+		$(".refund-logs-add").unbind();
+	});
+});
+</script>
+
+
+

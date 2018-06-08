@@ -1,0 +1,120 @@
+<div class="mb0 mt30">
+    <div class="clearfix">
+        <div class="h50">
+            <span class="lh50 fs14 strong fl">广告订单详情</span>
+            <a href="{:U('/My/index')}" class="layui-btn layui-btn-normal fr mr10 mt5 mb5">返回广告列表</a>
+        </div>
+    </div>
+    <div class="solid_b mt-1"></div>
+</div>
+
+<table class="bg_white mb20">
+    <tbody>
+        <tr class="strong">
+            <td class="pd20" width="50%">订单信息</td>
+            <td class="pd20" width="50%">广告位信息</td>
+        </tr>
+        <tr>
+            <td class="pd20 text_77">
+                <div class="clearfix mb10">
+                    <div class="fl w80">投放素材：</div>
+                    <div class="ml80">
+                        <a href="{$data.images}" class="image-zoom">
+                            <img src="{:myurl($data['images'],['w' => 200,'h' => 100])}" width="200" height="100" class="border-1px">
+                        </a>
+                    </div>
+                </div>
+                <div class="clearfix mb10 line22">
+                    <div class="fl w80">订单编号：</div>
+                    <div class="ml80">{$data.a_no}</div>
+                </div>
+                <div class="clearfix mb10 line22">
+                    <div class="fl w80">投放类型：</div>
+                    <div class="ml80">{$data.type_name}</div>
+                </div>
+                <div class="clearfix mb10 line22">
+                    <div class="fl w80">投放位置：</div>
+                    <div class="ml80">位置{$data['sort']+1}</div>
+                </div>
+                <div class="clearfix mb10 line22">
+                    <div class="fl w80">投放天数：</div>
+                    <div class="ml80"><span class="fs16 strong mr5">{$data.num}</span>天</div>
+                </div>
+
+                <div class="clearfix mb10 line22">
+                    <div class="fl w80">单　　价：</div>
+                    <div class="ml80">￥{$data.price}元/天</div>
+                </div>
+                <div class="clearfix mb10 line22">
+                    <div class="fl w80">合计金额：</div>
+                    <div class="ml80">￥{$data.money}</div>
+                </div>
+                <div class="clearfix mb10 line22">
+                    <div class="fl w80">应付金额：</div>
+                    <div class="ml80 text_red strong fs16">￥{$data.money_pay}</div>
+                </div>
+                <div class="clearfix mb10 line22">
+                    <div class="fl w80">创建时间：</div>
+                    <div class="ml80">{$data.atime}</div>
+                </div>
+            </td>
+            <td class="pd20" valign="top">
+                <div class="row ">
+                    
+                    <div class="col-xs-9">
+                        <div class="clearfix mb10">
+                            <div class="fl w80">位　　置：</div>
+                            <div class="ml80">
+                                <a href="{$position.images}" class="image-zoom">
+                                    <img src="{:myurl($position['images'],['w' => 200,'h' => 100])}" width="200" height="100" class="border-1px">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="clearfix mb10">
+                            <div class="fl w80">名　　称：</div>
+                            <div class="ml80">{$position.position_name}</div>
+                        </div>
+                        <div class="clearfix mb10">
+                            <div class="fl w80">尺　　寸：</div>
+                            <div class="ml80">{$position.width}x{$position.height} (px)</div>
+                        </div>
+                        <div class="clearfix mb10">
+                            <div class="fl w80">平　　台：</div>
+                            <div class="ml80">
+                                <switch name="position.device">
+                                    <case value="1">PC端</case>
+                                    <case value="2">移动端</case>
+                                    <default />未知
+                                </switch>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </td>
+        </tr>
+      
+        <tr>
+            <td class="pd20" colspan="2">
+                <strong class="fs14">投放日期列表</strong>
+                
+            </td>
+        </tr>
+        <tr>
+            <td class="pd20" colspan="2">
+                <div class="row">
+                    <for statr="0" end="3">
+                        <div class="col-xs-4">
+                            <div class="strong text-center">{$calendar[$i].year} 年 {$calendar[$i].month} 月</div>
+                            {$calendar[$i].cal}
+                        </div>
+                    </for>
+                     
+                </div>
+            </td>
+        </tr>
+
+
+
+    </tbody>
+</table>

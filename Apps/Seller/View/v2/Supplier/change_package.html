@@ -1,0 +1,153 @@
+<extend name="Seller@Public:base" />
+<block name="body">
+    <div class="centent_body">
+        <!-- to do your html codeing -->
+        <div class="revision_bg">
+            <div class="container ptb_size_lg clearfix">
+                <!-- 左侧导航 -->
+                <include file="Public:sideNav" />
+                <!-- 左侧导航结束 -->
+
+                <div class="revisionRight pd15" style="width: 1020px"><!-- 右侧内容 -->
+
+                    <div class="clearfix revisionOrderTab" data-url="">
+                        <h4 class="pb10 solid_b">商家入驻>选择套餐</h4>
+                    </div>
+                    <include file="supplier_nav" />
+
+
+                    <div class="tab-content tenants-tab-box">
+                        <div class="tab-pane active" id="example-tabs2-activity">
+                            <div class="tenants-tab-pane">
+                                <h5 class="pb10">&nbsp;</h5>
+                                <form id="package_info" class="form-horizontal form-lzx" onsubmit="return package_submit()">
+									<input type="hidden" name="id" value="{$info.package.id}"/>
+                                    <div class="form-group mb20">
+                                        <label class="col-xs-3 control-label text-right pr0 fs14">套餐类型</label>
+                                        <input type="hidden" value="{$info.package.package}" name="package"/>
+                                        <div class="col-xs-8">
+                                            <div class="row">
+                                                <div class="col-xs-4">
+                                                    <label class="square mt10 no-strong"><input type="checkbox" name="packages" value="1" data-money="{$supplier.gold_price}" data-price="{$supplier.gold_price}" onclick="change_package()" <notempty name="select_1">checked</notempty>><em class="fl"></em>
+                                                        <span class="small_xs ml10">金积分交易 ￥{$supplier.gold_price}</span>
+                                                        <span class="num hide">金积分交易<span class="c-faa">{$supplier.gold_num}</span> 件</span>
+                                                    </label>
+                                                </div>
+                                                <div class="col-xs-4">
+                                                    <label class="square mt10 no-strong"><input type="checkbox" name="packages" value="4" data-money="{$supplier.silver_price}" data-price="{$supplier.silver_price}" onclick="change_package()" <notempty name="select_4">checked</notempty>><em class="fl"></em>
+                                                        <span class="small_xs ml10">银积分交易 ￥{$supplier.silver_price}</span>
+                                                        <span class="num hide">银积分交易<span class="c-faa">{$supplier.silver_num}</span> 件</span>
+                                                    </label>
+                                                </div>
+                                                <div class="col-xs-4">
+                                                    <label class="square mt10 no-strong"><input type="checkbox" name="packages" value="2" data-money="{$supplier.cash_price}" data-price="{$supplier.cash_price}" onclick="change_package()" <notempty name="select_2">checked</notempty>><em class="fl"></em>
+                                                        <span class="small_xs ml10">现金交易 ￥{$supplier.cash_price}</span>
+                                                        <span class="num hide">现金交易<span class="c-faa">{$supplier.cash_num}</span> 件</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mb20">
+                                        <label class="col-xs-3 control-label text-right pr0 fs14">上传商品数量<span class="c-fe1">*</span></label>
+                                        <div class="col-xs-8">
+                                            <div class="line32 fs14 show_num">
+                                                <!--现金交易<span class="c-faa">50</span> 件 + 银积分交易 <span class="c-faa">20</span> 件-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group mb20">
+                                        <label class="col-xs-3 control-label text-right pr0 fs14">应付金额<span class="c-fe1">*</span></label>
+                                        <div class="col-xs-8">
+                                            <input type="text" name="money" class="form-control bor_r0" placeholder="" readonly="readonly" value="0">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-xs-3 control-label text-right pr0">&nbsp;</label>
+                                        <div class="col-xs-8 mt20 text-center">
+                                            <div class="row mb40">
+                                                <div class="col-xs-6">
+                                                    <button type="submit" class="btn pl35 pr35 my-btn-blue">提交</button>
+                                                </div>
+                                                <div class="col-xs-6 text-left">
+                                                    <a href="{:U('Supplier/upload_data')}" type="button" class="btn pl35 pr35 my-btn-white">返回</a>
+                                                </div>
+                                            </div>
+                                            <div class="pt10 information-box text-left">
+                                                <i class="fa fa-exclamation-circle pr10 c-faa fs16"></i>提交入驻资料后雇员将在7个工作日内进行审核，请耐心等待审核结果
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+
+
+
+
+                    <include file="right" />
+
+                </div>
+
+            </div>
+        </div>
+        <!-- my codeing over -_-   -->
+
+    </div>
+</block>
+
+<block name="css">
+
+</block>
+
+<block name="script">
+    <!-- to do your javascript codeing -->
+    <Script>
+		change_package();
+        //选择套餐
+        function change_package(){
+            var html = new Array();
+            var money = 0;
+            var id = $("input[name='packages']:checked").map(function(){
+                money += $(this).data('money');
+                html.push($(this).closest('label').find('.num').html());
+                return $(this).val();
+            }).get().join(',');
+            html = html.join(' + ');
+            $("input[name='package']").val(id);
+            $(".show_num").html(html);
+            $("input[name='money']").val(money);
+        }
+
+        //提交套餐
+        function package_submit(){
+            var formData = new FormData(document.getElementById("package_info"));
+            $.ajax({
+                url:"__URL__/ajax_change_package",
+                type:"post",
+                data:formData,
+                processData:false,
+                contentType:false,
+                success:function(ret){
+                    if(ret.code == 1){
+                        gourl({url:'__URL__/upload_voucher'});
+                    }else{
+                        talert({status:'warning',msg:ret.msg});
+                    }
+
+                },
+            });
+            return false;
+        }
+
+
+
+    </Script>
+
+</block>

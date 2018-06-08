@@ -1,0 +1,115 @@
+<include file="Public:header" />
+		<div class="page-group">
+			<div id="page-cart" class="page">
+				<!-- 标题栏 -->
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left" href="/"></a>
+					<h1 class="title">购物车</h1>
+					<a class="icon iconfont icon-category pull-right ml5 ac-menu" onclick="top_menu()"></a>
+				</header>
+
+				<!-- 浮动导航 -->
+				<include file="Public:fixed-menu" />
+				
+				<nav class="bar bar-tab">
+					<div class="cart-footer">
+						<div class="l">
+							<label class="label-checkbox">
+								<input class="check-all" type="checkbox" name="check_all" value="1">
+								<div class="item-media"><i class="icon icon-form-checkbox"></i> 全选</div>
+							</label>
+						</div>
+						<div class="m">
+							<div>合计：<span class="text-red">￥<span class="total_price">0</span></span></div>
+							<!--<div class="text-gray ft05">奖励 <span class="total_score">0</span> 积分</div>-->
+						</div>
+						<div class="r">
+							<div class="btn-submit">结算(<span class="num">0</span>)</div>
+						</div>
+					</div>
+				</nav>					
+		
+				<!-- 这里是页面内容区 -->		
+				<div class="content infinite-scroll" data-distance="100" data-p="1">
+					<notempty name="list.list">
+						<form id="form-cart" name="form-cart" onsubmit="return false;">
+						<volist name="list.list" id="vo">
+						<div class="list-block media-list">
+							<ul>
+								<li>
+									<div class="item-content">
+										<label class="label-checkbox">
+											<input type="checkbox" name="express_tpl_id" value="{$vo.express_tpl_id}">											
+											<div class="item-media" style="min-width: 1.5rem;"><i class="icon icon-form-checkbox"></i></div>
+										</label>
+										<div class="item-inner">
+											<div class="item-title-row">
+												<div class="item-title pl05"><a href="javascript:;" data-url="/Shop/index/shop_id/{$vo.shop_id}">{$vo.shop.shop_name}</a></div>
+												<div class="item-after" onclick="edit_goods($(this))" type="1">编辑</div>
+											</div>
+										</div>
+									</div>
+								</li>						
+								<volist name="vo.goods" id="gl">
+								<li data-total_price="{$gl.total_price}" data-total_score="{$gl.score}" data-score_ratio="{$gl.score_ratio}">
+									<div class="item-content">
+										<label class="label-checkbox">
+											<input class="check-goods" type="checkbox" name="cart_id" id="cart_id" value="{$gl.id}" <neq name="gl.status" value="1">disabled="disabled"</neq> <if condition="$gl['status'] eq 1 and $gl['is_select'] eq 1">checked</if>>
+											<div class="item-media" style="min-width: 1.5rem;"><i class="icon icon-form-checkbox"></i></div>
+										</label>										
+										<div class="item-media pl05">
+											<a href="/Goods/view/id/{$gl.attr_list_id}"><img class="lazyload" data-sizes="auto" data-src="{:myurl($gl['images'],150)}" alt="商品主图" src="../Public/images/nopic.gif" width="60"></a>
+										</div>
+										<div class="item-inner">
+											<a href="/Goods/view/id/{$gl.attr_list_id}">
+											<div class="item-title-row">
+												<div class="item-title">{$gl.goods_name}</div>
+												<div class="item-after">
+													<div class="text-red">￥{$gl.price}</div>							
+												</div>
+											</div>
+											<div class="item-subtitle">
+												<div class="pull-right text-gray cart_goods_num">x{$gl.num}</div>
+												<div class="ft05">{$gl.attr_name}</div>																		
+											</div>
+											<neq name="gl.status" value="1">
+											<div class="item-text">
+												<div class="text-red ft05">{$gl.status_name}</div>
+											</div>
+											</neq>
+											</a>
+										</div>
+									</div>
+									<div class="edit-goods hide">
+										<div class="num-dec" onclick="cart_num_dec($(this))">-</div>
+										<div class="num-inc" onclick="cart_num_inc($(this))">+</div>
+										<input type="hidden" name="price" id="price" value="{$gl.price}">		
+										<input type="hidden" name="attr_list_id" id="attr_list_id" value="{$gl.attr_list_id}">	
+										<input type="number" name="num" id="num" placeholder="订购数量" value="{$gl.num}" maxlength="6" data-max_num="{$gl.num}" onblur="cart_set_num($(this))" style="max-width: 5rem;margin-left: 2rem;text-align: center;">
+										<div class="delete" onclick="delete_cart_goods($(this))">删除</div>
+
+									</div>
+								</li>
+								</volist>
+							</ul>
+						</div>	
+						<div class="clearfix md5"></div>
+						</volist>	
+						</form>
+						
+					<else />
+						<div class="nors text-center">
+							<div><i class="iconfont icon-gouwuchekong ft3"></i></div>
+							 暂无商品加入购物车！
+						</div>		
+					</notempty>
+				</div>			
+				
+			</div>		
+
+		
+		</div>	
+		
+
+<include file="Public:script" />
+<include file="Public:footer" />

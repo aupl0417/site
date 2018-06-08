@@ -1,0 +1,181 @@
+<include file="Public:header" />
+<include file="Public:menu" />
+
+<div class="w1200 mt20 md20 bg-white box">
+	<div class="box-header">
+		入驻情况
+	</div>
+	
+	<div class="box-content p50">
+		<div class="crow">
+			<div class="ccol-35 text-right">
+				<img src="../Public/images/icon-no-sm.png" alt="审核图标">
+			</div>
+			<div class="ccol-40">
+				<h2 class="mt20 md20">您提交的资料未能通过审核！</h2>
+				<div class="md20"></div>
+				<div>您可根据反馈回来的原因重新提交资料进行审核；</div>
+				<div>有疑问可联系客服咨询。</div>
+			</div>
+		</div>
+		<div class="clearfix md30"></div>
+		
+		<table class="nobg noborder tdbg-line" style="line-height:25px">
+			<tr class="success">
+				<td width="100" class="text-center">
+					<div class="number-circle">1</div>
+				</td>
+				<td>
+					<div class="box p20 m10">
+						<div class="ft18">开店须知</div>
+						<div class="text-gray">告知招商类目、开店须知，检测用户是否符合开店资格。</div>	
+					</div>					
+				</td>
+			</tr>
+			<tr class="success">
+				<td width="100" class="text-center">
+					<div class="number-circle">2</div>
+				</td>
+				<td>
+					<div class="box p20 m10">
+						<div class="ft18">合同审阅</div>
+						<div class="text-gray">查阅并同意合同，合同下载</div>						
+					</div>					
+				</td>
+			</tr>
+			<tr class="<if condition=" $info:shop_type_id " >success</if>">
+				<td width="100" class="text-center">
+					<div class="number-circle">3</div>
+				</td>
+				<td>
+					<div class="box p20 m10">
+						<div class="crow">
+							<div class="ccol-40">
+								<div class="ft18">店铺类型、品牌、经营类目</div>
+								<div class="text-gray">选择开店类型、经营品牌及类目</div>									
+							</div>
+							<div class="ccol-40">&nbsp;</div>
+							<div class="ccol-20 text-right">
+								<a href="__URL__/shop_type" class="btn btn-trans btn-default btn-xs">编辑</a>
+							</div>
+						</div>
+						<div class="clearfix"></div>
+					</div>					
+				</td>
+			</tr>
+			<tr class="<if condition=" $info:brand_cred " >success</if>">
+				<td width="100" class="text-center">
+					<div class="number-circle">4</div>
+				</td>
+				<td>
+					<div class="box p20 m10">
+						<div class="crow">
+							<div class="ccol-40">
+								<div class="ft18">品牌资质</div>
+								<div class="text-gray">完善品牌资料及上传品牌资质</div>									
+							</div>
+							<div class="ccol-40">&nbsp;</div>
+							<div class="ccol-20 text-right">
+								<a href="__URL__/brand" class="btn btn-trans btn-default btn-xs">编辑</a>
+							</div>
+						</div>
+						<div class="clearfix"></div>
+					</div>								
+				</td>
+			</tr>
+			<tr class="<if condition=" $info:industry_cred " >success</if>">
+				<td width="100" class="text-center">
+					<div class="number-circle">5</div>
+				</td>
+				<td>
+					<div class="box p20 m10">
+						<div class="crow">
+							<div class="ccol-40">
+								<div class="ft18">行业资质</div>
+								<div class="text-gray">提交经营品牌的行业资质</div>								
+							</div>
+							<div class="ccol-40">&nbsp;</div>
+							<div class="ccol-20 text-right">
+								<a href="__URL__/industry" class="btn btn-trans btn-default btn-xs">编辑</a>
+							</div>
+						</div>
+						<div class="clearfix"></div>
+					</div>								
+				</td>
+			</tr>
+			<tr class="<if condition=" $info:shop_name " >success</if>">
+				<td width="100" class="text-center">
+					<div class="number-circle">6</div>
+				</td>
+				<td>
+					<div class="box p20 m10">
+						<div class="crow">
+							<div class="ccol-40">
+								<div class="ft18">店铺设置</div>
+								<div class="text-gray">设置店铺名称、分账模式及店铺负责联系方式</div>								
+							</div>
+							<div class="ccol-40">&nbsp;</div>
+							<div class="ccol-20 text-right">
+								<a href="__URL__/shop_info" class="btn btn-trans btn-default btn-xs">编辑</a>
+							</div>
+						</div>
+						<div class="clearfix"></div>
+					</div>								
+				</td>
+			</tr>
+			<tr>
+				<td width="100" class="text-center">
+					<div class="number-circle">7</div>
+				</td>
+				<td>
+					<div class="box p20 m10">
+						<div class="crow">
+							<div class="ccol-40">
+								<div class="ft18">邮寄合同</div>
+								<div class="text-gray">审核通过后邮寄合同，未通审核可重新提交资料</div>								
+							</div>
+							<div class="ccol-40">&nbsp;</div>
+							<div class="ccol-20 text-right">
+								<eq name="info:status" value="3">
+								<a href="__URL__/audit" class="btn btn-trans btn-default btn-xs">查看</a>
+								</eq>
+							</div>
+						</div>
+						<div class="clearfix"></div>
+					</div>								
+				</td>
+			</tr>
+			<tr>
+				<td width="100" class="text-center">
+					<div class="number-circle">8</div>
+				</td>
+				<td>
+					<div class="box p20 m10">
+						<div class="crow">
+							<div class="ccol-40">
+								<div class="ft18">开店成功</div>
+								<div class="text-gray">乐兑商城招商部已收到合同并通过审核，开店成功</div>							
+							</div>
+							<div class="ccol-40">&nbsp;</div>
+							<div class="ccol-20 text-right">
+								<eq name="info:status" value="4">
+								<a href="__URL__/audit" class="btn btn-trans btn-default btn-xs">浏览店铺</a>
+								</eq>
+							</div>
+						</div>
+						<div class="clearfix"></div>
+					</div>								
+				</td>
+			</tr>
+		</table>
+	</div>
+
+</div>
+
+
+
+<include file="Public:copyright" />
+<include file="Public:js" />
+
+
+<include file="Public:footer" />

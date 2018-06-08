@@ -1,0 +1,196 @@
+<style>
+	.cates{
+		height:32px;
+	}
+	
+	.cates .cates-scroller{
+		position: absolute;
+	    -webkit-tap-highlight-color: rgba(0,0,0,0);
+	    height: 32px;
+	    -webkit-transform: translateZ(0);
+	    -moz-transform: translateZ(0);
+	    -ms-transform: translateZ(0);
+	    -o-transform: translateZ(0);
+	    transform: translateZ(0);
+	    -webkit-touch-callout: none;
+	    -webkit-user-select: none;
+	    -moz-user-select: none;
+	    -ms-user-select: none;
+	    user-select: none;
+	    -webkit-text-size-adjust: none;
+	    -moz-text-size-adjust: none;
+	    -ms-text-size-adjust: none;
+	    -o-text-size-adjust: none;
+	    text-size-adjust: none;
+		text-overflow: -o-ellipsis-lastline;  
+	}
+	
+	.cates ul li{
+		width:80px;
+		text-align:center;
+		padding:8px;
+		float: left;
+    	display: block;
+	}
+	.cates ul li.active{
+		color:#dc143c;
+	}
+	.cates ul li .text{
+    	font-weight: bold;
+	}
+</style>
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin({ref:true})"></i>
+		</div>
+		<div class="title">
+			优惠券领取
+		</div>
+		<div class="r">
+		</div>
+	</div>
+</header>
+<section>
+	<div class="cates">
+		<div class="cates-scroller">
+			<ul>
+				<volist name="cates" id="vo">
+					<li onclick="couponRecom($(this))" data-p="1" data-id="{$key}" data-name="{$vo}">
+						<div class="text">{$vo}</div>
+					</li>
+				</volist>
+			</ul>
+		</div>
+	</div>
+	
+	<div class="lists">
+		<div class="coupon_scroller">
+			<div class="load-body">数据加载中……</div>
+		</div>
+		<div class="p10 load-more" onclick="coupon_pagelist($(this))">
+			<div class="btn btn-lg btn-block btn-danger btn-trans">加载更多……</div>
+		</div>	
+	</div>
+</section>
+
+<script id="my_agent_list" type="text/html">
+<% for(i=0;i<data.length;i++){ %>
+	<div class="line-box hover row" onclick="get_coupon(<%=data[i].coupon_id%>)">
+		<div class="col-70"><span class="b">所属店铺：<%= data[i].shop_name %></span></div>
+		<div class="col-30 text-right text-danger">立即领取</div>	
+	</div>
+	<div class="line-box-m hover row noicon md10">
+		<div class="col-20">
+			<div class="p5" onclick="openWin({name:'shop',url:'/Shop/index/shop_id/<%= data[i].shop_id %>'})"><img src="<%= data[i].shop_logo %>" alt="商家LOGO"></div>
+		</div>
+		<div class="col-50">
+			<p>发布时间：<%= data[i].atime %></p>
+			<p>过期时间：<%= data[i].sday %> 至 <%= data[i].eday %></p>
+		</div>
+		<div class="col-30 text-right">
+			<p>需消费：<span class="text-danger">￥<%= data[i].min_price %> 元</span></p>
+			<p>面值：<span class="text-danger">￥<%= data[i].price %> 元</span></p>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+<% } %>
+</script>
+
+<script id="my_agent_cates_list" type="text/html">
+	<div class="cates-scroller">
+		<ul>
+			<% for(i=0;i<data.length;i++){ %>
+				<li class="active" onclick="miaosha($(this))" data-id="<%= data[i].id %>" data-name="<%= data[i].name %>">
+					<div class="text"><%= data[i].name %></div>
+				</li>
+			<% } %>
+		</ul>
+	</div>
+</script>
+
+<script>
+	fixBar(1);
+	couponRecom();
+	var cates_count = '{$count}';
+	var cates_width = parseInt(cates_count * 80);
+	$(".cates-scroller").css({'width':cates_width+'px'})
+	myScroll = new IScroll('.cates', { scrollX: true, scrollY: false ,click:true,eventPassthrough: true,preventDefault: false,startX:0});
+	
+	//用于iscrllo指高度
+	//var section_height = $('.page.active section').height();
+	//var activity_height=section_height - 32 -45;
+	//$('.page.active .lists').css({height:activity_height+'px'});
+	
+	function couponRecom(obj) {
+		var id = '{$first}';
+		if(obj != '' && obj != undefined) id = obj.data('id');
+		$("li[data-id!='"+id+"']").removeClass('active');
+		$("li[data-id='"+id+"']").addClass('active');
+		ajax_post({
+			url:'/Api/api',
+			data:{apiurl:'/Coupon/recom',is_openid:1,id:id, no_sign:'openid'},
+		},function(ret){
+			if(ret.code==1){
+				var html = '<div class="load-body">没有可领取的优惠券</div>';
+				if(ret.data.list != '') {
+					if(ret.data.allpage > 1) {
+						$(".page.active section .lists .load-more").css({'display':'block'});
+					} else {
+						$(".page.active section .lists .load-more").css({'display':'none'});
+					}
+					var html = template('my_agent_list', {data:ret.data.list});
+				}
+				$('.page.active section .lists .coupon_scroller').html(html);
+				hover('.page.active section');
+			}
+		});
+	}
+	
+	//分页
+	function coupon_pagelist(obj) {
+		var active = $(".page.active section .cates .cates-scroller li.active");
+		var d = active.data();
+		d.p = parseInt(d.p + 1);
+		active.attr('data-p', parseInt(d.p));
+		ajax_post({
+			url:'/Api/api',
+			data:{apiurl:'/Coupon/recom',is_openid:1,id:d.id,p:d.p, no_sign:'openid,p'},
+		},function(ret){
+			if(ret.code==1){
+				var html = '<div class="load-body">没有可领取的优惠券</div>';
+				if(ret.data.list != '') {
+					if(ret.data.allpage <= d.p ) {
+						$(".page.active section .lists .load-more").css({'display':'none'});
+					}
+					var html = template('my_agent_list', {data:ret.data.list});
+					
+				}
+				$('.page.active section .lists .coupon_scroller').append(html);
+				$(".page.active section .cates .cates-scroller li.active").unbind();
+				hover('.page.active section');
+			}
+		});
+	}
+	
+	function get_coupon(b_id){
+		ajax_post({
+			url:'/Api/api',
+			data:{apiurl:'/Coupon/get_coupon',is_openid:1,b_id:b_id},
+		},function(ret){
+			valert({msg:ret.msg});
+		});
+	}
+	
+	//延迟使用iscrllo,否则会失败
+	setTimeout(function(){
+		myScroll = new IScroll('.coupon_scroller', { 
+			scrollbars: true,
+			mouseWheel: true,
+			click:true,
+			interactiveScrollbars: true,
+			shrinkScrollbars: 'scale',
+			fadeScrollbars: true
+		});	
+	},500);
+</script>

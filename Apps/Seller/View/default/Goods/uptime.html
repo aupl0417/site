@@ -1,0 +1,448 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body">
+<include file="Public:nav" />
+	<div class="container mb30">
+		<include file="Public:side" />
+		<div class="w980 fl">				
+				<div class="bor_der">
+					<div class="bg_f1 clearfix fs14 text_44 tle_R">
+						<a class="fl plr15 line40 ml-1 active" href="javascript:;">待上架的商品</a>
+					</div>
+					<div class="pd15">
+						<p>商品将会根据您选择的时间均匀分布上架。</p>
+					</div>
+					<div class="solid_t mt-1 plr15 ptb10">
+						<blockquote class="pd0 pl10 mt10 mb20 fs14 strong">商品上架时间</blockquote>
+						<form class="row form-horizontal group-border-dashed" id="formadd" name="formadd" data-url="/Goods/uptime" novalidate="novalidate">
+								<div class="col-xs-2">
+									<div class="form-group">
+										<label class="square fl mr5">
+											<if condition="$result[0] eq 0 ">
+											<input type="checkbox" name="is_best0" value="00:00">
+											<else />
+											 <input type="checkbox" name="is_best0" checked="checked" value="00:00">
+											 </if>
+											<span></span>
+										</label>
+										<strong>00:00-01:00</strong>
+									</div>
+								</div>
+								<div class="col-xs-2">
+									<div class="form-group">
+										<label class="square fl mr5">
+											<if condition="$result[1] eq 0 ">
+											<input type="checkbox" name="is_best1" value="01:00">
+											<else />
+											<input type="checkbox" name="is_best1" checked="checked" value="01:00">
+											 </if>
+											<span></span>
+										</label>
+										<strong>01:00-02:00</strong>
+									</div>
+								</div>
+								<div class="col-xs-2">
+									<div class="form-group">
+										<label class="square fl mr5">
+											<if condition="$result[2] eq 0 ">
+											<input type="checkbox" name="is_best2" value="02:00">
+											<else />
+											<input type="checkbox" name="is_best2" checked="checked" value="02:00">
+											 </if>
+											<span></span>
+										</label>
+										<strong>02:00-03:00</strong>
+									</div>
+								</div>
+								<div class="col-xs-2">
+									<div class="form-group">
+										<label class="square fl mr5">
+											<if condition="$result[3] eq 0 ">
+											<input type="checkbox" name="is_best3" value="03:00">
+											<else />
+											<input type="checkbox" name="is_best3" checked="checked" value="03:00">
+											 </if>
+											<span></span>
+										</label>
+										<strong>03:00-04:00</strong>
+									</div>
+								</div>
+								<div class="col-xs-2">
+									<div class="form-group">
+										<label class="square fl mr5">
+											<if condition="$result[4] eq 0 ">
+											<input type="checkbox" name="is_best4" value="04:00">
+											<else />
+											<input type="checkbox" name="is_best4" checked="checked" value="04:00">
+											</if>
+											<span></span>
+										</label>
+										<strong>04:00-05:00</strong>
+									</div>
+								</div>
+								<div class="col-xs-2">
+									<div class="form-group">
+										<label class="square fl mr5">
+											<if condition="$result[5] eq 0 ">
+											<input type="checkbox" name="is_best5" value="05:00">
+											<else />
+											<input type="checkbox" name="is_best5" checked="checked" value="05:00">
+											 </if>
+											<span></span>
+										</label>
+										<strong>05:00-06:00</strong>
+									</div>
+								</div>
+								<div class="col-xs-2">
+									<div class="form-group">
+										<label class="square fl mr5">
+											<if condition="$result[6] eq 0 ">
+											<input type="checkbox" name="is_best6" value="06:00">
+											<else />
+											<input type="checkbox" name="is_best6" checked="checked" value="06:00">
+											 </if>
+											<span></span>
+										</label>
+										<strong>06:00-07:00</strong>
+									</div>
+								</div>
+								<div class="col-xs-2">
+									<div class="form-group">
+										<label class="square fl mr5">
+											<if condition="$result[7] eq 0 ">
+											<input type="checkbox" name="is_best7" value="07:00">
+											<else />
+											<input type="checkbox" name="is_best7" checked="checked" value="07:00">
+											 </if>
+											<span></span>
+										</label>
+										<strong>07:00-08:00</strong>
+									</div>
+								</div>
+								<div class="col-xs-2">
+									<div class="form-group">
+										<label class="square fl mr5">
+											<if condition="$result[8] eq 0 ">
+											<input type="checkbox" name="is_best8" value="08:00">
+											<else />
+											<input type="checkbox" name="is_best8" checked="checked" value="08:00">
+											 </if>
+											<span></span>
+										</label>
+										<strong>08:00-09:00</strong>
+									</div>
+								</div>
+								<div class="col-xs-2">
+									<div class="form-group">
+										<label class="square fl mr5">
+											<if condition="$result[9] eq 0 ">
+											<input type="checkbox" name="is_best9" value="09:00">
+											<else />
+											<input type="checkbox" name="is_best9" checked="checked" value="09:00">
+											 </if>
+											<span></span>
+										</label>
+										<strong>09:00-10:00</strong>
+									</div>
+								</div>
+								<div class="col-xs-2">
+									<div class="form-group">
+										<label class="square fl mr5">
+										<if condition="$result[10] eq 0 ">
+											<input type="checkbox" name="is_best10" value="10:00">
+											<else />
+											<input type="checkbox" name="is_best10" checked="checked" value="10:00">
+											 </if>
+											<span></span>
+										</label>
+										<strong>10:00-11:00</strong>
+									</div>
+								</div>
+								<div class="col-xs-2">
+									<div class="form-group">
+										<label class="square fl mr5">
+											<if condition="$result[11] eq 0 ">
+											<input type="checkbox" name="is_best11" value="11:00">
+											<else />
+											<input type="checkbox" name="is_best11" checked="checked" value="11:00">
+											 </if>
+											<span></span>
+										</label>
+										<strong>11:00-12:00</strong>
+									</div>
+								</div>
+								<div class="col-xs-2">
+									<div class="form-group">
+										<label class="square fl mr5">
+											<if condition="$result[12] eq 0 ">
+											<input type="checkbox" name="is_best12" value="12:00">
+											<else />
+											<input type="checkbox" name="is_best12" checked="checked" value="12:00">
+											 </if>
+											<span></span>
+										</label>
+										<strong>12:00-13:00</strong>
+									</div>
+								</div>
+								<div class="col-xs-2">
+									<div class="form-group">
+										<label class="square fl mr5">
+											<if condition="$result[13] eq 0 ">
+											<input type="checkbox" name="is_best13" value="13:00">
+											<else />
+											<input type="checkbox" name="is_best13" checked="checked" value="13:00">
+											 </if>
+											<span></span>
+										</label>
+										<strong>13:00-14:00</strong>
+									</div>
+								</div>
+								<div class="col-xs-2">
+									<div class="form-group">
+										<label class="square fl mr5">
+											<if condition="$result[14] eq 0 ">
+											<input type="checkbox" name="is_best14" value="14:00">
+											<else />
+											<input type="checkbox" name="is_best14" checked="checked" value="14:00">
+											 </if>
+											<span></span>
+										</label>
+										<strong>14:00-15:00</strong>
+									</div>
+								</div>
+								<div class="col-xs-2">
+									<div class="form-group">
+										<label class="square fl mr5">
+											<if condition="$result[15] eq 0 ">
+											<input type="checkbox" name="is_best15" value="15:00">
+											<else />
+											<input type="checkbox" name="is_best15" checked="checked" value="15:00">
+											 </if>
+											<span></span>
+										</label>
+										<strong>15:00-16:00</strong>
+									</div>
+								</div>
+								<div class="col-xs-2">
+									<div class="form-group">
+										<label class="square fl mr5">
+											<if condition="$result[16] eq 0 ">
+											<input type="checkbox" name="is_best16" value="16:00">
+											<else />
+											<input type="checkbox" name="is_best16" checked="checked" value="16:00">
+											 </if>
+											<span></span>
+										</label>
+										<strong>16:00-17:00</strong>
+									</div>
+								</div>
+								<div class="col-xs-2">
+									<div class="form-group">
+										<label class="square fl mr5">
+											<if condition="$result[17] eq 0 ">
+											<input type="checkbox" name="is_best17" value="17:00">
+											<else />
+											<input type="checkbox" name="is_best17" checked="checked" value="17:00">
+											 </if>
+											<span></span>
+										</label>
+										<strong>17:00-18:00</strong>
+									</div>
+								</div>
+								<div class="col-xs-2">
+									<div class="form-group">
+										<label class="square fl mr5">
+											<if condition="$result[18] eq 0 ">
+											<input type="checkbox" name="is_best18" value="18:00">
+											<else />
+											<input type="checkbox" name="is_best18" checked="checked" value="18:00">
+											 </if>
+											<span></span>
+										</label>
+										<strong>18:00-19:00</strong>
+									</div>
+								</div>
+								<div class="col-xs-2">
+									<div class="form-group">
+										<label class="square fl mr5">
+											<if condition="$result[19] eq 0 ">
+											<input type="checkbox" name="is_best19" value="19:00">
+											<else />
+											<input type="checkbox" name="is_best19" checked="checked" value="19:00">
+											 </if>
+											<span></span>
+										</label>
+										<strong>19:00-20:00</strong>
+									</div>
+								</div>
+								<div class="col-xs-2">
+									<div class="form-group">
+										<label class="square fl mr5">
+											<if condition="$result[20] eq 0 ">
+											<input type="checkbox" name="is_best20" value="20:00">
+											<else />
+											<input type="checkbox" name="is_best20" checked="checked" value="20:00">
+											 </if>
+											<span></span>
+										</label>
+										<strong>20:00-21:00</strong>
+									</div>
+								</div>
+								<div class="col-xs-2">
+									<div class="form-group">
+										<label class="square fl mr5">
+											<if condition="$result[21] eq 0 ">
+											<input type="checkbox" name="is_best21" value="21:00">
+											<else />
+											<input type="checkbox" name="is_best21" checked="checked" value="21:00">
+											 </if>
+											<span></span>
+										</label>
+										<strong>21:00-22:00</strong>
+									</div>
+								</div>
+								<div class="col-xs-2">
+									<div class="form-group">
+										<label class="square fl mr5">
+											<if condition="$result[22] eq 0 ">
+											<input type="checkbox" name="is_best22" value="22:00">
+											<else />
+											<input type="checkbox" name="is_best22" checked="checked" value="22:00">
+											 </if>
+											<span></span>
+										</label>
+										<strong>22:00-23:00</strong>
+									</div>
+								</div>
+								<div class="col-xs-2">
+									<div class="form-group">
+										<label class="square fl mr5">
+											<if condition="$result[23] eq 0 ">
+											<input type="checkbox" name="is_best23" value="23:00">
+											<else />
+											<input type="checkbox" name="is_best23" checked="checked" value="23:00">
+											 </if>
+											<span></span>
+										</label>
+										<strong>23:00-24:00</strong>
+									</div>
+								</div>
+							<div class="col-xs-12">
+								<div class="form-group">
+									<label class="col-xs-5 pd0 control-label"></label>
+									<div class="col-xs-7 clearfix">
+										<button class="btn btn-primary fl ml0 btn-submit" type="submit" style="margin-right:20px">提交</button>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+					<notempty name="data.code">
+						{:W('Common/Builder/nors', array('param' => array('text' => $data['msg'])))}
+					<else />
+						<div class="plr15 ptb10">
+							<blockquote class="pd0 pl10 mt10 mb20 fs14 strong">商品列表</blockquote>
+							<div class=" mb20">
+								<div class="clearfix bg_f1 guide_tle bor_der">
+									<div class="pt10 fl">
+										<label class="square fl ml15 mr10">
+										</label>
+										
+									</div>		
+									<div class="fr mr15 mt6"> 
+										{$data.page.total}
+										<div class="btn-group spacer" style="margin-top:0!important">
+											<button type="button" class="btn btn-default btn-xs plr10"><i class="fa fa-angle-left plr5"></i></button>
+											<button type="button" class="btn btn-default btn-xs plr10"><i class="fa fa-angle-right plr5"></i></button>
+										</div>
+									</div>
+								</div>
+								<table class="table-bordered bor_no hover_tr mb20">
+									<tbody class="td_borno">
+										<tr class="solid_b solid_l solid_r">
+											<td class="pl40" width="30%">商品</td>
+											<td width="10%">商品编号</td>
+											<td width="13%">单价（元）</td>
+											<td width="9%">积分比例</td>
+											<td width="6%">库存</td>
+											<td width="8%">总销量</td>
+											<td width="14%">上架时间</td>
+										</tr>
+										<volist name="data.list" id="vo">
+											<tr class="solid_b">
+												<td class="clearfix">
+													<a href="javascript:;" data-url="{:DM('item')}{:U('/index/preview', ['id' => $vo['attr_list'][0]['id']])}"><img class="square100 fl mr10" src="{$vo.images}"></a>
+													<textarea data-title="{$vo.goods_name}" data-id="{$vo.id}" class="fl bor_no mr5" cols="13" rows="5">{$vo.goods_name}</textarea>
+													<i class="fa fa-pencil fa-fw mt10 text_77"></i>
+												</td>
+												<td>{$vo.code}</td>
+												<td>
+													<div class="mt-15">
+														<del class="text_77">{$vo.maket_price}</del> </br>
+														<input data-title="修改属性" data-url="{:U('/goods/sku', ['id' => $vo['id']])}" class="strong text_44 input_80 plr5 bor_no changeSku" type="text" value="{$vo.price}">
+														<i class="fa fa-pencil fa-fw text_77"></i>
+													</div>											
+												</td>
+												<td>
+													<div class="mt-15">
+														<del class="text_77"></del> </br>
+														{$vo['score_ratio'] * 100}%
+														<!-- <input data-title="修改属性" data-url="{:U('/goods/sku', ['id' => $vo['id']])}" class="strong text_44 input_80 plr5 bor_no changeSku" type="text" value="{$vo['score_ratio'] * 100 * $vo['price']}">
+														<i class="fa fa-pencil fa-fw text_77"></i> -->
+													</div>
+												</td>
+												<td class="text_44 strong">{$vo.num}</td>
+												<td class="text_44 strong">{$vo.sale_num}</td>
+												<td class="text_77">{$vo.uptime}</td>
+											</tr>
+										</volist>
+									</tbody>
+								</table>
+								<div class="clearfix">
+									<div class="col-xs-12 text-center">
+										{:paresePageAction($data['page']['page'], '/SellerGoods/goods_offline')}
+									</div>
+								</div>
+							</div>
+						</div>
+					</notempty>
+				</div>
+			</div><!-- 右边结束 -->
+
+		</div>
+	</div>
+</block>
+<block name="css"></block>
+<block name="script">
+<script>
+
+$(document).ready(function() {
+	
+	$(".btn-submit").click(function() {
+		
+		var is_go = false;
+		//将类目组装成字符串
+		
+		$("#formadd input:checkbox:checked").each(function() {
+			is_go = true;
+			return;
+		});
+		if(!is_go) {
+			talert({status:0,msg:'必须选择一个时间'});
+			return false;
+		}
+	});
+	
+	checkform({
+		formid:"#formadd",
+
+	},function(res) {
+		talert({status:res.code,msg:res.msg});
+		if(res.code == 1) {
+			//setTimeout("ref()", 1000);
+		}
+	});
+});
+</script>
+
+</block>

@@ -1,0 +1,62 @@
+<include file="Public:header" />
+		<div class="page-group">
+			<div id="page-cnews" class="page" data-page_num="100">
+				<input type="hidden" id="p" name="p" value="2" />
+				<!-- 标题栏 -->
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left back" href="/"></a>
+					<h1 class="title">C+商务系统公告</h1>
+					<a class="icon iconfont icon-category pull-right ml5 ac-menu" onclick="top_menu()"></a>					
+				</header>
+
+				<!-- 浮动导航 -->
+				<include file="Public:fixed-menu" />
+
+				<!-- 这里是页面内容区 -->
+				<div class="content infinite-scroll" data-distance="100" data-p="1">
+					<notempty name="pagelist">
+						<volist name="pagelist" id="vo">
+							<div class="list-block media-list">						
+								<ul>	
+									<li>
+										<a class="item-content" href="__URL__/view/id/{$vo.n_id}">
+											<div class="item-inner">
+												<div class="item-title-row">
+													<div class="item-title">{$vo.n_title}</div>
+													<div class="item-after">{$vo.n_createTime|strip_tags|msubstr=0,10,'utf-8'}</div>
+												</div>
+											</div>
+										</a>
+									</li>
+
+									<li>
+										<notempty name="vo.n_image">
+											<a href="__URL__/view/id/{$vo.n_id}">
+												<img class="lazyload" data-sizes="auto" data-src="{:myurl($vo['n_image'],640,200,1)}" alt="商品主图" src="../Public/images/nopic.gif">
+											</a>
+										</notempty>	
+										<a href="__URL__/view/id/{$vo.n_id}" class="item-content">
+											<div class="item-inner">
+												{$vo.n_content1}	
+											</div>
+										</a>
+									</li>
+								</ul>
+							</div>
+							<div class="clearfix md5"></div>
+						</volist>
+					<else />
+							<div class="nors text-center">
+								<div><i class="iconfont icon-sousuowujieguo ft3"></i></div>
+								 找不到记录！
+							</div>
+					</notempty>	
+				</div>
+			</div>	
+
+		
+		</div>	
+		
+
+<include file="Public:script" />
+<include file="Public:footer" />

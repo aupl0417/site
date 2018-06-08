@@ -1,0 +1,146 @@
+<extend name="Seller@Public:base" />
+<block name="body">
+    <div class="centent_body">
+        <!-- to do your html codeing -->
+        <div class="revision_bg">
+            <div class="container ptb_size_lg clearfix">
+                <!-- 左侧导航 -->
+                <include file="Public:sideNav" />
+                <!-- 左侧导航结束 -->
+
+                <div class="revisionRight pd15" style="width: 1020px;"><!-- 右侧内容 -->
+
+                    <div class="clearfix revisionOrderTab" data-url="">
+                        <a class="orderOption active" href="javascript:;">咨询详情</a>
+                    </div>
+
+                    <div class="content">
+                        <div class="row" style="border-bottom: solid 1px #F0F0F0; padding: 30px 0">
+                            <div class="col-md-4 col-sm-6 text-center">
+                                <div class="btn btn-sm btn-primary btn-rad btn-trans">{$data.status_name}</div>
+                                <eq name="data.status" value="2"><!-- 未回复的情况下可以删除咨询 -->
+                                    <p><a class="btn btn-sm btn-primary btn-rad btn-trans" href="{:U('/advisory/edit', ['id' => $data['id']])}">修改回复</a></p>
+                                    <else />
+                                    <p><a class="btn btn-sm btn-primary btn-rad btn-trans" href="{:U('/advisory/reply', ['id' => $data['id']])}">回复咨询</a></p>
+                                </eq>
+                            </div>
+                            <div class="col-md-4 col-sm-6" style="border-left: solid 1px #F8F8F8; border-right: solid 1px #F8F8F8;">
+                                <h4>商品信息</h4>
+                                <p>
+                                    图片：
+                                    <div>
+                                        <a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', ['id' => $data['attr_list_id']])}">
+                                            <img alt="{$data.goods_name}" title="{$data.goods_name}" src="{:myurl($data['images'], 80);}">
+                                        </a>
+                                    </div>
+                                </p>
+                                <p>
+                                    单价：<span class="text_yellow">￥ {$data.price}</span>
+                                </p>
+                            </div>
+                            <div class="col-md-4 col-sm-6">
+                                <h4>买家信息</h4>
+                                <p>
+                                    昵称：{$data.nick}
+                                </p>
+                                <p>
+                                    方圆：<a target="_blank" href="{:DM('oauth2')}{:U('Im/check',['receiver' => $data['nick']])}"><img src="/Public/images/icon-im18.png"></a>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="row" style="padding: 30px 0">
+                            <div class="col-md-6 col-sm-6" style="border-right: solid 1px #F8F8F8;">
+                                <h4>咨询信息</h4>
+                                <p>
+                                    咨询时间：{$data.atime}
+                                </p>
+                                <p>
+                                    咨询类型：{$data.type_name}
+                                </p>
+                                <p>
+                                    咨询内容：{$data.content}
+                                </p>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <h4>回复信息</h4>
+                                <eq name="data.status" value="2">
+                                    <p>
+                                        回复时间：{$data.reply_time}
+                                    </p>
+                                    <p>
+                                        回复内容：{$data.reply_content}
+                                    </p>
+                                    <else />
+                                    {:W('Common/Builder/nors', array('param' => array('text' => '商家未回复！')))}
+                                </eq>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <!-- my codeing over -_-   -->
+
+    </div>
+</block>
+
+<block name="css">
+</block>
+
+<block name="script">
+    <!-- to do your javascript codeing -->
+    <script>
+        function delHistory(id) {
+            vmodal({
+                title:'删除提示',
+                msg:'您真的要删除吗?',
+                class:'text-center',
+                confirm:1,
+                footer:false,
+                width:'600px',
+            },function(ret) {
+                $(".modal-ok").click(function() {
+                    ajax_post({
+                        url:'/run/authRun',
+                        data:{id:id},
+                        headers:{Action : '{$advisoryDel}'},
+                    },function(ret) {
+                        talert({status:ret.code,msg:ret.msg});
+                        if(ret.code == 1) {
+                            setTimeout(function () {
+                                gourl({url:'{:U("/advisory")}'})
+                            }, 1000);
+                        }
+                    })
+                })
+            })
+        }
+
+        //收藏店铺
+        function favShop(id) {
+            ajax_post({
+                url:'{:U("/run/authrun")}',
+                data:{shop_id:id},
+                headers : {Action : '{:enCryptRestUri("/Fav/shop")}'},
+            },function(ret) {
+                talert({status:ret.code,msg:ret.msg});
+            })
+        }
+
+        //收藏商品
+        function favGoods(id) {
+            ajax_post({
+                url:'{:U("/run/authrun")}',
+                data:{goods_id:id},
+                headers : {Action : '{:enCryptRestUri("/Fav/goods")}'},
+            },function(ret) {
+                talert({status:ret.code,msg:ret.msg});
+            })
+        }
+
+
+    </script>
+</block>

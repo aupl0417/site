@@ -1,0 +1,210 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin({ref:true})"></i>
+		</div>
+		<div class="title">
+			申请退款
+		</div>
+		<div class="r">
+			
+		</div>
+	</div>
+</header>
+<section>
+	<div class="refund_goods md10"></div>
+	<div class="refund_express"></div>
+</section>
+
+
+<script id="tpl_refund_goods" type="text/html">
+	<% for(i=0;i<data.length;i++){ %>
+	<form class="md10" id="form-refund-goods-<%= i %>" data-i="<%= i %>">
+		<div class="line-box-m row hover" onclick="openWin({name:'goods_view',url:'/Goods/view/id/<%= data[i].attr_list_id %>'})">
+			<div class="col-15"><img src="<%= data[i].images %>" alt="商品图片"></div>
+			<div class="col-85">
+				<div class="pl10 pr10">
+					<div class="lh2-18px"><%= data[i].goods_name %></div>
+					<div class="text-gray"><%= data[i].attr_name %></div>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		
+		<div class="line-input hover row">
+			<div class="col-30">退回数量</div>
+			<div class="col-70"><input id="num" name="num" placeholder="请输入想退回的商品数量，最多可退<%= data[i].can_num %>件" value="<%= data[i].can_num %>"></div>
+		</div>
+		<div class="line-input hover row">
+			<div class="col-30">退款金额</div>
+			<div class="col-70"><input id="price" name="price" placeholder="请输入退款金额，最多可退<%= data[i].can_price %>元" value="<%= data[i].can_price %>"></div>
+		</div>
+		<% if (data[i].is_refund_express == 1) { %>
+		<div class="line-input hover row">
+			<div class="col-30">退运费</div>
+			<div class="col-70"><input id="price" name="refund_express" placeholder="请输入退款金额，最多可退<%= data[i].express_money %>元"></div>
+		</div>
+		<%}%>
+		<div class="line-box-m noicon row">
+			<div class="col-30">退款原因</div>
+			<div class="col-70">
+				<textarea id="reason" name="reason" placeholder="请输入退款原因" maxlength="100" rows="5"></textarea>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="line-box hover noicon">
+			<div class="md8"></div>
+			<div class="text-right"><div class="btn btn-xs btn-danger" onclick="refund_goods($(this))" data-i="<%= i %>">提交</div></div>
+		</div>
+		<input type="hidden" name="orders_goods_id" value="<%= data[i].id %>">
+		<input type="hidden" name="apiurl" value="/Refund/add">
+		<input type="hidden" name="is_openid" value="1">
+		<input type="hidden" name="s_no" value="<%= data[i].s_no %>">
+		<input type="hidden" name="no_sign" value="refund_express,num,price">
+	</form>
+	<% } %>
+</script>
+
+<script id="tpl_refund_express" type="text/html">
+	<form class="md10" id="form-refund-express">
+		<div class="line-box hover row noicon b">
+			退运费
+		</div>
+		
+		<div class="line-input hover row">
+			<div class="col-30">退款金额</div>
+			<div class="col-70"><input id="price" name="price" placeholder="请输入退款金额，最多可退<%= data.money %>元" value="<%= data.money %>"></div>
+		</div>
+
+		<div class="line-box-m noicon row">
+			<div class="col-30">退款原因</div>
+			<div class="col-70">
+				<textarea id="reason" name="reason" placeholder="请输入退款原因" maxlength="100" rows="5"></textarea>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="line-box hover noicon">
+			<div class="md8"></div>
+			<div class="text-right"><div class="btn btn-xs btn-danger" onclick="refund_express($(this))">提交</div></div>
+		</div>
+		<input type="hidden" name="apiurl" value="/Refund/express_add">
+		<input type="hidden" name="is_openid" value="1">
+		<input type="hidden" name="s_no" value="<%= data.s_no %>">
+	</form>
+
+</script>
+
+
+<script id="tpl_refund_finish" type="text/html">
+	<div class="load-body"><%= data %></div>
+</script>
+
+<script>
+	fixBar(1);
+	
+	ajax_post({
+		url:'/Api/apis',
+		data:{
+			goods:{apiurl:'/Refund/goods',is_openid:1,s_no:'{$_GET.s_no}',imgsize:100,no_sign:'imgsize'},
+		}
+	},function(ret){
+		if(ret.goods.code==1){
+			var html=template('tpl_refund_goods',{data:ret.goods.data.goods});
+			$('.page.active .refund_goods').html(html);
+			
+			if(ret.goods.data.express!=null && ret.goods.data.express.money>0){
+				var html=template('tpl_refund_express',{data:ret.goods.data.express});
+				$('.page.active .refund_express').html(html);
+			}
+		}
+		else{
+			openWin({name:'refund_item_list',url:'/Refund/item_list/s_no/{$_GET.s_no}',close:true});
+			//var html=template('tpl_refund_finish',{data:'已提交退款申请！'});
+			//$('.page.active section').html(html);
+		}
+	});
+	
+	
+	//商品退款
+	function refund_goods(obj){
+		var d=obj.data();
+		var data=getFormJson('#form-refund-goods-'+d.i);
+		
+		if(data.refund_express != undefined){
+			if(isNaN(data.num) || isNaN(data.price) || isNaN(data.refund_express)){
+				valert({msg:'运费、金额、数量格式错误！'});
+				return false;
+			}
+			// 运费 金额 数量 3者必填一
+			if(data.num == '' || data.num < 0) data.num = '0';
+			if(data.price == '' || data.price < 0) data.price = '0';
+			if(data.refund_express == '' || data.refund_express < 0) data.refund_express = '0';
+			if(data.num == '0' && data.price == '0' && data.refund_express == '0'){
+				valert({msg:'运费、金额、数量必须填写一个并且不能为0！'});
+				return false;
+			}
+		}else{
+			if( isNaN(data.num) || isNaN(data.price) ){
+				valert({msg:'金额、数量格式错误！'});
+				return false;
+			}
+			// 金额 数量 2者必填一
+			if(data.num == '' || data.num < 0) data.num = '0';
+			if(data.price == '' || data.price < 0) data.price = '0';
+			if(data.num == '0' && data.price == '0'){
+				valert({msg:'金额、数量必须填写一个并且不能为0！'});
+				return false;
+			}
+		}
+		if(data.reason==''){
+			valert({msg:'请输入退款原因！'});
+			return false;
+		}
+		
+		ajax_post({
+			url:'/Api/api',
+			data:data
+		},function(ret){
+			valert(ret);			
+			if(ret.code==1){
+				$('.page.active #form-refund-goods-'+d.i).remove();				
+				if($('.page.active form').size()==0){
+					var html=template('tpl_refund_finish',{data:'已提交退款申请！'});
+					$('.page.active section').html(html);				
+				}
+			}
+		});
+	}
+	
+	
+	//运费退款
+	function refund_express(obj){
+		var d=obj.data();
+		var data=getFormJson('#form-refund-express');
+		if(data.num==''){
+			valert({msg:'请输入退回商品数量！'});
+			return false;
+		}
+
+		if(data.reason==''){
+			valert({msg:'请输入退款原因！'});
+			return false;
+		}
+		
+		ajax_post({
+			url:'/Api/api',
+			data:data
+		},function(ret){
+			valert(ret);			
+			if(ret.code==1){
+				$('.page.active #form-refund-express').remove();				
+				if($('.page.active form').size()==0){
+					var html=template('tpl_refund_finish',{data:'已提交退款申请！'});
+					$('.page.active section').html(html);				
+				}
+			}
+		});
+	}	
+
+	
+</script>

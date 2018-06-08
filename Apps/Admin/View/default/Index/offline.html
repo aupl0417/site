@@ -1,0 +1,58 @@
+<div class="m20">
+	<h1 class="text-center md20" style="font-size:3em">想踢我，没那么容易，考考你先</h1>
+	
+	<div class="box p20" style="background-color: #fdf5e6;	color: #ff6347;">
+		<h2 style="font-size:2em">{$rs.question}</h2>
+	</div>
+	
+<form data-url="__URL__/offline_save" id="form_illegl_add" class="form-horizontal vform">
+
+			{:W('Widget/buildform',array(array(
+				'field'		=>array(
+					array(
+						'formtype'		=>'text',
+						'label'			=>'答案',
+						'name'			=>'answer',						
+						'is_need'		=>true,
+					),
+
+					array(
+						'formtype'		=>'hidden',
+						'name'			=>'id',			
+						'value'			=>$rs['id'],
+					),
+					array(
+						'formtype'		=>'hidden',
+						'name'			=>'admin_id',			
+						'value'			=>$_GET['admin_id'],
+					),
+
+				),
+			),$rs))}
+			
+	<div class="p20 text-center">
+		<button type="submit" class="btn btn-primary btn-150px"><i class="fa fa-check"></i> 提交</button>
+	</div>
+<!--token-->
+
+</form>		
+</div>
+
+<script>
+checkform({
+	formid:'#form_illegl_add',
+},function(ret){
+	if(ret.status=='success'){
+		$('#ajax-modal .modal-body .m20').html('<h1 class="text-center md20 text-success" style="font-size:3em">'+ret.msg+'</h1>');
+		$('.online-user [data-admin_id="{$_GET.admin_id}"]').remove();
+		setTimeout(function(){
+			$('#ajax-modal').modal('hide');
+		},1000);
+	}else if(ret.status=='info'){
+		valert({status:'warning',msg:ret.msg});
+	}else{
+		$('#ajax-modal .modal-body .m20').html('<h1 class="text-center md20 text-danger" style="font-size:3em">'+ret.msg+'</h1>');
+	}
+});
+
+</script>

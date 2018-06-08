@@ -1,0 +1,202 @@
+<div class="attr-set">
+<div class="text-center text_yellow" style="padding:15px 0">可以为属性添加最多4张图片！</div>
+<style>
+	
+	.upload:hover{border:1px solid #c81623;cursor:pointer}
+</style>
+<volist name="list" id="vo">
+<div class="attr-group" id="{$vo.id}">
+	<div class="p10 border-d ft16 strong">{$vo.attr_name}</div>
+	<div class="p10">
+		<div class="row">
+		<volist name="vo.attr_options" id="opt">
+			<div class="col-xs-3 md20">
+				<div class="input-group">
+					<span class="input-group-addon" style="padding:0 10px;"><input type="checkbox" id="attr_id_{$vo.id}_{$key}" name="attr_id_{$vo.id}_{$key}" value="{$vo.id}:{$key}" class="i-red-square" {:in_array($vo['id'].':'.$key,$attr_value['attr'])?'checked':''}></span>
+					<input type="text" name="attr_value_{$vo.id}_{$key}" id="attr_value_{$vo.id}_{$key}" class="form-control" value="{:$attr_value[$key]['attr_value']?$attr_value[$key]['attr_value']:$opt}" placeholder="请输入{$vo.attr_name}">
+					<!--<span class="input-group-addon cursor" data-key="{$vo.id}_{$key}" onclick="select_images($(this))">图片</span>-->
+					<input type="hidden" name="attr_aid_{$vo.id}_{$key}" id="attr_aid_{$vo.id}_{$key}" value="{:$attr_value[$vo['id'].':'.$key]}">
+				</div>
+				<div class="attr-images attr_images_{$vo.id}_{$key} text-center" style="height:40px">
+					<assign name="ilkey" value="$key" />
+					<div class="max-100 hover-shadow fl mr10" <?php if(count($attr_value[$key]['attr_album']) == 4){?>style="display: none;"<?php }?>>
+						<img src="__PUBLIC__/images/icon-plus.png" alt="主图" style= 'width:40px;height:40px;'class= "upload" onclick = 'attrImageUpload(this)'>
+					</div>
+					<if condition="!empty($attr_value[$key]['attr_album'])">
+					<foreach name="attr_value[$key]['attr_album']" item="il">
+						<div class="max-100 hover-shadow fl mr10" style="position:relative;">
+							<div class="img-remove" onclick="attrImageDelete(this)">
+								<i class="fa fa-times"></i>
+							</div>
+							<a class="image-zoom" href="{$il}" title="{$il}">
+								<img src="{$il}?imageMogr2/thumbnail/!39x39r/gravity/Center/crop/39x39" alt="主图" style= 'width:39px;height:39px;border:1px solid #ccc;'>
+							</a>
+							<input type="hidden" name="attr_images_{$vo.id}_{$ilkey}[]" value="{$il}">
+						</div>
+					</foreach>
+					</if>
+				</div>
+			</div>
+		</volist>
+		</div>
+	</div>
+</div>
+</volist>
+</div>
+
+<div class="attr-lib">
+	<div class="p10 border-d ft16 strong">商品库存 <!--<span class="ft12 text-gray ml20">多条库存时，最高价与最低相差不得超过彼此的30%;</span>--></div>
+	<div class="p10 attr-set-list">
+		<div class="text-center nors">请先从上面选择属性！</div>
+	</div>
+</div>	
+
+<script>
+iCheckClass('.attr-group');
+image_zoom();
+var attr_list_array = new Array();  		//记录当前填写的属性价格
+var del_attr_list_key = new Array();		//记录已经填写完成，需要删除的数组attr_list_array的key
+
+function select_images(obj){
+	var d=obj.data();
+	$('.vform-type').html('goods_attr');
+	$('.vform-action').html(d.key);
+	//alert(d.key);
+	vmodal({
+		title:'上传主图',
+		iframe:'/UploadMore',
+		width:'95%',
+		tag:'#ajax-modal2',
+	});
+}
+
+$('.attr-set input[type="checkbox"]').on('ifChanged',function(){
+	attr_create();
+});
+
+$('.attr-set input[name^="attr_value_"]').change(function(){
+	attr_create();
+});
+
+if($('.attr-set input[type="checkbox"]:checked').size()>0){
+	attr_create();
+}
+
+function attr_create(){
+	var select=new Array();
+	attr_save();
+	$('.attr-set input[type="checkbox"]:checked').each(function(i){
+		select[i]=$(this).val()+':'+$(this).closest('.input-group').find('input[type="text"]').val();
+	});
+	ajax_post({
+		url:'__URL__/attr_create_form/goods_id/{$_GET.goods_id}',
+		data:{data:select}
+	},function(ret){
+		//alert(ret.html);
+		if(ret.code==1){
+			$('.attr-set-list').html(ret.html);
+			//循环属性列表
+			$(".attr-set-list tbody tr").each(function(k,v){
+				var obj = $(this);
+				//查找属性的id值
+				var attr_sku_attr_id = obj.find('input[name="attr_sku_attr_id[]"]').val();
+				$.each(attr_list_array,function(ke,va){
+					//如果当前属性的id值和数组的匹配，将数组的值填写上去，并将数组的key记录
+					if(attr_sku_attr_id == va[0]){
+						obj.find('input[name="attr_sku_price[]"]').val(va[1]);
+						obj.find('input[name="attr_sku_price_market[]"]').val(va[2]);
+						obj.find('input[name="attr_sku_price_purchase[]"]').val(va[3]);
+						obj.find('input[name="attr_sku_num[]"]').val(va[4]);
+						obj.find('input[name="attr_sku_code[]"]').val(va[5]);
+						obj.find('input[name="attr_sku_barcode[]"]').val(va[6]);
+						obj.find('input[name="attr_sku_weight[]"]').val(va[7]);
+						del_attr_list_key.push(ke);
+					}
+				});
+				//将属性数组已匹配的值删除
+				$.each(del_attr_list_key,function(key,val){
+					attr_list_array.splice(val,1);
+				});
+				//清空需要删除的key
+				del_attr_list_key = new Array();
+				//console.log(attr_list_array);
+				//console.log(del_attr_list_key);
+			});
+		}else{
+			$('.attr-set-list').html('<div class="text-center nors">请先从上面选择属性！</div>');
+		}
+	});
+}
+//根据属性id值保存已经填写的价格
+function attr_save(){
+	$(".attr-set-list tbody tr").each(function(k,v){
+		var arr = new Array();
+		arr[0]= $(this).find('input[name="attr_sku_attr_id[]"]').val();
+		arr[1]= $(this).find('input[name="attr_sku_price[]"]').val();
+		arr[2]= $(this).find('input[name="attr_sku_price_market[]"]').val();
+		arr[3]= $(this).find('input[name="attr_sku_price_purchase[]"]').val();
+		arr[4]= $(this).find('input[name="attr_sku_num[]"]').val();
+		arr[5]= $(this).find('input[name="attr_sku_code[]"]').val();
+		arr[6]= $(this).find('input[name="attr_sku_barcode[]"]').val();
+		arr[7]= $(this).find('input[name="attr_sku_weight[]"]').val();
+		attr_list_array.push(arr);	//组装数组
+	});
+}
+
+var attr_upload_obj;
+var attr_upload = 0;
+var attr_upload_input = '';
+function attrImageUpload(obj){
+	//已经存在的图片数量
+	pics_num = $(obj).parent().siblings(".fl").length;
+	if(pics_num == 4){
+		talert({msg:'只能上传4张图片'});return;
+	}
+	var name = '';
+	name = $(obj).parent().parent().prev().children("input:hidden").attr("name");
+	name = name.replace('attr_aid_','');
+	attr_upload_input = 'attr_images_'+name;
+	$('#attrImageData').click();
+	attr_upload_obj = $(obj);
+}
+//删除属性图片
+function attrImageDelete(obj){
+	if(confirm("确定要删除这个图片？")){
+		pics_num = $(obj).parent().siblings(".fl").length;
+		if(pics_num == 4){
+			$(obj).parent().siblings(".fl").first().show();		//图片少于4张，上传按钮出现
+		}
+		
+		$(obj).parent().remove();
+	}
+}
+$('#attrImageData').change(function(){
+	if(attr_upload != 0){return;}
+	attr_upload++;
+	ajax_post_form({
+		formid:'#form-attr-upload',
+	},function(ret){
+		if(ret.code==1){
+			$("#attrImageData").val('');	//清除form的信息
+			
+			var html='<div class="max-100 hover-shadow fl mr10" style="position:relative;">';
+				html+='	<div class="img-remove" onclick="attrImageDelete(this)"><i class="fa fa-times"></i></div>';
+				html+='	<a class="image-zoom" title="'+ret.url+'">';
+				html+='	<img src="'+ret.url+'" alt="主图" style= "width:39px;height:39px;border:1px solid #ccc;"';
+				html+='	</a>';													
+				html+='	<input type="hidden" name="'+attr_upload_input+'[]" value="'+ret.url+'">';												
+				html+='</div>';
+			attr_upload_obj.parent().parent().append(html);
+			//如果图片达到4张，将上传按钮隐藏
+			if(attr_upload_obj.parent().siblings(".fl").length == 4){
+				attr_upload_obj.parent().hide();
+			}
+			attr_upload=0;
+		}
+	});
+});
+
+
+
+
+</script>

@@ -1,0 +1,47 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body">
+	<include file="Public:nav" />
+	<div class="container mb30">
+		<include file="Public:side" />
+		<div class="w980 fl">
+			<div class="bor_der">
+				<div class="bg_f1 clearfix fs14 text_44 tle_R">
+					<a class="fl plr15 line40 ml-1 active" href="javascript:;">开店协议</a>
+				</div>
+				
+				<div class="pd10">
+					<div class="pd30 bor_der over" style="height:300px; overflow-y:scroll;">
+						<h3 class= "text-center">{$data.name}</h3>
+						{$data.content}
+					</div>
+				</div>
+				
+				<div class="pd10">
+					<div class="form-group">
+						<label for="protocol" class="square mr10 fl fs12"><input id="protocol" name="protocol" type="checkbox"><span></span></label>
+						<label for="protocol"><span class="text_77">我已仔细阅读并同意<span class="text_yellow">《乐兑平台卖家服务协议》</span></span></label>
+					</div>
+					<div class="form-group">
+						<a class="btn btn-primary disabled btn-next" href="{:U('/opens/step1')}">下一步</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</block>
+<block name="css"></block>
+<block name="script">
+<script>
+$(document).ready(function() {
+	$("#protocol").change(function() {
+		if($(this).is(":checked") == true) {
+			$(".btn-next").removeClass('disabled');
+		} else {
+			$(".btn-next").addClass('disabled');
+		}
+	});
+});
+</script>
+</block>

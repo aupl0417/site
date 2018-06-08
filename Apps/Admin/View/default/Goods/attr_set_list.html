@@ -1,0 +1,35 @@
+<table>
+	<thead>
+		<tr>
+			<th class="text-center">顺序</th>
+			<th>属性</th>
+			<th>销售价 <i class="fa fa-arrow-down mr20" onclick="addsome(2)"></i> <i class="fa fa-trash-o" onclick="trash_all(2)"></i></th>
+			<th>库存 <i class="fa fa-arrow-down mr20" onclick="addsome(3)"></i> <i class="fa fa-trash-o" onclick="trash_all(3)"></i></th>
+			<th>市场价 <i class="fa fa-arrow-down mr20" onclick="addsome(4)"></i> <i class="fa fa-trash-o" onclick="trash_all(4)"></i></th>
+			<th>成本价 <i class="fa fa-arrow-down mr20" onclick="addsome(5)"></i> <i class="fa fa-trash-o" onclick="trash_all(5)"></i></th>
+			<th>编号 <i class="fa fa-arrow-down mr20" onclick="addsome(6)"></i> <i class="fa fa-trash-o" onclick="trash_all(6)"></i></th>
+			<th>条形码 <i class="fa fa-arrow-down mr20" onclick="addsome(7)"></i> <i class="fa fa-trash-o" onclick="trash_all(7)"></i></th>
+			<th>重量(Kg) <i class="fa fa-arrow-down mr20" onclick="addsome(8)"></i> <i class="fa fa-trash-o" onclick="trash_all(8)"></i></th>
+		</tr>
+	</thead>
+	<tbody>
+		<volist name="attr_set_list" id="vo">
+		<tr>
+			<td class="text-center">{$key+1}</td>
+			<td class="attr-item-name">
+				{$vo.attr_name}
+				<input type="hidden" id="attr_sku_attr_id[]" name="attr_sku_attr_id[]" value="{$vo.attr_id}">
+				<input type="hidden" id="attr_sku_attr[]" name="attr_sku_attr[]" value="{$vo.attr}">
+				<input type="hidden" id="attr_sku_id[]" name="attr_sku_id[]" value="{$vo.id}">
+			</td>
+			<td><input type="text" id="attr_sku_price[]" name="attr_sku_price[]" value="{$vo.price}" class="form-control"></td>
+			<td><input type="text" id="attr_sku_num[]" name="attr_sku_num[]" value="{$vo.num}" class="form-control"></td>
+			<td><input type="text" id="attr_sku_price_market[]" name="attr_sku_price_market[]" value="{$vo.price_market}" class="form-control"></td>
+			<td><input type="text" id="attr_sku_price_purchase[]" name="attr_sku_price_purchase[]" value="{$vo.price_purchase}" class="form-control"></td>
+			<td><input type="text" id="attr_sku_code[]" name="attr_sku_code[]" value="{$vo.code}" class="form-control"></td>
+			<td><input type="text" id="attr_sku_barcode[]" name="attr_sku_barcode[]" value="{$vo.barcode}" class="form-control"></td>
+			<td><input type="text" id="attr_sku_weight[]" name="attr_sku_weight[]" value="{$vo.weight}" class="form-control"></td>
+		</tr>
+		</volist>
+	</tbody>	
+</table>

@@ -1,0 +1,202 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body mt10">
+
+    <include file="Public:nav_statistic" />
+
+    <div class="container">
+
+        <include file="Public:side_statistic" />
+
+        <div class="w960 fl">
+            <ol class="breadcrumb pd10 bor_der bor_r0 mt0 mb20">
+                <li><a href="/">数据统计 </a> </li>
+                <li><a href="">商品分析</a></li>
+                <li><a href="">商品效果</a></li>
+            </ol>
+
+
+            <div class="ptb10 solid_b mb20">
+                <span class="fs16">商品明细</span>
+            </div>
+
+  
+
+            <div class="mb35">
+
+                <div class="ptb10 solid_b mb20">
+                    <span class="fs16">商品排行概览</span>
+                </div>
+                <div class="mb10">
+                    <strong class="fs14 text_black mr20">选择时间</strong>
+                    <a class="text_yellow plr20 <if condition='$con[effect_type] eq 1'>btn btn-primary btn-xs </if>" onclick = "select_change('effect','type',1)">昨天</a>
+                    <a class="text_yellow plr20 <if condition='$con[effect_type] eq 2'>btn btn-primary btn-xs </if>" onclick = "select_change('effect','type',2)">最近一周</a>
+                    <a class="text_yellow plr20 <if condition='$con[effect_type] eq 3'>btn btn-primary btn-xs </if>" onclick = "select_change('effect','type',3)">最近一个月</a>
+                    <a class="text_yellow plr20 <if condition='$con[effect_type] eq 4'>btn btn-primary btn-xs </if>" onclick = "select_change('effect','type',4)">最近三个月</a>
+                    <div class="pull-right btn-group btn-group-sm mt-5">
+                        <button type="button" class="btn btn-primary plr20 <if condition='$con[effect_terminal] neq 1'> btn-trans</if>" onclick = "select_change('effect','terminal',1)">全部</button>
+                        <button type="button" class="btn btn-primary plr20 <if condition='$con[effect_terminal] neq 2'> btn-trans</if>" onclick = "select_change('effect','terminal',2)">pc端</button>
+                        <button type="button" class="btn btn-primary plr20 <if condition='$con[effect_terminal] neq 3'> btn-trans</if>" onclick = "select_change('effect','terminal',3)">手机端</button>
+                    </div>
+                </div>
+
+                
+                <div class="clearfix mt20 mb10">
+                    <span class="pull-left mr15">查看指标</span>
+
+                    <label class="square mr10 fl list-checkbox">
+                        <input type="checkbox" <if condition="$con['field_uv'] eq 1">checked="checked"</if> onchange="field_change(this,'uv')"><span class="pull-left"></span>
+                        <span class="fl ml2 small_xs">商品访客数</span>
+                    </label>
+                    <label class="square mr10 fl list-checkbox">
+                        <input type="checkbox" <if condition="$con['field_pv'] eq 1">checked="checked"</if> onchange="field_change(this,'pv')"><span class="pull-left"></span>
+                        <span class="fl ml2 small_xs">商品浏览量</span>
+                    </label>
+                    <label class="square mr10 fl list-checkbox">
+                        <input type="checkbox" <if condition="$con['field_buy_num'] eq 1">checked="checked"</if> onchange="field_change(this,'buy_num')"><span class="pull-left"></span>
+                        <span class="fl ml2 small_xs">下单件数</span>
+                    </label>
+                    <label class="square mr10 fl list-checkbox">
+                        <input type="checkbox" <if condition="$con['field_buy_money'] eq 1">checked="checked"</if> onchange="field_change(this,'buy_money')"><span class="pull-left"></span>
+                        <span class="fl ml2 small_xs">支付金额</span>
+                    </label>
+                    <label class="square mr10 fl list-checkbox">
+                        <input type="checkbox" <if condition="$con['field_into_cart'] eq 1">checked="checked"</if> onchange="field_change(this,'into_cart')"><span class="pull-left"></span>
+                        <span class="fl ml2 small_xs">加购件数</span>
+                    </label>
+                    <label class="square mr10 fl list-checkbox">
+                        <input type="checkbox" <if condition="$con['field_fav_num'] eq 1">checked="checked"</if> onchange="field_change(this,'fav_num')"><span class="pull-left"></span>
+                        <span class="fl ml2 small_xs">收藏人数</span>
+                    </label>
+                    <label class="square mr10 fl list-checkbox">
+                        <input type="checkbox" <if condition="$con['field_avg_residence_time'] eq 1">checked="checked"</if> onchange="field_change(this,'avg_residence_time')"><span class="pull-left"></span>
+                        <span class="fl ml2 small_xs">平均停留时长</span>
+                    </label>
+
+                    <div class="pull-right mt-10">
+                        <input type="text" class="form-control fl" placeholder="请输入商品名称" value="{$con['effect_keyword']}" style="width:190px;border-color:#c81623">
+                        <button class="btn btn_m btn-primary plr20" onclick="select_change('effect','keyword',$(this).prev().val())">搜索</button>
+                    </div>   
+                </div>
+                    
+               
+                <div class="tab-container tab_li_sty">
+                    
+                   <table class="bg_white mt-1">
+                        <thead class="no-border">
+                            <tr class="bg_f1">
+                                <th class="text-center">序号</th>
+                                <th class="text-center" width="32%"> 商品信息</th>
+                                <if condition="$con['field_uv'] eq 1"><th class="text-center"> 商品访客数</th></if>
+                                <if condition="$con['field_pv'] eq 1"><th class="text-center"> 商品浏览量</th></if>
+                                <if condition="$con['field_buy_num'] eq 1"><th class="text-center"> 下单件数</th></if>
+                                <if condition="$con['field_buy_money'] eq 1"><th class="text-center"> 支付金额(元）</th></if>
+                                <if condition="$con['field_into_cart'] eq 1"><th class="text-center"> 加购件数</th></if>
+                                <if condition="$con['field_fav_num'] eq 1"><th class="text-center"> 收藏人数</th></if>
+                                <if condition="$con['field_avg_residence_time'] eq 1"><th class="text-center"> 平均停留时长</th></if>
+                            </tr>
+                        </thead>
+                        <tbody class="no-border-y text-center">
+							<volist name = "goods_list.list" id = "vo">
+                            <tr>
+                                <td class="ptb15">{$vo.no}</td>
+                                <td class="ptb15 text-left  ">
+                                    <img class="fl mr10" width="60" height="60" src="{$vo.images}" style="max-width: 945px;">
+                                    <div class="text_44 mb0 w210 h34 over">{$vo.goods_name}</div>
+                                    <h6 class="mb0 text_over text_yellow">￥ {$vo.price}</h6>
+                                </td>
+                                <if condition="$con['field_uv'] eq 1"><td class="ptb15">{$vo.uv}</td></if>
+                                <if condition="$con['field_pv'] eq 1"><td class="ptb15">{$vo.pv}</td></if>
+                                <if condition="$con['field_buy_num'] eq 1"><td class="ptb15">{$vo.buy_num}</td></if>
+                                <if condition="$con['field_buy_money'] eq 1"><td class="ptb15">{$vo.buy_money}</td></if>
+                                <if condition="$con['field_into_cart'] eq 1"><td class="ptb15">{$vo.into_cart}</td></if>
+                                <if condition="$con['field_fav_num'] eq 1"><td class="ptb15">{$vo.fav_num}</td></if>
+                                <if condition="$con['field_avg_residence_time'] eq 1"><td class="ptb15">{$vo.avg_residence_time}</td></if>
+                            </tr>
+							</volist>
+                        </tbody>
+                     </table>
+                     <div class="text-right">
+                        <ul class="pagination">
+							<li class="prev <empty name="goods_list.page.prevPage">disabled</empty>">
+								<a <notempty name="goods_list.page.prevPage">onclick = "select_change('effect','page',{$goods_list.page.prevPage})"</notempty>><span class="fa fa-angle-left"></span>&nbsp;上一页</a>
+							</li>
+							
+							<volist name="goods_list.page.page" id="vo">
+							<li <if condition="$vo.active eq 1">class="active"</if>><a onclick="select_change('effect','page',{$vo.p})">{$vo.p}</a></li>
+							</volist>
+
+							<li class="next  <empty name="goods_list.page.nextPage">disabled</empty>">
+								<a <notempty name="goods_list.page.nextPage">onclick = "select_change('effect','page',{$goods_list.page.nextPage})"</notempty>>下一页&nbsp;<span class="fa fa-angle-right"></span></a>
+							</li>
+						</ul>
+						<div class="pull-right mt25 ml10 clearfix w190">
+							<span class="pull-left mr5">跳到</span>
+						   
+							<select class="form-control pull-left mt-8" style="width:60px;height:31px" onchange = "select_change('effect','page',this.value)">
+								<for start="1" end="$goods_list.page.totalPage" comparison="elt">
+								<option value = "{$i}" <if condition="$goods_list.page.nowPage eq $i">selected="selected"</if>>{$i}</option>
+								</for>
+							</select>
+							<span class="pull-left ml15">共{$goods_list.page.totalPage}页</span>
+						</div>
+                    </div>  
+                        
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+<form action="" method="post" class="hide page_select">
+	<foreach name="con" item="vo" key="key">
+		<input type="hidden" name="{$key}" value="{$vo}"/>
+	</foreach>	
+</form>
+</block>
+
+<block name="css"></block>
+<block name="script">
+
+<script src="__NEW_DESIGN__flatdream/js/jquery.js"></script>
+<script src="__NEW_DESIGN__flatdream/js/jquery.pushmenu/js/jPushMenu.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.nanoscroller/jquery.nanoscroller.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.sparkline/jquery.sparkline.min.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.ui/jquery-ui.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.gritter/js/jquery.gritter.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/behaviour/core.js"></script>
+<script src="__NEW_DESIGN__flatdream/js/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.flot/jquery.flot.js"></script>
+
+<script src="__NEW_DESIGN__js/amcharts.js" type="text/javascript"></script>
+<script src="__NEW_DESIGN__js/serial.js" type="text/javascript"></script>
+<script src="__NEW_DESIGN__js/pie.js"></script>
+<script>
+	//页面页码切换
+	function select_change(type,name,new_val){
+		var old_val = $('.page_select input[name="'+type+'_'+name+'"]').val();
+		if(old_val != new_val){
+			$('.page_select input[name="'+type+'_'+name+'"]').val(new_val);
+			
+			if(name !== 'page'){
+				$('.page_select input[name="'+type+'_page"]').val(1);
+			}
+			$('.page_select').submit();
+		}
+	}
+	function field_change(obj,name){
+		if($(obj).is(':checked')){
+			console.log(1);
+			$('.page_select input[name="field_'+name+'"]').val(1);
+		}else{
+			console.log(0);
+			$('.page_select input[name="field_'+name+'"]').val(0);
+		}
+	}
+</script>
+</block>

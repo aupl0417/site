@@ -1,0 +1,48 @@
+.pt5{padding-top:0.5rem;}
+.pl5{padding-left:0.5rem;}
+.pr5{padding-right:0.5rem;}
+.pd5{padding-bottom:0.5rem;}
+.bg-white{background:#fff;}
+h4{text-align: center;margin: 0.2rem;font-size:1.1rem;}
+
+.bgimg{font-size:0px;}
+.bgimg img{width:100%;display:block;}
+
+.link{position:relative;}
+.link .link-button {position: absolute;top: 0;height: 100%;}
+.link .link-button.link-1{left: 21%;width: 14%;}
+.link .link-button.link-2{left: 60%;width: 19%;}
+.link .link-button.link-3{left: 40%;width: 17%;top: 16%;height: 43%;}
+
+
+
+.green,.green .ibl,.green .ibr{background:#71e4ae}
+.green .goods_name{color:#08864b}
+.green .goods_price{border:1px solid #08864b}
+.green .goods_price .fl{background:#08864b}
+.green .goods_price .fr{color:#08864b}
+
+.violet,.violet .ibl,.violet .ibr{background:#b6acf5}
+.violet .goods_name{color:#553def}
+.violet .goods_price{border:1px solid #553def}
+.violet .goods_price .fl{background:#553def}
+.violet .goods_price .fr{color:#553def}
+
+.orange,.orange .ibl,.orange .ibr{background:#f8be80}
+.orange .goods_name{color:#f07700}
+.orange .goods_price{border:1px solid #f07700}
+.orange .goods_price .fl{background:#f07700}
+.orange .goods_price .fr{color:#f07700}
+
+.link-goods{width:90%;margin:0 auto;}
+.link-goods .link-goods-item{width:48%;margin:0 1% 1rem 1%;background:#fff;position:relative;padding:0.3rem;}
+.link-goods .link-goods-item .goods_name{padding: 0 0.3rem;font-size: 0.6rem;height: 1.7rem;line-height: 0.8rem;overflow: hidden;}
+.link-goods .link-goods-item .goods_price{margin:0.3rem 10%;}
+.link-goods .link-goods-item .goods_price .fl{color:#fff;padding: 0.2rem;width:55%;overflow:hidden;font-size:0.7rem;}
+.link-goods .link-goods-item .goods_price .fl span{}
+.link-goods .link-goods-item .goods_price .fr{text-align:center;width:45%;font-weight: 700;}
+
+.link-goods .link-goods-item .itl{position:absolute;top:0.3rem;left:0.3rem;width:10%;}
+.link-goods .link-goods-item .itr{position:absolute;top:0.3rem;right:0.3rem;width:10%;}
+.link-goods .link-goods-item .ibl{position:absolute;bottom:0px;left:0px;width:10%;}
+.link-goods .link-goods-item .ibr{position:absolute;bottom:0px;right:0px;width:10%;}

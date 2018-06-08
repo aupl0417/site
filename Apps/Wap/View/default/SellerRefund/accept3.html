@@ -1,0 +1,15 @@
+	<form id="form-refund-accept">
+	
+		<div class="line-input hover row">
+			<div class="col-30">安全密码</div>
+			<div class="col-70"><input type="password" id="password_pay" name="password_pay" placeholder="请输入安全密码" maxlength="6"></div>
+		</div>
+
+		<div class="line-box nobg noicon ft12 text-gray">
+			请确认已收到退货并无异议后再执行此操作
+		</div>
+		<input type="hidden" name="apiurl" value="/SellerRefund2/accept2">
+		<input type="hidden" name="is_openid" value="1">
+		<input type="hidden" name="s_no" value="{$_GET.s_no}">
+		<input type="hidden" name="r_no" value="{$_GET.r_no}">
+	</form>

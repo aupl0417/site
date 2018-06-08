@@ -1,0 +1,55 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			{$_GET['title']}
+		</div>
+		
+	</div>
+</header>
+<section id="team-list">
+	<div class="load-body">数据加载中....</div>
+</section>
+
+<script id="team-list-content" type="text/html">
+	<% if(data.length == 0){ %><div class="text-center">暂无数据....</div><% } %>
+	
+	<% for(i=0;i<data.length;i++){ %>
+		<div class="line-box noicon row">
+			<div class="col-30"><%= list[data[i].team_num] %></div>
+			<div class="col-30 text-center"><%= data[i].nick %></div>
+			<div class="col-40 text-right"><%= data[i].atime %></div>
+		</div>
+	<% } %>
+</script>
+
+<script>
+fixBar(1);
+var level = parseInt({$_GET['level']});
+$(function(){
+	ajax_post({
+		url:'/Api/api',
+		data:{
+			apiurl:'/Team/downline_user',
+			is_openid:1,
+			level:level,
+		},
+	},function(ret){
+		// console.log(JSON.stringify(ret));
+		if( ret.code == 1 ){
+			var team_list = {1:'普通会员',2:'创业会员',3:'县级代理',4:'区级代理',5:'市级代理',6:'省级代理'};
+			var html = template('team-list-content', {data:ret.data.downline_user,list:team_list});
+			$('.page.active #team-list').html(html);
+		}
+	});
+});
+
+
+
+
+
+
+
+</script>

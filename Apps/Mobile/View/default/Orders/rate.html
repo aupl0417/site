@@ -1,0 +1,156 @@
+<include file="Public:header" />
+		<div class="page-group">
+			<div id="page-orders-rate" class="page">
+				<!-- 标题栏 -->
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left back" data-no-cache="true"></a>
+					<h1 class="title">发表评价</h1>
+					<a class="icon iconfont icon-category pull-right ml5 ac-menu" onclick="top_menu()"></a>
+				</header>
+
+				<!-- 浮动导航 -->
+				<include file="Public:fixed-menu" />
+				
+			
+				<!-- 工具栏 -->
+				<notempty name="list">
+				<nav class="bar bar-tab">
+					<div class="goods-footer">
+						<div class="cart-btn">
+							<div class="btn-buy btn-submit">发表评价</div>
+						</div>
+					</div>
+				</nav>			
+				</notempty>
+		
+				<!-- 这里是页面内容区 -->		
+				<div class="content">
+					<notempty name="list">
+					<form name="form-rate" id="form-rate" onsubmit="return false">
+					<volist name="list" id="vo">
+						<div class="list-block media-list">
+							<ul>
+								<li class="bg-gray2">
+									<a href="/Goods/view/id/{$vo.attr_list_id}" class="item-content">
+										<div class="item-media">
+											<img class="lazyload" data-sizes="auto" data-src="{:myurl($vo['images'],150)}" alt="商品主图" src="../Public/images/nopic.gif" width="60">
+										</div>
+										<div class="item-inner">
+											<div class="item-title-row">
+												<div class="item-title">{$vo.goods_name}</div>
+												<div class="item-after">
+													￥{$vo.price}
+												</div>
+											</div>
+											<div class="item-subtitle">
+												<div class="pull-right text-gray">x{$vo.num}</div>
+												<div class="ft05">{$vo.attr_name}</div>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<div class="item-content item-link" onclick="rate_point_option($(this))" data-tag="#fraction_desc">
+										<input type="hidden" name="fraction_desc" id="fraction_desc" value="5" />
+										<div class="item-inner">
+											<div class="item-title-row">
+												<div class="item-title">描述相符</div>
+												<div class="item-after">
+													5分
+												</div>
+											</div>
+										</div>
+									</div>
+								</li>								
+								<li>
+									<div class="item-content">
+										<div class="item-inner">
+											<div class="item-title-row">
+												<div class="item-title" style="min-width:3rem">评价</div>
+												<div class="item-input">
+													<textarea id="content" name="content" placeholder="分享您的购物心得，不超过200字" maxlength="200" rows="8"></textarea>
+												</div>
+											</div>
+										</div>
+									</div>
+								</li>	
+								<li>
+									<div class="item-content">
+										<div class="upload-box">
+											<div class="upload-action">
+												<div class="upload-btn">
+													<input id="imageData" name="imageData" type="file" value="" />
+													<img alt="上传图片" src="../Public/images/up_load.jpg" width="60">
+													<input type="hidden" id="images" name="images" />
+												</div>												
+											</div>
+											<div class="images-list">
+												
+											</div>
+										</div>
+									</div>
+								</li>								
+							</ul>
+						</div>
+						<div class="clearfix md5"></div>
+						<input type="hidden" name="orders_goods_id" value="{$vo.id}" />
+					</volist>
+					
+					<div class="list-block">
+						<ul>
+							<li>
+								<div class="item-content item-link" onclick="rate_point_option($(this))" data-tag="#fraction_speed">
+									<input type="hidden" name="fraction_speed" id="fraction_speed" value="5" />
+									<div class="item-inner">
+											<div class="item-title">物流速度</div>
+											<div class="item-after">
+												5分
+											</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="item-content item-link" onclick="rate_point_option($(this))" data-tag="#fraction_service">
+									<input type="hidden" name="fraction_service" id="fraction_service" value="5" />
+									<div class="item-inner">
+											<div class="item-title">服务态度</div>
+											<div class="item-after">
+												5分
+											</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title label">是否匿名</div>
+										<div class="item-input text-right">											
+											<label class="label-switch">
+							                  	<input type="checkbox" name="is_anonymous" value="1">
+							                  	<div class="checkbox"></div>
+							                </label>										
+										</div>
+									</div>
+								</div>
+							</li>								
+						</ul>
+					</div>		
+					<input type="hidden" name="s_no" value="{$_GET.s_no}" />
+					</form>
+					<else />
+						<div class="nors text-center">
+							<div><i class="iconfont icon-zhongping ft3"></i></div>
+							该订单无商品可评价！
+						</div>			
+					</notempty>									
+				</div><!--/content-->
+				
+			</div>
+			
+
+						
+		</div>	
+		
+
+<include file="Public:script" />
+<include file="Public:footer" />

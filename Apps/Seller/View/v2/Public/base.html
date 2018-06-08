@@ -1,0 +1,46 @@
+<include file="Home@Public:header" />
+<link rel="stylesheet" type="text/css" href="__NEW_DESIGN__css/lzx.css">
+<header>
+	<include file="Home@Public:top" />
+	{:W('Common/Ad/index_new', array(130,'margin:auto;max-height:100px;'))}
+	<div class="container">
+		<div class="row mg0">
+			<div class="col-xs-2 pl0"><a href="{:DM('www')}"><img src="__NEW_DESIGN__images/dt_logo.png"></a></div>
+			<div class="col-xs-8 pr0" style="height: 48px; line-height: 48px; margin-top: 40px;">
+				<div class="re fl plr10">
+					<a class="text_77 fs14" href="{:DM('seller')}">卖家首页</a>
+				</div>
+				<volist name=":getShopMenu()" id="vo">
+					<eq name="vo.position" value="1">
+						<div class="re fl plr10 hover_title ml10">
+							<a class="text_77 fs14 {$vo.class}" <eq name="vo.target" value="1">target="_blank"</eq> href="{:eval($vo['url'])}">{$vo.name}<notempty name="vo.child"><i class="fa fa-caret-down ml5"></i></notempty></a>
+							<notempty name="vo.child">
+							<div class="ab dn line20 hover_body" style="left: 0;top: 39px;border: 0;">
+								<volist name="vo.child" id="c">
+									<notempty name="Think.session.user.funIds">
+										<in name="c.auth" value="$Think.session.user.funIds">
+											<a class="text_77 fs14 {$c.class}" <eq name="c.target" value="1">target="_blank"</eq> href="{:eval($c['url'])}"><p class="mb7">{$c.name}</p></a>
+										</in>
+										<else />
+										<a class="text_77 fs14 {$c.class}" <eq name="c.target" value="1">target="_blank"</eq> href="{:eval($c['url'])}"><p class="mb7">{$c.name}</p></a>
+									</notempty>
+								</volist>
+							</div>
+							</notempty>
+						</div>
+					</eq>
+				</volist>
+				<!--<form action="{:DM('s')}" method="get" class="search_goods_shop fr" style="width: 400px; margin-top: 5px;">-->
+					<!--<div class="search_tle row mg0">-->
+						<!--<input name="keywords" class="col-xs-8 bor_no plr10 fs14" style="height:32px" type="text" placeholder="请输入店铺/商品的搜索关键字" value="" autocomplete="off">-->
+						<!--<button class="col-xs-2 btn btn_m bg_red bor_no bor_r0 fs16 fr" style="height:34px;line-height:18px;color:white">搜索</button>-->
+					<!--</div>-->
+				<!--</form>-->
+			</div>
+			<!--{:W('Common/Side/cart')}-->
+		</div>
+	</div>
+</header>
+<block name="body"></block>
+<include file="Home@Public:bottom" />
+

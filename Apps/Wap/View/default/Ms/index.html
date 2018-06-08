@@ -1,0 +1,218 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			年终大促
+		</div>
+		<div class="r">
+		</div>
+	</div>
+</header>
+
+<section class="hd0101">
+	<div class="text-center">
+		<img src="../Public/Images/activity/20170101/banner.jpg">
+	</div>
+
+	<div class="special_wap">
+        <div class="special_mod">
+            <div class="mb30">
+                <div class="row_block clear_fix text-center">
+                    <div class="col_4 amg pl10" style="padding-left:10px;">
+                        <img class="image_size" style="width:50px;margin-top:15px;margin-left:15px" src="../Public/Images/activity/20170101/seckill.png">
+                    </div>
+
+                    <volist name="miaosha_list" id="vo">
+	                    <div class="col_4 miaosha-list-tab special_node {:$current_num['day']==$vo['day']['day'] && $current_num['time']==$vo['day']['time']?'active':''}" onclick="miaosha_select($(this),'{$vo.day.day}','{$vo.day.time}')">
+	                        <p class="special_date">{$vo.day.day|strtotime=###|date="m-d",###}</p>
+	                        <div class="special_time">{$vo.day.time}</div>
+	                        <span class="special_state">{:$current_num['day']==$vo['day']['day'] && $current_num['time']==$vo['day']['time']?'GO':($current_num['day']==$vo['day']['day'] && $current_num['time'] > $vo['day']['time'] ? '正在进行' : '即将开始')}</span>
+	                    </div>
+                    </volist>
+                </div>
+                <div style="border-bottom:1px solid black; margin: -15px 8% 0 15%"></div>    
+            </div>
+            <volist name="miaosha_list" id="vo">
+		        {$vo.data}
+            </volist>
+        </div>
+    </div>
+
+	<!--300-50-->
+	<div class="text-center">
+		<img src="../Public/Images/activity/20170101/300_50_bar.jpg">
+	</div>
+	<div class="cell-bg" id="300_50_html">
+		<!--  -->
+	</div>
+	<div class="text-center">
+		<img src="../Public/Images/activity/20170101/cell_footer.jpg">
+	</div>
+	<!--200-25-->
+	<div class="text-center">
+		<img src="../Public/Images/activity/20170101/200_25_bar.jpg">
+	</div>
+	<div class="cell-bg">
+		<ul id="200_25_html">
+			<!--  -->
+		</ul>
+		<div class="clearfix"></div>
+	</div>
+	<div class="text-center">
+		<img src="../Public/Images/activity/20170101/cell_footer.jpg">
+	</div>
+	<!--100-10-->
+	<div class="text-center">
+		<img src="../Public/Images/activity/20170101/100_10_bar.jpg">
+	</div>
+	<div class="cell-bg" id="100_10_html">
+		<!--  -->
+	</div>
+	<div class="text-center">
+		<img src="../Public/Images/activity/20170101/cell_footer.jpg">
+	</div>
+
+
+	<!--规则-->
+	<div class="text-center">
+		<img src="../Public/Images/activity/20170101/guizhe_bar.jpg">
+	</div>
+	<div class="cell-bg">
+		<div class="guize manjian-guize">
+			<div class="subject">一、秒杀活动规则：（秒杀时间：2017年1月1日至1月15日）</div>
+			<div class="guize-text">
+			1.秒杀活动每天10：00、15：00开抢，18：00结束，抢购商品数量有限，售完即止；<br />
+			2.请在秒杀期内提交订单，逾期提交订单不享有秒杀特价；<br />
+			3.活动期间，抢购商品信息以秒杀详情页描述为准；<br />
+			4.秒杀产品，部分不包含运费，用户抢购成功后，需支付配送费用；<br />
+			5.查看商品、加入购物车、下单未付款均不能作为成功参加活动的标准；<br />
+			6.由于抢购期间参与用户量较大，可能造成订单延误发货，敬请谅解；<br />
+			7.在此次活动期间，同一款商品，只参与一次秒杀活动，秒杀结束后，不再参与秒杀活动；<br />
+			8.参与秒杀活动的商品不再参与该店铺内其他活动。<br />
+			</div>
+
+			<div class="subject">二、满减规则：（满减活动时间：2017年1月1日至1月15日）</div>
+			<div class="guize-text">
+			1.满减活动从2017年1月1日00：00：00开始，至2017年1月15日24：00结束；<br />
+			2.买家选择了满减优惠后，只能去对应的店铺中购买并满金额时才能享受满减优惠，例：A店铺设有满100减10的活动，那么只有当买家选择A店铺的满减优惠并去A店铺消费满100元时才能享受减10元的优惠，去其他店铺中是无法享受这个优惠。		
+			</div>
+		</div>
+	</div>
+	<div class="text-center">
+		<img src="../Public/Images/activity/20170101/cell_footer.jpg">
+	</div>
+	<div class="m20 text-center">
+		<div class="row clearfix">
+			<div class="col-35"></div>
+			<div class="col-30" onclick="scrollToID('body')"><img src="../Public/Images/activity/20170101/btn_gotop.jpg" class="not-block"></div>
+			<div class="col-30"></div>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+</section>
+
+<script>
+	fixBar(1);
+
+	$(function(){
+		
+		ajax_post({
+			url:'/Api/apis',
+			data:{
+				FullCut:{
+					'apiurl':'/FullCut/lists',
+					'device':2,
+					'category_id':'1,3,4,2',
+				},
+			},
+		},function(res){
+			// console.log(res);
+			if(res.FullCut.code == 1){
+				var html = '';
+				var zero = 1,one = 3,two = 4,three = 2;
+
+				if(res.FullCut.data.hasOwnProperty(zero)){
+					var html = res.FullCut.data[zero].remark;
+					if(html != ''){
+						$('.manjian-guize').html(html);
+					}
+				}
+
+				if(res.FullCut.data.hasOwnProperty(one)){
+					var html = '';
+					if(res.FullCut.data[one].fullcut.length){
+						$.each(res.FullCut.data[one].fullcut,function(k,v){
+							html += '<div class="md10"><img onclick="jumpConpon(' + v.shop_id + ')" src="' + v.images + '"></div>';
+						});
+					}
+					$('#300_50_html').html(html);
+				}
+				
+				if(res.FullCut.data.hasOwnProperty(two)){
+					var html = '';
+					if(res.FullCut.data[two].fullcut.length){
+						$.each(res.FullCut.data[two].fullcut,function(k,v){
+							html += '<li><img onclick="jumpConpon(' + v.shop_id + ')" src="' + v.images + '"></li>';
+						});
+					}
+					$('#200_25_html').html(html);
+				}
+				
+				
+				if(res.FullCut.data.hasOwnProperty(three)){
+					var html = '';
+					if(res.FullCut.data[three].fullcut.length){
+						$.each(res.FullCut.data[three].fullcut,function(k,v){
+							html += '<div class="md10"><img onclick="jumpConpon(' + v.shop_id + ')" src="' + v.images + '"></div>';
+						});
+					}
+					$('#100_10_html').html(html);
+				}
+			}
+		});
+	});
+
+	function jumpConpon(id){
+		openWin({
+			name:'shop',
+			url:'/Shop/index/shop_id/' + id,
+		});
+	}
+	$(function(){
+		$('.miaosha-list-tab').each(function(){
+			if($(this).hasClass('active')){
+				$('.page.active .miaosha-list-item').addClass('hide').eq($(this).index() - 1).removeClass('hide');
+			}
+		});
+	});
+	
+
+	function miaosha_select(obj,day,time){
+		obj.addClass('active').siblings().removeClass('active');
+		obj.find('span').html('GO');
+
+		var dt = new Date();
+		obj.siblings().each(function(){
+			var dateHtml = dt.getFullYear() + ' ' + $(this).find('.special_date').html() + ' ' + $(this).find('.special_time').html() + ':00';
+			var thisDate = Date.parse(dateHtml.replace(/-/g,  "/"));
+			if(thisDate <= dt){
+				$(this).find('span').html('正在进行');
+			}else{
+				$(this).find('span').html('即将开始');
+			}
+		});
+
+		var index = obj.index();
+		$('.page.active .miaosha-list-item').addClass('hide').eq(index - 1).removeClass('hide');
+	}
+
+	function scrollToID(tag){
+		var data = {
+			scrollTop: 0,
+		};
+		$('section').animate(data,1000);
+	}
+
+</script>

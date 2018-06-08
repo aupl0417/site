@@ -1,0 +1,111 @@
+<div class="container " style="width: auto;">
+	<div class="tab-container tab_li_sty">
+		<ul class="nav nav-tabs solid_b" id="changeLoveGoods-list">
+			<li class="active"><a onmouseover="($(this).click())" class="ptb5" href="#home_1" data-toggle="tab">热卖推荐</a></li>
+			<li><a onmouseover="($(this).click())" href="#profile_1" data-toggle="tab">看了又看</a></li>
+			<li><a onmouseover="($(this).click())" href="#djsfalj_1" data-toggle="tab">猜你喜欢</a></li>
+		</ul>
+		<a class="fr pl15 bg_white mt-20" href="javascript:;" onclick="changeLoveGoods()">换一批 <i class="fa fa-refresh"></i></a>
+		<div class="tab-content mb0 bor_no ptb10 plr0">
+			<div class="tab-pane active" id="home_1">
+				<div class="row mlr_10">
+					<notempty name="like.code">
+						{:W('Common/Builder/nors', array('param' => array('text' => $like['msg'])))}
+					<else />
+						<volist name="like" id="vo" offset="1" length='5'>
+							<div class="col_5 plr10">
+								<div class="bor_hover over" style="width: 216px">
+									<a target="_blank" href="{:DM('item')}{:U('/index/index', ['id' => $vo['attr_list'][0]['id']])}"><img class="square220" src="{:myurl($vo['images'], 216)}"></a>
+									<p class="text_44 plr5 mt5 mb0 lh2-40px"><a target="_blank" href="{:DM('item')}{:U('/index/index', ['id' => $vo['attr_list'][0]['id']])}">{$vo.goods_name}</a></p>
+									<h4 class="mt5 text_red plr5">￥{$vo.price} <span class="fr text_77 fs12 mt3">销量：{$vo.sale_num}</span></h4>
+								</div>
+							</div>
+						</volist>
+					</notempty>
+				</div>						
+			</div>
+			<div class="tab-pane" id="profile_1">
+				<div class="row mlr_10">
+					<notempty name="like.code">
+						{:W('Common/Builder/nors', array('param' => array('text' => $like['msg'])))}
+					<else />
+						<volist name="like" id="vo" offset="3" length='8'>
+							<div class="col_5 plr10">
+								<div class="bor_hover over" style="width: 216px">
+									<a target="_blank" href="{:DM('item')}{:U('/index/index', ['id' => $vo['attr_list'][0]['id']])}"><img class="square220" src="{:myurl($vo['images'], 216)}"></a>
+									<p class="text_44 plr5 mt5 mb0 lh2-40px"><a target="_blank" href="{:DM('item')}{:U('/index/index', ['id' => $vo['attr_list'][0]['id']])}">{$vo.goods_name}</a></p>
+									<h4 class="mt5 text_red plr5">￥{$vo.price} <span class="fr text_77 fs12 mt3">销量：{$vo.sale_num}</span></h4>
+								</div>
+							</div>
+						</volist>
+					</notempty>
+				</div>
+			</div>
+			<div class="tab-pane" id="djsfalj_1">
+				<div class="row mlr_10">
+					<notempty name="like.code">
+						{:W('Common/Builder/nors', array('param' => array('text' => $like['msg'])))}
+					<else />
+						<volist name="like" id="vo" offset="1" length='5'>
+							<div class="col_5 plr10">
+								<div class="bor_hover over" style="width: 216px">
+									<a target="_blank" href="{:DM('item')}{:U('/index/index', ['id' => $vo['attr_list'][0]['id']])}"><img class="square220" src="{:myurl($vo['images'], 216)}"></a>
+									<p class="text_44 plr5 mt5 mb0 lh2-40px"><a target="_blank" href="{:DM('item')}{:U('/index/index', ['id' => $vo['attr_list'][0]['id']])}">{$vo.goods_name}</a></p>
+									<h4 class="mt5 text_red plr5">￥{$vo.price} <span class="fr text_77 fs12 mt3">销量：{$vo.sale_num}</span></h4>
+								</div>
+							</div>
+						</volist>
+					</notempty>
+				</div>							
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script>
+
+
+function changeLoveGoods(){
+	
+	var ac = '{:enCryptRestUri("/Index/like")}';
+	ajax_post({
+		url:'/run',
+		headers:{Action:ac},
+		data:{
+			imgsize:220,
+		}
+	},function (ret) {
+		// console.log(ret);
+		if(ret.code == 1){
+			var data = ret.data;
+			var html = '';
+			html += '<div class="row mlr_10">';
+			var url = '{:DM("item")}{:U("/goods",[],false)}';
+			for(i = 0; i < 5; i++){
+				
+				html += '<div class="col_5 plr10"><div class="bor_hover over">';
+				html += '<a target="_blank" href="' + url + '/' + data[i].attr_list[0].id + '.html"><img class="square220" src="' + data[i].images + '"></a>';
+				html += '<p class="text_44 plr5 mt5 mb0 lh2-40px"><a target="_blank" href="' + url + '/' + data[i].attr_list[0].id + '.html">' + data[i].goods_name + '</a></p>';
+				html += '<h4 class="mt5 text_red plr5">￥' + data[i].price + ' <span class="fr text_77 fs12 mt3">销量：' + data[i].sale_num + '</span></h4>';
+				html += '</div></div>';
+			}
+			html += '</div>';
+			$('#changeLoveGoods-list li').each(function(x,y){
+				if($(this).hasClass('active')){
+					var id = $(this).find('a').eq(0).attr('href');
+					$(id).html(html);
+				}
+			});
+			
+		}
+	});
+
+}
+
+
+
+
+
+
+</script>

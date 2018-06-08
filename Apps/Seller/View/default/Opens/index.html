@@ -1,0 +1,53 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body">
+	<include file="Public:nav" />
+	<div class="container mb30">
+		<include file="Public:side" />
+		<div class="w980 fl">
+			<div class="bor_der">
+				<div class="bg_f1 clearfix fs14 text_44 tle_R">
+					<a class="fl plr15 line40 ml-1 active" href="javascript:;">我要开店</a>
+				</div>
+					
+				<empty name="data.step">
+					<include file="welcome" />
+				<else />
+					<eq name="data.step" value="10">
+						<include file="success" />
+					<else />
+						<include file="logs" />
+					</eq>
+				</empty>
+			</div>
+		</div>
+	</div>
+</div>
+</block>
+<block name="css"></block>
+<block name="script">
+<script>
+$(document).ready(function() {
+	$(".clearError").click(function() {
+		vmodal({
+			  title:'已修复提示',
+			  msg:'您真的已经修复了所有未通过问题了吗？提交后将不能在修改。',
+			  class:'text-center',
+			  confirm:1,
+			  width:'700px',
+		  },function(ret) {
+			  $(".modal-ok").click(function() {
+				  ajax_post({
+					  url:'/opens/clearErr',
+				  },function(ret) {
+					  talert({status:ret.code,msg:ret.msg});
+					  if(ret.code == 1) {
+						  setTimeout("ref()", 1000);
+						}
+				  })
+			  })
+		  })
+	})
+});
+</script>
+</block>

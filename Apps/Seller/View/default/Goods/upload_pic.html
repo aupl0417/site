@@ -1,0 +1,29 @@
+<form enctype="multipart/form-data" id="form-upload" data-url="/Setting/upload">
+<div class="p10">
+	<div class="btn btn-lg btn-primary btn-block" id="choose-image" >选择图片</div>
+</div>
+<input style="display:none" id="imageData" name="imageData" type="file" value="" />
+
+</form>
+
+<script>
+$(document).ready(function(){
+	// 一进来就触发点击
+	$('#imageData').click();
+	// 选择图片后,上传
+	$('#imageData').change(function(){
+		ajax_post_form({
+			formid:'#form-upload',
+		},function(ret){
+			if(ret.code==1){
+				// 替换内容
+			}
+		});
+	});
+});
+	
+	// 点击按钮来触发点击
+	$('#choose-image').on('click',function(){
+		$('#imageData').click();
+	});
+</script>

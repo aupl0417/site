@@ -1,0 +1,55 @@
+<include file="Public:header" />
+<include file="nav" />
+
+
+<div class="m20 text-center">
+	
+	<!-- <div class="alert alert-warning alert-white-alt2 rounded">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		<div class="icon"><i class="fa fa-warning"></i></div>
+		<div class="ft16"><strong>提示!</strong> 推送链接之前请先更新链接</div>
+	</div> -->
+	<div class="col-xs-12">
+		<div class="block-flat">
+			<div class="header">
+				<h4>更新所有接口参数、例子、标题等</h4>
+			</div>
+			<div class="content text-center" style="height:auto">
+				<a href="/Apidoc2/update_apis" target="_blank" class="update-set">
+					<div class="btn btn-default btn-rad  btn-lg m20">
+						开始更新<span style="{$vo['insert'] > 0 ? 'color:red' : ''}"></span>
+					</div>
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="row text-center">
+		<foreach name="fileList" item="vo">
+			<div class="col-xs-3">
+				<div class="block-flat">
+					<div class="header">
+						<h4>{$vo.controller}({$vo.update})</h4>
+					</div>
+					<div class="content text-center" style="height:auto">
+						<a href="/Apidoc2/create/controller/{$vo.controller}" class="update-set">
+							<div class="btn btn-default btn-rad  btn-lg m20">
+								导入Api<span style="{$vo['insert'] > 0 ? 'color:red' : ''}">({$vo.insert})</span>
+							</div>
+						</a>
+						<a href="/Apidoc2/update/controller/{$vo.controller}"  class="update-set">
+							<div class="btn btn-default btn-rad  btn-lg m20">
+								更新类目<span style="{$vo['update'] > 0 ? 'color:red' : ''}">({$vo.update})</span>
+							</div>
+						</a>
+					</div>
+				</div>
+			</div>
+		</foreach>
+		
+	</div>
+</div>
+
+<include file="Public:copyright" />
+<include file="Public:js" />
+
+<include file="Public:footer" />

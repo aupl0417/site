@@ -1,0 +1,151 @@
+<div class="bor_der w190 mr20 fl seller-side" data-url="__SELF__">
+	<div class="pd10 clearfix">
+		<img class="fl mr4" src="__NEW_DESIGN__images/user.png">
+		<strong class="fl mt-1 fs16 mr5 text_black">卖家中心</strong>
+		<!-- <a class="re" href="javascript:;">
+			<i class="fa fa-envelope-o fs14 fl mt5"></i>
+			<span class="ab bg_red news_red"></span>
+		</a> -->
+	</div>
+	<div class="pb10 solid_t">
+		<div class="user_left_tle">
+			<a class="pl30 db line36 text_black" href="/">
+				<span class="fl bg_red spot"></span>
+				<strong class="fs14">信息总览</strong>
+			</a>
+		</div>
+		<div class="user_left_tle">
+			<a class="pl30 db line36 text_black" href="javascript:;">
+				<span class="fl bg_red spot"></span>
+				<strong class="fs14">交易管理</strong>
+			</a>
+			<div class="ad">
+				<a class="pl30 db line30" href="{:U('/orders')}">订单管理</a>
+				<a class="pl30 db line30" href="{:U('/comments')}">评价管理</a>
+				<a class="pl30 db line30" href="{:U('/service')}">售后列表</a>
+				<a class="pl30 db line30" href="{:U('/refund')}">退款列表</a>
+				<a class="pl30 db line30" href="{:DM('expressprint')}" target="_blank">物流工具 <img src="/Public/images/icon-new.gif" alt="new"></a>
+			</div>
+		</div>
+		<div class="user_left_tle">
+			<a class="pl30 db line36 text_black" href="javascript:;">
+				<span class="fl bg_red spot"></span>
+				<strong class="fs14">商品管理</strong>
+			</a>
+			<div class="ad">
+				<a class="pl30 db line30" href="{:DM('sell')}" target="_blank">商品管理 <img src="/Public/images/icon-new.gif" alt="new"></a>
+				<a class="pl30 db line30" href="{:U('/goods')}">出售中的商品</a>
+				<a class="pl30 db line30" href="{:U('/goods/recommend')}">橱窗中的商品</a>
+				<a class="pl30 db line30" href="{:U('/goods/warehouse')}">仓库中的商品</a>
+				<a class="pl30 db line30" href="{:U('/goods/noshelves')}">待上架的商品</a>
+				<a class="pl30 db line30" href="{:U('/goods/nopic')}">主图异常的商品</a>
+				<a class="pl30 db line30" href="{:U('/goods/violation')}">违规的商品</a>
+				<a class="pl30 db line30" href="{:U('/goods/add')}">发布商品</a>
+				<a class="pl30 db line30" href="{:U('/category')}">商品分类</a>
+				<a class="pl30 db line30" href="{:U('/goods/import')}">商品导入</a>
+				<a class="pl30 db line30" href="{:U('/goods/uptime')}">商品上架时间管理</a>
+				<a class="pl30 db line30" href="{:U('/advisory')}">商品咨询</a>
+			</div>
+		</div>
+		<div class="user_left_tle">
+			<a class="pl30 db line36 text_black" href="javascript:;">
+				<span class="fl bg_red spot"></span>
+				<strong class="fs14">店铺管理</strong>
+			</a>
+			<div class="ad">
+				<neq name="isOpen" value="1">
+				<a class="pl30 db line30" href="{:U('/opens')}">我要开店</a>
+				</neq>
+				<if condition="$shop_info.shop_url neq ''">
+				<a class="pl30 db line30" href="{$shop_info.shop_url}">我的店铺</a>
+				<a class="pl30 db line30" href="{:DM('make','/main')}" target="_blank">店铺装修</a>
+					<if condition="session('user.type') eq 1 and session('user.shop_type') eq 6">
+						<a class="pl30 db line30" href="{:DM('zhaoshang','/Shopup')}" target="_blank">店铺升级</a>
+					</if>
+				</if>
+				<a class="pl30 db line30" href="{:U('/setting')}">店铺设置</a>
+				<a class="pl30 db line30" href="{:U('/domain')}">域名设置</a>
+				
+				
+			</div>
+		</div>
+		<div class="user_left_tle">
+			<a class="pl30 db line36 text_black" href="javascript:;">
+				<span class="fl bg_red spot"></span>
+				<strong class="fs14">商品增值服务</strong>
+			</a>
+			<div class="ad">
+				<a class="pl30 db line30" href="{:U('/package/add')}">添加包装模板</a>
+				<a class="pl30 db line30" href="{:U('/package')}">包装模板管理</a>
+				<a class="pl30 db line30" href="{:U('/protection/add')}">添加售后模板</a>
+				<a class="pl30 db line30" href="{:U('/protection')}">售后模板管理</a>
+			</div>
+		</div>
+		<div class="user_left_tle">
+			<a class="pl30 db line36 text_black" href="javascript:;">
+				<span class="fl bg_red spot"></span>
+				<strong class="fs14">运费模板</strong>
+			</a>
+			<div class="ad">
+				<a class="pl30 db line30" href="{:U('/express')}">运费模板列表</a>
+				<a class="pl30 db line30" href="{:U('/express/add')}">添加运费模板</a>
+			</div>
+		</div>
+		<div class="user_left_tle">
+			<a class="pl30 db line36 text_black" href="javascript:;">
+				<span class="fl bg_red spot"></span>
+				<strong class="fs14">营销中心</strong>
+			</a>
+			<div class="ad">
+				<a class="pl30 db line30" href="{:U('/activity')}">促销管理</a>
+				<a class="pl30 db line30" href="{:U('/activity/type')}">发布促销活动</a>
+				<a class="pl30 db line30" href="{:U('/coupon')}">优惠券管理</a>
+				<a class="pl30 db line30" href="{:U('/coupon/create')}">发布优惠券</a>
+				<a class="pl30 db line30" href="{:DM('ad')}">广告位购买</a>
+				<!-- <a class="pl30 db line30" href="{:U('/sale')}">活动报名</a> -->
+			</div>
+		</div>
+		<div class="user_left_tle">
+			<a class="pl30 db line36 text_black" href="javascript:;">
+				<span class="fl bg_red spot"></span>
+				<strong class="fs14">地址管理</strong>
+			</a>
+			<div class="ad">
+				<a class="pl30 db line30" href="{:U('/addr')}">我的地址</a>
+				<a class="pl30 db line30" href="{:U('/addr/add')}">添加地址</a>
+			</div>
+		</div>
+		<div class="user_left_tle">
+			<a class="pl30 db line36 text_black" href="javascript:;">
+				<span class="fl bg_red spot"></span>
+				<strong class="fs14">品牌管理</strong>
+			</a>
+			<div class="ad">
+				<a class="pl30 db line30" href="{:U('/brand/brand_add')}">添加品牌</a>
+				<a class="pl30 db line30" href="{:U('/brand/my_brand/status/1')}">我的品牌</a>
+				<notempty name="shop_info">	<!-- 个人店铺隐藏品牌推广 -->
+					<lt name="shop_info.type_id" value="6">
+					<a class="pl30 db line30" href="{:U('/brand/brand_promotion')}">品牌推广</a>
+					</lt>
+				</notempty>
+			</div>
+		</div>
+			
+		<!-- <div class="user_left_tle">
+			<a class="pl30 db line36 text_black" href="javascript:;">
+				<span class="fl bg_red spot"></span>
+				<strong class="fs14">数据中心</strong>
+			</a>
+		</div> -->
+		<div class="user_left_tle">
+			<a class="pl30 db line36 text_black" href="javascript:;">
+				<span class="fl bg_red spot"></span>
+				<strong class="fs14">客户服务</strong>
+			</a>
+			<div class="ad">
+				<!-- <a class="pl30 db line30" href="javascript:;">申诉中心</a> -->
+				<a class="pl30 db line30" href="{:DM('www','/service')}">联系平台客服</a>
+			</div>
+		</div>
+	</div>
+</div>

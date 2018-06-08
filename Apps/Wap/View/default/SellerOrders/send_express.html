@@ -1,0 +1,116 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			发货
+		</div>
+		<div class="r">
+		</div>
+	</div>
+</header>
+
+<section>	
+	<div class="load-body">数据加载中……</div>
+</section>
+
+
+<script id="tpl_send_express" type="text/html">
+<form id="form-send-express">
+	<div class="line-box noicon hover">
+		<div class="title">订单号：<%= data.s_no %></div>
+	</div>
+	
+	<div class="line-box-m noicon hover md10">
+		<div><span class="b mr10"><%= data.orders.linkname %></span> <%= data.orders.mobile %> <% if(data.orders.postcode!=""){ %>，<%= data.orders.tel %><% } %></div>
+		<div class="text-gray"><%= data.orders.province %> <%= data.orders.city %> <%= data.orders.district %> <%= data.orders.town %> <%= data.orders.street %> <% if(data.orders.postcode!=""){ %>(<%= data.orders.postcode %>)<% } %> </div>
+	</div>
+	<% for(j= 0;j<data.orders_goods.length;j++){ %>
+	<div class="line-box-m hover row noicon">
+		
+			<div class="col-20">
+				<div class="p5" onclick="openWin({name:'goods_view',url:'/Goods/view/id/<%= data.orders_goods[j].attr_list_id %>'})"><img src="<%= data.orders_goods[j].images %>" alt="商品图片"></div>
+			</div>
+			
+			<div class="col-50">
+				<p><%= data.orders_goods[j].goods_name %></p>
+				<p><%= data.orders_goods[j].attr_name %></p>
+			</div>
+			<div class="col-30 text-right">
+				<p>￥<%= data.orders_goods[j].price %></p>
+				<p>x<%= data.orders_goods[j].num %></p>
+				<p class="p5">已退货数量：<%= data.orders_goods[j].refund_num %></p>
+			</div>
+			
+		
+		<div class="clearfix"></div>
+	</div>
+	<% } %>
+	<div class="line-box-m hover row express-company" onclick="openWin({name:'select_express_company',url:'__URL__/select_express_company'})">
+		<div class="col-30">
+			<img src="/Public/images/icon-plus.png" alt="快递公司logo">
+		</div>
+		<div class="col-70 text-right text-gray">
+			<div style="line-height:40px;margin-right:20px;">选择快递公司</div>
+		</div>
+		<input type="hidden" name="express_company_id" id="express_company_id" value="">
+		<div class="clearfix"></div>
+	</div>
+	<div class="line-input row">
+		<div class="col-30">快递单号</div>
+		<div class="col-70">
+			<input name="express_code" id="express_code" placeholder="请输入快递单号">
+		</div>
+		<div class="clearfix"></div>
+	</div>	
+	<input type="hidden" name="apiurl" value="/SellerOrders/send_express">
+	<input type="hidden" name="is_openid" value="1">	
+	<input type="hidden" name="s_no" value="<%= data.s_no %>">	
+	<input type="hidden" name="no_sign" value="">	
+	<div class="p10">
+		<div class="btn btn-lg btn-block btn-danger" onclick="send_express()">发货</div>
+	</div>	
+</form>
+</script>
+
+<script>
+	fixBar(1);	
+	
+	ajax_post({
+		url:'/Api/api',
+		data:{apiurl:'/SellerOrders/view',is_openid:1,s_no:'{$_GET.s_no}'}
+	},function(ret){
+		if(ret.code == 1){
+			var html=template('tpl_send_express',{data:ret.data});
+			$('.page.active section').html(html);
+		}		
+	});	
+	
+	function send_express(){
+		var data=getFormJson('#form-send-express');
+		if(data.express_company_id==''){
+			valert({msg:'请输入选择快递公司！'});
+			return false;
+		}		
+		
+		if(data.express_code==''){
+			valert({msg:'请输入快递单号'});
+			$('.page.active #express_code').focus();
+			return false;
+		}
+		
+		ajax_post({
+			url:'/Api/api',
+			data:data,
+		},function(ret){
+			valert(ret);
+			if(ret.code==1){
+				setTimeout(function(){
+					closeWin({ref:true});
+				},1000);
+			}
+		});
+	}
+	
+</script>

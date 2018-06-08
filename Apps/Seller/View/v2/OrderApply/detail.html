@@ -1,0 +1,98 @@
+<extend name="Seller@Public:base" />
+<block name="body">
+    <div class="centent_body">
+        <!-- to do your html codeing -->
+        <div class="revision_bg">
+            <div class="container ptb_size_lg clearfix">
+                <!-- 左侧导航 -->
+                <include file="Public:sideNav" />
+                <!-- 左侧导航结束 -->
+                <div class="revisionRight pd15" style="width: 1020px;"><!-- 右侧内容 -->
+
+                    <div class="clearfix revisionOrderTab" data-url="">
+                        <a class="orderOption active" href="javascript:;">申诉详情</a>
+                    </div>
+
+                    <div class="content">
+
+                        <div class="row" style="padding: 30px 0">
+                            <div class="col-md-6 col-sm-6" style="border-right: solid 1px #F8F8F8;">
+                                <h4>申诉信息</h4>
+                                <p>
+                                    订单编号：<a class="text_blue" href="{:U('/orders/detail', ['id' => $data['s_no']])}">{$data.s_no}</a>
+                                </p>
+                                <p>
+                                    申诉时间：{$data.atime}
+                                </p>
+                                <p>
+                                    申诉原因：{$data.remark}
+                                </p>
+                                <notempty name="data.images">
+                                    <php>
+                                        $images	=	explode(',',rtrim($data['images'], ','));
+                                    </php>
+                                    <p>
+                                        图片：
+                                        <ul class="images-select-box">
+                                            <volist name="images" id="vo">
+                                                <li id="" data-path="{$vo}" class="text-center" style="width:auto; padding: 0;">
+                                                    <div class="li-img-box" style="width: 100px; height: 100px;">
+                                                        <a href="{$vo}" class="image-zoom" title="大图">
+                                                            <img src="{:myurl($vo, 100)}" width="80" height="80">
+                                                        </a>
+                                                    </div>
+                                                </li>
+                                            </volist>
+                                        </ul>
+                                    </p>
+                                </notempty>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <h4>申诉结果</h4>
+								   <p>审核结果：{$data.status_name} </p>
+								   <p>审核时间：{$data.dotime}</p>
+									<notempty name="data.reason">
+										<p>原因：{$data.reason}</p>
+									</notempty>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <!-- my codeing over -_-   -->
+
+    </div>
+</block>
+
+<block name="css">
+</block>
+
+<block name="script">
+    <!-- to do your javascript codeing -->
+    <script>
+        //收藏店铺
+        function favShop(id) {
+            ajax_post({
+                url:'{:U("/run/authrun")}',
+                data:{shop_id:id},
+                headers : {Action : '{:enCryptRestUri("/Fav/shop")}'},
+            },function(ret) {
+                talert({status:ret.code,msg:ret.msg});
+            })
+        }
+
+        //收藏商品
+        function favGoods(id) {
+            ajax_post({
+                url:'{:U("/run/authrun")}',
+                data:{goods_id:id},
+                headers : {Action : '{:enCryptRestUri("/Fav/goods")}'},
+            },function(ret) {
+                talert({status:ret.code,msg:ret.msg});
+            })
+        }
+    </script>
+</block>

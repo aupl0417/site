@@ -1,0 +1,248 @@
+<h4 class="text-center pd10">
+	{$data.s_no}
+</h4>
+<notempty name="data.code">
+	{:W('Common/Builder/nors', array('param' => array('text' => $data['msg'])))}
+<else />
+	<table class="table table-bordered table-advance table-hover mb30">
+		<tbody>
+			<tr style="background:#f9f9f9;">
+				<th class="col-lg-1 text-center">图片</th>
+				<th class="col-lg-2 text-center">商品</th>
+				<th class="col-lg-1 text-center">单价</th>
+				<th class="col-lg-1 text-center">数量</th>
+				<th class="col-lg-1 text-center">退货数量</th>			
+				<th class="col-lg-1 text-center">运费</th>
+				<th class="col-lg-1 text-center">总额</th>
+			</tr>
+			<volist name="data.orders_goods" id="vo">
+				<tr class="count">
+					<td style="vertical-align: middle;"><a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', array('id' => $vo['attr_list_id']))}" target="_blank"><img src="{$vo['images']}" class="img-thumbnail"></a></td>
+					<td style="vertical-align: middle;"><a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', array('id' => $vo['attr_list_id']))}" target="_blank">{$vo.goods_name}</a></br>{$vo.attr_name}</td>
+					<if condition="($type eq 'ship') and $shop_type eq 1">
+						<td style="vertical-align: middle;" class="text-center">
+							{$vo.price}
+						</td>
+					<else /> 
+						<td style="vertical-align: middle;" class="text-center">{$vo.price}</td>	
+					</if>
+
+					<td style="vertical-align: middle;" class="text-center">×{$vo.num}</td>
+					<td style="vertical-align: middle;" class="text-center text_yellow">×{$vo.refund_num}</td>
+	
+					<eq name="key" value="0">
+					<td style="vertical-align: middle;" class="text-center rwospanTd">{$data.express_price}</td>
+					<td style="vertical-align: middle;" class="text-center rwospanTd">{$data.pay_price}</td>
+					</eq>
+				</tr>
+			</volist>
+		</tbody>
+	</table>
+</notempty>
+<table class="table table-bordered table-advance table-hover mb30">
+	<tbody>
+		<tr>
+			<td class="col-lg-4">
+				<p class="text_44 fs14 strong">买家信息</p>
+				<p>姓名：{$data.orders.linkname}</p>
+				<p>手机：{$data.orders.mobile}&nbsp;&nbsp;{$data.orders.tel}</p>
+				<div class="clearfix">
+					<span>收货地址：</span>
+					<span>{$data.orders.province}{$data.orders.city}{$data.orders.district}{$data.orders.town}{$data.orders.street}{$data.orders.postcode}</span>
+				</div>
+			</td>
+			<td class="col-lg-4">
+				<p class="text_44 fs14 strong">快递信息</p>
+				<p>运送方式：
+					<switch name="data.express_type">
+						<case value="1">快递</case>
+						<case value="2">EMS</case>
+						<default/>未知运送方式
+					</switch>
+				</p>
+				
+			</td>
+			<td class="col-lg-4">
+				<p class="text_44 fs14 strong">订单信息</p>
+				<p>创建时间：{$data.atime}</p>
+				<p>订单编号：{$data.s_no}</p>
+				<p>备注：<span class="text_yellow"><empty name="data.remark">未备注<else />{$data.remark}</empty></span></p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+{:W('Common/Builder/form', [['data' => $keyList, 'run' => '/run/authRun']])}
+<script>
+
+function scm(obj){
+	var tr=obj.closest('tr');
+	var order_id = tr.find('input[name="id"]').val();//ID
+	var price = tr.find('input[name="total_price_edit"]').val();//售价
+	var purchase = tr.find('input[name="purchase_price"]').val();//成本
+	var other = tr.find('input[name="other_price"]').val();//附加费用
+	var goods_num = tr.find('input[name="num"]').val();//数量
+
+	if(purchase == 0 || purchase==""){
+		talert({status:'warning',msg:'成本不能为空！'});
+		return false;
+	}
+	if(isNaN(purchase)){
+		talert({status:'warning',msg:'成本只能是数字！'});
+		return false;
+	}
+	
+	ajax_post({
+		url : '/Orders/scm_save',
+		data : {
+			profit_price : price,
+			purchase_price : purchase,
+			id : order_id,
+			other_price : other,	
+			num : goods_num,			
+		},
+	}, function(ret) {
+		talert({status:ret.code,msg:ret.msg});
+		if(ret.code == 1) {
+			var check = true;
+			$('input[name="purchase_price"]').each(function(){
+				var result = $(this).val();
+				if(!result){
+					check = false;
+				}
+			});
+			if(check){
+				$(".btn-submit").attr("disabled", false);
+			}
+		}
+	})
+}
+
+<switch name="Think.get.type">
+<case value="close">
+checkform({
+	formid:"#formadd",
+	headers : {Action : '{$header}'},
+	rules:{
+		reason:{
+			required:true,
+			minlength:5,
+			maxlength:200,
+		}
+	},
+	messages:{
+		reason:{
+			required:'关闭原因不能为空',
+			minlength:'关闭原因必须在5-200个汉字之间',
+			maxlength:'关闭原因必须在5-200个汉字之间',
+		}
+	}
+},function(res) {
+	talert({status:res.code,msg:res.msg});
+	if(res.code == 1) {
+		setTimeout("ref()", 1000);
+	}
+});
+</case>
+<case value="ship">
+$("#express_company_id").change(function(){
+	//console.log($(this).children(":selected").html());
+	var company_name = $(this).children(":selected").html();
+	if(company_name == '无需物流'){
+		$(".f-express_code").hide();
+		$("#express_code").val('——');
+	}else{
+		if($("#express_code").val() == '——'){
+			$("#express_code").val('');
+		}
+		$(".f-express_code").show();
+	}
+});
+$(".btn-submit").click(function() {
+	var company = $("input[name='express_company_id']").val();
+	if(company == '' || company == undefined) {
+		talert({status:0,msg:'请选择快递公司'});
+		return false;
+	}
+});
+checkform({
+	formid:"#formadd",
+	headers : {Action : '{$header}'},
+	rules:{
+		express_code:{
+			required:true,
+		},
+		express_company_id:{
+			required:true,
+		},
+		express_remark:{
+			minlength:5,
+			maxlength:200,	
+		},
+	},
+	messages:{
+		express_code:{
+			required:'快递单号不能为空',
+		},
+		express_company_id:{
+			required:'快递公司不能为空',
+		},
+		express_remark:{
+			minlength:'备注必须在5-200个汉字之间',
+			maxlength:'备注必须在5-200个汉字之间',
+		},
+	}
+},function(res) {
+	talert({status:res.code,msg:res.msg});
+	if(res.code == 1) {
+		setTimeout("ref()", 1000);
+	}
+});
+</case>
+</switch>
+$(document).ready(function() {
+	var count = $("tr.count").size();
+	$(".rwospanTd").attr('rowspan', count);
+	if($("input[name='express_company_id_search']").size() > 0) {
+		var keyword = '';
+		$("input[name='express_company_id_search']").keyup(function() {
+			keyword = $(this).val();
+			var obj = $(this);
+			if(keyword != '') {
+				ajax_post({
+					url:'{:U("/run")}',
+					data:{q:keyword},
+					headers:{Action : '{:enCryptRestUri("/Serllser/searchExpressCompany")}'},
+				},function(res) {
+					if(res.code == 1 && res.data != '') {
+						obj.parent().find(".search-select-list-box").removeClass('hide');
+						var list = res.data;
+						var html = '';
+						for(i in list) {
+							html += '<li onclick="chooseCompany(\'express_company_id_search\', \''+list[i]['id']+'\', \''+list[i]['company']+'\');" data-id="'+list[i]['id']+'" style="padding:10px 0;border-bottom:solid 1px #b8b8b8;cursor: pointer;"><img height="30px" alt="'+list[i]['company']+'" src="'+list[i]['logo']+'"><span class="ml10">'+list[i]['company']+'</span></li>'
+						}
+						obj.parent().find(".search-select-list-box ul").html(html)
+					}
+				});
+			} else {
+				obj.parent().find(".search-select-list-box").addClass('hide');
+			}
+		});
+	}
+})
+
+function chooseCompany(doc, val, company) {
+	var obj = $("#"+doc);
+	obj.val(company);
+	obj.next().val(val);
+	obj.parent().find(".search-select-list-box").addClass('hide');
+	if(company == '无需物流') {
+		$(".f-express_code").hide();
+		$("#express_code").val('——');
+	} else {
+		if($("#express_code").val() == '——'){
+			$("#express_code").val('');
+		}
+		$(".f-express_code").show();
+	}
+}
+</script>

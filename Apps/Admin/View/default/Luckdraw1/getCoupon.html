@@ -1,0 +1,102 @@
+<h3 class="text-center" style="display: block">
+    选择商家优惠券
+</h3>
+    <table class="mt20 table table-bordered table-advance table-hover table-id-{$Think.get.id}-sort-{$Think.get.sort}">
+        <tbody>
+        <tr>
+            <td class="text-center">
+                选择
+            </td>
+            <td class="text-center">
+                商家
+            </td>
+            <td class="text-center">
+                需消费金额
+            </td>
+            <td class="text-center">
+                面值
+            </td>
+            <td class="text-center">
+                发行数量
+            </td>
+            <td class="text-center">
+                领取数量
+            </td>
+        </tr>
+        <volist name="rs" id="vo">
+            <tr>
+                <td width="80" class="text-center" style="vertical-align: middle;">
+                    <input name="chooseCoupon" type="checkbox" class="i-red-square coupon-id-{$Think.get.id}-sort-{$Think.get.sort}" value="{$vo.id}">
+                </td>
+                <td class="text-center" style="vertical-align: middle; text-align: center">
+                    {$vo.shop_name}
+                </td>
+                <td width="100" class="text-center min_price" style="vertical-align: middle; text-align: center">
+                    {$vo.min_price}
+                </td>
+                <td class="price" style="vertical-align: middle; text-align: center">
+                    {$vo.price}
+                </td>
+                <td style="vertical-align: middle; text-align: center">
+                    {$vo.num}
+                </td>
+                <td style="vertical-align: middle; text-align: center">
+                    {$vo.get_num}
+                </td>
+            </tr>
+        </volist>
+        </tbody>
+    </table>
+    <div class="text-center">
+        <button type="button" class="btn btn-primary btn-rad btn-trans btn-chooses"><i class="fa fa-check"></i> 提交</button>
+    </div>
+    <script>
+        iCheckClass();
+        $(document).ready(function () {
+            var id = '{$Think.get.id}', sort = '{$Think.get.sort}';
+            $(".btn-chooses").click(function () {
+//            alert($("#form_{$Think.get.id}_{$Think.get.sort}").find('input[name="prize_id"]').val())
+//            if ($("#form_{$Think.get.id}_{$Think.get.sort}").find('input[name="prize_id"]').val() == '') {
+//                return false;
+//            }
+                $("#ajax-modal").modal('hide');
+            });
+
+            var couponsIds = $("#form_"+id+"_"+sort).find('input[name="value"]').val();
+
+            /**
+             *  预选中
+             */
+            if (couponsIds != '') {
+                var couponsIdsArr = couponsIds.split(',');
+                $('.coupon-id-'+id+'-sort-'+sort).each(function () {
+                    if ($.inArray($(this).val(), couponsIdsArr) >= 0) {
+                        $(this).iCheck('check');
+                    }
+                });
+            }
+
+            $('.table-id-'+id+'-sort-'+sort+' input[type="checkbox"]').on('ifChecked ifUnchecked', function (event) {
+                var data = {id:$(this).val(), min_price:$(this).closest('tr').find('.min_price').html(), price:$(this).closest('tr').find('.price').html()}
+                var form = $("#form_"+id+"_"+sort);
+                var ids = form.find('input[name="value"]').val();
+                var html= form.find('.coupon_list').html();
+                if (event.type == 'ifChecked') {
+                    ids += data.id + ',';
+                    //'ID:'+data.id+' '+data.min_price+'-'+data.price+',';
+                    html += '<span data-id="'+data.id+'" class="mr10 btn btn-success btn-trans">满 ' + data.min_price + ' 减 ' + data.price + '</span>';
+                    form.find('input[name="value"]').attr('value', ids);
+                    form.find('.coupon_list').html(html);
+                } else {
+                    var idsArr = ids.split(',')//, htmlArr = html.split(','), str = 'ID:'+data.id+' '+data.min_price+'-'+data.price;
+
+                    var idsIndex = $.inArray(data.id, idsArr)//, htmlIndex = $.inArray(str, htmlArr);
+                    if (idsIndex >= 0) idsArr.splice(idsIndex, 1);
+                    form.find('.coupon_list').find('span[data-id="'+data.id+'"]').remove();
+                    //if (htmlIndex >= 0) htmlArr.splice(htmlIndex, 1);
+                    form.find('input[name="value"]').attr('value', idsArr.toString());
+                    //form.find('.coupon_list').html(htmlArr.toString());
+                }
+            });
+        })
+    </script>

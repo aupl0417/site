@@ -1,0 +1,84 @@
+<section>
+	<link rel="stylesheet" href="../Public/Js/responsiveslides/lrtk.css">
+	<div class="slide_container">
+      <ul class="rslides" id="slider">
+        <li>
+          <img src="http://d.lanrentuku.com/down/js/jiaodiantu-1055/images/1.jpg" alt="">
+          <p class="caption">标题1</p>
+        </li>
+        <li>
+          <img src="http://d.lanrentuku.com/down/js/jiaodiantu-1055/images/2.jpg" alt="">
+          <p class="caption">标题2</p>
+        </li>
+        <li>
+          <img src="http://d.lanrentuku.com/down/js/jiaodiantu-1055/images/3.jpg" alt="">
+          <p class="caption">标题3</p>
+        </li>
+      </ul>
+    </div>
+	
+	
+	<script src="../Public/Js/responsiveslides/responsiveslides.min.js"></script>
+	<script>
+		$(function () {
+			$("#slider").responsiveSlides({
+			auto: true,
+			pager: false,
+			nav: false,
+			speed: 500,
+			// 对应外层div的class : slide_container
+			namespace: "slide"
+			});
+		});
+	</script>
+
+</section>
+
+<footer class="footer border-t fixed-bottom">
+	<ul class="col-4">
+		<li>
+			<div class="menu hover" onclick="openWin({name:'home',url:'/Index/home'})">
+				<i class="icons i-home">
+				</i>
+				<div>
+					首页
+				</div>
+			</div>
+		</li>
+		<li>
+			<div class="menu hover" onclick="openWin({name:'category',url:'/Goods/category'})">
+				<i class="icons i-category">
+				</i>
+				<div>
+					分类
+				</div>
+			</div>
+		</li>
+		<li>
+			<div class="menu hover" onclick="openWin({name:'cart',url:'/Cart/index',logined:true})">
+				<i class="icons i-cart2">
+				</i>
+				<div>
+					购物车
+				</div>
+			</div>
+		</li>
+		<li>
+			<div class="menu hover" onclick="openWin({name:'ucenter',url:'/Ucenter/index'})">
+				<i class="icons i-my active">
+				</i>
+				<div>
+					我的
+				</div>
+			</div>
+		</li>
+	</ul>
+</footer>
+
+<script>
+	fixBar(3);
+
+	
+
+
+</script>

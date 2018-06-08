@@ -1,0 +1,74 @@
+<div class="content">
+	<notempty name="one">
+		<table style="background-color:#fff">
+			<thead>
+				<tr>
+					<th nowrap="nowrap"><strong></strong></th>
+					<th nowrap="nowrap"><strong>详情</strong></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr style="background-color:#fff">
+					<td>标题</td>
+					<td style="word-break:break-all"><span>{$one.title}</span></td>
+				</tr>
+				<tr style="background-color:#fff">
+					<td>接口地址</td>
+					<td style="word-break:break-all"><span>{$one.api_url}</span></td>
+				</tr>
+				<tr style="background-color:#fff">
+					<td>状态</td>
+					<td style="word-break:break-all"><span>{$one['status'] ? "正常" : "锁定"}</span></td>
+				</tr>
+				<tr style="background-color:#fff">
+					<td >类目</td>
+					<td style="word-break:break-all"><span>{$one.category}</span></td>
+				</tr>
+				<tr style="background-color:#fff">
+					<td>参数</td>
+					<td style="word-break:break-all">
+						<notempty name="one.param">
+							<foreach name="one.param" item="v">
+								<p>字段：{$v.name} 类型：{$v.type} 是否必须：{$v.need} 说明：{$v.descript|default="无"}</p>
+							</foreach>
+						</notempty>
+					</td>
+				</tr>
+				<tr style="background-color:#fff">
+					<td>其他参数</td>
+					<td style="word-break:break-all">
+						<notempty name="one.other_param">
+							<foreach name="one.other_param" key="ko" item="vo">
+								<p>{$ko} {$vo}</p>
+							</foreach>
+						</notempty>
+					</td>
+				</tr>
+				<tr style="background-color:#fff">
+					<td>例子</td>
+					<td style="word-break:break-all">
+						<notempty name="one.example">
+							<foreach name="one.example" key="ko" item="vo">
+								<p>{$vo|str_replace=" ",'&nbsp;',###}</p>
+							</foreach>
+						</notempty>
+					</td>
+				</tr>
+				<tr style="background-color:#fff">
+					<td>返回</td>
+					<td style="word-break:break-all">{$one.return}</td>
+				</tr>
+				<tr style="background-color:#fff">
+					<td>描述</td>
+					<td style="word-break:break-all"><span>{$one.content}</span></td>
+				</tr>
+				
+			</tbody>
+		</table>
+	</notempty>
+	<div class="clearfix"></div>
+			
+</div>
+
+
+

@@ -1,0 +1,84 @@
+{:W('Common/Builder/form', [['data' => $data, 'run' => '/run/authRun', 'clickClass' => 'submit-addr']])}
+<script>
+    iCheckClass();
+    $(".submit-addr").click(function () {
+        $('.chinaCity').change(function() {
+            checkForms();
+        });
+        checkform({
+            formid:"#formadd",
+            headers : {Action : '{$Addradd}'},
+            rules:{
+                linkname:{
+                    required:true,
+                },
+                mobile:{
+                    required:true,
+                    isMobile:true,
+                },
+                province:{
+                    required:true,
+                },
+                city:{
+                    required:true,
+                },
+                district:{
+                    required:true,
+                },
+                town:{
+                    required:true,
+                },
+                postcode:{
+                    number:true,
+                    rangelength:[5,6],
+                },
+                street:{
+                    required:true,
+                    rangelength:[5,120]
+                },
+                tel:{
+                    //tel:true,
+                },
+            },
+            messages:{
+                linkname:{
+                    required:'收货人姓名不能为空',
+                },
+                mobile:{
+                    required:'收货人手机号不能为空',
+                    isMobile1:'手机号码格式错误！',
+                },
+                province:{
+                    required:'省份不能为空',
+                },
+                city:{
+                    required:'城市不能为空',
+                },
+                district:{
+                    required:'地区不能为空',
+                },
+                town:{
+                    required:'城镇不能为空',
+                },
+                postcode:{
+                    number:'邮编为数字类型',
+                    rangelength:'邮编长度为5-6位',
+                },
+                street:{
+                    required:'收货详细地址不能为空',
+                    rangelength:'详细地址长度介于5-120位之间',
+                },
+                tel:{
+                    //tel:'请输入正确的电话号码格式！'
+                },
+            }
+        },function(ret) {
+            talert({status:ret.code,msg:ret.msg});
+            if(ret.code == 1) {
+                update_addr();
+                //$("#ajax-modal").hide();
+                $("#ajax-modal").modal('hide');
+            }
+        })
+    });
+</script>

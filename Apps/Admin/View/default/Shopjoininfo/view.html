@@ -1,0 +1,378 @@
+<div class="p20 box">
+	<div class="row">
+		<div class="col-xs-5 auth-text">
+			<div>用户ID：{$rs.uid}</div>
+			<div>用户名：{$rs.user.nick}</div>
+			<div>用户类型：
+				<eq name="rs.user.type" value="1">
+					企业用户
+					<else />
+					个人用户
+				</eq>
+			</div>
+			<notempty name="rs.user.company"><div>公司名称：{$rs.user.company}</div></notempty>
+			<div>店铺名称：<span class="ft18 strong text-danger">{$rs.shop_name}{$rs.shop_type.type_name}</span></div>
+			<div>店铺类型：{$rs.shop_type.type_name}</div>
+			
+			
+			<div>申请时间：{$rs.atime}</div>
+			<div>审核状态：
+				{:status($rs['status'],array(array('签订合同'),array('审核中'),array('审核未通过','btn-danger'),array('审核通过','btn-warning'),array('已交保证金','btn-success'),array('开店成功','btn-success')))}
+			</div>
+			<div>
+			结算类型：{:status($rs['inventory_type'],[['现金结算', 'btn-success'],['积分结算', 'btn-success']])}
+			</div>
+			<div class="md20"></div>
+			<div class="border-d ft18 md10">店铺联系人</div>
+			
+			<div class="row">
+				<div class="col-xs-6">店铺负责人姓名：{$rs.contact.linkname}</div>
+				<div class="col-xs-6">店铺负责人手机：{$rs.contact.mobile}</div>
+				<div class="col-xs-6">店铺负责人电话：{$rs.contact.tel}</div>
+				<div class="col-xs-6">店铺负责人邮箱：{$rs.contact.email}</div>
+				
+				<notempty name="rs.contact.op_linkname">
+				<div class="col-xs-6">运营负责人姓名{$rs.contact.op_linkname}</div>
+				<div class="col-xs-6">运营负责人手机{$rs.contact.op_mobile}</div>
+				<div class="col-xs-6">运营负责人电话：{$rs.contact.op_tel}</div>
+				<div class="col-xs-6">运营负责人邮箱：{$rs.contact.op_email}</div>
+				</notempty>
+
+				<notempty name="rs.contact.cs_linkname">
+				<div class="col-xs-6">售后负责人姓名：{$rs.contact.cs_linkname}</div>
+				<div class="col-xs-6">售后负责人手机：{$rs.contact.cs_mobile}</div>
+				<div class="col-xs-6">售后负责人电话：{$rs.contact.cs_tel}</div>
+				<div class="col-xs-6">售后负责人邮箱：{$rs.contact.cs_email}</div>
+				</notempty>
+
+				<notempty name="rs.contact.fc_linkname">
+				<div class="col-xs-6">财务负责人姓名：{$rs.contact.fc_linkname}</div>
+				<div class="col-xs-6">财务负责人手机：{$rs.contact.fc_mobile}</div>
+				<div class="col-xs-6">财务负责人电话：{$rs.contact.fc_tel}</div>
+				<div class="col-xs-6">财务负责人邮箱：{$rs.contact.fc_email}</div>
+				</notempty>
+
+				<notempty name="rs.contact.tc_linkname">
+				<div class="col-xs-6">技术负责人姓名：{$rs.contact.tc_linkname}</div>
+				<div class="col-xs-6">技术负责人手机：{$rs.contact.tc_mobile}</div>
+				<div class="col-xs-6">技术负责人电话：{$rs.contact.tc_tel}</div>
+				<div class="col-xs-6">技术负责人邮箱：{$rs.contact.tc_email}</div>
+				</notempty>
+				
+			</div>
+			<div class="md20"></div>
+			<div class="border-d ft18 md10">常用退货地址</div>	
+			
+			<div><span class="ft16">{$rs.contact.rf_linkname}</span> {$rs.contact.rf_mobile} <notempty name="rs.contact.rf_tel">，{$rs.contact.rf_tel}</notempty></div>
+			<div>
+				{:get_key_by_list(array('table'=>'area','field'=>'id,a_name','key_val'=>$rs['contact']['rf_province']))} {:get_key_by_list(array('table'=>'area','field'=>'id,a_name','key_val'=>$rs['contact']['rf_city']))} {:get_key_by_list(array('table'=>'area','field'=>'id,a_name','key_val'=>$rs['contact']['rf_district']))}
+				{:get_key_by_list(array('table'=>'area','field'=>'id,a_name','key_val'=>$rs['contact']['rf_town']))} {$rs.contact.rf_street} <notempty name="rs.contact.rf_postcode">，{$rs.contact.rf_postcode}</notempty>
+			</div>
+			<!-- 
+			<eq name="rs.user.type" value="1">
+				<div class="md20"></div>
+				<div class="border-d ft18 md10">纳税信息</div>	
+				<div class="row">
+					<div class="col-xs-2">纳税期限</div>
+					<div class="col-xs-10">
+						<empty name="rs.bank.tax_expire">
+							长期
+						<else />
+							{$rs.bank.tax_expire}
+						</empty>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-2">纳税资格证</div>
+					<div class="col-xs-10">
+						<a class="image-zoom" href="{$rs.bank.tax_cert}"><img src="{:myurl($rs['bank']['tax_cert'],100,60)}"></a>
+					</div>
+				</div>
+			</eq>
+			 -->
+		</div>
+		<div class="col-xs-7 auth-text">
+			<div class="border-d ft18 md10">店铺类目</div>
+			<table>
+				<thead>
+					<tr>
+						<th>主营类目</th>
+						<!-- <th>二级类目</th> -->
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>{$rs.categoryName}</td>
+						<!-- <td>
+							<volist name="vo.category_second_name" id="vl">
+								<div>{$vl}</div>
+							</volist>
+						</td> -->
+					</tr>
+				</tbody>
+			</table>
+			<notempty name="rs.cert">
+				<div class="md20"></div>
+				<div class="border-d ft18 md10">资质信息</div>
+				<table>
+					<thead>
+						<tr>
+							<th>资质名称</th>
+							<th>所属类目</th>
+							<th>资质照片</th>
+							<th>资质期限</th>
+						</tr>
+					</thead>
+					<tbody>
+						<volist name="rs.cert" id="vo">
+						<notempty name="vo.child.cert_images">
+							<tr>
+								<td>{$vo.cert_name}</td>
+								<td>{$vo.category_name}</td>
+								<td><a class="image-zoom" href="{$vo['child']['cert_images']}"><img src="{:myurl($vo['child']['cert_images'],100,60)}"></a></td>
+								<td><empty name="vo.child.expire">长期<else />{$vo.child.expire}</empty></td>
+							</tr>
+						<else />
+							<tr>
+								<td colspan="4" style="padding:20px;" class="text-center text_red">
+									<strong class="text_red" style="color:red">商家未提交  {$vo.cert_name} 资质信息，请谨慎审核通过！</strong>
+								</td>
+							</tr>
+						</notempty>
+						</volist>
+					</tbody>
+				</table>
+			</notempty>
+			<div class="md20"></div>
+			<notempty name="rs.brand">
+				<div class="border-d ft18 md10">品牌信息</div>			
+				<table>
+					<thead>
+						<tr>
+							<th>品牌中文名</th>
+							<th>品牌英文名</th>
+							<th>品牌logo</th>
+							<th>商标证书</th>
+							<th>商标授理书</th>
+							<th>品牌拥有者</th>
+						</tr>
+					</thead>
+					<tbody>
+						<volist name="rs.brand" id="vo">
+						<tr>
+							<td>{$vo.b_name}</td>
+							<td>{$vo.b_ename}</td>
+							<td><a class="image-zoom" href="{$vo.b_logo}"><img src="{:myurl($vo['b_logo'],100,60)}"></a></td>
+							<td><a class="image-zoom" href="{$vo.b_images}"><img src="{:myurl($vo['b_images'],100,60)}"></a></td>
+							<td><a class="image-zoom" href="{$vo.b_images2}"><img src="{:myurl($vo['b_images2'],100,60)}"></a></td>
+							<td>{$vo.b_master}</td>
+						</tr>
+						</volist>
+					</tbody>
+				</table>
+			</notempty>
+			
+			<notempty name="rs.product">
+				<div class="border-d ft18 md10">产品信息</div>			
+				<table>
+					<thead>
+						<tr>
+							<th class="col-xs-6">产品图片</th>
+							<th class="col-xs-6">其他相关资质</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>
+								<php>$pImg = explode(',', trim($rs['product']['pro_images'], ','));</php>
+								<volist name="pImg" id="vo">
+									<a class="image-zoom" href="{$vo}" title="大图">
+										<img src="{:myurl($vo, 100)}" />
+									</a>
+								</volist>
+							</td>
+							<td>
+								<php>$cImg = explode(',', trim($rs['product']['cert_images'], ','));</php>
+								<volist name="cImg" id="vo">
+									<a class="image-zoom" href="{$vo}" title="大图">
+										<img src="{:myurl($vo, 100)}" />
+									</a>
+								</volist>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								{$rs.product.intro}
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</notempty>
+			
+			<div class="md20"></div>
+			<div class="border-d ft18 md10">商标信息</div>			
+			<table>
+				<thead>
+					<tr>
+						<th>注册人</th>
+						<th>注册号</th>
+						<th>商标证书</th>
+						<th>注册类型</th>
+						<th>商标产地</th>
+						<th>有效期限</th>
+						<th>是否为代理</th>
+						<th>代理资格</th>
+						<th>代理期限</th>
+					</tr>
+				</thead>
+				<tbody>
+					<volist name="rs.bankCert" id="vo">
+					<tr>
+						<td>{$vo.reg_people}</td>
+						<td>{$vo.reg_no}</td>
+						<td><a class="image-zoom" href="{$vo.license_images}"><img src="{:myurl($vo['license_images'],100,60)}"></a></td>
+						<td><eq name="vo.reg_type" value="1">R标<else />TM标</eq></td>
+						<td><eq name="vo.is_import" value="1">进口<else />非进口</eq></td>
+						<td><empty name="vo.reg_expire">长期<else />{$vo.reg_expire}</empty></td>
+						<td><eq name="vo.is_proxy" value="1">是<else />否</eq></td>
+						<eq name="vo.is_proxy" value="1">
+						<td><a class="image-zoom" href="{$vo.proxy_cert}"><img src="{:myurl($vo['proxy_cert'],100,60)}"></a></td>
+						<td>
+							<empty name="vo.proxy_expire">长期<else />{$vo.proxy_expire}</empty>
+						</td>
+						<else />
+						<td colspan="2">非代理品牌</td>
+						</eq>
+					</tr>
+					</volist>
+				</tbody>
+			</table>
+			<!-- 
+			<eq name="rs.user.type" value="1">
+				<div class="md20"></div>
+				<div class="border-d ft18 md10">银行开户信息</div>			
+				<table>
+					<thead>
+						<tr>
+							<th>开户银行</th>
+							<th>开户许可证</th>
+							<th>银行账户</th>
+							<th>户名</th>
+							<th>支行联号</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>{:getBank($rs['bank']['bank_id'])}</td>
+							<td><a class="image-zoom" href="{$rs.bank.bank_license}"><img src="{:myurl($rs['bank']['bank_license'],100,60)}"></a></td>
+							<td>{$rs.bank.bank_account}</td>
+							<td>{$rs.bank.bank_name}</td>
+							<td>{$rs.bank.bank_no}</td>
+						</tr>
+					</tbody>
+				</table>
+			</eq> -->
+			
+		</div>
+	</div>
+	<div class="ft18 strong p10 border-d md20">审核记录</div>
+	<neq name="rs.status" value="5">
+	<form data-url="__URL__/logs_add" data-id="#form_{$rs.id}" id="form_{$rs.id}" class="form-horizontal vform">
+			{:W('Widget/buildform',array(array(
+				'field'		=>array(	
+					array(
+						'formtype'		=>'radio',
+						'label'			=>'状态',
+						'name'			=>'status',
+						'data'			=>array(array(2,'拒绝审核'),array(5,'审核通过且创建店铺')),
+						//'data'			=>array(array(0,'签订合同'),array(1,'等待审核'),array(2,'拒绝审核'),array(3,'审核通过'),array(4,'已交保证金'),array(5,'创建店铺')),
+						'field'			=>array(0,1),
+						'value'			=>$rs['status'],
+					),
+					array(
+						'formtype'		=>'textarea',
+						'label'			=>'原因',
+						'name'			=>'reason',
+						'tips'			=>'拒绝审核时必填',
+					),
+					array(
+						'formtype'		=>'checkbox',
+						'label'			=>'未通过步骤',
+						'data'			=>$notPass,
+						'name'			=>'not_pass',
+						'field'			=>array(0,1),
+						'tips'			=>'拒绝审核时必填',
+					),
+					array(
+						'formtype'		=>'hidden',
+						'name'			=>'shop_join_id',
+						'value'			=>$rs['id'],
+					),					
+					array(
+						'formtype'		=>'html',
+						'label'			=>' ',
+						'html'			=>'<button type="button" class="btn btn-primary btn-150px logs-add"><i class="fa fa-check"></i> 提交</button>'
+					),
+
+
+				),
+			)))}
+	
+	
+	</form>
+	</neq>
+	<notempty name="rs.logs">
+	<ul class="timeline">
+		<volist name="rs.logs" id="vo">
+		<li>
+			<i class="fa fa-clock-o"></i>
+			<span class="date">
+				{$vo.atime}
+			</span>
+			<div class="content">
+				<div class="md20">审核状态：
+					{:status($vo['status'],array(array('签订合同'),array('审核中'),array('审核未通过','btn-danger'),array('审核通过','btn-warning'),array('已交保证金','btn-success'),array('开店成功','btn-success')))}
+				</div>
+				<notempty name="vo.reason">
+				<div class="md20 ft14">
+					原因：
+					{$vo.reason|nl2br}
+				</div>
+				</notempty>
+				<notempty name="vo.remark">
+				<div class="md20 ft14">
+					备注：
+					{$vo.remark|nl2br}
+				</div>
+				</notempty>
+				<small class="md10">
+					雇员ID：{$vo.a_uid}
+				</small>
+			</div>
+		</li>
+		</volist>
+	</ul>
+	</notempty>
+	
+</div>
+<div class="clearfix">
+	<div class="pull-right text-gray" onclick="$(this).closest('tr').toggleClass('hide');"><i class="fa fa-times-circle-o fa-2x"></i></div>	
+</div>
+
+<script>
+image_zoom();
+$('.logs-add').click(function(){
+	var d=$(this).closest('form').data();
+	ajax_post_form({
+		formid:d.id
+	},function(ret){
+		valert(ret);
+		if(ret.status=='success'){
+			var tag='#item-{$rs.id}';
+			var url='__URL__/view/id/{$rs.id}';
+			loadurl({tag:tag,url:url});
+		}
+	});
+
+});
+</script>

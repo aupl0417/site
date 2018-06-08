@@ -1,0 +1,124 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			<div class="row">
+				<div class="col-20">&nbsp;</div>
+				<div class="col-60">
+					<div class="input-search-box" >
+						<input type="text" id="q" name="q" placeholder="搜索本店商品" onclick="openWin({name:'search',url:'/Goods/search/shop_id/{$_GET.shop_id}'})" />
+					</div>				
+				</div>
+				<div class="col-20"></div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="r">
+			<div class ="cart_total_num hide" style="top:5px;"></div>
+			<i class="icons i-cart" onclick="openWin({name:'cart',url:'/Cart/index',logined:true})"></i>	
+		</div>
+	</div>
+</header>
+
+<!--主体-->
+<section>
+	<div class="shop-header" style="background-image:url(../Public/Images/header/{:rand(1,14)}.jpg);">
+
+	</div>
+	<div class="line-box nobg noicon hover">
+		<div class="title">联系客服</div>
+	</div>
+	<div class="shop_info"></div>
+
+	
+	
+</section>
+
+
+<script id="tpl_shop_contact" type="text/html">
+	<div class="line-box row noicon hover">
+		<div class="col-30">手机</div>
+		<div class="col-70 text-right text-gray"><%= data.mobile %></div>
+	</div>
+	<div class="line-box row noicon hover">
+		<div class="col-30">电话</div>
+		<div class="col-70 text-right text-gray"><%= data.tel %></div>
+	</div>
+	<div class="line-box row noicon hover">
+		<div class="col-30">QQ</div>
+		<div class="col-70 text-right text-gray"><%= data.qq %></div>
+	</div>
+	<div class="line-box row noicon hover">
+		<div class="col-30">旺旺</div>
+		<div class="col-70 text-right text-gray"><%= data.wang %></div>
+	</div>
+	<div class="line-box row noicon hover">
+		<div class="col-30">邮箱</div>
+		<div class="col-70 text-right text-gray"><%= data.email %></div>
+	</div>
+	<div class="line-box row noicon hover">
+		<div class="col-30">地区</div>
+		<div class="col-70 text-right text-gray"><%= data.province %> <%= data.city %> <%= data.district %> <%= data.town %></div>
+	</div>
+
+</script>
+
+<script id="tpl_shop_header" type="text/html">
+		<div class="love-icon">
+			<i class="icons icons-30px i-star" onclick="shop_fav_add(<%= data.id %>)"></i>
+		</div>
+		<div class="row" style="padding-top:15px">
+			<div class="col-10" style="width:20px;">&nbsp;</div>
+			<div class="col-20" width="70px">
+				<img src="<%= data.shop_logo %>" width="70" height="70" class="img-circle">
+			</div>
+			<div class="col-60">
+				<div class="pl10" style="padding-top:10px">
+					<div class="ft16 b"><%= data.shop_name %></div>
+					<div>综合评分：<%= data.fraction %></div>
+				</div>
+			</div>
+		</div>
+</script>
+
+<script>
+fixBar(1);
+// 获取店铺商品列表
+ajax_post({
+	url:'/Api/apis',
+	data:{
+		shop:{apiurl:'/Shop/shop_info',shop_id:'{$_GET.shop_id}'},
+		cart_num:{apiurl:'/Cart/cart_total',is_openid:1}
+		}
+},function(ret){	
+	if(ret.shop.code==1){
+		var html=template('tpl_shop_header',{data:ret.shop.data});
+		$('.page.active .shop-header').html(html);
+		
+		var html=template('tpl_shop_contact',{data:ret.shop.data});
+		$('.page.active .shop_info').html(html);
+	}
+	
+	//购物车数量
+	if(ret.cart_num.code==1 && ret.cart_num.data.num > 0){
+		$(".cart_total_num").removeClass('hide').html(ret.cart_num.data.num);
+	}else{
+		$(".cart_total_num").addClass('hide').html(0);
+	}
+});	
+
+
+	//添加关注
+	function shop_fav_add(shop_id){
+		ajax_post({
+			url:'/Api/api',
+			data:{apiurl:'/ShopFav/add',is_openid:1,shop_id:shop_id}
+		},function(ret){
+			valert(ret);
+		});
+	}
+	
+	
+</script>

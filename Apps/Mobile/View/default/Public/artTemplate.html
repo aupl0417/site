@@ -1,0 +1,976 @@
+<!--推荐频道-->		
+<script type="text/html" id="tpl_hot_item">
+	<% for(var i=0;i<data.length;i++){ %>
+	<div class="card facebook-card">
+		<div class="card-content">
+			<img class="lazyload" data-sizes="auto" data-src="<%= data[i].images %>" src="../Public/images/nopic_640x325.gif" width="100%" alt="<%= data[i].name %>">
+		</div>
+		<div class="card-footer no-border">
+			<%= data[i].name %>
+		</div>
+	</div>	
+	<% } %>
+</script>
+
+<!--猜您喜欢-->
+<script type="text/html" id="tpl_love_goods">
+	<% for(var i=0;i<data.length;i++){ %>
+	<% if(data[i].data.attr_list[0]){ %>
+	<div class="col-25">
+		<a href="/Goods/view/id/<%= data[i].data.attr_list[0].id %>" class="item-link goods-item">
+			<div class="goods-img">
+				<img class="lazyload" data-sizes="auto" data-src="<%= imgwh(data[i].data.images,200,200) %>" src="../Public/images/nopic.gif" alt="<%= data[i].data.goods_name%>">
+			</div>
+			<div class="goods-name">
+				<%= data[i].data.goods_name%>
+			</div>
+		</a>
+	</div>
+	<% } %>	
+	<% } %>	
+</script>
+
+
+<!--收货地址-->
+<script type="text/html" id="tpl_address_item">
+	<% for(var i=0;i<data.length;i++){ %>
+	<li id="address-<%= data[i].id %>">
+		<a href="#" class="item-link item-content action" data-id="<%= data[i].id %>">
+			<div class="item-media">
+				<i class="iconfont icon-shouhuodizhi ft1"></i>
+			</div>
+			<div class="item-inner">
+				<div class="item-title-row">
+					<div class="item-title"><strong><%= data[i].linkname %></strong>，<%= data[i].mobile %></div>
+				</div>
+				<div class="item-subtitle text-gray"><%= data[i].province %> <%= data[i].city %> <%= data[i].district %> <%= data[i].town %> <%= data[i].street %></div>
+			</div>
+		</a>
+	</li>
+	<% } %>	
+</script>
+
+<!--城市-->
+<script type="text/html" id="tpl_city_item">
+	<% for(var i=0;i<data.length;i++){ %>
+	<li>
+		<div class="item-link item-content open-popup" data-popup=".popup-district" data-id="<%= data[i].id %>"  onclick="select_city($(this))">
+			<div class="item-inner">
+				<div class="item-title"><%= data[i].a_name %></div>
+			</div>
+		</div>
+	</li>
+	<% } %>	
+</script>
+
+<!--商品详情选择城市-->
+<script type="text/html" id="tpl_city_item2">
+	<% for(var i=0;i<data.length;i++){ %>
+	<li>
+		<div class="item-link item-content open-popup" data-popup=".popup-district" data-id="<%= data[i].id %>"  onclick="select_city2($(this))">
+			<div class="item-inner">
+				<div class="item-title"><%= data[i].a_name %></div>
+			</div>
+		</div>
+	</li>
+	<% } %>	
+</script>
+
+<!--区县-->
+<script type="text/html" id="tpl_district_item">
+	<% for(var i=0;i<data.length;i++){ %>
+	<li>
+		<div class="item-link item-content <%= data[i].dnum > 0 ? 'open-popup' : ''%>" data-popup=".popup-town" data-id="<%= data[i].id %>" onclick="<%= data[i].dnum > 0 ? 'select_district($(this))' : 'select_city_item($(this))'%>">
+			<div class="item-inner">
+				<div class="item-title"><%= data[i].a_name %></div>
+			</div>
+		</div>
+	</li>
+	<% } %>	
+</script>
+
+<!--街道-->
+<script type="text/html" id="tpl_town_item">
+	<% for(var i=0;i<data.length;i++){ %>
+	<li>
+		<div class="item-link item-content open-popup" data-id="<%= data[i].id %>" onclick="select_city_item($(this))">
+			<div class="item-inner">
+				<div class="item-title"><%= data[i].a_name %></div>
+			</div>
+		</div>
+	</li>
+	<% } %>	
+</script>
+
+
+<!--关注的商品-->
+<script type="text/html" id="tpl_fav_goods">
+	<% for(var i=0;i<data.length;i++){ %>
+	<li class="goods-content item-link" id="fav_goods_<%= data[i].id %>">
+		<div class="goods-item">
+			<div class="goods-images">
+				<a href="/Goods/view/id/<%= data[i].attr_list[0].id %>">
+					<img class="lazyload" data-sizes="auto" data-src="<%= imgwh(data[i].goods.images,100,100) %>" src="../Public/images/nopic.gif" width="100" alt="商品主图">
+				</a>
+			</div>
+			<div class="goods-info" onclick="cancel_fav_goods($(this))" data-id="<%= data[i].id %>">
+				<div class="goods-name"><%= data[i].goods.goods_name %></div>
+				<div class="goods-info-more">
+					<div class="goods-price">￥<%= data[i].goods.price %></div>
+					<div class="score"><!--奖励 <%= score(data[i].goods.score_ratio,data[i].goods.price) %> 积分，-->已售出 <%= data[i].goods.sale_num %> 件</div>
+				</div>
+			</div>
+		</div>
+	</li>
+	<% } %>	
+</script>
+
+
+<!--关注的店铺-->
+<script type="text/html" id="tpl_fav_shop">
+	<% for(var i=0;i<data.length;i++){ %>
+	<div class="list-block media-list">						
+		<ul>		
+			<li id="fav_shop_id_<%= data[i].id %>">
+				<div class="item-link item-content">
+					<div class="item-media">
+						<a href="/Shop/shop_id/<%= data[i].shop_id %>">
+							<img class="lazyload img-circle" data-sizes="auto" data-src="<%= data[i].shop.shop_logo %>" src="../Public/images/nopic.gif" width="44" alt="店铺logo">
+						</a>
+					</div>
+					<div class="item-inner" data-id="<%= data[i].id %>" onclick="cancel_fav_shop($(this))">
+						<div class="item-title-row">
+							<div class="item-title strong"><%= data[i].shop.shop_name %></div>
+						</div>
+						<div class="item-subtitle text-gray"><i class="iconfont icon-xihuanline"></i> 关注 <%= data[i].shop.fav_num %></div>
+					</div>
+				</div>
+			</li>
+			<div class="row bg-white">
+			<% for(var j=0;j<data[i].shop_goods.length;j++){ %>
+				<a class="col-25 p5" href="/Goods/view/id/<% data[i].shop_goods[j].attr_list[0].id %>">
+					<img class="lazyload" data-sizes="auto" data-src="<%= imgwh(data[i].shop_goods[j].images,320,320) %>" alt="商品主图" src="../Public/images/nopic.gif">
+				</a>
+			<% } %>	
+			</div>
+		</ul>
+	</div>
+	<div class="clearfix md5"></div>
+	<% } %>	
+</script>
+	
+<!--商品搜索-->
+<script type="text/html" id="tpl_goods_item">
+	<% for(var i=0;i<data.length;i++){ %>
+	<% if(data[i].data.attr_list[0]){ %>
+	<li class="goods-content item-link" style="min-height: 121px;">
+		<a class="goods-item" href="/Goods/view/id/<%= data[i].data.attr_list[0].id %>">
+			<div class="goods-images" style="min-width: 100px;">
+				<img class="lazyload" data-sizes="auto" data-src="<%= imgwh(data[i].data.images,320,320) %>" src="../Public/images/nopic.gif" width="100" alt="<%= data[i].data.goods_name %>">
+			</div>
+			<div class="goods-info">
+				<div class="goods-name"><%= data[i].data.goods_name %></div>
+	
+				<div class="goods-info-more">
+					<div class="goods-price"><img class="icon-price" src="../Public/images/icon_<%= data[i].data.score_type %>.png"> <%= data[i].data.price %> <% if(data[i].data.is_daigou == 1){ %><span class="lab lab-danger lab-xs ml03">代</span><% } %></div>
+					<div class="score"><% if(data[i].data.is_self == 1){ %><span class="lab lab-trans lab-danger lab-xs mr03">自营</span><% } %> <!--奖励  <%= score(data[i].data.score_ratio,data[i].data.price) %> 积分，-->已售出   <%= data[i].data.sale_num %> 件</div>
+				</div>
+			</div>
+		</a>
+	</li>
+	<% } %>
+	<% } %>
+</script>
+
+<!--首页猜您喜欢-->
+<script type="text/html" id="tpl_love_home">
+	<% for(var i=0;i<data.length;i++){ %>
+	<% if(data[i].data.attr_list[0]){ %>
+	<div class="col-50">
+		<a href="/Goods/view/id/<%= data[i].data.attr_list[0].id %>" class="love-goods-item">
+			<div class="goods-images">
+				<img class="lazyload" data-sizes="auto" data-src="<%= imgwh(data[i].data.images,320,320) %>" src="../Public/images/nopic.gif" width="100%" alt="<%= data[i].data.goods_name %>">
+			</div>
+			<div class="goods-name"><%= data[i].data.goods_name %></div>
+		</a>
+	</div>
+	<% } %>
+	<% } %>
+</script>
+
+<!--商品评价-->
+<script type="text/html" id="tpl_goods_rate">
+	<% for(var i=0;i<data.length;i++){ %>
+	<li class="rate-content item-link">
+		<div class="face">
+			<img class="lazyload img-circle border-1px" data-sizes="auto" data-src="<%= imgwh(data[i].user.face,50,50) %>" alt="头像" src="../Public/images/nopic.gif" width="50" height="50">
+		</div>
+		<div class="rate-info">
+			<div class="pull-right"><img src="../Public/images/rate_<%= data[i].rate %>.png" alt="评价等级"></div>
+			<div class="nick"><%= data[i].user.nick %></div>
+			<div class="rate-text"><%= data[i].content %></div>
+			<div class="time"><%= data[i].orders_goods.attr_name %></div>
+			<div class="time"><%= data[i].atime %></div>
+			
+			<% if(data[i].images){ %>
+			<div class="row">
+				<% for(var j=0;j<data[i].images;j++){ %>
+				<div class="col-20">
+					<img class="lazyload" data-sizes="auto" data-src="<%= imgwh(data[i].images[j],50,50) %>" alt="晒图" src="../Public/images/nopic.gif" width="100%">
+				</div>
+				<% } %>
+			</div>		
+			<% } %>
+		</div>
+	</li>
+	<% } %>
+</script>
+
+
+<!--店铺商品-->
+<script type="text/html" id="tpl_shop_goods">
+	<% for(var i=0;i<data.length;i++){ %>
+	<% if(data[i].attr_list[0]){ %>
+	<div class="col-50">
+		<a href="/Goods/view/id/<%= data[i].attr_list[0].id %>" class="love-goods-item">
+			<div class="goods-images">
+				<img class="lazyload" data-sizes="auto" data-src="<%= imgwh(data[i].images,320,320) %>" src="../Public/images/nopic.gif" width="100%" alt="<%= data[i].goods_name %>">
+			</div>
+			<div class="goods-name"><%= data[i].goods_name %></div>
+			<div class="goods-info clearfix md5">
+				<div class="pull-right text-gray ft05">售出  <%= data[i].sale_num %> 件</div>
+				<div class="price"><img class="icon-price" src="../Public/images/icon_<%= data[i].data.score_type %>.png"><%= data[i].price %></div>
+				<div class="clearfix"></div>
+				<div class="pull-right text-gray ft05">
+					奖励   <%= score(data[i].score_ratio,data[i].price) %> 分
+				</div>
+			</div>		
+		</a>
+	</div>
+	<% } %>
+	<% } %>
+</script>
+
+
+<!--店铺评价-->
+<script type="text/html" id="tpl_shop_rate">
+	<% for(var i=0;i<data.length;i++){ %>
+	<li class="rate-content item-link">
+		<div class="face">
+			<img class="lazyload img-circle border-1px" data-sizes="auto" data-src="<%= imgwh(data[i].user.face,50,50) %>" alt="头像" src="../Public/images/nopic.gif" width="50" height="50">
+		</div>
+		<div class="rate-info">
+			<div class="pull-right"><img src="../Public/images/rate_<%= data[i].rate %>.png" alt="评价等级"></div>
+			<div class="nick"><%= data[i].user.nick %></div>
+			<div class="rate-text"><%= data[i].content %></div>
+			<div class="time"><%= data[i].orders_goods.goods_name %></div>
+			<div class="time"><%= data[i].orders_goods.attr_name %></div>
+			<div class="time"><%= data[i].atime %></div>
+			
+			<% if(data[i].images){ %>
+			<div class="row">
+				<% for(var j=0;j<data[i].images;j++){ %>
+				<div class="col-20">
+					<img class="lazyload" data-sizes="auto" data-src="<%= imgwh(data[i].images[j],50,50) %>" alt="晒图" src="../Public/images/nopic.gif" width="100%">
+				</div>
+				<% } %>
+			</div>		
+			<% } %>
+		</div>
+	</li>
+	<% } %>
+</script>
+
+<!--合并订单支付结果提示-->
+<script type="text/html" id="tpl_orders_multi_pay_result">
+	<div class="list-block media-list">
+		<ul>
+			<li>
+				<div class="item-content">
+					<div class="item-media">
+						<i class="iconfont icon-jilu"></i>
+					</div>
+					<div class="item-inner">
+						<div class="item-title-row">
+							<div class="item-title">合并订单号</div>
+							<div class="item-after"><%= data.o_no%></div>
+						</div>
+					</div>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<div class="nors text-center">
+		<% if(data.count==data.ok){ %>
+			<div class="text-success">
+				<div><i class="iconfont icon-zhengque ft3"></i></div>
+				支付成功！
+			</div>
+		<% }else{ %>
+			<div class="text-red">
+				<div><i class="iconfont icon-weibiaoti1 ft3"></i></div>
+				存在部分子订单支付失败！
+			</div>
+		<% } %>
+	</div>	
+	
+	<div class="p5 text-gray ft05">
+		以下为所属子订单支付状态
+	</div>
+	<% for(var i=0;i<data.orders.length;i++){ %>
+	<div class="list-block media-list">
+		<ul>
+			<li>
+				<a href="javascript:;" data-url="/Shop/index/shop_id/<%= data.orders[i].data.shop.id %>" class="item-content item-link">
+					<div class="item-media"><i class="icon iconfont icon-dianpu1"></i></div>
+					<div class="item-inner">
+						<div class="item-title-row">
+							<div class="item-title"><%= data.orders[i].data.shop.shop_name %></div>
+						</div>
+					</div>
+				</a>
+			</li>
+			<li>
+				<div class="item-content item-link">
+					<div class="item-media"></div>
+					<div class="item-inner">
+						<div class="item-title-row">
+							<div class="item-title">订单号</div>
+							<div class="item-after"><%= data.orders[i].data.orders.s_no %></div>
+						</div>
+					</div>
+				</div>
+			</li>			
+			<li>
+				<div class="item-content item-link">
+					<div class="item-media"></div>
+					<div class="item-inner">
+						<div class="item-title-row">
+							<div class="item-title">支付状态</div>
+							<div class="item-after">
+								<span class="<%= data.orders[i].code!=1 ? 'text-red':'text-success' %>"><%= data.orders[i].msg %></span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</li>			
+		</ul>
+	</div>
+	<div class="clearfix md5"></div>
+	<% } %>
+	
+</script>
+
+<!--合并订单支付结果提示(erp收银台)-->
+<script type="text/html" id="tpl_orders_multi_pay_result2">
+	<div class="list-block media-list">
+		<ul>
+			<li>
+				<div class="item-content">
+					<div class="item-media">
+						<i class="iconfont icon-jilu"></i>
+					</div>
+					<div class="item-inner">
+						<div class="item-title-row">
+							<div class="item-title">合并订单号</div>
+							<div class="item-after"><%= data.o_no%></div>
+						</div>
+					</div>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<div class="nors text-center">
+		<% if(data.count==data.success){ %>
+			<div class="text-success">
+				<div><i class="iconfont icon-zhengque ft3"></i></div>
+				支付成功！
+			</div>
+		<% }else{ %>
+			<div class="text-red">
+				<div><i class="iconfont icon-weibiaoti1 ft3"></i></div>
+				存在部分子订单支付失败！
+			</div>
+		<% } %>
+	</div>	
+	<div class="p5 text-gray ft05">
+		以下为所属子订单支付状态
+	</div>
+	<% for(var i=0;i<data.orders.length;i++){ %>
+	<div class="list-block media-list">
+		<ul>
+			<li>
+				<a href="javascript:;" data-url="/Shop/index/shop_id/<%= data.orders[i].shop_id %>" class="item-content item-link">
+					<div class="item-media"><i class="icon iconfont icon-dianpu1"></i></div>
+					<div class="item-inner">
+						<div class="item-title-row">
+							<div class="item-title"><%= data.orders[i].shop_name %></div>
+						</div>
+					</div>
+				</a>
+			</li>
+			<li>
+				<div class="item-content item-link">
+					<div class="item-media"></div>
+					<div class="item-inner">
+						<div class="item-title-row">
+							<div class="item-title">订单号</div>
+							<div class="item-after"><%= data.orders[i].s_no %></div>
+						</div>
+					</div>
+				</div>
+			</li>			
+			<li>
+				<div class="item-content item-link">
+					<div class="item-media"></div>
+					<div class="item-inner">
+						<div class="item-title-row">
+							<div class="item-title">支付状态</div>
+							<div class="item-after">
+								<span class="<%= data.orders[i].code!=1 ? 'text-red':'text-success' %>"><%= data.orders[i].msg %></span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</li>			
+		</ul>
+	</div>
+	<div class="clearfix md5"></div>
+	<% } %>
+</script>
+
+<!--订单列表-->
+<script type="text/html" id="tpl_orders">
+	<% for(var i=0;i<data.length;i++){ %>
+	<div class="list-block media-list" data-s_no="<%= data[i].s_no %>">
+		<ul>
+			<li>
+				<div class="item-content item-link">
+					<div class="item-media"><i class="icon iconfont icon-dianpu1"></i></div>
+					<div class="item-inner">
+						<div class="item-title-row">
+							<div class="item-title">
+								<a href="javascript:;" data-url="/Shop/index/shop_id/<%= data[i].shop_id %>"><%= data[i].shop.shop_name %></a>
+							</div>
+							<div class="item-after">
+								<a href="/Orders/view/s_no/<%= data[i].s_no %>"><span class="text-red"><%= data[i].status_name %></span></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</li>
+			<% for(var j=0;j<data[i].orders_goods.length;j++){ %>
+				<li class="bg-gray2">
+					<a href="/Orders/view/s_no/<%= data[i].s_no %>" class="item-content">
+						<div class="item-media">
+							<img class="lazyload" data-sizes="auto" data-src="<%= imgwh(data[i].orders_goods[j].images,150,150) %>" alt="商品主图" src="../Public/images/nopic.gif" width="60">
+						</div>
+						<div class="item-inner">
+							<div class="item-title-row">
+								<div class="item-title">
+									<% if(data[i].orders_goods[j].officialactivity_id == 250){ %><% } %>
+									<%= data[i].orders_goods[j].goods_name %>
+								</div>
+								<div class="item-after">
+									<img class="icon-price" src="../Public/images/icon_<%= data[i].orders_goods[0].score_type %>.png"> <%= data[i].orders_goods[j].price %>
+								</div>
+							</div>
+							<div class="item-subtitle">
+								<div class="pull-right text-gray">x<%= data[i].orders_goods[j].num %></div>
+								<div class="ft05"><%= data[i].orders_goods[j].attr_name %></div>
+							</div>
+						</div>
+					</a>
+				</li>
+			<% } %>	
+	
+			<li>
+				<a href="/Orders/view/s_no/<%= data[i].s_no %>" class="item-content">
+					<div class="item-inner">
+						<div class="item-title-row">
+							<div class="item-title">
+								<div class="ft05">共<%= data[i].goods_num %>件商品，运费<img class="icon-price" src="../Public/images/icon_<%= data[i].orders_goods[0].score_type %>.png"> <%= data[i].express_price_edit %><!--，奖励<%= data[i].score %>积分--></div>
+							</div>
+							<div class="item-after">
+								合计：<img class="icon-price" src="../Public/images/icon_<%= data[i].orders_goods[0].score_type %>.png"> <strong> <%= data[i].pay_price %></strong>
+							</div>
+						</div>
+					</div>
+				</a>
+			</li>
+			
+			<% if(data[i].status==1){ %>
+			<li>
+				<div class="item-content">
+					<div class="item-inner">
+						<div class="item-title-row">
+							<div class="item-title"></div>
+							<div class="item-after">
+								<a href="/Orders/close/s_no/<%= data[i].s_no %>" class="button button-light" data-no-cache="true">关闭</a>
+								<a href="/Orders/view/s_no/<%= data[i].s_no %>/is_pay/1" class="button button-danger ml03" data-no-cache="true">付款</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</li>			
+			<% }else if(data[i].status==2 && data[i].refund_in > 0){ %>
+			<li>
+				<div class="item-content">
+					<div class="item-inner">
+						<div class="item-title-row">
+							<div class="item-title"></div>
+							<div class="item-after">
+								<a href="/Refund/refund_goods_list/s_no/<%= data[i].s_no %>" class="button button-light" data-no-cache="true">退款中</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</li>				
+			<% }else if(data[i].status==3){ %>	
+			<li>
+				<div class="item-content">
+					<div class="item-inner">
+						<div class="item-title-row">
+							<div class="item-title"></div>
+							<div class="item-after">
+								<% if(data[i].refund_in > 0){ %>
+								<a href="/Refund/refund_goods_list/s_no/<%= data[i].s_no %>" class="button button-light" data-no-cache="true">退款中</a>
+								<% } %>
+								<a href="/Orders/logistics_view/s_no/<%= data[i].s_no %>" class="button button-light ml03" data-no-cache="true">查看物流</a>
+								<a href="/Orders/receive/s_no/<%= data[i].s_no %>" class="button button-danger ml03" data-no-cache="true">确认收货</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</li>					
+			<% }else if(data[i].status==4){ %>	
+			<li>
+				<div class="item-content">
+					<div class="item-inner">
+						<div class="item-title-row">
+							<div class="item-title"></div>
+							<div class="item-after">
+								<a href="/Orders/logistics_view/s_no/<%= data[i].s_no %>" class="button button-light ml03" data-no-cache="true">查看物流</a>								
+								<% if(data[i].service_in>0){ %>	
+									<a href="/Service/index/s_no/<%= data[i].s_no %>" class="button button-light ml03" data-no-cache="true">售后中</a>
+								<%}%>
+								<% if(data[i].is_rate == 1){%><a href="/Orders/receive/s_no/<%= data[i].s_no %>" class="button button-danger ml03 hide" data-no-cache="true">评价</a><% } %>
+							</div>
+						</div>
+					</div>
+				</div>
+			</li>	
+			<% }else if(data[i].status==5){ %>	
+			<li>
+				<div class="item-content">
+					<div class="item-inner">
+						<div class="item-title-row">
+							<div class="item-title"></div>
+							<div class="item-after">
+								<%if(data[i].service_in>0){%>	
+									<a href="/Service/index/s_no/<%= data[i].s_no %>" class="button button-light ml03" data-no-cache="true">售后中</a>
+								<%}%>
+							</div>
+						</div>
+					</div>
+				</div>
+			</li>			
+			<% } %>
+		</ul>
+	</div>
+	<div class="clearfix md5"></div>
+	<% } %>	
+</script>
+
+<!--通知列表-->
+<script type="text/html" id="tpl_notice_list">
+	<% for(var i=0;i<data.length;i++){ %>
+		<div class="card" data-id="<%= data[i].id %>">
+			<div class="card-header">
+				<div>系统消息(<%= data[i].status_name %>)</div>
+				<a href="#" class="link" onclick="delete_notice($(this))" ids="<%= data[i].id %>">删除</a>	
+			</div>
+			<a class="card-content" href="__URL__/view/id/<%= data[i].id %>">
+				<div class="card-content-inner">
+					<p><%= data[i].content %></p>
+					<p class="color-gray">接收时间 <%= data[i].atime %></p>
+				</div>
+			</a>
+		</div>
+	<% } %>	
+</script>
+
+<!--乐兑新闻列表-->
+<script type="text/html" id="tpl_news_list">
+	<% for(var i=0;i<data.length;i++){ %>
+			<div class="list-block media-list">						
+			<ul>	
+				<li>
+					<a class="item-content" href="__URL__/view/id/<%= data[i].id %>">
+						<div class="item-inner">
+							<div class="item-title-row">
+								<div class="item-title"><%= data[i].name %></div>
+								<div class="item-after"><%= data[i].atime %></div>
+							</div>
+						</div>
+					</a>
+				</li>
+				<li>
+					<a href="__URL__/view/id/<%= data[i].id %>" class="item-content">
+						<div class="item-inner">											
+							<%= data[i].content %>						
+						</div>
+					</a>
+				</li>
+			</ul>
+		</div>
+		<div class="clearfix md5"></div>
+	<% } %>	
+</script>
+
+<!--售后列表-->
+<script type="text/html" id="tpl_service_list">
+	<% for(var i=0;i<data.length;i++){ %>
+		<div class="list-block media-list">
+			<ul>
+				<li>
+					<div class="item-content item-link">
+						<div class="item-media"><i class="icon iconfont icon-dianpu1"></i></div>
+						<div class="item-inner">
+							<div class="item-title-row">
+								<div class="item-title"><a href="javascript:;" data-url="/Shop/index/shop_id/<%= data[i].shop_id %>"><%= data[i].shop.shop_name %>{$vo.shop.shop_name}</a></div>
+								<div class="item-after"><a href="/Service/view/r_no/<%= data[i].r_no %>" data-no-cache="true"><span class="text-red"><%= data[i].status_name %></span></a></div>
+							</div>
+						</div>
+					</div>
+				</li>
+				<li class="bg-gray2">
+					<a href="/Service/view/r_no/<%= data[i].r_no %>" class="item-content">
+						<div class="item-media">
+							<img class="lazyload" data-sizes="auto" data-src="<%= imgwh(data[i].orders_goods.images,150,150) %>" alt="商品主图" src="../Public/images/nopic.gif" width="60">
+						</div>
+						<div class="item-inner">											
+							<div class="item-title-row">
+								<div class="item-title"><%= data[i].orders_goods.goods_name %></div>
+
+							</div>
+							<div class="item-subtitle">
+								<div class="pull-right text-gray">x<%= data[i].num %></div>
+								<div class="ft05"><%= data[i].orders_goods.attr_name %></div>
+							</div>									
+						</div>
+					</a>
+				</li>
+				<li>
+					<a href="/Service/view/r_no/<%= data[i].r_no %>" class="item-content">
+						<div class="item-media"><i class="icon iconfont text-red icon-shouhou1"></i></div>
+						<div class="item-inner">													
+							<div class="item-title-row">
+								<div class="item-title">
+									换货/维修
+								</div>														
+							</div>
+						</div>
+					</a>
+				</li>
+			</ul>
+		</div>	
+		<div class="clearfix md5"></div>
+	<% } %>	
+</script>
+
+<!--话费、流量列表-->
+<script type="text/html" id="tpl_recharge_list">
+	<% for(var i=0;i<data.length;i++){ %>
+		<li>
+			<a href="/TellRecharge/view/s_no/<%= data[i].s_no %>" class="item-content3">
+				<% if(data[i].mobile_type == 1){ %>
+					<div class="shop_logo">
+						<img class="lazyload" data-sizes="auto" data-src="<%= imgwh("../Public/images/move.png",150,150) %>" alt="移动" src="../Public/images/nopic.gif" width="40">
+					</div>
+				<% }else if(data[i].mobile_type == 2){ %>	
+					<div class="shop_logo">
+						<img class="lazyload" data-sizes="auto" data-src="<%= imgwh("../Public/images/unicom.png",150,150) %>" alt="联通" src="../Public/images/nopic.gif" width="40">
+					</div>
+				<% }else{ %>
+					<div class="shop_logo">
+						<img class="lazyload" data-sizes="auto" data-src="<%= imgwh("../Public/images/telecom.png",150,150) %>" alt="电信" src="../Public/images/nopic.gif" width="40">
+					</div>				
+				<% } %>	
+				<div class="shop_info">
+					<div class="shop_name">
+						<%= data[i].mobile %>
+					</div>
+					<div class="text-gray ft05">
+						<% if(data[i].return_status == 1 || data[i].return_status == 29 || data[i].status == 3 || data[i].status == 4|| data[i].status == 5){ %>
+							<div class="text-success">充值成功</div>
+						<% }else{ %>
+							<div class="text-gray"><%= data[i].status_name %></div>
+						<% } %>	
+						<div class="ft06"><%= data[i].atime %></div>
+					</div>
+				</div>
+				
+				<div class="recharge">
+					<div class="price"><span><%= data[i].desc %></span></div>
+				</div>
+			</a>
+		</li>
+	<% } %>	
+</script>
+
+<!--退款列表-->
+<script type="text/html" id="tpl_refund_list">
+	<% for(var i=0;i<data.length;i++){ %>
+	<div class="list-block media-list">
+		<ul>
+			<li>
+				<a href="/Refund/view/r_no/<%= data[i].r_no %>" class="item-content item-link" data-no-cache="true">
+					<div class="item-media"><i class="icon iconfont icon-tuihuoyuanyin"></i></div>
+					<div class="item-inner">
+						<div class="item-title-row">
+							<div class="item-title"><%= data[i].r_no %></div>
+							<div class="item-after"><span class="text-red"><%= data[i].status_name %></span></div>
+						</div>
+					</div>
+				</a>
+			</li>
+			<li class="bg-gray2">
+				<div class="item-bottom p5 text-gray ft05">
+					退款金额 ￥<%= data[i].refund_money %>
+				</div>
+				<a href="/Refund/view/r_no/<%= data[i].r_no %>" class="item-content">
+					<div class="item-media">
+						<img class="lazyload" data-sizes="auto" data-src="<%= imgwh(data[i].orders_goods.images,150,150) %>" alt="商品主图" src="../Public/images/nopic.gif" width="60">
+					</div>
+					<div class="item-inner">
+						<div class="item-title-row">
+							<div class="item-title"><%= data[i].orders_goods.goods_name %></div>
+						</div>
+						<div class="item-subtitle">
+							<div class="ft05"><%= data[i].orders_goods.attr_name %></div>
+						</div>
+					</div>
+				</a>
+			</li>
+	
+			<li>
+				<a href="/Refund/view/r_no/<%= data[i].r_no %>" class="item-content">
+					<div class="item-media"><i class="icon iconfont text-red <%= data[i].type==1?'icon-tuihuo01':'icon-tuikuan' %>"></i></div>
+					<div class="item-inner">
+						<div class="item-title-row">
+							<div class="item-title"><%= data[i].type_name %></div>
+						</div>
+					</div>
+				</a>
+			</li>
+		</ul>
+	</div>
+	<div class="clearfix md5"></div>
+	<% } %>	
+</script>
+
+<!--购物车可用优惠券选择-->
+<script type="text/html" id="tpl_cart_coupon">
+	<% for(var i=0;i<data.length;i++){ %>
+	<li data-coupon_id="<%= data[i].id %>" data-price="<%= data[i].price %>">
+		<div class="item-content">
+			<div class="item-media"><i class="icon iconfont icon-youhuiquan text-red"></i></div>
+			<div class="item-inner">
+				<div class="item-title-row">
+					<div class="item-title"><%= data[i].title %> (<span class="text-red">￥<%= data[i].price%></span>)</div>
+				</div>
+			</div>
+		</div>
+	</li>
+	<% } %>
+</script>		
+
+<!--我的优惠券-->
+<script type="text/html" id="tpl_my_coupon">
+	<% for(var i=0;i<data.length;i++){ %>
+	<li>
+		<a href="javascript:;" data-url="/Shop/index/shop_id/<%= data[i].shop_id %>" class="item-content3">
+			<div class="shop_logo">
+				<img class="lazyload img-circle border-1px" data-sizes="auto" data-src="<%= imgwh(data[i].shop_logo,45,45) %>" alt="商品主图" src="../Public/images/nopic.gif">
+			</div>
+			<div class="shop_info">
+				<div class="shop_name">
+					<div class="pull-right num">(<%= data[i].num %>张)</div>
+					<%= data[i].shop_name %>
+				</div>
+				<div class="text-gray ft05">
+					<div>使用期限</div>
+					<div><%= data[i].sday %> ~ <%= data[i].eday %></div>
+				</div>
+			</div>
+			<div class="coupon">
+				<div class="price">￥<span><%= data[i].price %></span></div>
+				<div class="text">满<%= data[i].min_price %>使用</div>
+			</div>
+		</a>
+	</li>
+	<% } %>
+</script>
+
+<!-- 抽奖游戏 -->
+<script type="text/html" id="tpl_luckdraw_alert">
+	<div class="alert-luckdraw">
+		<div class="alert-luckdraw-header">
+			<i onclick="closeAlertLuckdraw($(this));" class="icon iconfont icon-guanbi1"></i>
+		</div>
+		<div class="alert-luckdraw-content">
+			<% if(data.type == 1) { %>
+				<p class="alert-luckdraw-content-title">恭喜啦</p>
+				<p class="alert-luckdraw-content-intro">您获得 <%=data.coupon.price%> 元代金券</p>
+				<div class="alert-luckdraw-content-box row">
+					<div class="alert-luckdraw-content-box-left col-35">
+						<span class="fs7rem">￥</span><span class="alert-luckdraw-content-box-money"><%=data.coupon.price%></span>
+					</div>
+					<div class="alert-luckdraw-content-box-right col-65">
+						<p class="m0 fs7rem">
+							现金抵扣券
+						</p>
+						<p class="m0 fs7rem">
+							使用时间
+						</p>
+						<p class="m0 fs5rem">
+							<%=data.coupon.sday%> - <%=data.coupon.eday%>
+						</p>
+					</div>
+				</div>
+			<% } else if(data.type == 2) { %>
+				<p class="alert-luckdraw-content-title">恭喜啦</p>
+				<p class="alert-luckdraw-content-intro">您获得了 <%=data.coupon.shop_name%> <%=data.coupon.price%> 元优惠券</p>
+				<div class="alert-luckdraw-content-box row">
+					<div class="alert-luckdraw-content-box-left col-35">
+						<span class="fs7rem">￥</span><span class="alert-luckdraw-content-box-money"><%=data.coupon.price%></span>
+					</div>
+					<div class="alert-luckdraw-content-box-right col-65">
+						<p class="m0 fs7rem">
+							满 <%=data.coupon.min_price%> 减 <%=data.coupon.price%>
+						</p>
+						<p class="m0 fs7rem">
+							使用时间
+						</p>
+						<p class="m0 fs5rem">
+							<%=data.coupon.sday%> - <%=data.coupon.eday%>
+						</p>
+					</div>
+				</div>
+			<% } else if(data.type == 3) { %>
+				<p class="alert-luckdraw-content-title">恭喜啦</p>
+				<p class="alert-luckdraw-content-intro">您获得 <%=data.score%> 积分</p>
+				<div>
+					<img src="../Public/draw/images/score_pic.png">
+				</div>
+			<% } else if(data.type == 4) { %>
+				<p class="alert-luckdraw-content-title">很遗憾</p>
+				<p class="alert-luckdraw-content-intro">您未抽中</p>
+				<div>
+					<img src="../Public/draw/images/no-luck.png">
+				</div>
+			<% } %>
+		</div>
+		<div class="alert-luckdraw-footer">
+			<% if(data.url != '') { %>
+				<a href="<%= data.url %>">去使用 >></a>
+			<% } else { %>
+				<a onclick="reLuckdraw('<%= data.draw_id %>', '<%= data.position %>');" href="javascript:;">再来一次</a>
+			<% } %>
+		</div>
+	</div>
+</script>
+
+<!--使用唐宝购买次数-->
+<script type="text/html" id="tpl_luckdraw_buy">
+	<div class="alert-luckdraw">
+		<div class="alert-luckdraw-header">
+			<i onclick="closeAlertLuckdraw($(this));" class="icon iconfont icon-guanbi1"></i>
+		</div>
+		<div class="alert-luckdraw-content">
+			<p class="alert-luckdraw-content-title">机会已用完</p>
+			<p class="alert-luckdraw-content-intro">您确定要花费 <%= data.tangbao %> 个唐宝进行抽奖吗？</p>
+		</div>
+		<div class="alert-luckdraw-footer">
+			<a href="javascript:;" onclick="luckdrawBuy('<%= data.draw_id %>', '<%= data.position %>');">确定付款</a>
+		</div>
+	</div>
+</script>
+
+<!--中奖列表-->
+<script type="text/html" id="tpl_luckdraw_lists">
+	<% for(var i=0;i<data.length;i++) { %>
+		<div class="row no-gutter row-content">
+			<div class="col-25 text-center jianbian h70">
+				<p class="row-title-money" style="font-size: 1.3rem; margin-top: 0.3rem;">
+					<% if(data[i].type_id < 3) { %><span class="fs7rem">￥</span><%= data[i].intro.price %> <% } else { %> <%= data[i].intro.score %> <% } %>
+				</p>
+				<p class="rem07" style="margin-top: -0.5rem;">
+					<%= data[i].typeName %>
+				</p>
+			</div>
+			<div class="col-50 h70">
+				<% if(data[i].type_id < 3) { %>
+					<p class="text-center rem07">
+						<% if(data[i].intro.shop_name != '' && data[i].intro.shop_name != undefined) { %>
+							<%= data[i].intro.shop_name %>
+						<% } else { %>
+							&nbsp;
+						<% } %>
+					</p>
+					<p class="text-center rem06">
+						满 <%= data[i].intro.min_price %> 减 <%= data[i].intro.price %>
+					</p>
+					<p class="text-center row-time">
+						<%= data[i].intro.sday %> - <%= data[i].intro.eday %>
+					</p>
+				<% } %>
+			</div>
+			<div class="col-25 text-center pd05">
+				<% if(data[i].type_id < 3) { %>
+					<a href="<%= data[i].intro.url %>" class="button button-danger mt05 pd0">去消费</a>
+				<% } else { %>
+					<% if(data[i].status > 0 ) { %>
+						<a href="javascript:;" class="button disabled mt05 pd0">已发放</a>
+						<% } else { %>
+						<a href="javascript:;" onclick="receiveScore('<%= data[i].id %>', $(this));" class="button button-success mt05 pd0">领取</a>
+					<% } %>
+				<% } %>
+			</div>
+		</div>
+	<% } %>
+</script>
+
+<!--方圆消息列表-->
+<script type="text/html" id="tpl_im_list">
+	<% for(var i=0;i<data.length;i++) { %>
+		<li class="seller-message">
+			<div class="m-badge-delete delete-message" data-from_name="{:session('user.nick')}" data-to_name="<%= data[i].username%>">删除</div>
+			<a href="#" class="item-content" onclick="sellerMessageInfo({shop_id:'<%= data[i].shop_id%>',nick:'<%= data[i].username%>',type:'1'})">
+				<div class="item-media">
+					<img class="img-circle border-1px" src="<%= data[i].shop_logo%>" width="44">
+					<!-- 已读未读 1为未读 -->
+					<% if(data[i].status == 1){ %>
+						<span class="m-badge"></span>
+					<% }else{ %>
+						<span></span>
+					<% }%>
+				</div>
+				
+				<div class="item-inner">
+					<div class="item-title-row">
+						<div class="item-title">
+							<%= data[i].username%>
+						</div>
+					</div>
+					<div class="item-subtitle text-gray">
+						<%= data[i].content.content%>
+						
+					</div>
+				</div>
+				
+			</a>
+		</li>
+	<% } %>
+</script>

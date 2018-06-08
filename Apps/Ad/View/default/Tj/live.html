@@ -1,0 +1,131 @@
+<include file="Public:header" />
+<div class="container">
+    <css href="__PUBLIC__/Jquery/DateTimePicker/jquery.datetimepicker.css" />
+    <div class="mt30 mb20 bg_white">
+        <div class="layui-tab layui-tab-card">
+            <ul class="layui-tab-title">
+                <li <if condition='ACTION_NAME EQ "index"'>class="layui-this"</if>><a href="{:U('Tj/index')}">总揽</a></li>
+                <li <if condition='ACTION_NAME EQ "jcdata"'>class="layui-this"</if>><a href="{:U('Tj/jcdata')}">基础数据</a></li>
+                <li <if condition='ACTION_NAME EQ "live"'>class="layui-this"</if>><a href="{:U('Tj/live')}">实时访问</a></li>              
+            </ul>
+            <div class="layui-tab-content p20">
+            	<div class="fl fs14 mt30 text-gray">访客从广告页进入后的访问路径</div>
+            	<div class="fr mt20">
+            		<form action="{:U('Tj/live')}" method="get">
+						<div class="layui-inline">
+							<label class="layui-form-label fs14 w100">查看日期：</label>
+							<div class="layui-input-inline">
+								<input type="text" name="date" id="date" value="{:I('get.date')}" autocomplete="off" class="layui-input datepicker">
+							</div>
+					  	</div>
+					  	<div class="layui-inline">
+							<label class="layui-form-label w100 fs14">查看终端：</label>
+							<div class="layui-input-inline">
+								<php>$device=I('get.device','0');</php>
+								<button class="layui-btn <eq name='device' value='0'>layui-btn-warm<else/>layui-btn-primary</eq> btnc" type="button" onclick="setDvice('0',this)">全部</button>
+								<button class="layui-btn <eq name='device' value='pc'>layui-btn-warm<else/>layui-btn-primary</eq> btnc" type="button" onclick="setDvice('pc',this)">PC</button>
+								<button class="layui-btn <eq name='device' value='wap'>layui-btn-warm<else/>layui-btn-primary</eq> btnc" type="button" onclick="setDvice('wap',this)">移动端</button>
+								<input type="hidden" name="device" id="device" value="{$device}"/>
+							</div>
+					  	</div>
+					  	<div class="layui-inline">
+					  		<label class="layui-form-label w100 fs14">&nbsp;</label>
+							<div class="layui-input-inline">
+								<button class="layui-btn layui-btn-primary" type="submit">开始查询</button>
+							</div>
+					  	</div>
+				  	</form>
+				</div>
+				<div class="clearfix"></div>
+                <!-- 内容 -->
+                
+                <div class="mt20">
+					<table class="layui-table bg-white">
+						<thead>
+							<tr style="background-color: white;">
+								<th class="text-gray h60" width="500" style="border: 0;font-size: 16px;line-height: 38px;" colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;访问广告</th>
+								<th class="text-center text-gray" style="border: 0;font-size: 16px;line-height: 38px;">访问用户</th>
+								<th class="text-center text-gray" style="border: 0;font-size: 16px;line-height: 38px;">访问IP</th>
+								<th class="text-center text-gray" style="border: 0;font-size: 16px;line-height: 38px;">访问时间</th>
+								<th class="text-center text-gray" style="border: 0;font-size: 16px;line-height: 38px;">&nbsp;</th>
+							</tr>
+						</thead>
+						<tbody>
+							<volist name="data.list" id="vo" key="key">
+								<tr>
+					        		<td style="border: 0;font-size: 16px;text-align: right;" width="110"><a href="{$vo['images']}" class="image-zoom"><img src="{:myurl($vo['images'],90)}"/></a></td>
+				        			<td style="border: 0;font-size: 16px;">
+					        			<div class="fs14">广告标题：{$vo.name}</div>
+		                                <div class="fs14">推广类型：
+		                                	<switch name="vo.type">
+		                                	 <case value="0">商品</case>
+		                                	 <case value="1">店铺</case>
+		                                	 <case value="2">站外链接</case>
+		                                	</switch>
+		                                </div>
+		                                <div class="fs14">位置：位置{$vo['sort']+1}</div>
+					        		</td>
+									<td class="text-center h60" style="border: 0;font-size: 16px;">{$vo.nick}</td>
+									<td class="text-center" style="border: 0;font-size: 16px;"><notempty name='vo.city'><span style="line-height: 2;">{$vo.province} {$vo.city}</span><br/></notempty>{$vo.ip}</td>
+									<td class="text-center" style="border: 0;font-size: 16px;">{$vo.time}</td>
+									<td class="text-center" style="border: 0;font-size: 16px;">
+										<a href="javascript:;" class="" onclick="showDi({$key})" style="color:dodgerblue">访问路径&nbsp;<i class="layui-icon" id="ico{$key}">&#xe619;</i></a>
+									</td>
+					        	</tr>
+					        	<tr id="showDi{$key}" style="display: none;">
+									<td colspan="6" style="border: 0;">
+										<table class="layui-table bg-white">
+											<foreach name="vo['list']" item="item">
+												<tr>
+													<td class="text-right clearfix" style="border: 0;font-size: 14px;">
+														<a href="{$item.images}" title="大图" class="image-zoom">
+															<img src="{$item.images}" style="vertical-align: top;"/>
+														</a>
+													</td>
+													<td style="border: 0;font-size: 14px;width:270px;">
+														{$item.goods_name}
+													</td>
+													<td class="text-center" style="border: 0;font-size: 16px;width: 311px;">{$item.type}</td>
+													<td class="" style="border: 0;font-size: 16px;">{$item.time}</td>
+												</tr>
+											</foreach>
+										</table>
+									</td>
+								</tr>
+							</volist>
+						</tbody>
+					</table>
+					<div class="pd10">
+	                   <div class="row text-center">
+	                     	<div class="col-xs-10 text-right">
+	                         	{$data.page.page}
+	                     	</div>
+	                		<div class="col-xs-2 text-center mt25"> {$data.page.total}</div>
+	                	</div>
+	                </div>
+				</div>
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+<script src="__PUBLIC__/Jquery/DateTimePicker/jquery.datetimepicker.js"></script>
+<script>
+	function setDvice(d,o){
+		$("#device").val(d);
+		$(".btnc").removeClass("layui-btn-warm");
+		$(".btnc").addClass("layui-btn-primary");
+		$(o).removeClass("layui-btn-primary");
+		$(o).addClass("layui-btn-warm");
+	}
+	function showDi(n){
+		if($("#showDi"+n).is(":hidden")){
+			$("#ico"+n).html("&#xe61a;");
+		}else{
+			$("#ico"+n).html("&#xe619;");
+		}
+		$("#showDi"+n).toggle("slow");
+	}
+</script>
+<include file="Public:footer" />

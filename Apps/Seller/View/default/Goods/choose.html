@@ -1,0 +1,159 @@
+<link rel="stylesheet" type="text/css" href="/Public/CSS/flatdream/js/jquery.icheck/skins/square/_all.css">
+<div class="pd10">
+	<!-- <div class="header">							
+		<h3><a href="javascript:;" data-url="{:U('/opens/addCheckInfo', array('type' => 'brand'))}" data-title="添加品牌" class="btn btn-info opreating btn-brandAdd disabled">添加品牌</a></h3>
+	</div> -->
+	<div class="over form-horizontal">
+		<div class="form-group">
+			<div class="col-xs-3">
+		        <input type="text" value="{$q}" id="search-q" maxlength="15" class="form-control" placeholder="搜索商品，请输入商品关键字">
+		    </div>						
+			<div class="col-xs-2">
+				<button type="button" class="btn btn-primary btn-trans btn-rad" onclick="searchQ()">点击搜索</button>
+			</div>
+		</div>
+	</div>
+	<empty name="data.code">
+		<table class="table table-bordered table-advance table-hover mb30">
+			<tbody>
+				<tr>
+					<th class="col-xs-1 text-center" style="vertical-align: middle;">
+						<input type="checkbox" class="i-red-square checkedAll" id="checkAll"><label style="padding:0 5px;" id="labelCheckAll" for="checkAll">全选</label>
+					</th>
+					<th class="col-xs-2 text-center" style="vertical-align: middle;">商品图片</th>
+					<th class="col-xs-5 text-center" style="vertical-align: middle;">商品名称</th>
+					<th class="col-xs-1 text-center" style="vertical-align: middle;">商品价格</th>
+					<th class="col-xs-1 text-center" style="vertical-align: middle;">奖励积分</th>
+					<th class="col-xs-1 text-center" style="vertical-align: middle;">库存数量</th>
+				</tr>
+				<volist name="data.list" id="vo">
+					<tr class="countBrand">
+						<td class="text-center" style="vertical-align: middle;">
+							<input type="checkbox" <in name="vo.id" value="$chooseIds">checked</in> class="i-red-square" name="ids[]" value="{$vo.id}">
+						</td>
+						<td class="text-center img">
+							<a class="image-zoom" href="javascript:;" onclick="bigImage($(this))" data-url="{$vo['images']}" title="大图">
+								<img src="{$vo['images']}" width="60" />
+							</a>
+						</td>
+						<td style="vertical-align: middle;" class="text-center col-xs-1">{$vo.goods_name}</td>
+						<td style="vertical-align: middle;" class="text-center col-xs-1">
+							{$vo.price}
+						</td>
+						<td style="vertical-align: middle;" class="text-center col-xs-1">{$vo['score_ratio'] * 100}%</td>
+						<td style="vertical-align: middle;" class="text-center col-xs-1">{$vo.num}</td>
+					</tr>
+				</volist>
+			</tbody>
+		</table>
+		<div class="text-center">
+			{:paresePageActionAjax($data['page']['page'], 'href="', 'href="javascript:;" onclick="gonextpage($(this))" data-url="')}
+		</div>
+		<div class="text-center">
+			<a href="javascript:;" class="btn btn-primary" id="submitCheckbox">确定选择</a>
+		</div>
+	<else />
+		{:W('Common/Builder/nors', array('param' => array('text' => $data['msg'])))}
+	</empty>
+</div>
+<script>
+iCheckClass();
+$(document).ready(function() {
+	var typeName	=	'{$_GET["type"]}';
+	var chooseGoods	=	$("input[name='"+typeName+"']").val();
+	var chooseGoods2= 	'';
+	var cnt			=	0;
+	var cnt2		= 	0;
+	var maxNum		=	parseInt($(".maxnum").html());
+	if(chooseGoods != '') {
+		chooseGoods	=	trim(chooseGoods);
+		chooseGoods	=	chooseGoods.split(',');
+		cnt2 = cnt			=	chooseGoods.length;
+		for(j = 0; j < cnt; j++) {
+			$('input[name="ids[]"]').each(function() {
+				if($(this).val() == chooseGoods[j]) {
+					$(this).parent().addClass('checked');
+					$(this).prop('checked', true);
+				}
+			})
+		}
+		chooseGoods	+=	',';
+		chooseGoods2 = chooseGoods;
+	}
+	$("#labelCheckAll").click(function() {
+		var checkAll	=	$("#checkAll").is(":checked");
+		if(checkAll == false) {
+			$("input[name='ids[]']").prop('checked', false);
+			$('table .icheckbox_square-red').removeClass('checked');
+		} else {
+			$("input[name='ids[]']").prop('checked', true);
+			$('table .icheckbox_square-red').addClass('checked');
+		}
+	})
+	$("th .icheckbox_square-red ins").click(function() {
+		var checkAll	=	$("#checkAll").is(":checked");
+		if(checkAll == false) {
+			$("input[name='ids[]']").prop('checked', false);
+			$('table .icheckbox_square-red').removeClass('checked');
+		} else {
+			$("input[name='ids[]']").prop('checked', true);
+			$('table .icheckbox_square-red').addClass('checked');
+		}
+	})
+	$("#submitCheckbox").click(function() {
+		var html	=	'';
+		var im	=	'';
+		cnt=cnt2;
+		chooseGoods=chooseGoods2;
+		$("input[name='ids[]']:checked").unbind().each(function() {
+			if($('[data-id="'+$(this).val()+'"]').size()<=0){
+				chooseGoods	+=	$(this).val() + ',';
+				var id	=	$(this).val();
+				var img	=	$(this).closest('tr').find('img').attr('src');
+				im		+=	img + ',';
+				html	+=	'<li data-name="'+typeName+'" data-id="'+id+'" data-path="'+img+'" class="text-center"> '+
+								'<div class="li-img-box">' +
+									'<a href="javascript:;" onclick="bigImage($(this))" data-url="'+img+'" data-title="大图" class="image-zoom" title="大图">' +
+										'<img src="'+img+'">' +
+									'</a>' +
+								'</div>' + 
+								'<div class="delete-images" onclick="reMoveGoods($(this));">' +
+									'<div class="selected-icon">' +
+										'<i class="fa fa-times"></i>' +
+									'</div>'+
+								'</div>' +
+							'</li>';
+				cnt++;
+			}
+		})
+		if(chooseGoods == '') {
+			talert({status:0,msg:'请至少选择一款商品！'});
+			return false;
+		}
+		if(cnt > maxNum) {
+			if(cnt2 !=0){
+				talert({status:0,msg:'最多只能选择'+maxNum+'款商品！已选择的商品和这次选择的商品已经超过'+maxNum+'款！'});
+			}else{
+				talert({status:0,msg:'最多只能选择'+maxNum+'款商品！'});
+			}
+			return false;
+		}
+		$("#images-list-" + typeName).append(html);
+		$("input[name='"+typeName+"']").val(chooseGoods);
+		$(".modal").modal('hide');
+	})
+})
+function gonextpage(obj) {
+	var url = obj.data('url');
+	$(".modal-body").load(url);
+}
+function trim(str) {
+	var nStr	=	str.replace(/(\s*),$/,'');
+	return nStr;
+}
+function searchQ(){
+	var q = $('#search-q').val();
+	var url = '/goods/choose/q/' + q + '/type/{$_GET["type"]}.html';
+	$('.modal-body').load(url);
+}
+</script>

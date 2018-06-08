@@ -1,0 +1,199 @@
+<extend name="Seller@Public:base" />
+<block name="body">
+    <div class="centent_body">
+        <!-- to do your html codeing -->
+        <div class="revision_bg">
+            <div class="container ptb_size_lg clearfix">
+                <!-- 左侧导航 -->
+                <include file="Public:sideNav" />
+                <!-- 左侧导航结束 -->
+
+                <div class="revisionRight pd15" style="width: 1020px"><!-- 右侧内容 -->
+                    <!--<div class="clearfix revisionOrderTab" data-url="">-->
+                        <!--<a class="orderOption active" href="javascript:;">订单评价</a>-->
+                    <!--</div>-->
+                    
+                    <div class="row">
+                    	<form action="__URL__/index" method="get">
+	                    	<div class="col-sm-12" style="border-right: solid 1px #F8F8F8">
+	                    		<h2>当前已违规扣分：<span style="color: red;">{$point|default='0'}</span></h2>
+	                    		<between name="point" value="0,10">
+	                    			<div class="form-tips pl10">您当前信用记录良好，请继续保持</div>
+	                    		</between>
+	                    		<between name="point" value="11,12">
+	                    			<div class="form-tips pl10" style="color: #FF6666;">您当前信用记录不容乐观，请认真遵守商城相关规定</div>
+	                    		</between>
+	                    		<between name="point" value="12,23">
+	                    			<div class="form-tips pl10" style="color: #FF6666;">您当前信用记录较差，将被屏蔽店铺所有商品的展示三天，请认真遵守商城相关规定</div>
+	                    		</between>
+	                    		<between name="point" value="24,35">
+	                    			<div class="form-tips pl10" style="color: #FF6666;">您当前信用记录差，将被暂停店铺营业三个月，请认真遵守商城相关规定</div>
+	                    		</between>
+	                    		<between name="point" value="36,48">
+	                    			<div class="form-tips pl10" style="color: #FF6666;">您当前信用记录差，将被关店，该帐号一年内不得开店，请认真遵守商城相关规定</div>
+	                    		</between>
+	                    		<hr/>
+	                    	</div>
+	                        <div class="col-sm-5" style="border-right: solid 1px #F8F8F8">
+	                            <div class="form-group">
+	                            	<label class="control-label label-block" for="num">违规类型</label>
+	                            	<select id="type" name="rules_type" class="form-control ">
+	                            		<option value="">请选择违规类型</option>
+	                            		<option value="1" <eq name="parm.rules_type" value="1">selected="selected"</eq>>商品违规</option>
+	                            		<option value="2" <eq name="parm.rules_type" value="2">selected="selected"</eq>>交易违规</option>
+	                            		<option value="3" <eq name="parm.rules_type" value="3">selected="selected"</eq>>其他违规</option>
+	                            	</select>
+	                            </div>
+	                        </div>
+	                        <div class="col-sm-7" style="border-right: solid 1px #F8F8F8">
+	                            <div class="form-group">
+	                            	<label class="control-label label-block" for="num">违规行为</label>
+	                            	<select id="wrongdoing" name="wrongdoing" class="form-control ">
+	                            		<option value="">请选择违规行为</option>
+	                            		<volist name="wd" id="vo">
+	                            			<option value="{$vo.id}" <eq name="parm.wrongdoing" value="$vo.id">selected="selected"</eq>>{$vo.reason}</option>
+	                            		</volist>
+	                            	</select>
+	                            </div>
+	                        </div>
+	                        <div class="col-sm-5" style="border-right: solid 1px #F8F8F8">
+	                        	<label class="control-label label-block" for="num">发起时间</label>
+	                            <div class="input-group date datetime" data-min-view="2" data-date-format="yyyy-mm-dd" style="">
+	                                <input name="stime" data-filter="gte" class="form-control form-filter" readonly="stiem" id="stime" type="text" placeholder="开始时间" value="{$parm.stime}"/>
+	                                <span class="input-group-addon btn default">
+	                                    <span class="glyphicon glyphicon-th fa fa-calendar"></span>
+	                                </span>
+	                            </div>
+	                        </div>
+	                        <div class="col-sm-5" style="border-right: solid 1px #F8F8F8">
+	                           	<label class="control-label label-block" for="num">结束时间</label>
+	                           	<div class="input-group date datetime" data-min-view="2" data-date-format="yyyy-mm-dd" style="">
+	                                <input name="etime" data-filter="gte" class="form-control form-filter" readonly="etime" id="etime" type="text" placeholder="结束时间" value="{$parm.etime}"/>
+	                                <span class="input-group-addon btn default">
+	                                    <span class="glyphicon glyphicon-th fa fa-calendar"></span>
+	                                </span>
+	                            </div>
+	                        </div>
+	                        <div class="col-sm-2" style="border-right: solid 1px #F8F8F8">
+	                        	<label class="control-label label-block" for="num">&nbsp;</label>
+	                        	<div class="input-group">
+	                        		<button class="btn btn-primary" type="submit">搜索</button>
+	                        	</div>
+	                        </div>
+	                        <input type="hidden" name="status" value="{$parm.status}"/>
+	                        <div class="clearfix revisionOrderTab sid-active col-sm-12">
+	                        	<h4><a href="__URL__/index/status/0" class="orderOption <eq name='parm.status' value='0'>active</eq>">待申诉<eq name="is_s" value="2"><span style="font-size: 16px;color: red;">({$total[0]|default='0'})</span></eq></a></h4>
+	                        	<h4><a href="__URL__/index/status/1" class="orderOption <eq name='parm.status' value='1'>active</eq>">申诉中<eq name="is_s" value="2"><span style="font-size: 16px;color: red;">({$total[1]|default='0'})</span></eq></a></h4>
+	                        	<h4><a href="__URL__/index/status/2" class="orderOption <eq name='parm.status' value='2'>active</eq>">处罚生效<eq name="is_s" value="2"><span style="font-size: 16px;color: red;">({$total[2]|default='0'})</span></eq></a></h4>
+	                        	<h4><a href="__URL__/index/status/3" class="orderOption <eq name='parm.status' value='3'>active</eq>">处罚取消<eq name="is_s" value="2"><span style="font-size: 16px;color: red;">({$total[3]|default='0'})</span></eq></a></h4>
+	                        </div>
+                        </form>
+                        <div class="col-sm-12">
+                        	<eq name="parm.status" value="0">
+                        		<div class="alert alert-danger" role="alert" style="padding: 10px;margin-bottom: 10px;">如对违规记录有任何异议可在三天内发起申诉，如过期未发起申诉违规行为将被判定，届时处罚将生效！</div>
+                        	</eq>
+                        	<table class="no-border mb20 bg_f1">
+		                        <thead class="no-border-y">
+			                        <tr>
+				                        <td width="8%">违规类型</td>
+				                        
+				                        <td width="15%">违规行为</td>
+										<td width="8%">严重程度</td>
+				                        <td width="15%">违规情节</td>
+				                        <td width="8%">扣分分值</td>
+				                        <td width="20%">处理方式</td>
+				                        <td width="8%">状态</td>
+				                        <td width="10%">发起时间</td>
+				                        <td width="">操作</td>
+			                        </tr>
+			                        <tr><td colspan="9" style="background-color: white;"></td></tr>
+		                        </thead>
+		                        <tbody style="background-color: white;">
+		                        	<empty name="list.list">
+		                        		<tr><td colspan="9" style="">{:W('Common/Builder/nors', array('param' => array('text' => '没找到数据')))}</td></tr>
+		                        	</empty>
+		                        	<volist name="list.list" id="vo">
+		                        		<tr style="border: solid 2px #F8F8F8">
+					                        <td>{$vo.rules_type_name}</td>
+					                        <td>{$vo.rules.reason}</td>
+											<td>{$vo.type_name}</td>
+					                        <td>
+												<div style="max-height:100px;overflow:auto;" alt="{$vo.plot}">{$vo.plot}</div>
+											</td>
+					                        <td>{$vo.point}</td>
+					                        <td>
+												<div style="max-height:100px;overflow:auto;">{$vo.punishment}</div>
+											</td>
+					                        <td>{$vo.status_name}</td>
+					                        <td>{$vo.atime}</td>
+					                        <td class="text-center">
+												<switch name="vo.status" >
+												<case value="0">
+													<div>
+						                        		<a href="__URL__/su/id/{$vo.id}.html" class="btn btn-primary btn-sm">&nbsp;申诉&nbsp;</a>
+						                        	</div>
+												</case>
+												<case value="1">
+													<div>
+						                        		<a href="__URL__/su/id/{$vo.id}.html" class="btn btn-primary btn-sm">&nbsp;申诉补充&nbsp;</a>
+						                        	</div>
+												</case>
+												</switch>
+					                        	<div style="margin-top: 5px;">
+					                        		<a href="__URL__/info/id/{$vo.id}.html" target="_blank" class="btn-link">查看详情</a>
+					                        	</div>
+					                        </td>
+				                        </tr>
+		                        	</volist>
+		                        </tbody>
+		                    </table>
+		                    <div class="page-box col-xs-12 text-center">
+	                            {$list.page.page}
+	                        </div>
+                        </div>
+                    </div>
+					
+                </div>
+
+            </div>
+        </div>
+        <!-- my codeing over -_-   -->
+
+    </div>
+</block>
+
+<block name="css">
+	<script src="__FLATDREAM__/js/bootstrap.datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="__FLATDREAM__/js/bootstrap.datetimepicker/js/bootstrap-datetimepicker.zh-CN.js"></script>
+    <link rel="stylesheet" href="__FLATDREAM__/js/bootstrap.datetimepicker/css/bootstrap-datetimepicker.css" />
+</block>
+
+<block name="script">
+	<script>
+		$(function(){
+			$(".datetime").datetimepicker({
+                format : 'yyyy-mm-dd'
+            });
+            $('.datetime').datetimepicker({
+                language:  'zh-CN',
+                weekStart : 1,
+                todayBtn : 1,
+                autoclose : 1,
+                todayHighlight : 1,
+                startView : 2,
+                forceParse : 0,
+                showMeridian : 1
+            });
+			$('#type').change(function(index){
+				var id=$(this).val();
+				$.getJSON('__URL__/get_wrongdoing',{id:id},function(data){
+					var html='<option value="">请选择违规行为</option>';
+					for(var i in data){
+						html+='<option value="'+data[i]['id']+'" data-remark="'+data[i]['remark']+'">'+data[i]['reason']+'</option>';
+					}
+					$('#wrongdoing').html(html);
+				});
+			});
+		});
+	</script>
+</block>

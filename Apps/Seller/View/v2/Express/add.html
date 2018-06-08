@@ -1,0 +1,421 @@
+<extend name="Seller@Public:base" />
+<block name="body">
+    <div class="centent_body">
+        <!-- to do your html codeing -->
+        <div class="revision_bg">
+            <div class="container ptb_size_lg clearfix">
+                <!-- 左侧导航 -->
+                <include file="Public:sideNav" />
+                <!-- 左侧导航结束 -->
+
+                <div class="revisionRight pd15" style="width: 1020px"><!-- 右侧内容 -->
+                    <div class="clearfix revisionOrderTab" data-url="">
+                        <a class="orderOption active" href="javascript:;">创建运费模板</a>
+                    </div>
+                    <div class="bg-warning pd10 letter-spacing1">
+                        <i class="fa fa-exclamation-circle fs16 fl text_yellow"></i>
+                        <p class="ml20 mb0">小提示，您当前正在创建<strong class="text_yellow"> 运费模板 </strong>, 请填如实填写下列表单。</p>
+                    </div>
+                    <!-- 表单 -->
+                    <div class="">
+                        <div class=""><h4>运费模板基本信息 </h4></div>
+                        <hr style="margin:10px 0" />
+                        <form class="form-horizontal vform" id="form_express_add" data-url="__URL__/add_save" onsubmit="return form_express()">
+
+                            {:W('Common/Builder/buildform',array(array(
+                            'field'		=>array(
+
+                            array(
+                            'formtype'		=>'text',
+                            'label'			=>'模板名称',
+                            'name'			=>'tpl_name',
+                            'is_need'		=>true,
+                            'attr'			=>'maxlength="30"',
+                            ),
+                            array(
+                            'formtype'		=>'text',
+                            'label'			=>'宝贝地址',
+                            'name'			=>'select_city',
+                            'is_need'		=>true,
+                            'attr'			=>'readonly',
+                            'placeholder'	=>'省 - 市 - 区 - 街道',
+                            'right'			=>'<span class="input-group-addon" style="cursor: pointer;">请选择城市 <i class="fa fa-angle-down"></i></span>',
+                            ),
+                            array(
+                            'formtype'		=>'select',
+                            'label'			=>'发货时间',
+                            'name'			=>'send_time',
+                            'field'			=>[0,1],
+                            'data' 			=>[
+                            [4,'4小时内'],
+                            [8,'8小时内'],
+                            [12,'12小时内'],
+                            [16,'16小时内'],
+                            [20,'20小时内'],
+                            [24,'1天内'],
+                            [48,'2天内'],
+                            ],
+                            'tips'			=>'如实设定宝贝的发货时间，不仅可避免发货咨询和纠纷，还能促进成交！',
+                            ),
+                            array(
+                            'formtype'		=>'radio',
+                            'label'			=>'是否包邮',
+                            'name'			=>'is_free',
+                            'is_need'		=>true,
+                            'field'			=>[0,1],
+                            'data'			=>[
+                            [0,'自定义运费'],
+                            [1,'卖家承担运费']
+                            ],
+
+                            ),
+
+                            array(
+                            'formtype'		=>'radio',
+                            'label'			=>'计价方式',
+                            'name'			=>'unit',
+                            'data'			=>array(array(1,'按件数'),array(2,'按重量')),
+                            'field'			=>array(0,1),
+                            'value'			=>1,
+                            'is_need'		=>true,
+                            ),
+
+                            array(
+                            'formtype'		=>'textarea',
+                            'label'			=>'模板备注',
+                            'name'			=>'content',
+                            'attr'			=>'maxlength="100" rows="3"',
+                            ),
+                            array(
+                            'formtype'		=>'hidden',
+                            'name'			=>'province',
+                            ),
+                            array(
+                            'formtype'		=>'hidden',
+                            'name'			=>'city',
+                            ),
+                            array(
+                            'formtype'		=>'hidden',
+                            'name'			=>'district',
+                            ),
+                            array(
+                            'formtype'		=>'hidden',
+                            'name'			=>'town',
+                            ),
+                            ),
+                            ),$rs))}
+                            <div id="show_yunfei">
+                                <div class=""><h4>自定义运费设置 <small>除指定地区外，其余地区的运费采用“默认运费”（卖家承担运费时以下设置无效）</small></h4></div>
+                                <hr style="margin:10px 0" />
+
+                                {:W('Common/Builder/buildform',array(array(
+                                'field'		=>array(
+
+                                array(
+                                'formtype'		=>'checkbox',
+                                'label'			=>'快递',
+                                'name'			=>'is_express',
+                                'field'			=>array(0,1),
+                                'data'			=>array(1,'启用'),
+                                'col'			=>array('col-xs-2','col-xs-9'),
+                                ),
+
+                                ),
+                                ),$rs))}
+                                <div class="row">
+                                    <div class="col-xs-2">
+                                    </div>
+                                    <div class="col-xs-9 express">
+                                        <div class="row md10">
+                                            <div class="col-xs-4">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">默认运费</span>
+                                                    <input type="text" class="form-control" id="express_default_first_unit" name="express_default_first_unit" value="1">
+                                                    <span class="input-group-addon"><span class="unit">件</span>内</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-2 pl0">
+                                                <div class="input-group">
+                                                    <input onBlur="checkExpressMax(this)" type="text" class="form-control" id="express_default_first_price" name="express_default_first_price" value="10">
+                                                    <span class="input-group-addon">元</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-3 pl0">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">每增加</span>
+                                                    <input type="text" class="form-control" id="express_default_next_unit" name="express_default_next_unit" value="1">
+                                                    <span class="input-group-addon"><span class="unit">件</span></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-3 pl0">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">增加运费</span>
+                                                    <input onBlur="checkExpressMax(this)" type="text" class="form-control" id="express_default_next_price" name="express_default_next_price" value="8">
+                                                    <span class="input-group-addon">元</span>
+                                                </div>
+                                            </div>
+                                        </div><!--/row-->
+                                        <div class="express_area">
+                                        </div>
+                                        <div class="btn btn-sm btn-primary btn-trans btn-rad" onclick="area_add($(this))" data-tag="express"><i class="fa fa-plus"></i> 为指定地区添加运费</div>
+                                    </div>
+                                </div>
+
+                                <hr />
+                                {:W('Common/Builder/buildform',array(array(
+                                'field'		=>array(
+
+                                array(
+                                'formtype'		=>'checkbox',
+                                'label'			=>'EMS',
+                                'name'			=>'is_ems',
+                                'field'			=>array(0,1),
+                                'data'			=>array(1,'启用'),
+                                'col'			=>array('col-xs-2','col-xs-9'),
+                                ),
+
+                                ),
+                                ),$rs))}
+                                <div class="row">
+                                    <div class="col-xs-2">
+                                    </div>
+                                    <div class="col-xs-9 ems">
+                                        <div class="row md10">
+                                            <div class="col-xs-4">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">默认运费</span>
+                                                    <input type="text" class="form-control" id="ems_default_first_unit" name="ems_default_first_unit" value="1">
+                                                    <span class="input-group-addon"><span class="unit">件</span>内</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-2 pl0">
+                                                <div class="input-group">
+                                                    <input onBlur="checkExpressMax(this)" type="text" class="form-control" id="ems_default_first_price" name="ems_default_first_price" value="21">
+                                                    <span class="input-group-addon">元</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-3 pl0">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">每增加</span>
+                                                    <input type="text" class="form-control" id="ems_default_next_unit" name="ems_default_next_unit" value="1">
+                                                    <span class="input-group-addon"><span class="unit">件</span></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-3 pl0">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">增加运费</span>
+                                                    <input onBlur="checkExpressMax(this)" type="text" class="form-control" id="ems_default_next_price" name="ems_default_next_price" value="14">
+                                                    <span class="input-group-addon">元</span>
+                                                </div>
+                                            </div>
+                                        </div><!--/row-->
+                                        <div class="express_area">
+                                        </div>
+                                        <div class="btn btn-sm btn-primary btn-trans btn-rad" onclick="area_add($(this))" data-tag="ems"><i class="fa fa-plus"></i> 为指定地区添加运费</div>
+                                    </div>
+                                </div>
+
+                                <div class="vaction hide"></div>
+                            </div>
+                            <div class="p10 text-center mt20">
+                                <button type="submit" class="btn btn-lg btn-rad btn-trans btn-primary">创建运费模板</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <!-- my codeing over -_-   -->
+
+    </div>
+</block>
+
+<block name="css">
+    <link rel="stylesheet" type="text/css" href="/Public/new_design/flatdream/js/jquery.icheck/skins/all.css">
+</block>
+
+<block name="script">
+    <script type="text/javascript" src="/Public/new_design/flatdream/js/jquery.icheck/icheck.js"></script>
+    <!-- to do your javascript codeing -->
+    <script>
+        $(document).ready(function(){
+            $('input[name="unit"]').on('ifChecked', function(event){
+                var unit=$('input[name="unit"]:checked').val();
+                if(unit==1) $('.unit').html('件');
+                else $('.unit').html('kg');
+            });
+
+            $('.f-select_city .col-xs-7').append('<div class="city-box"><div class="city-load"></div><div class="clearfix"></div></div>');
+
+            $('.f-select_city .input-group').click(function(){
+                $('.city-load').slideToggle();
+                if($('.city-load').html()=='') loadurl({tag:'.city-load',url:'__URL__/city'});
+            });
+            // 是否包邮显示隐藏
+            $('input[name="is_free"]').on('ifChecked', function(){
+                var is_free = $(this).val();
+                if(is_free == 1){
+                    $('#show_yunfei').hide();
+                    $('.f-unit').hide();
+                }else if(is_free == 0){
+                    $('#show_yunfei').show();
+                    $('.f-unit').show();
+                }
+            });
+
+        });
+
+        function form_express(){
+            var data=getFormJson('#form_express_add');
+            if(data.tpl_name==''){
+                talert({msg:'请输入模板名称'});
+                $('#tpl_name').focus();
+                return false;
+            }
+
+            if(data.select_city==''){
+                talert({msg:'请选择宝贝所在地'});
+                $('#tpl_name').focus();
+                return false;
+            }
+
+            if(data.is_free==0){
+                if(data.is_ems==undefined && data.is_express==undefined){
+                    talert({msg:'选择自定义运费时，快递或EMS至少需启用一项'});
+                    return false;
+                }
+            }
+
+            if(data.is_express==1){
+                if(data.express_default_first_unit==''){
+                    talert({msg:'请设置好快递默认运费'});
+                    $('#express_default_first_unit').focus();
+                    return false;
+                }
+
+                if(data.express_default_first_price==''){
+                    talert({msg:'请设置好快递默认运费'});
+                    $('#express_default_first_price').focus();
+                    return false;
+                }
+
+                if(data.express_default_next_unit==''){
+                    talert({msg:'请设置好快递默认运费'});
+                    $('#express_default_next_unit').focus();
+                    return false;
+                }
+
+                if(data.express_default_next_price==''){
+                    talert({msg:'请设置好快递默认运费'});
+                    $('#express_default_next_price').focus();
+                    return false;
+                }
+            }
+
+            if(data.is_ems==1){
+                if(data.ems_default_first_unit==''){
+                    talert({msg:'请设置好EMS默认运费'});
+                    $('#ems_default_first_unit').focus();
+                    return false;
+                }
+
+                if(data.ems_default_first_price==''){
+                    talert({msg:'请设置好EMS默认运费'});
+                    $('#ems_default_first_price').focus();
+                    return false;
+                }
+
+                if(data.ems_default_next_unit==''){
+                    talert({msg:'请设置好EMS默认运费'});
+                    $('#ems_default_next_unit').focus();
+                    return false;
+                }
+
+                if(data.ems_default_next_price==''){
+                    talert({msg:'请设置好EMS默认运费'});
+                    $('#ems_default_next_price').focus();
+                    return false;
+                }
+            }
+
+            ajax_post_form({
+                formid:'#form_express_add',
+            },function(ret){
+                if(ret.code==1){
+                    location.href='__URL__/';
+                }else{
+                    talert(ret);
+                }
+            });
+
+            return false;
+        }
+
+        function area_add(obj){
+            var d=obj.data();
+            $('.vaction').html(d.tag);
+
+            var unit=$('input[name="unit"]:checked').val();
+
+            //return false;
+
+            vmodal({
+                title:'为指定地区添加运费',
+                url:'__URL__/area_add/unit/'+unit,
+                width:'1000px',
+            });
+        }
+
+        function area_edit(obj){
+            var d=obj.data();
+            $('.vaction').html(d.type);
+
+            var unit=$('input[name="unit"]:checked').val();
+
+            var index=obj.closest('.express_area .box').index();
+
+            vmodal({
+                title:'修改指定地区运费',
+                url:'__URL__/area_edit/unit/'+unit+'/index/'+index,
+                width:'1000px',
+            });
+
+        }
+
+        function area_delete(obj){
+            var obj;
+            vmodal({
+                title:'删除',
+                msg:'<h4>真的要删除该运费设置吗？</h4>',
+                class:'text-center',
+                confirm:1,
+                width:'650px',
+            },function(){
+                $('.modal-ok').click(function(){
+                    obj.closest('.box').remove();
+                    $('#ajax-modal').modal('hide');
+                });
+            });
+
+        }
+
+        function checkExpressMax(th){
+            var value = $(th).val();
+            if(isNaN(value) || value == ''){
+                $(th).val('');
+                return false;
+            }
+            var price = parseFloat(value);
+            if(price >= 100){
+                $(th).val(99.99);
+            }else if(price < 0){
+                $(th).val('');
+            }else{
+                $(th).val(price);
+            }
+        }
+
+    </script>
+</block>

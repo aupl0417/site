@@ -1,0 +1,55 @@
+<!-- 页面统计 -->
+<php>
+use Rest\Controller\TjController as Tj;
+$isPageVisitRecord = Tj::isAllow();
+</php>
+<if condition="$isPageVisitRecord eq true">
+<script type="text/javascript">
+$(function(){
+	ajax_post({
+		headers:{Action:'{:enCryptRestUri("/Tj/visit")}'},
+		url:'/run/index',
+		data:{
+			server:{
+				REDIRECT_STATUS : '{$_SERVER.REDIRECT_STATUS}',
+				HTTP_HOST : '{$_SERVER.HTTP_HOST}',
+				HTTP_CONNECTION : '{$_SERVER.HTTP_CONNECTION}',
+				HTTP_CACHE_CONTROL : '{$_SERVER.HTTP_CACHE_CONTROL}',
+				HTTP_UPGRADE_INSECURE_REQUESTS : '{$_SERVER.HTTP_UPGRADE_INSECURE_REQUESTS}',
+				HTTP_USER_AGENT : '{$_SERVER.HTTP_USER_AGENT}',
+				HTTP_ACCEPT : '{$_SERVER.HTTP_ACCEPT}',
+				HTTP_REFERER : '{$_SERVER.HTTP_REFERER}',
+				HTTP_ACCEPT_ENCODING : '{$_SERVER.HTTP_ACCEPT_ENCODING}',
+				HTTP_ACCEPT_LANGUAGE : '{$_SERVER.HTTP_ACCEPT_LANGUAGE}',
+				HTTP_COOKIE : '{$_SERVER.HTTP_COOKIE}',
+				PATH : '{$_SERVER.PATH}',
+				SystemRoot : '{$_SERVER.SystemRoot}',
+				COMSPEC : '{$_SERVER.COMSPEC}',
+				PATHEXT : '{$_SERVER.PATHEXT}',
+				WINDIR : '{$_SERVER.WINDIR}',
+				SERVER_NAME : '{$_SERVER.SERVER_NAME}',
+				SERVER_ADDR : '{$_SERVER.SERVER_ADDR}',
+				SERVER_PORT : '{$_SERVER.SERVER_PORT}',
+				REMOTE_ADDR : '{$_SERVER.REMOTE_ADDR}',
+				REQUEST_SCHEME : '{$_SERVER.REQUEST_SCHEME}',
+				CONTEXT_PREFIX : '{$_SERVER.CONTEXT_PREFIX}',
+				REDIRECT_URL : '{$_SERVER.REDIRECT_URL}',
+				SERVER_PROTOCOL : '{$_SERVER.SERVER_PROTOCOL}',
+				REQUEST_METHOD : '{$_SERVER.REQUEST_METHOD}',
+				QUERY_STRING : '{$_SERVER.QUERY_STRING}',
+				REQUEST_URI : '{$_SERVER.REQUEST_URI}',
+				SCRIPT_NAME : '{$_SERVER.SCRIPT_NAME}',
+				PATH_INFO : '{$_SERVER.PATH_INFO}',
+				PATH_TRANSLATED : '{$_SERVER.PATH_TRANSLATED}',
+				PHP_SELF : '{$_SERVER.PHP_SELF}',
+				REQUEST_TIME_FLOAT : '{$_SERVER.REQUEST_TIME_FLOAT}',
+				REQUEST_TIME : '{$_SERVER.REQUEST_TIME}',
+			},
+		},
+	},function(ret){
+
+	});
+});
+
+</script>
+</if>

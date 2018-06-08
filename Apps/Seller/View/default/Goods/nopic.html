@@ -1,0 +1,184 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body">
+<include file="Public:nav" />
+	<div class="container mb30">
+		<include file="Public:side" />
+		<div class="w980 fl">
+			
+				<div class="bor_der">
+					<div class="bg_f1 clearfix fs14 text_44 tle_R">
+						<a class="fl plr15 line40 ml-1 active" href="javascript:;">主图异常的商品</a>
+					</div>
+					<notempty name="data.code">
+						{:W('Common/Builder/nors', array('param' => array('text' => $data['msg'])))}
+					<else />
+					
+					
+					<div class="plr15 ptb10">
+						<blockquote class="pd0 pl10 mt10 mb20 fs14 strong">商品列表</blockquote>
+						<div class=" mb20">
+							<div class="clearfix bg_f1 guide_tle bor_der">
+								<div class="pt10 fl">
+									<label class="square fl ml15 mr10">
+										<input id="checkedAll" type="checkbox">
+										<span></span>
+									</label>
+									<a class="mr20" href="javascript:;">全选</a>		
+									<a data-type="batch" data-header="{:enCryptRestUri('/Goods/delete')}" data-id="{$vo.id}" data-title="确认批量删除" data-msg="您真的要删除选中的商品吗？" class="mr20 opreating" href="javascript:;">删除</a>
+								</div>		
+								<div class="fr mr15 mt6"> 
+									{$data.page.total}
+									<div class="btn-group spacer" style="margin-top:0!important">
+										<button type="button" class="btn btn-default btn-xs plr10"><i class="fa fa-angle-left plr5"></i></button>
+										<button type="button" class="btn btn-default btn-xs plr10"><i class="fa fa-angle-right plr5"></i></button>
+									</div>
+								</div>
+							</div>
+							<table class="table-bordered bor_no hover_tr mb20">
+								<tbody class="td_borno">
+									<tr class="solid_b solid_l solid_r">
+										<td class="pl40" width="40%">商品</td>
+										<td width="13%">单价（元）</td>
+										<td width="9%">积分比例</td>
+										<td width="6%">库存</td>
+										<td width="8%">总销量</td>
+										<td width="14%">发布时间</td>
+										<td width="10%">操作</td>
+									</tr>
+									<volist name="data.list" id="vo">
+										<tr class="solid_b">
+											<td class="clearfix">
+												<label class="square fl ml7 mr10"><input name="ids[]" class="ids" value="{$vo.id}" type="checkbox"><span></span></label>
+												<img class="square100 fl mr10" src="{$vo.images}">
+												<textarea data-title="{$vo.goods_name}" data-id="{$vo.id}" class="fl bor_no mr10" cols="27" rows="5">{$vo.goods_name}</textarea>
+												<i class="fa fa-pencil fa-fw mt10 text_77"></i>
+											</td>
+											<td>
+												<div class="mt-15">
+													<del class="text_77">{$vo.maket_price}</del> </br>
+													<input data-title="修改属性" data-url="{:U('/goods/sku', ['id' => $vo['id']])}" class="strong text_44 input_80 plr5 bor_no changeSku" type="text" value="{$vo.price}">
+													<i class="fa fa-pencil fa-fw text_77"></i>
+												</div>											
+											</td>
+											<td>
+												<div class="mt-15">
+													<del class="text_77"></del> </br>
+													{$vo['score_ratio'] * 100}%
+													<!-- <input data-title="修改属性" data-url="{:U('/goods/sku', ['id' => $vo['id']])}" class="strong text_44 input_80 plr5 bor_no changeSku" type="text" value="{$vo['score_ratio'] * 100 * $vo['price']}">
+													<i class="fa fa-pencil fa-fw text_77"></i> -->
+												</div>
+											</td>
+											<td class="text_44 strong">{$vo.num}</td>
+											<td class="text_44 strong">{$vo.sale_num}</td>
+											<td class="text_77">{$vo.atime}</td>
+											<td class="text_44">
+												<a class="text_blue" href="{:U('/goods/edit', ['id' => $vo['id']])}"><p class="mb5">商品编辑</p></a>
+												<a data-header="{:enCryptRestUri('/Goods/delete')}" data-id="{$vo.id}" data-title="确认删除" data-msg="您真的要删除此项记录吗？" class="text_blue opreating" href="javascript:;"><p class="mb5">删除</p></a>
+											</td>
+										</tr>
+									</volist>
+								</tbody>
+							</table>
+							<div class="clearfix">
+								<div class="col-xs-12 text-center">
+									{:paresePageAction($data['page']['page'], '/Goods/goods_list')}
+								</div>
+							</div>
+						</div>
+					</div>
+					</notempty>
+				</div>
+			</div><!-- 右边结束 -->
+
+		</div>
+	</div>
+</block>
+<block name="css"></block>
+<block name="script">
+<script>
+$(document).ready(function() {
+	//编辑商品名称
+	$(".clearfix textarea").bind({
+		focusout:function() {
+			var obj = $(this);
+			var title	=	obj.val();
+			var d	=	obj.data();
+			if(title == d.title) {
+				return false;
+			}
+			ajax_post({
+				url:'{:U("/run/authRun")}',
+				data:{goods_id:d.id,goods_name:title},
+				headers : {Action : '{:enCryptRestUri("/Goods/changeGoodsName")}'},
+			},function(res) {
+				talert({status:res.code,msg:res.msg});
+				obj.data('title',title);
+			});
+		}
+	});
+	//编辑商品属性
+	$(".changeSku").focus(function() {
+		var d	=	$(this).data();
+		vmodal({
+			title:d.title,
+			url:d.url,
+			width:"80%"
+		});
+	})
+	//操作
+	$(".opreating").click(function() {
+		var d 	=	$(this).data();
+		if(d.type == 'batch') {
+			d.id	=	'';
+			$(".ids").each(function() {
+				if($(this).is(":checked") == true) {
+					d.id	+=	$(this).val() + ',';
+				}
+			})
+		}
+		if(d.id == '') {
+			talert({status:0,msg:'请至少选择一项'});
+			return false;
+		}
+		if(d.type == 'open') {
+			vmodal({
+				title:d.title,
+				url:d.url,
+			});
+		} else {
+			vmodal({
+				  title:d.title,
+				  msg:d.msg,
+				  class:'text-center',
+				  confirm:1,
+				  footer:false,
+				  width:'600px',
+			  },function(ret) {
+				  $(".modal-ok").click(function() {
+					  ajax_post({
+						  url:'{:U("/run/authRun")}',
+						  data:{id:d.id},
+						  headers : {Action : d.header},
+					  },function(ret) {
+						  talert({status:ret.code,msg:ret.msg});
+						  if(ret.code == 1) {
+						  	ref(); 
+						  }
+					  })
+				  })
+			  })
+		}
+	});
+	
+	//全选反选
+	$("#checkedAll").change(function() {
+		if($(this).is(":checked") == true) {
+			$(".ids").prop("checked", true);
+		} else {
+			$(".ids").prop("checked", false);
+		}
+	});
+});
+</script>
+</block>

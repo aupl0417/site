@@ -1,0 +1,65 @@
+<form data-url="__URL__/field_add_from_table_save" id="form_create" class="form-horizontal vform">
+<div class="text-gray box md20 p20">
+	提示：选择要生成表单的字段，提交后默认生成将会是input文本框，生成后再根据需求进行调整。<br />鼠标拖动可调整顺序
+</div>
+<table class="field-list">
+	<thead>
+		<th class="text-center">选择</th>
+		<th>注释</th>
+		<th>字段名</th>
+		<th>类型</th>
+	</thead>
+	<tbody>
+		<volist name="fields" id="vo">
+		<tr>
+			<td class="text-center">
+				<in name="vo.name" value="$list">
+				<i class="fa fa-check text-success"></i>
+				<else />
+				<input type="checkbox" id="field[]" name="field[]" value="{$vo.name}" class="i-red-square">
+				</in>
+			</td>
+			<td>{$vo.comment}</td>
+			<td>{$vo.name}</td>
+			<td>{$vo.type}</td>
+		</tr>
+		</volist>
+	</tbody>
+	
+</table>
+	{:W('Widget/buildform',array(array(
+		'field'		=>array(
+			array(
+				'formtype'		=>'select',
+				'label'			=>'分组',
+				'name'			=>'group_id',
+				'is_need'		=>true,
+				'data'			=>CURD(array('table'=>'formtpl_group','map'=>array('formtpl_id'=>$_GET['formtpl_id']))),
+				'field'			=>array('id','group_name'),
+			),	
+			array(
+				'formtype'		=>'hidden',
+				'name'			=>'formtpl_id',				
+				'value'			=>I('get.formtpl_id'),
+			),			
+		),
+	)))}
+<div class="p20 text-center">
+	<button type="submit" class="btn btn-primary btn-150px"><i class="fa fa-check"></i> 提交</button>
+</div>
+<!--token-->
+</form>
+<script>
+iCheckClass();
+$('.field-list tbody').sortable({});
+
+checkform({
+	formid:'#form_create',
+},function(ret){
+	valert(ret);
+	if(ret.status=='success'){
+		ref();
+	}
+});
+
+</script>

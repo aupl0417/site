@@ -1,0 +1,68 @@
+<include file="Public:header" />
+		<div class="page-group">
+			<div id="page-forget" class="page">
+				<!-- 标题栏 -->
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left back" href="/"></a>
+					<h1 class="title">找回密码</h1>
+				</header>
+		
+				<!-- 这里是页面内容区 -->		
+				<div class="content">
+					<form onsubmit="return false" id="form-forget">
+					<div class="list-block">
+						<ul>
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title label">用户昵称</div>
+										<div class="item-input">
+											<input type="text" name="username" placeholder="6~20位之间的中文、字母、数字或下划线组合" maxlength="20">
+										</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title label">手机号码</div>
+										<div class="item-input">
+											<input type="text" name="mobile" placeholder="请输入手机号码" maxlength="15">
+										</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="item-right" style="padding: 0.3rem 0">
+									<div class="smscode active">
+										获取验证码
+									</div>
+								</div>								
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title label">验证码</div>
+										<div class="item-input">
+											<input type="text" name="smscode" placeholder="6位短信验证码" maxlength="6">
+										</div>
+									</div>
+								</div>
+							</li>
+
+						</ul>
+					</div>		
+				
+					<div class="clearfix m5">
+						<div class="button button-big button-fill button-danger md2 btn-submit">下一步</div>
+					</div>
+					</form>
+					
+					
+				</div><!--content-->
+			</div>		
+			
+		</div>	
+		
+
+
+<include file="Public:script" />
+<include file="Public:footer" />

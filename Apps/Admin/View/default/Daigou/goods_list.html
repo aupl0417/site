@@ -1,0 +1,64 @@
+<div class="goods_list">
+
+	<div class="fl ml40 mt5 mb0" style="width:300px">
+		<div class="input-group input-group-sm mb0">
+			<input type="text" class="form-control" name="goods_name" id="search_goods" placeholder="输入代购商品名称搜索">
+			<span class="input-group-btn">
+				<button class="btn btn-danger" type="button" onclick="button()">搜索</button>
+			</span>
+		</div>
+	</div>
+	<div class="clearfix md20"></div>
+	<volist name="pagelist.list" id="vo">
+		<div class="goods-item" onclick="goods_select($(this))" data-id="{$vo.id}">
+			<div class="crow">
+				<div class="ccol-10">
+					<img src="{$vo.images}" alt="{$vo.goods_name}" class="max100">
+				</div>
+				<div class="ccol-90">
+					<div class="pl10">
+						<div class="md5 goods_name">{$vo.goods_name}</div>
+						<div class="text-danger">{$vo.price}</span></div>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+	</volist>
+	<div class="row">
+		<div class="col-xs-9 pages">
+			{$pagelist.page.page}
+		</div>
+		<div class="col-xs-3 text-gray text-right pages-total" style="line-height:45px;">
+			{$pagelist.page.total}
+		</div>
+	</div>
+</div>
+
+<script>
+	
+function page(p){
+	loadurl({tag:'.goods_list',url:'__URL__/goods_list/p/'+p});
+}	
+function button(){
+	var name = $('#search_goods').val();
+	loadurl({tag:'.goods_list',url:'__URL__/goods_list/goods_name/'+name});
+}
+//选择宝贝
+function goods_select(obj){
+	obj.addClass('active').siblings().removeClass('active');	
+	$('.modal-footer .pull-left').html('<div class="btn btn-danger" onclick="select_ok()">确定选择</div>');
+}
+
+function select_ok(){
+	if($('.goods_list .goods-item.active').size()==0){
+		valert({msg:'请选择商品！'});
+	}else{
+		var obj=$('.goods_list .goods-item.active');
+		$('.input-group #goods_name').val(obj.find('.goods_name').html());
+		$('.input-group #goods_id').val(obj.data('id'));
+
+		$('#ajax-modal').modal('hide');
+	}
+}
+</script>

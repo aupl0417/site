@@ -1,0 +1,47 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			商品参数
+		</div>
+		<div class="r">
+		</div>
+	</div>
+</header>
+<section>	
+	<div class="content">
+		<div class="load-body">数据加载中……</div>
+	</div>
+</section>
+<script id="tpl_goods_param" type="text/html">
+	<% for (var i = 0; i < data.length; i ++) { %>
+		<div class="line-box row noicon nobg text-gray ft14 b">
+			<%= data[i].group_name %>
+		</div>		
+		<% for (var j = 0; j < data[i].param.length; j ++) { %>
+		<div class="line-box row noicon">
+			<div class="col-4"><%= data[i].param[j].param_name %></div>
+			<div class="col-4x3 text-gray text-right"><%= data[i].param[j].param_value%></div>
+		</div>
+		<% } %>
+	<% } %>
+</script>
+
+<script>
+	fixBar(1);
+	
+	ajax_post({
+		url:'/Api/api',
+		data:{apiurl:'/Goods/goods_param',goods_id:'{$_GET.goods_id}'},
+	},function(ret){
+		if(ret.code==1){
+			var html = template('tpl_goods_param', {data:ret.data});
+			$('.page.active section .content').html(html);
+		}else if(ret.code==3){
+			$('.page.active section .content').html(no_data_text);
+		}
+	});
+	
+</script>

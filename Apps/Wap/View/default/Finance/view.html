@@ -1,0 +1,175 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			账单详情
+		</div>
+		<div class="r">
+			
+		</div>
+	</div>
+</header>
+<section>
+	<div class="load-body">数据加载中……</div>
+</section>
+
+
+<script id="tpl_finance_orders_view" type="text/html">
+	<div class="line-box noicon fr-gray fr-70 hover">
+		<div class="fl title">流水号</div>
+		<div class="fr"><%= data.f_no %></div>
+	</div>
+	<div class="line-box noicon fr-gray fr-70 hover">
+		<div class="fl title">年利率</div>
+		<div class="fr"><%= data.year_ratio*100 %>%</div>
+	</div>
+	<div class="line-box noicon fr-gray fr-70 hover">
+		<div class="fl title">转入积分</div>
+		<div class="fr"><%= data.score %></div>
+	</div>
+	<div class="line-box noicon fr-gray fr-70 hover">
+		<div class="fl title">转入现金</div>
+		<div class="fr"><%= data.money %></div>
+	</div>
+	<div class="line-box noicon fr-gray fr-70 hover">
+		<div class="fl title">创建时间</div>
+		<div class="fr"><%= data.atime %></div>
+	</div>
+	<% if(data.status>0){ %>
+	<div class="line-box noicon fr-gray fr-70 hover">
+		<div class="fl title">付款时间</div>
+		<div class="fr"><%= data.pay_time %></div>
+	</div>
+	<% } %>
+	<% if(data.status==4){ %>
+	<div class="line-box noicon fr-gray fr-70 hover">
+		<div class="fl title">转出时间</div>
+		<div class="fr"><%= data.out_time %></div>
+	</div>
+	<% } %>
+	<div class="line-box noicon fr-gray fr-70 hover">
+		<div class="fl title">状态</div>
+		<div class="fr"><%= data.status_name %></div>
+	</div>
+	<% if(data.status==1){ %>
+	<div class="line-box noicon fr-gray fr-70 hover">
+		<div class="fl title">存放天数</div>
+		<div class="fr">已存放 <%= data.date_diff.days %> 天，满 {:C('cfg.finance')['min_day']} 天以上才能转出</div>
+	</div>	
+	<% } %>
+	<div class="box row border-d account-win md10">
+		<div class="col-2 hover">
+			<div>
+			<div class="money text-danger"><%= data.total_money %></div>
+			<div class="text-gray">总价（元）</div>
+			</div>
+		</div>
+		<div class="col-2 hover">
+			<div>
+				<% if(data.status==4){ %>
+				<div class="money text-danger"><%= data.win_money %></div>
+				<div class="text-gray">收益（元）</div>
+				<% }else{ %>
+				<div class="money text-danger"><%= data.win_money_30day %></div>
+				<div class="text-gray">30天预估收益（元）</div>				
+				<% } %>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	</div>	
+	<% if(data.status==0){ %>
+	<form id="form-finance-pay">
+	<div class="line-input row">
+		<div class="col-4">安全密码</div>
+		<div class="col-4x3"><input type="password" id="password_pay" name="password_pay" placeholder="请输入安全密码" maxlength="6"></div>
+	</div>	
+	<div class="line-box nobg noicon">
+		我的积分账户：<span class="ac_score text-success">0</span> 分 <span class="text-success" onclick="openWin({name:'score_add',url:'/Score/add'})">购买</span>
+	</div>
+	<div class="line-box nobg noicon">
+		我的现金账户：<span class="ac_cash text-success">0</span> 元 <span class="text-success" onclick="openWin({name:'recharge',url:'/Recharge/index'})">充值</span>
+	</div>		
+	<div class="p10">
+		<div class="btn btn-lg btn-block btn-danger" onclick="finance_pay()">付款</div>
+	</div>
+	</form>
+	<% }else if(data.status==1) {%>
+	<form id="form-finance-pay">
+	<div class="line-input row">
+		<div class="col-4">安全密码</div>
+		<div class="col-4x3"><input type="password" id="password_pay" name="password_pay" placeholder="请输入安全密码" maxlength="6"></div>
+	</div>		
+	<div class="p10">
+		<div class="btn btn-lg btn-block btn-danger" onclick="finance_out()">转出</div>
+	</div>
+	</form>	
+	<% } %>
+</script>
+
+<script>
+	fixBar(1);	
+
+	ajax_post({
+		url:'/Api/api',
+		data:{apiurl:'/Finance/view',is_openid:1,f_no:'{$_GET.f_no}'},
+	},function(ret){
+		if(ret.code==1){			
+			var html = template('tpl_finance_orders_view', {data:ret.data});
+			$('.page.active section').html(html);
+			
+			if(ret.data.status==0){
+				ajax_post({
+					url:'/Api/api',
+					data:{apiurl:'/Account/account',is_openid:1},
+				},function(ret){
+					if(ret.code==1){			
+						$('.page.active .ac_cash').html(ret.data.ac_cash);
+						$('.page.active .ac_score').html(ret.data.ac_score);
+					}
+				});			
+			}
+		}else if(ret.code==3){
+			$('.page.active section').html(no_data_text);
+		}
+	});	
+	
+	function finance_pay(){
+		if($('.page.active #password_pay').val()==''){
+			valert({msg:'请输入安全密码！'});
+			$('.page.active #password_pay').focus();
+			return false;
+		}
+		
+		ajax_post({
+			url:'/Api/api',
+			data:{apiurl:'/Finance/pay',is_openid:1,password_pay:$('.page.active #password_pay').val(),f_no:'{$_GET.f_no}'},
+		},function(ret){
+			if(ret.code==1){			
+				openWin({name:'tips',url:'/Finance/tips/f_no/{$_GET.f_no}',close:true});
+			}else{
+				valert(ret);
+			}
+		});	
+	}
+	function finance_out(){
+		if($('.page.active #password_pay').val()==''){
+			valert({msg:'请输入安全密码！'});
+			$('.page.active #password_pay').focus();
+			return false;
+		}
+		
+		ajax_post({
+			url:'/Api/api',
+			data:{apiurl:'/Finance/out',is_openid:1,password_pay:$('.page.active #password_pay').val(),f_no:'{$_GET.f_no}'},
+		},function(ret){
+			if(ret.code==1){			
+				openWin({name:'finance_orders_view',url:'/Finance/view/f_no/{$_GET.f_no}',ref:true});
+			}else{
+				valert(ret);
+			}
+		});	
+	}
+	
+</script>

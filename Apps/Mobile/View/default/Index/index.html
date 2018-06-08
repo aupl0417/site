@@ -1,0 +1,276 @@
+<include file="Public:header" />
+		<div class="page-group">
+			<div class="page" id="page-home" data-page_num="{$pagelist.pageinfo.page}" data-url="/Index/love_page" data-tpl="tpl_love_home" data-p="1">
+				<input type="hidden" name="p" id="p" value="2" />
+				<!-- 标题栏 -->
+				<header class="bar bar-nav index-bar-nav">
+					<a class="search-bar index-bar-nav-search" href="/Search" data-no-cache="true"><i class="iconfont icon-sousuo_sousuo"></i> 请输入关键词、店铺名</a>
+					<a class="icon iconfont icon-category1 pull-right" href="/goods/category">
+					</a>
+				</header>
+		
+				<!-- 工具栏 -->
+				<include file="Public:nav" />
+
+				<!-- 浮动导航 -->
+				<include file="Public:fixed-menu" />
+		
+				<!-- 这里是页面内容区 -->
+				<div class="content index-content" style="top: 0;">
+					<!--焦点图-->
+					<div class="swiper-container swiper-home" data-space-between='10'>
+						<div class="swiper-wrapper">
+							<volist name="ads.data.187.data.ads" id="vo">
+							<div class="swiper-slide"><a href="{$vo.url}"><img src="{$vo.images}" alt="" style='width: 100%'></a></div>
+							</volist>							
+						</div>
+						<div class="swiper-pagination"></div>
+					</div>
+					
+					<!--菜单-->
+					<div class="home-menu md5">
+						<div class="row">
+							<volist name="ads.data.177.data.ads" id="vo">
+							<div class="col-20">
+								<a href="{$vo.url}">
+									<div class="img"><img src="{$vo.images}" alt="{$vo.name}"></div>
+									<div class="md5">{$vo.name}</div>
+								</a>
+							</div>
+							</volist>
+						</div>
+					</div>
+
+
+					<!-- 金银卡积分 -->
+					<div class="row no-gutter img-block md5 bg-white index-card">
+						<div class="col-50 text-center">
+							<a href="{:U('/search/goods', ['score_type' => 1])}">金积分专区</a>
+						</div>
+						<div class="col-50 text-center">
+							<a href="{:U('/search/goods', ['score_type' => 4])}">银积分专区</a>
+						</div>
+					</div>
+
+
+
+
+					<!--秒杀-->
+					<!--<div class="miaosha-time-box3" data-time_dif="{$miaosha.times.active.time_dif}" data-active="{$miaosha.times.active.active}" data-daytime="{$miaosha.times.active.daytime}">-->
+						<!--<a href="/Miaosha" data-no-cache="true">-->
+							<!--<div class="pull-left"><img src="../Public/images/nav-icon-qiangou.png" alt="秒杀" height="25"></div>-->
+							<!--<div id="clock"></div>-->
+						<!--</a>-->
+					<!--</div>-->
+					<!--<notempty name="miaosha.goods_list">-->
+					<!--<div class="iscroll-home-miaosha">-->
+						<!--<div id="scroller" style="width:{:count($miaosha['goods_list']) * 7.1}rem;min-width:100%;" data-couht="{:count($miaosha['goods_list'])}">-->
+							<!--<ul>-->
+								<!--<volist name="miaosha.goods_list" id="vo">-->
+								<!--<li>-->
+									<!--<a href="/Goods/view/id/{$vo.goods_attr_list.id}">-->
+										<!--<div><img class="lazyload" data-sizes="auto" data-src="{:myurl($vo['images'],320)}" src="../Public/images/nopic.gif" width="100%" alt="{$vo.goods.goods_name}"></div>-->
+										<!--<div class="subject">{$vo.subject}</div>-->
+										<!--<div class="price">￥{$vo.price}</div>-->
+										<!--<div class="ft06 text-gray text-overline">￥{:round($vo['goods_attr_list']['price'] * 1.2)}</div>-->
+									<!--</a>-->
+								<!--</li>-->
+								<!--</volist>-->
+							<!--</ul>-->
+						<!--</div>-->
+					<!--</div>-->
+					<!--<div class="clearfix md5" style="height:10rem;"></div>-->
+					<!--<else />-->
+						<!--<div class="nors text-center md5 bg-white">-->
+							<!--<a href="/Miaosha" data-no-cache="true" class="text-gray">-->
+								<!--<div><i class="iconfont icon-miaosha1 ft3"></i></div>-->
+								 <!--暂无商品！-->
+							<!--</a>-->
+						<!--</div>-->
+					<!--</notempty>-->
+					
+					
+					
+					<!--广告-->
+					<div class="row no-gutter img-block md5 bg-white">
+						<div class="col-50 border-r" style="height:12rem;overflow: hidden;">
+							<!--广告 178-->
+							<volist name="ads.data.178.data.ads" id="vo">
+								<a href="{$vo.url}"><img src="{$vo.images}" alt="" style='width: 100%'></a>
+							</volist>
+						</div>
+						<div class="col-50" style="height:12rem;overflow: hidden;">
+							<!--广告 179-->
+							<volist name="ads.data.179.data.ads" id="vo">
+							<div class="border-d" style="height:6rem;overflow: hidden;">								
+								<a href="{$vo.url}"><img src="{$vo.images}" alt="" style='width: 100%'></a>								
+							</div>
+							</volist>
+						</div>
+					</div>
+					
+					<!--焦点图-->
+					<div class="swiper-container" data-space-between='10'>
+						<div class="swiper-wrapper">
+							<volist name="ads.data.180.data.ads" id="vo">
+							<div class="swiper-slide"><a href="{$vo.url}"><img src="{$vo.images}" alt="" style='width: 100%'></a></div>
+							</volist>							
+						</div>
+						<div class="swiper-pagination"></div>
+					</div>		
+					
+					<!--广告-->
+					<div class="row no-gutter img-block bg-white border-d">
+						<!--广告 179-->
+						<volist name="ads.data.181.data.ads" id="vo">
+						<div class="col-25 {$key > 0 ? 'border-l' :''}" style="min-height: 5rem;">	
+							<a href="{$vo.url}"><img src="{$vo.images}" alt="" style='width: 100%'></a>								
+						</div>
+						</volist>						
+					</div>					
+					
+					<div class="row no-gutter img-block bg-white border-d">
+						<!--广告 179-->
+						<volist name="ads.data.182.data.ads" id="vo">
+						<div class="col-50 {$key > 0 ? 'border-l' :''}" style="min-height: 5rem;">	
+							<a href="{$vo.url}"><img src="{$vo.images}" alt="" style='width: 100%'></a>								
+						</div>
+						</volist>						
+					</div>	
+					
+					<div class="row no-gutter img-block md5 bg-white border-d">
+						<!--广告 179-->
+						<volist name="ads.data.183.data.ads" id="vo">
+						<div class="col-33 {$key > 0 ? 'border-l' :''}" style="min-height: 5rem;">	
+							<a href="{$vo.url}"><img src="{$vo.images}" alt="" style='width: 100%'></a>								
+						</div>
+						</volist>						
+					</div>	
+					
+					<!--焦点图-->
+					<div class="swiper-container md5" data-space-between='10'>
+						<div class="swiper-wrapper">
+							<volist name="ads.data.184.data.ads" id="vo">
+							<div class="swiper-slide"><a href="{$vo.url}"><img src="{$vo.images}" alt="" style='width: 100%'></a></div>
+							</volist>							
+						</div>
+						<div class="swiper-pagination"></div>
+					</div>							
+					
+					<div class="list-block">
+						<ul>
+							<li>
+								<a class="item-content item-link" href="/Search/goods">
+									<div class="item-inner">
+										<div class="item-title">为您推荐</div>
+									</div>
+								</a>
+							</li>							
+						</ul>
+					</div>
+					<!--广告-->
+					<div class="row no-gutter img-block bg-white">
+						<div class="col-50 border-r border-d" style="height:12rem;overflow: hidden;">
+							<!--广告 178-->
+							<volist name="ads.data.193.data.ads" id="vo">
+								<a href="{$vo.url}"><img src="{$vo.images}" alt="" style='width: 100%'></a>
+							</volist>
+						</div>
+						<div class="col-50" style="height:12rem;overflow: hidden;">
+							<!--广告 179-->
+							<volist name="ads.data.192.data.ads" id="vo">
+								<div class="border-d" style="height:6rem;overflow: hidden;">
+									<a href="{$vo.url}"><img src="{$vo.images}" alt="" style='width: 100%'></a>
+								</div>
+							</volist>
+						</div>
+					</div>
+					<!--广告-->
+					<div class="row no-gutter img-block bg-white border-d md5">
+						<!--广告 179-->
+						<volist name="ads.data.191.data.ads" id="vo">
+							<div class="col-25 {$key > 0 ? 'border-l' :''}" style="min-height: 5rem;">
+								<a href="{$vo.url}"><img src="{$vo.images}" alt="" style='width: 100%'></a>
+							</div>
+						</volist>
+					</div>
+
+
+
+					<div class="list-block">
+						<ul>
+							<li>
+								<a class="item-content item-link" href="/Search/goods">
+									<div class="item-inner">
+										<div class="item-title">爱生活·爱品质</div>
+									</div>
+								</a>
+							</li>
+						</ul>
+					</div>
+					<!--广告-->
+					<div class="row no-gutter img-block bg-white border-d">
+						<!--广告 179-->
+						<volist name="ads.data.194.data.ads" id="vo">
+							<div class="col-50" style="min-height: 5rem;">
+								<a href="{$vo.url}"><img src="{$vo.images}" alt="" style='width: 100%'></a>
+							</div>
+						</volist>
+					</div>
+					<!--广告-->
+					<div class="row no-gutter img-block bg-white border-d md5">
+						<!--广告 179-->
+						<volist name="ads.data.195.data.ads" id="vo">
+							<div class="col-25 border-d {$key > 0 ? 'border-l' :''}" style="height: 5rem; overflow: hidden">
+								<a href="{$vo.url}"><img src="{$vo.images}" alt="" style='width: 100%'></a>
+							</div>
+						</volist>
+					</div>
+
+
+
+					<h3 class="text-center index-h3">猜你喜欢</h3>
+					<div class="clearfix md5"></div>
+					<input type="hidden" id="love_page_home" name="love_page_home" value="{$pagelist.pageinfo.p}" />
+					<div class="infinite-scroll">
+						<div class="row img-block love-home list-container">
+							<volist name="pagelist.list" id="vo">
+							<div class="col-50">
+								<a href="/Goods/view/id/{$vo.data.attr_list.0.id}" class="love-goods-item">
+									<div class="goods-images">
+										<img class="lazyload" data-sizes="auto" data-src="{:myurl($vo['data']['images'],320)}" src="../Public/images/nopic.gif" width="100%" alt="{$vo.data.goods_name}">
+									</div>
+									<div class="goods-name">{$vo.data.goods_name}</div>
+								</a>
+							</div>
+							</volist>
+						</div>
+						
+						<div class="infinite-scroll-preloader">
+							<div class="preloader">
+							</div>
+						</div>						
+					</div>
+				
+				</div>
+			</div>
+		
+			<!-- popup, panel 等放在这里 -->
+			<div class="panel-overlay"></div>
+			<!-- Left Panel with Reveal effect -->
+			<div class="panel panel-left panel-reveal">
+				<div class="content-block">
+					<p onclick="$.closePanel();"><a href="/Index/about">关于乐兑</a></p>
+					<p></p>
+					<!-- Click on link with "close-panel" class will close panel -->
+					<p>
+						<a href="#" class="close-panel">关闭</a>
+					</p>
+				</div>
+			</div>
+		
+		</div>	
+		
+
+<include file="Public:script" />
+<include file="Public:footer" />

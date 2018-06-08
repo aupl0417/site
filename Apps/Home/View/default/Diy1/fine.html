@@ -1,0 +1,53 @@
+<div class="pt20 mb20">
+	<p class="fs20 strong text-center">乐兑 · 精品</p>
+	<div class="clearfix">
+		<div class="boutique_l">
+			<div class="ad-box">
+				<if condition="session('admin.id') gt 0 && $_GET['diy'] eq 'yes'">
+				<div class="ad-edit-box hide"><a data-type="modal" data-url="{:U('/ad/add', ['id' => $fineOne['id']])}" data-title="{$fineOne['position_name']}" href="javascript:;" class="btn btn-danger btn-ad">编辑广告位</a></div>
+				</if>
+			<volist name="fineOne.ads" id="ads">
+			<a target="_blank" href="{:DM('click')}?act={:enCryptRestUri($ads['id'])}" class="db re mb30">
+				<img data-original="{$ads.background_images}" src="{$ads.background_images}">	<!-- background -->
+				<img data-original="{$ads.images}" class="ab tion_right" style="bottom:0;left:0" src="{$ads.images}">
+			</a>
+			</volist>
+			</div>
+			<div class="ad-box">
+				<if condition="session('admin.id') gt 0 && $_GET['diy'] eq 'yes'">
+				<div class="ad-edit-box hide"><a data-type="modal" data-url="{:U('/ad/add', ['id' => $fineTwo['id']])}" data-title="{$fineTwo['position_name']}" href="javascript:;" class="btn btn-danger btn-ad">编辑广告位</a></div>
+				</if>
+			<volist name="fineTwo.ads" id="ads">
+			<a target="_blank" href="{:DM('click')}?act={:enCryptRestUri($ads['id'])}" class="db re mb30">
+				<img data-original="{$ads.background_images}" src="{$ads.background_images}">	<!-- background -->
+				<img data-original="{$ads.images}" class="ab tion_bottom" style="bottom:-40px;right:0" src="{$ads.images}">
+			</a>
+			</volist>
+			</div>
+		</div>	
+		<div class="boutique_c">
+			<div class="ad-box">
+				<if condition="session('admin.id') gt 0 && $_GET['diy'] eq 'yes'">
+				<div class="ad-edit-box hide"><a data-type="modal" data-url="{:U('/ad/add', ['id' => $fineThree['id']])}" data-title="{$fineThree['position_name']}" href="javascript:;" class="btn btn-danger btn-ad">编辑广告位</a></div>
+				</if>
+			<volist name="fineThree.ads" id="ads">
+				<a target="_blank" href="{:DM('click')}?act={:enCryptRestUri($ads['id'])}">
+					<img data-original="{$ads.images}" class="tion_swing" src="{$ads.images}">
+				</a>
+			</volist>
+			</div>
+		</div>
+		<div class="boutique_r">
+			<div class="ad-box">
+				<if condition="session('admin.id') gt 0 && $_GET['diy'] eq 'yes'">
+				<div class="ad-edit-box hide"><a data-type="modal" data-url="{:U('/ad/add', ['id' => $fineFour['id']])}" data-title="{$fineFour['position_name']}" href="javascript:;" class="btn btn-danger btn-ad">编辑广告位</a></div>
+				</if>
+			<volist name="fineFour.ads" id="ads">
+				<a target="_blank" href="{:DM('click')}?act={:enCryptRestUri($ads['id'])}" class="db mb30">
+					<img data-original="{$ads.images}" class="tion_top" src="{$ads.images}">
+				</a>
+			</volist>
+			</div>
+		</div>
+	</div>
+</div>

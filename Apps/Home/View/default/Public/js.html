@@ -1,0 +1,49 @@
+
+<!--[if IE 8]>
+<script src="__PROUI__/js/helpers/excanvas.min.js"></script>
+<![endif]-->
+
+{:W('Common/Script/js')}
+<script type="text/javascript">
+$(document).ready(function() {
+    $("img").lazyload({
+         placeholder : "/Public/images/nopic.png", //加载图片前的占位图片
+         effect      : "fadeIn", //加载图片使用的效果(淡入)
+         skip_invisible : false,
+    });
+});
+
+function ajax_topbar(){
+	if($('.ajax_topbar').size()>0){
+		ajax_get({
+			url:'/Topbar/topbar',
+		},function(ret){
+			if($('.ajax_topbar').size()>0) $('.ajax_topbar').html(ret.topbar);
+			if($('.ajax_user').size()>0) $('.ajax_user').html(ret.user);
+			if($('.ajax_cart_num').size()>0) $('.ajax_cart_num').html(ret.cart);
+			
+			if($('.ajax_search_near').size()>0){
+				if(ret.keywords && ret.keywords!=''){
+					var html='';
+					$.each(ret.keywords,function(i,item){
+						html +='<a class="btn btn-sm btn-trans plr20" href="{:DM('s')}/Index/index/keywords/'+item+'">'+item+'</a>';
+					});
+					/*
+					for(i=0;i<ret.keywords.length;i++){
+						if(i<10){
+							html +='<a class="btn btn-sm btn-trans plr20" href="{:DM('s')}/Index/index/keywords/'+ret.keywords[i]+'">'+ret.keywords[i]+'</a>';
+						}
+					}
+					*/
+					$('.ajax_search_near').html(html);
+				}else{
+					$('.ajax_search_near').html('<div class="plr20">暂无搜索记录！</div>');
+				}
+			}
+		});
+	}
+}
+
+
+
+</script>

@@ -1,0 +1,134 @@
+<div class="p20 box">
+	<div class="row">
+		<div class="col-xs-6 auth-text">
+			<div class="row">
+				<div class="col-xs-2 text-center">
+					<img src="{:myurl($rs['goods']['images'],100)}">
+				</div>
+				<div class="col-xs-10">
+					<div class="ft16 md20">{$rs['goods']['goods_name']}</div>
+					<gt name="rs.illegl_point" value="0"><div>扣分：<span class="text-danger ft16">{$rs.illegl_point}</span>分</div></gt>
+					<div>违规原因：{$rs.reason}</div>
+					<div>违规备注：{$rs.remark}</div>					
+					<div>申请时间：{$rs.atime}</div>
+					<div>最后操作时间：{$rs.dotime}</div>
+					<div>审核状态：
+						{:status($rs['status'],array(0=>array('取消违规'),1=>array('违规下架','btn-danger'),2=>array('等待审核','btn-warning'),3=>array('审核未通过','btn-dark'),4=>array('审核通过','btn-success')))}
+					</div>					
+				</div>
+			</div>
+			
+
+		</div>
+		<div class="col-xs-6">
+
+			<div class="row">
+				<div class="col-xs-2 text-center">
+					<img src="{:myurl($rs['shop']['shop_logo'],100)}">
+				</div>
+				<div class="col-xs-10">
+					<div class="ft16 md20">{$rs['shop']['shop_name']}</div>
+					<div>昵称：{$rs.seller.nick}</div>
+					<div>手机：{$rs.shop.mobile}</div>					
+					<div>QQ：{$rs.shop.qq}</div>
+					</div>					
+				</div>
+			</div>
+			
+		</div>
+	</div>
+	
+	<if condition="$rs.shop_vr_status neq 0 && $rs.shop_vr_status neq 1">
+		<div class="ft18 strong p10 border-d md20">审核记录</div>
+		<notin name="rs.status" value="0,4">
+		<form data-url="__URL__/logs_add" data-id="#form_{$rs.id}" id="form_{$rs.id}" class="form-horizontal vform">
+				{:W('Widget/buildform',array(array(
+					'field'		=>array(	
+						array(
+							'formtype'		=>'radio',
+							'label'			=>'状态',
+							'name'			=>'status',
+							'data'			=>array(array(2,'等待审核'),array(3,'审核未通过'),array(4,'审核通过')),
+							'field'			=>array(0,1),
+							'value'			=>$rs['status'],
+							'is_need'		=>1,
+						),
+						array(
+							'formtype'		=>'textarea',
+							'label'			=>'备注',
+							'name'			=>'remark',
+							'is_need'		=>1,
+						),
+						array(
+							'formtype'		=>'hidden',
+							'name'			=>'illegl_id',
+							'value'			=>$rs['id'],
+						),					
+						array(
+							'formtype'		=>'html',
+							'label'			=>' ',
+							'html'			=>'<button type="button" class="btn btn-primary btn-150px logs-add"><i class="fa fa-check"></i> 提交</button>'
+						),
+
+
+					),
+				)))}
+		
+		
+		</form>
+		</notin>
+		<notempty name="rs.logs">
+		<ul class="timeline">
+			<volist name="rs.logs" id="vo">
+			<li>
+				<i class="fa fa-clock-o"></i>
+				<span class="date">
+					{$vo.atime}
+				</span>
+				<div class="content">
+					<div class="md20">审核状态：
+						{:status($vo['status'],array(0=>array('取消违规'),1=>array('违规下架','btn-danger'),2=>array('等待审核','btn-warning'),3=>array('审核未通过','btn-dark'),4=>array('审核通过','btn-success')))}
+					</div>
+
+					<div class="md20 ft14">
+						备注：
+						{$vo.remark|nl2br}
+					</div>
+
+					<small class="md10">
+						雇员ID：{$vo.a_uid}
+					</small>
+				</div>
+			</li>
+			</volist>
+		</ul>
+		</notempty>
+	<else/>
+		
+		<div class="ft18 strong p10 border-d md20 text-center">请等待违规判定</div>
+	</if>
+
+</div>
+<div class="clearfix">
+	<div class="pull-right text-gray" onclick="$(this).closest('tr').toggleClass('hide');"><i class="fa fa-times-circle-o fa-2x"></i></div>	
+</div>
+
+<script>
+image_zoom();
+$('.logs-add').click(function(){
+	var d=$(this).closest('form').data();
+	ajax_post_form({
+		formid:d.id
+	},function(ret){
+		valert(ret);
+		if(ret.status=='success'){
+			var tag='#item-{$rs.id}';
+			var url='__URL__/view/id/{$rs.id}';
+			var from_goods='{$_GET.from_goods}';
+			if(from_goods!='') loadurl({tag:'#item-'+from_goods,url:url});
+			else loadurl({tag:tag,url:url});
+		}
+	});
+
+});
+</script>

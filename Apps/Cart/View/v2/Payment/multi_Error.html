@@ -1,0 +1,48 @@
+<extend name="Home@Public:base" />
+<block name="body">
+    <div class="centent_body">
+        <!-- to do your html codeing -->
+        <div class="revision_bg">
+            <div class="container ptb_size_lg clearfix" style="/*width: 980px;*/">
+                <div class="pd15" style="background:#fff">
+
+                    <div class="text-center pd15">
+                        <h1 class="mb20 text-warning mt20">支付失败</h1>
+                        <div class="content">
+                            <volist name="shop" id="vo">
+                                <notempty name="vo.error_msg">
+                                    <div class="content text-left" style="width: 700px;margin: 0 auto;">
+                                        <div class="bg-warning pd10 letter-spacing1">
+                                            <div class="row ft14">
+                                                <div class="col-md-1 text-right">
+                                                    <a href="{:shop_url($vo['shop']['id'],$vo['shop']['domain'])}" target="_blank"><img src="{:myurl($vo['shop']['shop_logo'],50)}" alt="店铺logo"></a>
+                                                </div>
+                                                <div class="col-md-11" style="height: 50px;">
+                                                    <div class="ft18 strong"><a href="{:shop_url($vo['shop']['id'],$vo['shop']['domain'])}" target="_blank">{$vo.shop.shop_name}</a></div>
+                                                    <div>昵称：{$vo.seller.nick}</div>
+                                                </div>
+                                                <div class="col-md-1">
+                                                    &nbsp;
+                                                </div>
+                                                <div class="col-md-11">
+                                                    {$vo.error_msg}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </notempty>
+                            </volist>
+                        </div>
+                        <div class="mt30">
+                            <a href="{:DM('my', '/orders')}" class="btn btn-rad btn-trans btn-success">查看订单</a>
+                            <a href="{:DM('www')}" class="btn btn-rad btn-trans btn-danger ml30">继续购买</a>
+                        </div>
+                    </div>
+
+                    <div class="row" style="border-top: solid 20px #F8F8F8"></div>
+                    {:W('Common/Side/like')}
+                </div>
+            </div>
+        </div>
+    </div>
+</block>

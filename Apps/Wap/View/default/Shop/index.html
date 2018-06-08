@@ -1,0 +1,339 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			<div class="row">
+				<div class="col-20">&nbsp;</div>
+				<div class="col-60">
+					<div class="input-search-box" >
+						<input type="text" id="q" name="q" placeholder="搜索本店商品" onclick="openWin({name:'search',url:'/Goods/search/shop_id/{$_GET.shop_id}'})" />
+					</div>				
+				</div>
+				<div class="col-20"></div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="r">
+			<div class ="cart_total_num hide" style="top:5px;"></div>
+			<i class="icons i-cart" onclick="openWin({name:'cart',url:'/Cart/index',logined:true})"></i>	
+		</div>
+	</div>
+</header>
+
+<!--主体-->
+<section>
+	<div class="shop-header" style="background-image:url(../Public/Images/header/{:rand(1,14)}.jpg);">
+
+	</div>
+	
+	<!--主菜单-->
+	<div class="row tabs">
+		<div class="col-20">
+			<div class="tabs-item active" data-active="1">首页</div>
+		</div>
+		<div class="col-20 search-menu">
+			<div class="tabs-item">全部</div>
+		</div>		
+		<div class="col-20">
+			<div class="tabs-item">上新</div>
+		</div>
+		<div class="col-20">
+			<div class="tabs-item">热销</div>
+		</div>
+		<div class="col-20">
+			<div class="tabs-item">人气</div>
+		</div>
+	</div>	
+	<div class="clearfix"></div>
+	<div class="tabs-content">
+		<div class="tabs-pane active">
+			<!--banner-->
+			<div class="hide">
+				<img src="../Public/Images/shop-banner.jpg" alt="">
+			</div>		
+			<div class="goods-rand"></div>
+		</div>
+		<div class="tabs-pane">
+			<div class="pagelist" data-p="" data-allpage=""></div>
+			<div class="p10 load-more md10" onclick="shop_goods_pagelist($(this).closest('.tabs-pane').find('.pagelist'))">
+				<div class="btn btn-lg btn-block btn-danger btn-trans md10">加载更多……</div>
+			</div>			
+		</div>
+		<div class="tabs-pane">
+		</div>
+		<div class="tabs-pane">
+		</div>
+		<div class="tabs-pane">
+		</div>
+		
+	</div>
+
+</section>
+
+<!--页脚菜单-->
+<footer class="footer border-t fixed-bottom">
+	<ul class="col-4">
+		<li>
+			<div class="menu hover" onclick="openWin({name:'shop_info',url:'/Shop/info/shop_id/{$_GET.shop_id}'})">
+				<i class="icons i-shop-info active">
+				</i>
+				<div>
+					店铺信息
+				</div>
+			</div>
+		</li>
+		<li>
+			<div class="menu hover" onclick="openLayer({title:'商品分类',url:'/Shop/category/shop_id/{$_GET.shop_id}'})">
+				<i class="icons i-shop-category">
+				</i>
+				<div>
+					宝贝分类
+				</div>
+			</div>
+		</li>
+		<li>
+			<div class="menu hover" onclick="openWin({name:'shop_rate',url:'/Shop/rate/shop_id/{$_GET.shop_id}'})">
+				<i class="icons i-shop-rate">
+				</i>
+				<div>
+					用户评价
+				</div>
+			</div>
+		</li>
+		<li>
+			<div class="menu hover" onclick="openWin({name:'shop_contact',url:'/Shop/contact/shop_id/{$_GET.shop_id}'})">
+				<i class="icons i-shop-contact">
+				</i>
+				<div>
+					联系客服
+				</div>
+			</div>
+		</li>
+	</ul>
+</footer>
+
+<include file="Public:r_layer" />
+
+<script id="tpl_goods_rand" type="text/html">
+<div class="box">
+	<div class="row">
+	<% for(i=0;i<data.length;i++){ %>
+		<% if(data[i].attr_list != null){ %>
+		<div class="col-2">
+			<div class="p10 border m5 hover" onclick="openWin({name:'goods_view',url:'<%= data[i].attr_list[0].detail_url %>'})">
+				<img src="<%= data[i].images %>" alt="<%= data[i].goods_name %>">
+				<div class="goods_name lh2-18px"><%= data[i].goods_name %></div>
+				<div>￥<span class="price text-danger"><%= data[i].attr_list[0].price %></span></div>
+			</div>
+		</div>
+		<% } %>
+	<% } %>
+	</div>
+	<div class="clearfix"></div>
+</div>	
+</script>
+
+<script id="tpl_shop_goods_list" type="text/html">
+    <% for (var i = 0; i < data.length; i ++) { %>
+		<% if(data[i].attr_list != null){ %>
+		<div class="line-box-m row hover" onclick="openWin({name:'goods_view',url:'<%= data[i].attr_list[0].detail_url%>'})">
+			<div class="col-5"><img src="<%= data[i].images %>" alt="<%= data[i].goods_name %>"></div>
+			<div class="col-5x4">
+				<div class="pl10">
+					<div class="goods_name lh2-20px"><%= data[i].goods_name %></div>
+					<div class="text-gray">累计售出：<%= data[i].sale_num %></div>
+					<div><span class="text-danger">￥<%= data[i].price%></span><span class="text-gray">，奖励 <%= (data[i].score_ratio * 100 * data[i].price).toFixed(2) %> 积分</span></div>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<% } %>
+    <% } %>
+
+</script>
+
+<script id="tpl_shop_header" type="text/html">
+		<div class="love-icon">
+			<i class="icons icons-30px i-star" onclick="shop_fav_add(<%= data.id %>)"></i>
+		</div>
+		<div class="row" style="padding-top:15px">
+			<div class="col-10" style="width:20px;">&nbsp;</div>
+			<div class="col-20" width="70px">
+				<img src="<%= data.shop_logo %>" width="70" height="70" class="img-circle">
+			</div>
+			<div class="col-60">
+				<div class="pl10" style="padding-top:10px">
+					<div class="ft16 b"><%= data.shop_name %></div>
+					<div>综合评分：<%= data.fraction %></div>
+				</div>
+			</div>
+		</div>
+</script>
+
+<script>
+fixBar();
+// 获取店铺商品列表
+ajax_post({
+	url:'/Api/apis',
+	data:{
+			goods_rand:{apiurl:'/Shop/goods_rand',shop_id:'{$_GET.shop_id}',imgsize:320,no_sign:'imgsize'},
+			shop_info:{apiurl:'/Shop/shop_info',shop_id:'{$_GET.shop_id}'},
+			cart_num:{apiurl:'/Cart/cart_total',is_openid:1}
+		}
+},function(ret){
+	if( ret.goods_rand.code == 1 ){
+		//ret.goods_rand.data[0].attr_list=null;
+		var html = template('tpl_goods_rand',{data:ret.goods_rand.data});
+		
+		if(ret.shop_info.data.banner){
+			html = ret.shop_info.data.banner + html;
+		}
+		
+		$('.page.active .tabs-content .tabs-pane').eq(0).find('.goods-rand').html(html);
+		
+	} else if(ret.goods_rand.code == 301) {
+		gourl(ret.goods_rand.data.domain);
+	}
+	
+	if(ret.shop_info.code==1){
+		var html=template('tpl_shop_header',{data:ret.shop_info.data});
+		$('.page.active .shop-header').html(html);
+		
+		//满减活动图片显示
+		if(ret.shop_info.data.full_dec_img){
+			var html = '<div class="full_dec_box"><div class="full_dec_img" onclick="$(this).closest(\'.full_dec_box\').remove()"><img src="'+ret.shop_info.data.full_dec_img+'" alt="满减活动图片"></div></div>';
+			$('.page.active').append(html);
+		}
+	} else if(ret.shop_info.code == 301) {
+		gourl(ret.shop_info.data.domain);
+	}
+	
+	//购物车数量
+	if(ret.cart_num.code==1 && ret.cart_num.data.num > 0){
+		$(".cart_total_num").removeClass('hide').html(ret.cart_num.data.num);
+	}else{
+		$(".cart_total_num").addClass('hide').html(0);
+	}
+});	
+
+
+var shop_goods_data={apiurl:'/Shop/goods_list',shop_id:'{$_GET.shop_id}',imgsize:160,no_sign:'p,pagesize,q,imgsize,sid'};
+
+$('.page.active .tabs .tabs-item').each(function(index){
+	var obj=$(this);
+	var index;
+	
+	obj.click(function(){
+		$(this).closest('.tabs').find('.tabs-item').removeClass('active');
+		$(this).addClass('active');
+		
+		$('.page.active .tabs-content .tabs-pane').removeClass('active').eq(index).addClass('active');
+		
+		var init = $(this).data('init');
+		if(init != 1){
+			$(this).data({init:1});		
+			switch(index){
+				case 1:
+					//shop_goods_pagelist(shop_goods_data);		
+					$('.page.active .tabs-content .tabs-pane').eq(index).data({active:1});
+					shop_goods_pagelist($('.page.active .tabs-content .tabs-pane').eq(index).find('.pagelist'));
+				break;
+				case 2:
+					ajax_post({
+						url:'/Api/api',
+						data:{apiurl:'/Shop/goods_new',shop_id:'{$_GET.shop_id}',imgsize:320,no_sign:'imgsize'}
+					},function(ret){
+						if( ret.code == 1 ){
+							var html = template('tpl_goods_rand',{data:ret.data});
+							$('.page.active .tabs-content .tabs-pane').eq(index).data({active:1}).html(html);
+							
+						}
+					});						
+				break;
+				case 3:
+					ajax_post({
+						url:'/Api/api',
+						data:{apiurl:'/Shop/goods_hot',shop_id:'{$_GET.shop_id}',imgsize:320,no_sign:'imgsize'}
+					},function(ret){
+						if( ret.code == 1 ){
+							var html = template('tpl_goods_rand',{data:ret.data});
+							$('.page.active .tabs-content .tabs-pane').eq(index).data({active:1}).html(html);
+							
+						}
+					});						
+				break;
+				case 4:
+					ajax_post({
+						url:'/Api/api',
+						data:{apiurl:'/Shop/goods_sale',shop_id:'{$_GET.shop_id}',imgsize:320,no_sign:'imgsize'}
+					},function(ret){
+						if( ret.code == 1 ){
+							var html = template('tpl_goods_rand',{data:ret.data});
+							$('.page.active .tabs-content .tabs-pane').eq(index).data({active:1}).html(html);
+							
+						}
+					});						
+				break;				
+			}
+			
+		}
+	});
+
+});
+	
+	
+	function shop_goods_pagelist(obj){
+		var obj;
+		var data = shop_goods_data;
+		
+		var sid = $('.page.active .search-menu').data('sid');
+		if(sid != undefined) data.sid = sid;
+		
+		pagelist({
+
+			data:data,
+			success:function(ret){
+				var html=template('tpl_shop_goods_list',{data:ret.data.list});
+				if(obj.data('p')==2){
+					obj.html(html);					
+				}else obj.append(html);
+				
+				
+			},
+			error:function(ret){
+				obj.html(no_data_text);
+			}
+		});
+	}
+	
+	//添加关注
+	function shop_fav_add(shop_id){
+		ajax_post({
+			url:'/Api/api',
+			data:{apiurl:'/ShopFav/add',is_openid:1,shop_id:shop_id}
+		},function(ret){
+			valert(ret);
+		});
+	}
+	
+	
+	function shop_category2(id){
+
+		$('.page.active .search-menu').data({sid:id});
+		$('.page.active section').data({p:'',allpage:''});
+		$('.page.active .tabs-content .tabs-pane').eq(1).find('.pagelist').html('');
+		$('.page.active .tabs-content .tabs-pane').eq(1).find('.load-more').removeClass('active');
+		
+		if($('.page.active .tabs .tabs-item').eq(1).hasClass('active'))	{			
+		}
+		else $('.page.active .tabs .tabs-item').eq(1).click();
+		
+		shop_goods_pagelist($('.page.active .tabs-content .tabs-pane').eq(1).find('.pagelist'));		
+
+	}
+	
+	
+</script>
+<include file="Public:shop_collect" />

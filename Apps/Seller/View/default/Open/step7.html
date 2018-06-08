@@ -1,0 +1,30 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body">
+	<include file="Public:nav" />
+	<div class="container mb30">
+		<include file="Public:side" />
+		<div class="w980 fl">
+			<div class="bor_der">
+				<div class="bg_f1 clearfix fs14 text_44 tle_R">
+					<a class="fl plr15 line40 ml-1 active" href="javascript:;"><empty name="data.content">等待审核<else />确认已签订合同</empty></a>
+				</div>
+				
+				<!-- 主体部分 -->
+				<div class="pd10">
+					<empty name="data.content">
+						{:W('Common/Builder/nors', array('param' => array('text' => '<a class="btn btn-success" href="javascript:;"><i class="fa fa-check"></i>等待审核</a>')))}
+					<else />
+						{$data.content}
+					</empty>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</block>
+<block name="css"></block>
+<block name="script">
+<script>
+</script>
+</block>

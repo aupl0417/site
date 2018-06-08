@@ -1,0 +1,81 @@
+<extend name="Seller@Public:base" />
+<block name="body">
+    <div class="centent_body">
+        <!-- to do your html codeing -->
+        <div class="revision_bg">
+            <div class="container ptb_size_lg clearfix">
+                <!-- 左侧导航 -->
+                <include file="Public:sideNav" />
+                <!-- 左侧导航结束 -->
+
+                <div class="revisionRight pd15" style="width: 1020px"><!-- 右侧内容 -->
+                    <div class="clearfix revisionOrderTab sid-active" data-sid="{$function}">
+                        <a class="fr btn btn-primary" href="{:U('/subAccount/create')}">创建子账号</a>
+                        <a class="fr btn btn-primary mr10" href="{:U('/subAccount/apply')}">申请增额</a>
+                        <a class="orderOption" data-sid="index" href="{:U('/subAccount')}">子账号管理</a>
+                        <a class="orderOption" data-sid="applyList" href="{:U('/subAccount/applyList')}">申请列表</a>
+                    </div>
+
+                    <div class="content">
+                        <empty name="data.list">
+                            {:W('Common/Builder/nors', array('param' => array('text' => $data['msg'])))}
+                            <else />
+                            <volist name="data.list" id="vo">
+                                <div class="alert solid_b">
+                                    <a href="javascript:;" data-title="删除提醒" data-id="{$vo.id}" class="fr text_yellow fs14 btn-delete">删除</a>
+                                    <in name="vo.status" value="1,3">   <!-- 审核中或未通过的情况下可以编辑修改 -->
+                                        <a href="{:U('/subAccount/changeApply', ['id' => $vo['id']])}" class="fr text_blue fs14 mr10">修改</a>
+                                    </in>
+                                    <span style="color: #b8b8b8">申请理由：{$vo.reason} [申请 {$vo.num} 个] [{$vo.atime}] <span class="text_green">[{$vo.statusName}]</span></span>
+                                    <br />
+                                    <notempty name="vo.reason2"><p style="color: #e51400; padding-top: 5px">乐兑回复：{$vo.reason2} [{$vo.dotime}]</p></notempty>
+                                </div>
+                            </volist>
+                            <div class="page-box col-xs-12 text-center">
+                                {:page_html($data['pageinfo'])}
+                            </div>
+                        </empty>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- my codeing over -_-   -->
+
+    </div>
+</block>
+
+<block name="css">
+
+</block>
+
+<block name="script">
+    <!-- to do your javascript codeing -->
+    <script>
+        $(document).ready(function() {
+            $(".btn-delete").click(function () {
+                var d = $(this).data();
+                vmodal({
+                    title: '删除提示',
+                    msg: '您真的要删除吗?',
+                    class: 'text-center',
+                    confirm: 1,
+                    footer: false,
+                    width: '600px',
+                }, function (ret) {
+                    $(".modal-ok").click(function () {
+                        ajax_post({
+                            url: '__SELF__?ret=/SellerSubAccount/delApply',
+                            data: {id: d.id},
+                        }, function (ret) {
+                            talert({status: ret.code, msg: ret.msg});
+                            if (ret.code == 1) {
+                                setTimeout("ref()", 1000);
+                            }
+                        })
+                    })
+                })
+            });
+        });
+    </script>
+</block>

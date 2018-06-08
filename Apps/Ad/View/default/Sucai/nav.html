@@ -1,0 +1,10 @@
+
+<div class="mb10 mt10">
+    <div class="clearfix">
+        <span class="fl mt20"><a class="layui-btn layui-btn-small <if condition='$t eq ""'>layui-btn-danger<else/>layui-btn-primary</if>" href="{:U('/Sucai/index')}">全部({$tongji.sucai.all|default='0'})</a></span>
+        <span class="fl mt20 ml10"><a class="layui-btn layui-btn-small <if condition='$t eq "1"'>layui-btn-danger<else/>layui-btn-primary</if>" href="{:U('/Sucai/index',['t' => '1'])}">已审核({$tongji.sucai.1|default='0'})</a></span>
+        <span class="fl mt20 ml10"><a class="layui-btn layui-btn-small <if condition='$t eq "."'>layui-btn-danger<else/>layui-btn-primary</if>" href="{:U('/Sucai/index',['t' => '0'])}">待审核({$tongji.sucai.0|default='0'})</a></span>
+        <span class="fl mt20 ml10"><a class="layui-btn layui-btn-small <if condition='$t eq "2"'>layui-btn-danger<else/>layui-btn-primary</if>" href="{:U('/Sucai/index',['t' => '2'])}">审核未通过({$tongji.sucai.2|default='0'})</a></span>
+        <div class="fr"><a href="{:U('/Sucai/create')}" class="layui-btn mt10 mb10 mr5 fs16"> 提交素材</a></div>
+    </div>
+</div>

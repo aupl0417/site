@@ -1,0 +1,113 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			<div class="row">
+				<div class="col-20">&nbsp;</div>
+				<div class="col-60">
+					<div class="input-search-box" >
+						<input type="text" id="q" name="q" placeholder="搜索本店商品" onclick="openWin({name:'search',url:'/Goods/search/shop_id/{$_GET.shop_id}'})" />
+					</div>				
+				</div>
+				<div class="col-20"></div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="r">
+			<i class="icons i-cart" onclick="openWin({name:'cart',url:'/Cart/index',logined:true})"></i>	
+		</div>
+	</div>
+</header>
+
+<!--主体-->
+<section>
+	<div class="shop-header" style="background-image:url(../Public/Images/header/{:rand(1,14)}.jpg);">
+
+	</div>
+	<div class="line-box nobg noicon hover">
+		<div class="title">店铺信息</div>
+	</div>
+	<div class="shop_info"></div>
+
+	
+	
+</section>
+
+
+<script id="tpl_shop_info" type="text/html">
+	<div class="line-box row noicon hover">
+		<div class="col-30">店铺名称</div>
+		<div class="col-70 text-right text-gray"><%= data.shop_name %></div>
+	</div>
+	<div class="line-box row noicon hover">
+		<div class="col-30">综合评分</div>
+		<div class="col-70 text-right text-gray"><%= data.fraction %></div>
+	</div>
+	<div class="line-box row noicon hover">
+		<div class="col-30">手机</div>
+		<div class="col-70 text-right text-gray"><%= data.mobile %></div>
+	</div>
+	<div class="line-box row noicon hover">
+		<div class="col-30">电话</div>
+		<div class="col-70 text-right text-gray"><%= data.tel %></div>
+	</div>
+	<div class="line-box row noicon hover">
+		<div class="col-30">QQ</div>
+		<div class="col-70 text-right text-gray"><%= data.qq %></div>
+	</div>
+	<div class="line-box row noicon hover">
+		<div class="col-30">旺旺</div>
+		<div class="col-70 text-right text-gray"><%= data.wang %></div>
+	</div>
+	<div class="line-box row noicon hover">
+		<div class="col-30">邮箱</div>
+		<div class="col-70 text-right text-gray"><%= data.email %></div>
+	</div>
+	<div class="line-box row noicon hover">
+		<div class="col-30">地区</div>
+		<div class="col-70 text-right text-gray"><%= data.province %> <%= data.city %> <%= data.district %> <%= data.town %></div>
+	</div>
+	<div class="line-box row noicon hover">
+		<div class="col-30">货源</div>
+		<div class="col-70 text-right text-gray"><%= data.huoyan %></div>
+	</div>
+	<div class="line-box-m row noicon hover">
+		<div class="col-30">介绍</div>
+		<div class="col-70 text-gray"><%= data.about %></div>
+		<div class="clearfix"></div>
+	</div>
+</script>
+
+
+
+<script>
+fixBar(1);
+// 获取店铺商品列表
+ajax_post({
+	url:'/Api/api',
+	data:{apiurl:'/Shop/shop_info',shop_id:'{$_GET.shop_id}'}
+},function(ret){	
+	if(ret.code==1){
+		var html=template('tpl_shop_header',{data:ret.data});
+		$('.page.active .shop-header').html(html);
+		
+		var html=template('tpl_shop_info',{data:ret.data});
+		$('.page.active .shop_info').html(html);
+	}
+});	
+
+
+	//添加关注
+	function shop_fav_add(shop_id){
+		ajax_post({
+			url:'/Api/api',
+			data:{apiurl:'/ShopFav/add',is_openid:1,shop_id:shop_id}
+		},function(ret){
+			valert(ret);
+		});
+	}
+	
+	
+</script>

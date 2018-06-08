@@ -1,0 +1,46 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			代理购买
+		</div>
+		<div class="r">
+			<div class="text" onclick="openWin({name:'my_agent',url:'/Upgrade/my_agent'})">我的代理</div>
+		</div>
+	</div>
+</header>
+<section>
+	<div class="load-body">数据加载中……</div>	
+</section>
+
+<script id="agent_level" type="text/html">
+	<div class="line-box sm nobg noicon text-gray">请选择您要购买的代理级别</div>
+    <% for (var i = 0; i < data.length; i ++) { %>
+		<div class="line-box" onclick="openWin({name:'agent_order',url:'/Upgrade/agent_order/level/<%= data[i].id %>',close:true,logined:true})">
+			<div class="title"><%= data[i].level_name%></div>
+		</div>
+    <% } %>
+
+</script>
+
+<script>
+	fixBar(1);
+	
+	ajax_post({
+		url:'/Api/api',
+		data:{apiurl:'/UserUpgrade/agent_level'},
+	},function(ret){
+		if(ret.code==1){			
+			var html = template('agent_level', {data:ret.data});
+			$('.page.active section').html(html);
+			hover('.page.active section');
+		}else if(ret.code==3){
+			$('.page.active section').html(no_data_text);
+		}
+	});
+	
+
+	
+</script>

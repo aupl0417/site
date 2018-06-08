@@ -1,0 +1,83 @@
+<form  data-id="#form"  class="form-horizontal vform" >
+	<div class="form-group f-type">
+		<label class="control-label col-xs-3">同义词分类<span class="required" aria-required="true">*</span></label>
+		<div class="col-xs-7">
+			<div class="input-group">
+				<div>
+					<select name="type" class="form-control type" style="">
+						<option value="">请选择分类</option>
+						<volist name="rs" id="data" >
+							<option value="{$data.id}">{$data.category_name}</option>
+						</volist>
+					</select>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="form-group f-status">
+		<label class="control-label col-xs-3">同义词状态<span class="required" aria-required="true">*</span></label>
+		<div class="col-xs-7">
+			<div class="input-group">
+				<div>
+					<select name="type" class="form-control status">
+						<option value="1">正常</option>
+						<option value="0">停用</option>
+					</select>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="form-group f-reason">
+		<label class="control-label col-xs-3">新增同义词<span class="required" aria-required="true">*</span></label>
+		<div class="col-xs-7">
+			<div class="input-group">
+				<div>
+					<textarea name="data" placeholder="请输入新增的同义词,一行一对,用逗号隔开。已存在或者不符合要求的同义词将直接过滤掉！" class="form-control synonym_data"  rows="10"></textarea>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="form-group f-">
+		<label class="control-label col-xs-3"> </label>
+		<div class="col-xs-7">
+			<div class="input-group">
+				<div>
+					<button type="button" class="btn btn-danger btn-150px logs-add"><i class="fa fa-check"></i> 提交</button>
+				</div>
+			</div>
+		</div>
+	</div>		
+</form>
+
+<script>
+$(".logs-add").click(function(){
+	var type_value=$(".type").val();
+	if(!type_value){
+		valert({status:'warning',msg:'请选择同义词分类'});
+		return false;
+	}
+	var value=$(".synonym_data").val();
+	if(!value){
+		valert({status:'warning',msg:'请输入新增同义词'});
+		return false;
+	}
+	var status_value=$(".status").val();
+	if(!status_value){
+		valert({status:'warning',msg:'请选择同义词状态'});
+		return false;
+	}
+	ajax_post({
+		url:'__URL__/save_batch_add',
+		data:{data:value,sid:type_value,status:status_value},
+	},function(ret){
+		valert({status:ret.status,msg:ret.msg});
+		if(ret.status=='success'){
+			setTimeout(function(){
+				ref();
+			},500);
+		}
+	});
+});
+
+</script>

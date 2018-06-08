@@ -1,0 +1,167 @@
+<include file="Public:header" />
+		<div class="page-group">
+			<div id="page-shop-contact" class="page" data-shop_id="{$_GET.shop_id}">
+				<!-- 标题栏 -->
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left back" href="/"></a>
+					<h1 class="title">联系卖家</h1>
+					<a class="icon iconfont icon-category pull-right ml5 ac-menu" onclick="top_menu()"></a>
+				</header>
+
+				<!-- 浮动导航 -->
+				<include file="Public:fixed-menu" />
+				
+				
+				<!-- 这里是页面内容区 -->		
+				<div class="content">
+					<!--店招-->
+					<div class="shop-header">
+						<div class="fav" id="ac-fav" data-shop_id="{$_GET.shop_id}">
+							<i class="iconfont icon-xihuan {:$info['is_fav']>0?'text-red':''}"></i> 关注
+						</div>
+						<div class="header-bg" style="background-image:url(../Public/images/header/{:rand(1,14)}.jpg);"></div>
+						<div class="shop-info-box">
+							<div class="logo">
+								<img class="lazyload img-circle border-1px bg-white" data-sizes="auto" data-src="{:myurl($info['shop_logo'],50)}" alt="店铺logo" src="../Public/images/nopic.gif" width="50" height="50">
+							</div>
+							<div class="shop-info">
+								<a href="javascript:;" data-url="/Shop/index/shop_id/{$_GET.shop_id}">
+									<div class="shop-name">{$info.shop_name} <i class="iconfont icon-qianjin text-red"></i></div>
+									<div class="fav-num">{$info.fav_num}人关注</div>
+								</a>
+							</div>
+						</div>
+					</div>	
+					<div class="bg-white border-d">
+						<div class="row shop-fraction">
+							<div class="col-33">
+								<div class="text-red">{$info.fraction_desc}</div>
+								<div class="text-gray">实物描述</div>
+							</div>
+							<div class="col-33">
+								<div class="text-red">{$info.fraction_service}</div>
+								<div class="text-gray">服务态度</div>								
+							</div>
+							<div class="col-33">
+								<div class="text-red">{$info.fraction_speed}</div>
+								<div class="text-gray">发货速度</div>								
+							</div>
+						</div>					
+					</div>
+					<!--菜单-->
+					<div class="shop-menu">
+						<div class="row">
+							<div class="col-50">
+								<a href="/Shop/goods/shop_id/{$_GET.shop_id}">
+									{$info.goods_num}								
+									<div class="text">全部商品</div>
+								</a>
+							</div>
+							<div class="col-50 border-l">
+								<a href="/Shop/best/shop_id/{$_GET.shop_id}">
+									{$info.best_num}	
+									<div class="text">促销</div>		
+								</a>
+							</div>
+						</div>
+					</div>
+					
+					
+					<!--联系信息-->
+					<div class="list-block">
+						<ul>
+							<li>
+								<div class="item-content">
+									<div class="item-media"><i class="icon iconfont icon-denglu"></i></div>
+									<div class="item-inner">
+										<div class="item-title">卖家昵称</div>
+										<div class="item-after">{$info.nick}</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="item-content">
+									<div class="item-media"><i class="icon iconfont icon-shoujishuma"></i></div>
+									<div class="item-inner">
+										<div class="item-title">手机号码</div>
+										<div class="item-after">{$info.mobile}</div>
+									</div>
+								</div>
+							</li>
+							<notempty name="info.tel">
+							<li>
+								<div class="item-content">
+									<div class="item-media"><i class="icon iconfont icon-shouhouguanli"></i></div>
+									<div class="item-inner">
+										<div class="item-title">电话号码</div>
+										<div class="item-after">{$info.tel}</div>
+									</div>
+								</div>
+							</li>
+							</notempty>
+							<notempty name="info.qq">
+							<li>
+								<div class="item-content">
+									<div class="item-media"><i class="icon iconfont icon-qq"></i></div>
+									<div class="item-inner">
+										<div class="item-title">QQ号码</div>
+										<div class="item-after">{$info.qq}</div>
+									</div>
+								</div>
+							</li>
+							</notempty>
+							<notempty name="info.email">
+							<li>
+								<div class="item-content">
+									<div class="item-media"><i class="icon iconfont icon-biaoqian1"></i></div>
+									<div class="item-inner">
+										<div class="item-title">电子邮箱</div>
+										<div class="item-after">{$info.email}</div>
+									</div>
+								</div>
+							</li>	
+							</notempty>
+							<li>
+								<div class="item-content">
+									<div class="item-media"><i class="icon iconfont icon-shouhuodizhi"></i></div>
+									<div class="item-inner">
+										<div class="item-title">所在地区</div>
+										<div class="item-after">{$info.province} {$info.city} {$info.district} {$info.town}</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="item-content">
+									<div class="item-media"><i class="icon iconfont icon-wenhua"></i></div>
+									<div class="item-inner">
+										<div class="item-title">详细地址</div>
+										<div class="item-text" style="max-width:70%">{$info.street}</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="item-content">
+									<div class="item-media"><i class="icon iconfont icon-guanyu"></i></div>
+									<div class="item-inner">
+										<div class="item-title">店铺简介</div>
+										<div class="item-text" style="max-width:70%">{$info.about}</div>
+									</div>
+								</div>
+							</li>
+					
+						</ul>
+					</div>			
+									
+					
+					
+					
+				</div>			
+				
+			</div>		
+
+		
+		</div>	
+		
+
+<include file="Public:script" />
+<include file="Public:footer" />

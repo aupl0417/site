@@ -1,0 +1,93 @@
+<include file="Public:header" />
+	<div class="page-group">
+		<div id="page-pay-result" class="page">
+			<!-- 标题栏 -->
+			<header class="bar bar-nav">
+				<a class="icon icon-left pull-left back-stop"></a>
+				<a class="icon iconfont icon-category pull-right ml5 ac-menu" onclick="top_menu()" data-no-cache="true"></a>
+				<h1 class="title">付款结果</h1>
+			</header>
+
+			<!-- 浮动导航 -->
+			<include file="Public:fixed-menu" />
+
+			<!-- 这里是页面内容区 -->	
+			<div class="content">
+				<div class="list-block media-list">
+					<ul>
+						<li>
+							<div class="item-content">
+								<div class="item-inner">
+									<div class="item-title-row">
+										<div class="item-title">充值结果</div>
+										<div class="item-after">
+											<if condition="$res['status'] eq 2">
+											<span class="text-success">{$res.msg}</span>
+											<elseif condition="$res['status'] neq 2"/>
+											<span class="text-red">{$res.msg}</span>
+											</if>
+										</div>
+									</div>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="item-content">
+								<div class="item-inner">
+									<div class="item-title-row">
+										<div class="item-title">充值号码</div>
+										<div class="item-after">{$res.mobile}</div>
+									</div>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="item-content">
+								<div class="item-inner">
+									<div class="item-title-row">
+										<div class="item-title">充值面值</div>
+										<div class="item-after">{$res.desc}</div>
+									</div>
+								</div>
+							</div>
+						</li>							
+						<li>
+							<div class="item-content">
+								<div class="item-inner">
+									<div class="item-title-row">
+										<div class="item-title">充值订单号</div>
+										<div class="item-after">{$res.s_no}</div>
+									</div>
+								</div>
+							</div>
+						</li>							
+							<notempty name="res.trade_no">
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title-row">
+											<div class="item-title">第三方交易流水号</div>
+											<div class="item-after">{$res.trade_no}</div>
+										</div>
+									</div>
+								</div>
+							</li>	
+							</notempty>							
+					</ul>
+				</div>	
+				<div class="clearfix md10"></div>	
+				<div class="row bg-white text-center ptd10">
+					<if condition="$res['status'] eq 2">
+						<div class="text-center text-red md1">预计花费将于五分钟到账!</div>
+					<elseif condition="$res['status'] neq 2"/>
+						<div class="text-center text-red md1">{$res.msg}！</div>
+					</if>
+					<a href="/TellRecharge" class="btn button-danger button-fill btn-lg plr5">返回首页</a>
+				</div>
+			</div>	
+		</div>
+	</div>	
+		
+
+<include file="Public:script" />
+<include file="Public:footer" />

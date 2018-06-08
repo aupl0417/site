@@ -1,0 +1,79 @@
+<div class="p20 box">
+    <div class="row">
+        <div class="col-xs-4">
+            <p>
+                奖品类型：{$rs.name}
+            </p>
+            <p>
+                抽中次数：{$rs.count_winning}
+            </p>
+            <p>
+                添加时间：{$rs.atime}
+            </p>
+            <p>
+                修改时间：{$rs.etime}
+            </p>
+            <eq name="rs.type_id" value="3">
+                <p>
+                    赠送积分：{$rs.value}
+                </p>
+            </eq>
+        </div>
+        <div class="col-xs-4">
+            <div class="ft18 strong p10 border-d md20">未领完</div>
+            <lt name="rs.type_id" value="3">
+                <notempty name="rs.coupon">
+                    <volist name="rs.coupon" id="vo">
+                        <p>
+                            所属商家：{$vo.shop_name|default='-'}
+                        </p>
+                        <p>
+                            批次编号：{$vo.b_no|default='-'}
+                        </p>
+                        <p>
+                            可用时间：{$vo.sday} - {$vo.eday}
+                        </p>
+                        <p>
+                            消费限制：满 {$vo.min_price} 减 {$vo.price}
+                        </p>
+                        <p>
+                            领取数量：{$vo.get_num}
+                        </p>
+                        <p>
+                            使用数量：{$vo.use_num}
+                        </p>
+                        <p>----------------------------------------</p>
+                    </volist>
+                </notempty>
+            </lt>
+        </div>
+        <div class="col-xs-4">
+            <div class="ft18 strong p10 border-d md20">已领完</div>
+            <lt name="rs.type_id" value="3">
+                <notempty name="rs.r_coupon">
+                    <volist name="rs.r_coupon" id="vo">
+                        <p>
+                            所属商家：{$vo.shop_name|default='-'}
+                        </p>
+                        <p>
+                            批次编号：{$vo.b_no|default='-'}
+                        </p>
+                        <p>
+                            可用时间：{$vo.sday} - {$vo.eday}
+                        </p>
+                        <p>
+                            消费限制：满 {$vo.min_price} 减 {$vo.price}
+                        </p>
+                        <p>
+                            领取数量：{$vo.get_num}
+                        </p>
+                        <p>
+                            使用数量：{$vo.use_num}
+                        </p>
+                        <p>----------------------------------------</p>
+                    </volist>
+                </notempty>
+            </lt>
+        </div>
+    </div>
+</div>

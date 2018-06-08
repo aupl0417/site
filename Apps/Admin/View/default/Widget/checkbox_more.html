@@ -1,0 +1,5 @@
+<div class="ml50">
+	<volist name="data" id="dl">
+	<label class="{$vo.class} mr10" style="{$vo.style}"><input type="checkbox" class="i-grey-square" name="{$vo.name}[]" value="{$dl[$vo['field'][0]]}" {$dl[$vo['field'][0]]|input_checked=$vo['value'],'checked'} {$vo.attr} /> {$dl[$vo['field'][1]]}</label>
+	</volist>
+</div>

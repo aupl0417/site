@@ -1,0 +1,63 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			购买积分详情
+		</div>
+		<div class="r">
+			
+		</div>
+	</div>
+</header>
+<section>
+	<div class="load-body">数据加载中……</div>
+</section>
+
+
+<script id="tpl_score_orders_view" type="text/html">
+	<div class="line-box noicon fr-70 hover">
+		<div class="fl title">购买积分</div>
+		<div class="fr ft14 text-success">+<%= data.score %></div>
+	</div>
+	<div class="line-box noicon fr-gray fr-70 hover">
+		<div class="fl title">流水号</div>
+		<div class="fr"><%= data.s_no %></div>
+	</div>
+	<div class="line-box noicon fr-gray fr-70 hover">
+		<div class="fl title">创建时间</div>
+		<div class="fr"><%= data.atime %></div>
+	</div>
+	<div class="line-box noicon fr-gray fr-70 hover">
+		<div class="fl title">付款时间</div>
+		<div class="fr"><%= data.pay_time %></div>
+	</div>
+	<div class="line-box noicon fr-gray fr-70 hover">
+		<div class="fl title">实付金额</div>
+		<div class="fr"><%= data.pay_money %></div>
+	</div>
+	<div class="line-box noicon fr-gray fr-70 hover">
+		<div class="fl title">状态</div>
+		<div class="fr">已结算</div>
+	</div>
+</script>
+
+<script>
+	fixBar(1);
+	
+	ajax_post({
+		url:'/Api/api',
+		data:{apiurl:'/Score/view',is_openid:1,s_no:'{$_GET.s_no}'},
+	},function(ret){
+		if(ret.code==1){			
+			var html = template('tpl_score_orders_view', {data:ret.data});
+			$('.page.active section').html(html);
+			hover('.page.active section');
+		}else if(ret.code==3){
+			$('.page.active section').html(no_data_text);
+		}
+	});	
+
+	
+</script>

@@ -1,0 +1,79 @@
+<include file="Public:header" />
+<include file="Public:menu" />
+
+
+
+
+<!--焦点图-->
+<div id="slide-banner" class="carousel slide" data-ride="carousel">
+	<div class="carousel-inner">
+									
+	</div>
+					
+	<a class="left carousel-control" href="#slide-banner" data-slide="prev">
+		<span><i class="fa fa-chevron-left"></i></span>
+	</a>
+	<a class="right carousel-control" href="#slide-banner" data-slide="next">
+		<span><i class="fa fa-chevron-right"></i></span>
+	</a>	
+</div>
+
+
+
+<div class="w1200 p20">
+	<div class="md20">
+		<h4 class="b">入驻流程</h4>
+	</div>
+	<div class="row">
+		<div class="col-xs-3">
+			<img src="../Public/images/step_1.jpg" alt="步骤1">
+		</div>
+		<div class="col-xs-3">
+			<img src="../Public/images/step_2.jpg" alt="步骤2">
+		</div>
+		<div class="col-xs-3">
+			<img src="../Public/images/step_3.jpg" alt="步骤3">
+		</div>
+		<div class="col-xs-3">
+			<img src="../Public/images/step_4.jpg" alt="步骤4">
+		</div>
+	</div>
+</div>
+
+
+
+
+
+<script id="tpl_slide" type="text/html">
+	<% for(i=0;i<data.ads.length;i++){ %>
+		<div class="item text-center <%= i==0?"active":"" %>">
+			<a href="<%= data.ads[i].url %>" target="_blank">
+				<img src="<%= data.ads[i].images %>" alt="<%= data.ads[i].name %>">
+			</a>
+		</div>
+	<% } %>
+</script> 
+
+
+
+<include file="Public:copyright" />
+<include file="Public:js" />
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		api({
+			data:{apiurl:'/Ad/ads',position_id:'133'}
+		},function(ret){
+			if(ret.code==1){
+				var html = template('tpl_slide',{data:ret.data[133].data});
+				$('.carousel-inner').html(html);
+				
+
+			}
+		});
+	});
+
+
+</script>
+
+<include file="Public:footer" />

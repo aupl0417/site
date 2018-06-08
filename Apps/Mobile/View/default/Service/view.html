@@ -1,0 +1,327 @@
+<include file="Public:header" />
+		<div class="page-group">
+			<div id="page-service-view" class="page">
+				<!-- 标题栏 -->
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left back" href="/"></a>
+					<h1 class="title">售后详情</h1>
+					<a class="icon iconfont icon-category pull-right ml5 ac-menu" onclick="top_menu()"></a>
+				</header>
+
+				<!-- 浮动导航 -->
+				<include file="Public:fixed-menu" />
+				
+				<!-- 这里是页面内容区 -->		
+				<div class="content">		
+					<div class="orders-status-box md5">
+						<div class="row">
+							<div class="col-70">
+								<div class="status-name">{$rs.status_name}</div>
+								<div class="sub-text">{$rs.limit_time_name}</div>
+							</div>
+							<div class="col-30 text-center">
+								<i class="iconfont icon-weixiu"></i>
+							</div>
+						</div>	
+					</div>
+					
+					<!--操作-->
+					<div class="clearfix">		
+						<if condition="$rs.status eq 1">
+							<div class="p5 md5">
+								<div class="btn btn-white btn-lg btn-block btn-cancel" data-r_no="{$rs.r_no}" data-s_no="{$rs.s_no}">取消申请</div>
+							</div>
+						<elseif condition="$rs.status eq 2"/>
+							<div class="p5 md5">
+								<div class="row clearfix">
+									<div class="col-33">
+										<a class="btn btn-white btn-lg btn-block" href="__URL__/service_appeal/r_no/{$rs.r_no}">提出申诉</a>
+									</div>
+									<div class="col-33">
+										<div class="btn btn-white btn-lg btn-block btn-cancel" data-r_no="{$rs.r_no}" data-s_no="{$rs.s_no}">取消申请</div>
+									</div>
+									<div class="col-33">
+										<a class="btn btn-danger btn-trans btn-lg btn-block" href="__URL__/service_edit/s_no/{$rs.s_no}/r_no/{$rs.r_no}">修改申请</a>
+									</div>								
+								</div>	
+							</div>
+						<elseif condition="$rs.status eq 3"/>
+							<div class="p5 md5">
+								<div class="row">
+									<div class="col-50">
+										<div class="btn btn-white btn-lg btn-block btn-cancel" data-r_no="{$rs.r_no}" data-s_no="{$rs.s_no}">取消申请</div>
+									</div>								
+									<div class="col-50">
+										<a class="btn btn-danger btn-trans btn-lg btn-block" href="__URL__/service_send_express/s_no/{$rs.s_no}/r_no/{$rs.r_no}">寄出商品</a>
+									</div>
+								</div>		
+							</div>
+						<elseif condition="$rs.status eq 4"/>
+							<div class="p5 md5">
+								<div class="btn btn-white btn-lg btn-block btn-cancel" data-r_no="{$rs.r_no}" data-s_no="{$rs.s_no}">取消申请</div>
+							</div>
+						<elseif condition="$rs.status eq 5"/>	
+							<div class="p5 md5">
+								<div class="row">
+									<div class="col-50">
+										<a class="btn btn-white btn-lg btn-block" href="__URL__/service_appeal/r_no/{$rs.r_no}">提出申诉</a>
+									</div>
+									<div class="col-50">
+										<div class="btn btn-danger btn-trans btn-lg btn-block btn-cancel" data-r_no="{$rs.r_no}" data-s_no="{$rs.s_no}">取消申请</div>
+									</div>
+								</div>			
+							</div>
+						<elseif condition="$rs.status eq 6"/>
+							<div class="p5 md5">
+								<div class="row">
+									<div class="col-33">
+										<div class="btn btn-white btn-lg btn-block btn-cancel" data-r_no="{$rs.r_no}" data-s_no="{$rs.s_no}">取消申请</div>
+									</div>								
+									<div class="col-33">
+										<a class="btn btn-white btn-lg btn-block" href="__URL__/service_appeal/r_no/{$rs.r_no}">发起申诉</a>
+									</div>								
+									<div class="col-33">
+										<div class="btn btn-danger btn-trans btn-lg btn-block open-popup" data-popup=".popup-receive">确认收货</div>
+									</div>
+								</div>	
+							</div>
+						</if>						
+					</div>						
+				
+				
+				<div class="list-block media-list">
+					<ul>
+						<li>
+							<a href="/Service/logs/r_no/{$rs.r_no}" class="item-content item-link" data-no-cache="true">
+								<div class="item-media"><i class="iconfont icon-weixin1 text-info"></i></div>
+								<div class="item-inner">
+									<div class="item-title-row">
+										<div class="item-title">协商详情</div>
+										<div class="item-after">更多</div>
+									</div>
+								</div>
+							</a>
+						</li>
+						
+						<gt name="rs.logs.0.uid" value="0">
+							<if condition="$rs['logs'][0]['uid'] eq $_SESSION['user']['id']">
+							<li>
+								<div class="item-content">
+									<div class="item-media"><i class="iconfont icon-wode text-info"></i></div>
+									<div class="item-inner">
+										<div class="item-title-row">
+											<div class="item-title"><strong>自己</strong></div>
+											<div class="item-after">{$rs.logs.0.atime}</div>
+										</div>
+									</div>
+								</div>
+							</li>
+							<else />
+							<li>
+								<div class="item-content">
+									<div class="item-media"><i class="iconfont icon-dianpu text-yellow"></i></div>
+									<div class="item-inner">
+										<div class="item-title-row">
+											<div class="item-title"><strong>商家</strong></div>
+											<div class="item-after">{$rs.logs.0.atime}</div>
+										</div>
+									</div>
+								</div>
+							</li>
+							</if>
+						<else />
+							<li>
+								<div class="item-content">
+									<div class="item-media"><i class="iconfont icon-kefu text-red"></i></div>
+									<div class="item-inner">
+										<div class="item-title-row">
+											<div class="item-title"><strong>乐兑客服</strong></div>
+											<div class="item-after">{$rs.logs.0.atime}</div>
+										</div>
+									</div>
+								</div>
+							</li>
+						</gt>
+						
+						<li class="bg-gray2">
+							<div class="item-content2">
+								<div class="md5">
+									<div class="status-name">{$rs.logs.0.status_name}</div>
+								</div>
+								<div class="text">
+									描述：<span class="text-gray">{$rs.logs.0.remark}</span>
+								</div>
+								
+								<notempty name="rs.logs.0.images">
+									<div class="mt05"></div>
+									<div class="row">
+										<volist name="rs.logs.0.images" id="img">
+											<div class="col-20">
+												<img class="lazyload" data-sizes="auto" data-src="{:myurl($img,200)}" alt="晒图" src="../Public/images/nopic.gif" width="100%">
+											</div>
+										</volist>
+									</div>
+								</notempty>									
+								
+								
+								<if condition="$rs['logs'][0]['express_code'] neq '' or $rs['logs'][0]['address'] neq '' or $rs['logs'][0]['num'] gt 0 or $rs['logs'][0]['money'] gt 0 or $rs['logs'][0]['refund_express'] gt 0">
+								<div class="logs-sys-box">
+									<notempty name="rs.logs.0.express_code"><div>物流公司：{$rs.logs.0.express_company.company}，运单号：{$rs.logs.0.express_code}</div></notempty>
+									<notempty name="rs.logs.0.address"><div>{:$rs['logs'][0]['uid']== $_SESSION['user']['id'] ? '我的地址：':'商家地址：'}{$rs.logs.0.address}</div></notempty>
+									<div>
+										<gt name="rs.logs.0.num" value="0">售后商品数量 {$rs.logs.0.num} 件；</gt>
+									</div>
+								</div>
+								</if>
+								</div>
+							</li>
+						</ul>
+					</div>
+					
+					<div class="clearfix md5"></div>
+					<div class="list-block media-list">
+						<ul>
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title-row">
+											<div class="item-title">售后编号</div>
+											<div class="item-after">{$rs.r_no}</div>
+										</div>
+									</div>
+								</div>
+							</li>
+							<li class="bg-gray2">
+								<a href="/Goods/view/id/{$rs.orders_goods.attr_list_id}" class="item-content">
+									<div class="item-media">
+										<img class="lazyload" data-sizes="auto" data-src="{:myurl($rs['orders_goods']['images'],150)}" alt="商品主图" src="../Public/images/nopic.gif" width="60">
+									</div>
+									<div class="item-inner">											
+										<div class="item-title-row">
+											<div class="item-title">{$rs.orders_goods.goods_name}</div>
+											<div class="item-after hide">￥{$rs.orders_goods.price}</div>
+										</div>
+										<div class="item-subtitle">
+											<div class="pull-right text-gray hide">x{$rs.num}</div>
+											<div class="ft05">{$rs.orders_goods.attr_name}</div>
+										</div>									
+									</div>
+								</a>
+							</li>
+							<li>
+								<a href="javascript:;" data-url="/Shop/index/shop_id/{$rs.shop_id}" class="item-content item-link">
+									<div class="item-inner">
+										<div class="item-title-row">
+											<div class="item-title">店铺</div>
+											<div class="item-after">{$rs.shop.shop_name}</div>
+										</div>
+									</div>
+								</a>
+							</li>
+							<li>
+								<a href="/Orders/view/s_no/{$rs.s_no}" class="item-content item-link" data-no-cache="true">
+									<div class="item-inner">
+										<div class="item-title-row">
+											<div class="item-title">订单号</div>
+											<div class="item-after">{$rs.s_no}</div>
+										</div>
+									</div>
+								</a>
+							</li>								
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title-row">
+											<div class="item-title">售后类型</div>
+											<div class="item-after">{$rs.type_name}</div>
+										</div>
+									</div>
+								</div>
+							</li>							
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title-row">
+											<div class="item-title">售后数量</div>
+											<div class="item-after">{$rs.num}</div>
+										</div>
+									</div>
+								</div>
+							</li>	
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title-row">
+											<div class="item-title" style="min-width:3.5rem;">售后原因</div>
+											<div class="item-text">{$rs.reason}</div>
+										</div>
+									</div>
+								</div>
+							</li>	
+							<notempty name="rs.images.0">
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title-row">
+											<div class="item-title" style="min-width:3.5rem;">相关图片</div>
+											<div class="item-text" style="min-height: 56px;">
+												<volist name="rs.images" id="vo">
+												<img src="{:myurl($vo,50)}" class="m03">	
+												</volist>												
+											</div>
+										</div>
+									</div>
+								</div>
+							</li>
+							</notempty>							
+						</ul>
+					</div>
+					
+
+				</div><!--/content-->
+			</div>	
+
+		
+			<!--popup 确认收货-->
+			<div class="popup popup-receive popup-top50" style="overflow: hidden;height:100%">
+				<div class="close-popup btn-close">
+					<i class="iconfont icon-guanbi1"></i>
+				</div>
+				
+				<form name="form-receive" id="form-receive" onsubmit="return false">
+			
+					<!--账户信息-->
+					<div class="clearfix md5"></div>
+					<div class="p5 ft05 text-gray"><i class="iconfont icon-weibiaoti1"></i> 请确定您已收到货且无异议再执行此操作！</div>
+					
+					<div class="clearfix md5"></div>
+					<div class="list-block">
+						<ul>
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title label">安全密码</div>
+										<div class="item-input">
+											<input type="password" id="pay_password" name="pay_password" placeholder="请输入6位安全密码" maxlength="6" autocomplete="new-password">
+										</div>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+					<input type="hidden" name="r_no" id="r_no" value="{$rs.r_no}" />
+				</form>
+				
+				<div class="goods-footer fixed-bottom">
+					<div class="cart-btn">
+						<div class="btn-buy btn-submit-receive">确认收货</div>
+					</div>
+				</div>		
+			</div>			
+		
+		
+		</div>	
+		
+
+<include file="Public:script" />
+<include file="Public:footer" />

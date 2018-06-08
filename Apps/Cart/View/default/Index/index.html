@@ -1,0 +1,305 @@
+<extend name="Home@Public:base" />
+
+<block name="body">
+	<div class="centent_body pt40">
+		<div class="container">
+			<notempty name="data.code">
+				{:W('Common/Builder/nors', array('param' => array('text' => $data['msg'])))}
+			<else />
+				<form id="formadd" class="form-horizontal" data-url="">
+					<div class="clearfix">
+						<div class="solid_b fl plr20 text_red fs14" style="border-bottom:3px solid #c81623">全部商品（{$count.style_num}）</div>	
+						<div class="fr">
+							已选商品（不含运费）<span class="text_red allPrice">￥ <span>0.00</span></span>
+							<div class="btn btn-default btn-xs plr10 fr mt-8 ml10 btn-submit">结算</div>
+						</div>			
+					</div>
+		
+					<div class="solid_t mt-1 pd15">
+						<div class="row test_black fs14 strong">
+							<div class="col-xs-2">
+								<label class="square mr10 fl fs12"><input class="checkedAll" type="checkbox"><span></span></label>全选
+							</div>
+							<div class="col-xs-5 pl0">商品信息</div>
+							<div class="col-xs-1 pr0">单价（元）</div>
+							<div class="col-xs-2 text-center pr35">数量</div>
+							<div class="col-xs-1 pl0">金额（元）</div>
+							<div class="col-xs-1">操作</div>
+						</div>
+					</div>
+				
+					<volist name="data" id="vo">
+						<div class="mb20 icheckbox_square-grey">
+							<div class="clearfix pl15">
+								<label class="square mr10 fl shop_checked"><input type="checkbox"><span></span></label>
+								<strong class="mr10">店铺：{$vo.shop.shop_name}</strong>
+								<img class="mt-5" src="__NEW_DESIGN__images/contact_QQ.jpg">
+								<img class="mt-5" src="__NEW_DESIGN__images/contact_wang.jpg">
+								<notempty name="vo.activity">
+									<span class="ml10">可享受促销：</span>
+									<volist name="vo.activity" id="ac" key="ackey">
+										<span class="mr10">{$ackey}、{$ac.desc}
+											<eq name="ac.type_id" value="2">
+												<volist name="ac.goods" id="acGoods">
+													<a href="{:DM('item')}{:U('/index/index', ['id' => $acGoods['attr_list'][0]['id']])}" target="_blank"><img src="{:myurl($acGoods['images'], 20)}"></a>
+												</volist>
+											</eq>
+										</span>
+									</volist>
+								</notempty>
+							</div>
+							<div class="solid_last bor_der">
+								<volist name="vo.goods" id="goods">
+									<div class="ptb10 pl15 solid_b row mg0" <neq name="goods.status" value="1">style="background:#f0f0f0"</neq>>
+										<div class="col-xs-5 pd0 clearfix ">
+											<div class="fl mr10">
+												<label class="square mr10 fl list-checkbox <neq name="goods.status" value="1">disabled</neq>"><input <neq name="goods.status" value="1">class="disabled" disabled</neq> type="checkbox" name="ids[]" value="{$goods.id}" <eq name="goods.is_select" value="1"><eq name="goods.status" value="1">checked</eq></eq>><span></span></label>
+												<a target="_blank" href="{:DM('item')}{:U('/index/index', ['id' => $goods['attr_list_id']])}"><img width="80" src="{$goods['images']}"></a>
+											</div>					
+											<p class="line_tow strong"><a target="_blank" href="{:DM('item')}{:U('/index/index', ['id' => $goods['attr_list_id']])}">{$goods.goods_name}</a><br /><neq name="goods.status" value="1"><span class="text_red">当前商品已下架</span></neq></p>
+										</div>
+										<div class="col-xs-2 text_77">
+											{$goods.attr_name}</br>
+										</div>
+										<div class="col-xs-1">
+											<strong class="num_price">{$goods.price}</strong>
+										</div>
+										<div class="col-xs-2">
+											<div class="input-group no-margin pull-left" style="width:140px">
+												<span data-attr="{$goods.attr_list_id}" data-id="{$goods.id}" class="input-group-btn btn_bon">
+													<button type="button" class="btn btn-default btn-d"><i class="fa fa-minus"></i></button>
+												</span>
+												<input data-id="{$goods.attr_list_id}" type="text" class="form-control text-center goods_num" style="border-left:none" placeholder="数量" value="{$goods.num}" data-num="{$goods.num}">
+												<span data-attr="{$goods.attr_list_id}" data-id="{$goods.id}" class="input-group-btn btn_top">
+													<button type="button" class="btn btn-default btn-a"><i class="fa fa-plus"></i></button>
+												</span>
+											</div>
+										</div>
+										<div class="col-xs-1 pl0"><strong class="text_red fs16 total_price">{$goods.total_price}</strong></div>
+										<div class="col-xs-1 pr0">
+											<a onclick="addToFav('{$goods.goods_id}');" href="javascript:;">移入收藏夹</a>  </br>
+											<a onclick="removeToCart('{$goods.id}')" href="javascript:;">删除</a>
+										</div>
+									</div>
+								</volist>
+							</div>
+						</div>
+					</volist>
+				
+				
+					<div class="bor_der mb40" style="border-bottom:none">
+						<div class="clearfix">
+							<div class="pl15 fl clearfix mt15">
+								<label class="square mr10 fl"><input class="checkedAll" type="checkbox"><span></span></label>
+								<div class="fl">全选 </div>
+							</div>
+							<div class="fr mt-1">
+								<div class="fl mt10">
+									已选<strong class="text_red plr5 fs14 totalGoods">0</strong>件商品
+									<span class="plr20">合计（不含运费）：<strong class="text_red fs16 allPrice">￥<span>0.00</span></strong></span>
+								</div>
+								<div type="buttun" class="btn btn-danger btn-lg btn_m btn-submit" style="width:100px">结算</div>
+							</div>
+						</div>
+						<div class="solid_t mt-1"></div>	
+					</div>
+				</form>
+			</notempty>
+			<!-- 猜你喜欢 -->
+			{:W('Common/Side/like')}
+		</div>
+	</div>
+</block>
+
+<block name="script">
+<script>
+	$(document).ready(function() {
+		checkChecked();
+		
+		//后续操作单个选取
+		$(".icheckbox_square-grey input[type='checkbox']").change(function() {
+			checkChecked();
+		});
+		
+		$(".shop_checked input[type='checkbox']").change(function() {
+			if($(this).is(":checked") == true) {
+				$(this).parent().parent().parent().find("input[type='checkbox']").not(".disabled").prop('checked', true);
+			} else {
+				$(this).parent().parent().parent().find("input[type='checkbox']").not(".disabled").prop('checked', false);
+			}
+			checkChecked();
+		})
+		
+		$(".goods_num").change(function() {
+			var id		=	$(this).data('id');
+			var old_num =   $(this).attr('data-num');
+			var num 	=	$(this).val();
+			var obj_num = $(this);
+			var obj_total_price = $(this).parent().parent().next().children();
+			ajax_post({
+				url:'{:U("/run/authRun")}',
+				data:{attr_list_id:id,type:3,num:num},
+				headers : {Action : '{:enCryptRestUri("/Index/cartadd")}'},
+			},function(ret) {
+				if(ret.code == 1) {
+					obj_num.val(ret.data.num).attr('data-num',ret.data.num);
+					var totalPrice = ret.data.num * ret.data.price;
+					obj_total_price.html(toDecimal2(totalPrice));
+					checkChecked();
+				}else{
+					
+					obj_num.val(old_num);
+					talert({status:ret.code,msg:ret.msg});
+				}
+			});
+		});
+		
+		$(".checkedAll").change(function() {
+			if($(this).is(":checked") == true) {
+				$("input[type='checkbox']").not(".disabled").prop('checked', true);
+			} else {
+				$("input[type='checkbox']").not(".disabled").prop('checked', false);
+			}
+			checkChecked();
+		})
+		
+		$(".btn-submit").click(function() {
+			var ids = '';
+			$("input[name='ids[]']").each(function() {
+				if($(this).is(":checked") == true) {
+					ids += $(this).val() + ',';
+				}
+			})
+			if(ids == '' || ids == undefined) {
+				talert({status:0,msg:'请至少选择一款商品'});
+				return;
+			}
+			ajax_post({
+				url:'{:U("/run/authRun")}',
+				data:{ids:ids},
+				headers : {Action : ACTION},
+			},function(ret) {
+				if(ret.code == 1) {
+					gourl({url:'{:U("/confirm")}'});
+				} else {
+					talert({status:ret.code,msg:ret.msg});
+				}
+			});
+		});
+		
+		
+		/*数量递增递减*/
+		//加
+		$(".btn_top").click(function(){
+			var obj_total_price = $(this).parent().parent().next().children();
+			var obj_num = $(this).prev();
+			var d = $(this).data();
+			ajax_post({
+				url:'{:U("/run/authRun")}',
+				data:{attr_list_id:d.attr,type:1,num:1},
+				headers : {Action : '{:enCryptRestUri("/Index/cartadd")}'},
+			},function(ret) {
+				if(ret.code == 1) {
+					obj_num.val(ret.data.num).attr('data-num',ret.data.num);
+					var totalPrice = ret.data.num * ret.data.price;
+					obj_total_price.html(toDecimal2(totalPrice));
+					checkChecked();
+				}else{
+					talert({status:ret.code,msg:ret.msg});
+				}
+			});
+		});
+		//减
+		$(".btn_bon").click(function(){
+			var obj_total_price = $(this).parent().parent().next().children();
+			var obj_num = $(this).next();
+			var d = $(this).data();
+			ajax_post({
+				url:'{:U("/run/authRun")}',
+				data:{attr_list_id:d.attr,type:2,num:1},
+				headers : {Action : '{:enCryptRestUri("/Index/cartadd")}'},
+			},function(ret) {
+				if(ret.code == 1) {
+					obj_num.val(ret.data.num).attr('data-num',ret.data.num);
+					var totalPrice = ret.data.num * ret.data.price;
+					obj_total_price.html(toDecimal2(totalPrice));
+					checkChecked();
+				}else{
+					talert({status:ret.code,msg:ret.msg});
+				}
+			});
+		});
+	})
+
+	//移除购物车
+	function removeToCart(id) {
+		vmodal({
+			  title:'删除提示',
+			  msg:'您真的要删除吗?',
+			  class:'text-center',
+			  confirm:1
+		  },function(ret) {
+			  $(".modal-ok").click(function() {
+				  ajax_post({
+					  url:'{:U("/run/authRun")}',
+					  data:{id:id},
+					  headers : {Action : '{:enCryptRestUri("/Index/del")}'},
+				  },function(ret) {
+					  talert({status:ret.code,msg:ret.msg});
+					  if(ret.code == 1) {
+					   ref(); 
+					}
+				  })
+			  })
+		  })
+	}
+	
+	//收藏商品
+	function addToFav(id) {
+		ajax_post({
+			url:'{:U("/run/authRun")}',
+			data:{goods_id:id},
+			headers : {Action : '{:enCryptRestUri("/Index/favgoods")}'},
+		},function(ret) {
+			talert({status:ret.code,msg:ret.msg});
+		})
+	}
+	//为数字后面加两位小数
+	function toDecimal2(x) {
+        var f = parseFloat(x);    
+        if (isNaN(f)) {    
+            return false;    
+        }    
+        var f = Math.round(x*100)/100;    
+        var s = f.toString();    
+        var rs = s.indexOf('.');    
+        if (rs < 0) {    
+            rs = s.length;    
+            s += '.';    
+        }    
+        while (s.length <= rs + 2) {    
+            s += '0';    
+        }
+        return s;    
+    }
+	//把数据写进html
+	function writePrice(totalPrice, totalGoods) {
+		$(".totalGoods").html(totalGoods);					//已选商品
+		$(".allPrice span").html(toDecimal2(totalPrice));	//已选商品总额
+	}
+	
+	//遍历已选商品及价格总和
+	function checkChecked() {
+		var totalPrice	=	0;		//默认已选商品
+		var totalGoods	=	0;		//默认已选商品总额
+		$(".list-checkbox input[type='checkbox']").each(function() {
+			if($(this).is(":checked") == true) {
+				var price = $(this).parent().parent().parent().parent().find('.total_price').html();
+				totalPrice += parseFloat(price);
+				totalGoods++;
+			}
+		});
+		writePrice(totalPrice, totalGoods);
+	}
+</script>
+</block>

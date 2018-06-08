@@ -1,0 +1,41 @@
+.pt5{padding-top:0.5rem;}
+.pl5{padding-left:0.5rem;}
+.pr5{padding-right:0.5rem;}
+.pd5{padding-bottom:0.5rem;}
+.bg-white{background:#fff;}
+h4{text-align: center;margin: 0.2rem;font-size:1.1rem;}
+
+.bgimg{font-size:0px;}
+.bgimg img{width:100%;display:block;margin-top:-1px;}
+
+.link{position:relative;}
+.link .link-button {position: absolute;top: 0;height: 100%;}
+.link .link-button.link-1{left: 21%;width: 14%;}
+.link .link-button.link-2{left: 60%;width: 19%;}
+.link .link-button.link-3{left: 40%;width: 17%;top: 16%;height: 43%;}
+	
+	
+.red{background:#fdf8eb;}
+.red .link-goods-item{border:1px solid #fd5677}
+.red .shadow{box-shadow:0px 0px 20px #e6bac0;}
+.red .goods_price{color: #fd5677;}
+
+
+.green{background:#ddfbf1;}
+.green .link-goods-item{border:1px solid #229b74}
+.green .shadow{box-shadow:0px 0px 20px #d3eae2;}
+.green .goods_price{color: #229b74;}
+
+.pink{background:#fecfde;}
+.pink .link-goods-item{border:1px solid #f66d8e}
+.pink .shadow{box-shadow:0px 0px 20px #dbb3c0;}
+.pink .goods_price{color: #f66d8e;}
+
+.link-goods-l{background:url(../images/100.png) repeat-y}
+.link-goods-r{background:url(../images/101.png) repeat-y right}
+
+.link-goods-item{margin-bottom:0.5rem;width:30%;}
+.link-goods-item .goods_name{font-size:0.7rem;padding:0.2rem;height:2.2rem;line-height:1rem;overflow:hidden;}
+.link-goods-item .goods_price{font-size:0.5rem;padding:0.2rem;}
+.link-goods-item .goods_price span{font-size:0.7rem;}
+.link-goods-item .goods_price img{width:90%;}

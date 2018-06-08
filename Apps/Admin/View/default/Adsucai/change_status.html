@@ -1,0 +1,53 @@
+<form data-url="__URL__/change_status_save" id="form_status" class="form-horizontal vform">
+
+			{:W('Widget/buildform',array(array(
+				'field'		=>array(
+					array(
+						'formtype'		=>'radio',
+						'label'			=>'状态',
+						'name'			=>'status',
+						'data'			=>array(array(0,'等待审核'),array(1,'通过审核'),array(2,'拒绝审核')),
+						'field'			=>array(0,1),
+						'value'			=>$rs['status'],
+					),				
+					array(
+						'formtype'		=>'textarea',
+						'label'			=>'不符合要求原因',
+						'name'			=>'reason',
+						'is_need'		=>true,
+						'attr'			=>'maxlength="200"',
+					),
+					array(
+						'formtype'		=>'textarea',
+						'label'			=>'审核素材ID',
+						'name'			=>'id',
+						'attr'			=>'readonly',
+					),
+
+				),
+			),$rs))}
+			
+	<div class="p20 text-center">
+		<button type="submit" class="btn btn-primary btn-150px"><i class="fa fa-check"></i> 提交</button>
+	</div>
+<!--token-->
+
+</form>			
+<script>
+var id=new Array();
+$('input[type="checkbox"]:checked').each(function(index){
+	id[index]=$(this).val();
+});
+$('#form_status #id').val(id.join(','));
+
+iCheckClass();
+checkform({
+	formid:'#form_status',
+},function(ret){
+	valert(ret);
+	if(ret.status=='success'){
+		ref();
+	}
+});
+
+</script>

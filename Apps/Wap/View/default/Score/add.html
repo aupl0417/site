@@ -1,0 +1,118 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin({ref:true})"></i>
+		</div>
+		<div class="title">
+			购买积分
+		</div>
+		<div class="r">
+			<div class="text" onclick="openWin({name:'score_orders',url:'/Score/orders'})">购买记录</div>
+		</div>
+	</div>
+</header>
+<section>
+	<form id="form-score-add">
+		<div class="line-input row hover">
+			<div class="col-4 ft14">购买积分</div>
+			<div class="col-4x3">
+				<input name="score" id="score" placeholder="请输入要购买的积分" onblur="score_tips()">
+			</div>
+		</div>
+		<div class="line-box nobg noicon text-gray">
+			<span class="text-success">点击查看</span> 积分购买优惠规则
+		</div>
+		<div class="line-box row hover noicon">
+			<div class="col-4">消费现金</div>
+			<div class="col-4x3 text-right need-cash">
+				0.00
+			</div>
+		</div>
+		<div class="line-box nobg noicon text-gray">
+			我的现金账户：<span class="ac_cash text-success">0</span> 元 <span class="text-success" onclick="openWin({name:'recharge',url:'/Recharge/index'})">充值</span>
+		</div>	
+		<div class="line-input row hover">
+			<div class="col-4 ft14">安全密码</div>
+			<div class="col-4x3">
+				<input type="password" name="password_pay" id="password_pay" placeholder="请输入安全密码" maxlength="6">
+			</div>
+		</div>
+		<if condition="$_SESSION['user']['password_pay'] eq ''">
+		<div class="line-input row bobg">
+			<div class="col-100">尚未设置安全密码,&nbsp;&nbsp;<a class="text-success" href="javascript:openWin({name:'user_spp',url:'/User/spp',logined:true,ref:true})">马上去设置</a></div>
+		</div>
+		</if>
+		<div class="p10">
+			<div class="btn btn-lg btn-block btn-danger md10" onclick="score_add()">购买</div>
+		</div>
+		<input type="hidden" name="apiurl" value="/Score/score_pay">
+		<input type="hidden" name="is_openid" value="1">		
+	</form>
+</section>
+
+
+<script>
+	fixBar(1);
+	
+	ajax_post({
+		url:'/Api/api',
+		data:{apiurl:'/Account/account',is_openid:1},
+	},function(ret){
+		if(ret.code==1){			
+			$('.page.active .ac_cash').html(ret.data.ac_cash);
+			$('.page.active .ac_score').html(ret.data.ac_score);
+		}
+	});		
+
+	var min_score={:C('cfg.score')['min_score']};
+	var max_score={:C('cfg.score')['max_score']};
+	var ratio={:C('cfg.score')['ratio']};
+	
+	function score_tips(){
+		var data=getFormJson('#form-score-add');
+		var score=parseInt(data.score);
+		if(score<min_score){
+			valert({msg:'购买积分最低不得少于'+min_score+'分！'});
+			return false;
+		}
+		if(score>max_score){
+			valert({msg:'购买积分最高不得大于'+max_score+'分！'});
+			return false;
+		}
+		
+		var need_cash=Math.round(score * ratio *100)/100;
+		$('.page.active .need-cash').html(need_cash);
+	}
+	
+	function score_add(){
+		var data=getFormJson('#form-score-add');
+		if(data.score==''){
+			valert({msg:'请输入要购买的积分！'});
+			return false;
+		}
+		var score=parseInt(data.score);
+		if(score<min_score){
+			valert({msg:'购买积分最低不得少于'+min_score+'分！'});
+			return false;
+		}
+		if(score>max_score){
+			valert({msg:'购买积分最高不得大于'+max_score+'分！'});
+			return false;
+		}				
+		if(data.password_pay==''){
+			valert({msg:'请输入安全密码！'});
+			return false;
+		}			
+		ajax_post({
+			url:'/Api/api',
+			data:data,
+		},function(ret){
+			if(ret.code==1){			
+				openWin({name:'score_orders',url:'/Score/orders',close:true});
+			}else{
+				valert(ret);
+			}
+		});	
+	}
+	
+</script>

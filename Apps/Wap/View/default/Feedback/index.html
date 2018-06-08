@@ -1,0 +1,80 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			我要反馈
+		</div>
+		<div class="r">
+		</div>
+	</div>
+</header>
+<section>
+  <form id="feedbackForm" enctype="multipart/form-data" data-url="/Api/api">
+  	<div class="row md20">
+  		<textarea style="padding: 0px" id="content" name="content" rows="6" placeholder="请留下您宝贵的意见或者建议，我们将不断改善~"></textarea>
+	</div>
+
+
+	<div class="line-input row md20">
+		<input type="text" id="email" name="email" placeholder="输入您的邮箱，以便我们及时回复您">
+	</div>
+    
+    <div class="line-box-m hover" onclick="edit_face()">
+		<div class="fl ft30">
+			<img id="face" src="../Public/Images/up_load1.jpg" class="face" width="50" height="50">
+		</div>
+		<div class="clearfix"></div>
+	</div>
+    
+    <div class="p10 row">
+	 <div class="btn btn-lg btn-danger btn-block" onclick="card_add()">提交</div>
+		<input type="hidden" name="apiurl" value="/Feedback/add">
+		<input type="hidden" name="no_sign" value="images">
+    </div>
+</section>
+
+<include file="Public:d_layer" />
+<script type="text/javascript">
+  
+	fixBar(1);
+	function edit_face(){
+		vmodal({
+			title:'上传图片',
+			url:'__URL__/edit_face',
+			is_footer:false,
+		});
+	}
+	
+	function card_add(){
+		var data=getFormJson('#feedbackForm');
+		if(data.content==''){
+			valert({msg:'请输入您要反馈的内容！'});
+			return false;
+		}
+		if(data.email==''){
+			valert({msg:'请输入您的邮箱！'});
+			return false;
+		}
+	    var filter  = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+	    if (!filter.test(data.email.trim())) {
+		     valert({"status":"warning","msg":"您的电子邮件格式不正确"});
+		     return false;
+	    	 
+	     }
+	    data.images = $('.page.active #face').attr('src');
+		
+		ajax_post({
+			url:'/Api/api',
+			data:data,
+		},function(ret){
+			if(ret.code==1){	
+				valert({"status":"warning","msg":"反馈信息成功！"});
+				openWin({name:'feedbackadd',url:'/Ucenter/index',ref:true,close:true});
+			}else{
+				valert(ret);
+			}
+		});		
+	}
+</script>

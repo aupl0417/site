@@ -1,0 +1,72 @@
+<include file="Public:header" />
+<div class="navbar-fixed-top">
+	<div class="pull-right">
+		<div class="btn btn-primary btn-rad btn-trans m10" onclick="ref()"><i class="fa fa-refresh"></i> 刷新</div>
+	</div>
+	<ul class="nav-box2" data-page="__SELF__">
+		<li><a href="__URL__/vrpoint" class="active">商家违规分数</a></li>
+	</ul>
+</div>
+<notempty name="pagelist.list">
+<div class="m20">
+	<include file="search_box_vr" />
+	
+	<form id="formlist" name="formlist">
+		<div class="block-flat">
+			<div class="content">		
+				<include file="widget_pagelist" />			
+				
+				<div class="clearfix"></div>
+				<div class="row">
+					<div class="col-xs-10 text-center">
+						{$pagelist.page.page}
+					</div>
+					<div class="col-xs-2 text-right">
+						<div class="page-total">共 {$pagelist.allnum} 条记录，共 {$pagelist.allpage} 页</div>
+					</div>
+				</div>
+	
+			</div>
+			
+		</div>
+	
+	</form><!--/form-->
+
+	<div class="clearfix h50px"></div>
+	
+</div>
+
+
+<div class="navbar-fixed-bottom border-t">
+	<div class="buttom-bar bg-white-50">
+
+		<div class="row">
+			<div class="col-xs-2 pull-right">
+				<div class="input-group pull-right">
+					<select id="gopage" name="gopage" class="form-control">
+						<option value="1">跳转</option>
+						{$pagelist.page.gopage}
+					</select>					
+				</div>			
+			</div>
+		</div>
+	</div>
+</div>	
+
+<else />
+<div class="m20">
+	<include file="search_box_vr" />
+	<div class="text-center nors">
+		<div class="nors-tips md20">暂无记录！</div>
+	</div>
+</div>
+</notempty>
+
+
+
+<include file="Public:copyright" />
+<include file="Public:js" />
+<script>
+
+</script>
+<include file="Public:footer" />

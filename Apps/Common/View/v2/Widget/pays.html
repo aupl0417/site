@@ -1,0 +1,79 @@
+<h4 class="mb20 text_red text-center">￥ {$data.pay_price} 元</h4>
+<div style="width:450px;margin:0 auto;">
+	<volist name="pays" id="vo">
+		<div data-id="{$key}" class="alert alert-default alert-white rounded hover">
+			<div class="icon bg-d8d8d8"><i class="fa fa-check"></i></div>
+			<strong>{$vo.name}</strong><notempty name="vo.val"><span class="text_red ml10">{$vo.val}</span></notempty>
+		</div>
+	</volist>
+	<!-- <div data-id="3" class="alert alert-default alert-white rounded hover" id="alipay">
+		<div class="icon bg-d8d8d8"><i class="fa fa-check"></i></div>
+		<strong><a target="_blank">支付宝</a></strong>
+	</div> -->
+	
+	<if condition=" $data['pay_price'] gt $pays[1]['money'] and $data['pay_price']*100 gt $pays[2]['money']">
+		<div class="bg-warning pd10"">
+			<i class="fa fa-exclamation-circle fs16 fl text_yellow"></i>
+			<p class="ml20 mb0">你的账户余额不足，<a target="_blank" href="{:erp_url($cfg['erp']['domain']['pay'].'/assetCenter/recharge')}" class="text_red">立即充值</a></p>
+		</div>
+	</if>	
+	
+	<if condition="1 eq 0">
+		<p class="ml20 mb0">卖家的库存积分不足，<a  class="send_shop_sms text_red" style="cursor:pointer">短信通知卖家</a></p>
+	</if>
+	<empty name="account.a_payPwd">
+		<div class="bg-warning pd10">
+			<i class="fa fa-exclamation-circle fs16 fl text_yellow"></i>
+			<p class="ml20 mb0">您还未设置安全密码，只有在设置安全密码后才能购买商品，<a target="_blank" href="{:DM('my', '/change')}" class="text_red">立即设置安全密码</a></p>
+		</div>
+	<else />
+	{:W('Common/Builder/form', [['data' => $keyList, 'run' => '/run/authRun']])}
+		<div class="text-center">
+			<a href= "{:DM('Cart')}/Alipay/pay/s_no/{$data.s_no}" target="_blank" class="alipay_button btn btn-danger plr20 btn-submit dn">付款</a>
+		</div>
+	</empty>
+</div>
+<style type="text/css">
+.alert-default .icon i{
+	color:#d8d8d8;
+}
+.hover{
+	cursor:pointer;
+}
+</style>
+<script>
+$(document).ready(function() {
+	var paytype	=	1;
+	//if(paytype != undefined) {
+		$("input[name='paytype']").val(paytype);
+		$('.alert-default').first().addClass('alert-success');
+	//} else {
+	//	$('.alert-default').first().addClass('alert-success');
+	//	$("input[name='paytype']").val($('.alert-default').first().data('id'));
+	//}
+	$(".alert").click(function() {
+		paytype	=	$(this).data('id');
+		$(this).removeClass('alert-default');
+		$(this).addClass('alert-success');
+		$(".alert").not("[data-id="+paytype+"]").removeClass('alert-success').addClass('alert-default');
+		$("input[name='paytype']").val(paytype);
+		if(paytype==3){
+			$("#formadd").hide();
+			$(".alipay_button").show();
+		}else{
+			$("#formadd").show();
+			$(".alipay_button").hide();
+		}
+	});
+	$(".send_shop_sms").click(function(){
+		ajax_post({
+				url:'/Pay/send_shop_sms',
+				data:{id:'1'},
+			},function(ret) {
+		});
+	});
+	
+	
+	
+})
+</script>

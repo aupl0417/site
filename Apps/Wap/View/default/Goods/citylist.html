@@ -1,0 +1,100 @@
+<div class="line-box row noicon md10">
+	<div class="col-30">请选择地区</div>
+	<div class="col-70 text-right check-express-price text-gray ft12"></div>
+</div>
+<div class="citylist-box"></div>
+<script id="citylist" type="text/html">
+	<div class="row">
+		<% for(i=0;i<citylist.length;i++){ %>
+			<div class="col-20 text-center city-us" data-id="<%= citylist[i].id %>" data-tagid="#<%= ceil((i+1)/5) %>">
+				<span class="province"><%= citylist[i].sub_name %> </span>
+			</div>
+			<% if((i+1) % 5==0){ %>
+				<div class="clearfix"></div>
+				<div class="bg-gray p10 hide col-xs-12" id="<%= (i+1)/5 %>">
+					
+				</div>
+				<div class="clearfix"></div>
+			<% } %>
+		<% } %>
+		<div class="clearfix"></div>
+		<div class="bg-gray p10 hide col-xs-12" id="7"></div>
+	</div>
+
+</script>
+
+<script id="citys" type="text/html">
+	<div class="row">
+		<% for(i=0;i<citys.length;i++){ %>
+		<div class="col-20 text-center">
+			<span class="city lh-25px" title="<%= citys[i].a_name %>" data-id="<%= citys[i].id %>"><%= citys[i].a_name %></span>
+		</div>
+		<% } %>
+	</div>
+</script>
+
+<script>
+		ajax_get({
+			url:'__URL__/city',
+		},function(ret) {
+			if(ret.code==1){
+				var html = template('citylist', {citylist:ret.data});
+				$('.citylist-box').html(html);
+				
+				citys(ret.data);
+			}else{
+				valert(ret);
+			}
+		})
+
+function callback(ret){
+	var data={citylist:ret};
+	var html = template('citylist', data);
+	$('.citylist-box').html(html);
+
+	citys(ret);
+}
+
+
+function citys(ret){
+	$('.citylist-box .city-us').click(function(){
+		$(this).addClass('active').siblings().removeClass('active');
+		$('.citylist-box .col-xs-12').addClass('hide');
+		var d=$(this).data();
+		$(d.tagid).removeClass('hide');
+		
+		var data={};
+		for(var i=0;i<ret.length;i++){
+			if(ret[i].id==d.id){
+				data.citys=ret[i].dlist;
+				break;
+			}
+		}
+		//alert(data.citys[0].name);
+		var html = template('citys', data);
+		$('.citylist-box '+d.tagid).html(html);		
+		
+		$('.citylist-box .city').click(function(){			
+			var d=$(this).data();
+			ajax_get({
+				url:'__URL__/get_express_price/tid/{$_GET.tid}/city/'+d.id,
+			},function(ret){
+				if(ret.code==1){
+					$('.check-express-price').html(ret.data);
+				}
+			});
+
+		});
+		
+		
+	});
+}
+
+
+
+template.helper('ceil', function (v) {
+	return Math.ceil(v);
+});
+
+
+</script>

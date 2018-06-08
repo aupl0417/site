@@ -1,0 +1,69 @@
+<include file="Public:header" />
+		<div class="page-group">
+			<div id="page-fav-shop" class="page" data-url="__URL__/shop_page" data-page_num="{$pagelist.pageinfo.page}" data-tpl="tpl_fav_shop">
+				<input type="hidden" name="p" id="p" value="2" />
+				<!-- 标题栏 -->
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left back" href="/"></a>
+					<h1 class="title">我关注的店铺</h1>
+				</header>
+
+				<!-- 浮动导航 -->
+				<include file="Public:fixed-menu" />
+		
+				<!-- 这里是页面内容区 -->		
+				<div class="content infinite-scroll" data-distance="100" data-p="1">
+					<notempty name="pagelist.list">
+					<div class="list-container">
+						<volist name="pagelist.list" id="vo">
+						<div id="fav_shop_id_{$vo.id}">
+							<div class="list-block media-list">						
+								<ul>							
+									<li>
+										<div class="item-link item-content">
+											<div class="item-media">
+												<a href="javascript:;" data-url="/Shop/index/shop_id/{$vo.shop_id}"><img src="{$vo.shop.shop_logo}" width="44" class="img-circle"></a>
+											</div>
+											<div class="item-inner" data-id="{$vo.id}" onclick="cancel_fav_shop($(this))">
+												<div class="item-title-row">
+													<div class="item-title strong">{$vo.shop.shop_name}</div>
+												</div>
+												<div class="item-subtitle text-gray"><i class="iconfont icon-xihuanline"></i> 关注 {$vo.shop.fav_num}</div>
+											</div>
+										</div>
+									</li>
+
+								</ul>
+							</div>
+							<div class="row bg-white">
+								<volist name="vo.shop_goods" id="v">
+									<a class="col-25 p5" href="/Goods/view/id/{$v.attr_list.0.id}">
+										<img class="lazyload" data-sizes="auto" data-src="{:myurl($v['images'],150)}" alt="商品主图" src="../Public/images/nopic.gif">
+									</a>
+								</volist>
+							</div>
+							<div class="clearfix md5"></div>
+						</div>
+						</volist>
+					</div>
+					<!-- 加载提示符 -->
+					<div class="infinite-scroll-preloader">
+						<div class="preloader">
+						</div>
+					</div>
+					<else />
+							<div class="nors text-center">
+								<div><i class="iconfont icon-sousuowujieguo ft3"></i></div>
+								 找不到记录！
+							</div>
+					</notempty>					
+				</div>			
+				
+			</div>
+		
+		
+		</div>	
+		
+
+<include file="Public:script" />
+<include file="Public:footer" />

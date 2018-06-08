@@ -1,0 +1,100 @@
+<include file="Home@Public:header" />
+<include file="Faq@Public:css" />
+
+	<style type="text/css">
+		ul{
+			padding-left: 0px;
+			margin-bottom: 0px;
+		}
+		.box{
+			padding: 0px;
+		}
+		a{
+			color: black;
+		}
+		h2{
+			font-size:18px;
+		}
+	</style>
+
+<header>	
+	<include file="Home@Public:top" />
+	<include file="Faq@Public:search" />
+	
+</header>
+<!--内容开始-->
+
+	<div class="container mt20">
+	 <div class="row md20">
+		<include file="Faq@Public:sidebar" />
+		<div class="col-xs-9">
+			<div class="bg-white" style="min-height:500px;">
+			
+				<div class="help-nav-title">
+					所有帮助  <notempty name="Think.get.cid" ><i class="fa fa-angle-right"></i> <span id="second"></span> <i class="fa fa-angle-right"></i><span id="third"></span> <i class="fa fa-angle-right"></i><span id="forth"></span> </notempty>
+				</div>
+			
+
+				<div class="list-group p20">
+					<foreach name="data.list" item="vo" key="k">
+						<a href="{:U('/view')}?id={$vo.id}" target="_blank" class="list-group-item" title="{$vo.name}">
+						<h2 class="ft18">{$vo.name|html_entity_decode}</h2>
+						<div class="text-gray">{$vo.content}</div>
+					</a>
+					</foreach>				
+				</div>
+				
+				<div class="row">
+					<div class="col-xs-9 text-center">
+						
+						{:paresePageAction($data['page']['page'], '/Help/help_list',isset($param) ? $param : "__ACTION__")}
+										
+						</div>
+					<div class="col-xs-3 text-center">
+						{$data.page.total}					</div>
+					
+				</div>
+			</div>
+		</div>
+	 </div>
+</div>
+	<!--内容结束-->
+<include file="Home@Public:footer" />
+<include file="Home@Public:js" />
+	<script type="text/javascript">
+		$(document).ready(function(){
+			itabs({});
+			$('.tabs-help-content .us-name').click(function(){
+				$(this).parent().toggleClass('active');
+			});
+			var d=$('[data-type="help-sort"]').data();
+			if(d.sid){
+				var index=$('.itabs-content li[id="'+d.sid+'"]').closest('.itabs-pane').index();
+				$('.itabs li').eq(index).addClass('active').siblings().removeClass('active');
+				$('.itabs-content .itabs-pane').eq(index).addClass('active').siblings().removeClass('active');
+				$('.itabs-content .itabs-pane').eq(index).find('.us').removeClass('active');
+				index=$('.itabs-content li[id="'+d.sid+'"]').addClass('active').closest('.us').addClass('active');
+			}
+		});	
+		
+		var cid = {$_GET['cid']?$_GET['cid']:"''"};
+		if(cid!=''){
+			$("#"+cid).children('a').css('color','#FEAE1B').closest('.us').addClass('active');
+
+			var obj = $("#"+cid).closest('.itabs-pane');
+			if(!obj.hasClass('active')){
+				obj.addClass('active').siblings().removeClass('active');
+				$(".tabs-help .active").removeClass('active').siblings().addClass('active');
+			}
+
+			$("#second").text($(".itabs > li.active a").text());
+			$("#third").text($(".us.active  .us-name").text());
+			$("#forth").text($("#"+cid).children('a').text());
+
+		}
+		
+		$(document).ready(function() {
+			//顶部，静态化时需要用到
+			ajax_topbar();
+		});			
+	</script>

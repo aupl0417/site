@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>{$Think.config.seo.title}</title>
+		<meta name="keywords" content="{$Think.config.seo.keywords}">
+		<meta name="description" content="{$Think.config.seo.description}">	
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+		<css href="__FLATDREAM__/js/bootstrap/dist/css/bootstrap.css" />
+		<css href="__FLATDREAM__/js/jasny.bootstrap/extend/css/jasny-bootstrap.min.css" />
+		<css href="__FLATDREAM__/fonts/font-awesome-4/css/font-awesome.min.css" />
+		<css href="__FLATDREAM__/js/jquery.gritter/css/jquery.gritter.css" />
+		<css href="__FLATDREAM__/js/jquery.magnific-popup/dist/magnific-popup.css" />
+		<css href="__FLATDREAM__/css/skin-red.css" />	
+		<css href="__FLATDREAM__/js/jquery.icheck/skins/all.css" />
+		<css href="__JS__/toastr/toastr.css" />
+		<css href="../Public/css/style.css" />
+	</head>
+<body class="{$Think.const.CONTROLLER_NAME}_{$Think.const.ACTION_NAME}">
+	<div id="ajax_tips"></div>
+	<div id="ajax_post_tips"></div>
+
+	<!--[if lt IE 10]>
+	<div class="alert alert-warning md0">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		<i class="fa fa-warning sign"></i><strong>浏览器版本过低！</strong> 请使用谷歌浏览器(Chrome)、火狐浏览器(FireFox)、360浏览器、搜狗浏览器、腾讯浏览器(TT)、IE10以上、苹果浏览器(Safari)等浏览器浏览本站才可体验最佳效果。
+	</div>
+	<![endif]-->
+
+
+<div class="topbar">
+	<div class="w1200 crow pl10 pr10">
+		<div class="ccol-20">
+			<if condition="session('user.id') gt 0">
+				欢迎您 <a href="{:C('sub_domain.my')}" target="_blank" class="mr10"><span class="text-danger">{$_SESSION['user']['nick']}</span></a>
+				<a href="{:C('sub_domain.user')}/logout.html">退出</a>
+			<else />
+				<a href="{:C('sub_domain.user')}/login.html" target="_blank" class="mr10"><span class="text-danger">亲，请登录</span></a> 
+				<span><a href="{:C('sub_domain.user')}/register.html" target="_blank">免费注册</a></span>
+			</if>
+		</div>
+		<div class="ccol-80 text-right">
+			<ul>
+				<li>
+					<a href="{:C('sub_domain.www')}">乐兑首页</a>
+				</li>
+				<li>
+					<a href="{:C('sub_domain.cart')}"><i class="fa fa-shopping-cart"></i> 购物车</a>
+				</li>
+				<li>
+					<a href="{:C('sub_domain.my')}/fav.html"><i class="fa fa-star"></i> 收藏夹</a>
+				</li>
+				<li>
+					<a href="{:C('sub_domain.s')}/category.html">商品分类</a>
+				</li>
+				<li>
+					<a href="{:C('sub_domain.seller')}">卖家中心</a>
+				</li>
+				<li>
+					<a href="{:C('sub_domain.www')}/service.html">联系客服</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>	
+<div class="clearfix"></div>	

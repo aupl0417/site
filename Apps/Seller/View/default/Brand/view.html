@@ -1,0 +1,357 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body">
+	<include file="Public:nav" />
+	<div class="container mb30">
+		<include file="Public:side" />
+		
+		<div class="w980 fl">
+			<div class="bor_der">
+				<div class="bg_f1 clearfix fs14 text_44 tle_R">
+					<a class="fl plr15 line40 ml-1 active" href="javascript:;">{$seo['title']}</a>
+				</div>
+				
+				<form class="form-horizontal" id="formadd" name="formadd" data-url="/run/authRun" novalidate="novalidate">
+					<div class = 'vform'>
+						<input name="brand_id" value="{$_GET.id}" type="hidden">
+						<div class="form-group f-name">
+							<label class="col-xs-3 control-label">品牌名称</label>
+							<div class="col-xs-7">
+								<div class="input-group">
+									<div class="form-control" style="border:0">{$data.brand_name}</div>
+								</div>
+								<div class="tips-form text-gray ft12"></div>
+							</div>
+						</div>
+						<div class="form-group f-name">
+							<label class="col-xs-3 control-label">推广标题<span class="text_yellow" aria-required="true">*</span></label>
+							<div class="col-xs-7">
+								<div class="input-group">
+									<input type="text" id="name" class="form-control" name="name" placeholder="品牌名称" value="{$data.name}">
+								</div>
+								<div class="tips-form text-gray ft12"></div>
+							</div>
+						</div>
+						<div class="form-group f-ename">
+							<label class="col-xs-3 control-label">品牌英文名称 </label>
+							<div class="col-xs-7">
+								<div class="input-group">
+									<input type="text" id="ename" class="form-control" name="ename" placeholder="品牌英文名称" value="{$data.ename}">
+								</div>
+								<div class="tips-form text-gray ft12"></div>
+							</div>
+						</div>
+						
+						
+						<div class="form-group f-logo">
+							<label class="col-xs-3 control-label">品牌logo <span class="text_yellow" aria-required="true">*</span></label>
+							<div class="col-xs-7">
+								<div class="input-group">
+									<div class="uploader">
+									<div id="filePicker_logo" class="webuploader-container">选择图片</div>
+									<ul id="images-list-logo" class="images-select-box">
+										<li id="" data-path="{$data.logo}" class="text-center">
+											<div class="li-img-box">
+												<a href="javascript:;" onclick="bigImage($(this));" class="image-zoom" data-url="{$data.logo}" title="大图">
+													<img src="{$data.logo}">
+												</a>
+											</div>
+											<!-- <div class="delete-images" onclick="reMove($(this));">
+												<div class="selected-icon">
+													<i class="fa fa-times"></i>
+												</div>
+											</div> -->
+										</li>			</ul>
+									<input name="logo" type="hidden" value="{$data.logo}">
+									</div>
+									<script>
+									$(document).ready(function() {
+											// 初始化Web Uploader
+											var uploader_logo = WebUploader.create({
+
+												// 选完文件后，是否自动上传。
+												auto: true,
+
+												formData:{
+													action  : 'MDAwMDAwMDAwMK5nj6nHfHHKv6Wbo5mLgqSJkailk2anmw',
+												},
+												// swf文件路径
+												swf: 'Uploader.swf',
+												fileSingleSizeLimit:1024 * 1024 * 2,
+												// 文件接收服务端。
+												server: "/run/upload.html",
+												// 选择文件的按钮。可选。
+												// 内部根据当前运行是创建，可能是input元素，也可能是flash.
+												pick: '#filePicker_logo',
+												duplicate :true,
+												// 只允许选择图片文件。
+												accept: {
+													title: 'Images',
+													extensions: 'gif,jpg,jpeg,bmp,png',
+													mimeTypes: 'image/*'
+												}
+											});
+											uploader_logo.on('fileQueued', function (file) {
+												uploader_logo.upload();
+											});
+											uploader_logo.on('error', function(code) {
+												switch(code) {
+													case 'F_EXCEED_SIZE':
+														talert({status:0,msg:'图片大小不能超过2M'});
+														break;
+												}
+											})
+											/*上传成功**/
+											uploader_logo.on('uploadSuccess', function (file, data) {
+												if(data.code == 1) {
+													data = data.data;
+													$("input[name='logo']").val(data.url);
+													var html = '<li id="" data-path="'+data['url']+'" class="text-center">'+
+																	'<div class="li-img-box">'+
+																		'<a href="javascript:;" onclick="bigImage($(this));" class="image-zoom" data-url="'+data['url']+'" title="大图"><img src="'+data['url']+'"></a>'+
+																	'</div>'+													
+																	//'<div class="delete-images" onclick="reMove($(this));"><div class="selected-icon"><i class="fa fa-times"></i></div></div>'+											
+																'</li>';
+													$("input[name='logo']").parent().find("#images-list-logo").html(html);
+												} else {
+													talert({status:data.code,msg:data.msg});
+												}
+											});
+										})
+									</script>				
+								</div>
+								<div class="tips-form text-gray ft12"></div>
+							</div>
+						</div>						
+						<div class="form-group f-images">
+							<label class="col-xs-3 control-label">品牌形象图 <span class="text_yellow" aria-required="true">*</span></label>
+							<div class="col-xs-7">
+								<div class="input-group">
+									<div class="uploader">
+										<div id="filePicker_images" class="webuploader-container">选择图片</div>
+										<ul id="images-list-images" class="images-select-box">
+											<li id="" data-path="{$data.images}" class="text-center">
+												<div class="li-img-box">
+													<a href="javascript:;" onclick="bigImage($(this));" class="image-zoom" data-url="{$data.images}" title="大图">
+														<img src="{$data.images}">
+													</a>
+												</div>
+												<!-- <div class="delete-images" onclick="reMove($(this));">
+													<div class="selected-icon">
+														<i class="fa fa-times"></i>
+													</div>
+												</div> -->
+											</li>			</ul>
+										<input name="images" type="hidden" value="{$data.images}">
+									</div>
+									<script>
+									$(document).ready(function() {
+											// 初始化Web Uploader
+											var uploader_images = WebUploader.create({
+
+												// 选完文件后，是否自动上传。
+												auto: true,
+
+												formData:{
+													action  : 'MDAwMDAwMDAwMK5nj6nHfHHKv6Wbo5mLgqSJkailk2anmw',
+												},
+												// swf文件路径
+												swf: 'Uploader.swf',
+												fileSingleSizeLimit:1024 * 1024 * 2,
+												// 文件接收服务端。
+												server: "/run/upload.html",
+												// 选择文件的按钮。可选。
+												// 内部根据当前运行是创建，可能是input元素，也可能是flash.
+												pick: '#filePicker_images',
+												duplicate :true,
+												// 只允许选择图片文件。
+												accept: {
+													title: 'Images',
+													extensions: 'gif,jpg,jpeg,bmp,png',
+													mimeTypes: 'image/*'
+												}
+											});
+											uploader_images.on('fileQueued', function (file) {
+												uploader_images.upload();
+											});
+											uploader_images.on('error', function(code) {
+												switch(code) {
+													case 'F_EXCEED_SIZE':
+														talert({status:0,msg:'图片大小不能超过2M'});
+														break;
+												}
+											})
+											/*上传成功**/
+											uploader_images.on('uploadSuccess', function (file, data) {
+												if(data.code == 1) {
+													data = data.data;
+													$("input[name='images']").val(data.url);
+													var html = '<li id="" data-path="'+data['url']+'" class="text-center">'+
+																	'<div class="li-img-box">'+
+																		'<a href="javascript:;" onclick="bigImage($(this));" class="image-zoom" data-url="'+data['url']+'" title="大图"><img src="'+data['url']+'"></a>'+
+																	'</div>'+													
+																	//'<div class="delete-images" onclick="reMove($(this));"><div class="selected-icon"><i class="fa fa-times"></i></div></div>'+											
+																'</li>';
+													$("input[name='images']").parent().find("#images-list-images").html(html);
+												} else {
+													talert({status:data.code,msg:data.msg});
+												}
+											});
+										})
+									</script>
+								</div>
+								<div class="tips-form text-gray ft12"></div>
+							</div>
+						</div>
+						<div class="form-group f-about">
+							<label class="col-xs-3 control-label">品牌介绍 <span class="text_yellow" aria-required="true">*</span></label>
+							<div class="col-xs-7">
+								<div class="input-group">
+									<div class="">
+										<textarea id="about" class="form-control" name="about" rows="" cols="">{$data.about}</textarea>
+									</div>
+								</div>
+								<div class="tips-form text-gray ft12"></div>
+							</div>
+						</div>
+						
+						<div class="form-group f-tag">
+							<label class="col-xs-3 control-label">品牌标签 <span class="text_yellow" aria-required="true">*</span></label>
+							<div class="col-xs-7">
+								<div class="input-group">
+									<div>
+										<notempty name="tags.code">
+											{:W('Common/Builder/nors', array('param' => array('text' => $tags['msg'])))}
+										<else />
+											<volist name="tags" id="v" key="k">
+												<label class="mr20" style="">
+													<input type="checkbox" class="i-red-square" name="tag[]" value="{$v.id}" <in name="v.id" value="$data.tag">checked='checked'</in> > {$v.tag_name}
+												</label>
+											</volist>
+										</notempty>
+									</div>
+								</div>
+								
+							</div>
+						</div>		
+						
+						
+						
+						
+						<div class="form-group f-category_id">
+							<label class="control-label col-xs-3">主营类目 <span class="required" aria-required="true">*</span></label>
+							<div class="col-xs-7">
+								<div class="input-group">
+									<div>
+										<ul class="nav nav-tabs border-d">
+											<volist name="categorys" id="v" key="k">
+											<li <if condition="$k eq 1">class="active"</if>><a href="#category_id{$k}" data-toggle="tab">{$v.category_name}</a></li>
+											</volist>
+										</ul>
+										<div class="tab-content tab-content-noborder" style='border: none;box-shadow: none;'>
+											<volist name="categorys" id="v" key="k">
+											<div class="tab-pane <if condition="$k eq 1">active</if>" id="category_id{$k}">
+												<volist name="v.son" id="va" key="ke">
+												<label class="mr20" style="">
+													<input type="checkbox" class="i-red-square" name="category_id[]" value="{$va.id}" <in name="va.category_name" value="$data.category_name">checked='checked'</in> > {$va.category_name}
+												</label>
+												</volist>
+											</div>
+											</volist>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<input type = 'hidden' name = 'category_id' value = '{$data.category_id}'/>
+						<input type = 'hidden' name = 'tag' value = '{$data.tag}'/>
+						<div class="text-center">
+							<button type="submit" class="btn btn-primary bg-8ac mb30 border_none text_white inline-block btn-150px fs18 btn-submit ">提交</button>
+						</div>
+					</div>
+				</form>
+				<!-- 主体部分 -->
+				
+			</div>
+		</div>
+	</div>
+</block>
+<block name="css">
+<script type="text/javascript" src="/Public/Webuploader/js/webuploader.js"></script>
+<link rel="stylesheet" type="text/css" href="/Public/Webuploader/css/webuploader.css">
+<link rel="stylesheet" type="text/css" href="/Public/CSS/flatdream/js/jquery.icheck/skins/square/_all.css">
+</block>
+<block name="script">
+<script type="text/javascript">
+	$(document).ready(function(){
+		$(".btn-submit").click(function() {
+			if($("input[name='logo']").val() == '') {
+				talert({status:0,msg:'logo不能为空'});
+				return false;
+			}
+			if($("input[name='images']").val() == '') {
+				talert({status:0,msg:'品牌形象图不能为空'});
+				return false;
+			}
+			//将类目组装成字符串
+			var category_id ='';
+			$("input:checkbox[name='category_id[]']:checked").each(function() {
+				category_id += $(this).val() + ",";
+			});
+			category_id = category_id.substring(0,category_id.length-1);
+			$("input[name='category_id']").val(category_id);
+			if($("input[name='category_id']").val() == ''){
+				talert({status:0,msg:'请勾选主营类目！'});
+				return false;
+			}
+			
+			//将标签组装成字符串
+			var tag ='';
+			$("input:checkbox[name='tag[]']:checked").each(function() {
+				tag += $(this).val() + ",";
+			});
+			tag = tag.substring(0,tag.length-1);
+			$("input[name='tag']").val(tag);
+			if($("input[name='tag']").val() == ''){
+				talert({status:0,msg:'请勾选品牌标签！'});
+				return false;
+			}
+		});
+		
+		
+		checkform({
+			formid:"#formadd",
+			rules:{
+				name:{
+					required:true,
+				},
+				
+				about:{
+					required:true,
+				},
+				tag:{
+					required:true,
+				}	
+			},
+			messages:{
+				name:{
+					required:'品牌名称不能为空',
+				},
+				
+				about:{
+					required:'品牌介绍不能为空',
+				},
+				tag:{
+					required:'品牌标签不能为空',
+				},
+			},
+		},function(res) {
+			talert({status:res.code,msg:res.msg});
+			if(res.code == 1) {
+				//setTimeout("ref()", 1000);
+				setTimeout(gourl({url:'{:U("brand/brand_promotion")}'}),1000);
+			}
+		});
+	});
+</script>
+</block>

@@ -1,0 +1,90 @@
+<div class="clearfix">
+	<div class="pull-right text-gray" onclick="$(this).closest('tr').toggleClass('hide');"><i class="fa fa-times-circle-o fa-2x"></i></div>	
+</div>
+
+	<div class="box p20" id="{$vo.id}">
+		<div class="header">
+			<div class="pull-right">
+				<a href="__URL__/edit/id/{$rs.id}" class="btn btn-sm btn-primary btn-rad btn-trans">修改</a>
+			</div>
+			<span class="mr20 ft16">支付终端：{:status($rs['terminal'],array(array('PC'),array('WAP','btn-danger'),array('IOS','btn-info'),array('ANDROID','btn-warning')))}	</span>
+			<span class="mr20 ft16">ID:{$rs.id}</span> 
+			<span class="mr20 ft18 text-danger">订单号：{$rs.s_no}</span>
+			<span class="mr20 ft16"> 买家：{$rs.user.nick} / {$rs.user.mobile}</span>
+		</div>
+		<div class="content">
+				<div class="row md20 auth-text">
+					<div class="col-xs-3">
+						<div class="fl" width="60">
+							<img src="{:myurl($rs['shop']['shop_logo'],50)}" class="img-circle">
+						</div>
+						<div style="margin-left:70px">
+							<div>店铺：<span class="ft18 strong">{$rs.shop.shop_name}</span></div>
+							<div>卖家昵称：{$rs.seller.nick}</div>							
+							<div>手机：{$rs.seller.mobile}</div>
+							<div>QQ：{$rs.shop.qq}</div>
+							<notempty name="rs.shop.wang"><div>旺旺：{$rs.shop.wang}</div></notempty>
+							
+						</div>
+					</div>
+
+					<div class="col-xs-3">
+						<div>充值号码：<span class="ft18 strong">{$rs.mobile}</span></div>
+						<div>充值方案：{$rs.type_name}</div>
+						<div>充值类型：{$rs.recharge_type_name}</div>
+						<div>充值面额：{$rs.desc}</div>
+						<div>奖励积分：<span class="text-info ft18">{$rs.score}</span>分</div>
+						<div>实付金额：<span class="text-danger ft18">￥{$rs.pay_price}</span></div>
+					</div>
+					<div class="col-xs-3">
+						<div class="md10">状态：
+							{:status($rs['status'],[['已删除'],['已拍下'],['已付款','btn-success'],['已发货','btn-warning'],['已收货','btn-info'],['已评价','btn-dark'],['已归档'],10=>['已关闭'],11=>['已关闭']])}						
+							
+						</div>
+						
+						<div class="mt10">
+							<notempty name="rs.dtpay_no">
+							<div class="md5">大唐支付流水号：{$rs.dtpay_no}</div>
+							</notempty>							
+							<php>if($rs['erp_status']['code'] == 1){</php>
+								<div>在ERP中的状态：<span>{$rs['erp_status']['data']['o_orderState_text']}<php>echo $rs['erp_status']['data']['o_isReceived']==1?'，已分账':'';</php></span>
+								</div>
+							<php>}else{</php>
+								
+							<php>}</php>
+							<div>创建时间：{$rs.atime}</div>
+							<neq name="rs.pay_time" value="0000-00-00 00:00:00">
+							<div>付款时间：{$rs.pay_time}</div>
+							</neq>
+							<neq name="rs.close_time" value="0000-00-00 00:00:00">
+							<div>关闭时间：{$rs.close_time}</div>
+							</neq>
+							<neq name="rs.refund_time" value="0000-00-00 00:00:00">
+							<div>退款时间：{$rs.refund_time}</div>
+							</neq>
+							<neq name="rs.express_time" value="0000-00-00 00:00:00">
+							<div>发货时间：{$rs.express_time}</div>
+							</neq>
+						</div>
+					</div>					
+					<div class="col-xs-3">
+						<div>受理状态：{$rs.transtat_name}</div>
+						<div>充值状态：{$rs.return_status_name}</div>
+						<neq name="rs.return_time" value="0000-00-00 00:00:00">
+						<div>到账时间：{$rs.return_time}</div>
+						</neq>
+						<notempty name="trade_no">
+						<div>充值平台流水号：{$rs.trade_no}</div>
+						</notempty>
+					</div>					
+				</div>
+				
+		
+
+		</div>		
+	</div>
+	
+
+<div class="clearfix">
+	<div class="pull-right text-gray" onclick="$(this).closest('tr').toggleClass('hide');"><i class="fa fa-times-circle-o fa-2x"></i></div>	
+</div>

@@ -1,0 +1,144 @@
+
+<div class="province">
+	<div class="city-header">
+		<div class="pull-right">
+			<div class="btn btn-xs" onclick="$('.city-load').slideToggle();">关闭</div>
+		</div>	
+		<div class="city-text">请选择一级类目</div>		 
+	</div> 
+	<div class="clearfix"></div>
+	<div class="city-list">
+		<ul>
+			<volist name="city" id="vo">
+			<li data-id="{$vo.id}" onclick="select_province($(this))">{$vo.category_name}</li>
+			</volist>
+		</ul>
+	</div>
+</div>
+
+<div class="city hide">
+	<div class="city-header">
+		<div class="pull-right">
+			<div class="btn btn-xs" onclick="$('.city-load').slideToggle();">关闭</div>
+			<div class="btn btn-xs" onclick="city_back($(this))" data-name="province">返回</div>
+		</div>		
+		<div class="city-text">请选择二级类目</div>		 
+	</div> 
+	<div class="clearfix"></div>
+	<div class="city-list">
+		<ul>
+		
+		</ul>
+	</div>
+</div>
+
+<div class="district hide">
+	<div class="city-header">
+		<div class="pull-right">
+			<div class="btn btn-xs" onclick="$('.city-load').slideToggle();">关闭</div>
+			<div class="btn btn-xs" onclick="city_back($(this))" data-name="city">返回</div>
+			<div class="btn btn-xs btn-danger" onclick="select_ok()">确定</div>
+		</div>	
+		<div class="city-text">请选择三级类目</div>		 
+	</div> 
+	<div class="clearfix"></div>
+	<div class="city-list">
+		<ul>
+		
+		</ul>
+	</div>
+</div>
+
+
+
+<script>
+function select_province(obj){
+	obj.closest('ul').find('li.active').removeClass('active');
+	obj.addClass('active');
+	
+
+	$('.province .city-text').html(obj.html());
+	$('.city ul').html('');
+	$('.district ul').html('');
+
+	$('#district').val('');
+	$('.province').addClass('hide');
+	$('.city').removeClass('hide');
+	
+	ajax_get({
+		url:'__URL__/get_city/sid/'+obj.data('id')
+	},function(ret){
+		if(ret.code==1){
+			var html='';
+			for(i=0;i<ret.data.length;i++){
+				html+='<li data-id="'+ret.data[i].id+'" onclick="select_city($(this))">'+ret.data[i].category_name+'</li>';
+			}
+			$('.city ul').html(html);
+		}else{
+			talert(ret);
+		}
+	});
+}
+
+function select_city(obj){
+	obj.closest('ul').find('li.active').removeClass('active');
+	obj.addClass('active');
+	
+	$('.city .city-text').html(obj.html());
+	$('.district ul').html('');
+	
+	$('.city').addClass('hide');
+	$('.district').removeClass('hide');
+	
+	ajax_get({
+		url:'__URL__/get_city/sid/'+obj.data('id')
+	},function(ret){
+		if(ret.code==1){
+			var html='';
+			for(i=0;i<ret.data.length;i++){
+				html+='<li data-id="'+ret.data[i].id+'" onclick="select_district($(this))">'+ret.data[i].category_name+'</li>';
+			}
+			$('.district ul').html(html);
+		}else{
+			talert(ret);
+		}
+	});
+}
+
+function select_district(obj){
+	obj.closest('ul').find('li.active').removeClass('active');
+	obj.addClass('active');
+	
+	$('#cid').val(obj.data('id'));
+	$('.district .city-text').html(obj.html());	
+
+}
+
+
+function select_ok(){
+	var province	=$('.province .city-text').html();
+	var city		=$('.city .city-text').html();
+	var district	=$('.district .city-text').html();
+	//var town		=$('.town .city-text').html();
+	
+	if($('#district').val()==''){
+		talert({msg:'请第三级目录'});
+		return false;
+	}
+
+	var html=province+' > '+city+' > '+district;
+	$('#select_city').val(html);
+	$('.city-load').slideToggle();
+}
+
+
+function city_back(obj){
+	var d=obj.data();
+	
+	obj.closest('.city-header').parent().addClass('hide');
+	$('.'+d.name).removeClass('hide');
+	
+}
+
+</script>
+

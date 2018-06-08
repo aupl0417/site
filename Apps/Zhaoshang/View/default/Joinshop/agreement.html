@@ -1,0 +1,45 @@
+<include file="Public:header" />
+<include file="Public:menu" />
+
+<div class="w1200 mt20 md20 bg-white box">
+	<div class="box-header">
+		阅读入驻合同
+	</div>
+	
+	<div class="box-content p50">
+		<div style="max-height:500px;overflow:auto;" class="md20 p20 border-1px">
+			{$zs.agreement|html_entity_decode}
+		</div>
+
+		<div class="md20 link-blue">
+			<a href="https://www.trj.cc/Public/download/trj.docx" target="_blank">合同下载</a>
+		</div>
+		
+		<div class="p10 text-center">
+			<div class="pull-left"><a href="__URL__/" class="btn btn-danger btn-150px btn-trans">上一步</a></div>
+			<div class="pull-right"><a href="__URL__/shop_type" class="btn btn-danger btn-150px {:$status!=1?'disabled':''} step-next">下一步</a></div>
+			
+			<label><input type="checkbox" class="i-red-square" name="is_read" id="is_read" value="1"> 已阅读并同意</label>
+		</div>		
+	</div>
+
+</div>
+
+
+<include file="Public:copyright" />
+<include file="Public:js" />
+
+
+<script>
+$(document).ready(function(){
+
+	$('#is_read').on('ifChecked', function(){
+		$('.step-next').removeClass('disabled');
+	});
+	$('#is_read').on('ifUnchecked', function(){
+		$('.step-next').addClass('disabled');
+	});	
+});	
+</script>
+
+<include file="Public:footer" />

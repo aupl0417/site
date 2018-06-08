@@ -1,0 +1,227 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			购物车
+		</div>
+		<div class="r">
+		</div>
+	</div>
+</header>
+<section>
+
+	<div class="load-body">数据加载中……</div>
+
+</section>
+<footer class="footer fixed-bottom">
+	<div class="row">
+		<div class="col-5x4">
+			<div style="line-height:50px;overflow:hidden;padding-left:10px;">选中 <span class="text-success b allnum">0</span> 款商品，合计 <span class="text-success b total_price">0</span> 元</div>
+		</div>
+
+		<div class="col-5">
+			<div class="cart-btn-add" onclick="cart_next()">下一步</div>
+		</div>
+	</div>
+</footer>
+
+<include file="Public:d_layer" />
+
+<script id="tpl_cart_list" type="text/html">
+	<% for (i=0;i< data.length;i++){ %>
+	<div class="shop md10">
+		<div class="line-box noicon row">
+			<div class="col-10 text-center" style="max-width:40px"><i class="icons icons-20px is_shop i-checkbox" style="margin-top:12px"></i></div>
+			<div class="col-90 b ft14">
+				<%= data[i].shop.shop_name %>
+			</div>
+		</div>
+		<div class="shop_goods">
+			<% for (j=0;j< data[i].goods.length;j++){ %>
+			<div class="line-box-m noicon" id="<%= data[i].goods[j].id %>" <% if(data[i].goods[j].status != 1) { %>style="background:#f0f0f0"<% } %>>
+				<div class="action">
+					<div class="action-btn action-btn-edit" style="height:80px;line-height:80px;" onclick="cart_goods_edit($(this))" data-id="<%= data[i].goods[j].id %>">修改</div>
+					<div class="action-btn action-btn-delete" style="height:80px;line-height:80px;" onclick="cart_goods_delete($(this))" data-id="<%= data[i].goods[j].id %>">删除</div>					
+				</div>
+				<div class="row">
+					<div class="col-10 text-center" style="max-width:40px"><i class="icons icons-20px <% if(data[i].goods[j].status == 1) { %>i-checkbox<% }%> <% if(data[i].goods[j].is_select==1 && data[i].goods[j].status == 1){ %>active<% } %>" data-money="<%= data[i].goods[j].total_price%>" data-id="<%= data[i].goods[j].id%>"></i></div>
+					<div class="col-15" style="max-width:70px" onclick="openWin({name:'goods_view',url:'/Goods/view/id/<%= data[i].goods[j].attr_list_id %>'})"><img src="<%= data[i].goods[j].images %>"></div>
+					<div class="col-75" onclick="cart_goods_click($(this))">
+						<div class="pl10">
+							<div class="goods_name lh2-20px"><%= data[i].goods[j].goods_name %><% if(data[i].goods[j].status != 1) { %><br /><span class="text_red">商品已下架</span><% } %></div>
+							<div class="row">						
+								<div class="col-2 text-gray"><%= data[i].goods[j].attr_name %></div>
+								<div class="col-2 text-right"><%= data[i].goods[j].price %> x <span class="text-success b num"><%= data[i].goods[j].num %></span> 件</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+			<% } %>
+		</div>
+		<% if(data[i].activity != '') { %>
+			<div class="line-box noicon row">
+				<div class="col-90 b ft14">
+					<% for(s=0;s < data[i].activity.length;s++) { %>
+						<%= data[i].activity[s].desc %>
+						<% if(data[i].activity[s].type_id == 2) { %>
+							<% for(g=0; g < data[i].activity[s].goods.length; g++) { %>
+								<img height="20" src="<%= data[i].activity[s].goods[g].images %>">
+							<% } %>
+						<% } %> <% if((data[i].activity.length - 1) != s) { %>,<% } %>
+					<% } %>
+				</div>
+			</div>
+		<% } %>
+	</div>
+	<% } %>
+</script>	
+
+
+
+<script>
+	fixBar();
+	template.config("escape", false);
+	ajax_post({
+		url:'/Api/api',
+		data:{apiurl:'/CartVer2/goods_list',is_openid:1},
+	},function(ret){
+		if(ret.code==1){			
+			var html = template('tpl_cart_list', {data:ret.data});
+			$('.page.active section').html(html);
+			cart_total();
+			
+			$('.page.active .i-checkbox').click(function(){
+				var obj=$(this);
+				$(this).toggleClass('active');
+				
+				if($(this).hasClass('is_shop')){
+					if($(this).hasClass('active')){
+						$(this).closest('.shop').find('.i-checkbox').addClass('active');
+					}else{
+						$(this).closest('.shop').find('.i-checkbox').removeClass('active');
+					}
+				}
+				cart_total();
+				
+			});
+		}else if(ret.code==3){
+			$('.page.active section').html(no_data_text);
+		}
+	});
+	
+	//选中的商品进行统计
+	function cart_total(){
+		//选中款数
+		var num=$('.page.active .i-checkbox.active').not('.is_shop').size();
+				
+		var total_price=0;
+		//合计
+		$('.page.active .i-checkbox.active').not('.is_shop').each(function(){
+			total_price+=parseFloat($(this).data('money'));
+			total_price=Math.round(total_price*100)/100;
+		});
+				
+		$('.page.active .allnum').html(num);
+		$('.page.active .total_price').html(total_price);	
+	}
+	
+	//下一步，标记选中的商品
+	function cart_next(){
+		//选中款数
+		var num=$('.page.active .i-checkbox.active').not('.is_shop').size();
+		if(num==0){
+			valert({msg:'请至少选中一款商品！'});
+			return false;
+		}
+		//获取选中的ID
+		var ids=new Array();
+		$('.page.active .i-checkbox.active').not('.is_shop').each(function(index){
+			ids[index]=$(this).data('id');
+		})
+		
+		//alert(ids);
+		ajax_post({
+			url:'/Api/api',
+			data:{apiurl:'/Cart/selected',is_openid:1,ids:ids.join(',')},
+		},function(ret){
+			if(ret.code==1){			
+				openWin({name:'cart_next',url:'/Cart/cart_next',close:true});
+			}else{
+				valert(ret);
+			}
+		});		
+	}
+	
+	//点击触发删除按钮
+	function cart_goods_click(obj){
+		var n=0;
+		if(obj.closest('.line-box-m').find('.action').hasClass('active')) n=1;
+		obj.closest('section').find('.action.active').removeClass('active');
+		
+		if(n!=1) obj.closest('.line-box-m').find('.action').addClass('active');
+	}	
+	
+	//删除购物车中商品
+	function cart_goods_delete(obj){
+		var obj;
+		var d=obj.data();
+		vmodal({
+			title:'删除商品',
+			msg:'<div class="p10 text-center">真的要删除该商品吗？</div>',
+		},function(){
+			$('.page.active .vmodal .vmodal-success').unbind();
+			$('.page.active .vmodal .vmodal-success').click(function(){			
+				ajax_post({
+					url:'/Api/api',
+					data:{apiurl:'/Cart/delete',is_openid:1,id:d.id}
+				},function(ret){
+					valert(ret);
+					if(ret.code==1){
+						var size=obj.closest('.shop_goods').find('.line-box-m').size();
+						if(size>1){
+							$('.page.active #'+d.id).remove();
+							cart_total();
+						}else{
+							obj.closest('.shop').remove();
+						}
+					}
+				});			
+			});
+		});
+	}
+	
+	//修改数量
+	function cart_goods_edit(obj){
+		var d=obj.data();
+		vmodal({
+			title:'修改数量',
+			url:'/Cart/edit_item/id/'+d.id
+		},function(){
+			$('.page.active .vmodal .vmodal-success').unbind();
+			$('.page.active .vmodal .vmodal-success').click(function(){
+				if($('.page.active #num').val()==''){
+					valert({msg:'订购数量不能为空！'});
+					return false;
+				}				
+				var data=getFormJson('#form-cart-item');				
+				ajax_post({
+					url:'/Api/api',
+					data:data,
+				},function(ret){
+					valert(ret);
+					if(ret.code==1){
+						//winRef();
+						$('.page.active #'+d.id).find('.num').html($('.page.active .vmodal #num').val());
+						$('.page.active #'+d.id).find('.i-checkbox').data({money:ret.data.total_price});
+						cart_total();
+						
+					}
+				});
+			});
+		});
+	}
+</script>

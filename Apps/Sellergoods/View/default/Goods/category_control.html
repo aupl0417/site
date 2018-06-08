@@ -1,0 +1,74 @@
+<div class="clearfix type_choice">
+	<div class = "fl btn btn-trans btn-sm btn-120px mr10 btn-primary" type="1">追加类目</div>
+	<div class = "fl btn btn-trans btn-sm btn-120px mr10" type="2">修改类目</div>
+	<div class = "fl btn btn-trans btn-sm btn-120px" type="3">删除类目</div>
+</div>
+<div class="new_choice p20">
+	<foreach name="data" item="val">
+		<div class="row mt10">
+			<input name="all_category" id="checkedAll" class="i-red-square" type="checkbox" value="{$val.id}"> {$val.category_name}
+		</div>
+		<div class="row mt10 p10">
+			<foreach name="val.dlist" item="res">
+				<div class="col-md-4 fl mt10">
+					<input name="all_category" id="checkedAll" class="i-red-square" type="checkbox" value="{$res.id}"> {$res.category_name}
+				</div>
+			</foreach>		
+		</div>		
+	</foreach>
+	<div class="row mt20 text-center">
+		<div class="btn btn-info" onclick="ok_category()">确认</div>
+
+	</div>
+</div>
+<script>
+	iCheckClass('.new_choice');
+	$('.new_choice').removeClass('new_choice');
+	//choice();
+
+	//选择分类执行模式
+	var cate_type = 1;
+	$(".type_choice div").click(function(){
+		cate_type = $(this).attr('type');
+		$(this).addClass('btn-primary').siblings('div').removeClass('btn-primary');
+	});
+
+
+
+	function ok_category(){
+		var ids = $(".ids:checked").map(function(){
+			return $(this).val();
+		}).get().join(',');
+
+		var category_ids = $("input[name='all_category']:checked").map(function(){
+                return $(this).val();
+        }).get().join(',');
+
+		if(category_ids == "" ){
+			talert({status:0,msg:'请至少选择一项分类'});
+			return false;
+		}
+		//修改
+		if(cate_type == 2){
+			var apiurl = '/SellerGoodsManage/update_shop_category';
+		//删除
+		}else if(cate_type == 3){
+			var apiurl = '/SellerGoodsManage/batch_delete_category';
+		//追加
+		}else{
+			var apiurl = '/SellerGoodsManage/set_shop_category';
+		}
+
+		api({
+			data:{apiurl:apiurl,id:ids,shop_category_id:category_ids,is_openid:1}
+		},function(ret){
+			ret.status = ret.code;
+			talert(ret);
+			if(ret.code == 1){
+				setTimeout(function(){
+					ref();
+				},1000);
+			}
+		});
+	}
+</script>

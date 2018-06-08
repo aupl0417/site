@@ -1,0 +1,47 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body">
+	<include file="Public:nav" />
+	<div class="container mb30">
+		<include file="Public:side" />
+		<div class="w980 fl">
+			<div class="bor_der">
+				<div class="bg_f1 clearfix fs14 text_44 tle_R">
+					<a class="fl plr15 line40 ml-1 active" href="javascript:;">{$title}包装模板</a>
+				</div>
+				{:W('Common/Builder/form', [['data' => $keyList, 'self' => 'yes']])}
+				<!-- 主体部分 -->
+			</div>
+		</div>
+	</div>
+</div>
+</block>
+<block name="css"></block>
+<block name="script">
+<script>
+$(document).ready(function() {
+	checkform({
+		formid:"#formadd",
+		rules:{
+			package_name:{
+				required:true,
+				maxlength:25,
+			},
+		},
+		messages:{
+			package_name:{
+				required:'保障模板名称不能为空',
+				maxlength:'保障模板名称最长为25个字符',
+			},
+		},
+	},function(res) {
+		talert({status:res.code,msg:res.msg});
+		if(res.code == 1) {
+			setTimeout(function() {
+				gourl({url:"{:U('/package')}"})
+			}, 1000);
+		}
+	});
+});
+</script>
+</block>

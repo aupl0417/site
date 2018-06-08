@@ -1,0 +1,73 @@
+			{:W('Widget/listable',array(array(
+				'data'	=>$pagelist['list'],
+				'items'	=>array(
+					array(
+						'title'		=>'ID',
+						'field'		=>'id',
+						'td_attr'		=>'width="80" class="text-center"',
+					),
+					array(
+						'title'		=>'选择',
+						'type'		=>'html',
+						'html'		=>'<input type="checkbox" class="i-grey-square" name="id[]" id="id[]" value="[id]" data-id="[id]" data-images="[images]" data-name="[name]">',
+						'td_attr'	=>'width="60" class="text-center"',
+						'norder'	=>1,
+					),
+					array(
+						'title'		=>'状态',
+						'type'		=>'active',
+						'field'		=>'active',
+						'td_attr'	=>'width="60" class="text-center"',
+						'data'		=>array(
+							1	=>'<div class="btn btn-xs btn-rad btn-trans btn-success">上架</div>',
+							0	=>'<div class="btn btn-xs btn-rad btn-trans btn-default">下架</div>',
+						),
+
+					),
+					array(
+						'title'		=>'图片',
+						'field'		=>'images',
+						'type'		=>'images',
+						'td_attr'	=>'class="text-center" width="80"',
+						'before'	=>'<a class="image-zoom" href="[images]" title="[name]">',
+						'end'		=>'</a>',
+					),
+					array(
+						'title'		=>'商品',
+						'field'		=>'name',
+						'icon'	=>'<i class="fa fa-pencil"></i>',
+					),
+					array(
+						'title'		=>'编号',
+						'field'		=>'code',
+					),
+					array(
+						'title'		=>'价格',
+						'field'		=>'price',
+					),
+					array(
+						'title'		=>'选择折扣类型',
+						'type'		=>'html',
+						'html'		=>'<select id="discount_sort[id]" name="discount_sort[[id]]"><option selected value="0">打折</option><option value="1">减价</option></select>',
+						'td_attr'	=>'class="text-center"',
+					),
+					array(
+						'title'		=>'折扣(打折：0-10)',
+						'type'		=>'html',
+						'html'		=>'<input id="discount[id]" gid="[id]" gprice="[price]" type="text" name="discount[[id]]" value="" onblur="count_price(this);">',
+						'td_attr'	=>'class="text-center"',
+					),
+					array(
+						'title'		=>'折扣后价格',
+						'type'		=>'html',
+						'html'		=>'<span class="color-warning" id="price[id]">0.00</span><input id="xianshi_price[id]" type="hidden" name="xianshi_price[[id]]" value="[price]">',
+						'td_attr'	=>'class="text-center"',
+					),
+					array(
+						'title'		=>'时间',
+						'field'		=>'atime',
+						'function'	=>'return date("Y-m-d H:i:s",[atime]);',
+						'td_attr'	=>'width="120" class="text-center"',
+					),
+				),
+			)))}

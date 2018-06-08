@@ -1,0 +1,172 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body">
+	<include file="Public:nav" />
+	<div class="container mb30">
+		<include file="Public:side" />
+		<div class="w980 bor_der mb20 fl">
+			<div class="bg_f1 clearfix fs14 text_44 tle_R orders-tab" data-url="__SELF__">
+				<a class="fl plr15 line40 ml-1" href="{:U('/service')}">售后管理</a>
+				<a class="fl plr15 line40 ml-1" href="{:U('/service/index', ['sid' => 'seller'])}">等待卖家操作</a>
+				<a class="fl plr15 line40 ml-1" href="{:U('/service/index', ['sid' => 'buyer'])}">等待买家操作</a>
+				<a class="fl plr15 line40 ml-1" href="{:U('/service/index', ['sid' => 'arb'])}">等待仲裁</a>
+				<a class="fl plr15 line40 ml-1" href="{:U('/service/index', ['sid' => 'cancel'])}">已取消</a>
+				<a class="fl plr15 line40 ml-1" href="{:U('/service/index', ['sid' => 'over'])}">已完成</a>
+				<div class="fl ml40 mt5 mb0" style="width:300px">
+					<form method="get" action="{:U('/service/index')}" class="form-inline">
+						<div class="input-group input-group-sm mb0">
+							<input type="text" class="form-control" name="rno" value="{$_GET.rno}" placeholder="输入售后单号搜索">
+							<span class="input-group-btn">
+								<button class="btn btn-primary" type="submit">搜索</button>
+							</span>
+							<span class="input-group-btn">
+								<button id="hige_search" class="btn btn-default plr20" type="button">
+									高级搜索<i class="fa fa-angle-down ml5"></i>
+								</button>
+							</span>
+						</div>
+					</form>
+				</div>
+			</div>
+			<empty name="data.list">
+				{:W('Common/Builder/nors', array('param' => array('text' => $data['msg'])))}
+			<else />
+				<div class="pd15">
+					<form method="get" action="{:U('/service/index')}" class="form-inline">
+						<div id="search_dn" class="plr15 pb10 clearfix dn">
+							<div class="form-group">
+								<input class="form-control fs14 fl mr10" style="width:200px" type="text" name="sno" placeholder="订单号" value='{$_GET.sno}'>
+								<!-- <input class="form-control fs14 fl mr10" style="width:120px" type="text" name="goods_name" placeholder="商品名称" value='{$_GET.goods_name}'> -->
+								<input class="form-control fs14 fl" style="width:120px" type="text" name="nick" placeholder="买家昵称">
+								<div class="fl fs14 ml20 mr5 mt6">申请日期</div>	
+								<div class="input-group date datetime fl" data-min-view="2" data-date-format="yyyy-mm-dd" style="width:120px">
+										<input name="sday" value="{$_GET.sday}" data-filter="gte" class="form-control form-filter" readonly="sday" id="sday" type="text" placeholder="开始时间">
+										<span class="input-group-addon btn default"><span class="glyphicon glyphicon-th fa fa-calendar"></span>
+									</span>
+								</div>
+								<span class="fl plr5 mt7">-</span>
+								<div class="input-group fl date datetime" data-min-view="2" data-date-format="yyyy-mm-dd" style="width:120px">
+										<input name="eday" value="{$_GET.eday}" data-filter="lte" class="form-control form-filter" readonly="eday" id="eday" type="text" placeholder="结束时间">
+										<span class="input-group-addon btn default"><span class="glyphicon glyphicon-th fa fa-calendar"></span>
+									</span>
+								</div>
+							</div>
+							<button class="btn btn-primary" type="submit">搜索</button>
+						</div>
+					</form>
+					<div class="row mg0 test_black fs14 strong">
+						<div class="col-xs-5 text-center">商品信息</div>
+						<div class="col-xs-1 text-center">数量</div>
+						<div class="col-xs-2 text-center">类型</div>
+						<div class="col-xs-2 text-center">状态</div>
+						<div class="col-xs-2 text-center">操作</div>
+					</div>
+				</div>
+				<div class="solid_t pd15">
+					<volist name="data.list" id="vo">
+						<table class="table table-bordered table-advance table-hover mb30">
+							<tbody>
+								<tr>
+									<th class="col-xs-5" colspan="2">售后单号：<a href="{:U('/orders/detail', array('id' => $vo['s_no']))}" target="_blank">{$vo.r_no}</a></th>
+									<th class="col-xs-7" colspan="5" class="col-lg-1"><a target="_blank" class="text_44 mr20" href="{:shop_url($vo['shop']['id'], $vo['shop']['domain'])}">{$vo.shop.shop_name}</a>
+										订单号：<a href="{:U('/orders/detail', ['id' => $vo['s_no']])}">{$vo.s_no}</a>
+										<a class="mr5 ml10 text_blue" target="_blank" href="{:DM('oauth2')}{:U('Im/check',['receiver' => $vo['user']['nick']])}"><img class="mr5" width="12" src="/Public/images/icon-im.png">买家：{$vo.user.nick}</a>
+										<notempty name="data.shop.wang">
+											<a class="mr10" target="_blank" href="http://amos1.taobao.com/msg.ww?v=2&uid={$vo.shop.wang}&s=2"><img class="mr5" style="vertical-align:middle;" src="__NEW_DESIGN__images/contact_wang.jpg">{$vo.shop.wang}</a>
+										</notempty>
+										<notempty name="data.shop.mobile">
+											<a class="mr10" href="javascript:;"><img class="mr5" style="vertical-align:middle;" src="__NEW_DESIGN__images/contact_phong.jpg">{$vo.shop.mobile}</a>
+										</notempty>
+									</th>
+								</tr>
+									<tr class="countTr">
+										<td style="vertical-align: middle;" class="text-center col-xs-2"><a target="_blank" href="{:DM('item')}{:U('/index/index', array('id' => $vo['orders_goods']['attr_list_id']))}"><img src="{$vo['orders_goods']['images']}" class="img-thumbnail"></a></td>
+										<td class="col-xs-3"><a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', array('id' => $vo['orders_goods']['attr_list_id']))}"><empty name="vo.orders_goods.goods_name">运费<else/>{$vo.orders_goods.goods_name}<br/>{$vo.orders_goods.attr_name}</empty></a></td>
+										<td style="vertical-align: middle;" class="text-center col-xs-1"><notempty name="vo.orders_goods">×{$vo.num}</notempty></td>
+										<td style="vertical-align: middle;" class="text-center col-xs-2">{$vo.status_name}</br>({$vo.type_name})</td>
+										<td style="vertical-align: middle;" class="text-center col-xs-2" rowspan="{$count}">
+											<switch name="vo.status">
+												<case value="1">
+													<div data-type="modal" data-url="{:U('/service/opreat', ['type' => 'accept', 'id' => $vo['r_no']])}" data-title="同意售后" class="btn btn-success btn-ml text-center btn_m w100 opreating">同意售后</div>
+													<div data-type="modal" data-url="{:U('/service/opreat', ['type' => 'reject', 'id' => $vo['r_no']])}" data-title="拒绝售后" class="btn btn-primary btn-ml text-center btn_m mt10 opreating w100">拒绝售后</div>
+												</case>
+												<case value="2">
+													<div class="btn btn-primary btn-ml text-center btn_m w100">等待买家操作</div>	<!-- 拒绝售后 -->
+												</case>
+												<case value="3">
+													<div class="btn btn-primary btn-ml text-center btn_m w100">等待买家操作</div>
+												</case>
+												<case value="4">
+													<div data-type="modal" data-url="{:U('/service/opreat', ['type' => 'accept1', 'id' => $vo['r_no']])}" data-title="已收到货" class="btn btn-success btn-ml text-center btn_m w100 opreating">已收到货</div>
+													<div data-type="modal" data-url="{:U('/service/opreat', ['type' => 'appeal', 'id' => $vo['r_no']])}" data-title="未收到货" class="btn btn-primary btn-ml text-center btn_m mt10 opreating w100">未收到货</div>
+												</case>
+												<case value="5">
+													<div data-type="modal" data-url="{:U('/service/opreat', ['type' => 'send_express', 'id' => $vo['r_no']])}" data-title="寄出商品" class="btn btn-success btn-ml text-center btn_m w100 opreating">寄出商品</div>
+												</case>
+												<case value="6">
+													<div class="btn btn-primary btn-ml text-center btn_m w100">卖家寄出商品</div>
+												</case>
+												<case value="10">
+													<div class="btn btn-primary btn-ml text-center btn_m w100">等待仲裁</div>
+												</case>
+												<case value="20">
+													<div class="btn btn-success btn-ml text-center btn_m w100">售后已取消</div>
+												</case>
+												<case value="100">
+													<div class="btn btn-success btn-ml text-center btn_m w100">售后已完成</div>
+												</case>
+											</switch>
+										</td>
+										<td style="vertical-align: middle;" class="text-center col-xs-2" rowspan="{$count}">
+											<a class="text_blue" href="{:U('/refund/detail', array('id' => $vo['r_no'], 'sid' => 3))}" target="_blank">售后详情</a>
+										</td>
+									</tr>
+							</tbody>
+						</table>
+					</volist>
+					
+					<div class="text-right">
+						<div class="col-xs-12 text-center">
+							{:paresePageAction($data['page']['page'], '/SellerRefund/refund_list')}
+						</div>
+					</div>
+				</div>
+			</empty>
+		</div>
+	</div>
+</div>
+</block>
+<block name="css">
+<script src="__FLATDREAM__/js/bootstrap.datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script src="__FLATDREAM__/js/bootstrap.datetimepicker/js/bootstrap-datetimepicker.zh-CN.js"></script>
+<link rel="stylesheet" href="__FLATDREAM__/js/bootstrap.datetimepicker/css/bootstrap-datetimepicker.css" />
+</block>
+<block name="script">
+<script>
+$(document).ready(function() {
+	$(".datetime").datetimepicker({
+		format : 'yyyy-mm-dd'
+	});
+	$('.datetime').datetimepicker({
+		language:  'zh-CN',
+		weekStart : 1,
+		todayBtn : 1,
+		autoclose : 1,
+		todayHighlight : 1,
+		startView : 2,
+		forceParse : 0,
+		showMeridian : 1
+	});
+	$(".opreating").click(function() {
+		var d 	=	$(this).data();
+		vmodal({
+			title:d.title,
+			url:d.url,
+		});
+	})
+	$('#hige_search').click(function(){
+		$('#search_dn').slideToggle('slow')
+	})
+})
+</script>
+</block>

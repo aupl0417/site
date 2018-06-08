@@ -1,0 +1,23 @@
+<extend name="Home@Public:base" />
+<block name="body">
+    <div class="centent_body">
+        <!-- to do your html codeing -->
+        <div class="revision_bg">
+            <div class="container ptb_size_lg clearfix" style="/*width: 980px;*/">
+                <div class="pd15" style="background:#fff">
+
+                    <div class="text-center pd15">
+                        <h1 class="mb20 text-success mt20">支付成功</h1>
+                        <div>
+                            <a href="{:DM('my', '/orders')}" class="btn btn-rad btn-trans btn-success">查看订单</a>
+                            <a href="{:DM('www')}" class="btn btn-rad btn-trans btn-danger ml30">继续购买</a>
+                        </div>
+                    </div>
+
+                    <div class="row" style="border-top: solid 20px #F8F8F8"></div>
+                    {:W('Common/Side/like')}
+                </div>
+            </div>
+        </div>
+    </div>
+</block>

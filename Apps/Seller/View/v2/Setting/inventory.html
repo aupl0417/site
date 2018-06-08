@@ -1,0 +1,56 @@
+<extend name="Seller@Public:base" />
+<block name="body">
+    <div class="centent_body">
+        <!-- to do your html codeing -->
+        <div class="revision_bg">
+            <div class="container ptb_size_lg clearfix">
+                <!-- 左侧导航 -->
+                <include file="Public:sideNav" />
+                <!-- 左侧导航结束 -->
+
+                <div class="revisionRight pd15" style="width: 1020px"><!-- 右侧内容 -->
+                    <div class="clearfix revisionOrderTab" data-url="">
+                        <a class="orderOption active" href="javascript:;">结算方式介绍</a>
+                    </div>
+
+                    <div class="content">
+                        <p><h4>库存积分方式</h4>
+                            选择库存积分分发的结算方式，买家确认收货后货款将实时结算到商家的账户上。 当商家库存积分不足时，买家无法支付订单。 商家购买足够库存积分后将提醒买家再次支付。</p>
+
+                        <p><h4>扣除货款方式</h4>
+                            选择扣除货款的结算方式，买家确认收货后货款结算到商家账户上的时间暂定为10天。 扣除部分订单交易金额作为库存积分的代付款，将余下的货款结算给商家。</p>
+                    </div>
+
+                    <!-- 表单 -->
+                    <div class="row" style="border-top: solid #F8F8F8 20px">
+                        <div class="clearfix revisionOrderTab pd15" data-url="">
+                            <a class="orderOption active" href="javascript:;">设置结算方式</a>
+                        </div>
+                        <div class="col-sm-4">
+
+                        </div>
+                        <div class="col-sm-4">
+                            {$form.html}
+                        </div>
+                        <div class="col-sm-4">
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <!-- my codeing over -_-   -->
+
+    </div>
+</block>
+
+<block name="css">
+
+</block>
+
+<block name="script">
+    <!-- to do your javascript codeing -->
+    {$form.js}
+</block>

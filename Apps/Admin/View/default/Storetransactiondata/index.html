@@ -1,0 +1,492 @@
+<include file="Public:header" />
+<include file="nav" />
+<js href="__JS__/ECharts/echarts.min.js" />
+	<div class="pd20">
+		<div class="bor_der pd15 m20 block-flat">
+			<h5 class="fs16 mt0">基础数据统计</h5>
+			<table class="bg_white table_dotted">
+				<tbody class="solid_t">
+					<tr>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">支付宝付款累计总金额(元)</p>
+							<strong>
+								<empty name="totals[0].total_alipay">
+								0
+								<else/>
+								{$result.total_alipay}
+								</empty>
+							</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">现金支付累计总金额(元)</p>
+							<strong>
+								<empty name="totals[0].money_total">
+								0
+								<else/>
+								{$result.money_total}
+								</empty>
+							</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">唐宝支付累计总金额(个)</p>
+							<strong>
+								<empty name="totals[0].total_tangbao">
+								0
+								<else/>
+								{$result.total_tangbao}
+								</empty>
+							</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">累计成交总金额(元)</p>
+							<strong>
+								<empty name="totals[0].success_order_total">
+								0
+								<else/>
+								{$result.success_order_total}
+								</empty>
+							</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">累计确认收货总金额(元)</p>
+							<strong>
+								<empty name="totals[0].accept_total">
+								0
+								<else/>
+								{$result.accept_total}
+								</empty>
+							</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">累计申请退款总金额(元)</p>
+							<strong>
+								<empty name="totals[0].refund_total">
+								0
+								<else/>
+								{$result.refund_total}
+								</empty>
+							</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">累计退款成功总额(元)</p>
+							<strong>{$result.refund_success_total}
+								<empty name="totals[0].refund_success_total">
+								0
+								<else/>
+								{$result.refund_success_total}
+								</empty>
+							</strong>
+						</td>
+					</tr>
+				</tbody>
+			</table>	
+		</div>
+		
+		<div class="bor_der pd15 m20 block-flat">
+			<h5 class="fs16 mt0">实时新增</h5>
+			<table class="bg_white table_dotted ">
+				<tbody class="solid_t">
+					<tr>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日支付宝付款笔数</p>
+							<strong>{$totals.0.alipay_num}</strong>
+							<h5 class="text_77">较前一日 <span class="{$rate.alipay_num_color}">{$rate.alipay_num}%  {$rate.alipay_num_sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日支付宝付款总金额(元)</p>
+							<strong>
+								<empty name="totals[0].day_alipay_total">
+								0
+								<else/>
+								{$totals.0.day_alipay_total}
+								</empty>
+							</strong>
+							<h5 class="text_77">较前一日 <span class="{$rate.day_alipay_total_color}">{$rate.day_alipay_total}%  {$rate.day_alipay_total_sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日现金支付笔数</p>
+							<strong>{$totals.0.money_num}</strong>
+							<h5 class="text_77">较前一日 <span class="{$rate.money_num_color}">{$rate.money_num}%  {$rate.money_num_sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日现金支付总金额(元)</p>
+							<strong>
+								<empty name="totals[0].day_money_total">
+								0
+								<else/>
+								{$totals.0.day_money_total}
+								</empty>
+							</strong>
+							<h5 class="text_77">较前一日 <span class="{$rate.day_money_total_color}">{$rate.day_money_total}%  {$rate.day_money_total_sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日唐宝支付笔数</p>
+							<strong>{$totals.0.tangbao_num}</strong>
+							<h5 class="text_77">较前一日 <span class="{$rate.tangbao_num_color}">{$rate.tangbao_num}%  {$rate.tangbao_num_sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日唐宝支付总金额(个)</p>
+							<strong>
+								<empty name="totals[0].day_tangbao_total">
+								0
+								<else/>
+								{$totals.0.day_tangbao_total}
+								</empty>
+							</strong>
+							<h5 class="text_77">较前一日 <span class="{$rate.day_tangbao_total_color}">{$rate.day_tangbao_total}%  {$rate.day_tangbao_total_sign};</span></h5>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<div class="row mt30">
+			<div class="clearfix"></div>
+		
+			<div class="box p20 m20">
+				<div id="main" style="width: 100%;height:400px;"></div>
+			</div>
+			<script type="text/javascript">
+				// 基于准备好的dom，初始化echarts实例
+				var myChart = echarts.init(document.getElementById('main'));
+	
+				// 指定图表的配置项和数据
+				{:W('Widget/promotion_total')}
+	
+	
+				// 使用刚指定的配置项和数据显示图表。
+				myChart.setOption(option);
+			</script>	
+			</div>
+
+			<table class="bg_white table_dotted">
+				<tbody class="solid_t">
+					<tr>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日下单笔数</p>
+							<strong>{$totals.0.order_num}</strong>
+							<h5 class="text_77">较前一日 <span class="{$rate.order_num_color}">{$rate.order_num}%  {$rate.order_num_sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日下单总金额(元)</p>
+							<strong>
+								<empty name="totals[0].day_order_total">
+								0
+								<else/>
+								{$totals.0.day_order_total}
+								</empty>
+							</strong>
+							<h5 class="text_77">较前一日 <span class="{$rate.day_order_total_color}">{$rate.day_order_total}%  {$rate.day_order_total_sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日下单平均单价(元)</p>
+							<strong>
+								<empty name="totals[0].day_average_order">
+								0
+								<else/>
+								{$totals.0.day_average_order}
+								</empty>
+							</strong>
+							<h5 class="text_77">较前一日 <span class="{$rate.day_average_order_color}">{$rate.day_average_order}%  {$rate.day_average_order_sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日成交笔数</p>
+							<strong>{$totals.0.order_success}</strong>
+							<h5 class="text_77">较前一日 <span class="{$rate.order_success_color}">{$rate.order_success}%  {$rate.order_success_sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日成交总金额(元)</p>
+							<strong>
+								<empty name="totals[0].day_order_success_total">
+								0
+								<else/>
+								{$totals.0.day_order_success_total}
+								</empty>
+							</strong>
+							<h5 class="text_77">较前一日 <span class="{$rate.day_order_success_total_color}">{$rate.day_order_success_total}%  {$rate.day_order_success_total_sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日成交平均单价(元)</p>
+							<strong>
+								<empty name="totals[0].day_average_success_order">
+								0
+								<else/>
+								{$totals.0.day_average_success_order}
+								</empty>
+							</strong>
+							<h5 class="text_77">较前一日 <span class="{$rate.day_average_success_order_color}">{$rate.day_average_success_order}%  {$rate.day_average_success_order_sign};</span></h5>
+						</td>
+					</tr>
+					<tr>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日确认收货笔数</p>
+							<strong>{$totals.0.accept_num}</strong>
+							<h5 class="text_77">较前一日 <span class="{$rate.accept_num_color}">{$rate.accept_num}%  {$rate.accept_num_sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日确认收货总金额(元)</p>
+							<strong>
+								<empty name="totals[0].day_accept_total">
+								0
+								<else/>
+								{$totals.0.day_accept_total}
+								</empty>
+							</strong>
+							<h5 class="text_77">较前一日 <span class="{$rate.day_accept_total_color}">{$rate.day_accept_total}%  {$rate.day_accept_total_sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日收货平均单价(元)</p>
+							<strong>
+								<empty name="totals[0].day_average_accept">
+								0
+								<else/>
+								{$totals.0.day_average_accept}
+								</empty>
+							</strong>
+							<h5 class="text_77">较前一日 <span class="{$rate.day_average_accept_color}">{$rate.day_average_accept}%  {$rata.day_average_accept_sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日申请退款笔数</p>
+							<strong>{$totals.0.refund_num}</strong>
+							<h5 class="text_77">较前一日 <span class="{$rate.refund_num_color}">{$rate.refund_num}%  {$rate.refund_num_sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日申请退款总金额(元)</p>
+							<strong>
+								<empty name="totals[0].day_refund_money">
+								0
+								<else/>
+								{$totals.0.day_refund_money}
+								</empty>
+							</strong>
+							<h5 class="text_77">较前一日 <span class="{$rate.day_refund_money_color}">{$rate.day_refund_money}%  {$rate.day_refund_money_sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日申请退款平均单价(元)</p>
+							<strong>
+								<empty name="totals[0].day_average_refund">
+								0
+								<else/>
+								{$totals.0.day_average_refund}
+								</empty>
+							</strong>
+							<h5 class="text_77">较前一日 <span class="{$rate.day_average_refund_color}">{$rate.day_average_refund}%  {$rate.day_average_refund_sign};</span></h5>
+						</td>
+					</tr>
+					<tr>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日退款成功笔数</p>
+							<strong>{$totals.0.refund_success_num}</strong>
+							<h5 class="text_77">较前一日 <span class="{$rate.refund_success_num_color}">{$rate.refund_success_num}%  {$rate.refund_success_num_sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日退款成功总金额(元)</p>
+							<strong>
+								<empty name="totals[0].refund_success_money">
+								0
+								<else/>
+								{$totals.0.refund_success_money}
+								</empty>
+							</strong>
+							<h5 class="text_77">较前一日 <span class="{$rate.refund_success_money_color}">{$rate.refund_success_money}%  {$rate.refund_success_money_sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+<!-- 							<p class="mb20 text_77">上一日退款成功平均单价(元)</p> -->
+<!-- 							<strong>36598.00</strong> -->
+<!-- 							<h5 class="text_77">较前一日 <span class="text_red">0.5%  &uarr;</span></h5> -->
+						</td>
+						<td class="fs14 pd20"></td>
+						<td class="fs14 pd20"></td>
+						<td class="fs14 pd20"></td>
+					</tr>
+				</tbody>
+			</table>
+			<style>
+				.table_dotted tbody,.table_dotted tr,.table_dotted td{border:1px dashed #ccc !important;}
+			</style>	
+		</div>
+
+			
+		</div>
+
+	</div>
+
+<notempty name="pagelist.list">
+<div class="m20">
+
+	<form id="formlist" name="formlist">
+	<div class="block-flat">
+		<div class="content">		
+			<include file="widget_pagelist" />			
+			
+			<div class="clearfix"></div>
+			<div class="row">
+				<div class="col-xs-10 text-center">
+					{$pagelist.page.page}
+				</div>
+				<div class="col-xs-2 text-right">
+					<div class="page-total">共 {$pagelist.allnum} 条记录，共 {$pagelist.allpage} 页</div>
+				</div>
+			</div>
+
+		</div>
+		
+	</div>
+	
+	</form><!--/form-->
+
+	<div class="clearfix h50px"></div>
+	
+</div>
+
+
+<div class="navbar-fixed-bottom border-t">
+	<div class="buttom-bar bg-white-50">
+
+		<div class="row">
+			<div class="col-xs-3">
+				<button type="button" class="btn btn-info btn-rad btn-trans select-all"><i class="fa fa-location-arrow"></i> 全选 / 反选</button>
+				<button type="button" class="btn btn-primary btn-rad btn-trans delete-select"><i class="fa fa-times"></i> 删除选中记录</button>
+			</div>
+			<div class="col-xs-2">				
+				<div class="input-group">
+					<select id="toactive" name="toactive" class="form-control" >
+						<option value="0">锁定</option>
+						<option value="1">正常</option>
+					</select>
+					<div class="input-group-btn">
+						<div class="btn btn-rad btn-trans btn-default active-change">修改</div>
+					</div>
+				</div>				
+			</div>
+			<div class="col-xs-2 pull-right">
+				<div class="input-group pull-right">
+					<select id="gopage" name="gopage" class="form-control">
+						<option value="1">跳转</option>
+						{$pagelist.page.gopage}
+					</select>					
+				</div>			
+			</div>
+
+					
+		</div>
+			
+	</div>
+</div>	
+
+<else />
+<div class="m20">
+	<include file="search_box" />
+	<div class="text-center nors">
+		<div class="nors-tips md20">暂无记录！</div>
+		<a href="__URL__/add" class="btn btn-trans btn-lg btn-rad btn-primary"><i class="fa fa-plus"></i> 新增记录</a>		
+	</div>
+</div>
+</notempty>
+
+
+
+<include file="Public:copyright" />
+<include file="Public:js" />
+<script>
+$(document).ready(function(){
+	$('.delete-select').click(function(){
+		if($('input[type="checkbox"]:checked').size()==0){
+			valert({status:'warning',msg:'请至少选择一项！'})
+			return false;
+		}else {
+			confirm_form({
+				formid:'#formlist',
+				furl:'__URL__/delete_select',
+				script:'callback(ret)',
+				title:'删除记录',
+				msg:'真的要删除吗？',
+				class:'text-center',
+				confirm:1
+			});
+		}
+	});
+
+	$('.active-change').click(function(){
+		if($('input[type="checkbox"]:checked').size()==0){
+			valert({status:'warning',msg:'请至少选择一项！'})
+			return false;
+		}else {
+			confirm_form({
+				formid:'#formlist',
+				furl:'__URL__/active_change_select/toactive/'+$('#toactive').val(),
+				script:'activeCall(ret)',
+				title:'批量更改记录状态',
+				msg:'真的要改记录状态吗？',
+				class:'text-center',
+				confirm:1
+			});
+		}
+	});
+	
+	$('.sid-change').click(function(){
+		if($('input[type="checkbox"]:checked').size()==0){
+			valert({status:'warning',msg:'请至少选择一项！'})
+			return false;
+		}else if($('#tosid').val()==''){
+			valert({status:'warning',msg:'请选择一个分类'})
+			return false;			
+		}else {
+			confirm_form({
+				formid:'#formlist',
+				furl:'__URL__/sid_change_select/tosid/'+$('#tosid').val(),
+				script:'activeCall(ret)',
+				title:'批量记录归类',
+				msg:'真的要批量记录归类吗？',
+				class:'text-center',
+				confirm:1
+			});
+		}
+	});	
+	
+	$('#gopage').change(function(){
+		var url=$('#gopage').val();
+		location.href=url;
+	});
+	$('.go-page').click(function(){
+		var url=$('#gopage').val();
+		location.href=url;
+	});	
+	
+	$('.btn-view').click(function(){
+		var d=$(this).data();
+		//alert(d.tag);
+		var tag='#view-'+d.id;
+		var item='#item-'+d.id;
+
+		$(tag).toggleClass('hide');
+		if($(item).html()=='') loadurl({tag:item,url:d.url});
+	});
+});
+
+function callback(ret){
+	valert({status:ret.status,msg:ret.msg});
+	if(ret.status=='success'){
+		$('input[type="checkbox"]:checked').each(function(){
+			$('#'+$(this).val()).remove();
+		});
+		$('#ajax-modal').modal('hide');
+	}
+}
+
+function delCall(ret,tag){
+	valert({status:ret.status,msg:ret.msg});
+	if(ret.status=='success'){
+		$(tag).remove();
+		$('#ajax-modal').modal('hide');
+	}
+}
+function activeCall(ret){
+	valert({status:ret.status,msg:ret.msg});
+	if(ret.status=='success'){
+		setTimeout(function(){
+			ref();
+		},500);
+	}
+}
+</script>
+<include file="Public:footer" />

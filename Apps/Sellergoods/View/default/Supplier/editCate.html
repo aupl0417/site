@@ -1,0 +1,178 @@
+<include file="Index/header" />
+<div class="bg-gray content-wrap" style="height: 100%; width: 100%; overflow: scroll;">
+
+    <div class="content pd15">
+        <div class="bg-warning pd10 letter-spacing1">
+            <i class="fa fa-exclamation-circle fs16 fl text_yellow"></i>
+            <p class="ml20 mb0">小提示，您正在为 <span class="text_red strong"> {$goods.goods_name}</span> 修改分类。</p>
+        </div>
+        <div class="row mt30">
+            <div class="col-md-8">
+                <div class="content">
+                    <h4>请选择分类</h4>
+                    <div class="m20">
+                        <div class="row select-category">
+                            <div class="col-xs-4">
+                                <div class="strong mb10">一级类目</div>
+                                <div class="box first-dir"></div>
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="strong mb10">二级类目</div>
+                                <div class="box second-dir"></div>
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="strong mb10">三级类目</div>
+                                <div class="box three-dir"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg_f1 ptb10 pd10 mb20 mt20">您当前选择的是：
+                        <span class="selected"></span>
+                    </div>
+                </div>
+                <div class="pd15" style="background: #F8F8F8;border: solid 1px #F0F0F0;">
+                    <h4 class="text-center strong mb20">乐兑平台发布商品协议 </h4>
+                    <p class="mb5">如您成为乐兑卖家，并使用乐兑商城平台所提供的卖家平台服务，您应当阅读并遵守《乐兑商城平台个人卖家服务协议》（以下简称“本协议”）、《平台服务协议》等相关协议</p>
+                    <p class="mb5">乐兑平台所实时发布的平台规则。请您务必审慎阅读、充分理解各条款内容，特别是免除或者限制责任的条款，以及开通或使用某项服务的单独协议。限制、免责条款可能以黑体加粗形式提示您注意。除非您已阅读并接受本协议所有条款，否则您无权使用本协议所约定提供的平台服务。您申请开通或使用本服务即视为您已阅读并同意上述协议的约束。</p>
+                </div>
+                <div class="text-center mt30">
+                    <button type="button" class="btn btn-primary btn-trans btn-rad next-page">
+                        同意协议并修改商品 <i class="fa fa-caret-right"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <p><a target="_blank" href="{:DM('faq', '/view')}?id=850" class="text_blue">如何发布商品？</a></p>
+                <p><a target="_blank" href="{:DM('faq', '/view')}?id=851" class="text_blue">我能发布多少个商品？</a></p>
+                <p><a target="_blank" href="{:DM('faq', '/view')}?id=852" class="text_blue">我的商品该发布在哪个类目下？</a></p>
+                <p><a target="_blank" href="{:DM('faq', '/view')}?id=853" class="text_blue">禁发商品名录 ？</a></p>
+                <p><a target="_blank" href="{:DM('faq', '/view')}?id=854" class="text_blue">商品属性、数量设置方法？</a></p>
+                <p><a target="_blank" href="{:DM('faq', '/view')}?id=855" class="text_blue">发布的商品在哪里编辑？</a></p>
+                <p><a target="_blank" href="{:DM('faq', '/view')}?id=856" class="text_blue">违规处理名单 ？ </a></p>
+                <p><a target="_blank" href="{:DM('faq', '/view')}?id=857" class="text_blue">属性里没有找到我的商品 ？ </a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script id="tpl_first_category" type="text/html">
+    <ul style="padding-left: 0;">
+        {{each data as val i}}
+        <li onclick="select_first($(this))" data-id="{{val.id}}">{{val.category_name}}</li>
+        {{/each}}
+    </ul>
+</script>
+
+<script id="tpl_second_category" type="text/html">
+    <ul style="padding-left: 0;">
+        {{each data as val i}}
+        <li onclick="select_second($(this))" data-id="{{val.id}}">{{val.category_name}}</li>
+        {{/each}}
+    </ul>
+</script>
+
+<script id="tpl_three_category" type="text/html">
+    <ul style="padding-left: 0;">
+        {{each data as val i}}
+        <li onclick="select_three($(this))" data-id="{{val.id}}">{{val.category_name}}</li>
+        {{/each}}
+    </ul>
+</script>
+<link rel="stylesheet" type="text/css" href="/Public/CSS/flatdream/js/jquery.nanoscroller/nanoscroller.css" />
+<link rel="stylesheet" type="text/css" href="/Public/CSS/flatdream/js/bootstrap.switch/bootstrap-switch.min.css" />
+<link rel="stylesheet" type="text/css" href="/Public/CSS/flatdream/js/bootstrap.slider/css/slider.css" />
+<link rel="stylesheet" type="text/css" href="/Public/CSS/flatdream/js/fuelux/css/fuelux.css">
+<link rel="stylesheet" type="text/css" href="/Public/CSS/flatdream/js/fuelux/css/fuelux-responsive.min.css">
+<link rel="stylesheet" type="text/css" href="/Public/new_design/flatdream/js/jquery.icheck/skins/all.css">
+<script type="text/javascript" src="/Public/CSS/flatdream/js/bootstrap.switch/bootstrap-switch.js"></script>
+<script type="text/javascript" src="/Public/CSS/flatdream/js/bootstrap.slider/js/bootstrap-slider.js" ></script>
+<script type="text/javascript" src="/Public/new_design/js/loader.min.js"></script>
+<script type="text/javascript" src="/Public/new_design/flatdream/js/jquery.icheck/icheck.js"></script>
+
+<script type="text/javascript">
+    var category={:$shopCategorys?json_encode($shopCategorys):'""'};
+    var first_category;
+    var second_category;
+    $(document).ready(function(){
+        if(category!=''){
+            var html=template('tpl_first_category',{data:category});
+            $('.first-dir').html(html);
+        }
+
+        $('.next-page').click(function(){
+            if($('.three-dir li.active').size()==0){
+                talert({status:'warning',msg:'请选择完整类目（第三级类目）！'});
+                return false;
+            }
+
+            var url = '{:U("/Supplier/goods_edit", ["id" => $goods["id"]])}?cateId=' + $('.three-dir li.active').data('id');
+            window.location.href = url;
+            return false;
+
+            ajax_post({
+                url:'{:U("/goods/saveCate")}',
+                data:{cateId:$('.three-dir li.active').data('id'), id:'{$goods.id}'}
+            }, function (res) {
+                talert({status:res.code, msg:res.msg});
+                if (res.code == 1) {
+                    var url = '{:U("/goods/edit", ["id" => $goods["id"]])}';
+                    window.location.href = url;
+                }
+            })
+
+//            var url = '{:U("/goods/create")}?cateId=' + $('.three-dir li.active').data('id');
+//            window.location.href = url;
+        });
+
+    });
+
+    function select_first(obj){
+        $('.second-dir').html('');
+        $('.three-dir').html('');
+
+        var id=obj.data('id');
+        obj.addClass('active').siblings().removeClass('active');
+        var data;
+        for(i=0;i<category.length;i++){
+            if(id==category[i].id){
+                data=category[i].dlist;
+                break;
+            }
+        }
+
+        var html=template('tpl_second_category',{data:data});
+        $('.second-dir').html(html);
+    }
+
+    function select_second(obj){
+        $('.three-dir').html('');
+
+        var id=obj.data('id');
+        obj.addClass('active').siblings().removeClass('active');
+        var data;
+        for(i=0;i<category.length;i++){
+            for(j=0;j<category[i].dlist.length;j++){
+                if(id==category[i].dlist[j].id){
+                    data=category[i].dlist[j].dlist;
+                    break;
+                }
+            }
+
+        }
+
+        var html=template('tpl_three_category',{data:data});
+        $('.three-dir').html(html);
+    }
+
+    function select_three(obj){
+        obj.addClass('active').siblings().removeClass('active');
+
+        var first = $('.first-dir li.active').text();
+        var second = $('.second-dir li.active').text();
+        var three = $('.three-dir li.active').text();
+
+        var html = first+' > '+second+' > '+three;
+        $('.selected').html(html);
+    }
+</script>

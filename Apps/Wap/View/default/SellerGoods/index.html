@@ -1,0 +1,397 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			商品管理
+		</div>
+		<div class="r">
+		</div>
+	</div>
+</header>
+<section>	
+	<!--主菜单-->
+	<div class="row tabs">
+		<div class="col-33">
+			<div class="tabs-item active" data-active="1">
+				在售中(<span class="c-1">0</span>)
+			</div>
+		</div>	
+		<div class="col-33">
+			<div class="tabs-item" data-active="1">
+				仓库中(<span class="c-2">0</span>)
+			</div>
+		</div>
+		<div class="col-33">
+			<div class="tabs-item" data-active="1">
+				待上架(<span class="c-3">0</span>)
+			</div>
+		</div>
+	</div>	
+	<div class="clearfix"></div>
+	<div class="tabs-content">
+		<div class="tabs-pane active online">
+			<div class="pagelist"></div>
+			<div class="p10 load-more" onclick="goods_online_more($(this).closest('.tabs-pane'))">
+				<div class="btn btn-lg btn-block btn-danger btn-trans">加载更多……</div>
+			</div>	
+		</div>
+		<div class="tabs-pane online2">
+			<div class="pagelist"></div>
+			<div class="p10 load-more" onclick="goods_online_more2($(this).closest('.tabs-pane'))">
+				<div class="btn btn-lg btn-block btn-danger btn-trans">加载更多……</div>
+			</div>	
+		</div>
+		<div class="tabs-pane offline">
+			<div class="pagelist"></div>
+			<div class="p10 load-more" onclick="goods_offline_more($(this).closest('.tabs-pane'))">
+				<div class="btn btn-lg btn-block btn-danger btn-trans">加载更多……</div>
+			</div>			
+		</div>
+		
+	</div>	
+
+</section>
+<script id="tpl_goods_online" type="text/html">
+	<% for(i=0;i<data.length;i++){ %>
+		<div class="line-box-m hover row" id="online-<%= data[i].id %>">
+			<div class="col-15" onclick="openWin({name:'goods_view',url:'<%= data[i].attr_list[0].detail_url %>'})"><img src="<%= data[i].images %>" alt="商品主图"></div>
+			<div class="col-85" onclick="goods_online_click($(this))" data-id="<%= data[i].id %>">
+				<div class="pl10 mr20">
+					<div class="lh-20px"><%= data[i].goods_name %></div>
+					<div class="text-gray">
+						<span class="mr10">￥<%= data[i].price %></span>
+						<span class="mr10">库存 <%= data[i].num %></span>
+						<span class="mr10">售出 <%= data[i].sale_num %></span>
+						<span class="mr10">奖励 <%= (data[i].score_ratio * 100*data[i].price).toFixed(2) %> 积分</span>
+					</div>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+
+	<% } %>
+</script>
+<script id="tpl_goods_online2" type="text/html">
+	<% for(i=0;i<data.length;i++){ %>
+		<div class="line-box-m hover row" id="online-<%= data[i].id %>">
+			<div class="col-15" onclick="openWin({name:'goods_view',url:'<%= data[i].attr_list[0].detail_url %>'})"><img src="<%= data[i].images %>" alt="商品主图"></div>
+			<div class="col-85" onclick="goods_online_click($(this))" data-id="<%= data[i].id %>">
+				<div class="pl10 mr20">
+					<div class="lh-20px"><%= data[i].goods_name %></div>
+					<div class="text-gray">
+						<span class="mr10">￥<%= data[i].price %></span>
+						<span class="mr10">库存 <%= data[i].num %></span>
+						<span class="mr10">售出 <%= data[i].sale_num %></span>
+						<span class="mr10">奖励 <%= (data[i].score_ratio * 100*data[i].price).toFixed(2) %> 积分</span>
+					</div>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+
+	<% } %>
+</script>
+<script id="tpl_goods_offline" type="text/html">
+	<% for(i=0;i<data.length;i++){ %>
+		<div class="line-box-m hover row" id="offline-<%= data[i].id %>">
+			<div class="col-15"><img src="<%= data[i].images %>" alt="商品主图"></div>
+			<div class="col-85" onclick="goods_offline_click($(this))" data-id="<%= data[i].id %>">
+				<div class="pl10 mr20">
+					<div class="lh-20px"><%= data[i].goods_name %></div>
+					<div class="text-gray">
+						<span class="mr10">￥<%= data[i].price %></span>
+						<span class="mr10">库存 <%= data[i].num %></span>
+						<span class="mr10">售出 <%= data[i].sale_num %></span>
+						<span class="mr10">奖励 <%= (data[i].score_ratio * 100*data[i].price).toFixed(2) %> 积分</span>
+					</div>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+
+	<% } %>
+</script>
+
+<include file="Public:d_layer" />
+<script>
+fixBar(1);
+
+ajax_post({
+	url:'/Api/api',
+	data:{apiurl:'/SellerGoods/total_goods',is_openid:1}
+},function(ret){
+	if(ret.code == 1){
+		$('.page.active .c-1').html(ret.data[1]);
+		$('.page.active .c-2').html(ret.data['online_zero']);
+		$('.page.active .c-3').html(ret.data[2]);
+	}		
+});
+
+var data_goods_online={apiurl:'/SellerGoods/goods_online',is_openid:1,imgsize:160,no_sign:'p,pagesize,imgsize,status,action'};
+var data_goods_online2={apiurl:'/SellerGoods/goods_online',num:0,is_openid:1,imgsize:160,no_sign:'p,pagesize,imgsize,status,action,num'};
+var data_goods_offline={apiurl:'/SellerGoods/goods_offline',is_openid:1,imgsize:160,no_sign:'p,pagesize,imgsize,status,action'};
+
+seller_goods(data_goods_online,$('.page.active .online'),'tpl_goods_online');
+
+function seller_goods(data,obj,tpl){
+	var obj;
+	pagelist({
+		obj:obj,
+		data:data,
+		success:function(ret){
+			var html=template(tpl,{data:ret.data.list});			
+			
+			if(obj.data('p')==1){
+				obj.find('.pagelist').html(html);				
+
+			}else{
+				obj.find('.pagelist').append(html);
+			}
+			
+
+		},
+		error:function(ret){
+			obj.find('.pagelist').html(no_data_text);
+	
+		},
+	});	
+}
+
+//售中更多商品
+function goods_online_more(obj){
+	seller_goods(data_goods_online,obj,'tpl_goods_online');
+}
+//仓库更多商品
+function goods_online_more2(obj){
+	seller_goods(data_goods_online2,obj,'tpl_goods_online2');
+}
+
+//待上架更多商品
+function goods_offline_more(obj){
+	seller_goods(data_goods_offline,obj,'tpl_goods_offline');
+}
+
+$('.page.active .tabs .tabs-item').each(function(index){
+	var obj=$(this);
+	var index;	
+	obj.click(function(){	
+		$(this).closest('.tabs').find('.tabs-item').removeClass('active');
+		$(this).addClass('active');
+		$('.page.active .tabs-content .tabs-pane').removeClass('active').eq(index).addClass('active');		
+
+		if(index==1){
+			var tag=$('.page.active .tabs-content .tabs-pane').eq(index);
+			if(tag.data('p')==undefined) seller_goods(data_goods_online2,tag,'tpl_goods_online2');
+		}else if(index==2){
+			var tag=$('.page.active .tabs-content .tabs-pane').eq(index);
+			if(tag.data('p')==undefined) seller_goods(data_goods_offline,tag,'tpl_goods_offline');
+		}
+
+	});
+});
+
+$('.page.active .tabs .tabs-item').eq({$_GET['status']?$_GET['status']:0}).click();
+
+//售中商品点击
+function goods_online_click(obj){
+	var d=obj.data();
+	/*
+	ajax_post({
+		url:'/Api/api',
+		data:{apiurl:'/SellerGoods/goods_sku',goods_id:d.id,is_openid:1}
+	},function(ret){
+		var html = '<form class = "sku_edit"><table cellspacing="0" style="margin:0 10px;">'
+					+ '<tr>'
+						+ '<th nowrap="nowrap">属性</th>'
+						+ '<th nowrap="nowrap">销售价</th>'
+						+ '<th nowrap="nowrap">市场价</th>'
+						+ '<th nowrap="nowrap">成本价</th>'
+						+ '<th nowrap="nowrap">库存</th>'
+					+ '</tr>';
+		$.each(ret.data,function(k,v){
+			html+= '<tr class = "sku_value">'
+					+ '<td style="padding:2px 4px;">'+v.attr_name+''
+						+'<input type="hidden" name="id[]" value="'+v.id+'">'
+						+'<input type="hidden" name="code[]" value="'+v.code+'">'
+						+'<input type="hidden" name="barcode[]" value="'+v.barcode+'">'
+					+ '</td>'
+					+ '<td style="padding:2px 4px;"><input style="border: 1px solid #dcdcdc;" class="text-center" name="price[]" type = "text" value = "'+v.price+'"/></td>'
+					+ '<td style="padding:2px 4px;"><input style="border: 1px solid #dcdcdc;" class="text-center" name="price_market[]" type = "text" value = "'+v.price_market+'"/></td>'
+					+ '<td style="padding:2px 4px;"><input style="border: 1px solid #dcdcdc;" class="text-center" name="price_purchase[]" type = "text" value = "'+v.price_purchase+'"/></td>'
+					+ '<td style="padding:2px 4px;"><input style="border: 1px solid #dcdcdc;" class="text-center" name="num[]" type = "text" value = "'+v.num+'"/></td>'
+				 + '</tr>'
+		})
+		html +='</table></form>';
+		vmodal({
+			title:'编辑商品',
+			msg:'<div>'+html+'</div><div class="row"><div class="col-33"><div class="btn btn-danger btn-block m10" onclick="change_sku('+d.id+')">保存</div></div><div class="col-33"><div class="btn btn-danger btn-block m10" onclick="set_goods_offline('+d.id+')">下架</div></div><div class="col-33"><div class="btn btn-danger btn-block m10"  onclick="set_goods_delete('+d.id+',\'online\')">删除</div></div></div>',
+			is_footer:false,
+		});
+	});	*/
+	vmodal({
+		title:'操作',
+		msg:'<div class="row"><div class="col-33"><div class="btn btn-danger btn-block m10" onclick="set_goods_offline('+d.id+')">下架</div></div><div class="col-33"><div class="btn btn-danger btn-block m10" onclick="openWin({name:\'goods_sku\',url:\'SellerGoods/goods_sku/goods_id/'+d.id+'\'})">改价格</div></div><div class="col-33"><div class="btn btn-danger btn-block m10"  onclick="set_goods_delete('+d.id+',\'online\')">删除</div></div></div>',
+		is_footer:false,
+	});
+}
+
+//修改属性价格库存
+function change_sku(goods_id){
+	var id = '';
+	var num = '';
+	var code = '';
+	var price = '';
+	var barcode = '';
+	var price_market = '';
+	var price_purchase = '';
+	var result=true;
+	
+	$(".sku_edit .sku_value").each(function(k,v){
+		id += k+'='+($(this).find("input[name='id[]']").val())+'&';
+		code += k+'='+($(this).find("input[name='code[]']").val())+'&';
+		barcode += k+'='+($(this).find("input[name='barcode[]']").val())+'&';
+		price_market += k+'='+($(this).find("input[name='price_market[]']").val())+'&';
+		price_purchase += k+'='+($(this).find("input[name='price_purchase[]']").val())+'&';
+		if($(this).find("input[name='price[]']").val() == ''){
+			valert({status:0,msg:'销售价不能为空'});
+			result = false;
+		}else{
+			price += k+'='+($(this).find("input[name='price[]']").val())+'&';
+		}
+		if($(this).find("input[name='num[]']").val() == ''){
+			valert({status:0,msg:'库存不能为空'});
+			result = false;
+		}else{
+			num += k+'='+($(this).find("input[name='num[]']").val())+'&';
+		}
+	});
+	
+	if(!result){
+		return result;
+	}
+	id = id.substring(0,id.length-1);
+	num = num.substring(0,num.length-1);
+	code = code.substring(0,code.length-1);
+	price = price.substring(0,price.length-1);
+	barcode = barcode.substring(0,barcode.length-1);
+	price_market = price_market.substring(0,price_market.length-1);
+	price_purchase = price_purchase.substring(0,price_purchase.length-1);
+
+	var data={
+		apiurl:'/SellerGoods/goods_sku_edit',
+		goods_id:goods_id,
+		is_openid:1,
+		no_sign:'barcode,code,price_purchase,price_market,weight',
+		id:id,
+		price:price,
+		price_market:price_market,
+		price_purchase:price_purchase,
+		num:num,
+		code:code,
+		barcode:barcode
+	};
+	ajax_post({
+		url:'/Api/api',
+		data:data,
+	},function(ret){
+		if(ret.code==1) {
+			valert(ret);
+		
+		}else{
+			valert(ret);
+		}
+	});
+	
+	
+}
+
+//仓库商品点击
+function goods_offline_click(obj){
+	var d=obj.data();
+	/*
+	ajax_post({
+		url:'/Api/api',
+		data:{apiurl:'/SellerGoods/goods_sku',goods_id:d.id,is_openid:1}
+	},function(ret){
+		var html = '<form class = "sku_edit"><table cellspacing="0" style="margin:0 10px;">'
+					+ '<tr>'
+						+ '<th nowrap="nowrap">属性</th>'
+						+ '<th nowrap="nowrap">销售价</th>'
+						+ '<th nowrap="nowrap">市场价</th>'
+						+ '<th nowrap="nowrap">成本价</th>'
+						+ '<th nowrap="nowrap">库存</th>'
+					+ '</tr>';
+		$.each(ret.data,function(k,v){
+			html+= '<tr class = "sku_value">'
+					+ '<td style="padding:2px 4px;">'+v.attr_name+''
+						+'<input type="hidden" name="id[]" value="'+v.id+'">'
+						+'<input type="hidden" name="code[]" value="'+v.code+'">'
+						+'<input type="hidden" name="barcode[]" value="'+v.barcode+'">'
+					+ '</td>'
+					+ '<td style="padding:2px 4px;"><input style="border: 1px solid #dcdcdc;" class="text-center" name="price[]" type = "text" value = "'+v.price+'"/></td>'
+					+ '<td style="padding:2px 4px;"><input style="border: 1px solid #dcdcdc;" class="text-center" name="price_market[]" type = "text" value = "'+v.price_market+'"/></td>'
+					+ '<td style="padding:2px 4px;"><input style="border: 1px solid #dcdcdc;" class="text-center" name="price_purchase[]" type = "text" value = "'+v.price_purchase+'"/></td>'
+					+ '<td style="padding:2px 4px;"><input style="border: 1px solid #dcdcdc;" class="text-center" name="num[]" type = "text" value = "'+v.num+'"/></td>'
+				 + '</tr>'
+		})
+		html +='</table></form>';
+		vmodal({
+			title:'编辑商品',
+			msg:'<div>'+html+'</div><div class="row"><div class="col-33"><div class="btn btn-danger btn-block m10" onclick="change_sku('+d.id+')">保存</div></div><div class="col-33"><div class="btn btn-danger btn-block m10" onclick="set_goods_online('+d.id+')">上架</div></div><div class="col-33"><div class="btn btn-danger btn-block m10"  onclick="set_goods_delete('+d.id+',\'online\')">删除</div></div></div>',
+			is_footer:false,
+		});
+	});	
+	*/
+	vmodal({
+		title:'操作',
+		msg:'<div class="row"><div class="col-33"><div class="btn btn-danger btn-block m10" onclick="set_goods_online('+d.id+')">上架</div></div><div class="col-33"><div class="btn btn-danger btn-block m10" onclick="openWin({name:\'goods_sku\',url:\'SellerGoods/goods_sku/goods_id/'+d.id+'\'})">改价格</div></div><div class="col-33"><div class="btn btn-danger btn-block m10"  onclick="set_goods_delete('+d.id+',\'online\')">删除</div></div></div>',
+		is_footer:false,
+	});
+}
+
+//下架
+function set_goods_offline(id){
+	ajax_post({
+		url:'/Api/api',
+		data:{apiurl:'/SellerGoods/set_goods_offline',id:id,is_openid:1}
+	},function(ret){
+		valert(ret);
+		if(ret.code == 1){
+			$('.page.active #online-'+id).remove();
+			$('.page.active .vmodal').removeClass('active');
+			$('.page.active .vmodal-mask').removeClass('active');	
+		}		
+	});	
+}
+
+//上架
+function set_goods_online(id){
+	ajax_post({
+		url:'/Api/api',
+		data:{apiurl:'/SellerGoods/set_goods_online',id:id,is_openid:1}
+	},function(ret){
+		valert(ret);
+		if(ret.code == 1){
+			$('.page.active #offline-'+id).remove();
+			$('.page.active .vmodal').removeClass('active');
+			$('.page.active .vmodal-mask').removeClass('active');	
+		}		
+	});	
+}
+//删除
+function set_goods_delete(id,t){
+	ajax_post({
+		url:'/Api/api',
+		data:{apiurl:'/SellerGoods/goods_delete',id:id,is_openid:1}
+	},function(ret){
+		valert(ret);
+		if(ret.code == 1){
+			$('.page.active #'+t+'-'+id).remove();
+			$('.page.active .vmodal').removeClass('active');
+			$('.page.active .vmodal-mask').removeClass('active');	
+		}		
+	});	
+}
+</script>

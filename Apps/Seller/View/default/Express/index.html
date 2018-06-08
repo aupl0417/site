@@ -1,0 +1,154 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body">
+	<include file="Public:nav" />
+	<div class="container mb30">
+		<include file="Public:side" />
+		<div class="w980 fl">
+			<div class="bor_der">
+				<div class="bg_f1 clearfix fs14 text_44 tle_R">
+					<a class="fl plr15 line40 ml-1 active" href="javascript:;">运费模板</a>
+				</div>
+		</div>
+				
+				<div class="p10">
+					<div class="row">
+						<div class="col-xs-2"><a href="__URL__/add" class="btn btn-primary">添加运费模板</a></div>
+						<div class="col-xs-10" style="line-height:40px;">运费模板只能创建一个包邮模板和一个自定义地区运费模板</div>
+					</div>
+				</div>
+				<div class="p10">
+				<notempty name="list">
+					<volist name="list" id="vo">
+						<table class="md20" id="{$vo.id}">
+							<thead>
+								<tr>
+									<th colspan="6">
+										<div class="pull-right">
+											<a href="__URL__/edit/id/{$vo.id}" class="btn btn-info">修改</a> 
+											<div class="btn btn-primary" onclick="express_delete($(this))" data-id="{$vo.id}">删除</div>
+										</div>
+										<h4>{$vo.tpl_name}</h4>
+									</th>
+								</tr>
+								<eq name="vo.is_free" value="0">
+								<tr>
+									<th class="text-center" width="100">运送方式</th>
+									<th class="text-center">运送到</th>
+									<th class="text-center" width="100">首{$vo['unit']==1?'件':'重'}</th>
+									<th class="text-center" width="100">运费(元)</th>
+									<th class="text-center" width="100">续{$vo['unit']==1?'件':'重'}</th>
+									<th class="text-center" width="100">运费(元)</th>
+								</tr>
+								</eq>
+							</thead>
+							
+							<tbody class="tm">
+								<eq name="vo.is_free" value="0">
+								<eq name="vo.is_express" value="1">
+								<tr>
+									<td class="text-center">快递</td>
+									<td>默认地区</td>
+									<td class="text-center">{$vo.express_default_first_unit}</td>
+									<td class="text-center">{$vo.express_default_first_price}</td>
+									<td class="text-center">{$vo.express_default_next_unit}</td>
+									<td class="text-center">{$vo.express_default_next_price}</td>
+								</tr>								
+								</eq>
+								<eq name="vo.is_ems" value="1">
+								<tr>
+									<td class="text-center">EMS</td>
+									<td>默认地区</td>
+									<td class="text-center">{$vo.ems_default_first_unit}</td>
+									<td class="text-center">{$vo.ems_default_first_price}</td>
+									<td class="text-center">{$vo.ems_default_next_unit}</td>
+									<td class="text-center">{$vo.ems_default_next_price}</td>
+								</tr>								
+								</eq>								
+								<volist name="vo.express_area" id="a">
+								<eq name="vo.is_express" value="1">
+								<eq name="a.type" value="1">
+								<tr>
+									<td class="text-center">{$a['type']==1?'快递':'EMS'}</td>
+									<td>{$a.city}</td>
+									<td class="text-center">{$a.first_unit}</td>
+									<td class="text-center">{$a.first_price}</td>
+									<td class="text-center">{$a.next_unit}</td>
+									<td class="text-center">{$a.next_price}</td>
+								</tr>
+								</eq>
+								</eq>
+								<eq name="vo.is_ems" value="1">
+								<eq name="a.type" value="2">
+								<tr>
+									<td class="text-center">{$a['type']==1?'快递':'EMS'}</td>
+									<td>{$a.city}</td>
+									<td class="text-center">{$a.first_unit}</td>
+									<td class="text-center">{$a.first_price}</td>
+									<td class="text-center">{$a.next_unit}</td>
+									<td class="text-center">{$a.next_price}</td>
+								</tr>
+								</eq>
+								</eq>
+								</volist>
+								<else />
+									<tr>
+										<td colspan="6" class="text-center">
+											<h4>全国包邮</h4>
+										</td>
+									</tr>							
+								</eq>								
+							</tbody>
+
+						</table>
+					</volist>
+				
+				<else />
+					<div class="nors text-center">还未设置运费模板</div>
+				</notempty>
+				</div>
+				
+				
+				
+				<div class="clearfix"></div>
+				
+			
+		</div>
+	</div>
+</div>
+</block>
+<block name="css"></block>
+<block name="script">
+<script>
+function express_delete(obj){
+	var d=obj.data();
+	vmodal({
+		title:'删除运费模板',
+		// url:d.url,
+		msg:'<h4>您真的要删除吗？</h4><div class="mt10">如有商品应用了该模板，必须解除应用后方可删除该运费模板！</div>',
+	  	class:'text-center',
+		width:'650px',
+	  	confirm:1
+	},function(ret){
+		$(".modal-ok").click(function(){
+			ajax_post({
+			  	url:'__URL__/delete',
+			  	data:{id:d.id},
+		  	},function(ret) {
+				if(ret.code==1){
+					$('#'+d.id).remove();
+					$('#ajax-modal').modal('hide');
+				}else{
+					talert(ret);
+				}
+		  	})
+		});
+	});
+}
+
+
+
+</script>
+
+
+</block>

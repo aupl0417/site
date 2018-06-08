@@ -1,0 +1,50 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body">
+<include file="Public:nav" />
+	<div class="container mb30">
+		<include file="Public:side" />
+		<div class="w980 fl">				
+			<div class="bor_der">
+				<div class="bg_f1 clearfix fs14 text_44 tle_R">
+					<a class="fl plr15 line40 ml-1 active" href="javascript:;">添加商品</a>
+				</div>
+				<div class="nors" style="padding:50px;">
+					<notempty name="type.express_tpl">
+					<div class="alert alert-warning alert-white-alt2 rounded md20">
+						<div class="pull-right"><a href="{:U('/express/add')}" class="btn btn-xs btn-primary">去添加</a></div>
+						<div class="icon"><i class="fa fa-warning"></i></div>
+						<strong>还未添加运费模板!</strong> 
+					</div>
+					</notempty>
+					<notempty name="type.package">
+					<div class="alert alert-warning alert-white-alt2 rounded md20">
+						<div class="pull-right"><a href="{:U('/package/add')}" class="btn btn-xs btn-primary">去添加</a></div>
+						<div class="icon"><i class="fa fa-warning"></i></div>
+						<strong>还未添加包装模板!</strong> 
+					</div>
+					</notempty>
+					<notempty name="type.protection">
+					<div class="alert alert-warning alert-white-alt2 rounded md20">
+						<div class="pull-right"><a href="{:U('/protection/add')}" class="btn btn-xs btn-primary">去添加</a></div>
+						<div class="icon"><i class="fa fa-warning"></i></div>
+						<strong>还未添加售后模板!</strong> 
+					</div>
+					</notempty>
+					<notempty name="type.category">
+					<div class="alert alert-warning alert-white-alt2 rounded md20">
+						<div class="pull-right"><a href="{:U('/category')}" class="btn btn-xs btn-primary">去添加</a></div>
+						<div class="icon"><i class="fa fa-warning"></i></div>
+						<strong>还未添加店分商品分类!</strong> 
+					</div>
+					</notempty>
+				
+				</div>
+			</div>
+		</div><!-- 右边结束 -->
+	</div>
+</div>
+</block>
+<block name="css"></block>
+<block name="script">
+</block>

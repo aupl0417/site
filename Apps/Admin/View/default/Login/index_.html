@@ -1,0 +1,104 @@
+<include file="Public:header" />
+
+<div id="cl-wrapper" class="login-container">
+
+	<div class="middle-login">
+		<div class="block-flat">
+			<div class="header">							
+				<h3 class="text-center">乐兑C+消费系统V1.0</h3>
+			</div>
+			<div>
+				<form style="margin-bottom: 0px !important;" class="form-horizontal" id="form-login" name="form-login">
+					<div class="content">
+						<h4 class="title text-center">管理员登录</h4>
+						
+						{:W('Widget/create_form',array(array(
+							'col'		=>array('','col-xs-12'),
+							'dline'		=>'hide',						
+							'field'		=>array(
+								array(
+									'type'			=>'input',
+									'name'			=>'username',
+									'placeholder'	=>'请输入管理员账号(昵称/手机/邮箱)',
+									'is_need'		=>1,
+									'addon_left'	=>'<span class="input-group-addon"><i class="fa fa-user"></i></span>',
+								),
+								array(
+									'type'=>'password',
+									'name'			=>'password',
+									'placeholder'	=>'请输入密码',
+									'is_need'		=>1,
+									'addon_left'	=>'<span class="input-group-addon"><i class="fa fa-lock"></i></span>',
+								),
+								array(
+									'type'			=>'vcode',
+									'name'			=>'vcode',
+									'placeholder'	=>'验证码',
+								),
+							),
+						)))}						
+						
+
+							
+					</div>
+					<div class="foot">
+						<button type="submit" class="btn btn-lg btn-block btn-primary btn-rad btn-trans m0"><i class="fa fa-key"></i> 登录</div>
+
+					</div>
+				</form>
+			</div>
+		</div>
+
+	</div> 
+	
+</div>
+<include file="Public:copyright" />
+<include file="Public:js" />
+<js href="__JS__/backstretch/jquery.backstretch.min.js" />
+<js href="__APP_JS__/Admin/Login/rand-bg.js" />
+<script>
+
+checkform({
+	formid:'#form-login',
+	url:'__URL__/check_login',
+	rules:{
+		username: {
+			required: !0,
+		},	
+		password: {
+			required: !0,
+			maxlength:18,
+			minlength:6
+		},
+        vcode: {
+            required: true,
+			rangelength:[4,5],
+        }			
+
+	},
+	messages:{
+		username:{
+			required:'请输入管理员账号'
+		},
+		password: {
+			required: "请输入新密码",
+			maxlength:"密码长度不能超过18个字符",
+			minlength:"密码长度至少6个字符以上"
+		},
+        vcode: {
+            required: '请输入验证码！',
+			rangelength:'验证码长度为4~5位！',
+        }			
+
+	},
+	script:'callback(ret)'
+});
+
+function callback(ret){
+	valert({status:ret.status,msg:ret.msg});
+	if(ret.status=='success'){
+		location.href='/';
+	}
+}
+</script>
+<include file="Public:footer" />

@@ -1,0 +1,40 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body">
+	<include file="Public:nav" />
+	<div class="container mb30">
+		<include file="Public:side" />
+		<div class="w980 fl">
+			<div class="bor_der">
+				<div class="bg_f1 clearfix fs14 text_44 tle_R">
+					<a class="fl plr15 line40 ml-1 active" href="javascript:;">{$seo['title']}</a>
+				</div>
+				<!-- 主体部分 -->
+				<div class="pd10">
+					<empty name="data">
+						{:W('Common/Builder/nors', array('param' => array('text' => '没有任何促销活动类型')))}
+					<else />
+						<div class="row">
+							<volist name="data" id="vo">
+								<div class="col-md-6 col-sm-6 mb10">
+									<div class="block block-color danger">
+										<div class="header hover">
+											<div class="actions"><a href="{:U('/activity/create', ['type' => $vo['id']])}">发布促销活动</a></div>
+											<h3>{$vo.activity_name}</h3>
+										</div>
+										<div class="content pd10" style="background:#f0f0f0;">
+											<p>{$vo.intro|html_entity_decode}</p>
+										</div>
+									</div>
+								</div>
+							</volist>
+						</div>
+					</empty>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</block>
+<block name="css"></block>
+<block name="script"></block>

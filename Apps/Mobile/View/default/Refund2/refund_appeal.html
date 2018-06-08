@@ -1,0 +1,107 @@
+<include file="Public:header" />
+		<div class="page-group">
+			<div id="page-refund2-appeal" class="page">
+				<!-- 标题栏 -->
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left back" data-no-cache="true"></a>
+					<h1 class="title">申诉</h1>
+					<a class="icon iconfont icon-category pull-right ml5 ac-menu" onclick="top_menu()"></a>
+				</header>
+
+				<!-- 浮动导航 -->
+				<include file="Public:fixed-menu" />
+				
+				<nav class="bar bar-tab">
+					<div class="footer-btn footer-btn-default btn-submit">提交申诉</div>
+				</nav>				
+				
+				<!-- 这里是页面内容区 -->		
+				<div class="content">
+					<form name="form-refund-appeal" id="form-refund-appeal" onsubmit="return false;" data-url="/Refund2/appeal" data-can_price="{$rs.can_price}" data-can_num="{$rs.can_num}" data-can_express_price="{$rs.can_express_price}">
+						<div class="list-block media-list">
+							<ul>
+								<li>
+									<div class="item-content">
+										<div class="item-inner">
+											<div class="item-title-row">
+												<div class="item-title">退款编号</div>
+												<div class="item-after">{$rs.r_no}</div>
+											</div>
+										</div>
+									</div>
+								</li>
+								<li class="bg-gray2">
+									<a href="/Goods/view/id/{$rs.orders_goods.attr_list_id}" class="item-content">
+										<div class="item-media">
+											<img class="lazyload" data-sizes="auto" data-src="{:myurl($rs['orders_goods']['images'],150)}" alt="商品主图" src="../Public/images/nopic.gif" width="60">
+										</div>
+										<div class="item-inner">
+											<div class="item-title-row">
+												<div class="item-title">{$rs.orders_goods.goods_name}</div>
+												<div class="item-after">
+													￥{$rs.orders_goods.price}
+												</div>
+											</div>
+											<div class="item-subtitle">
+												<div class="pull-right text-gray">x{$rs.orders_goods.num}</div>
+												<div class="ft05">{$rs.orders_goods.attr_name}</div>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<a href="/Orders/view/s_no/{$rs.s_no}" class="item-content item-link" data-no-cache="true">
+										<div class="item-inner">
+											<div class="item-title-row">
+												<div class="item-title">订单号</div>
+												<div class="item-after">{$rs.s_no}</div>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li>
+									<div class="item-content">
+										<div class="item-inner">
+											<div class="item-title-row">
+												<div class="item-title" style="min-width:4rem">申诉原因</div>
+												<div class="item-input">
+													<textarea id="reason" name="remark" placeholder="请输入申诉原因，不超过100字" maxlength="100" rows="8"></textarea>
+												</div>
+											</div>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class="item-content">
+										<div class="upload-box">
+											<div class="upload-action">
+												<div class="upload-btn">
+													<input id="imageData" name="imageData" type="file" value="" />
+													<img alt="上传图片" src="../Public/images/up_load.jpg" width="60">
+													<input type="hidden" id="images" name="images" value="{$rs.images}" />
+												</div>												
+											</div>
+											<div class="images-list">
+												<volist name="rs.images_list" id="vo">
+													<img src="{$vo}" alt="晒图" data-images="{$vo}" onclick="rate_images_remove($(this))">
+												</volist>
+											</div>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+						<input type="hidden" name="r_no" id="r_no" value="{$rs.r_no}" />
+						<input type="hidden" name="s_no" id="s_no" value="{$rs.s_no}">
+					</form>				
+				
+				
+				</div><!--/content-->
+				
+			</div>
+			
+		</div>	
+		
+
+<include file="Public:script" />
+<include file="Public:footer" />

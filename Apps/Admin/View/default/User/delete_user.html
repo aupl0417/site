@@ -1,0 +1,67 @@
+<div class="alert alert-warning alert-white-alt2 rounded">
+	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+	<div class="icon"><i class="fa fa-warning"></i></div>
+	<h5>由于删除用户事关重大，请回答以下问题正确后才可进行操作！</h5>清除用户会连同该用户所关联的一切数据删除，所以请慎重操作，<br />操作前请先备份数据库以免造成不可挽回的损失。
+</div>
+<form data-url="__URL__/delete_user_save" id="form_illegl_add" class="form-horizontal vform">
+
+			{:W('Widget/buildform',array(array(
+				'field'		=>array(
+				
+					array(
+						'formtype'		=>'select',
+						'label'			=>'问题',
+						'name'			=>'question',
+						'is_need'		=>true,
+						'field'			=>array('q','q'),
+						'data' 			=>$qa
+					),
+					array(
+						'formtype'		=>'text',
+						'label'			=>'答案',
+						'name'			=>'answer',						
+						'is_need'		=>true,
+					),
+					array(
+						'formtype'		=>'password',
+						'label'			=>'暗号',
+						'name'			=>'password',						
+						'is_need'		=>true,
+					),
+					array(
+						'formtype'		=>'text',
+						'label'			=>'用户ID',
+						'name'			=>'id',						
+						'is_need'		=>true,
+						'attr'			=>'readonly'
+					),
+
+				),
+			),$rs))}
+			
+	<div class="p20 text-center">
+		<button type="submit" class="btn btn-primary btn-150px"><i class="fa fa-check"></i> 提交</button>
+	</div>
+<!--token-->
+
+</form>			
+<script>
+var id=new Array();
+$('input[type="checkbox"]:checked').each(function(index){
+	id[index]=$(this).val();
+});
+$('#form_illegl_add #id').val(id.join(','));
+
+iCheckClass();
+checkform({
+	formid:'#form_illegl_add',
+},function(ret){
+	valert(ret);
+	if(ret.status=='success'){
+		setTimeout(function(){
+			ref();
+		},1000);
+	}
+});
+
+</script>

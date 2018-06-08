@@ -1,0 +1,448 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body">
+	<include file="Public:nav" />
+	<div class="container mb30">
+		<include file="Public:side" />
+		<div class="w980 fl">
+			<div class="bor_der">
+				<div class="bg_f1 clearfix fs14 text_44 tle_R">
+					<a class="fl plr15 line40 ml-1 active" href="javascript:;">订单详情</a>
+				</div>
+				
+				<!-- 主体部分 -->
+				<div class="pd30 solid_b">
+					<div class="row mg0 text-center flow_down">
+						<switch name="data.status">
+					<case value="11">
+					<!-- 退款关闭 -->
+						<div class="col_3 order_flow">
+							<div class="h30 <egt name="data.status" value="1">active</egt>">
+								<div class="ab_l"></div>
+								<strong class="re"><span>1</span></strong>							
+								<div class="ab_r"></div>	
+							</div>
+							<p class="mt5 mb0">拍下商品</p>
+							<p class="text_77 mb0"><notempty name="data.atime"><if condition="$data['atime'] neq '0000-00-00 00:00:00'">{$data.atime}</if></notempty></p>
+						</div>
+						<div class="col_3 order_flow">
+							<div class="h30 <egt name="data.status" value="2">active</egt>">
+								<div class="ab_l"></div>
+								<strong class="re"><span>2</span></strong>							
+								<div class="ab_r"></div>	
+							</div>
+							<p class="mt5 mb0">付款</p>
+							<p class="text_77 mb0"><notempty name="data.pay_time"><if condition="$data['pay_time'] neq '0000-00-00 00:00:00'">{$data.pay_time}</if></notempty></p>
+						</div>
+						<div class="col_3 order_flow">
+							<div class="h30 <egt name="data.status" value="11">active</egt>">
+								<div class="ab_l"></div>
+								<strong class="re"><span>3</span></strong>							
+								<div class="ab_r"></div>	
+							</div>
+							<p class="mt5 mb0">退款完成</p>
+							<p class="text_77 mb0"><notempty name="data.etime"><if condition="$data['etime'] neq '0000-00-00 00:00:00'">{$data.etime}</if></notempty></p>
+						</div>
+					</case>
+					<case value="10">
+					<!-- 未支付超时关闭 -->
+						<div class="col_2 order_flow">
+							<div class="h30 <egt name="data.status" value="1">active</egt>">
+								<div class="ab_l"></div>
+								<strong class="re"><span>1</span></strong>							
+								<div class="ab_r"></div>	
+							</div>
+							<p class="mt5 mb0">拍下商品</p>
+							<p class="text_77 mb0"><notempty name="data.atime"><if condition="$data['atime'] neq '0000-00-00 00:00:00'">{$data.atime}</if></notempty></p>
+						</div>
+						<div class="col_2 order_flow">
+							<div class="h30 <egt name="data.status" value="2">active</egt>">
+								<div class="ab_l"></div>
+								<strong class="re"><span>2</span></strong>							
+								<div class="ab_r"></div>	
+							</div>
+							<p class="mt5 mb0">订单关闭</p>
+							<p class="text_77 mb0"><notempty name="data.etime"><if condition="$data['etime'] neq '0000-00-00 00:00:00'">{$data.etime}</if></notempty></p>
+						</div>
+					</case>
+					<default />
+					<!-- 正常流程 -->
+						<div class="col_5 order_flow">
+							<div class="h30 <egt name="data.status" value="1">active</egt>">
+								<div class="ab_l"></div>
+								<strong class="re"><span>1</span></strong>							
+								<div class="ab_r"></div>	
+							</div>
+							<p class="mt5 mb0">拍下商品</p>
+							<p class="text_77 mb0"><notempty name="data.atime"><if condition="$data['atime'] neq '0000-00-00 00:00:00'">{$data.atime}</if></notempty></p>
+						</div>
+						<div class="col_5 order_flow">
+							<div class="h30 <egt name="data.status" value="2">active</egt>">
+								<div class="ab_l"></div>
+								<strong class="re"><span>2</span></strong>							
+								<div class="ab_r"></div>	
+							</div>
+							<p class="mt5 mb0">付款</p>
+							<p class="text_77 mb0"><notempty name="data.pay_time"><if condition="$data['pay_time'] neq '0000-00-00 00:00:00'">{$data.pay_time}</if></notempty></p>
+						</div>
+						<div class="col_5 order_flow">
+							<div class="h30 <egt name="data.status" value="3">active</egt>">
+								<div class="ab_l"></div>
+								<strong class="re"><span>3</span></strong>							
+								<div class="ab_r"></div>	
+							</div>
+							<p class="mt5 mb0">卖家发货</p>
+							<p class="text_77 mb0"><notempty name="data.express_time"><if condition="$data['express_time'] neq '0000-00-00 00:00:00'">{$data.express_time}</if></notempty></p>
+						</div>
+						<div class="col_5 order_flow">
+							<div class="h30 <egt name="data.status" value="4">active</egt>">
+								<div class="ab_l"></div>
+								<strong class="re"><span>4</span></strong>							
+								<div class="ab_r"></div>	
+							</div>
+							<p class="mt5 mb0">确认收货</p>
+							<p class="text_77 mb0"><notempty name="data.receipt_time"><if condition="$data['receipt_time'] neq '0000-00-00 00:00:00'">{$data.receipt_time}</if></notempty></p>
+						</div>
+						<div class="col_5 order_flow">
+							<div class="h30 <egt name="data.status" value="5">active</egt>">
+								<div class="ab_l"></div>
+								<strong class="re"><span>5</span></strong>							
+								<div class="ab_r"></div>	
+							</div>
+							<p class="mt5 mb0">评价</p>
+							<p class="text_77 mb0"><notempty name="data.rate_time"><if condition="$data['rate_time'] neq '0000-00-00 00:00:00'">{$data.rate_time}</if></notempty></p>
+						</div>
+					</switch>
+					</div>	
+				</div>
+					
+					<div class="pd20">
+					<h5 class="strong"><i class="fa fa-check-circle text_green fs30 fl mt-8 mr5 "></i>
+						订单状态 : {$data.status_name}
+						
+						<switch name="data.status">
+							<case value="1">
+								<div class="btn btn-primary btn-ml plr20 ml20 mr20">等待买家支付</div>
+								<div data-type="modal" data-url="{:U('/orders/opreat', ['type' => 'close', 'id' => $data['s_no']])}" data-title="订单关闭" class="btn btn-default btn-ml plr20 opreating">关闭订单</div>
+							</case>
+							<case value="2">
+								<div class="btn btn-primary btn-ml plr20 ml20 mr20">买家已付款</div>
+								<div data-type="modal" data-url="{:U('/orders/opreat', ['type' => 'ship', 'id' => $data['s_no']])}" data-title="立即发货" class="btn btn-info btn-ml plr20 opreating">立即发货</div>
+							</case>
+							<case value="3">
+								<div class="btn btn-success btn-ml plr20 ml20 mr20">等待买家收货</div>
+							</case>
+							<case value="4">
+								<div class="btn btn-success btn-ml plr20 ml20 mr20">等待买家评价</div>
+							</case>
+							<case value="5">
+								<div class="btn btn-primary btn-ml plr20 ml20 mr20">买家已评价</div>
+							</case>
+							<case value="10">
+								<div class="btn btn-primary btn-ml plr20 mr20 ml20">订单已关闭</div>
+							</case>
+							<case value="20">
+								<div class="btn btn-primary btn-ml plr20 ml20 mr20">退款订单</div>
+							</case>
+							<case value="30">
+								<div class="btn btn-primary btn-ml plr20 ml20 mr20">售后订单</div>
+							</case>
+						</switch>
+					</h5>
+					<div class="ml40 pl20">
+						<!-- <p>还有<span class="text_yellow">1天5小时30分40秒 </span>来确认收货，超时订单自动确认收货 </p>
+						<p>物流：顺丰快递包裹，单号：880011870150</p>
+						<p>【丰收街道投递部】已妥投,投递员：大班，签收人：宏观 本人收 </p>
+						<p>2015-09-05 18:30:58 </p> -->
+					</div>
+				</div>
+
+					<div class="solid_t pl35 pr35">
+						<div class="row mg0">
+							<div class="col-xs-4 pt20 pb20">
+								<p class="text_44 fs14 strong">买家信息</p>
+								<p>昵称：<a class="text_blue" target="_blank" href="{:DM('oauth2')}{:U('Im/check',['receiver' => $data['buyer']['nick']])}"><img class="mr5" width="12" src="/Public/images/icon-im.png">{$data.buyer.nick}</a></p>
+								<p>姓名：{$data.orders.linkname}</p>
+								<p>手机：{$data.orders.mobile} {$data.orders.tel}</p>
+								<p>邮编：{$data.orders.postcode|default="无"}</p>
+								<div class="clearfix">
+									<span>收货地址：</span>
+									<span style="word-wrap:break-word;word-break:break-all">{$data.orders.province}{$data.orders.city}{$data.orders.district}{$data.orders.town}{$data.orders.street}</span>
+								</div>
+								<div class="clearfix">买家留言：<empty name="data.remark"><span class="text_yellow">未留言</span><else />{$data.remark}</empty>  </div>
+							</div>
+							<div class="col-xs-4 solid_l solid_r pt20 pb20">
+								<p class="text_44 fs14 strong">物流信息</p>
+								<p>运送方式：
+									<switch name="data.express_type">
+										<case value="1">快递</case>
+										<case value="2">EMS</case>
+										<default/>未知运送方式
+									</switch>
+								</p>
+								<notempty name="data.express_company">
+									<notempty name="data.express_code">
+										<p>物流公司：{$data.express_company}</p>
+										<p>快递单号：<span class="text_yellow">{$data.express_code}</span>
+											<eq name="data.status" value="3">
+											<span class="btn btn-xs btn-trans btn-info" onclick="vmodal({title:'更改发货方式',url:'__URL__/edit_express/s_no/{$data.s_no}',width:'700px'})">更改</span>
+											</eq>
+										</p>
+										<notempty name="data.express_remark"><p>发货备注：{$data.express_remark|nl2br}</p></notempty>
+										
+									</notempty>
+								</notempty>
+								
+								
+							</div>	
+							<div class="col-xs-4 pt20 pb20">
+								<p class="text_44 fs14 strong">订单信息</p>
+								<p>创建时间：{$data.atime}</p>
+								<p>订单编号：{$data.s_no}</p>
+							</div>	
+						</div>
+					</div>
+					<div class="pd20 solid_t">
+						<div class="ml40 pl20">
+						    <div class="block-transparent">
+					          <div class="header">
+					            <h4>订单日志</h4>
+					          </div>
+					          <ul class="timeline">
+						          <volist name="logs" id="vo">
+						            <li>
+						              <i class="fa fa-angle-double-down"></i>
+						              <span class="date">{$vo.atime}</span>
+						              <div class="content">
+						                <p><strong>{$vo.remark}</strong></p>
+						                <notempty name="vo.reason">
+						                	<p>{$vo.reason}</p>
+						                </notempty>
+						              </div>
+						            </li>
+					            </volist>
+					          </ul>
+					        </div>
+						</div>
+					</div>
+					<div class="pd20 solid_t">
+						<div class="ml20 pl20">
+							<div class="pull-right {$data['seller_remark_color']?$data['seller_remark_color']:'text-gray'}" style="cursor:pointer;"><i class="fa fa-flag" title="备注" onclick="vmodal({title:'备注',url:'__URL__/remark_add/s_no/{$data.s_no}',width:'700px'})"></i></div>
+							<strong>订单备注</strong>
+							<div class="row mt10 text_44" style="padding-left:15px;">
+								<notempty name="data.seller_remark">
+									{$data.seller_remark|nl2br}
+								<else />
+									未添加备注！
+								</notempty>
+							</div>
+						</div>
+					</div>						
+					
+					<!-- 优惠信息 -->
+					<notempty name="data.activity">
+						<div class="pd20 solid_t">
+							<div class="ml40 pl20">
+								<strong>促销信息</strong>
+								<div class="text_44 mt10">
+									<volist name="data.activity" id="vo">
+										<switch name="vo.type_id">
+											<case value="2">
+												<div class="pd10 strong text_yellow solid_b">
+													享受了满 {$vo.full_money} 元赠送
+													<div class="mt10">
+														<volist name="vo.goods" id="goods">
+												    		<div class="li-img-box fl mr10" style="width:40px;height:40px;">
+																<a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', ['id' => $goods['attr_list'][0]['id']])}">
+																	<img src="{$goods.images}" width="40px">
+																</a>
+															</div>
+														</volist>
+														<div class="clear"></div>
+													</div>
+												</div>
+											</case>
+											<default />
+												<div class="pd10 strong text_yellow solid_b">
+													{$vo.remark}
+												</div>
+										</switch>
+									</volist>
+								</div>
+							</div>
+						</div>
+					</notempty>
+					<gt name="data.coupon_id" value="0">
+						<div class="pd20 solid_t">
+							<div class="ml40 pl20">
+								<strong>优惠信息</strong>
+								<div class="text_44 mt10">
+									<span class="text_yellow strong">当前订单使用了￥ {$data.coupon.price} 元优惠券</span>
+									<br />
+									优惠码：{$data.coupon.code}
+								</div>
+							</div>
+						</div>
+					</gt>
+					<notempty name="express">
+						<if condition="$express['id'] neq 361">
+						<div class="pd20 solid_t" id="express" style="max-height: 500px;overflow: auto;">
+							<div class="ml40 pl20">
+								<div class="block-transparent">
+									<div class="header">
+										<h4>物流信息</h4>
+									</div>
+									<notempty name="express.express">
+									<ul class="timeline">
+										<volist name="express.express" id="vo">
+										<li>
+											<i class="fa fa-angle-double-down"></i>
+											<span class="date">{$vo.ftime}</span>
+											<div class="content">
+												<p><strong>{$vo.context}</strong></p>
+											</div>
+										</li>
+										</volist>
+									</ul>
+									<else/>
+										{:W('Common/Builder/nors', array('param' => array('text' => '暂无物流信息！')))}
+									</notempty>
+								</div>
+							</div>
+						</div>
+						</if>
+					</notempty>
+					<div class="mb10 solid_t pd15">
+					<div class="bg_f1 ptb10">
+						<div class="row mg0 test_black fs14">
+							<div class="col-xs-2">商品</div>
+							<div class="col-xs-3"></div>
+							<div class="col-xs-1 text-center">单价</div>
+							<div class="col-xs-1 text-center">数量</div>
+							<div class="col-xs-1 text-center">金额</div>
+							<div class="col-xs-2 pd0 text-center">状态</div>
+							<div class="col-xs-2 text-center">总价</div>
+						</div>
+					</div>
+					<empty name="data.orders_goods">
+						{:W('Common/Builder/nors', array('param' => array('text' => '找不到记录！')))}
+					<else />
+						<php>
+							$count = count($data['orders_goods']);
+						</php>
+						<table class="table table-bordered table-advance table-hover mb30">
+							<tbody>
+								<volist name="data.orders_goods" id="goods">
+									<tr class="countTr">
+										<td style="vertical-align: middle;" class="text-center col-xs-2"><a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', array('id' => $goods['attr_list_id']))}"><img src="{$goods['images']}" class="img-thumbnail"></a></td>
+										<td class="col-xs-3">
+											<a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', array('id' => $goods['attr_list_id']))}">{$goods.goods_name}</a>
+											<div class="md5 text-gray mt5">颜色/尺码：{$goods.attr_name}</div>
+											<notempty name="goods.activity_name"><span class="btn btn-primary btn-trans btn-xs m0">{$goods.activity_name}</span></notempty>
+											<gt name="data.daigou_cost" value="0">
+											<span class="btn btn-primary btn-trans btn-xs m0">代购商品</span>
+											</gt>
+										</td>
+										<td style="vertical-align: middle;" class="text-center col-xs-1">{$goods.price}</td>
+										<td style="vertical-align: middle;" class="text-center col-xs-1">×{$goods.num}</td>
+										<td style="vertical-align: middle;" class="text-center col-xs-1"><span class="text-d-lt">{$goods.total_price}</span><br /><span class="text_yellow">({$goods.total_price_edit})</span>
+											<in name="data.status" value="4,5">
+												<gt name="goods.serviceover" value="0">
+													<br />
+													<span class="text_yellow">
+													售后已完成
+													</span>
+													</gt>
+													<gt name="goods.serviceing" value="0">
+													<br />
+													<span class="text_yellow">
+													售后中
+													</span>
+												</gt>
+											</in>
+											<in name="data.status" value="2,3">
+												<gt name="goods.refundover" value="0">
+												<br />
+												<span class="text_yellow">
+												退款已完成
+												</span>
+												</gt>
+												<gt name="goods.refunding" value="0">
+												<br />
+												<span class="text_yellow">
+												退款中
+												</span>
+												</gt>
+											</in>
+										</td>
+										<eq name="key" value="0">
+										<td style="vertical-align: middle;" class="text-center col-xs-2" rowspan="{$count}">
+											<switch name="data.status">
+												<case value="1">
+													<div class="btn btn-primary btn-ml text-center btn_m w100">等待买家支付</div>
+													<div data-type="modal" data-url="{:U('/orders/opreat', ['type' => 'close', 'id' => $data['s_no']])}" data-title="订单关闭" class="btn btn-default btn-ml text-center btn_m mt10 opreating w100">关闭订单</div>
+												</case>
+												<case value="2">
+													<div class="btn btn-primary btn-ml text-center btn_m w100">买家已付款</div>
+													<div data-type="modal" data-url="{:U('/orders/opreat', ['type' => 'ship', 'id' => $data['s_no']])}" data-title="立即发货" class="btn btn-default btn-ml text-center btn_m mt10 opreating w100">立即发货</div>
+												</case>
+												<case value="3">
+													<div class="btn btn-success btn-ml text-center btn_m w100">等待买家收货</div>
+												</case>
+												<case value="4">
+													<div class="btn btn-success btn-ml text-center btn_m w100">等待买家评价</div>
+												</case>
+												<case value="5">
+													<div class="btn btn-primary btn-ml plr20 btn_m w100">已评价</div>
+												</case>
+												<case value="10">
+													<div class="btn btn-primary btn-ml text-center btn_m w100">已关闭</div>
+												</case>
+												<case value="11">
+													<div class="btn btn-primary btn-ml text-center btn_m w100">退款完成</div>
+												</case>
+												<case value="20">
+													<div class="btn btn-primary btn-ml text-center btn_m w100">退款订单</div>
+												</case>
+												<case value="30">
+													<div class="btn btn-primary btn-ml text-center btn_m w100">售后订单</div>
+												</case>
+											</switch>
+										</td>
+										<td style="vertical-align: middle;" class="text-center col-xs-2" rowspan="{$count}"><span class="text-d-lt">{$data.total_price}</span><br /><span class="text_yellow">{$data.pay_price}</span></br><span class = "text_yellow">(含运费：{$data.express_price_edit})</span><br />{$data.pay_typename}
+										<gt name="data.daigou_cost" value="0">
+										<br />
+										<span class = "text_yellow">(含手续费：{$data.daigou_cost})</span>
+										</gt>
+										</td>
+										</eq>
+									</tr>
+								</volist>
+							</tbody>
+						</table>
+						<div class="pt30 text-right pb20">
+							实付款：<span class="fs30 text_yellow">{$data.pay_price}</span> 元
+							<h6>（扣除库存积分  <span class="text_yellow">{$data.score}</span> 积分，注：邮费<gt name="data.daigou_cost" value="0">及手续费</gt>不扣积分）<a class="text_blue" target="_blank" href="{:DM('faq', '/view')}?id=949">点击查看详情</a></h6>
+						</div>
+					</empty>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</block>
+<block name="css">
+<link rel="stylesheet" type="text/css" href="/Public/new_design/flatdream/js/jquery.icheck/skins/all.css"></block>
+<block name="script">
+<script>
+$(document).ready(function() {
+	$(".opreating").click(function() {
+		var d 	=	$(this).data();
+		vmodal({
+			title:d.title,
+			url:d.url,
+		});
+	})
+})
+</script>
+</block>

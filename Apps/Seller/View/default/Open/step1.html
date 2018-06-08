@@ -1,0 +1,31 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body">
+	<include file="Public:nav" />
+	<div class="container mb30">
+		<include file="Public:side" />
+		<div class="w980 fl">
+			<div class="bor_der">
+				<div class="bg_f1 clearfix fs14 text_44 tle_R">
+					<a class="fl plr15 line40 ml-1 active" href="javascript:;">开店入驻协议</a>
+				</div>
+				
+				<!-- 主体部分 -->
+				<div class="pd10">
+					<empty name="data.content">
+						{:W('Common/Builder/nors', array('param' => array('text' => $data['msg'])))}
+					<else />
+						{$data.content}
+					</empty>
+				</div>
+				<div class="text-center pd10">
+					<a class="btn btn-info" href="{:U('/open')}"><i class="fa fa-mail-reply"></i>上一步</a><a class="btn btn-success ml20" href="{:U('/open/step2')}"><i class="fa fa-mail-forward"></i>下一步</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</block>
+<block name="css"></block>
+<block name="script">
+</block>

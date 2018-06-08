@@ -1,0 +1,76 @@
+<div class="mb20 pt10 right_ladder level_ladder_e floor-public">
+	<h4 class="fs20 strong mb0">手机数码 · 运动户外</h4>
+	<div class="tab-container level_ladder">
+		<div class="clearfix">
+			<ul class="nav nav-tabs pull-right">
+				<li class="active"><a onmouseover="this.click()" href="#floorFiveHot" data-toggle="tab">热卖<span class="pull-right mr-18 text_dd">|</span></a></li>
+				<volist name="fiveCate" id="vo">
+				<li><a onmouseover="this.click()" href="#{$vo.id}" data-toggle="tab">{$vo.category_name}<span class="pull-right mr-18 text_dd">|</span></a></li>
+				</volist>
+				<li><a href="{:DM('s')}{:U('/index/index', ['id' => 100845562])}">more</a></li>
+			</ul>	
+		</div>
+		
+		<div class="tab-content bor_no pd0">
+			<div class="tab-pane active" id="floorFiveHot">
+				<div class="row tab_p_tle tab_p_top  mg0">
+					<div class="col_2_5 tab_p_r">
+						<volist name="floorFive1.ads" id="ads">
+							<a target="_blank" href="{:DM('click')}?act={:enCryptRestUri($ads['id'])}"><img data-original="{$ads.images}"></a>
+						</volist>
+						<div class="fr w150 text_white pd15">
+							<div class="text-center solid_b fs20 ptb10">热搜 HOT</div>
+							<div class="pt15 text-center">
+								<volist name="floorFiveHot.ads" id="ads">
+								<a target="_blank" href="{:DM('click')}?act={:enCryptRestUri($ads['id'])}"><h4 class="fs14 pt10 text_dd">{$ads.name}</h4></a>
+								</volist>
+							</div>
+						</div>
+					</div>
+					<div class="col_2_5 tab_p_r">
+						<volist name="floorFive2.ads" id="ads" style="border-bottom:0">
+						<a target="_blank" href="{:DM('click')}?act={:enCryptRestUri($ads['id'])}"><img width="475" height="296" data-original="{$ads.images}"></a>
+						</volist>
+					</div>
+					<div class="col_5 tab_p_r" style="border-right: 1px solid #ddd;border-bottom:0">
+						<p class="solid_b mt9 mb0 pd10 fs18 text-center">热销榜 HOT LIST</p>
+						<volist name="floorFive3.ads" id="ads">
+							<a target="_blank" href="{:DM('click')}?act={:enCryptRestUri($ads['id'])}" class="clearfix tab_hot_a">
+								<span class="ab">TOP {$i}</span>
+								<img class="fl" width="74" height="74" data-original="{$ads.images}">
+								<p class="text_44 plr5 mt5 mb0 h34 over">{$ads.name}</p>
+								<h4 class="mt10 mb0 plr5 fs16">￥{$ads.goods_price}</h4>
+							</a>
+						</volist>
+					</div>
+				</div>
+				<div class="row tab_p_tle mg0">
+					<volist name="floorFive4.ads" id="ads">
+						<a target="_blank" href="{:DM('click')}?act={:enCryptRestUri($ads['id'])}" class="col_5 tab_p_r pd20">
+							<h5 class="text_black text_over mt0">{$ads.name}</h5>
+							<p class="text_77 h34 over">{$ads.subcontent}</p>
+							<b class="fs16">¥ {$ads.goods_price}</b>
+							<div class="amg hundred_one">
+								<img width="163" height="163" data-original="{:myurl($ads['images'], 163)}">	
+							</div>									
+						</a>
+					</volist>
+				</div>
+			</div>
+			<volist name="fiveCate" id="vo">
+				<div class="tab-pane" id="{$vo.id}">
+					<div class="clearfix tab_son">
+						<php>$lists = $love_goods[$vo['id']];</php>
+						<volist name="lists" id="vo">
+							<a target="_blank" href="{:DM('item','/goods/'.$vo['attr_list'][0]['id'])}" class="fl tab_child">
+								<div class="amg hundred_one pt20 pb10"><img width="163" height="163" data-original="{:myurl($vo['images'])}"></div>
+								<p class="text_44 h34 over">{$vo.goods_name}</p>
+								<span class="fs16">¥ {$vo.price}</span>
+							</a>
+						</volist>
+					</div>
+				</div>
+			</volist>
+		</div>
+	</div>
+</div>

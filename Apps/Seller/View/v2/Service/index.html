@@ -1,0 +1,265 @@
+<extend name="Seller@Public:base" />
+<block name="body">
+    <div class="centent_body">
+        <!-- to do your html codeing -->
+        <div class="revision_bg">
+            <div class="container ptb_size_lg clearfix">
+                <!-- 左侧导航 -->
+                <include file="Public:sideNav" />
+                <!-- 左侧导航结束 -->
+
+                <div class="revisionRight pd15" style="width: 1020px"><!-- 右侧内容 -->
+                    <div class="clearfix revisionOrderTab sid-active" data-sid="{$Think.get.sid}">
+                        <a class="orderOption" data-sid="" href="{:U('/service')}">所有订单</a>
+                        <a class="orderOption" data-sid="seller" href="{:U('/service/index', ['sid' => 'seller'])}">卖家操作</a>
+                        <a class="orderOption" data-sid="buyer" href="{:U('/service/index', ['sid' => 'buyer'])}">买家操作</a>
+                        <a class="orderOption" data-sid="arb" href="{:U('/service/index', ['sid' => 'arb'])}">等待仲裁</a>
+                        <a class="orderOption" data-sid="cancel" href="{:U('/service/index', ['sid' => 'cancel'])}">已取消</a>
+                        <a class="orderOption" data-sid="over" href="{:U('/service/index', ['sid' => 'over'])}">已完成</a>
+                        <div class="fr ml40 mb0" style="width:350px">
+                            <form class="form-horizontal" role="form" method="get">
+                                <input type="hidden" name="p" value="1"/>
+                                <div class="input-group mb0">
+                                    <input type="text" class="form-control" name="rno" placeholder="输入售后单号">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-primary" type="submit">搜索</button>
+                                    </span>
+                                    <span class="input-group-btn">
+                                        <button id="hige_search" class="btn btn-default" type="button">
+                                            高级搜索<i class="fa fa-angle-down ml5"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="row mt30 dn" id="search_dn" style="border-bottom: solid 1px #F8F8F8">
+                            <form class="form-horizontal" role="form" method="get">
+                                <input type="hidden" name="p" value="1"/>
+                                <div class="col-md-4 col-sm-4">
+                                    <div class="col-sm-12">
+                                        <div class="form-group mt0">
+                                            <input type="input" class="form-control" name="sno" id="sno" placeholder="请输入订单号">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-sm-8">
+                                    <div class="col-sm-3">
+                                        <div class="input-group">
+                                            <input type="input" class="form-control" name="nick" id="nick" placeholder="请输入买家昵称">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="input-group date datetime" data-min-view="2" data-date-format="yyyy-mm-dd" style="">
+                                            <input name="sday" data-filter="gte" class="form-control form-filter" readonly="sday" id="sday" type="text" placeholder="申请开始时间">
+                                            <span class="input-group-addon btn default">
+                                                <span class="glyphicon glyphicon-th fa fa-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="input-group date datetime" data-min-view="2" data-date-format="yyyy-mm-dd" style="">
+                                            <input name="eday" data-filter="gte" class="form-control form-filter" readonly="eday" id="eday" type="text" placeholder="申请结束时间">
+                                            <span class="input-group-addon btn default">
+                                                <span class="glyphicon glyphicon-th fa fa-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <button type="submit" class="btn btn-rad btn-trans btn-primary ">立即搜索</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- 表单 -->
+                    <table class="no-border mb20 bg_f1"><!-- 类型说明 -->
+                        <tbody class="no-border-y">
+                        <tr class="text-center">
+                            <td width="75%" style="padding:0">
+                                <table class="no-border">
+                                    <tbody class="no-border-y">
+                                    <td width="13%"></td>
+                                    <td width="30%">商品信息</td>
+                                    <td width="12%">类型</td>
+                                    <td width="10%">数量</td>
+                                    <td width="30%">申请时间</td>
+                                    </tbody>
+                                </table>
+                            </td>
+                            <td width="13%">状态</td>
+                            <td width="12%">操作</td>
+                        </tr>
+                        </tbody>
+                    </table><!-- 类型说明结束 -->
+
+                    <notempty name="data.code">
+                        {:W('Common/Builder/nors', array('param' => array('text' => $data['msg'])))}
+                        <else />
+                        <volist name="data.list" id="vo">
+                            <table class="revisionTable table"><!-- 订单信息 -->
+                                <tbody class="bg_white">
+                                <tr class="strong">
+                                    <td class="bg_f1" colspan="3">
+                                        <span class="mr20"><span class="text_f1">订单号：</span>{$vo.s_no}</span>
+                                        <span class="mr20"><span class="text_f1">售后单号：</span>{$vo.r_no}</span>
+                                        <a class="text_44" target="_blank" href="{:DM('oauth2')}{:U('Im/check',['receiver' => $vo['user']['nick']])}"><img class="mr5" width="12" src="/Public/images/icon-im.png">{$vo.user.nick}</a>
+                                    </td>
+                                </tr>
+                                <tr class="text-center">
+                                    <td style="padding:0; width:75%">
+                                        <table class="no-border table-hover">
+                                            <tbody class="no-border-y">
+                                            <tr><!-- 同店铺第一个商品 -->
+                                                <td width="13%">
+                                                    <a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', array('id' => $vo['orders_goods']['attr_list_id']))}">
+                                                        <img src="{$vo.orders_goods.images}" class="img-thumbnail"></a>
+                                                </td>
+                                                <td valign="top" width="30%" class="text-left">
+                                                    <a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', array('id' => $vo['orders_goods']['attr_list_id']))}">{$vo.orders_goods.goods_name}</a>
+                                                    <div class="md5 text-gray mt5">颜色/尺码：{$vo.orders_goods.attr_name}</div>
+                                                </td>
+                                                <td width="12%">
+                                                    <span class="text_yellow">{$vo.type_name}</span>
+                                                </td>
+                                                <td width="10%">× {$vo.num}</td>
+                                                <td width="30%">
+                                                    <span class="text_yellow">{$vo.atime}</span>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                    <td style="width:13%" rowspan="1">
+                                        <switch name="vo.status">
+                                            <case value="1">
+                                                <a href="{:U('/service/agree', ['id' => $vo['r_no']])}" title="同意售后" class="btn btn-sm btn-primary btn-rad btn-trans">同意售后</a>
+                                                <div class="mt5">
+                                                    <a href="{:U('/service/reject', ['id' => $vo['r_no']])}" title="拒绝售后" class="text_blue">拒绝售后</a>
+                                                </div>
+                                                <div class="mt5 text-gray countdown-box" data-remark="自动取消" data-time="{:str_replace('-', '/', $vo['next_time'])}"></div>
+                                            </case>
+                                            <case value="2">
+                                                <div class="btn btn-sm btn-primary btn-rad btn-trans">等待买家操作</div>	<!-- 拒绝售后 -->
+                                                <div class="mt5 text-gray countdown-box" data-remark="自动取消" data-time="{:str_replace('-', '/', $vo['next_time'])}"></div>
+                                            </case>
+                                            <case value="3">
+                                                <div class="btn btn-sm btn-primary btn-rad btn-trans">等待买家操作</div>
+                                                <div class="mt5 text-gray countdown-box" data-remark="自动取消" data-time="{:str_replace('-', '/', $vo['next_time'])}"></div>
+                                            </case>
+                                            <case value="4">
+                                                <a href="{:U('/service/accept', ['id' => $vo['r_no']])}" title="已收到货" class="btn btn-sm btn-primary btn-rad btn-trans">已收到货</a>
+                                                <div class="mt5">
+                                                    <a href="{:U('/service/appeal', ['id' => $vo['r_no']])}" title="未收到货" class="text_blue">未收到货</a>
+                                                </div>
+                                                <div class="mt5 text-gray countdown-box" data-remark="自动收货" data-time="{:str_replace('-', '/', $vo['next_time'])}"></div>
+                                            </case>
+                                            <case value="5">
+                                                <a href="{:U('/service/express', ['id' => $vo['r_no']])}" title="寄出商品" class="btn btn-sm btn-primary btn-rad btn-trans">邮寄商品</a>
+                                            </case>
+                                            <case value="6">
+                                                <div class="btn btn-sm btn-primary btn-rad btn-trans">卖家寄出商品</div>
+                                                <div class="mt5 text-gray countdown-box" data-remark="自动收货" data-time="{:str_replace('-', '/', $vo['next_time'])}"></div>
+                                            </case>
+                                            <case value="10">
+                                                <div class="btn btn-sm btn-primary btn-rad btn-trans">等待仲裁</div>
+                                            </case>
+                                            <case value="20">
+                                                <div class="btn btn-sm btn-primary btn-rad btn-trans">售后已取消</div>
+                                            </case>
+                                            <case value="100">
+                                                <div class="btn btn-sm btn-primary btn-rad btn-trans">售后已完成</div>
+                                            </case>
+                                        </switch>
+                                    </td>
+                                    <td style="width:12%" rowspan="1">
+                                        <a class="text_blue" href="{:U('/service/detail', ['id' => $vo['r_no']])}">详情</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table><!-- 订单信息结束 -->
+                        </volist>
+
+                        <div class="page-box col-xs-12 text-center">
+                            {:page_html($data['pageinfo'])}
+                        </div>
+                    </notempty>
+                </div>
+
+            </div>
+        </div>
+        <!-- my codeing over -_-   -->
+
+    </div>
+</block>
+
+<block name="css">
+    <script src="__FLATDREAM__/js/bootstrap.datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="__FLATDREAM__/js/bootstrap.datetimepicker/js/bootstrap-datetimepicker.zh-CN.js"></script>
+    <link rel="stylesheet" href="__FLATDREAM__/js/bootstrap.datetimepicker/css/bootstrap-datetimepicker.css" />
+</block>
+
+<block name="script">
+    <!-- to do your javascript codeing -->
+    <script>
+        $(document).ready(function() {
+            $(".datetime").datetimepicker({
+                format: 'yyyy-mm-dd'
+            });
+            $('.datetime').datetimepicker({
+                language: 'zh-CN',
+                weekStart: 1,
+                todayBtn: 1,
+                autoclose: 1,
+                todayHighlight: 1,
+                startView: 2,
+                forceParse: 0,
+                showMeridian: 1
+            });
+            $(".opreating").click(function () {
+                var d = $(this).data();
+                vmodal({
+                    title: d.title,
+                    url: d.url,
+                    width: "1200px",
+                    height: "auto",
+                });
+            })
+            $('#hige_search').click(function () {
+                $('#search_dn').slideToggle('slow')
+            });
+
+            /**
+             * 倒计时
+             */
+            $(".countdown-box").each(function () {
+                countDown($(this).data('time'), $(this));
+            });
+        });
+
+        /**
+         * 写入html
+         *
+         * @param times
+         * @param that
+         */
+        function countDown(times, that) {
+            var data = that.data();
+            var EndTime= new Date(times);
+            var NowTime = new Date();
+            var t =EndTime.getTime() - NowTime.getTime();
+            var d=0;
+            var h=0;
+            var m=0;
+            var s=0;
+            if(t>=0){
+                d=Math.floor(t/1000/60/60/24);
+                h=Math.floor(t/1000/60/60%24);
+                m=Math.floor(t/1000/60%60);
+                s=Math.floor(t/1000%60);
+                var html = d+"天"+h+"小时"+m+"分"+s+"秒后" + data.remark;
+                that.html(html);
+            }
+        }
+    </script>
+</block>

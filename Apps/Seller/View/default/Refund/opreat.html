@@ -1,0 +1,295 @@
+<script type="text/javascript" src="/Public/Webuploader/js/webuploader.js"></script>
+<link rel="stylesheet" type="text/css" href="/Public/Webuploader/css/webuploader.css">
+<h4 class="text-center pd10">
+	{$data.r_no}
+</h4>
+<notempty name="data.code">
+	{:W('Common/Builder/nors', array('param' => array('text' => $data['msg'])))}
+<else />
+	<table class="table table-bordered table-advance table-hover mb10">
+		<tbody>
+			<tr style="background:#f9f9f9;">
+				<notempty name="data.orders_goods">
+				<th class="col-lg-1 text-center">图片</th>
+				</notempty>
+				<th class="col-lg-2 text-center">商品</th>
+				<th class="col-lg-1 text-center">退款金额</th>
+				<th class="col-lg-1 text-center">退运费</th>
+				<notempty name="data.orders_goods">
+				<th class="col-lg-1 text-center">退货数量</th>
+				</notempty>
+				<th class="col-lg-1 text-center">当前状态</th>
+				<th class="col-lg-2 text-center">申请时间</th>
+			</tr>
+			<tr class="count">
+				<notempty name="data.orders_goods">
+				<td style="vertical-align: middle;">
+					<a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', array('id' => $data['orders_goods']['attr_list_id']))}" target="_blank"><img src="{$data['orders_goods']['images']}" class="img-thumbnail"></a>
+				</td>
+				</notempty>
+				<td style="vertical-align: middle;">
+					<empty name="data.orders_goods">
+					运费
+					<else/>
+					<a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', array('id' => $data['orders_goods']['attr_list_id']))}" target="_blank">{$data.orders_goods.goods_name}</a></br>{$data.orders_goods.attr_name}
+					</empty>
+				</td>
+				<td style="vertical-align: middle;" class="text-center">{$data.money}</td>
+				<td style="vertical-align: middle;" class="text-center">{$data.refund_express}</td>
+				<notempty name="data.orders_goods">
+				<td style="vertical-align: middle;" class="text-center">×{$data.num}</td>
+				</notempty>
+				<td style="vertical-align: middle;" class="text-center">{$data.status_name}</br>({$data.type_name})</td>
+				<td style="vertical-align: middle;" class="text-center">{$data.atime}</td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<table class="table table-bordered table-advance table-hover mb10">
+		<tbody>
+			<tr style="background:#f9f9f9;">
+				<th class="col-lg-1 text-left">退款理由</th>
+			</tr>
+			<tr class="count">
+				<td class="text-break-all">
+					{$data.reason}
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<notempty name="data.images">
+		<table class="table table-bordered table-advance table-hover">
+			<tbody>
+				<tr style="background:#f9f9f9;">
+					<th class="col-lg-1 text-left">退款照片</th>
+				</tr>
+				<tr class="count">
+					<td>
+						<php>
+							$images	=	explode(',',rtrim($data['images'], ','));
+						</php>
+						<ul class="images-select-box">
+							<volist name="images" id="vo">
+								<li id="" data-path="{$vo}" class="text-center">
+									<div class="li-img-box">
+										<a href="javascript:;" data-url="{$vo}" onclick="bigImage($(this))" class="image-zoom" title="大图">
+											<img src="{:myurl($vo, 100)}">
+										</a>
+									</div>
+								</li>
+							</volist>
+						</ul>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</notempty>
+	<switch name="Think.get.type">
+		<case value="cancel">
+			<div class="bg-warning pd10">
+				<i class="fa fa-exclamation-circle fs16 fl text_yellow"></i>
+				<p class="ml20 mb0">您当前的操作为取消退款，请谨慎操作！</p>
+			</div>
+		</case>
+		<case value="express">
+			<div class="bg-warning pd10">
+				<i class="fa fa-exclamation-circle fs16 fl text_yellow"></i>
+				<p class="ml20 mb0">您当前的操作为寄回商品至卖家，请谨慎操作！{$data.address}</p>
+			</div>
+		</case>
+		<case value="receipt">
+			<div class="bg-warning pd10">
+				<i class="fa fa-exclamation-circle fs16 fl text_yellow"></i>
+				<p class="ml20 mb0">您当前的操作为已收到买家退货，请谨慎操作！(确认收到买家退货后此退货单将变更为退货已完成)</p>
+			</div>
+		</case>
+	</switch>
+</notempty>
+{:W('Common/Builder/form', [['data' => $keyList, 'run' => '/run/authRun']])}
+<switch name="Think.get.type">
+<case value="cancel">
+<script>
+$(document).ready(function() {
+	checkform({
+		formid:"#formadd",
+		headers : {Action : '{$header}'},
+		rules:{
+			password_pay:{
+				required:true,
+				number:true,
+				minlength:6,
+				maxlength:6,
+			},
+			reason:{
+				required:true,
+				minlength:30,
+				maxlength:300,
+			}
+		},
+		messages:{
+			password_pay:{
+				required:'安全密码不能为空',
+				number:'安全密码为6位数字组成',
+				minlength:'安全密码为6位数字组成',
+				maxlength:'安全密码为6位数字组成',
+			},
+			reason:{
+				required:'关闭原因不能为空',
+				minlength:'关闭原因必须在30-300个汉字之间',
+				maxlength:'关闭原因必须在30-300个汉字之间',
+			}
+		}
+	},function(res) {
+		talert({status:res.code,msg:res.msg});
+		if(res.code == 1) {
+			setTimeout("ref()", 1000);
+		}
+	});
+	$(document).ready(function() {
+		var count = $("tr.count").size();
+		$(".rwospanTd").attr('rowspan', count);
+	})
+});
+</script>
+</case>
+<case value="express">
+<script>
+$(document).ready(function() {
+	checkform({
+		formid:"#formadd",
+		headers : {Action : '{$header}'},
+		rules:{
+			express_company_id:{
+				required:true,
+			},
+			express_code:{
+				required:true,
+			}
+		},
+		messages:{
+			express_company_id:{
+				required:'快递公司不能为空',
+			},
+			express_code:{
+				required:'快递单号不能为空',
+			}
+		}
+	},function(res) {
+		talert({status:res.code,msg:res.msg});
+		if(res.code == 1) {
+			setTimeout("ref()", 1000);
+		}
+	});
+	$(document).ready(function() {
+		var count = $("tr.count").size();
+		$(".rwospanTd").attr('rowspan', count);
+	})
+});
+</script>
+</case>
+<case value="appeal">
+<script>
+$(document).ready(function() {
+	checkform({
+		formid:"#formadd",
+		headers : {Action : '{$header}'},
+		rules:{
+			remark:{
+				required:true,
+				minlength:30,
+				maxlength:300,
+			}
+		},
+		messages:{
+			remark:{
+				required:'申诉原因不能为空',
+				minlength:'申诉原因必须在30-300个汉字之间',
+				maxlength:'申诉原因必须在30-300个汉字之间',
+			}
+		}
+	},function(res) {
+		talert({status:res.code,msg:res.msg});
+		if(res.code == 1) {
+			setTimeout("ref()", 1000);
+		}
+	});
+});
+</script>
+</case>
+<case value="refuse">
+<script>
+$(document).ready(function() {
+	checkform({
+		formid:"#formadd",
+		headers : {Action : '{$header}'},
+		rules:{
+			reason:{
+				required:true,
+				rangelength:[5,200],
+			},
+		},
+		messages:{
+			reason:{
+				required:'拒绝理由不能为空',
+				rangelength:'拒绝理由在5-200个汉字之间',
+			},
+		}
+	},function(res) {
+		talert({status:res.code,msg:res.msg});
+		if(res.code == 1) {
+			setTimeout("ref()", 1000);
+		}
+	});
+	$(document).ready(function() {
+		var count = $("tr.count").size();
+		$(".rwospanTd").attr('rowspan', count);
+	})
+});
+</script>
+</case>
+<default />
+<script>
+$(document).ready(function() {
+	checkform({
+		formid:"#formadd",
+		headers : {Action : '{$header}'},
+		rules:{
+			password_pay:{
+				required:true,
+				number:true,
+				minlength:6,
+				maxlength:6,
+			},
+			reason:{
+				rangelength:[0,200],
+			},
+		},
+		messages:{
+			password_pay:{
+				required:'安全密码不能为空',
+				number:'安全密码为6位数字组成',
+				minlength:'安全密码为6位数字组成',
+				maxlength:'安全密码为6位数字组成',
+			},
+			reason:{
+				rangelength:'备注信息最多200个字节',
+			},
+		}
+	},function(res) {
+		talert({status:res.code,msg:res.msg});
+		if(res.code == 1) {
+			setTimeout("ref()", 1000);
+		}
+	});
+	clickDisabled();
+	$(document).ready(function() {
+		var count = $("tr.count").size();
+		$(".rwospanTd").attr('rowspan', count);
+	})
+	
+	if($('.select-address .item').size()>0){
+		$('.select-address .item').eq(0).click();
+	}
+});
+</script>
+</switch>

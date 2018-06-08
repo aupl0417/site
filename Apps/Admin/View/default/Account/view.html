@@ -1,0 +1,118 @@
+<div class="p20 box">
+	<div class="row">
+		<div class="col-xs-6 auth-text">
+			<div>用户ID：{$rs.uid}</div>
+			<div>用户名：{$rs.user.nick}</div>
+		</div>
+		<div class="col-xs-6 auth-text">
+		
+		</div>
+	</div>
+	<div class="ft18 strong p10 border-d md20">充值记录</div>
+	
+	<form data-url="__URL__/logs_add" data-id="#form_{$rs.id}" id="form_{$rs.id}" class="form-horizontal vform">
+			{:W('Widget/buildform',array(array(
+				'field'		=>array(	
+					array(
+						'formtype'		=>'radio',
+						'label'			=>'子账户',
+						'name'			=>'flag',
+						'data'			=>array(array(1,'现金账户'),array(2,'积分账户'),array(3,'理财账户')),
+						'field'			=>array(0,1),
+						'value'			=>1,
+					),
+					array(
+						'formtype'		=>'radio',
+						'label'			=>'充值类型',
+						'name'			=>'type',
+						'data'			=>array(array(0,'+增加'),array(1,'-减少'),array(2,'设置（此项操作不加入异动）')),
+						'field'			=>array(0,1),
+						'value'			=>0,
+					),
+					array(
+						'formtype'		=>'text',
+						'label'			=>'金额',
+						'name'			=>'money',
+						'value'			=>10,
+					),					
+					array(
+						'formtype'		=>'textarea',
+						'label'			=>'备注',
+						'name'			=>'remark',
+					),
+					array(
+						'formtype'		=>'hidden',
+						'name'			=>'uid',
+						'value'			=>$rs['uid'],
+					),					
+					array(
+						'formtype'		=>'html',
+						'label'			=>' ',
+						'html'			=>'<button type="button" class="btn btn-primary btn-150px logs-add"><i class="fa fa-check"></i> 提交</button>'
+					),
+
+
+				),
+			)))}
+	
+	
+	</form>
+	<notempty name="rs.logs">
+	<ul class="timeline">
+		<volist name="rs.logs" id="vo">
+		<li>
+			<i class="fa fa-clock-o"></i>
+			<span class="date">
+				{$vo.atime}
+			</span>
+			<div class="content">
+				<div class="ft16 md10">
+					<switch name="vo.flag">
+						<case value="1">现金账户</case>
+						<case value="2">积分账户</case>
+						<case value="3">理财账户</case>
+					</switch>
+					<switch name="vo.type">
+						<case value="0">增加</case>
+						<case value="1">减少</case>
+						<case value="2">设置为</case>
+					</switch>
+					{$vo.money}，账户余额为：<span class="text-danger">{$vo.account}</span>
+				</div>
+				<notempty name="vo.remark">
+				<div class="md20 ft14">
+					备注：
+					{$vo.remark|nl2br}
+				</div>
+				</notempty>
+				<small class="md10">
+					雇员ID：{$vo.a_uid}
+				</small>
+			</div>
+		</li>
+		</volist>
+	</ul>
+	</notempty>
+	
+</div>
+<div class="clearfix">
+	<div class="pull-right text-gray" onclick="$(this).closest('tr').toggleClass('hide');"><i class="fa fa-times-circle-o fa-2x"></i></div>	
+</div>
+
+<script>
+image_zoom();
+$('.logs-add').click(function(){
+	var d=$(this).closest('form').data();
+	ajax_post_form({
+		formid:d.id
+	},function(ret){
+		valert(ret);
+		if(ret.status=='success'){
+			var tag='#item-{$rs.id}';
+			var url='__URL__/view/id/{$rs.id}';
+			loadurl({tag:tag,url:url});
+		}
+	});
+
+});
+</script>

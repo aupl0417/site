@@ -1,0 +1,189 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin({ref:true})"></i>
+		</div>
+		<div class="title">
+			售后详情
+		</div>
+		<div class="r">
+		</div>
+	</div>
+</header>
+<section>	
+	<div class="load-body">数据加载中……</div>
+</section>
+
+<include file="Public:d_layer" />
+
+<script id="tpl_seller_service_view" type="text/html">
+	<div class="line-box hover row noicon">
+		<div class="col-70"><div class="b">售后单号：<%= data.r_no %></div></div>
+		<div class="col-30 text-right text-danger"><%= data.status_name %></div>
+	</div>
+	<div class="line-box-m hover row md10" onclick="openWin({name:'goods_view',url:'/Goods/view/id/<%= data.orders_goods.attr_list_id %>'})">
+		<div class="col-15"><img src="<%= data.orders_goods.images %>" alt="商品图片"></div>
+		<div class="col-85">
+			<div class="pl10 pr10">
+				<div class="lh2-18px"><%= data.orders_goods.goods_name %></div>
+				<div class="row">
+					<div class="col-50 text-gray"><%= data.orders_goods.attr_name %></div>
+					
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	</div>	
+	<div class="line-box hover row" onclick="openWin({name:'seller_orders_view',url:'/SellerOrders/view/s_no/<%= data.s_no %>'})">
+		<div class="col-30">订单号</div>
+		<div class="col-70 text-gray"><%= data.s_no %></div>
+	</div>	
+	<div class="line-box hover noicon row">
+		<div class="col-30">售后类型</div>
+		<div class="col-70 text-gray"><%= data.type_name %></div>
+	</div>
+	<div class="line-box hover noicon row">
+		<div class="col-30">售后数量</div>
+		<div class="col-70 text-gray"><%= data.num %></div>
+	</div>
+	<div class="line-box-m hover noicon row">
+		<div class="col-30">申请原因</div>
+		<div class="col-70 text-gray"><%= data.reason %></div>
+		<div class="clearfix"></div>
+	</div>
+
+	
+	<% if(data.status==1){ %>
+		<div class="row">
+			<div class="col-50">
+				<div class="btn btn-danger btn-block m10" onclick="openWin({name:'service_accept',url:'__URL__/accept/s_no/<%= data.s_no %>/r_no/<%= data.r_no %>'})">同意售后</div>
+			</div>
+			<div class="col-50">
+				<div class="btn btn-danger btn-block m10" onclick="openWin({name:'service_reject',url:'__URL__/reject/s_no/<%= data.s_no %>/r_no/<%= data.r_no %>'})">拒绝售后</div>
+			</div>
+		</div>	
+	<%}else if(data.status==2){%>
+	<%}else if(data.status==3){%>
+	<%}else if(data.status==4){%>
+		<div class="row">
+			<div class="col-50">
+				<div class="btn btn-danger btn-block m10" onclick="seller_service_accept1($(this))" data-s_no="<%= data.s_no %>" data-r_no="<%= data.r_no %>">已收到货</div>
+			</div>
+			<div class="col-50">
+				<div class="btn btn-danger btn-block m10" onclick="openWin({name:'seller_service_appeal',url:'__URL__/appeal/s_no/<%= data.s_no %>/r_no/<%= data.r_no %>'})">未收到货</div>
+			</div>
+		</div>	
+	<%}else if(data.status==5){%>
+		<div class="p10">
+			<div class="btn btn-danger btn-block m10" onclick="openWin({name:'sellerservice_express',url:'__URL__/sellerservice_send_express/s_no/<%= data.s_no %>/r_no/<%= data.r_no %>'})">邮寄商品</div>
+		</div>			
+	<%}%>
+	
+	<div class="clearfix"></div>
+	
+	<div class="line-box hover noicon nobg md10 b">
+		处理过程
+	</div>
+	
+	<ul class="timeline m10">
+		<% for (var i = 0; i < data.logs.length; i ++) { %>
+		<li>
+			<span class="date">
+				<%= data.logs[i].atime %></span>
+			<div class="content">
+				<div class="box pl10">
+					<% if(data.logs[i].uid>0){ %>
+					<div class="md5"><%= data.logs[i].user.nick %></div>
+					<% }else{ %>
+					<div class="md5"><%= data.logs[i].admin.username %> (客服)</div>
+					<% } %>
+					<div class="text-gray"><%= data.logs[i].remark %></div>
+					<br/>
+					<% if(data.logs[i].images.length > 0){ %>
+						<div class="row" style="height:75px;display:bolck">
+							<% for(j = 0;j < data.logs[i].images.length; j++){ %>
+								<% if(data.logs[i].images[j] != ''){ %>
+								<img class='fl m5' width='50' height="50" src="<%= data.logs[i].images[j] %>" />
+								<% } %>
+							<% } %>
+						</div>
+					<% } %>
+				</div>
+			</div>
+		</li>
+		<% } %>
+	</ul>	
+	
+</script>
+
+<script>
+	fixBar(1);
+	template.config("escape", false);		//不直接输出html代码
+	ajax_post({
+		url:'/Api/api',
+		data:{apiurl:'/SellerRefund3/view',is_openid:1,r_no:'{$_GET.r_no}'}
+	},function(ret){
+		var html=template('tpl_seller_service_view',{data:ret.data});
+		$('.page.active section').html(html);
+	});
+	
+	//同意售后
+	function seller_service_accept(obj){
+		var d=obj.data();
+		vmodal({
+			title:'同意售后',
+			url:'__URL__/accept/s_no/'+d.s_no+'/r_no/'+d.r_no,
+		},function(){
+			$('.page.active .vmodal-success').unbind();
+			$('.page.active .vmodal-success').click(function(){
+				var data=getFormJson('#form-sellerservice-accept');
+				
+				if(data.password_pay==''){
+					valert({msg:'请输入安全密码！'});
+					$('.page.active #password_pay').focus();
+					return false;
+				}
+				
+				ajax_post({
+					url:'/Api/api',
+					data:data
+				},function(ret){
+					valert(ret);
+					if(ret.code==1){
+						winRef();
+					}
+				});		
+			});			
+		});
+	}
+	
+	//已收到货
+	function seller_service_accept1(obj){
+		var d=obj.data();
+		vmodal({
+			title:'收到商品',
+			url:'__URL__/accept1/s_no/'+d.s_no+'/r_no/'+d.r_no,
+		},function(){
+			$('.page.active .vmodal-success').unbind();
+			$('.page.active .vmodal-success').click(function(){
+				var data=getFormJson('#form-sellerservice-accept1');
+				
+				if(data.password_pay==''){
+					valert({msg:'请输入安全密码！'});
+					$('.page.active #password_pay').focus();
+					return false;
+				}
+				
+				ajax_post({
+					url:'/Api/api',
+					data:data
+				},function(ret){
+					valert(ret);
+					if(ret.code==1){
+						winRef();
+					}
+				});		
+			});			
+		});
+	}	
+</script>

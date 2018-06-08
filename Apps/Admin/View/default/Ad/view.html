@@ -1,0 +1,223 @@
+	<div class="">		
+		<div class="row">
+			<div class="col-xs-7 border-r-gray pr0">
+				<div class="border-d-gray p20 strong">
+					<div class="pull-right">
+						<switch name="rs.status">
+							<case value="0"><div class="btn btn-sm btn-danger">未付款</div></case>
+							<case value="1"><div class="btn btn-sm btn-success">已付款</div></case>
+						</switch>
+					</div>
+					订单编号：{$rs.a_no}
+				</div>
+				<div class="p20">
+						<div class="ad-info">
+							<div class="clearfix md10">
+								<div class="l">投放素材：</div>
+								<div class="r"><a href="{$rs.images}" class="image-zoom"><img src="{:myurl($rs['images'],500,100,2,'',1)}" alt="{$rs.name}" class="border-1px"></a></div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-xs-6">
+								<div class="ad-info">
+									<div class="clearfix md10">
+										<div class="l">订单编号：</div>
+										<div class="r">{$rs.a_no}</div>
+									</div>	
+									<div class="clearfix md10">
+										<div class="l">投放类型：</div>
+										<div class="r">{$rs['type']==1?'推广店铺':'推广宝贝'}</div>
+									</div>
+									<div class="clearfix md10">
+										<div class="l">推广标题：</div>
+										<div class="r strong">{$rs.name}</div>
+									</div>									
+									<div class="clearfix md10">
+										<div class="l">推广链接：</div>
+										<div class="r"><a href="{$rs.url}" target="_blank">{$rs.url}</a></div>
+									</div>							
+	
+									<div class="clearfix md10">
+										<div class="l">会员昵称：</div>
+										<div class="r">{$rs.user.nick}</div>
+									</div>										
+
+								</div>							
+							</div>
+							<div class="col-xs-6">							
+								<div class="ad-info">
+									<div class="clearfix md10">
+										<div class="l">单　　价：</div>
+										<div class="r">￥{$rs.price}元/天</div>
+									</div>
+									<div class="clearfix md10">
+										<div class="l">投放天数：</div>
+										<div class="r"><span class="ft16 text-info">{$rs.num}</span> 天</div>
+									</div>									
+									<div class="clearfix md10">
+										<div class="l">合计金额：</div>
+										<div class="r">￥{$rs.money}</div>
+									</div>
+									<div class="clearfix md10">
+										<div class="l">实付金额：</div>
+										<div class="r ft16 strong text-danger">￥{$rs.money_pay}</div>
+									</div>
+									<div class="clearfix md10">
+										<div class="l">创建时间：</div>
+										<div class="r">{$rs.atime}</div>
+									</div>
+									<gt name="rs.paytime" value="0">
+									<div class="clearfix md10">
+										<div class="l">付款时间：</div>
+										<div class="r">{$rs.pay_time}</div>
+									</div>
+									</gt>
+
+								</div>							
+							</div>
+						</div>
+						
+						<gt name="rs.ad_position.num" value="1">
+						<div class="clearfix mt10 ad-info">
+							<div class="l">投放位置：</div>
+							<div class="r">
+								<ul class="position_sort">
+								<for start="0" end="$rs['ad_position']['num']">
+									<li class="{:$rs['sort']==$i?'active':''}"><a href="javascript:void(0)">位置{$i+1}</a></li>
+								</for>
+								</ul>
+							</div>							
+						</div>								
+						</gt>
+					
+				</div>
+			</div>
+			<div class="col-xs-5 pl0">
+				<div class="border-d-gray p20 strong">
+					<div class="pull-right text-gray" onclick="$(this).closest('tr').toggleClass('hide');"><i class="fa fa-times-circle-o fa-2x"></i></div>				
+					广告位信息
+				</div>
+				<div class="row m20">
+					<div class="col-xs-3">
+						<div class="ad-img-box2">
+							<a href="{$rs.ad_position.images}" class="image-zoom"><img src="{:myurl($rs['ad_position']['images'],120,150,2,'',1)}" alt="{$rs.ad_position.position_name}"></a>
+						</div>
+					</div>
+					<div class="col-xs-9">
+						<h2 class="ft22 md20">{$rs.ad_position.position_name}</h2>
+						<div class="ad-info">
+							<div class="clearfix">
+								<div class="l">尺寸：</div>
+								<div class="r">{$rs.ad_position.width} x {$rs.ad_position.height} (px)</div>
+							</div>
+							<div class="clearfix">
+								<div class="l">类型：</div>
+								<div class="r">{$rs['type']==1?'图片':'焦点图'}</div>
+							</div>
+							<div class="clearfix">
+								<div class="l">终端：</div>
+								<div class="r">{$rs['device']==1?'PC':'移动设备'}</div>
+							</div>
+							<div class="clearfix">
+								<div class="l">价格：</div>
+								<div class="r text-danger">{$rs.price} 元/天</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="border-t-gray p20 strong clearfix">
+			<div class="fl">投放日期</div>
+			<div class="fr">
+				<ul class="itabs itabs-calendar" data-id="cal-{$rs.id}">
+					<li class="active"><div>1</div></li>
+					<li><div>2</div></li>
+					<li><div>3</div></li>
+					<li><div>4</div></li>
+				</ul>				
+				
+			</div>			
+		</div>
+		<div class="border-t-gray clearfix">
+
+			<div class="p20 calendar-box" id="cal-{$rs.id}">
+					<div class="itabs-content">
+						<div class="itabs-pane active">
+							<div class="row">
+								<volist name="calendar" id="vo" offset="0" length="3">
+									<div class="col-xs-4 md20">
+										<div class="">
+											<div class="text-center p10">								
+												<div class="strong">{$vo.year} 年 {$vo.month} 月</div>
+											</div>
+											{$vo.cal}
+										</div>
+									</div>
+									
+								</volist>
+							</div>					
+						</div>
+						<div class="itabs-pane">
+							<div class="row">
+								<volist name="calendar" id="vo" offset="3" length="3">
+									<div class="col-xs-4 md20">
+										<div class="">
+											<div class="text-center p10">								
+												<div class="strong">{$vo.year} 年 {$vo.month} 月</div>
+											</div>
+											{$vo.cal}
+										</div>
+									</div>
+									
+								</volist>
+							</div>					
+						</div>
+						<div class="itabs-pane">
+							<div class="row">
+								<volist name="calendar" id="vo" offset="6" length="3">
+									<div class="col-xs-4 md20">
+										<div class="">
+											<div class="text-center p10">									
+												<div class="strong">{$vo.year} 年 {$vo.month} 月</div>
+											</div>
+											{$vo.cal}
+										</div>
+									</div>
+									
+								</volist>
+							</div>					
+						</div>
+						<div class="itabs-pane">
+							<div class="row">
+								<volist name="calendar" id="vo" offset="9" length="3">
+									<div class="col-xs-4 md20">
+										<div class="">
+											<div class="text-center p10">
+							
+												<div class="strong">{$vo.year} 年 {$vo.month} 月</div>
+											</div>
+											{$vo.cal}
+										</div>
+									</div>
+									
+								</volist>
+							</div>					
+						</div>
+						
+					</div>
+					
+					
+
+			</div>
+							
+
+
+		</div>
+	</div>
+	
+<script>
+	image_zoom();
+	itabs({tag:'#item-{$rs.id}'});
+</script>	

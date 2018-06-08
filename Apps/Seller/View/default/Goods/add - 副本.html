@@ -1,0 +1,216 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<style type="text/css">
+/* 选择属性组合的时候，防止超出 */
+.attr-lib .attr-set-list{
+	max-height: 395px;
+	overflow-y:auto; 
+}
+</style>
+<div class="centent_body">
+	<include file="Public:nav" />
+	<div class="container mb30">
+		<include file="Public:side" />
+		<div class="w980 fl">
+			<div class="row wizard-row">
+				<div class="col-md-12 fuelux">
+					<div class="block-wizard" style="border: 1px solid #efefef;border-radius:0;">
+						<div class="bg_f1 clearfix fs14 text_44 tle_R">
+							<a class="fl plr15 line40 ml-1 active" href="javascript:;">发布商品</a>
+						</div>
+						<div class="step-content">
+							<form class="form-horizontal vform" id="form-goods-add" data-url="__URL__/add_next">
+								<div class=" plr15 pb5">
+										<blockquote class="pd0 pl10 mb0 fs14 strong">选择分类</blockquote>
+								</div>
+								<div class="active" id="step1">
+								
+									<notempty name="cate.code">
+										{:W('Common/Builder/nors', array('param' => array('text' => $data['msg'])))}
+									<else />
+										<div class="row mg0 mb20 goods-select-category" style="margin:0">
+											<div class="col-xs-6">							
+												<div class="bor_der drop_auto plr10 mt-1 cid-1">
+													<volist name="cate" id="vo">
+														<if condition="$vo['sid'] neq 0">
+														<h5 data-id="{$vo.id}" onclick="first_cid($(this))"><span>{$vo.category_name}</span> <i class="fa fa-angle-down fr"></i></h5>
+														</if>
+													</volist>
+												</div>
+											</div>
+											<div class="col-xs-6">							
+												<div class="bor_der drop_auto plr10 mt-1 cid-2">
+													
+												</div>
+											</div>
+										</div>
+									</notempty>
+				
+									<div class="bg_f1 ptb10 plr15 mg15 mb20">您当前选择的是：
+										<span class="selected"></span>
+									</div>
+				
+				
+									<div class="bor_der bg_f1 pd15 mg15">
+										<h4 class="text-center strong mb20">乐兑平台发布商品协议 </h4>
+										<p class="mb5">如您成为乐兑卖家，并使用乐兑商城平台所提供的卖家平台服务，您应当阅读并遵守《乐兑商城平台个人卖家服务协议》（以下简称“本协议”）、《平台服务协议》等相关协议</p>
+										<p class="mb5">乐兑平台所实时发布的平台规则。请您务必审慎阅读、充分理解各条款内容，特别是免除或者限制责任的条款，以及开通或使用某项服务的单独协议。限制、免责条款可能以黑体加粗形式提示您注意。除非您已阅读并接受本协议所有条款，否则您无权使用本协议所约定提供的平台服务。您申请开通或使用本服务即视为您已阅读并同意上述协议的约束。</p>
+									</div>
+				
+									<div class="mg15 text-center mb40">
+										<!-- <div class="btn btn-primary plr20">同意协议并发布商品</div> -->
+										<button type="button" data-step="1" data-wizard="#wizard1"
+												class="btn btn-primary wizard-next">
+												同意协议并发布商品 <i class="fa fa-caret-right"></i>
+											</button>
+									</div>
+				
+									<div class="pt40">
+										<div class="solid_b plr15 pb5">
+											<blockquote class="pd0 pl10 mb0 fs14 strong">商品发布先知</blockquote>
+										</div>
+										<div class="row pd15">
+											<a target="_blank" href="{:DM('faq', '/view')}?id=850" class="col-xs-3 mb10">如何发布商品？</a>
+											<a target="_blank" href="{:DM('faq', '/view')}?id=851" class="col-xs-3 mb10">我能发布多少个商品？</a>
+											<a target="_blank" href="{:DM('faq', '/view')}?id=852" class="col-xs-3 mb10">我的商品该发布在哪个类目下？</a>
+											<a target="_blank" href="{:DM('faq', '/view')}?id=853" class="col-xs-3 mb10">禁发商品名录 ？</a>
+											<a target="_blank" href="{:DM('faq', '/view')}?id=854" class="col-xs-3 mb10">商品属性、数量设置方法？</a>
+											<a target="_blank" href="{:DM('faq', '/view')}?id=855" class="col-xs-3 mb10">发布的商品在哪里编辑？</a>
+											<a target="_blank" href="{:DM('faq', '/view')}?id=856" class="col-xs-3 mb10">违规处理名单 ？ </a>
+											<a target="_blank" href="{:DM('faq', '/view')}?id=857" class="col-xs-3 mb10">属性里没有找到我的商品 ？ </a>
+										</div>
+									</div>
+								</div>
+
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+</div>
+</block>
+<block name="css">
+<link rel="stylesheet" type="text/css" href="/Public/CSS/flatdream/js/jquery.nanoscroller/nanoscroller.css" />
+<link rel="stylesheet" type="text/css" href="/Public/CSS/flatdream/js/bootstrap.switch/bootstrap-switch.min.css" />
+<link rel="stylesheet" type="text/css" href="/Public/CSS/flatdream/js/bootstrap.slider/css/slider.css" />
+<link rel="stylesheet" type="text/css" href="/Public/CSS/flatdream/js/fuelux/css/fuelux.css">
+<link rel="stylesheet" type="text/css" href="/Public/CSS/flatdream/js/fuelux/css/fuelux-responsive.min.css">
+<link rel="stylesheet" type="text/css" href="/Public/new_design/flatdream/js/jquery.icheck/skins/all.css">
+</block>
+
+
+
+<block name="script">
+<script type="text/javascript" src="/Public/CSS/flatdream/js/bootstrap.switch/bootstrap-switch.js"></script>
+<script type="text/javascript" src="/Public/CSS/flatdream/js/bootstrap.slider/js/bootstrap-slider.js" ></script>
+<script type="text/javascript" src="/Public/new_design/js/loader.min.js"></script>
+<script type="text/javascript" src="/Public/new_design/flatdream/js/jquery.icheck/icheck.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+
+    $("body .wizard-next").click(function(e){
+      var id = $(this).data("wizard");
+      var step= $(this).data("step");
+
+      //$(id).wizard('next');
+      //console.log(e);
+      //e.preventDefault();
+	  if(step==1){
+		var sid=$('.cid-2 h5.active').data('id');
+		if(sid==undefined){
+			talert({msg:'请选择类目！'});
+			return false;
+		}
+		$('#category_id').val(sid);
+		gourl({url:'{:U("/Goods/add_next/category/'+sid+'")}'});
+
+	  }
+
+    });
+});
+//更新分类
+function update_category(){
+	ajax_get({
+		url:'__URL__/update_category',
+	},function(ret){
+		$(".f-shop_category_id .input-group").html('');
+		if(ret.code==1){
+			var html = '<div><div class="box p10" style="max-height:300px;overflow-x:hidden;overflow-y:auto">';
+			$.each(ret.data,function(k,v){
+				html+='<div class="ft16 md10">'
+						+'<label class=" mr20">'
+								+'<input type="checkbox" class="i-red-square" name="shop_category_id[]" value="'+v.id+'" data-type="select-all" data-tag="#'+v.id+'" data-name="'+v.category_name+'" >'
+							+' '+v.category_name
+						+'</label>'
+					+'</div>'
+					+'<div class="md20 row" id="'+v.id+'" style="padding:0 18px;">';
+				$.each(v.son,function(ke,va){
+					html+='<div class="col-xs-4">'
+							+'<label class=" mr20">'
+								+'<input type="checkbox" class="i-red-square" name="shop_category_id[]" value="'+va.id+'">'
+							+' '+va.category_name
+							+'</label>'
+						+'</div>'
+				});
+				html+='</div>';
+			});
+			html+='</div></div>';
+			$(".f-shop_category_id .input-group").html(html);
+			iCheckClass();
+		}
+		talert({status:ret.code,msg:ret.msg});
+	});	
+}
+
+	function first_cid(obj){
+		$('.cid-2,.cid-3,.selected').html('');
+		obj.closest('.drop_auto').find('h5.active').removeClass('active');
+		obj.addClass('active');
+		ajax_get({
+			url:'__URL__/sub_category/sid/'+obj.data('id'),
+		},function(ret){
+			if(ret.code==1){
+				var html='';
+				for(i=0;i<ret.data.length;i++){
+					html+='<h5 data-id="'+ret.data[i].id+'" onclick="second_cid($(this))"><span>'+ret.data[i].category_name+'</span> <i class="fa fa-angle-down fr"></i></h5>';
+				}
+				
+				$('.cid-2').html(html);
+			}
+		});		
+	}	
+	
+	function second_cid(obj){
+		$('.cid-3').html('');
+		obj.closest('.drop_auto').find('h5.active').removeClass('active');
+		obj.addClass('active');
+			
+		obj.closest('.drop_auto').find('h5.active').removeClass('active');
+		obj.addClass('active');		
+		
+		var html=$('.cid-1 h5.active span').html()+' > '+$('.cid-2 h5.active span').html();
+		$('.selected').html(html);	
+	}
+
+	function addsome(index){
+		var value='';
+		$('.attr-set-list tbody tr').each(function(){
+			if($(this).find('td').eq(index).find('input').val()!=''){
+				value=$(this).find('td').eq(index).find('input').val();
+				return false;
+			}
+		});
+		$('.attr-set-list tbody tr').each(function(){
+			//if($(this).find('td').eq(index).find('input').val()==''){
+				$(this).find('td').eq(index).find('input').val(value);
+			//}	
+		});
+	}	
+	
+
+</script>
+</block>

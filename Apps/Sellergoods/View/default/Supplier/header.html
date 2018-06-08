@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{$Think.config.seo.title}</title>
+    <meta name="keywords" content="{$Think.config.seo.keywords}">
+    <meta name="description" content="{$Think.config.seo.description}"> 
+    <meta name="author" content="It is true">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="__NEW_DESIGN__flatdream/js/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="__NEW_DESIGN__flatdream/js/jquery.gritter/css/jquery.gritter.css"/>
+    <link rel="stylesheet" href="__NEW_DESIGN__flatdream/fonts/font-awesome-4/css/font-awesome.min.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="../assets/js/html5shiv.js"></script>
+    <script src="../assets/js/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="__NEW_DESIGN__flatdream/js/jquery.nanoscroller/nanoscroller.css"/>
+    <link rel="stylesheet" type="text/css" href="__NEW_DESIGN__flatdream/js/jquery.codemirror/lib/codemirror.css">
+    <link rel="stylesheet" type="text/css" href="__NEW_DESIGN__flatdream/js/jquery.codemirror/theme/ambiance.css">
+    <link rel="stylesheet" type="text/css" href="__NEW_DESIGN__flatdream/js/jquery.vectormaps/jquery-jvectormap-1.2.2.css" media="screen"/>
+    <link href="__NEW_DESIGN__flatdream/css/style.css" rel="stylesheet"/>
+    <!-- 定义样式 -->
+    <link href="../Public/css/common.css" rel="stylesheet">
+    <link href="../Public/css/css.css" rel="stylesheet">
+    <link href="../Public/css/open_yun.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/Public/CSS/flatdream/js/jquery.icheck/skins/square/_all.css">
+
+    <!-- 图片放大 -->
+    <link href="/Public/CSS/flatdream/js/jquery.magnific-popup/dist/magnific-popup.css" rel="stylesheet" />
+    <!-- talert 弹框css -->
+    <link rel="stylesheet" type="text/css" href="/Public/Jquery/toastr/toastr.css" />
+
+    <script src="__NEW_DESIGN__flatdream/js/jquery.js"></script>
+    <include file="Home@Public:js" />
+    <!-- 函数列表 -->
+    <script src="/Public/Apps/global.js"></script>
+    
+
+    <script type="text/javascript" src="/Public/Jquery/jquery.lazyload.min.js"></script>
+
+    <script src="__NEW_DESIGN__flatdream/js/jquery.pushmenu/js/jPushMenu.js"></script>
+    <script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.nanoscroller/jquery.nanoscroller.js"></script>
+    <script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.sparkline/jquery.sparkline.min.js"></script>
+    <script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.ui/jquery-ui.js"></script>
+    <script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.gritter/js/jquery.gritter.js"></script>
+    <!--<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/behaviour/core.js"></script>-->
+    <script src="__NEW_DESIGN__flatdream/js/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <script src="__NEW_DESIGN__flatdream/js/jquery.codemirror/lib/codemirror.js"></script>
+    <script src="__NEW_DESIGN__flatdream/js/jquery.codemirror/mode/xml/xml.js"></script>
+    <script src="__NEW_DESIGN__flatdream/js/jquery.codemirror/mode/css/css.js"></script>
+    <script src="__NEW_DESIGN__flatdream/js/jquery.codemirror/mode/htmlmixed/htmlmixed.js"></script>
+    <script src="__NEW_DESIGN__flatdream/js/jquery.codemirror/addon/edit/matchbrackets.js"></script>
+    <script src="__NEW_DESIGN__flatdream/js/jquery.vectormaps/jquery-jvectormap-1.2.2.min.js"></script>
+    <script src="__NEW_DESIGN__flatdream/js/jquery.vectormaps/maps/jquery-jvectormap-world-mill-en.js"></script>
+    <script src="__NEW_DESIGN__flatdream/js/behaviour/dashboard.js"></script>
+    <!--<script type="text/javascript" src="/Public/Apps/make.js"></script>-->
+    <!-- 上传images图片插件 -->
+    <script type="text/javascript" src="/Public/Webuploader/js/webuploader.js"></script>
+    <link rel="stylesheet" type="text/css" href="/Public/Webuploader/css/webuploader.css">
+
+
+    <script>
+    var ACTION = '{:enCryptRestUri("__ACTION__")}';
+    </script>
+</head>
+
+<body>
+<!-- ajax_post_form的 表单提交div -->
+<div id="ajax_tips"></div>
+<!-- 模态框 -->
+<include file="Common@Public:modal" />
+

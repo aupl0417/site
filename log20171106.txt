@@ -1,0 +1,1326 @@
+array (
+  'allpage' => 4,
+  'sql' => 'SELECT `id`,`atime`,`uptime`,`category_id`,`shop_category_id`,`goods_name`,`images`,`price`,`num`,`sale_num`,`score_ratio`,`code`,`is_best`,`status`,`express_tpl_id`,`score_ratio`,`is_collection`,`score_type` FROM `ylh_goods` WHERE `seller_id` = \'744535\' AND `status` = \'1\' ORDER BY id desc ,id desc LIMIT 0,15  ',
+  'list' => 
+  array (
+    0 => 
+    array (
+      'id' => '19694',
+      'atime' => '2017-09-21 16:29:02',
+      'uptime' => '2017-11-03 14:44:59',
+      'category_id' => '100842045',
+      'shop_category_id' => '0',
+      'goods_name' => '2017春秋中长款连帽男士休闲夹克衫韩版修身潮流衣服青年男装外套',
+      'images' => 'http://img.alicdn.com/bao/uploaded/i2/2148153413/TB1t4hlSVXXXXasXFXXXXXXXXXX_!!0-item_pic.jpg',
+      'price' => '2000.00',
+      'num' => '200',
+      'sale_num' => '0',
+      'score_ratio' => '0.00',
+      'code' => '',
+      'is_best' => '0',
+      'status' => '1',
+      'express_tpl_id' => '440',
+      'is_collection' => '2',
+      'score_type' => '1',
+      'attr_list' => 
+      array (
+        0 => 
+        array (
+          'id' => '75252',
+          'detail_url' => '/Goods/view/id/75252.html',
+        ),
+      ),
+    ),
+    1 => 
+    array (
+      'id' => '19693',
+      'atime' => '2017-09-21 15:32:13',
+      'uptime' => '2017-09-21 15:32:21',
+      'category_id' => '100845550',
+      'shop_category_id' => '0',
+      'goods_name' => '真维斯t恤男长袖圆领 2017秋装新款男士潮流字母印花纯棉修身衣服',
+      'images' => 'http://img.alicdn.com/bao/uploaded/i1/289268212/TB1t8eRfeALL1JjSZFjXXasqXXa_!!0-item_pic.jpg',
+      'price' => '75.90',
+      'num' => '10',
+      'sale_num' => '0',
+      'score_ratio' => '1.00',
+      'code' => '',
+      'is_best' => '0',
+      'status' => '1',
+      'express_tpl_id' => '317',
+      'is_collection' => '2',
+      'score_type' => '1',
+      'attr_list' => 
+      array (
+        0 => 
+        array (
+          'id' => '75250',
+          'detail_url' => '/Goods/view/id/75250.html',
+        ),
+      ),
+    ),
+    2 => 
+    array (
+      'id' => '19691',
+      'atime' => '2017-09-21 15:19:06',
+      'uptime' => '2017-09-21 15:25:36',
+      'category_id' => '100842045',
+      'shop_category_id' => '0',
+      'goods_name' => '2017春秋中长款连帽男士休闲夹克衫韩版修身潮流衣服青年男装外套',
+      'images' => 'http://img.alicdn.com/bao/uploaded/i2/2148153413/TB1t4hlSVXXXXasXFXXXXXXXXXX_!!0-item_pic.jpg',
+      'price' => '150.00',
+      'num' => '149',
+      'sale_num' => '1',
+      'score_ratio' => '0.00',
+      'code' => '',
+      'is_best' => '0',
+      'status' => '1',
+      'express_tpl_id' => '365',
+      'is_collection' => '2',
+      'score_type' => '4',
+      'attr_list' => 
+      array (
+        0 => 
+        array (
+          'id' => '75248',
+          'detail_url' => '/Goods/view/id/75248.html',
+        ),
+      ),
+    ),
+    3 => 
+    array (
+      'id' => '19690',
+      'atime' => '2017-09-20 14:06:40',
+      'uptime' => '2017-09-22 11:04:37',
+      'category_id' => '100843319',
+      'shop_category_id' => '100847658',
+      'goods_name' => '供货商现金测试商品3',
+      'images' => 'http://orxwhobqu.bkt.clouddn.com/FvNeo_pD7eD17pxIXp2RNAYz4Kw_',
+      'price' => '18.00',
+      'num' => '20',
+      'sale_num' => '0',
+      'score_ratio' => '0.50',
+      'code' => '',
+      'is_best' => '0',
+      'status' => '1',
+      'express_tpl_id' => '439',
+      'is_collection' => '0',
+      'score_type' => '2',
+      'attr_list' => 
+      array (
+        0 => 
+        array (
+          'id' => '75246',
+          'detail_url' => '/Goods/view/id/75246.html',
+        ),
+      ),
+    ),
+    4 => 
+    array (
+      'id' => '19689',
+      'atime' => '2017-09-20 14:04:23',
+      'uptime' => '2017-09-20 14:04:23',
+      'category_id' => '100843237',
+      'shop_category_id' => '100847658',
+      'goods_name' => '供货商现金测试商品2',
+      'images' => 'http://orxwhobqu.bkt.clouddn.com/FvNeo_pD7eD17pxIXp2RNAYz4Kw_',
+      'price' => '16.00',
+      'num' => '19',
+      'sale_num' => '0',
+      'score_ratio' => '1.00',
+      'code' => '',
+      'is_best' => '0',
+      'status' => '1',
+      'express_tpl_id' => '439',
+      'is_collection' => '0',
+      'score_type' => '2',
+      'attr_list' => 
+      array (
+        0 => 
+        array (
+          'id' => '75245',
+          'detail_url' => '/Goods/view/id/75245.html',
+        ),
+      ),
+    ),
+    5 => 
+    array (
+      'id' => '19687',
+      'atime' => '2017-09-20 11:57:40',
+      'uptime' => '2017-09-20 13:59:43',
+      'category_id' => '100842045',
+      'shop_category_id' => '100847658',
+      'goods_name' => '供货商银积分测试商品3',
+      'images' => 'http://orxwhobqu.bkt.clouddn.com/FvNeo_pD7eD17pxIXp2RNAYz4Kw_',
+      'price' => '240.00',
+      'num' => '14',
+      'sale_num' => '0',
+      'score_ratio' => '0.00',
+      'code' => '',
+      'is_best' => '0',
+      'status' => '1',
+      'express_tpl_id' => '439',
+      'is_collection' => '0',
+      'score_type' => '4',
+      'attr_list' => 
+      array (
+        0 => 
+        array (
+          'id' => '75243',
+          'detail_url' => '/Goods/view/id/75243.html',
+        ),
+      ),
+    ),
+    6 => 
+    array (
+      'id' => '19686',
+      'atime' => '2017-09-20 11:52:22',
+      'uptime' => '2017-09-20 13:59:10',
+      'category_id' => '100842045',
+      'shop_category_id' => '100847658',
+      'goods_name' => '供货商银积分测试商品2',
+      'images' => 'http://orxwhobqu.bkt.clouddn.com/FvNeo_pD7eD17pxIXp2RNAYz4Kw_',
+      'price' => '240.00',
+      'num' => '12',
+      'sale_num' => '5',
+      'score_ratio' => '0.00',
+      'code' => '',
+      'is_best' => '1',
+      'status' => '1',
+      'express_tpl_id' => '439',
+      'is_collection' => '0',
+      'score_type' => '4',
+      'attr_list' => 
+      array (
+        0 => 
+        array (
+          'id' => '75242',
+          'detail_url' => '/Goods/view/id/75242.html',
+        ),
+      ),
+    ),
+    7 => 
+    array (
+      'id' => '19685',
+      'atime' => '2017-09-20 11:47:54',
+      'uptime' => '2017-09-21 13:56:32',
+      'category_id' => '100842045',
+      'shop_category_id' => '100847658',
+      'goods_name' => '供货商金积分测试商品5',
+      'images' => 'http://orxwhobqu.bkt.clouddn.com/FvNeo_pD7eD17pxIXp2RNAYz4Kw_',
+      'price' => '140.00',
+      'num' => '15',
+      'sale_num' => '0',
+      'score_ratio' => '0.00',
+      'code' => '',
+      'is_best' => '0',
+      'status' => '1',
+      'express_tpl_id' => '439',
+      'is_collection' => '0',
+      'score_type' => '1',
+      'attr_list' => 
+      array (
+        0 => 
+        array (
+          'id' => '75241',
+          'detail_url' => '/Goods/view/id/75241.html',
+        ),
+      ),
+    ),
+    8 => 
+    array (
+      'id' => '19684',
+      'atime' => '2017-09-20 11:40:29',
+      'uptime' => '2017-09-20 11:40:29',
+      'category_id' => '100842045',
+      'shop_category_id' => '100847658',
+      'goods_name' => '供货商金积分测试商品4',
+      'images' => 'http://orxwhobqu.bkt.clouddn.com/FvNeo_pD7eD17pxIXp2RNAYz4Kw_',
+      'price' => '140.00',
+      'num' => '11',
+      'sale_num' => '0',
+      'score_ratio' => '0.00',
+      'code' => '',
+      'is_best' => '1',
+      'status' => '1',
+      'express_tpl_id' => '439',
+      'is_collection' => '0',
+      'score_type' => '1',
+      'attr_list' => 
+      array (
+        0 => 
+        array (
+          'id' => '75240',
+          'detail_url' => '/Goods/view/id/75240.html',
+        ),
+      ),
+    ),
+    9 => 
+    array (
+      'id' => '19683',
+      'atime' => '2017-09-20 11:39:24',
+      'uptime' => '2017-09-20 11:40:51',
+      'category_id' => '100842045',
+      'shop_category_id' => '100847658',
+      'goods_name' => '供货商金积分测试商品3',
+      'images' => 'http://orxwhobqu.bkt.clouddn.com/FvNeo_pD7eD17pxIXp2RNAYz4Kw_',
+      'price' => '120.00',
+      'num' => '10',
+      'sale_num' => '0',
+      'score_ratio' => '0.00',
+      'code' => '',
+      'is_best' => '1',
+      'status' => '1',
+      'express_tpl_id' => '439',
+      'is_collection' => '0',
+      'score_type' => '1',
+      'attr_list' => 
+      array (
+        0 => 
+        array (
+          'id' => '75239',
+          'detail_url' => '/Goods/view/id/75239.html',
+        ),
+      ),
+    ),
+    10 => 
+    array (
+      'id' => '19682',
+      'atime' => '2017-09-20 11:37:13',
+      'uptime' => '2017-09-20 11:37:13',
+      'category_id' => '100842045',
+      'shop_category_id' => '100847658',
+      'goods_name' => '供货商金积分测试商品2',
+      'images' => 'http://orxwhobqu.bkt.clouddn.com/FvNeo_pD7eD17pxIXp2RNAYz4Kw_',
+      'price' => '120.00',
+      'num' => '12',
+      'sale_num' => '0',
+      'score_ratio' => '0.00',
+      'code' => '',
+      'is_best' => '1',
+      'status' => '1',
+      'express_tpl_id' => '439',
+      'is_collection' => '0',
+      'score_type' => '1',
+      'attr_list' => 
+      array (
+        0 => 
+        array (
+          'id' => '75238',
+          'detail_url' => '/Goods/view/id/75238.html',
+        ),
+      ),
+    ),
+    11 => 
+    array (
+      'id' => '19681',
+      'atime' => '2017-09-20 09:53:10',
+      'uptime' => '2017-09-22 11:03:59',
+      'category_id' => '100843319',
+      'shop_category_id' => '100847658',
+      'goods_name' => '供货商现金测试商品1',
+      'images' => 'http://orxwhobqu.bkt.clouddn.com/FvNeo_pD7eD17pxIXp2RNAYz4Kw_',
+      'price' => '100.00',
+      'num' => '20',
+      'sale_num' => '0',
+      'score_ratio' => '2.00',
+      'code' => '',
+      'is_best' => '0',
+      'status' => '1',
+      'express_tpl_id' => '439',
+      'is_collection' => '0',
+      'score_type' => '2',
+      'attr_list' => 
+      array (
+        0 => 
+        array (
+          'id' => '75236',
+          'detail_url' => '/Goods/view/id/75236.html',
+        ),
+      ),
+    ),
+    12 => 
+    array (
+      'id' => '19680',
+      'atime' => '2017-09-20 09:51:08',
+      'uptime' => '2017-09-20 09:53:40',
+      'category_id' => '100843237',
+      'shop_category_id' => '100847658',
+      'goods_name' => '供货商银积分测试商品1',
+      'images' => 'http://orxwhobqu.bkt.clouddn.com/FvNeo_pD7eD17pxIXp2RNAYz4Kw_',
+      'price' => '1500.00',
+      'num' => '195',
+      'sale_num' => '5',
+      'score_ratio' => '0.00',
+      'code' => '',
+      'is_best' => '1',
+      'status' => '1',
+      'express_tpl_id' => '439',
+      'is_collection' => '0',
+      'score_type' => '4',
+      'attr_list' => 
+      array (
+        0 => 
+        array (
+          'id' => '75234',
+          'detail_url' => '/Goods/view/id/75234.html',
+        ),
+      ),
+    ),
+    13 => 
+    array (
+      'id' => '19679',
+      'atime' => '2017-09-19 16:26:34',
+      'uptime' => '2017-09-22 09:55:39',
+      'category_id' => '100842045',
+      'shop_category_id' => '100847658',
+      'goods_name' => '供货商金积分测试商品1',
+      'images' => 'http://orxwhobqu.bkt.clouddn.com/FvNeo_pD7eD17pxIXp2RNAYz4Kw_',
+      'price' => '1000.00',
+      'num' => '191',
+      'sale_num' => '9',
+      'score_ratio' => '0.00',
+      'code' => '',
+      'is_best' => '0',
+      'status' => '1',
+      'express_tpl_id' => '439',
+      'is_collection' => '0',
+      'score_type' => '1',
+      'attr_list' => 
+      array (
+        0 => 
+        array (
+          'id' => '75232',
+          'detail_url' => '/Goods/view/id/75232.html',
+        ),
+      ),
+    ),
+    14 => 
+    array (
+      'id' => '19678',
+      'atime' => '2017-09-14 11:49:35',
+      'uptime' => '2017-09-21 15:05:01',
+      'category_id' => '100842045',
+      'shop_category_id' => '100847658',
+      'goods_name' => '测试商品5',
+      'images' => 'http://orxwhobqu.bkt.clouddn.com/FqB_XE1pKa0yIhRDyowOIJ3-lPxs',
+      'price' => '75.00',
+      'num' => '197',
+      'sale_num' => '3',
+      'score_ratio' => '0.00',
+      'code' => '123123',
+      'is_best' => '0',
+      'status' => '1',
+      'express_tpl_id' => '437',
+      'is_collection' => '0',
+      'score_type' => '4',
+      'attr_list' => 
+      array (
+        0 => 
+        array (
+          'id' => '75230',
+          'detail_url' => '/Goods/view/id/75230.html',
+        ),
+      ),
+    ),
+  ),
+  'listnum' => 15,
+  'allnum' => '51',
+  'page' => 
+  array (
+    'page' => '<ul class="pagination">  <li class="active"><span class="current">1</span></li><li><a class="num" href="/SellerGoodsManage/goods_all/p/2.html">2</a></li><li><a class="num" href="/SellerGoodsManage/goods_all/p/3.html">3</a></li><li><a class="num" href="/SellerGoodsManage/goods_all/p/4.html">4</a></li> <li><a class="next" href="/SellerGoodsManage/goods_all/p/2.html">下一页</a></li> </ul>',
+    'gopage' => '<option value="/SellerGoodsManage/goods_all/p/1.html" selected>第 1 页</option><option value="/SellerGoodsManage/goods_all/p/2.html" >第 2 页</option><option value="/SellerGoodsManage/goods_all/p/3.html" >第 3 页</option><option value="/SellerGoodsManage/goods_all/p/4.html" >第 4 页</option>',
+    'total' => '共 51 条记录 / 共 4 页',
+  ),
+  'pageinfo' => 
+  array (
+    'pagesize' => '15',
+    'p' => 1,
+    'count' => '51',
+    'page' => 4,
+  ),
+)
+array (
+  'allpage' => 4,
+  'sql' => 'SELECT `id`,`atime`,`uptime`,`category_id`,`shop_category_id`,`goods_name`,`images`,`price`,`num`,`sale_num`,`score_ratio`,`code`,`is_best`,`status`,`express_tpl_id`,`score_ratio`,`is_collection`,`score_type` FROM `ylh_goods` WHERE `seller_id` = \'744535\' AND `status` = \'1\' ORDER BY id desc ,id desc LIMIT 0,15  ',
+  'list' => 
+  array (
+    0 => 
+    array (
+      'id' => '19694',
+      'atime' => '2017-09-21 16:29:02',
+      'uptime' => '2017-11-03 14:44:59',
+      'category_id' => '100842045',
+      'shop_category_id' => '0',
+      'goods_name' => '2017春秋中长款连帽男士休闲夹克衫韩版修身潮流衣服青年男装外套',
+      'images' => 'http://img.alicdn.com/bao/uploaded/i2/2148153413/TB1t4hlSVXXXXasXFXXXXXXXXXX_!!0-item_pic.jpg',
+      'price' => '2000.00',
+      'num' => '200',
+      'sale_num' => '0',
+      'score_ratio' => '0.00',
+      'code' => '',
+      'is_best' => '0',
+      'status' => '1',
+      'express_tpl_id' => '440',
+      'is_collection' => '2',
+      'score_type' => '1',
+      'attr_list' => 
+      array (
+        0 => 
+        array (
+          'id' => '75252',
+          'detail_url' => '/Goods/view/id/75252.html',
+        ),
+      ),
+    ),
+    1 => 
+    array (
+      'id' => '19693',
+      'atime' => '2017-09-21 15:32:13',
+      'uptime' => '2017-09-21 15:32:21',
+      'category_id' => '100845550',
+      'shop_category_id' => '0',
+      'goods_name' => '真维斯t恤男长袖圆领 2017秋装新款男士潮流字母印花纯棉修身衣服',
+      'images' => 'http://img.alicdn.com/bao/uploaded/i1/289268212/TB1t8eRfeALL1JjSZFjXXasqXXa_!!0-item_pic.jpg',
+      'price' => '75.90',
+      'num' => '10',
+      'sale_num' => '0',
+      'score_ratio' => '1.00',
+      'code' => '',
+      'is_best' => '0',
+      'status' => '1',
+      'express_tpl_id' => '317',
+      'is_collection' => '2',
+      'score_type' => '1',
+      'attr_list' => 
+      array (
+        0 => 
+        array (
+          'id' => '75250',
+          'detail_url' => '/Goods/view/id/75250.html',
+        ),
+      ),
+    ),
+    2 => 
+    array (
+      'id' => '19691',
+      'atime' => '2017-09-21 15:19:06',
+      'uptime' => '2017-09-21 15:25:36',
+      'category_id' => '100842045',
+      'shop_category_id' => '0',
+      'goods_name' => '2017春秋中长款连帽男士休闲夹克衫韩版修身潮流衣服青年男装外套',
+      'images' => 'http://img.alicdn.com/bao/uploaded/i2/2148153413/TB1t4hlSVXXXXasXFXXXXXXXXXX_!!0-item_pic.jpg',
+      'price' => '150.00',
+      'num' => '149',
+      'sale_num' => '1',
+      'score_ratio' => '0.00',
+      'code' => '',
+      'is_best' => '0',
+      'status' => '1',
+      'express_tpl_id' => '365',
+      'is_collection' => '2',
+      'score_type' => '4',
+      'attr_list' => 
+      array (
+        0 => 
+        array (
+          'id' => '75248',
+          'detail_url' => '/Goods/view/id/75248.html',
+        ),
+      ),
+    ),
+    3 => 
+    array (
+      'id' => '19690',
+      'atime' => '2017-09-20 14:06:40',
+      'uptime' => '2017-09-22 11:04:37',
+      'category_id' => '100843319',
+      'shop_category_id' => '100847658',
+      'goods_name' => '供货商现金测试商品3',
+      'images' => 'http://orxwhobqu.bkt.clouddn.com/FvNeo_pD7eD17pxIXp2RNAYz4Kw_',
+      'price' => '18.00',
+      'num' => '20',
+      'sale_num' => '0',
+      'score_ratio' => '0.50',
+      'code' => '',
+      'is_best' => '0',
+      'status' => '1',
+      'express_tpl_id' => '439',
+      'is_collection' => '0',
+      'score_type' => '2',
+      'attr_list' => 
+      array (
+        0 => 
+        array (
+          'id' => '75246',
+          'detail_url' => '/Goods/view/id/75246.html',
+        ),
+      ),
+    ),
+    4 => 
+    array (
+      'id' => '19689',
+      'atime' => '2017-09-20 14:04:23',
+      'uptime' => '2017-09-20 14:04:23',
+      'category_id' => '100843237',
+      'shop_category_id' => '100847658',
+      'goods_name' => '供货商现金测试商品2',
+      'images' => 'http://orxwhobqu.bkt.clouddn.com/FvNeo_pD7eD17pxIXp2RNAYz4Kw_',
+      'price' => '16.00',
+      'num' => '19',
+      'sale_num' => '0',
+      'score_ratio' => '1.00',
+      'code' => '',
+      'is_best' => '0',
+      'status' => '1',
+      'express_tpl_id' => '439',
+      'is_collection' => '0',
+      'score_type' => '2',
+      'attr_list' => 
+      array (
+        0 => 
+        array (
+          'id' => '75245',
+          'detail_url' => '/Goods/view/id/75245.html',
+        ),
+      ),
+    ),
+    5 => 
+    array (
+      'id' => '19687',
+      'atime' => '2017-09-20 11:57:40',
+      'uptime' => '2017-09-20 13:59:43',
+      'category_id' => '100842045',
+      'shop_category_id' => '100847658',
+      'goods_name' => '供货商银积分测试商品3',
+      'images' => 'http://orxwhobqu.bkt.clouddn.com/FvNeo_pD7eD17pxIXp2RNAYz4Kw_',
+      'price' => '240.00',
+      'num' => '14',
+      'sale_num' => '0',
+      'score_ratio' => '0.00',
+      'code' => '',
+      'is_best' => '0',
+      'status' => '1',
+      'express_tpl_id' => '439',
+      'is_collection' => '0',
+      'score_type' => '4',
+      'attr_list' => 
+      array (
+        0 => 
+        array (
+          'id' => '75243',
+          'detail_url' => '/Goods/view/id/75243.html',
+        ),
+      ),
+    ),
+    6 => 
+    array (
+      'id' => '19686',
+      'atime' => '2017-09-20 11:52:22',
+      'uptime' => '2017-09-20 13:59:10',
+      'category_id' => '100842045',
+      'shop_category_id' => '100847658',
+      'goods_name' => '供货商银积分测试商品2',
+      'images' => 'http://orxwhobqu.bkt.clouddn.com/FvNeo_pD7eD17pxIXp2RNAYz4Kw_',
+      'price' => '240.00',
+      'num' => '12',
+      'sale_num' => '5',
+      'score_ratio' => '0.00',
+      'code' => '',
+      'is_best' => '1',
+      'status' => '1',
+      'express_tpl_id' => '439',
+      'is_collection' => '0',
+      'score_type' => '4',
+      'attr_list' => 
+      array (
+        0 => 
+        array (
+          'id' => '75242',
+          'detail_url' => '/Goods/view/id/75242.html',
+        ),
+      ),
+    ),
+    7 => 
+    array (
+      'id' => '19685',
+      'atime' => '2017-09-20 11:47:54',
+      'uptime' => '2017-09-21 13:56:32',
+      'category_id' => '100842045',
+      'shop_category_id' => '100847658',
+      'goods_name' => '供货商金积分测试商品5',
+      'images' => 'http://orxwhobqu.bkt.clouddn.com/FvNeo_pD7eD17pxIXp2RNAYz4Kw_',
+      'price' => '140.00',
+      'num' => '15',
+      'sale_num' => '0',
+      'score_ratio' => '0.00',
+      'code' => '',
+      'is_best' => '0',
+      'status' => '1',
+      'express_tpl_id' => '439',
+      'is_collection' => '0',
+      'score_type' => '1',
+      'attr_list' => 
+      array (
+        0 => 
+        array (
+          'id' => '75241',
+          'detail_url' => '/Goods/view/id/75241.html',
+        ),
+      ),
+    ),
+    8 => 
+    array (
+      'id' => '19684',
+      'atime' => '2017-09-20 11:40:29',
+      'uptime' => '2017-09-20 11:40:29',
+      'category_id' => '100842045',
+      'shop_category_id' => '100847658',
+      'goods_name' => '供货商金积分测试商品4',
+      'images' => 'http://orxwhobqu.bkt.clouddn.com/FvNeo_pD7eD17pxIXp2RNAYz4Kw_',
+      'price' => '140.00',
+      'num' => '11',
+      'sale_num' => '0',
+      'score_ratio' => '0.00',
+      'code' => '',
+      'is_best' => '1',
+      'status' => '1',
+      'express_tpl_id' => '439',
+      'is_collection' => '0',
+      'score_type' => '1',
+      'attr_list' => 
+      array (
+        0 => 
+        array (
+          'id' => '75240',
+          'detail_url' => '/Goods/view/id/75240.html',
+        ),
+      ),
+    ),
+    9 => 
+    array (
+      'id' => '19683',
+      'atime' => '2017-09-20 11:39:24',
+      'uptime' => '2017-09-20 11:40:51',
+      'category_id' => '100842045',
+      'shop_category_id' => '100847658',
+      'goods_name' => '供货商金积分测试商品3',
+      'images' => 'http://orxwhobqu.bkt.clouddn.com/FvNeo_pD7eD17pxIXp2RNAYz4Kw_',
+      'price' => '120.00',
+      'num' => '10',
+      'sale_num' => '0',
+      'score_ratio' => '0.00',
+      'code' => '',
+      'is_best' => '1',
+      'status' => '1',
+      'express_tpl_id' => '439',
+      'is_collection' => '0',
+      'score_type' => '1',
+      'attr_list' => 
+      array (
+        0 => 
+        array (
+          'id' => '75239',
+          'detail_url' => '/Goods/view/id/75239.html',
+        ),
+      ),
+    ),
+    10 => 
+    array (
+      'id' => '19682',
+      'atime' => '2017-09-20 11:37:13',
+      'uptime' => '2017-09-20 11:37:13',
+      'category_id' => '100842045',
+      'shop_category_id' => '100847658',
+      'goods_name' => '供货商金积分测试商品2',
+      'images' => 'http://orxwhobqu.bkt.clouddn.com/FvNeo_pD7eD17pxIXp2RNAYz4Kw_',
+      'price' => '120.00',
+      'num' => '12',
+      'sale_num' => '0',
+      'score_ratio' => '0.00',
+      'code' => '',
+      'is_best' => '1',
+      'status' => '1',
+      'express_tpl_id' => '439',
+      'is_collection' => '0',
+      'score_type' => '1',
+      'attr_list' => 
+      array (
+        0 => 
+        array (
+          'id' => '75238',
+          'detail_url' => '/Goods/view/id/75238.html',
+        ),
+      ),
+    ),
+    11 => 
+    array (
+      'id' => '19681',
+      'atime' => '2017-09-20 09:53:10',
+      'uptime' => '2017-09-22 11:03:59',
+      'category_id' => '100843319',
+      'shop_category_id' => '100847658',
+      'goods_name' => '供货商现金测试商品1',
+      'images' => 'http://orxwhobqu.bkt.clouddn.com/FvNeo_pD7eD17pxIXp2RNAYz4Kw_',
+      'price' => '100.00',
+      'num' => '20',
+      'sale_num' => '0',
+      'score_ratio' => '2.00',
+      'code' => '',
+      'is_best' => '0',
+      'status' => '1',
+      'express_tpl_id' => '439',
+      'is_collection' => '0',
+      'score_type' => '2',
+      'attr_list' => 
+      array (
+        0 => 
+        array (
+          'id' => '75236',
+          'detail_url' => '/Goods/view/id/75236.html',
+        ),
+      ),
+    ),
+    12 => 
+    array (
+      'id' => '19680',
+      'atime' => '2017-09-20 09:51:08',
+      'uptime' => '2017-09-20 09:53:40',
+      'category_id' => '100843237',
+      'shop_category_id' => '100847658',
+      'goods_name' => '供货商银积分测试商品1',
+      'images' => 'http://orxwhobqu.bkt.clouddn.com/FvNeo_pD7eD17pxIXp2RNAYz4Kw_',
+      'price' => '1500.00',
+      'num' => '195',
+      'sale_num' => '5',
+      'score_ratio' => '0.00',
+      'code' => '',
+      'is_best' => '1',
+      'status' => '1',
+      'express_tpl_id' => '439',
+      'is_collection' => '0',
+      'score_type' => '4',
+      'attr_list' => 
+      array (
+        0 => 
+        array (
+          'id' => '75234',
+          'detail_url' => '/Goods/view/id/75234.html',
+        ),
+      ),
+    ),
+    13 => 
+    array (
+      'id' => '19679',
+      'atime' => '2017-09-19 16:26:34',
+      'uptime' => '2017-09-22 09:55:39',
+      'category_id' => '100842045',
+      'shop_category_id' => '100847658',
+      'goods_name' => '供货商金积分测试商品1',
+      'images' => 'http://orxwhobqu.bkt.clouddn.com/FvNeo_pD7eD17pxIXp2RNAYz4Kw_',
+      'price' => '1000.00',
+      'num' => '191',
+      'sale_num' => '9',
+      'score_ratio' => '0.00',
+      'code' => '',
+      'is_best' => '0',
+      'status' => '1',
+      'express_tpl_id' => '439',
+      'is_collection' => '0',
+      'score_type' => '1',
+      'attr_list' => 
+      array (
+        0 => 
+        array (
+          'id' => '75232',
+          'detail_url' => '/Goods/view/id/75232.html',
+        ),
+      ),
+    ),
+    14 => 
+    array (
+      'id' => '19678',
+      'atime' => '2017-09-14 11:49:35',
+      'uptime' => '2017-09-21 15:05:01',
+      'category_id' => '100842045',
+      'shop_category_id' => '100847658',
+      'goods_name' => '测试商品5',
+      'images' => 'http://orxwhobqu.bkt.clouddn.com/FqB_XE1pKa0yIhRDyowOIJ3-lPxs',
+      'price' => '75.00',
+      'num' => '197',
+      'sale_num' => '3',
+      'score_ratio' => '0.00',
+      'code' => '123123',
+      'is_best' => '0',
+      'status' => '1',
+      'express_tpl_id' => '437',
+      'is_collection' => '0',
+      'score_type' => '4',
+      'attr_list' => 
+      array (
+        0 => 
+        array (
+          'id' => '75230',
+          'detail_url' => '/Goods/view/id/75230.html',
+        ),
+      ),
+    ),
+  ),
+  'listnum' => 15,
+  'allnum' => '51',
+  'page' => 
+  array (
+    'page' => '<ul class="pagination">  <li class="active"><span class="current">1</span></li><li><a class="num" href="/SellerGoodsManage/goods_all/p/2.html">2</a></li><li><a class="num" href="/SellerGoodsManage/goods_all/p/3.html">3</a></li><li><a class="num" href="/SellerGoodsManage/goods_all/p/4.html">4</a></li> <li><a class="next" href="/SellerGoodsManage/goods_all/p/2.html">下一页</a></li> </ul>',
+    'gopage' => '<option value="/SellerGoodsManage/goods_all/p/1.html" selected>第 1 页</option><option value="/SellerGoodsManage/goods_all/p/2.html" >第 2 页</option><option value="/SellerGoodsManage/goods_all/p/3.html" >第 3 页</option><option value="/SellerGoodsManage/goods_all/p/4.html" >第 4 页</option>',
+    'total' => '共 51 条记录 / 共 4 页',
+  ),
+  'pageinfo' => 
+  array (
+    'pagesize' => '15',
+    'p' => 1,
+    'count' => '51',
+    'page' => 4,
+  ),
+)
+array (
+  'allpage' => 4,
+  'sql' => 'SELECT `id`,`atime`,`uptime`,`category_id`,`shop_category_id`,`goods_name`,`images`,`price`,`num`,`sale_num`,`score_ratio`,`code`,`is_best`,`status`,`express_tpl_id`,`score_ratio`,`is_collection`,`score_type` FROM `ylh_goods` WHERE `seller_id` = \'744535\' AND `status` = \'1\' ORDER BY id desc ,id desc LIMIT 0,15  ',
+  'list' => 
+  array (
+    0 => 
+    array (
+      'id' => '19694',
+      'atime' => '2017-09-21 16:29:02',
+      'uptime' => '2017-11-03 14:44:59',
+      'category_id' => '100842045',
+      'shop_category_id' => '0',
+      'goods_name' => '2017春秋中长款连帽男士休闲夹克衫韩版修身潮流衣服青年男装外套',
+      'images' => 'http://img.alicdn.com/bao/uploaded/i2/2148153413/TB1t4hlSVXXXXasXFXXXXXXXXXX_!!0-item_pic.jpg',
+      'price' => '2000.00',
+      'num' => '200',
+      'sale_num' => '0',
+      'score_ratio' => '0.00',
+      'code' => '',
+      'is_best' => '0',
+      'status' => '1',
+      'express_tpl_id' => '440',
+      'is_collection' => '2',
+      'score_type' => '1',
+      'attr_list' => 
+      array (
+        0 => 
+        array (
+          'id' => '75252',
+          'detail_url' => '/Goods/view/id/75252.html',
+        ),
+      ),
+    ),
+    1 => 
+    array (
+      'id' => '19693',
+      'atime' => '2017-09-21 15:32:13',
+      'uptime' => '2017-09-21 15:32:21',
+      'category_id' => '100845550',
+      'shop_category_id' => '0',
+      'goods_name' => '真维斯t恤男长袖圆领 2017秋装新款男士潮流字母印花纯棉修身衣服',
+      'images' => 'http://img.alicdn.com/bao/uploaded/i1/289268212/TB1t8eRfeALL1JjSZFjXXasqXXa_!!0-item_pic.jpg',
+      'price' => '75.90',
+      'num' => '10',
+      'sale_num' => '0',
+      'score_ratio' => '1.00',
+      'code' => '',
+      'is_best' => '0',
+      'status' => '1',
+      'express_tpl_id' => '317',
+      'is_collection' => '2',
+      'score_type' => '1',
+      'attr_list' => 
+      array (
+        0 => 
+        array (
+          'id' => '75250',
+          'detail_url' => '/Goods/view/id/75250.html',
+        ),
+      ),
+    ),
+    2 => 
+    array (
+      'id' => '19691',
+      'atime' => '2017-09-21 15:19:06',
+      'uptime' => '2017-09-21 15:25:36',
+      'category_id' => '100842045',
+      'shop_category_id' => '0',
+      'goods_name' => '2017春秋中长款连帽男士休闲夹克衫韩版修身潮流衣服青年男装外套',
+      'images' => 'http://img.alicdn.com/bao/uploaded/i2/2148153413/TB1t4hlSVXXXXasXFXXXXXXXXXX_!!0-item_pic.jpg',
+      'price' => '150.00',
+      'num' => '149',
+      'sale_num' => '1',
+      'score_ratio' => '0.00',
+      'code' => '',
+      'is_best' => '0',
+      'status' => '1',
+      'express_tpl_id' => '365',
+      'is_collection' => '2',
+      'score_type' => '4',
+      'attr_list' => 
+      array (
+        0 => 
+        array (
+          'id' => '75248',
+          'detail_url' => '/Goods/view/id/75248.html',
+        ),
+      ),
+    ),
+    3 => 
+    array (
+      'id' => '19690',
+      'atime' => '2017-09-20 14:06:40',
+      'uptime' => '2017-09-22 11:04:37',
+      'category_id' => '100843319',
+      'shop_category_id' => '100847658',
+      'goods_name' => '供货商现金测试商品3',
+      'images' => 'http://orxwhobqu.bkt.clouddn.com/FvNeo_pD7eD17pxIXp2RNAYz4Kw_',
+      'price' => '18.00',
+      'num' => '20',
+      'sale_num' => '0',
+      'score_ratio' => '0.50',
+      'code' => '',
+      'is_best' => '0',
+      'status' => '1',
+      'express_tpl_id' => '439',
+      'is_collection' => '0',
+      'score_type' => '2',
+      'attr_list' => 
+      array (
+        0 => 
+        array (
+          'id' => '75246',
+          'detail_url' => '/Goods/view/id/75246.html',
+        ),
+      ),
+    ),
+    4 => 
+    array (
+      'id' => '19689',
+      'atime' => '2017-09-20 14:04:23',
+      'uptime' => '2017-09-20 14:04:23',
+      'category_id' => '100843237',
+      'shop_category_id' => '100847658',
+      'goods_name' => '供货商现金测试商品2',
+      'images' => 'http://orxwhobqu.bkt.clouddn.com/FvNeo_pD7eD17pxIXp2RNAYz4Kw_',
+      'price' => '16.00',
+      'num' => '19',
+      'sale_num' => '0',
+      'score_ratio' => '1.00',
+      'code' => '',
+      'is_best' => '0',
+      'status' => '1',
+      'express_tpl_id' => '439',
+      'is_collection' => '0',
+      'score_type' => '2',
+      'attr_list' => 
+      array (
+        0 => 
+        array (
+          'id' => '75245',
+          'detail_url' => '/Goods/view/id/75245.html',
+        ),
+      ),
+    ),
+    5 => 
+    array (
+      'id' => '19687',
+      'atime' => '2017-09-20 11:57:40',
+      'uptime' => '2017-09-20 13:59:43',
+      'category_id' => '100842045',
+      'shop_category_id' => '100847658',
+      'goods_name' => '供货商银积分测试商品3',
+      'images' => 'http://orxwhobqu.bkt.clouddn.com/FvNeo_pD7eD17pxIXp2RNAYz4Kw_',
+      'price' => '240.00',
+      'num' => '14',
+      'sale_num' => '0',
+      'score_ratio' => '0.00',
+      'code' => '',
+      'is_best' => '0',
+      'status' => '1',
+      'express_tpl_id' => '439',
+      'is_collection' => '0',
+      'score_type' => '4',
+      'attr_list' => 
+      array (
+        0 => 
+        array (
+          'id' => '75243',
+          'detail_url' => '/Goods/view/id/75243.html',
+        ),
+      ),
+    ),
+    6 => 
+    array (
+      'id' => '19686',
+      'atime' => '2017-09-20 11:52:22',
+      'uptime' => '2017-09-20 13:59:10',
+      'category_id' => '100842045',
+      'shop_category_id' => '100847658',
+      'goods_name' => '供货商银积分测试商品2',
+      'images' => 'http://orxwhobqu.bkt.clouddn.com/FvNeo_pD7eD17pxIXp2RNAYz4Kw_',
+      'price' => '240.00',
+      'num' => '12',
+      'sale_num' => '5',
+      'score_ratio' => '0.00',
+      'code' => '',
+      'is_best' => '1',
+      'status' => '1',
+      'express_tpl_id' => '439',
+      'is_collection' => '0',
+      'score_type' => '4',
+      'attr_list' => 
+      array (
+        0 => 
+        array (
+          'id' => '75242',
+          'detail_url' => '/Goods/view/id/75242.html',
+        ),
+      ),
+    ),
+    7 => 
+    array (
+      'id' => '19685',
+      'atime' => '2017-09-20 11:47:54',
+      'uptime' => '2017-09-21 13:56:32',
+      'category_id' => '100842045',
+      'shop_category_id' => '100847658',
+      'goods_name' => '供货商金积分测试商品5',
+      'images' => 'http://orxwhobqu.bkt.clouddn.com/FvNeo_pD7eD17pxIXp2RNAYz4Kw_',
+      'price' => '140.00',
+      'num' => '15',
+      'sale_num' => '0',
+      'score_ratio' => '0.00',
+      'code' => '',
+      'is_best' => '0',
+      'status' => '1',
+      'express_tpl_id' => '439',
+      'is_collection' => '0',
+      'score_type' => '1',
+      'attr_list' => 
+      array (
+        0 => 
+        array (
+          'id' => '75241',
+          'detail_url' => '/Goods/view/id/75241.html',
+        ),
+      ),
+    ),
+    8 => 
+    array (
+      'id' => '19684',
+      'atime' => '2017-09-20 11:40:29',
+      'uptime' => '2017-09-20 11:40:29',
+      'category_id' => '100842045',
+      'shop_category_id' => '100847658',
+      'goods_name' => '供货商金积分测试商品4',
+      'images' => 'http://orxwhobqu.bkt.clouddn.com/FvNeo_pD7eD17pxIXp2RNAYz4Kw_',
+      'price' => '140.00',
+      'num' => '11',
+      'sale_num' => '0',
+      'score_ratio' => '0.00',
+      'code' => '',
+      'is_best' => '1',
+      'status' => '1',
+      'express_tpl_id' => '439',
+      'is_collection' => '0',
+      'score_type' => '1',
+      'attr_list' => 
+      array (
+        0 => 
+        array (
+          'id' => '75240',
+          'detail_url' => '/Goods/view/id/75240.html',
+        ),
+      ),
+    ),
+    9 => 
+    array (
+      'id' => '19683',
+      'atime' => '2017-09-20 11:39:24',
+      'uptime' => '2017-09-20 11:40:51',
+      'category_id' => '100842045',
+      'shop_category_id' => '100847658',
+      'goods_name' => '供货商金积分测试商品3',
+      'images' => 'http://orxwhobqu.bkt.clouddn.com/FvNeo_pD7eD17pxIXp2RNAYz4Kw_',
+      'price' => '120.00',
+      'num' => '10',
+      'sale_num' => '0',
+      'score_ratio' => '0.00',
+      'code' => '',
+      'is_best' => '1',
+      'status' => '1',
+      'express_tpl_id' => '439',
+      'is_collection' => '0',
+      'score_type' => '1',
+      'attr_list' => 
+      array (
+        0 => 
+        array (
+          'id' => '75239',
+          'detail_url' => '/Goods/view/id/75239.html',
+        ),
+      ),
+    ),
+    10 => 
+    array (
+      'id' => '19682',
+      'atime' => '2017-09-20 11:37:13',
+      'uptime' => '2017-09-20 11:37:13',
+      'category_id' => '100842045',
+      'shop_category_id' => '100847658',
+      'goods_name' => '供货商金积分测试商品2',
+      'images' => 'http://orxwhobqu.bkt.clouddn.com/FvNeo_pD7eD17pxIXp2RNAYz4Kw_',
+      'price' => '120.00',
+      'num' => '12',
+      'sale_num' => '0',
+      'score_ratio' => '0.00',
+      'code' => '',
+      'is_best' => '1',
+      'status' => '1',
+      'express_tpl_id' => '439',
+      'is_collection' => '0',
+      'score_type' => '1',
+      'attr_list' => 
+      array (
+        0 => 
+        array (
+          'id' => '75238',
+          'detail_url' => '/Goods/view/id/75238.html',
+        ),
+      ),
+    ),
+    11 => 
+    array (
+      'id' => '19681',
+      'atime' => '2017-09-20 09:53:10',
+      'uptime' => '2017-09-22 11:03:59',
+      'category_id' => '100843319',
+      'shop_category_id' => '100847658',
+      'goods_name' => '供货商现金测试商品1',
+      'images' => 'http://orxwhobqu.bkt.clouddn.com/FvNeo_pD7eD17pxIXp2RNAYz4Kw_',
+      'price' => '100.00',
+      'num' => '20',
+      'sale_num' => '0',
+      'score_ratio' => '2.00',
+      'code' => '',
+      'is_best' => '0',
+      'status' => '1',
+      'express_tpl_id' => '439',
+      'is_collection' => '0',
+      'score_type' => '2',
+      'attr_list' => 
+      array (
+        0 => 
+        array (
+          'id' => '75236',
+          'detail_url' => '/Goods/view/id/75236.html',
+        ),
+      ),
+    ),
+    12 => 
+    array (
+      'id' => '19680',
+      'atime' => '2017-09-20 09:51:08',
+      'uptime' => '2017-09-20 09:53:40',
+      'category_id' => '100843237',
+      'shop_category_id' => '100847658',
+      'goods_name' => '供货商银积分测试商品1',
+      'images' => 'http://orxwhobqu.bkt.clouddn.com/FvNeo_pD7eD17pxIXp2RNAYz4Kw_',
+      'price' => '1500.00',
+      'num' => '195',
+      'sale_num' => '5',
+      'score_ratio' => '0.00',
+      'code' => '',
+      'is_best' => '1',
+      'status' => '1',
+      'express_tpl_id' => '439',
+      'is_collection' => '0',
+      'score_type' => '4',
+      'attr_list' => 
+      array (
+        0 => 
+        array (
+          'id' => '75234',
+          'detail_url' => '/Goods/view/id/75234.html',
+        ),
+      ),
+    ),
+    13 => 
+    array (
+      'id' => '19679',
+      'atime' => '2017-09-19 16:26:34',
+      'uptime' => '2017-09-22 09:55:39',
+      'category_id' => '100842045',
+      'shop_category_id' => '100847658',
+      'goods_name' => '供货商金积分测试商品1',
+      'images' => 'http://orxwhobqu.bkt.clouddn.com/FvNeo_pD7eD17pxIXp2RNAYz4Kw_',
+      'price' => '1000.00',
+      'num' => '191',
+      'sale_num' => '9',
+      'score_ratio' => '0.00',
+      'code' => '',
+      'is_best' => '0',
+      'status' => '1',
+      'express_tpl_id' => '439',
+      'is_collection' => '0',
+      'score_type' => '1',
+      'attr_list' => 
+      array (
+        0 => 
+        array (
+          'id' => '75232',
+          'detail_url' => '/Goods/view/id/75232.html',
+        ),
+      ),
+    ),
+    14 => 
+    array (
+      'id' => '19678',
+      'atime' => '2017-09-14 11:49:35',
+      'uptime' => '2017-09-21 15:05:01',
+      'category_id' => '100842045',
+      'shop_category_id' => '100847658',
+      'goods_name' => '测试商品5',
+      'images' => 'http://orxwhobqu.bkt.clouddn.com/FqB_XE1pKa0yIhRDyowOIJ3-lPxs',
+      'price' => '75.00',
+      'num' => '197',
+      'sale_num' => '3',
+      'score_ratio' => '0.00',
+      'code' => '123123',
+      'is_best' => '0',
+      'status' => '1',
+      'express_tpl_id' => '437',
+      'is_collection' => '0',
+      'score_type' => '4',
+      'attr_list' => 
+      array (
+        0 => 
+        array (
+          'id' => '75230',
+          'detail_url' => '/Goods/view/id/75230.html',
+        ),
+      ),
+    ),
+  ),
+  'listnum' => 15,
+  'allnum' => '51',
+  'page' => 
+  array (
+    'page' => '<ul class="pagination">  <li class="active"><span class="current">1</span></li><li><a class="num" href="/SellerGoodsManage/goods_all/p/2.html">2</a></li><li><a class="num" href="/SellerGoodsManage/goods_all/p/3.html">3</a></li><li><a class="num" href="/SellerGoodsManage/goods_all/p/4.html">4</a></li> <li><a class="next" href="/SellerGoodsManage/goods_all/p/2.html">下一页</a></li> </ul>',
+    'gopage' => '<option value="/SellerGoodsManage/goods_all/p/1.html" selected>第 1 页</option><option value="/SellerGoodsManage/goods_all/p/2.html" >第 2 页</option><option value="/SellerGoodsManage/goods_all/p/3.html" >第 3 页</option><option value="/SellerGoodsManage/goods_all/p/4.html" >第 4 页</option>',
+    'total' => '共 51 条记录 / 共 4 页',
+  ),
+  'pageinfo' => 
+  array (
+    'pagesize' => '15',
+    'p' => 1,
+    'count' => '51',
+    'page' => 4,
+  ),
+)

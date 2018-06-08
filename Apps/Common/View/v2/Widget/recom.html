@@ -1,0 +1,67 @@
+<div class="mb20">
+	<div class="min_tle mb10">
+		<div class="solid_b pt40"></div>
+		<div class="clearfix mt-15">
+			<span class="fl pr15 bg_white fs16">为你推荐</span>
+			<a class="fr pl15 bg_white mt3" href="javascript:;" onclick="changeHotGoods()">换一批 <i class="fa fa-refresh"></i></a>
+		</div>	
+	</div>
+	<div class="row mlr-7" id="changeHotGoods" style="min-height:300px;">
+		<notempty name="data.code">
+			{:W('Common/Builder/nors', array('param' => array('text' => $data['msg'])))}
+		<else />
+			<volist name="data" id="vo" offset="1" length='5'>
+				<a target="_blank" class="col_5 db plr7" href="{:DM('item')}{:U('/index/index', ['id' => $vo['attr_list'][0]['id']])}">
+					<div class="bor_hover over">
+						<img width="225" data-original="{:myurl($vo['images'], 225)}">
+						<p class="text_44 plr5 mt5 mb0 h34 over">{$vo.goods_name}</p>
+						<h4 class="mt5 text_red plr5">￥{$vo.price} <span class="fr text_77 fs12 mt3">销量：{$vo.sale_num}</span></h4>
+					</div>						
+				</a>
+			</volist>
+		</notempty>
+	</div>	
+</div>
+<script>
+
+function changeHotGoods(){
+	var ac = '{:enCryptRestUri("/Index/recom")}';
+	ajax_post({
+		url: '/run',
+		data:{
+			imgsize:225,
+		},
+		headers:{Action:ac},
+	},function(ret){
+		
+		if(ret.code == 1){
+			var html = '';
+			var data = ret.data;
+			
+			var url = '{:DM("item")}{:U("/goods",[],false)}';
+			for(i = 0; i< 5; i++){
+				html += '<a target="_blank" class="col_5 db plr7" href="' + url + '/' + data[i].attr_list[0].id +'.html">';
+				html += '<div class="bor_hover over">';
+				html += '<img width="225" height="225" src="' + data[i].images + '" />';
+				html += '<p class="text_44 plr5 mt5 mb0 h34 over">' + data[i].goods_name + '</p>';
+				html += '<h4 class="mt5 text_red plr5">￥' + data[i].price + ' <span class="fr text_77 fs12 mt3">销量：' + data[i].sale_num + '</span></h4>';
+				html += '</div></a>';
+			}
+			$('#changeHotGoods').html(html);
+		}
+	});
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>

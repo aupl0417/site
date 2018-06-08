@@ -1,0 +1,75 @@
+<include file="Public:header" />
+		<div class="page-group">
+			<div class="page" id="page-goods-content">
+				<!-- 标题栏 -->
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left back" href="/"></a>
+					<h1 class="title"><a href="/Goods/view/id/{$_GET.id}" class="mr1">商品</a> <a href="/Goods/content/id/{$_GET.id}/goods_id/{$_GET.goods_id}" class="mr1">详情</a> <a class="hide" href="/Goods/rate/id/{$_GET.id}/goods_id/{$_GET.goods_id}">评价</a></h1>
+					<a class="icon iconfont icon-category pull-right ml5 ac-menu" onclick="top_menu()"></a>
+				</header>
+
+				<!-- 浮动导航 -->
+				<include file="Public:fixed-menu" />
+				
+				<!-- 这里是页面内容区 -->
+				<div class="content native-scroll">
+					<div class="buttons-tab fixed-bar">
+						<a href="#tab1" class="tab-link button active">图文</a>
+						<a href="#tab2" class="tab-link button">参数</a>
+						<a href="#tab3" class="tab-link button">包装</a>
+						<a href="#tab4" class="tab-link button">售后</a>
+					</div>
+					<div class="clearfix" style="height: 2rem;"></div>
+					<div class="tabs">
+						<div class="tab active img-block" id="tab1">	
+							<notempty name="rs.content.images_album">
+							<volist name="rs.content.images_album" id="vo">
+								<div align="center">								
+									<img class="lazyload" data-sizes="auto" data-src="{$vo}" src="../Public/images/nopic.gif">
+								</div>
+							</volist>
+							<else />
+								<div class="nors text-center">
+									<div><i class="iconfont icon-sousuowujieguo ft3"></i></div>
+									 暂无图片介绍！
+								</div>
+							</notempty>
+						</div>
+						
+						<div class="tab img-block" id="tab2">	
+							<volist name="rs.param" id="vo">
+								<div class="content-block-title">{$vo.group_name}</div>
+								<div class="list-block">
+									<ul>
+										<volist name="vo.param" id="item">
+										<li class="item-content">
+											<div class="item-inner">
+												<div class="item-title">{$item.param_name}</div>
+												<div class="item-after" style="max-width: 70%;">{$item.param_value}</div>
+											</div>
+										</li>
+										</volist>
+									</ul>
+								</div>							
+							</volist>
+						</div>
+						
+						<div class="tab img-block" id="tab3">	
+							<div class="m5">{$rs.package.content|html_entity_decode}</div>
+						</div>
+						
+						<div class="tab img-block" id="tab4">	
+							<div class="m5">{$rs.protection.content|html_entity_decode}</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		
+		
+		</div>	
+		
+		
+
+<include file="Public:script" />
+<include file="Public:footer" />

@@ -1,0 +1,159 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			秒杀
+		</div>
+		<div class="r">
+		</div>
+	</div>
+</header>
+
+<section>
+	<div class="timebar">
+		<div class="timebar-scroller">
+			<ul>
+				<volist name="times" id="vo">
+				<li class="{$this_time==$vo['time']?'active':''}" onclick="miaosha($(this))" data-day="{$this_day}" data-time="{$vo.time}">
+					<div class="time">{$vo.time}</div>
+					<div class="text">{$vo.status_name}</div>
+				</li>
+				</volist>
+			</ul>
+		</div>
+	</div>
+	
+	<div class="line-box nobg noicon row">
+		<div class="col-50">限时限量 疯狂抢购</div>
+		<div class="col-50 text-right timedec">
+			<div id="clock" class="activity_clock"></div>
+			<div class="activity_text hide">即将开抢</div>
+			<div class="activity_begin hide">已开抢</div>
+		</div>
+	</div>
+	
+	<div class="activity-box">
+		<div class="goods_scroller">
+			
+		</div>
+	</div>
+</section>
+
+<script id="tpl_activity_goods" type="text/html">
+<% for(i=0;i<data.length;i++){ %>
+	<div class="line-box hover noicon" >
+		<div class="ft16"><%= data[i].floor_name %></div>
+	</div>
+	<% if(data[i].goods){ %>
+	<% for(j=0;j<data[i].goods.length;j++){ %>
+	<div class="line-box-m row noicon" onclick="openWin({name:'goods_view',url:'<%= data[i].goods[j].url %>'})">
+		<div class="col-20">
+			<img src="<%= data[i].goods[j].images[0] %>" alt="<%= data[i].goods[j].goods.goods_name %>">
+		</div>
+		<div class="col-80">
+			<div  class="pl10">
+				<div class="lh2-18px md5"><%= data[i].goods[j].goods.goods_name %></div>
+				<div class="row">
+					<div class="col-50">
+						<div class="ft16 text-danger">￥<%= data[i].goods[j].price %></div>
+						<del class="text-gray">￥<%= data[i].goods[j].goods_attr_list.price %></del>
+					</div>
+					<div class="col-50 text-right">
+						<div class="btn btn-xs btn-danger btn-trans">立即抢购</div>
+						
+						<div class="text-gray" style="padding-right:10px">已抢 <%= data[i].goods[j].sale_num %> 件</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+	<% } %>
+	<% }else{ %>
+	<div class="line-box hover noicon" >
+		<div class="ft16 text-center">该分类暂无商品</div>
+	</div>
+	<% } %>
+<% } %>
+</script>
+<script>
+
+	fixBar(1);
+	myScroll = new IScroll('.timebar', { scrollX: true, scrollY: false ,click:true,eventPassthrough: true,preventDefault: false,startX:-(100*{$offset})});
+	
+	//用于iscrllo指高度
+	var section_height = $('.page.active section').height();
+	var activity_height=section_height - 60 -45;
+	$('.page.active .activity-box').css({height:activity_height+'px'});	
+	
+	ajax_post({
+		url:'/Api/api',
+		data:{apiurl:'/Miaosha/miaosha'},
+	},function(ret){
+		console.log(ret);
+		if(ret.code==1){	
+			var html = template('tpl_activity_goods',{data:ret.data});
+			$('.page.active .goods_scroller').html(html);
+		}else if(ret.code==3){
+			$('.page.active .goods_scroller').html(no_data_text);
+		}
+	});
+	
+	function miaosha(obj){
+		var d = obj.data();	
+		obj.addClass('active').siblings().removeClass('active');
+		var str1 = d.time.substring(0,2);
+		var str2 = '{$this_time}'.substring(0,2);
+		if(d.time=='{$this_time}'){
+			$(".activity_text").addClass('hide');
+			$(".activity_begin").addClass('hide');
+			$(".activity_clock").removeClass('hide');
+		}else if(str1>str2){
+			$(".activity_clock").addClass('hide');
+			$(".activity_begin").addClass('hide');
+			$(".activity_text").removeClass('hide');
+		}else{
+			$(".activity_clock").addClass('hide');
+			$(".activity_text").addClass('hide');
+			$(".activity_begin").removeClass('hide');
+		}
+		
+		ajax_post({
+			url:'/Api/api',
+			data:{apiurl:'/Miaosha/miaosha',day:d.day,time:d.time},
+		},function(ret){
+			if(ret.code==1){	
+				var html = template('tpl_activity_goods',{data:ret.data});
+				$('.page.active .goods_scroller').html(html);
+			}else if(ret.code==3){
+				$('.page.active .goods_scroller').html(no_data_text);
+			}
+		});
+	}
+	
+
+	//延迟使用iscrllo,否则会失败
+	setTimeout(function(){
+		myScroll = new IScroll('.activity-box', { 
+			scrollbars: true,
+			mouseWheel: true,
+			click:true,
+			interactiveScrollbars: true,
+			shrinkScrollbars: 'scale',
+			fadeScrollbars: true
+		});	
+	},500);
+	
+	<gt name="time_dif" value="0">
+	$(function(){
+		var twoDaysFromNow2 = new Date().valueOf() + {$time_dif} * 1000;
+
+		$('.activity_clock').countdown(twoDaysFromNow2, function(event) {
+		  var totalHours = event.offset.totalDays * 24 + event.offset.hours;
+		  $(this).html(event.strftime('<span>'+totalHours + '</span> : <span>%M</span> : <span>%S</span>'));
+		});
+	})
+	</gt>
+</script>

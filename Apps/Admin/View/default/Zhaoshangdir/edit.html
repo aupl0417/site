@@ -1,0 +1,47 @@
+<include file="Public:header" />
+<include file="nav" title="修改记录" />
+<div class="m20 p20 bg-white">
+
+	<form class="form-horizontal vform" id="formadd" name="formadd" data-url="__URL__/edit_save">
+		{:W('Widget/form',array($fcfg['id'],$rs))}
+
+		<input type="hidden" name="id" value="{$rs.id}">
+        <div class="clearfix md70"></div>
+		<div class="navbar-fixed-bottom border-t">
+			<div class="p10 bg-white-50 text-center">
+				<button type="button" class="btn btn-lg btn-rad btn-trans btn-default" onclick="back()"><i class="fa fa-mail-reply"></i> 返回</button>
+				<button type="submit" class="btn btn-lg btn-rad btn-trans btn-primary"><i class="fa fa-check"></i> 提交</button>					
+			</div>
+		</div>		
+		<div class="hide vform-action"></div>
+	</form>
+	<div class="clearfix"></div>
+</div>
+
+
+<include file="Public:copyright" />
+<include file="Public:js" />
+
+<script>
+iCheckClass();
+checkform({
+	formid:'#formadd',
+},function(ret){
+	valert(ret);
+	if(ret.status=='success'){
+		setTimeout(function(){
+			back();
+		},1000);
+
+	}	
+});
+
+var id={$rs.id};
+$('.tab-content .tab-pane').eq(1).html(loading).load('__URL__/cred/cid/'+id+'/index/'+1);
+$('.tab-content .tab-pane').eq(2).html(loading).load('__URL__/cred/cid/'+id+'/index/'+2);
+$('.tab-content .tab-pane').eq(3).html(loading).load('__URL__/cred/cid/'+id+'/index/'+3);
+$('.tab-content .tab-pane').eq(4).html(loading).load('__URL__/cred/cid/'+id+'/index/'+4);
+$('.tab-content .tab-pane').eq(5).html(loading).load('__URL__/cred/cid/'+id+'/index/'+5);
+
+</script>
+<include file="Public:footer" />

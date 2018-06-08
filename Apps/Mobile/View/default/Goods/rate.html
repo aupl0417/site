@@ -1,0 +1,226 @@
+<include file="Public:header" />
+		<div class="page-group">
+			<div class="page" id="page-goods-rate" data-goods_id="{$_GET.goods_id}">
+				<!-- 标题栏 -->
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left back" href="/"></a>
+					<h1 class="title"><a href="/Goods/view/id/{$_GET.id}" class="mr1">商品</a> <a href="/Goods/content/id/{$_GET.id}/goods_id/{$_GET.goods_id}" class="mr1">详情</a> <a href="/Goods/rate/id/{$_GET.id}/goods_id/{$_GET.goods_id}">评价</a></h1>
+					<a class="icon iconfont icon-category pull-right ml5 ac-menu" onclick="top_menu()"></a>
+				</header>
+
+				<!-- 浮动导航 -->
+				<include file="Public:fixed-menu" />
+				
+				<!-- 这里是页面内容区 -->
+				<div class="content native-scroll">
+					<div class="buttons-tab rate-tabs fixed-bar">
+						<a href="#tab1" class="tab-link button active">
+							全部
+							<div class="count">{$count.rate_num|intval}</div>
+						</a>
+						<a href="#tab2" class="tab-link button">
+							好评
+							<div class="count">{$count.rate_good|intval}</div>
+						</a>
+						<a href="#tab3" class="tab-link button">
+							中评
+							<div class="count">{$count.rate_middle|intval}</div>
+						</a>
+						<a href="#tab4" class="tab-link button">
+							差评
+							<div class="count">{$count.rate_bad|intval}</div>
+						</a>
+					</div>
+					<div class="clearfix" style="height: 2.5rem;"></div>
+					<div class="tabs">
+						<div class="tab active img-block infinite-scroll" id="tab1" data-page_num="{$pagelist.pageinfo.page}">	
+							<input type="hidden" id="p" name="p" value="2" />
+							<notempty name="pagelist.list">							
+							<div class="list-block rate-list">						
+								<ul class="list-container">							
+									<volist name="pagelist.list" id="vo">
+									<li class="rate-content item-link">
+										<div class="face">
+											<img class="lazyload img-circle border-1px" data-sizes="auto" data-src="{:myurl($vo['user']['face'],50)}" alt="头像" src="../Public/images/nopic.gif" width="50" height="50">
+										</div>
+										<div class="rate-info">
+											<div class="pull-right"><img src="../Public/images/rate_{$vo.rate}.png" alt="评价等级"></div>
+											<div class="nick">{$vo.user.nick}</div>
+											<div class="rate-text">{$vo.content|strip_tags}</div>
+											<div class="time">{$vo.orders_goods.attr_name}</div>
+											<div class="time">{$vo.atime}</div>
+											
+											<notempty name="vo.images">
+												<div class="row">
+													<volist name="vo.images" id="img">
+													<div class="col-20">
+														<img class="lazyload" data-sizes="auto" data-src="{:myurl($img,200)}" alt="晒图" src="../Public/images/nopic.gif" width="100%">
+													</div>
+													</volist>
+												</div>
+											</notempty>
+										</div>
+									</li>
+									</volist>
+								</ul>		
+							</div>
+							<!-- 加载提示符 -->
+							<div class="infinite-scroll-preloader">
+								<div class="preloader">
+								</div>
+							</div>
+							
+							<else />
+								<div class="nors text-center">
+									<div><i class="iconfont icon-chaping ft3"></i></div>
+									 暂无评价！
+								</div>
+							</notempty>
+						</div>
+						
+						<!--好评-->
+						<div class="tab img-block infinite-scroll" id="tab2" data-page_num="{$rate_good.pageinfo.page}">	
+							<input type="hidden" id="p" name="p" value="2" />
+							<notempty name="rate_good.list">							
+							<div class="list-block rate-list">						
+								<ul class="list-container">							
+									<volist name="rate_good.list" id="vo">
+									<li class="rate-content item-link">
+										<div class="face">
+											<img class="lazyload img-circle border-1px" data-sizes="auto" data-src="{:myurl($vo['user']['face'],50)}" alt="头像" src="../Public/images/nopic.gif" width="50" height="50">
+										</div>
+										<div class="rate-info">
+											<div class="pull-right"><img src="../Public/images/rate_{$vo.rate}.png" alt="评价等级"></div>
+											<div class="nick">{$vo.user.nick}</div>
+											<div class="rate-text">{$vo.content|strip_tags}</div>
+											<div class="time">{$vo.orders_goods.attr_name}</div>
+											<div class="time">{$vo.atime}</div>
+											<notempty name="vo.images">
+												<div class="row">
+													<volist name="vo.images" id="img">
+													<div class="col-20">
+														<img class="lazyload" data-sizes="auto" data-src="{:myurl($img,200)}" alt="晒图" src="../Public/images/nopic.gif" width="100%">
+													</div>
+													</volist>
+												</div>
+											</notempty>											
+										</div>
+									</li>
+									</volist>
+								</ul>		
+							</div>
+							<!-- 加载提示符 -->
+							<div class="infinite-scroll-preloader">
+								<div class="preloader">
+								</div>
+							</div>
+							
+							<else />
+								<div class="nors text-center">
+									<div><i class="iconfont icon-chaping ft3"></i></div>
+									 暂无评价！
+								</div>
+							</notempty>
+						</div>
+						
+						<!--中评-->
+						<div class="tab img-block infinite-scroll" id="tab3" data-page_num="{$rate_middle.pageinfo.page}">	
+							<input type="hidden" id="p" name="p" value="2" />
+							<notempty name="rate_middle.list">							
+							<div class="list-block rate-list">						
+								<ul class="list-container">							
+									<volist name="rate_middle.list" id="vo">
+									<li class="rate-content item-link">
+										<div class="face">
+											<img class="lazyload img-circle border-1px" data-sizes="auto" data-src="{:myurl($vo['user']['face'],50)}" alt="头像" src="../Public/images/nopic.gif" width="50" height="50">
+										</div>
+										<div class="rate-info">
+											<div class="pull-right"><img src="../Public/images/rate_{$vo.rate}.png" alt="评价等级"></div>
+											<div class="nick">{$vo.user.nick}</div>
+											<div class="rate-text">{$vo.content|strip_tags}</div>
+											<div class="time">{$vo.orders_goods.attr_name}</div>
+											<div class="time">{$vo.atime}</div>
+											<notempty name="vo.images">
+												<div class="row">
+													<volist name="vo.images" id="img">
+													<div class="col-20">
+														<img class="lazyload" data-sizes="auto" data-src="{:myurl($img,200)}" alt="晒图" src="../Public/images/nopic.gif" width="100%">
+													</div>
+													</volist>
+												</div>
+											</notempty>											
+										</div>
+									</li>
+									</volist>
+								</ul>		
+							</div>
+							<!-- 加载提示符 -->
+							<div class="infinite-scroll-preloader">
+								<div class="preloader">
+								</div>
+							</div>
+							
+							<else />
+								<div class="nors text-center">
+									<div><i class="iconfont icon-chaping ft3"></i></div>
+									 暂无评价！
+								</div>
+							</notempty>							
+						</div>
+						
+						<!--差评-->
+						<div class="tab img-block infinite-scroll" id="tab4" data-page_num="{$rate_bad.pageinfo.page}">	
+							<input type="hidden" id="p" name="p" value="2" />
+							<notempty name="rate_bad.list">							
+							<div class="list-block rate-list">						
+								<ul class="list-container">							
+									<volist name="rate_bad.list" id="vo">
+									<li class="rate-content item-link">
+										<div class="face">
+											<img class="lazyload img-circle border-1px" data-sizes="auto" data-src="{:myurl($vo['user']['face'],50)}" alt="头像" src="../Public/images/nopic.gif" width="50" height="50">
+										</div>
+										<div class="rate-info">
+											<div class="pull-right"><img src="../Public/images/rate_{$vo.rate}.png" alt="评价等级"></div>
+											<div class="nick">{$vo.user.nick}</div>
+											<div class="rate-text">{$vo.content|strip_tags}</div>
+											<div class="time">{$vo.orders_goods.attr_name}</div>
+											<div class="time">{$vo.atime}</div>
+											<notempty name="vo.images">
+												<div class="row">
+													<volist name="vo.images" id="img">
+													<div class="col-20">
+														<img class="lazyload" data-sizes="auto" data-src="{:myurl($img,200)}" alt="晒图" src="../Public/images/nopic.gif" width="100%">
+													</div>
+													</volist>
+												</div>
+											</notempty>											
+										</div>
+									</li>
+									</volist>
+								</ul>		
+							</div>
+							<!-- 加载提示符 -->
+							<div class="infinite-scroll-preloader">
+								<div class="preloader">
+								</div>
+							</div>
+							
+							<else />
+								<div class="nors text-center">
+									<div><i class="iconfont icon-chaping ft3"></i></div>
+									 暂无评价！
+								</div>
+							</notempty>							
+						</div>
+					</div>
+
+				</div>
+			</div>
+		
+		
+		</div>	
+		
+		
+
+<include file="Public:script" />
+<include file="Public:footer" />

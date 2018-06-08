@@ -1,0 +1,43 @@
+			{:W('Widget/listable',array(array(
+				'data'	=>$pagelist['list'],
+				'items'	=>array(
+					array(
+						'title'		=>'ID',
+						'field'		=>'id',
+						'td_attr'		=>'width="80" class="text-center"',
+					),
+					array(
+						'title'		=>'选择',
+						'type'		=>'html',
+						'html'		=>'<input type="checkbox" class="i-red-square" name="id[]" id="id[]" value="[id]">',
+						'td_attr'	=>'width="60" class="text-center"',
+						'norder'	=>1,
+					),
+					array(
+						'title'		=>'模板名称',
+						'field'		=>'tpl_name',
+					),
+					array(
+						'title'		=>'数据表',
+						'field'		=>'tables',
+					),
+					array(
+						'title'		=>'备注',
+						'field'		=>'remark',
+					),				
+					array(
+						'title'		=>'时间',
+						'field'		=>'atime',
+						'td_attr'	=>'width="200" class="text-center"',
+						'attr'		=>'class="text-gray"',
+					),	
+					array(
+						'title'		=>'操作',
+						'type'		=>'html',
+						'norder'	=>1,
+						'td_attr'	=>'class="text-center" width="80"',
+						'html'		=>'<a href="__CONTROLLER__/formtpl_view/id/[id]" class="btn btn-sm btn-info btn-rad btn-trans btn-block m0">修改</a> <a href="__CONTROLLER__/export/id/[id]" class="btn btn-sm btn-default btn-rad btn-trans btn-block m0">导出</a>',
+					),					
+					
+				),
+			)))}

@@ -1,0 +1,425 @@
+<extend name="Seller@Public:base" />
+<block name="body">
+    <div class="centent_body">
+        <!-- to do your html codeing -->
+        <div class="revision_bg">
+            <div class="container ptb_size_lg clearfix">
+                <!-- 左侧导航 -->
+                <include file="Supplier:sideNav" />
+                <!-- 左侧导航结束 -->
+
+                <div class="revisionRight pd15" style="width: 1020px;"><!-- 右侧内容 -->
+
+                    <div class="clearfix revisionOrderTab sid-active" data-sid="{$Think.get.sid}">
+                        <a class="orderOption" data-sid="" href="{:U('/SupplierOrders')}">所有订单</a>
+                        <a class="orderOption" data-sid="1" href="{:U('/SupplierOrders/index', ['sid' => 1])}">待付款</a>
+                        <a class="orderOption" data-sid="2" href="{:U('/SupplierOrders/index', ['sid' => 2])}">待发货</a>
+                        <a class="orderOption" data-sid="3" href="{:U('/SupplierOrders/index', ['sid' => 3])}">已发货</a>
+                        <a class="orderOption" data-sid="4" href="{:U('/SupplierOrders/index', ['sid' => 4])}">已收货</a>
+                        <a class="orderOption hide" data-sid="5" href="{:U('/SupplierOrders/index', ['sid' => 5])}">已评价</a>
+                        <div class="fr ml40 mb0" style="width:350px">
+                            <form class="form-horizontal" role="form" method="get">
+                                <input type="hidden" name="p" value="1"/>
+                                <div class="input-group mb0">
+                                    <input type="text" class="form-control" name="s_no" placeholder="输入订单号搜索">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-primary" type="submit">搜索</button>
+                                    </span>
+                                    <span class="input-group-btn">
+                                        <button id="hige_search" class="btn btn-default" type="button">
+                                            高级搜索<i class="fa fa-angle-down ml5"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="row mt30 dn" id="search_dn" style="border-bottom: solid 1px #F8F8F8">
+                            <form class="form-horizontal" role="form" method="get">
+                                <input type="hidden" name="p" value="1"/>
+                                <div class="col-md-4 col-sm-4">
+                                    <div class="col-sm-12">
+                                        <div class="form-group mt0">
+                                            <input type="input" class="form-control" name="goods_name" id="goods_name" placeholder="请输入商品名称">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-sm-8">
+                                    <div class="col-sm-3">
+                                        <div class="input-group">
+                                            <input type="input" class="form-control" name="nick" id="nick" placeholder="请输入买家昵称">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="input-group date datetime" data-min-view="2" data-date-format="yyyy-mm-dd" style="">
+                                            <input name="sday" data-filter="gte" class="form-control form-filter" readonly="sday" id="sday" type="text" placeholder="下单开始时间">
+                                            <span class="input-group-addon btn default">
+                                                <span class="glyphicon glyphicon-th fa fa-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="input-group date datetime" data-min-view="2" data-date-format="yyyy-mm-dd" style="">
+                                            <input name="eday" data-filter="gte" class="form-control form-filter" readonly="eday" id="eday" type="text" placeholder="下单结束时间">
+                                            <span class="input-group-addon btn default">
+                                                <span class="glyphicon glyphicon-th fa fa-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <button type="submit" class="btn btn-rad btn-trans btn-primary ">搜索订单</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <table class="no-border mb20 bg_f1"><!-- 类型说明 -->
+                        <tbody class="no-border-y">
+                        <tr class="text-center">
+                            <td width="75%" style="padding:0">
+                                <table class="no-border">
+                                    <tbody class="no-border-y">
+                                    <td width="13%" class="text-left">
+                                        <form class="hide" action="{:U('/SupplierOrders/outExcel')}" method="post">
+                                            <!--<input type="checkbox" id="checkedAll" class="i-red-square">-->
+                                            <input type="hidden" name="goods_id" id="checkedIds">
+                                            <a id="importOrders" class="btn btn-sm btn-primary btn-rad btn-trans ml5">导出</a>
+                                            <input type="submit" id="outExcelSubmit" class="dn">
+                                        </form>
+                                    </td>
+                                    <td width="30%">商品信息</td>
+                                    <td width="12%">单价</td>
+                                    <td width="10%">数量</td>
+                                    <td width="12%">实付款</td>
+                                    <!--<td width="18%">奖励积分</td>-->
+                                    </tbody>
+                                </table>
+                            </td>
+                            <td width="13%">状态</td>
+                            <td width="12%">操作</td>
+                        </tr>
+                        </tbody>
+                    </table><!-- 类型说明结束 -->
+
+                    <empty name="data.list">
+                        {:W('Common/Builder/nors', array('param' => array('text' => $data['msg'])))}
+                        <else />
+                        <volist name="data.list" id="vo">
+                            <table class="revisionTable table"><!-- 订单信息 -->
+                                <notempty name="vo.activity">
+                                    <div class="pd10" style="background:#fff3f4;color:#cc0000;">
+                                        参与促销活动：
+                                        <span class="ml15">
+                                            <volist name="vo.activity" id="ac">
+                                                <switch name="ac.type_id">
+                                                    <case value="2">
+                                                        {$key + 1}、<span class="text_yellow">满 {$ac.full_money} 送 </span>
+                                                        <volist name="ac.goods" id="ag">
+                                                            <a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', ['id' => $ag['attr_list'][0]['id']])}">
+                                                                <img src="{$ag.images}" width="40px" />
+                                                            </a>
+                                                        </volist>
+                                                    </case>
+                                                    <default />
+                                                    {$key + 1}、<span class="text_yellow mr10">{$ac.remark}</span>
+                                                </switch>
+                                            </volist>
+                                        </span>
+                                    </div>
+                                </notempty>
+                                <tbody class="bg_white">
+                                <tr class="strong">
+                                    <td class="bg_f1" colspan="3">
+                                        <input type="checkbox" name="ids[]" value="{$vo['id']}" class="i-red-square ids">
+                                        <span class="mr20 ml10"><span class="text_f1">订单号：</span>{$vo.s_no}</span>
+                                        <!--<span class="mr20">{$vo.shop.shop_name} <span class="text_f1">{$vo.atime}</span></span>-->
+                                        <span class="text_f1 mr20">{$vo.atime}</span>
+                                        <span class="mr20" style="display:inline-block">
+										<a class="text_44 hide" target="_blank" href="{:DM('oauth2')}{:U('Im/check',['receiver' => $vo['buyer']['nick']])}"><img class="mr5" width="12" src="/Public/images/icon-im.png">{$vo.buyer.nick}</a>
+                                            {$vo.buyer.nick}
+									</span>
+                                        <div data-popover="popover" data-original-title="订单备注" data-content="{$vo.seller_remark|default='点击添加备注'}" data-placement="left" data-trigger="hover" class="pull-right {$vo['seller_remark_color']?$vo['seller_remark_color']:'text-gray'}" style="cursor:pointer;"><i class="fa fa-flag" title="备注" onclick="vmodal({title:'备注',url:'/Orders/remark_add/s_no/{$vo.s_no}',width:'700px'})"></i></div>
+                                        <span class="fr text_yellow mr20">总额：<img class="icon-price" src="/Public/images/icon_{$vo.orders_goods.0.score_type}.png"> {$vo.pay_price}</span>
+                                    </td>
+                                </tr>
+                                <tr class="text-center">
+                                    <td style="padding:0; width:75%">
+                                        <volist name="vo.orders_goods" id="goods">
+                                            <table class="no-border table-hover">
+                                                <tbody class="no-border-y">
+                                                <tr><!-- 同店铺第一个商品 -->
+                                                    <td width="13%">
+                                                        <a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', array('id' => $goods['attr_list_id']))}">
+                                                            <img src="{$goods.images}" class="img-thumbnail"></a>
+                                                    </td>
+                                                    <td valign="top" width="30%" class="text-left">
+                                                        <a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', array('id' => $goods['attr_list_id']))}">{$goods.goods_name}</a>
+                                                        <div class="md5 text-gray mt5">颜色/尺码：{$goods.attr_name}</div>
+                                                        <gt name="vo.coupon_id" value="0">
+                                                            <div class="md5 text-gray mt5">
+                                                                使用了￥ <span class="text_yellow">{$vo.coupon.price}</span> 元优惠券
+                                                            </div>
+                                                        </gt>
+                                                        <gt name="vo.daigou_cost" value="0">
+                                                            <span class="btn btn-primary btn-trans btn-xs m0">代购商品</span>
+                                                        </gt>
+                                                        
+                                                        <eq name="goods.officialactivity_id" value="250">
+                                                        	<span class="btn btn-primary btn-trans btn-xs m0">限时秒杀</span>
+                                                        </eq>
+                                                    </td>
+                                                    <td width="18%">
+                                                        <img class="icon-price" src="/Public/images/icon_{$goods.score_type}.png"> <span class="text_yellow">{$goods.price}</span>
+                                                    </td>
+                                                    <td width="16%">× {$goods.num}</td>
+                                                    <td width="18%">
+                                                        <img class="icon-price" src="/Public/images/icon_{$goods.score_type}.png"> <span class="text_yellow">{$goods.total_price_edit}</span>
+                                                    </td>
+                                                    <!--<td width="18%">-->
+                                                        <!--<span class="text_yellow">{$goods.score}</span>-->
+                                                    <!--</td>-->
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </volist>
+                                    </td>
+                                    <td style="width:13%" rowspan="1">
+
+
+
+                                        <switch name="vo.status">
+                                            <case value="1">
+                                                <div class="btn btn-sm btn-primary btn-rad btn-trans">等待买家付款</div>
+                                                <!--
+                                                <div class="mt5">
+                                                    <a href="{:U('/SupplierOrders/editPrice', ['id' => $vo['s_no']])}" title="修改价格" class="text_blue">修改价格</a>
+                                                </div>
+                                                -->
+                                                <div class="mt5">
+                                                    <a href="{:U('/SupplierOrders/close', ['id' => $vo['s_no']])}" title="订单关闭" class="text_blue">关闭订单</a>
+                                                </div>
+                                                <div class="mt5 text-gray countdown-box" data-remark="自动关闭" data-time="{:str_replace('-', '/', $vo['next_time'])}"></div>
+                                            </case>
+                                            <case value="2">
+                                                <div class="btn btn-sm btn-primary btn-rad btn-trans">买家已付款</div>
+                                                <div class="mt5">
+                                                    <a href="{:U('/SupplierOrders/express', ['id' => $vo['s_no']])}" title="立即发货" class="text_blue">立即发货</a>
+                                                </div>
+                                            </case>
+                                            <case value="3">
+                                                <div class="btn btn-sm btn-primary btn-rad btn-trans">等待买家收货</div>
+                                                <div class="mt5">
+                                                    <a href="{:U('/SupplierOrders/editExpress', ['id' => $vo['s_no']])}" title="立即发货" class="text_blue">修改发货信息</a>
+                                                </div>
+                                                <div class="mt5 text-gray countdown-box" data-remark="自动收货" data-time="{:str_replace('-', '/', $vo['next_time'])}"></div>
+                                            </case>
+                                            <case value="4">
+                                                <div class="btn btn-sm btn-primary btn-rad btn-trans">买家已收货</div>
+                                                <div class="mt5 text-gray countdown-box hide" data-remark="自动评价" data-time="{:str_replace('-', '/', $vo['next_time'])}"></div>
+                                            </case>
+                                            <case value="5">
+                                                <div class="btn btn-sm btn-primary btn-rad btn-trans">买家已评价</div>
+                                            </case>
+                                            <case value="10">
+                                                <div class="btn btn-sm btn-primary btn-rad btn-trans">订单已关闭</div>
+                                            </case>
+                                            <case value="11">
+                                                <div class="btn btn-sm btn-primary btn-rad btn-trans">退款完成</div>
+                                            </case>
+                                            <case value="20">
+                                                <div class="btn btn-sm btn-primary btn-rad btn-trans">退款订单</div>
+                                            </case>
+                                            <case value="30">
+                                                <div class="btn btn-sm btn-primary btn-rad btn-trans">售后订单</div>
+                                            </case>
+                                            <default /><a href="javascript:;" class="btn btn-sm btn-default btn-rad btn-trans">未知状态</a>
+                                        </switch>
+                                        <gt name="vo.pay_time" value="0000-00-00 00:00:00">
+                                            <div class="mt5 text-gray">{$vo.pay_typename}</div>
+                                        </gt>
+                                    </td>
+                                    <td style="width:12%" rowspan="1">
+                                        <a class="text_blue" href="{:U('/SupplierOrders/detail', array('id' => $vo['s_no']))}" target="_blank">订单详情</a>
+                                        <eq name="vo.status" value="3">
+                                            <if condition = "$vo['express_company_id'] neq 361">
+                                                <br />
+                                                <a class="text_yellow" href="{:U('/SupplierOrders/detail', array('id' => $vo['s_no']))}#express" target="_blank">物流信息</a>
+                                            </if>
+                                        </eq>
+                                        <notempty name="vo['refund']">
+                                            <br />
+                                            <gt name="vo.status" value="3">
+                                                <a class="text_blue" href="{:U('/service/index', ['sno' => $vo['s_no']])}">存在售后</a>
+                                                <else />
+                                                <a class="text_blue" href="{:U('/refund/index', ['sno' => $vo['s_no']])}">存在退款</a>
+                                            </gt>
+                                        </notempty>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table><!-- 订单信息结束 -->
+                        </volist>
+                        <eq name="Think.get.sid" value="40">
+                                <div class="page-box col-xs-12 text-center">
+                                    <a class="btn-p page-s <eq name="p" value="1">disabled</eq>" <neq name="p" value="1">href="{:U('/SupplierOrders/index', ['sid' => 40, 'p' => ($p - 1)])}" </neq>>上一页</a>
+                        <a class="btn-p page-s <eq name="last" value="1">disabled</eq>" <neq name="last" value="1"> href="{:U('/SupplierOrders/index', ['sid' => 40, 'p' => ($p + 1)])}"</neq>>下一页</a>
+                                </div>
+                            <else />
+                                <div class="page-box col-xs-12 text-center">
+                                    {:page_html($data['pageinfo'])}
+                                </div>
+                        </eq>
+                    </empty>
+                </div>
+
+            </div>
+        </div>
+        <!-- my codeing over -_-   -->
+
+    </div>
+</block>
+
+<block name="css">
+    <script src="__FLATDREAM__/js/bootstrap.datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="__FLATDREAM__/js/bootstrap.datetimepicker/js/bootstrap-datetimepicker.zh-CN.js"></script>
+    <link rel="stylesheet" href="__FLATDREAM__/js/bootstrap.datetimepicker/css/bootstrap-datetimepicker.css" />
+    <link rel="stylesheet" type="text/css" href="/Public/new_design/flatdream/js/jquery.icheck/skins/all.css">
+</block>
+
+<block name="script">
+    <!-- to do your javascript codeing -->
+    <script>
+        iCheckClass();
+        $(document).ready(function() {
+            $(".datetime").datetimepicker({
+                format : 'yyyy-mm-dd'
+            });
+            $('.datetime').datetimepicker({
+                language:  'zh-CN',
+                weekStart : 1,
+                todayBtn : 1,
+                autoclose : 1,
+                todayHighlight : 1,
+                startView : 2,
+                forceParse : 0,
+                showMeridian : 1
+            });
+            $(".opreating").click(function() {
+                var d 	=	$(this).data();
+                vmodal({
+                    title:d.title,
+                    url:d.url,
+                    width:"1200px",
+                    height:"auto",
+                });
+            })
+            $('#hige_search').click(function(){
+                $('#search_dn').slideToggle('slow')
+            })
+            $(".buy-now").click(function() {
+                var d	=	$(this).data();
+                vmodal({
+                    title:'购买提示',
+                    msg:'您真的要再次购买吗?',
+                    class:'text-center',
+                    confirm:1,
+                    width:'600px',
+                    footer:false,
+                },function(ret) {
+                    $(".modal-ok").click(function() {
+                        ajax_post({
+                            url:'{:U("/orders/copyOrders")}',
+                            data:{id:d.id},
+                        },function(ret) {
+                            talert({status:ret.code,msg:ret.msg});
+                            if(ret.code == 1) {
+                                setTimeout(function() {
+                                    gourl({url:'{:DM("cart")}'});
+                                }, 1000);
+                            }
+                        })
+                    })
+                })
+            });
+            /**
+             * 倒计时
+             */
+            $(".countdown-box").each(function () {
+                countDown($(this).data('time'), $(this));
+            });
+
+            /**
+             * 全选/反选
+             */
+            $("#checkedAll").on('ifChecked ifUnchecked', function (event) {
+                if (event.type == 'ifChecked') {
+                    $("input[type='checkbox']").iCheck('check');
+                } else {
+                    $("input[type='checkbox']").iCheck('uncheck');
+                }
+            });
+
+            /**
+             * 导出数据
+             */
+            $("#importOrders").click(function () {
+                var ids = '';
+                $(".ids").each(function () {
+                    if ($(this).is(':checked') == true) {
+                        ids += $(this).val() + ',';
+                    }
+                });
+                if (ids != '') {    //如果有选择订单则只需导出选择中的订单
+                    vmodal({
+                        title:'数据导出',
+                        msg:'您正在导出选中的订单数据',
+                        class:'text-center',
+                        width:600,
+                        footer:false,
+                        confirm:1
+                    },function() {
+                        $(".modal-ok").click(function() {
+                            $("#checkedIds").val(ids);
+                            $("#outExcelSubmit").click();
+                        })
+                    });
+                } else {    //如果没有选择订单则需要选择订单
+                    vmodal({
+                        title:'选择需要导出的数据',
+                        msg:'您正在导出选中的订单数据',
+                        class:'text-center',
+                        width:900,
+                        footer:false,
+                        url:'{:U("/orders/outChoose")}'
+                    });
+                }
+            });
+        });
+
+        /**
+         * 写入html
+         *
+         * @param times
+         * @param that
+         */
+        function countDown(times, that) {
+            var data = that.data();
+            var EndTime= new Date(times);
+            var NowTime = new Date();
+            var t =EndTime.getTime() - NowTime.getTime();
+            var d=0;
+            var h=0;
+            var m=0;
+            var s=0;
+            if(t>=0){
+                d=Math.floor(t/1000/60/60/24);
+                h=Math.floor(t/1000/60/60%24);
+                m=Math.floor(t/1000/60%60);
+                s=Math.floor(t/1000%60);
+                var html = d+"天"+h+"小时"+m+"分"+s+"秒后" + data.remark;
+                that.html(html);
+            }
+        }
+    </script>
+</block>

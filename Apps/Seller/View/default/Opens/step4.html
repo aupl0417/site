@@ -1,0 +1,179 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body">
+	<include file="Public:nav" />
+	<div class="container mb30">
+		<include file="Public:side" />
+		<div class="w980 fl">
+			<div class="bor_der">
+				<div class="bg_f1 clearfix fs14 text_44 tle_R">
+					<a class="fl plr15 line40 ml-1 active" href="javascript:;">开店认证</a>
+				</div>
+				<include file="step" />
+				
+				<if condition="$trademark != null || $cert != null ">
+				<notempty name="trademark">
+					<div class="pd10">
+						<h5 class="strong">添加商标信息</h5>
+						<table class="table table-bordered table-advance table-hover">
+							<tbody>
+								<tr>
+									<th class="col-xs-2 text-center" style="vertical-align: middle;">资质品牌</th>
+									<th class="col-xs-2 text-center" style="vertical-align: middle;">资质证书</th>
+									<th class="col-xs-2 text-center" style="vertical-align: middle;">注册人</th>
+									<th class="col-xs-2 text-center" style="vertical-align: middle;">注册号</th>
+									<th class="col-xs-2 text-center" style="vertical-align: middle;">注册类型</th>
+									<!-- <th class="col-xs-2 text-center" style="vertical-align: middle;">商标产地</th> -->
+									<th class="col-xs-2 text-center" style="vertical-align: middle;">操作 </th>
+								</tr>
+								<volist name="trademark" id="vo">
+									<notempty name="vo.c_id">
+										<tr class="">
+											<td style="vertical-align: middle;" class="text-center col-xs-2">{$vo.b_name}</td>
+											<td class="text-center">
+												<a class="image-zoom" href="{$vo['license_images']}" title="大图">
+													<img src="{:myurl($vo['license_images'], 100)}" />
+												</a>
+											</td>
+											<td style="vertical-align: middle;" class="text-center col-xs-1">{$vo.reg_people}</td>
+											<td style="vertical-align: middle;" class="text-center col-xs-1">{$vo.reg_no}</td>
+											<td style="vertical-align: middle;" class="text-center col-xs-1">
+												<eq name="vo.reg_type" value="1">
+													R标
+												<else />
+													TM标
+												</eq>
+											</td>
+											<!-- <td style="vertical-align: middle;" class="text-center col-xs-1">
+												<eq name="vo.is_import" value="1">
+												进口
+												<else />
+												非进口
+												</eq>
+											</td> -->
+											<td style="vertical-align: middle;" class="text-center col-xs-1">
+												<a href="javascript:;" data-url="{:U('/opens/addCheckInfo', array('type' => 'trademark', 'b_id' => $vo['id'], 'id' => $vo['c_id']))}" data-title="修改资质" class="btn btn-primary btn-ml plr20 btn_m opreating">修改</a>
+											</td>
+										</tr>
+									<else />
+										<tr class="notNextCondition">
+											<td colspan="7">
+												{:W('Common/Builder/nors', array('param' => array('text' => '还未添' . $vo['b_name'] . '商标信息，<a data-url="/opens/addCheckInfo/type/trademark/b_id/'.$vo['id'].'" data-title="'.$vo['b_name'].'" class="text_yellow opreating" href="javascript:;">立即添加</a>')))}
+											</td>
+										</tr>
+									</notempty>
+								</volist>
+							</tbody>
+						</table>
+					</div>
+				</notempty>
+				
+				<notempty name="cert">
+					<div class="pd10 solid_t">
+						<h5 class="strong">添加资质</h5>
+						<table class="table table-bordered table-advance table-hover">
+							<tbody>
+								<tr>
+									<th class="col-xs-4 text-center" style="vertical-align: middle;">证书</th>
+									<th class="col-xs-2 text-center" style="vertical-align: middle;">添加时间</th>
+									<th class="col-xs-4 text-center" style="vertical-align: middle;">有效日期</th>
+									<th class="col-xs-2 text-center" style="vertical-align: middle;">操作</th>
+								</tr>
+								<volist name="cert" id="vo">
+									<notempty name="vo.child">
+										<tr class="countTr">
+											<td style="vertical-align: middle;" class="text-center col-xs-2">
+												<a class="image-zoom" href="{$vo.child.cert_images}" title="大图">
+													<img src="{:myurl($vo['child']['cert_images'], 100)}">
+												</a>
+											</td>
+											<td style="vertical-align: middle;" class="text-center col-xs-2">{$vo.child.atime}</td>
+											<td style="vertical-align: middle;" class="text-center col-xs-2">
+											<notempty name="vo.child.expire">
+												{$vo.child.expire}
+											<else />
+												长期
+											</notempty>
+											</td>
+											<td style="vertical-align: middle;" class="text-center col-xs-1">
+												<a href="javascript:;" data-url="{:U('/opens/addCheckInfo/', ['type' => 'cert', 'certId' => $vo['id'], 'id' => $vo['child']['id']])}" data-id="{$vo.child.id}" data-title="{$vo['cert_name']}" class="btn btn-primary btn-ml plr20 btn_m opreating">修改</a>
+											</td>
+										</tr>
+									<else />
+										<tr class="notNextCondition">
+											<td colspan="4">
+												{:W('Common/Builder/nors', array('param' => array('text' => '还未添' . $vo['cert_name'] . '，<a data-url="/opens/addCheckInfo/type/cert/certId/'.$vo['id'].'" data-title="'.$vo['cert_name'].'" class="text_yellow opreating" href="javascript:;">立即添加</a>')))}
+											</td>
+										</tr>
+									</notempty>
+								</volist>
+							</tbody>
+						</table>
+					</div>
+				</notempty>
+				<else />
+					{:W('Common/Builder/nors', array('param' => array('text' => '无需认证任何资质')))}
+				</if>
+				<div class="pd10 solid_t">
+					<div class="form-group text-right" style=" margin-bottom:0;">
+						<a class="btn btn-primary btn-next mr20" href="{:U('/opens/step3')}"><i class="fa fa-reply"></i>上一步</a><a class="btn btn-primary disabled btn-next" href="{:U('/opens/step6')}"><i class="fa fa-share"></i>下一步</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</block>
+<block name="css">
+<script src="__FLATDREAM__/js/bootstrap.datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script src="__FLATDREAM__/js/bootstrap.datetimepicker/js/bootstrap-datetimepicker.zh-CN.js"></script>
+<link rel="stylesheet" href="__FLATDREAM__/js/bootstrap.datetimepicker/css/bootstrap-datetimepicker.css" />
+<script type="text/javascript" src="/Public/Webuploader/js/webuploader.js"></script>
+<link rel="stylesheet" type="text/css" href="/Public/Webuploader/css/webuploader.css">
+</block>
+<block name="script">
+<script>
+$(document).ready(function() {
+	
+	//品牌、分类是否已添加
+	var notNextCondition	=	$(".notNextCondition").size();
+	if(notNextCondition == 0) {
+		$(".btn-next").removeClass('disabled');
+	}
+	
+	//模态框操作
+	$(".opreating").click(function() {
+		var d 	=	$(this).data();
+		vmodal({
+			title:d.title,
+			url:d.url,
+		});
+	});
+	//类目，品牌删除操作
+	$(".del").click(function() {
+		var d 	=	$(this).data();
+		vmodal({
+			  title:'删除提示',
+			  msg:'您真的要删除吗?',
+			  class:'text-center',
+			  confirm:1,
+		      footer:false,
+		      width:'600px',
+		  },function(ret) {
+			  $(".modal-ok").click(function() {
+				  ajax_post({
+					  url:'{:U("/run/authRun")}',
+					  data:{id:d.id},
+					  headers : {Action : d.action},
+				  },function(ret) {
+					  talert({status:ret.code,msg:ret.msg});
+					  if(ret.code == 1) {
+						  setTimeout("ref()", 1000);
+					  }
+				  })
+			  })
+		 })
+	})
+});
+</script>
+</block>

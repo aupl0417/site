@@ -1,0 +1,246 @@
+<script type="text/javascript" src="/Public/Webuploader/js/webuploader.js"></script>
+<link rel="stylesheet" type="text/css" href="/Public/Webuploader/css/webuploader.css">
+<style type="text/css">
+.form-group{padding:0;margin:5px 0;}
+.webuploader-pick{background:none}
+.webuploader-pick-hover{background:none}
+.table > tbody > tr > td{vertical-align: middle;}
+</style>
+<table class="table table-bordered table-advance table-hover mb30">
+	<tbody>
+		<tr>
+			<td width="15%">类型</td>
+			<td width="35%">{$data.type_name}</td>
+			<td width="15%">位置</td>
+			<td width="35%">{$data.num} 个</td>
+		</tr>
+		<tr>
+			<td>尺寸</td>
+			<td>{$data.width} x {$data.height} px</td>
+			<td>介绍</td>
+			<td>{$data.content|default='暂无介绍'}</td>
+		</tr>
+		<gt name="data.background_width" value="0">
+			<tr>
+				<td>背景图片尺寸</td>
+				<td colspan="3">{$data.background_width} x {$data.background_height} px</td>
+			</tr>
+		</gt>
+	</tbody>
+</table>
+<form class="form-horizontal" id="form_ad_add_{$data.id}" name="form_ad_add_{$data.id}" data-url="__SELF__" novalidate="novalidate">
+	<input type="hidden" name="id" value="{$data.id}" />
+	<div class="vform">
+		<table class="table table-bordered table-advance table-hover mb30">
+		<volist name="data.ad" id="vo">
+			<tr>
+				<gt name="data.background_width" value="0">
+				<th colspan="3">位置{$i}</th>
+				<else />
+				<th colspan="2">位置{$i}</th>
+				</gt>
+				<input type="hidden" name="ad[id][{$key}]" value="{$vo.id}" />
+			</tr>
+			<tr>
+				<lt name="data.type" value="3">
+				<td class="text-center v-center">广告图片</td>
+				<gt name="data.background_width" value="0">
+				<td class="text-center v-center">广告背景图片</td>
+				</gt>
+				</lt>
+				<td>
+					<div class="form-group">
+						<div class="input-group">
+							<div class="col-xs-3">
+								<select id="type_{$key}_{$data.id}" class="form-control " name="ad[type][{$key}]">
+									<option value="">投放类型</option>
+									<option <eq name="vo.type" value="0">selected</eq> value="0">商品</option>
+									<option <eq name="vo.type" value="1">selected</eq> value="1">店铺</option>
+									<option <eq name="vo.type" value="2">selected</eq> value="2">外链</option>
+								</select>
+							</div>
+							<div class="col-xs-5">
+								<input type="text" id="subject_{$key}_{$data.id}" class="form-control" name="ad[subject][{$key}]" placeholder="商品ID或店铺ID" value="<switch name="vo.type">
+									<case value="0">{$vo.goods_id}</case>
+									<case value="1">{$vo.shop_id}</case>
+								</switch>">
+							</div>
+							<div class="col-xs-2">
+								<a href="javascript:;" data-position="{$key}" class="btn btn-danger btn-getdata">获取信息</a>
+							</div>
+						</div>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<lt name="data.type" value="3">
+				<td width="20%" rowspan="3" class="text-center v-center">
+					<div id="filePicker_images_{$key}_{$data.id}">
+					<img width="80" height="80" src="{$vo.images|default='__NEW_DESIGN__/images/camera-img.jpg'}" />
+					</div>
+					<input name="images__{$key}" type="hidden" value="{$vo.images}" />
+				</td>
+				<gt name="data.background_width" value="0">
+				<td width="20%" rowspan="3" class="text-center v-center">
+					<div id="filePicker_background_images_{$key}_{$data.id}">
+					<img width="80" height="80" src="{$vo.background_images|default='__NEW_DESIGN__/images/camera-img.jpg'}" />
+					</div>
+					<input name="background_images__{$key}" type="hidden" value="{$vo.background_images}" />
+				</td>
+				</gt>
+				</lt>
+				<td>
+					<div class="form-group">
+						<div class="input-group">
+							<div class="col-xs-10">
+								<input type="text" id="name_{$key}_{$data.id}" class="form-control" name="ad[name][{$key}]" placeholder="广告标题" value="{$vo.name}">
+							</div>
+						</div>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div class="form-group">
+						<div class="input-group">
+							<div class="col-xs-10">
+								<input type="text" id="url_{$key}_{$data.id}" class="form-control" name="ad[url][{$key}]" placeholder="广告链接" value="{$vo.url}">
+							</div>
+						</div>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div class="form-group">
+						<div class="input-group">
+							<div class="col-xs-10">
+								<textarea id="subcontent_{$key}_{$data.id}" class="form-control" name="ad[subcontent][{$key}]" placeholder="广告简介" rows="" cols="">{$vo.subcontent}</textarea>
+							</div>			
+						</div>
+					</div>
+				</td>
+			</tr>
+			</volist>
+		</table>
+		<div class="text-center">
+			<button type="submit" class="btn btn-danger plr20 btn-submit">提交</button>
+		</div>
+	</div>
+</form>
+
+<script>
+$(document).ready(function() {
+	<for start="0" end="$data.num">
+	<lt name="data.type" value="3">
+	chooseImages('filePicker_images_{$i}_{$data.id}');
+	<gt name="data.background_width" value="0">
+	chooseImages('filePicker_background_images_{$i}_{$data.id}');
+	</gt>
+	</lt>
+	</for>
+	
+	$(".btn-getdata").click(function() {
+		var position = $(this).data('position');
+		var type = $("#type_" + position + "_{$data.id}").val();
+		if(type != '0' && type != '1') {
+			talert({status:0,msg:'投放类型请选择商品或商家'});
+			return false
+		}
+		var subName = '商品';
+		if(type == 1) subName = '商家';
+		var objectId = $("#subject_" + position + "_{$data.id}").val();
+		
+		if(isNaN(objectId)) {
+			talert({status:0,msg:'请输入正确的' + subName + 'ID'});
+			return false
+		}
+		if(objectId == undefined || objectId == '') {
+			talert({status:0,msg:'请输入' + subName + 'ID'});
+			return false
+		}
+		
+		ajax_post({
+			url:'{:U("/ad/getData")}',
+			data:{id:objectId,type:type},
+		},function(res) {
+			if(res.code == 1) {
+				if(type == 0) {
+					$("#name_" + position + "_{$data.id}").val(res.data.goods_name);
+					$("#subcontent_" + position + "_{$data.id}").val(res.data.sub_name);
+				} else {
+					$("#name_" + position + "_{$data.id}").val(res.data.shop_name);
+					$("#subcontent_" + position + "_{$data.id}").val(res.data.about);
+				}
+				$("#url_" + position + "_{$data.id}").val(res.data.url);
+			} else {
+				talert({status:res.code,msg:res.msg});
+			}
+		});
+	});
+});
+
+checkform({
+	'formid':'#form_ad_add_{$data.id}',
+},function(res) {
+	talert({status:res.code,msg:res.msg});
+	if(res.code == 1) {
+		ref();
+	}
+})
+
+function chooseImages(obj) { 
+	var htmlObj = $("#" + obj);
+	obj = WebUploader.create({
+
+	    // 选完文件后，是否自动上传。
+	    auto: true,
+
+	    formData:{
+	    	action  : '{:enCryptRestUri("/Upload/curlUpload")}',
+	    },
+	    // swf文件路径
+	    swf: 'Uploader.swf',
+	    fileSingleSizeLimit:1024 * 1024 * 2,
+	    // 文件接收服务端。
+		server: "{:U('/run/upload')}",
+	    // 选择文件的按钮。可选。
+	    // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+	    pick: '#' + obj,
+	    duplicate :true,
+	    // 只允许选择图片文件。
+	    accept: {
+	        title: 'Images',
+	        extensions: 'gif,jpg,jpeg,bmp,png',
+	        mimeTypes: 'image/*',
+	    },
+	    // 上传文件数量限制
+	    //fileNumLimit : FILE_NUM_LIMIT,
+	});
+	obj.on('fileQueued', function (file) {
+		obj.upload();
+    });
+	obj.on('error', function(code) {
+		switch(code) {
+			case 'F_EXCEED_SIZE':
+				talert({status:0,msg:'图片大小不能超过2M'});
+				break;
+			case 'Q_EXCEED_NUM_LIMIT':
+				talert({status:0,msg:'超过文件上传数连限制'});
+				break;
+		}
+	})
+	/*上传成功**/
+    obj.on('uploadSuccess', function (file, data) {
+    	if(data.code == 1) {
+    		data = data.data;
+	        htmlObj.next('input').val(data['url']);
+	        htmlObj.find('img').attr('src', data['url']);
+    	} else {
+    		talert({status:data.code,msg:data.msg});
+    	}
+    });
+	obj.reset();
+	//destroy();
+}
+</script>

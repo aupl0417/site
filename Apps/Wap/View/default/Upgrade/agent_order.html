@@ -1,0 +1,102 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			代理购买
+		</div>
+		<div class="r">
+			<div class="text" onclick="openWin({name:'my_agent',url:'/Upgrade/my_agent'})">我的代理</div>
+		</div>
+	</div>
+</header>
+<section>
+	<form id="form-agent-pay" data-url="/Api/api">
+	<div class="line-box hover" onclick="openWin({name:'level_about',url:'/Upgrade/level_about/level/{$_GET.level}'})">
+		<div class="fl title">购买代理等级</div>
+		<div class="fr text-success ft16 level_name">请选择代理等级</div>
+	</div>
+	<div class="line-box nobg noicon sm" onclick="openWin({name:'level_about',url:'/Upgrade/level_about/level/{$_GET.level}'})">
+		<span class="text-success">点击查看</span> <span class="text-gray">代理权益</span>
+	</div>
+	<div class="line-box" onclick="openWin({name:'select_province',url:'/City/province/level/{$_GET.level}/page/agent_order/field/city_id'})">
+		<div class="fl title">选择地区</div>
+		<div class="fr text-success ft16 city" style="max-width:60%">请选择地区</div>
+		<input type="hidden" id="city_id" name="city_id" value="">
+	</div>
+	<div class="line-box nobg noicon sm">
+	</div>	
+	<div class="line-box noicon">
+		<div class="fl title">金额</div>
+		<div class="fr text-success ft16">￥<span class="money">0</span></div>
+	</div>	
+	<div class="line-box nobg noicon sm">
+		<span class="text-gray">您的账户余额：<span class="cash">0</span> 元</span> <span class="text-success" onclick="openWin({name:'recharge',url:'/Recharge/index'})">充值</span>
+	</div>
+	
+	<div class="line-input row md20">
+		<div class="col-4">安全密码</div>
+		<div class="col-4x3"><input type="password" id="password_pay" name="password_pay" placeholder="请输入6位长度安全密码" maxlength="6"></div>
+	</div>
+	<if condition="$_SESSION['user']['password_pay'] eq ''">
+		<div class="line-input row bobg">
+			<div class="col-100">尚未设置安全密码,&nbsp;&nbsp;<a class="text-success" href="javascript:openWin({name:'user_spp',url:'/User/spp',logined:true,ref:true})">马上去设置</a></div>
+		</div>
+		</if>
+	<div class="p10">
+		<div class="btn btn-lg btn-danger btn-block" onclick="agent_pay()">确认购买</div>
+	</div>
+	<input type="hidden" name="is_openid" value="1">
+	<input type="hidden" name="level" value="{$_GET.level}">
+	<input type="hidden" name="apiurl" value="/UserUpgrade/agent_create_pay"> 
+	</form>
+</section>
+
+
+
+<script>
+	fixBar(1);
+	ajax_post({
+		url:'/Api/api',
+		data:{apiurl:'/Account/account',is_openid:1},
+	},function(ret){
+		if(ret.code==1){			
+			$('.page.active .cash').html(ret.data.ac_cash);
+		}
+	});
+	
+	ajax_post({
+		url:'/Api/api',
+		data:{apiurl:'/UserUpgrade/level_about',level:{$_GET.level}},
+	},function(ret){
+		if(ret.code==1){			
+			$('.page.active .level_name').html(ret.data.level_name)
+			$('.page.active .money').html(ret.data.upgrade_money);
+		}
+	});	
+
+	function agent_pay(){
+		if($('.page.active #city_id').val()==''){
+			valert({msg:'请选择地区！'});
+			return false;
+		}	
+		if($('.page.active #password_pay').val()==''){
+			valert({msg:'请输入安全密码！'});
+			$('.page.active #password_pay').focus();
+			return false;
+		}
+		
+		ajax_post_form({
+			formid:'#form-agent-pay',
+		},function(ret){
+			if(ret.code==1){
+				closeWin();
+				openWin({name:'upgrade_pay_success',url:'/Upgrade/pay_success',ref:true});
+			}else{
+				valert({msg:ret.msg});
+			}
+		});
+	}	
+	
+</script>

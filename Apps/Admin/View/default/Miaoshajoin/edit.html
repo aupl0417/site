@@ -1,0 +1,101 @@
+<include file="Public:header" />
+<include file="nav" title="修改记录" />
+<div class="m20 p20 bg-white">
+
+	<form class="form-horizontal vform" id="formadd" name="formadd" data-url="__URL__/edit_save">
+		{:W('Widget/form',array($fcfg['id'],$rs))}
+
+		<input type="hidden" name="id" value="{$rs.id}">
+        <div class="clearfix md70"></div>
+		<div class="navbar-fixed-bottom border-t">
+			<div class="p10 bg-white-50 text-center">
+				<button type="button" class="btn btn-lg btn-rad btn-trans btn-default" onclick="back()"><i class="fa fa-mail-reply"></i> 返回</button>
+				<button type="submit" class="btn btn-lg btn-rad btn-trans btn-primary"><i class="fa fa-check"></i> 提交</button>					
+			</div>
+		</div>		
+		<div class="hide vform-action"></div>
+	</form>
+	<div class="clearfix"></div>
+</div>
+
+
+<include file="Public:copyright" />
+<include file="Public:js" />
+
+<script>
+iCheckClass();
+checkform({
+	formid:'#formadd',
+},function(ret){
+	valert(ret);
+	if(ret.status=='success'){
+		setTimeout(function(){
+			back();
+		},1000);
+
+	}	
+});
+
+function select_goods(obj){
+	var field=obj.attr('name');
+	$('.vform-action').html(field);
+	vmodal({
+		title:'选择商品',
+		url:'/SelectItem/goods',
+		width:'95%',
+	});
+}
+function select_user(obj){
+	var field=obj.attr('name');
+	$('.vform-action').html(field);
+	vmodal({
+		title:'选择用户',
+		url:'/SelectItem/user',
+		width:'95%',
+	});
+}
+function select_shop(obj){
+	var field=obj.attr('name');
+	$('.vform-action').html(field);
+	vmodal({
+		title:'选择店铺',
+		url:'/SelectItem/shop',
+		width:'95%',
+	});
+}
+
+var goods_id = $('#goods_id').val();
+if(goods_id!=''){
+	ajax_get({
+		url:'/SelectItem/goods_item/id/'+goods_id
+	},function(ret){
+		var	html = '<div class="crow"><div class="ccol-10"><img src="'+ret.data.images+'" alt="商品图片"></div><div class="ccol-80 pl10"><h3 class="ft16">'+ret.data.goods_name+'</h3><span class="mr20">价格：'+ret.data.price+'</span><span class="mr20">库存：'+ret.data.num+'</span></div></div><div class="clearfix"></div>';
+		html='<div class="box p10">'+html+'</div>';
+		$('.f-goods_id .col-xs-7').append(html);
+	});
+}
+
+var uid = $('#uid').val();
+if(uid!=''){
+	ajax_get({
+		url:'/SelectItem/user_item/id/'+uid
+	},function(ret){
+		var	html = '<div class="crow"><div class="ccol-10"><img src="'+ret.data.face+'" alt="图片"></div><div class="ccol-80 pl10"><h3 class="ft16">'+ret.data.nick+'</h3></div></div><div class="clearfix"></div>';
+		html='<div class="box p10">'+html+'</div>';
+		$('.f-uid .col-xs-7').append(html);
+	});
+}
+
+var shop_id = $('#shop_id').val();
+if(shop_id!=''){
+	ajax_get({
+		url:'/SelectItem/shop_item/id/'+shop_id
+	},function(ret){
+		var	html = '<div class="crow"><div class="ccol-10"><img src="'+ret.data.shop_logo+'" alt="图片"></div><div class="ccol-80 pl10"><h3 class="ft16">'+ret.data.shop_name+'</h3>昵称：'+ret.data.nick+'</div></div><div class="clearfix"></div>';
+		html='<div class="box p10">'+html+'</div>';
+		$('.f-shop_id .col-xs-7').append(html);
+	});
+}
+
+</script>
+<include file="Public:footer" />

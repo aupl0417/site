@@ -1,0 +1,445 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body pt40">
+		<div class="container solid_t">
+			<form id="confirm" class="form-horizontal" data-url="">
+			<input type="hidden" name="address_id" value="" />
+			<input type="hidden" name="nosign" value="{$nosign}" />
+				<div class="solid_t solid_b pl30 ptb10 mb20">
+					<div class="clearfix">
+						<strong class="fs14 mt10 fl strong">收件人信息</strong>
+						<div class="fr">
+							<a href="javascript:;" onclick="addAddr();" class="btn btn-default"><i class="fa fa-plus"></i> 新增收货人信息</a>
+							<a target="_blank" href="{:DM('my', '/addr')}" class="btn btn-default"><i class="fa fa-gear"></i> 管理收货人信息</a>
+						</div>	
+					</div>			
+					<div class="mb15 clearfix" id="address">
+						<notempty name="addr.code">
+							{:W('Common/Builder/nors', array('param' => array('text' => $addr['msg'])))}
+						<else />
+							<volist name="addr" id="vo">
+								<div data-id="{$vo.id}" class="bor_der color_size width_block address <eq name="key" value="0">active<else />dn</eq>">
+									<div class="row pd5">
+										<div class="col-xs-5 text_over">{$vo.province_name}{$vo.city_name}{$vo.district_name}{$vo.town_name}{$vo.street}（{$vo.linkname}  收）</div>
+										<div class="col-xs-6 text_over">{$vo.mobile|hiddenStr}</div>
+									</div>
+								</div>
+							</volist>
+						</notempty>
+					</div>
+					<h5>
+						<a class="text_77 addr-list-btn" data-type="down" href="javascript:;">展开地址 <i class="fa fa-angle-double-down"></i></a>
+						<a class="text_77 " href="javascript:;" onclick = "update_addr()">更新地址</a>
+					</h5>
+				</div>
+				<notempty name="data.activity">
+					<div class="bg_red pd10">
+						<i class="fa fa-exclamation-circle fs16 fl text_white"></i>
+						<p class="ml20 mb0 text_white">{$data.activity}</p>
+					</div>
+				</notempty>
+				<div class="pt15 pl30 strong fs14">确认订单</div>
+				<volist name="data.list" id="vo">
+					<div class="mb30">
+						<div class="ptb10 plr15">
+							<div class="row ml15 mr0 fs14">
+								<div class="col-xs-5 strong pl0">店铺：{$vo.shop.shop_name}</div>
+								<div class="col-xs-2">规格</div>
+								<div class="col-xs-2 text-center">单价（元）</div>
+								<div class="col-xs-1 text-center">数量</div>
+								<div class="col-xs-2 text-center">金额（元）</div>
+							</div>
+						</div>
+						<div class="bor_der pd15 solid_last">
+							<volist name="vo.goods" id="goods">
+								<div class="row ml15 mr0 solid_b">
+									<div class="col-xs-5 ptb10 hover_p pl0">
+										<a target="_bland" href="{:DM('item')}{:U('/index/index', ['id' => $goods['attr_list_id']])}"><img class="fl mr10 bor_der" width="80" src="{$goods['images']}"></a>
+										<p class="line_tow strong"><a target="_bland" href="{:DM('item')}{:U('/index/index', ['id' => $goods['attr_list_id']])}">{$goods.goods_name}</a></p>
+									</div>
+									<div class="col-xs-2 text_77 ptb10">
+										{$goods.attr_name}<br>
+									</div>
+									<div class="col-xs-2 strong text-center ptb10">{$goods.price}</div>
+									<div class="col-xs-1 ptb10 text-center">{$goods.num}</div>
+									<div class="col-xs-2 ptb10 text_red text-center fs20">{$goods.total_price}</div>
+								</div>
+							</volist>
+						</div>
+						<div class="bor_der bg_f1 mt-1 pd15">
+							<div class="row ml15 mr0">
+								<div class="col-xs-5 pl0">
+									<div class="fl mr20">买家留言：</br><span class="text_red">重要提醒</span></div>
+									<textarea name="remark_{$vo.express_tpl_id}" cols="58" rows="3"></textarea>
+								</div>
+								<div class="col-xs-2 pr0 clearfix">
+									<span class="text_black fl">配送方式：</span>
+									<select data-total="{$vo.total_price}" data-reduction="{$vo.full_reduction|0}" data-seller="{$vo.seller_id}" data-free="{$vo.free_express|0}" data-express_tpl_id="{$vo.express_tpl_id}" class="form-control input-sm inline-block" name="express_type_{$vo.express_tpl_id}">
+					                    <volist name="vo.express_type" id="express">
+					                    	<option value="{$express.value}">{$express.name}</option>
+					                    </volist>
+					                </select>
+								</div>
+								<div class="col-xs-2 pr0 clearfix">
+									<notempty name="vo.coupon">
+										<div class="fs14 link-orange mb30">
+											<span class="text_black fl">
+											优惠券：
+											</span>
+											<select data-total="{$vo.total_price}" data-reduction="{$vo.full_reduction|0}" data-seller="{$vo.seller_id}" data-express_tpl_id="{$vo.express_tpl_id}" class="form-control input-sm inline-block" name="coupon_{$vo.express_tpl_id}">
+												<option value="0">--请选择--</option>
+												<volist name="vo.coupon" id="ex">
+											    	<option data-id="{$ex.id}" data-price="{$ex.price}" data-code="{$ex.code}" value="{$ex.id}">{$ex.price}元</option>
+											    </volist>
+											</select>
+										</div>
+									<else />
+										<select data-seller="{$vo.seller_id}" data-express_tpl_id="{$vo.express_tpl_id}" class="form-control input-sm w150 inline-block hide" name="coupon_{$vo.express_tpl_id}">
+											<option value="0">--请选择--</option>
+										</select>
+									</notempty>
+								</div>
+								<div class="col-xs-3 text-right">
+									<div class="pr15">店铺合计(含运费)：<strong class="text_red">￥</strong><span class="text_red fs20 shopTotalPrice"  id="shopTotalPrice_{$vo.express_tpl_id}"> {$vo.total_price}</span></div>
+									<notempty name="vo.full_reduction"><div class="pr15 shop_full_reduction_{$vo.express_tpl_id}">已优惠：<strong class="text_red">￥</strong><span data-reduction="{$vo.full_reduction}" class="text_red fs20">{$vo.full_reduction}</span></div></notempty>
+									<notempty name="vo.gift">
+										<div class="pr15">赠品：
+											<volist name="vo.gift" id="gift">
+												<a class="mr10" href="{:DM('item')}{:U('/index/index', ['id' => $gift['attr_list'][0]['id']])}" target="_blank"><img src="{:myurl($gift['images'], 20)}" /></a>
+											</volist>
+										</div>
+									</notempty>
+									<div class="pr15">运费：<strong class="text_red">￥</strong><span class="text_red fs20 shopTotalPrice" id="shopTotalExpressPrice_{$vo.express_tpl_id}">0.00</span></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</volist>
+
+				<div class="mb40 text-right">
+					<h3><span class="fs14">实付款</span><strong class="text_red">￥<span class="totalPrice">{$data.allMoney}</span></strong></h3>
+					<gt name="data.full_reduction" value="0"><h4><span class="fs14 reduction-fixed" data-reduction="{$data['full_reduction']}">已优惠</span><strong class="text_red">￥<span class="total_full_reduction" >{:number_format($data['full_reduction'], 2)}</span></strong></h4></gt>
+					<h3 class="mt40 mb20">
+						<a href="{:DM('cart')}" class="fs14 mr10"><i class="fa fa-angle-double-left mr10"></i>返回购物车修改</a>
+						<div class="btn btn-lg btn-danger plr20 fr mt-20 btn-submit orders-submit">提交订单</div>
+					</h3>
+					<h5><img class="mr10" src="__NEW_DESIGN__images/i.png">若价格变动，请在提交订单后联系卖家改价，并查看已买到的宝贝</h5>
+				</div>
+			</form>
+		</div>
+	</div>
+</block>
+<block name="css">
+	<link rel="stylesheet" type="text/css" href="/Public/CSS/flatdream/js/jquery.icheck/skins/square/_all.css">
+</block>
+<block name="script">
+<script>
+function update_addr(){
+	ajax_get({
+		url:'__URL__/update_addr',
+	},function(ret){
+		var html ='';
+		$.each(ret,function(k,v){
+			v.mobile = v.mobile.substring(0,3)+"*****"+v.mobile.substring(8,11);
+			if(v.district_name == null){v.district_name = '';}
+			if(v.town_name == null){v.town_name = '';}
+			
+			if(k==0){
+			html+='<div data-id="'+v.id+'" class="bor_der color_size width_block address active">'
+					+'<div class="row pd5">'
+						+'<div class="col-xs-5 text_over">'+v.province_name+v.city_name+v.district_name+v.town_name+v.street+'（'+v.linkname+'  收）</div>'
+						+'<div class="col-xs-6 text_over">'+v.mobile+'</div>'
+					+'</div>'					
+				+'</div>';
+			}else{
+			html+='<div data-id="'+v.id+'" class="bor_der color_size width_block address dn">'
+					+'<div class="row pd5">'
+						+'<div class="col-xs-5 text_over">'+v.province_name+v.city_name+v.district_name+v.town_name+v.street+'（'+v.linkname+'  收）</div>'
+						+'<div class="col-xs-6 text_over">'+v.mobile+'</div>'
+					+'</div>'					
+				+'</div>';
+			}
+		});
+		$("#address").html(html);
+		checkaddr();
+	});	
+}
+$(document).ready(function() {
+	checkaddr();
+	/*$(".address").click(function() {
+		var id	=	$(this).data('id');
+		
+	})*/
+});
+
+$(".addr-list-btn").click(function() {
+	var dn	=	$("#address .dn").size();
+	if(dn > 0) {
+		$("#address .dn").removeClass('dn');
+		$(this).html('收起地址 <i class="fa fa-angle-double-up"></i>');
+	} else {
+		$("#address .address").not("#address .active").addClass('dn');
+		$(this).html('展开地址 <i class="fa fa-angle-double-down"></i>');
+	}
+})
+
+function checkaddr(){
+	var countAddr = $(".container .address").size();
+	if(countAddr > 0) {
+		var defaultAddr		=	$("#address .active").data();
+		if(defaultAddr == undefined) {
+			$(".container .address:first").addClass("active");
+			defaultAddr		=	$("#address .active").data();
+			$("input[name='address_id']").val(defaultAddr.id);
+		} else {
+			$("input[name='address_id']").val(defaultAddr.id);
+		}
+		
+		$(".container .address").click(function(){
+		    $(this).addClass("active").siblings().removeClass("active");
+		    var d	=	$(this).data();
+		    $("input[name='address_id']").val(d.id);
+		    clickAddr(d.id)
+		});
+		
+		$("select[name^='express_']").each(function() {
+			var val = $(this).val();
+			if(val != '') {
+				countTotalPrice($(this));
+			}
+		});
+		$("select[name^='coupon_']").each(function() {
+			var val = $(this).val();
+			if(val > 0) {
+				countTotalPrice($(this));
+			}
+		});
+		$("select[name^='express_']").change(function() {
+			countTotalPrice($(this));
+		})
+		$("select[name^='coupon_']").change(function() {
+			countTotalPrice($(this));
+		})
+	}
+	
+	
+	
+	$("div[id^='shop-box_']").each(function() {
+		$(this).find(".mb-1:last").removeClass('mb-1');
+	})
+	
+	
+	$(".orders-submit").click(function() {
+		var data	=	$("#confirm").serialize();
+		var retu	=	true;
+		$("select[name^='express_']").each(function() {
+			if($(this).val() == '') {
+				retu	=	false;
+				return false;
+			}
+		})
+		if(retu == false) {
+			talert({status:'warning',msg:'请选择配送方式'});
+			return;
+		}
+		if($("input[name='address_id']").val() == '') {
+			talert({status:'warning',msg:'收货地址不能为空！'});
+			return false;
+		}
+		ajax_post({
+			url:'{:U("/run/authRun")}',
+			data:data,
+			headers : {Action : '{$action}'},
+		},function(ret) {
+			if(ret.code == 1) {
+				var url	=	'{:U("/pay")}' + '?ordersid=' + ret.data.o_no;
+				gourl({url:url})
+			} else {
+				talert({status:ret.code,msg:ret.msg});
+			}
+		})
+	})
+}
+
+function clickAddr(addr) {
+	$("select[name^='express_type_']").each(function() {
+		var express	=	$(this).val();
+		var data	=	$(this).data();
+		if(express != '' && express != undefined) {
+			var coupon	=	parseFloat($("select[name='coupon_"+data.express_tpl_id+"']").find("option:selected").text());
+			var reduction = parseFloat(data.reduction);
+			var fixed_reduction = parseFloat($(".reduction-fixed").data('reduction'));
+			if (isNaN(reduction)) reduction = 0;
+			if(isNaN(coupon)) {
+				coupon = 0;
+				if($(".shop_full_reduction_" + data.express_tpl_id).size() > 0) {
+					$(".shop_full_reduction_" + data.express_tpl_id).removeClass('hide');
+				}
+				if (reduction > 0 && allReduction < fixed_reduction) {
+					$(".total_full_reduction").closest('h4').removeClass('hide');
+					$(".total_full_reduction").html(toDecimal2(allReduction + reduction));
+				}
+				reduction = 0;
+			} else {
+				if($(".shop_full_reduction_" + data.express_tpl_id).size() > 0) {
+					$(".shop_full_reduction_" + data.express_tpl_id).addClass('hide');
+				}
+			}
+			
+			ajax_post({
+				url:'{:U("/run/authRun")}',
+				data:{address_id:addr,seller_id:data.seller,express_type:express,express_tpl_id:data.express_tpl_id},
+				async: false,
+				headers : {Action : '{:enCryptRestUri("/Confirm/getEpressPrice")}'}
+			},function(ret) {
+				if(ret.code == 1) {
+					var shopTotalPrice = (parseFloat(data.total) - parseFloat(coupon));
+					var shopTotalExpressPrice = parseFloat(ret.data.express_price);
+				} else if(ret.code == 175) {
+					ref();
+				} else {
+					var shopTotalPrice = (parseFloat(data.total) - parseFloat(coupon));
+				}
+				if (reduction > 0) {	//如果使用了优惠券，则满减需要除去
+					var allReductions= allReduction - reduction;
+					if (parseInt(allReductions) > 0) {
+						$(".total_full_reduction").html(toDecimal2(allReductions));
+					} else {
+						$(".total_full_reduction").html(toDecimal2(allReductions));
+						$(".total_full_reduction").closest('h4').addClass('hide');
+					}
+				}
+				$("#shopTotalPrice_" + data.express_tpl_id).html(toDecimal2(shopTotalPrice + shopTotalExpressPrice));
+				$("#shopTotalExpressPrice_" + data.express_tpl_id).html(toDecimal2(shopTotalExpressPrice));
+			})
+			writePrice();
+		}
+	})
+}
+
+//统计订单总金额
+function countTotalPrice(self) {
+	var shopTotalExpressPrice = 0; //店铺运费
+	var data	=	self.data();
+	var coupon	=	parseFloat($("select[name='coupon_"+data.express_tpl_id+"']").find("option:selected").text());
+	var couonData = $("select[name='coupon_"+data.express_tpl_id+"']").find("option:selected").data();
+	if (couonData.id != undefined) {
+		$("select[data-seller='"+data.seller+"'] option[value!='"+couonData.id+"']").not("select[name='coupon_"+data.express_tpl_id+"'] option").show();
+		$("select[data-seller='"+data.seller+"'] option[value='"+couonData.id+"']").not("select[name='coupon_"+data.express_tpl_id+"'] option[value='"+couonData.id+"']").hide();
+	} else {
+		$("select[data-seller='"+data.seller+"'] option[value!='"+couonData.id+"']").not("select[name='coupon_"+data.express_tpl_id+"'] option").show();
+	}
+	var fixed_reduction = parseFloat($(".reduction-fixed").data('reduction'));
+	var reduction = parseFloat(data.reduction);
+	if (isNaN(reduction)) reduction = 0;
+	var allReduction = parseFloat($(".total_full_reduction").text());
+	if(isNaN(coupon)) {
+		coupon = 0;
+		if($(".shop_full_reduction_" + data.express_tpl_id).size() > 0) {
+			$(".shop_full_reduction_" + data.express_tpl_id).removeClass('hide');
+		}
+		if (reduction > 0 && allReduction < fixed_reduction) {
+			$(".total_full_reduction").closest('h4').removeClass('hide');
+			$(".total_full_reduction").html(toDecimal2(allReduction + reduction));
+		}
+		reduction = 0;
+	} else {
+		if($(".shop_full_reduction_" + data.express_tpl_id).size() > 0) {
+			$(".shop_full_reduction_" + data.express_tpl_id).addClass('hide');
+		}
+	}
+	$.ajaxSetup({ async : false });
+	var defaultAddr		=	$("#address .active").data();
+	if(defaultAddr == undefined) {
+		return;
+	}
+	var express = 	$("select[name='express_type_"+data.express_tpl_id+"']").val();
+
+	if(express > 0) {
+		if (data.free == 1) {	//包邮促销
+			var shopTotalPrice = (parseFloat(data.total) - parseFloat(coupon));
+			shopTotalExpressPrice = 0;
+			$("#shopTotalPrice_" + data.express_tpl_id).html(toDecimal2(shopTotalPrice));
+			$("#shopTotalExpressPrice_" + data.express_tpl_id).html(toDecimal2(shopTotalExpressPrice));
+		} else {
+			ajax_post({
+				url:'{:U("/run/authRun")}',
+				data:{address_id:defaultAddr.id,seller_id:data.seller,express_type:express,express_tpl_id:data.express_tpl_id},
+				async: false,
+				headers : {Action : '{:enCryptRestUri("/Confirm/getEpressPrice")}'}
+			},function(ret) {
+				if(ret.code == 1) {
+					var shopTotalPrice = (parseFloat(data.total) - parseFloat(coupon));
+					shopTotalExpressPrice = parseFloat(ret.data.express_price);
+				} else if(ret.code == 175) {
+					ref();
+				} else {
+					var shopTotalPrice = (parseFloat(data.total) - parseFloat(coupon));
+				}
+				if (reduction > 0) {	//如果使用了优惠券，则满减需要除去
+					var allReductions= allReduction - reduction;
+					if (parseInt(allReductions) > 0) {
+						$(".total_full_reduction").html(toDecimal2(allReductions));
+					} else {
+						$(".total_full_reduction").html(toDecimal2(allReductions));
+						$(".total_full_reduction").closest('h4').addClass('hide');
+					}
+				}
+				$("#shopTotalPrice_" + data.express_tpl_id).html(toDecimal2(shopTotalPrice + reduction + shopTotalExpressPrice));
+				$("#shopTotalExpressPrice_" + data.express_tpl_id).html(toDecimal2(shopTotalExpressPrice));
+			})
+		}
+	} else {
+		var shopTotalPrice = (parseFloat(data.total) - parseFloat(coupon));
+		$("#shopTotalPrice_" + data.express_tpl_id).html(toDecimal2(shopTotalPrice));
+	}
+	writePrice();
+}
+
+/**
+ * 写价格
+ */
+function writePrice() {
+	var totalPrice			=	0;
+	var countShop			=	0;
+	var countShopExpress	=	0;
+	$("select[name^='express_type_']").each(function() {
+		var data			=	$(this).data();
+		countShop			=	$("#shopTotalPrice_" + data.express_tpl_id).html();
+		//countShopExpress	=	$("#shopTotalExpressPrice_" + data.express_tpl_id).html();
+		//totalPrice	+=	parseFloat(countShop) + parseFloat(countShopExpress);
+		totalPrice	+=	parseFloat(countShop);
+	});
+	$(".totalPrice").html(toDecimal2(totalPrice));
+}
+
+
+//为数字后面加两位小数
+function toDecimal2(x) {    
+    var f = parseFloat(x);    
+    if (isNaN(f)) {    
+        return false;    
+    }    
+    var f = Math.round(x*100)/100;    
+    var s = f.toString();    
+    var rs = s.indexOf('.');    
+    if (rs < 0) {    
+        rs = s.length;    
+        s += '.';    
+    }    
+    while (s.length <= rs + 2) {    
+        s += '0';    
+    }    
+    return s;    
+}
+/**
+ * 添加地址
+ */
+function addAddr() {
+	vmodal({
+		title:'添加收货地址',
+		url:'{:U("/confirm/addr")}',
+	})
+}
+</script>
+</block>

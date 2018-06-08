@@ -1,0 +1,70 @@
+<form class="form-horizontal" id="formadd" name="formadd" novalidate="novalidate" data-url="__SELF__">
+	<div class="vform">
+		<div class="form-group f-name">
+			<label class="col-xs-3 control-label">词<span
+				class="required" aria-required="true"> *</span></label>
+			<div class="col-xs-7">
+				<div class="input-group">
+					<div class="">
+						<input type="text" id="key" class="form-control " name="key"
+							placeholder="如：搜索、浙江大学、hello" value="">
+					</div>
+				</div>
+				<div class="tips-form text-gray ft12 link-blue"></div>
+			</div>
+		</div>
+		<div class="line line-dashed b-b line-lg pull-in"></div>
+		<!--input-->
+		<div class="form-group f-ac">
+			<label class="col-xs-3 control-label">同义词 <span
+				class="required" aria-required="true">*</span></label>
+			<div class="col-xs-7">
+				<div class="input-group">
+					<div class="">
+						<input type="text" id="synonym" class="form-control " name="synonym"
+							placeholder="如：查找、浙大、你好" value="">
+					</div>
+				</div>
+				<div class="tips-form text-gray ft12 link-blue"></div>
+			</div>
+		</div>
+		<div class="line line-dashed b-b line-lg pull-in"></div>
+	</div>
+
+	<div class="hide vform-action"></div>
+
+	<div class="text-center">
+		<button type="submit" class="btn btn-lg btn-rad btn-trans btn-primary">
+			<i class="fa fa-check"></i> 提交
+		</button>
+	</div>
+</form>
+<script>
+checkform({
+	formid:"#formadd",
+	rules:{
+		key:{
+			required:true,
+		},
+		synonym:{
+			required:true,
+		},
+	},
+	messages:{
+		synonym:{
+			required:'同义词不能为空',
+		},
+		key:{
+			required:'词不能为空',
+		},
+	}
+},function(ret) {
+	valert({
+		status:ret.code,
+		msg:ret.msg
+  	})
+	if(ret.code == 'success') {
+		ref();
+	}
+})
+</script>

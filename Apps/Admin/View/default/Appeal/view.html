@@ -1,0 +1,32 @@
+<gt name="rs.orders_status" value="3">
+<include file="serviceView" />
+<else />
+<include file="refundView" />
+</gt>
+<div class="clearfix">
+	<div class="pull-right text-gray" onclick="$(this).closest('tr').toggleClass('hide');"><i class="fa fa-times-circle-o fa-2x"></i></div>	
+</div>
+
+<script>
+image_zoom();
+$('.logs-add').click(function(){
+	var d=$(this).closest('form').data();
+	ajax_post_form({
+		formid:d.id
+	},function(ret){
+		valert(ret);
+		if(ret.status=='success'){
+			var tag='#item-{$rs.id}';
+			var url='__URL__/view/id/{$rs.id}';
+			loadurl({tag:tag,url:url});
+		}
+	});
+});
+$(".express-view").click(function() {
+	var d = $(this).data();
+	vmodal({
+		title:d.title,
+		url:d.url
+	});
+});
+</script>

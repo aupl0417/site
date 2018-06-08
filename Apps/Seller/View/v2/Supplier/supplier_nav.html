@@ -1,0 +1,36 @@
+
+<div class="tenants-time-box">
+	<ul class="list-unstyled over">
+		<li class="active">
+			<span>1</span>
+			<div>
+				<a href="__URL__/upload_data">上传资料</a>
+			</div>
+		</li>
+		<li <if condition="$level gt 1">class="active"</if>>
+			<span>2</span>
+			<div>
+				<a href="__URL__/change_package">选择套餐</a>
+			</div>
+		</li>
+		<li <if condition="$level gt 2">class="active"</if>>
+			<span>3</span>
+			<div>
+				<a href="__URL__/upload_voucher">上传汇款凭证</a>
+			</div>
+		</li>
+		<li <if condition="$level gt 3">class="active"</if>>
+			<span>4</span>
+			<div>
+				<a href="__URL__/examine">雇员审核</a>
+			</div>
+		</li>
+		<li <if condition="$level gt 4">class="active"</if>>
+			<span>5</span>
+			<div>
+				<a href="__URL__/success">成功入驻</a>
+			</div>
+		</li>
+	</ul>
+</div>
+

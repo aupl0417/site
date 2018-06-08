@@ -1,0 +1,200 @@
+<include file="Public:header" />
+		<div class="page-group">
+			<div id="page-ucenter" class="page">
+				<!-- 标题栏 -->
+				<header class="bar bg-white bar-nav">
+					<a class="icon icon-left pull-left back" href="/"></a>
+					<h1 class="title">我的乐兑</h1>
+					<a class="icon iconfont icon-category pull-right ml5 ac-menu" onclick="top_menu()"></a>
+					<a class="icon iconfont icon-xiaoxi1 pull-right hide" href="/Message" data-no-cache="true">
+					<if condition="$count egt 1">
+						<span class="notice-alert hide">{$count}</span>
+					</if>
+					</a>
+				</header>
+
+
+				<!-- 浮动导航 -->
+				<include file="Public:fixed-menu" />
+
+				<!-- 导航条 -->
+				<include file="Public:nav" />
+		
+				<!-- 这里是页面内容区 -->		
+				<div class="content">
+					<div class="user-header-box">
+						<!--user-header-->
+						<div class="user-header img-block">
+							<a class="setting hide" href="/Setting">
+								<i class="iconfont icon-shezhi"></i> 设置
+							</a>
+							<div class="user-face">
+								<img class="lazyload img-circle" data-sizes="auto" data-src="{:session('user.face')}" src="../Public/images/nopic.gif" alt="头像">
+							</div>
+							<div class="user-info">
+								<div class="nick">{:session('user.nick')}</div>
+								<div class="level_name">{:session('user.level_name')}</div>
+							</div>
+						</div>
+
+						<!--收藏-->
+						<div class="user-fav hide">
+							<div>
+								<a class="item-link" href="/FavGoods">
+								<div class="num">{$total.fav_goods}</div>
+								关注的商品
+								</a>
+							</div>
+							<div>
+								<a class="item-link" href="/FavShop">
+								<div class="num">{$total.fav_shop}</div>
+								关注的店铺
+								</a>
+							</div>
+							<div>
+								<a class="item-link" href="/Coupon/my_coupon">
+								<div class="num">{$total.coupon}</div>
+								我的优惠券
+								</a>
+							</div>
+						</div>
+					</div>
+					<!--我的订单-->
+					<div class="list-block">
+						<ul>
+							<li>
+								<a class="item-link item-content" href="/Orders" data-no-cache="true">
+									<div class="item-media"><i class="icon iconfont icon-jilu"></i></div>
+									<div class="item-inner">
+										<div class="item-title">我的订单<gt name="total.orders.allnum" value="0">({$total.orders.allnum})</gt></div>
+										<div class="item-after">全部订单</div>
+									</div>
+								</a>
+							</li>
+						</ul>
+					</div>
+					<div class="user-order-menu orders row no-gutter md5 ucenter-badge">
+						<a class="col-33 item-link" href="/Orders/index/status/1" data-no-cache="true">
+							<i class="iconfont icon-fukuan"><gt name="total.orders.count.1.count" value="0"><span class="badge">{$total.orders.count.1.count}</span></gt></i>
+							<div>待付款</div>
+						</a>
+						<a class="col-33 item-link" href="/Orders/index/status/2" data-no-cache="true">
+							<i class="iconfont icon-hongjiuchengicondaifahuo"><gt name="total.orders.count.2.count" value="0"><span class="badge">{$total.orders.count.2.count}</span></gt></i>
+							<div>待发货</div>
+						</a>
+						<a class="col-33 item-link" href="/Orders/index/status/3" data-no-cache="true">
+							<i class="iconfont icon-yifahuo"><gt name="total.orders.count.3.count" value="0"><span class="badge">{$total.orders.count.3.count}</span></gt></i>
+							<div>待收货</div>
+						</a>
+						<a class="col-33 item-link hide" href="/Orders/index/status/4" data-no-cache="true">
+							<i class="iconfont icon-daipinjia"><gt name="total.orders.count.4.count" value="0"><span class="badge">{$total.orders.count.4.count}</span></gt></i>
+							<div>待评价</div>
+						</a>
+						<a class="col-33 item-link hide" href="/Refund/index/status/1" data-no-cache="true">
+							<i class="iconfont icon-tuihuo1"><gt name="total.refund.refund_in" value="0"><span class="badge">{$total.refund.refund_in}</span></gt></i>
+							<div>退款中</div>
+						</a>
+						<a class="col-33 item-link hide" href="/Service" data-no-cache="true">
+							<i class="iconfont icon-weixiu-copy"><gt name="total.service.service_in" value="0"><span class="badge">{$total.service.service_in}</span></gt></i>
+							<div>售后中</div>
+						</a>						
+					</div>
+					
+					<!--话费流量-->
+					<div class="list-block hide hide">
+						<ul>
+							<li>
+								<a class="item-link item-content to-recharge" href="/TellRecharge/index" data-no-cache="true">
+									<div class="item-media"><i class="icon iconfont icon-iconfontshoujichongzhi"></i></div>
+									<div class="item-inner">
+										<div class="item-title">话费/流量</div>
+									</div>
+								</a>
+							</li>
+						</ul>
+					</div>
+					<div class="user-order-menu orders row no-gutter md5 ucenter-badge hide">
+						<a class="col-33 item-link" href="/TellRecharge/index" data-no-cache="true">
+							<i class="iconfont icon-huafeichongzhi"></i>
+							<div>充话费</div>
+						</a>
+						<a class="col-33 item-link" href="/TellRecharge/index/type/2" data-no-cache="true">
+							<i class="iconfont icon-huafeiliuliang"></i>
+							<div>充流量</div>
+						</a>
+						<a class="col-33 item-link" href="/TellRecharge/recharge_list" data-no-cache="true">
+							<i class="iconfont icon-huafeichaxun"></i>
+							<div>充值查询</div>
+						</a>						
+					</div>		
+
+					<!--我的账户-->
+					<div class="list-block hide">
+						<ul>
+							<li>
+								<div class="item-link item-content to-account">
+									<div class="item-media"><i class="icon iconfont icon-qianbao"></i></div>
+									<div class="item-inner">
+										<div class="item-title">我的账户</div>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+					<div class="user-order-menu account row no-gutter md5 hide">
+						<a class="col-50 item-link" href="#">
+							<div class="money">{$account.a_freeMoney}</div>
+							<div>现金</div>
+						</a>
+						<a class="col-50 item-link" href="#">
+							<div class="money">{$account.a_score}</div>
+							<div>积分</div>
+						</a>
+						<a class="col-50 item-link" href="#">
+							<div class="money">{$account.a_tangBao}</div>
+							<div>唐宝</div>
+						</a>
+						<a class="col-50 item-link" href="#">
+							<div class="money">{$account.a_storeScore}</div>
+							<div>库存积分</div>
+						</a>					
+					</div>					
+					<!--猜您喜欢-->
+					<div class="list-block">
+						<ul>
+							<li>
+								<div class="item-link item-content" onclick="love('.love-goods',$(this))">
+									<div class="item-media"><i class="icon iconfont icon-xihuanline"></i></div>
+									<div class="item-inner">
+										<div class="item-title">猜您喜欢</div>
+										<div class="item-after">换一组</div>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>		
+					<div class="row love-goods" style="min-height: 13.5rem;">
+						<volist name="love" id="vo">
+						<div class="col-25">
+							<a href="/Goods/view/id/{$vo.data.attr_list.0.id}" class="item-link goods-item">
+								<div class="goods-images">
+									<img class="lazyload" data-sizes="auto" data-src="{:myurl($vo['data']['images'],200)}" src="../Public/images/nopic.gif" alt="{$vo.data.images}">
+								</div>
+								<div class="goods-name">
+									{$vo.data.goods_name}
+								</div>
+							</a>
+						</div>
+						</volist>
+					</div>
+					
+				</div>			
+				
+			</div>		
+
+		
+		</div>	
+		
+
+<include file="Public:script" />
+<include file="Public:footer" />

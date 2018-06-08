@@ -1,0 +1,22 @@
+<include file="Home@Public:header" />
+
+
+<header>
+	<include file="Home@Public:top" />
+	
+	{:W('Common/Ad/index_new', array(130,'margin:auto;max-height:100px;'))}
+	
+	
+	<div class="container mt30 mb30">
+		<div class="row mg0">
+			<div class="col-xs-3 pl0"><a href="{:DM('www')}"><img src="__NEW_DESIGN__images/dt_logo.png"></a></div>
+			{:W('Common/Builder/search', ['shop' => $shopId])}
+			{:W('Common/Side/cart')}	
+		</div>
+	</div>
+</header>
+
+
+<block name="body"></block>
+<include file="Home@Public:bottom" />
+

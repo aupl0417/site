@@ -1,0 +1,139 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body mt10">
+
+    <include file="Public:nav_statistic" />
+
+    <div class="container">
+
+        <include file="Public:side_statistic" />
+
+        <div class="w960 fl">
+            <ol class="breadcrumb pd10 bor_der bor_r0 mt0 mb20">
+                <li><a href="/">数据统计 </a> </li>
+                <li><a href=""> 促销分析</a></li>
+                <li><a href="">促销效果</a></li>
+            </ol>
+
+            <div class="mb35">
+                <div class="ptb10 solid_b mb20">
+                    <span class="fs16">促销明细</span>
+                </div>
+                <div class="mb10">
+                    <strong class="fs14 text_black mr20">选择时间</strong>
+                     <a class="text_yellow plr20 <if condition='$con[effect_type] eq 1'>btn btn-primary btn-xs </if>" onclick = "select_change('effect','type',1)">昨天</a>
+                    <a class="text_yellow plr20 <if condition='$con[effect_type] eq 2'>btn btn-primary btn-xs </if>" onclick = "select_change('effect','type',2)">最近一周</a>
+                    <a class="text_yellow plr20 <if condition='$con[effect_type] eq 3'>btn btn-primary btn-xs </if>" onclick = "select_change('effect','type',3)">最近一个月</a>
+                    <a class="text_yellow plr20 <if condition='$con[effect_type] eq 4'>btn btn-primary btn-xs </if>" onclick = "select_change('effect','type',4)">最近三个月</a>
+                    <div class="pull-right mt-5">
+                        选择促销类型：
+                        <select class="form-control w190 pull-right mt-8" onchange = "select_change('effect','pro_type',this.value)">
+                            <option value="0">所有类型</option>
+							<volist name="promotion_type" id="vo">
+							<option value = "{$vo.id}" <if condition="$con['effect_pro_type'] eq $vo[id]">selected="selected"</if>>{$vo.activity_name}</option>
+							</volist>
+                        </select>
+                    </div>
+                </div>
+                <table class="bg_white mt-1">
+                    <thead class="no-border">
+                        <tr class="bg_f1">
+                            <th class="text-center"> 序号</th>
+                            <th class="text-center"> 促销类型</th>
+                            <th class="text-center" width="32%">  商品信息</th>
+                            <th class="text-center"> 累计支付金额</th>
+                            <th class="text-center">  客单价</th>
+                            <th class="text-center"> 累计支付买家数</th>
+                            <th class="text-center"> 累计支付新买家数</th>
+                        </tr>
+                    </thead>
+                    <tbody class="no-border-y text-center">
+						<volist name="promotion_list.data" id="vo">
+                        <tr>
+                            <td class="ptb15">{$vo.no}</td>
+                            <td class="ptb15">{$promotion_type[$vo[type]][activity_name]}</td>
+                            <td class="ptb15 text-left  ">
+                                <img class="fl mr10" width="60" height="60" src="{$vo.images}" style="max-width: 945px;">
+                                <div class="text_44 mb0 w210 h34 over">{$vo.goods_name}</div>
+                                <h6 class="mb0 text_over text_yellow">￥ {$vo.price}</h6>
+                            </td>
+                            <td class="ptb15">{$vo.total_money}</td>
+                            <td class="ptb15">{$vo.user_money}</td>
+                            <td class="ptb15">{$vo.buyer}</td>
+                            <td class="ptb15">{$vo.new_buyer}</td>
+                        </tr>
+                        </volist>
+                    </tbody>
+                 </table>
+                 <div class="text-right">
+                    <ul class="pagination">
+						<li class="prev <empty name="promotion_list.page.prevPage">disabled</empty>">
+							<a <notempty name="promotion_list.page.prevPage">onclick = "select_change('effect','page',{$promotion_list.page.prevPage})"</notempty>><span class="fa fa-angle-left"></span>&nbsp;上一页</a>
+						</li>
+						
+						<volist name="promotion_list.page.page" id="vo">
+						<li <if condition="$vo.active eq 1">class="active"</if>><a onclick="select_change('effect','page',{$vo.p})">{$vo.p}</a></li>
+						</volist>
+
+						<li class="next  <empty name="promotion_list.page.nextPage">disabled</empty>">
+							<a <notempty name="promotion_list.page.nextPage">onclick = "select_change('effect','page',{$promotion_list.page.nextPage})"</notempty>>下一页&nbsp;<span class="fa fa-angle-right"></span></a>
+						</li>
+					</ul>
+					<div class="pull-right mt25 ml10 clearfix w190">
+						<span class="pull-left mr5">跳到</span>
+					   
+						<select class="form-control pull-left mt-8" style="width:60px;height:31px" onchange = "select_change('effect','page',this.value)">
+							<for start="1" end="$promotion_list.page.totalPage" comparison="elt">
+							<option value = "{$i}" <if condition="$promotion_list[page][nowPage] eq $i">selected="selected"</if>>{$i}</option>
+							</for>
+						</select>
+						<span class="pull-left ml15">共{$promotion_list.page.totalPage}页</span>
+					</div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+<form action="" method="post" class="hide page_select">
+	<foreach name="con" item="vo" key="key">
+		<input type="hidden" name="{$key}" value="{$vo}"/>
+	</foreach>	
+</form>
+</block>
+
+<block name="css"></block>
+<block name="script">
+
+<script src="__NEW_DESIGN__flatdream/js/jquery.js"></script>
+<script src="__NEW_DESIGN__flatdream/js/jquery.pushmenu/js/jPushMenu.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.nanoscroller/jquery.nanoscroller.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.sparkline/jquery.sparkline.min.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.ui/jquery-ui.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.gritter/js/jquery.gritter.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/behaviour/core.js"></script>
+<script src="__NEW_DESIGN__flatdream/js/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.flot/jquery.flot.js"></script>
+
+<script src="__NEW_DESIGN__js/amcharts.js" type="text/javascript"></script>
+<script src="__NEW_DESIGN__js/serial.js" type="text/javascript"></script>
+<script src="__NEW_DESIGN__js/pie.js"></script>
+<script>
+	//页面页码切换
+	function select_change(type,name,new_val){
+		var old_val = $('.page_select input[name="'+type+'_'+name+'"]').val();
+		if(old_val != new_val){
+			$('.page_select input[name="'+type+'_'+name+'"]').val(new_val);
+			
+			if(name !== 'page'){
+				$('.page_select input[name="'+type+'_page"]').val(1);
+			}
+			$('.page_select').submit();
+		}
+	}
+</script>
+
+</block>

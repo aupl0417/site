@@ -1,0 +1,103 @@
+<include file="Public:header" />
+<include file="nav" />
+
+<div class="m20">
+	<div class="block-flat">
+			{:W('Widget/listable',array(array(
+				'data'	=>$pagelist['list'],
+				'items'	=>array(
+					array(
+						'title'			=>'选择',
+						'type'			=>'html',
+						'html'			=>'<input type="checkbox" class="i-red-square" name="id[]" id="id[]" value="[id]">',
+						'td_attr'		=>'width="60" class="text-center"',
+						'norder'		=>1,
+					),
+					array(
+						'title'			=>'ID',
+						'field'			=>'id',
+						'td_attr'		=>'class="text-center"',
+					),
+					array(
+						'title'			=>'状态',
+						'field'			=>'status',
+						'td_attr'		=>'class="text-center" width="100"',
+						'function'		=>"return status(\\$val['status'],array(array('待审核','btn-default btn-block'),array('审核通过','btn-success btn-block'),array('未通过审核','btn-danger btn-block')));",
+					),
+					array(
+						'title'			=>'活动时间',
+						'field'			=>'day',
+						'td_attr'		=>'class="text-center" width="100"',
+					),					
+					
+					array(
+						'title'			=>'主图',
+						'field'			=>'images',
+						'td_attr'		=>'class="text-center" width="80"',
+						'function'		=>'return images($val["goods_attr_list"]["images"],60);',
+					),
+					array(
+						'title'			=>'活动标题',
+						'field'			=>'subject',
+						'function'		=>'return "<h4>".$val["subject"]."</h4><div>".$val["goods"]["goods_name"]."</div>";',
+					),	
+					array(
+						'title'			=>'一口价',
+						'field'			=>'price',
+						'td_attr'		=>'class="text-center"',
+						'function'		=>'return $val["goods"]["price"];',
+					),					
+					array(
+						'title'			=>'活动价',
+						'field'			=>'price',
+						'td_attr'		=>'class="text-center"',
+					),	
+					array(
+						'title'			=>'活动图片(1)',
+						'field'			=>'images',
+						'td_attr'		=>'class="text-center" width="120"',
+						'function'		=>'return images($val["images"][0],100,60,1,"",1);',
+					),					
+					array(
+						'title'			=>'活动图片(2)',
+						'field'			=>'images',
+						'td_attr'		=>'class="text-center" width="120"',
+						'function'		=>'return images($val["images"][1],100,60,1,"",1);',
+					),	
+					array(
+						'title'			=>'卖家',
+						'field'			=>'uid',
+						'td_attr'		=>'class="text-center"',
+						'function'		=>'return $val["user"]["nick"];',
+					),					
+					array(
+						'title'			=>'店铺',
+						'field'			=>'uid',
+						'td_attr'		=>'class="text-center"',
+						'function'		=>'return $val["shop"]["shop_name"];',
+					),					
+					array(
+						'title'			=>'报名时间',
+						'field'			=>'atime',
+						'td_attr'		=>'class="text-center"',
+					),					
+					
+				),
+			)))}	
+	</div>
+</div>	
+
+
+
+
+
+<include file="Public:copyright" />
+<include file="Public:js" />
+<script>
+$(document).ready(function(){
+
+	
+
+});
+</script>
+<include file="Public:footer" />

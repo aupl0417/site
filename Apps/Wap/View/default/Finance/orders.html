@@ -1,0 +1,104 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			理财账单
+		</div>
+		<div class="r">
+			
+		</div>
+	</div>
+</header>
+<section>
+	<div class="pagelist">
+		<div class="load-body">数据加载中……</div>
+	</div>
+	<div class="p10 load-more" onclick="loadmore()">
+		<div class="btn btn-lg btn-block btn-danger btn-trans">加载更多……</div>
+	</div>
+</section>
+
+
+<script id="tpl_finance_orders_list" type="text/html">
+    <% for (var i = 0; i < data.length; i ++) { %>
+		<div class="line-box-m row hover" onclick="openWin({name:'finance_orders_view',url:'/Finance/view/f_no/<%= data[i].f_no %>'})">			
+				<div class="col-4x3" style="max-width:70%">					
+					<div class="text-gray">流水号：<%= data[i].f_no %></div>
+					<% if(data[i].status==4){ %>
+					<div>收益：<%= data[i].win_money %></div>
+					<% }else{ %>
+					<div>30天预估收益：<%= data[i].win_money_30day %></div>
+					<% } %>
+					<div class="text-gray"><%= data[i].atime %></div>
+				</div>
+				<div class="col-4 text-right">
+					<div class="ft16 text-success"><%= data[i].total_money %></div>
+					<% if(data[i].status==0){ %>
+					<div class=""><%= data[i].status_name %></div>
+					<% }else if(data[i].status==1){ %>
+						<div class="text-success"><%= data[i].status_name %></div>
+					<% }else{ %>
+						<div class="text-info"><%= data[i].status_name %></div>
+					<% } %>
+					
+				</div>
+			
+			<div class="clearfix"></div>
+		</div>
+    <% } %>
+
+</script>
+
+<script>
+	fixBar(1);
+	
+	var data={apiurl:'/Finance/finance_list',is_openid:1,status:'{$_GET.status}',month:'{$_GET.month}',no_sign:'p,pagesize,status,month'};
+	pagelist(data);
+	
+
+	
+	function pagelist(data,param){
+		var d=$('.page.active section').data();
+		var p=1;
+		if(d.p!=undefined){
+			p=d.p;
+		}
+		
+		if(d.allpage!=undefined && d.p>d.allpage){
+			$('.page.active .load-more').html('已无记录可加载！');
+			return false;
+		}
+		
+		data.p=p;		
+		ajax_post({
+			url:'/Api/api',
+			data:data,
+		},function(ret){
+			if(ret.code==1){			
+				var html = template('tpl_finance_orders_list', {data:ret.data.list});				
+				if(p==1){
+					$('.page.active .pagelist').html(html);
+				}else{
+					$('.page.active .pagelist').append(html);
+				}
+				p++;
+				$('.page.active section').data({p:p,allpage:ret.data.allpage});
+				
+				if(ret.data.allpage>1){
+					$('.page.active .load-more').addClass('active');
+				}
+				
+			}else if(ret.code==3){
+				$('.page.active .pagelist').html(no_data_text);
+			}
+		});	
+	}
+	
+	function loadmore(){
+		pagelist(data);
+	}
+
+	
+</script>

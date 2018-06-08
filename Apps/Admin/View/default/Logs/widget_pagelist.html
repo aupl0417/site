@@ -1,0 +1,68 @@
+			{:W('Widget/listable',array(array(
+				'data'	=>$pagelist['list'],
+				'item_view'=>array(
+					'html'	=>'<div class="orders-item" id="item-[_id]"></div>',
+				),				
+				'items'	=>array(
+					array(
+						'title'		=>'操作类型',
+						'type'		=>'active',
+						'field'		=>'type',
+						'td_attr'	=>'class="text-center"',
+						'data'		=>array(
+							'LOGIN'	=>'<div class="btn btn-xs btn-rad btn-trans btn-warning m0 btn-block">登录</div>',
+							'UPDATE'=>'<div class="btn btn-xs btn-rad btn-trans btn-default m0 btn-block">修改</div>',
+							'INSERT'=>'<div class="btn btn-xs btn-rad btn-trans btn-success m0 btn-block">新增</div>',
+							'DELETE'=>'<div class="btn btn-xs btn-rad btn-trans btn-danger m0 btn-block">删除</div>',
+						),
+					),				
+					array(
+						'title'		=>'ID',
+						'field'		=>'_id',
+						'td_attr'	=>'class="text-center"',
+					),				
+					array(
+						'title'		=>'IP',
+						'field'		=>'ip',
+						'td_attr'	=>'class="text-center"',
+					),				
+					array(
+						'title'		=>'雇员账号',
+						'field'		=>'name',
+						'td_attr'	=>'class="text-center"',
+					),				
+					array(
+						'title'		=>'操作数据表',
+						'field'		=>'table',
+						'td_attr'	=>'class="text-center"',
+					),				
+				
+					array(
+						'title'		=>'影响记录',
+						'field'		=>'insid',
+						'td_attr'	=>'class="text-center"',
+					),				
+					array(
+						'title'		=>'操作结果',
+						'field'		=>'res',
+						'td_attr'	=>'class="text-center"',
+					),				
+					array(
+						'title'		=>'URL',
+						'field'		=>'url',
+					),
+					array(
+						'title'		=>'时间',
+						'field'		=>'atime',
+						'td_attr'		=>'class="text-gray text-center"',
+					),
+					array(
+						'title'		=>'操作',
+						'type'		=>'html',
+						'norder'	=>1,
+						'html'		=>'<div class="btn btn-default btn-sm btn-rad btn-trans btn-block item-view m0" data-id="[_id]">详情</div>',
+						'td_attr'	=>'width="80" class="text-center"',
+					),				
+					
+				),
+			)))}

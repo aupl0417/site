@@ -1,0 +1,803 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			<span class="mr20" onclick="goods_view('.goods_content')">详情</span>
+			<span class="mr20" onclick="goods_view('.goods_param')">参数</span>
+			<span class="" onclick="goods_view('.goods_rate')">评价</span>
+		</div>
+		<div class="r">
+			<div class ="cart_total_num hide" style="top:5px;"></div>
+			<i class="icons i-cart" onclick="openWin({name:'cart',url:'/Cart/index',logined:true})"></i>
+		</div>
+	</div>
+</header>
+<section>	
+	<div class="load-body">数据加载中……</div>	
+</section>
+
+<footer class="footer fixed-bottom">
+	<div class="row">
+		<div class="col-15">
+			<div class="cart-btn-love border-r bottom-love">
+				<i class="icons icons-20px i-love"></i>
+				<div>收藏</div>
+			</div>
+		</div>
+		<div class="col-15">
+			<div class="cart-btn-love border-r shop-contact">
+				<i class="icons icons-20px i-chat"></i>
+				<div>客服</div>
+			</div>
+		</div>
+		<div class="col-15">
+			<div class="cart-btn-love border-r shop-index">
+				<i class="icons icons-20px i-shop"></i>
+				<div>店铺</div>
+			</div>
+		</div>		
+		<div class="col-25 addtocart" id="buy_1">
+			<div class="cart-btn-buy">立即购买</div>
+		</div>
+		<div class="col-30 addtocart" id="cart_1">
+			<div class="cart-btn-add">加入购物车</div>
+		</div>
+	</div>
+</footer>
+
+<include file="Public:d_layer" />
+
+<script id="tpl_goods_view" type="text/html">
+<div class="goods_main">
+
+	<ul class="rslides" id="goods_album_images">
+		<% for (var i = 0; i < data.images_album.length; i ++) { %>
+		<li>
+			<img src="<%= data.images_album[i] %>" alt="商品主图">
+			
+		</li>
+		<% } %>
+	</ul>
+	<div class="line-box-m noicon">
+		<div class="ft14 b md5"><%= data.goods.goods_name%></div>
+		<% if(data.goods.officialactivity_join_id>0){ %>
+			<span class="is_self">秒杀</span>
+			<div class="row">
+				<div class="col-50">
+					<div><span class="text-danger ft16 b a-price">￥<%= data.goods.officialactivity_price %></span></div>
+				</div>
+				<div class="col-50 text-gray text-right a-score">奖励 <%= (data.goods.score_ratio*100*data.goods.officialactivity_price).toFixed(2) %> 积分</div>
+			</div>
+		<% }else{ %>
+			<div class="row">
+				<div class="col-50"><span class="text-danger ft16 b a-price">￥<%= data.goods.price %></span></div>
+				<div class="col-50 text-gray text-right a-score">奖励 <%= (data.goods.score_ratio*100*data.goods.price).toFixed(2) %> 积分</div>
+			</div>
+		<% } %>
+		<div class="clearfix"></div>
+	</div>
+
+	<div class="line-box row this-selected" onclick="$('.page.active footer .addtocart').click();">
+		<div class="col-4 text-gray">当前已选择</div>
+		<div class="col-4x3"><%= data.attr_name %></div>
+	</div>
+</div>
+
+<div class="line-box noicon row ">
+	<div class="col-4 text-gray">服务</div>
+	<div class="col-4x3">7天无理由退换</div>
+</div>
+<div class="line-box row md10" onclick="check_express_price(<%= data.goods.express_tpl_id %>)">
+	<div class="col-4 text-gray">发货地区</div>
+	<div class="col-4x3"><%= data.city%></div>
+</div>
+
+<% if(data.goods.officialactivity_join_id>0){ %>
+	<div class="line-box goods_content noicon row">
+		<div class="col-4 ">秒杀倒计时</div>
+		<div class="timedec">
+		<div id="clock" class="goods-clock fr"></div>
+		</div>
+	</div>
+<% }else{ %>
+	<div class="goods-activity"></div>
+	<div class="goods-shop-coupon"></div>
+<% } %>
+
+<div class="goods-daigou"></div>
+
+<div class="line-box goods_content hover hide" onclick="openWin({name:'goods_content',url:'/Goods/content/goods_id/<%= data.goods_id %>'})">
+	商品详情
+</div>
+
+<div class="line-box goods_param hover" onclick="openWin({name:'goods_param',url:'/Goods/param/goods_id/<%= data.goods_id %>'})">
+	商品参数
+</div>
+<div class="line-box goods_package hover" onclick="openWin({name:'goods_package',url:'/Goods/package/package_id/<%= data.goods.package_id %>'})">
+	商品包装
+</div>
+<div class="line-box goods_protection md10 hover" onclick="openWin({name:'goods_protection',url:'/Goods/protection/protection_id/<%= data.goods.protection_id %>'})">
+	售后保障
+</div>
+
+<div class="line-box row hover">
+	<div class="col-60 title shop-view-name" onclick="getshop()">店铺名称</div>
+	<div class="col-40 text-right"><span class="text-danger shop-view-fraction" >综合得分：无</span></div>
+</div>
+<div class="box md10">
+	<div class="row text-center">
+		<div class="col-33">
+			<div class="p10">
+				<div class="ft16 text-danger shop-view-fraction-desc" >5.0</div>
+				<div class="text-gray">描述相符</div>
+			</div>
+		</div>
+		<div class="col-33">
+			<div class="p10">
+				<div class="ft16 text-danger shop-view-fraction-service" >5.0</div>
+				<div class="text-gray">服务态度</div>
+			</div>
+		</div>
+		<div class="col-33">
+			<div class="p10">
+				<div class="ft16 text-danger shop-view-fraction-speed" >5.0</div>
+				<div class="text-gray">发货速度</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-50 hover" onclick="openWin({name:'shop_contact',url:'/Shop/contact/shop_id/<%= data.goods.shop_id %>'})">
+				<div class="btn btn-lg btn-primary btn-block m10">联系客服</div>
+			</div>
+			<div class="col-50 hover" onclick="openWin({name:'shop',url:'/Shop/index/shop_id/<%= data.goods.shop_id %>'})">
+				<div class="btn btn-lg btn-primary btn-block m10">进入店铺</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		
+	</div>
+	<div class="clearfix"></div>
+</div>
+
+<div class="line-box goods_rate hover" onclick="openWin({name:'goods_rate',url:'/Goods/rate/goods_id/<%= data.goods_id %>'})">
+	<div class="title">商品评价</div>
+</div>
+<div class="box md10">
+	<div class="goods-rate"></div>
+	<div class="clearfix"></div>
+</div>
+
+<div class="line-box row hover">
+	<div class="col-50 title">猜您喜欢</div>
+	<div class="col-50 text-gray text-right" onclick="guess()">换一批</div>
+</div>
+
+<div class="box row guess-love-list-content md10" style="height:auto">
+
+</div>
+
+
+<div class="line-box row hover noicon">
+	<div class="col-50 title">商品详情</div>
+</div>
+<div class="box row content" style="height:auto">
+
+</div>
+<!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_m"></div>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jiathis_m.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+<div class="box md10">
+	<div class="clearfix"></div>
+</div>
+
+</script>
+
+<style>
+	.jiathis_style_m{height:25px;margin:10px 0;padding-left:10px;}
+	.jiathis_style_m .jiathis_txt{line-height: 25px!important;font-size: 15px;}
+	.jiathis_style_m .jiathis_style_32x32 .jtico{height:25px !important;padding-left: 25px!important;background-size:100%;}
+	.jiathis_style_m .jiathis_style_32x32 .jtico_qzone{background-position: 0px -25px;}
+	.jiathis_style_m .jiathis_style_32x32 .jtico_tqq {background-position: 0px -1375px;}
+	.jiathis_style_m .jiathis_style_32x32 .jtico_renren {background-position: 0px -50px;}
+	.jiathis_style_m .jiathis_style_32x32 .jtico_jiathis {background-position: 0px -1600px;}
+</style>
+
+
+
+<script type="text/html" id="guess-love-list">
+	<% for(i=0;i<data.length;i++){ %>
+		<div class="col-25" onclick="openWin({name:'goods_view',url:'<%= data[i].attr_list[0].url %>',ref:true})">
+			<div class="p10">
+				<img src="<%= data[i].images %>" />
+				<div class="text-center lh2-20px"><%= data[i].goods_name %></div>
+			</div>
+		</div>
+	<% } %>
+	<div class="clearfix"></div>
+</script>
+
+<!--商品属性选择-->
+<script id="tpl_goods_attr" type="text/html">
+<form id="form-attr">
+	<div class="line-box row noicon">
+		<div class="col-4">价格</div>
+			<% if(data.goods.officialactivity_join_id>0){ %>
+				<div class="col-4x3 text-right ft14 b text-danger a-price">￥<span class="price"><%= data.goods.officialactivity_price %></span></div>
+			<% }else{ %>
+				<div class="col-4x3 text-right ft14 b text-danger a-price">￥<span class="price"><%= data.price %></span></div>
+			<% } %>
+	</div>
+	<% for (var i = 0; i < data.attr.length; i ++) { %>
+	<div class="line-box-m noicon row">
+		<div class="col-4"><%= data.attr[i].attr_name %></div>
+		<div class="col-4x3 attr-list">
+			<% for (var j = 0; j < data.attr[i].option.length; j ++) { %>
+				<div class="attr-item" data-ij="<%= i %>,<%= j %>" data-attr="<%= data.attr[i].option[j].attr %>" onclick="attr_select($(this))"><%= data.attr[i].option[j].attr_value %></div>
+			<% } %>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+	<% } %>
+	<div class="line-box row noicon">
+		<div class="col-4">数量</div>
+		<div class="col-4x3">
+			<div class="row">
+				<div class="col-5" onclick="cart_dec($(this))">
+					<i class="icons icons-20px i-dec"></i>
+				</div>
+				<div class="col-5x3">
+					<input name="num" id="num" value="1" placeholder="订购数量" style="text-align:center">
+				</div>
+				<div class="col-5 text-right" onclick="cart_add($(this))">
+					<i class="icons icons-20px i-add"></i>
+				</div>
+			</div>
+		</div>
+	</div>
+	<input type="hidden" name="apiurl" value="/Cart/add">
+	<input type="hidden" name="is_openid" value="1">
+	<input type="hidden" name="attr_list_id" id="attr_list_id" value="<%= data.id%>">
+	<input type="hidden" name="type" value="1">
+	<input type="hidden" name="atonce" id="atonce" value="">
+	<input type="hidden" name="no_sign" id="no_sign" value="atonce">
+</form>	
+</script>
+
+<!--选择商品属性时对应的资料变动-->
+<script id="tpl_goods_attr_rs" type="text/html">
+	
+		<ul class="rslides" id="goods_album_images_new">
+			<% for (var i = 0; i < data.images_album.length; i ++) { %>
+				<li>		
+					<img src="<%= data.images_album[i] %>" alt="商品主图">		
+							
+				</li>
+			<% } %>
+		</ul>
+	
+	<div class="line-box-m noicon">
+		<div class="ft14 b md5"><%= data.goods.goods_name%></div>
+		<div class="row">
+			<div class="col-50"><span class="text-danger ft16 b a-price">￥<%= attr_rs.price %></span></div>
+			<div class="col-50 text-gray text-right a-score">奖励 <%= (data.goods.score_ratio*100*attr_rs.price).toFixed(2) %> 积分</div>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+
+	<div class="line-box row this-selected" onclick="$('.page.active footer .addtocart').click();">
+		<div class="col-4 text-gray">当前已选择</div>
+		<div class="col-4x3"><%= attr_rs.attr_name %></div>
+	</div>
+</script>	
+
+<script id="tpl_goods_rate" type="text/html">
+	<% for(i=0;i<data.length;i++){ %>
+	<div class="line-box-m hover noicon row">
+		<div class="col-10">
+			<img src="<%= data[i].user.face %>" class="img-circle" style="width:50px">
+		</div>
+		<div class="col-90">
+			<div class="pl10">
+				<div class="row">
+					<div class="col-60 b"><%= data[i].user.nick %></div>
+					<div class="col-40 text-right"><img src="../Public/Images/rate_<%= data[i].rate %>.png" alt="<%= data[i].rate_name %>"></div>
+				</div>
+				<div class=""><%= data[i].content %></div>
+				<div class="text-gray"><%= data[i].orders_goods.attr_name %></div>
+				<div class="text-gray"><%= data[i].atime %></div>
+				<% if(data[i].images){ %>
+					<div class="text-gray"></div>
+					<% for(j=0;j<data[i].images.length;j++){ %>
+						<% if(data[i].images[j]){ %>
+							<div class="fl m5"><img src="<%= data[i].images[j] %>" alt="晒单" /></div>
+						<% } %>
+					<% } %>
+				<% } %>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+	<% } %>
+</script>
+<script id="tpl_goods_activity" type="text/html">
+	<% for(i=0;i<data.length;i++){ %>
+		<div class="line-box noicon row <% if(data.length-1 == i){ %>md10<% } %>" style="height:auto;">
+		<%=#data[i].desc%>
+		<% if(data[i].goods != null){ %>
+			<div>
+			<% for(j=0;j<data[i].goods.length;j++){ %>
+			<img src="<%= data[i].goods[j].images %>" alt="<%= data[i].goods[j].goods_name %>"/>
+			<% } %>
+			</div>
+		<% } %>
+		</div>	
+	<% } %>
+</script>
+
+<script id="tpl_goods_shop_coupon" type="text/html">
+<div class="line-box goods_param hover strong text_red" onclick="openWin({name:'coupon_batch',url:'/Coupon/coupon_batch/shop_id/<%= data %>'})">
+	可领取优惠券
+</div>
+</script>
+
+<script id="tpl_goods_daigou" type="text/html">
+<div class="line-box noicon row md10 strong text_red" style="height:auto;">
+<strong>当前商品为代购商品，您在支付的时候需向商家支付 ( <%=data %>% ) 的手续费</strong>
+</div>
+</script>
+
+<script>
+	var jiathis_config;
+	fixBar();
+	var miaosha_activty = false;
+	var goods_data;
+	var score_ratio;
+	var is_daigou = false;
+	ajax_post({
+		url:'/Api/apis',
+		data:{
+			goods:{apiurl:'/Goods/view',id:'{$_GET.id}',isget_rate:1,imgsize:640,no_sign:'isget_rate,isget_content,imgsize'},
+			love_goods:{apiurl:'/Goods/love_goods',limit:4,imgsize:200,no_sign:'limit,imgsize'},
+			cart_num:{apiurl:'/Cart/cart_total',is_openid:1}
+		}			
+	},function(ret){
+		console.log(ret);
+		if(ret.goods.code==1){
+			goods_data=ret.goods.data;
+			miaosha_activty = ret.goods.data.goods.officialactivity_join_id;
+			is_daigou = ret.goods.data.goods.is_daigou;
+			
+			//分享按钮
+			jiathis_config = {
+				boldNum:0,
+				siteNum:7,
+				url:"{:DM('wap','/Index/index')}?url=/Goods/view/id/{$_GET.id}.html",
+				title:""+ret.goods.data.goods.goods_name+"",
+				summary:"唐人街",
+				//pic:"自定义分享的图片连接地址",
+			}
+			//分享按钮
+			
+			score_ratio = ret.goods.data.goods.score_ratio;
+			//console.log(score_ratio);
+			var html = template('tpl_goods_view', {data:ret.goods.data});
+			$('.page.active section').html(html);
+			//console.log($('body').data());
+			//清除活动
+			if($('body').data('timer')!=undefined){
+				var timer_val=$('body').data('timer');
+				clearInterval(timer_val);			
+				//console.log('清除'+timer_val);
+			}
+			$('.page.active .goods-activity').html(''); 
+			/*
+			$("#goods_album_images").responsiveSlides({
+				auto: true,
+				pager: false,
+				nav: true,
+				speed: 1000,
+				namespace: "slide"
+			});*/
+			$('#goods_album_images').bxSlider({
+				auto: true,
+				autoControls: true
+			});
+			
+			//详情
+			ajax_post({
+				url:'/Api/api',
+				data:{apiurl:'/Goods/goods_content',goods_id:goods_data.goods_id},
+			},function(ret){
+				if(ret.code==1){			
+					$('.content').html(ret.data.content);
+				}else if(ret.code==3){
+					$('.content').html(no_data_text);
+				}
+			});
+			
+			//加入收藏
+			$('.page.active .bottom-love').click(function(){
+				ajax_post({
+					url:'/Api/api',
+					data:{apiurl:'/Fav/goods_add',is_openid:1,goods_id:ret.goods.data.goods_id},
+				},function(ret){
+					valert(ret);
+				});
+			});
+			
+			//购物车数量
+			if(ret.cart_num.code==1 && ret.cart_num.data.num > 0){
+				$(".cart_total_num").removeClass('hide').html(ret.cart_num.data.num);
+			}else{
+				$(".cart_total_num").addClass('hide').html(0);
+			}
+			
+			//代购
+			if(is_daigou > 0) {
+				$(".cart-btn-add").parent().remove();
+				$(".cart-btn-buy").parent().addClass('col-55');
+				var daigouHtml = template('tpl_goods_daigou', {data:parseInt(ret.goods.data.goods.daigou_ratio * 100)});
+				$('.page.active .goods-daigou').html(daigouHtml); 
+			} else {
+				$('.page.active .goods-daigou').html(''); 
+			}
+			
+			//获取商家优惠券
+			ajax_post({
+				url:'/api/api',
+				data:{apiurl:'/coupon/getShopCoupon', shop_id:ret.goods.data.goods.shop_id}
+			}, function(res) {
+				if(res.code == 1 && res.data.count > 0) {
+					var html = template('tpl_goods_shop_coupon', {data:ret.goods.data.goods.shop_id});
+					$('.page.active .goods-shop-coupon').html(html);
+				}
+			});
+			
+			//获取商品参加的活动,当有秒杀活动时，屏蔽其他活动
+			if(ret.goods.data.goods.officialactivity_join_id <= 0){
+				ajax_post({
+					url:'/Goods/goods_activity',
+					data:{
+						goods_id:ret.goods.data.goods.id,
+						shop_id:ret.goods.data.goods.shop_id
+					}
+				},function(rett){
+					if(rett.code==1){
+						if(rett.data.type_id != undefined) {
+							$(".cart-btn-add").parent().remove();
+							$(".cart-btn-buy").parent().addClass('col-55');
+							$(".cart-btn-buy").parent().attr('data-spike', 'yes');
+							$(".cart-btn-buy").parent().attr('data-spm', rett.data.spm);
+							$(".a-price").html("￥ " + rett.data.full_money);
+							$(".a-score").html("奖励 "+ (rett.data.full_money*100*score_ratio).toFixed(2) +" 积分");
+							var timer	=	window.setInterval(function() {
+								countDown(rett.data.end_time);
+							},1000);
+							
+							$('body').data({timer:timer});
+							//console.log($('body').data());
+						} else {			
+							var html=template('tpl_goods_activity',{data:rett.data});
+							$('.page.active .goods-activity').html(html);
+						}
+					} else {
+
+					}
+				});
+			}			
+			
+			//评价
+			var html=template('tpl_goods_rate',{data:ret.goods.data.rate});
+			$('.page.active .goods-rate').html(html);
+			
+			//加入购物、立即购买
+			var attr_ids=ret.goods.data.attr_id.split(',');
+			var attr = template('tpl_goods_attr', {data:ret.goods.data});
+			if(miaosha_activty>0 || is_daigou > 0){
+				attr+='<div class="row"><div><div class="cart-btn-buy">立即购买</div></div></div>';
+			}else{
+				attr+='<div class="row"><div class="col-2"><div class="cart-btn-buy">立即购买</div></div><div class="col-2"><div class="cart-btn-add">加入购物车</div></div></div>';
+			}
+			$('.page.active footer .addtocart').click(function(){				
+				vmodal({
+					title:'商品属性',
+					msg:attr,
+					is_footer:false,
+				},function(){
+					$.each(attr_ids,function(index,item){
+						$('.page.active .vmodal-content [data-attr="'+item+'"]').addClass('active');
+					});
+					
+					//查看是否有0元购或者秒杀活动
+					var spike	=	$('.page.active footer .addtocart').data("spike");
+					var spm	=	$('.page.active footer .addtocart').data("spm");
+					if(spike == 'yes') {
+						$('.page.active .vmodal-content .cart-btn-add').parent().remove();
+						$('.page.active .vmodal-content .cart-btn-buy').parent().removeClass('col-2');
+						$(".a-price").html($(".goods_main .a-price").html());
+					}
+					if($('body').data('timer')!=undefined){
+						var timer_val=$('body').data('timer');
+						clearInterval(timer_val);				
+					}
+					//$('.page.active .goods-activity').html(''); 
+					$('.page.active .vmodal-content .cart-btn-buy').click(function(){
+					
+						if($('.page.active #num').val()==''){
+							valert({msg:'订购数量不能为空！'});
+							return false;
+						}					
+						$('.page.active .vmodal-content #atonce').val(1);
+						var data=getFormJson('#form-attr');
+						ajax_post({
+							url:'/Api/api',
+							data:data,
+						},function(ret){
+							if(ret.code==1){
+								openWin({name:'cart_next',url:'/Cart/cart_next?spm=' + spm,close:true});
+							}else{
+								valert(ret);
+							}
+						});						
+					});
+					$('.page.active .vmodal-content .cart-btn-add').click(function(){
+						if($('.page.active #num').val()==''){
+							valert({msg:'订购数量不能为空！'});
+							return false;
+						}
+						$('.page.active .vmodal-content #atonce').val('');
+						var data=getFormJson('#form-attr');
+						ajax_post({
+							url:'/Api/api',
+							data:data,
+						},function(ret){
+							if(ret.code==1){ 
+								valert({msg:'已加入购物车！'});
+							}else{
+								valert(ret);
+							}
+						});						
+					});
+				});
+				
+			});
+			
+			//底部按钮
+			$('.page.active .shop-contact').click(function(){
+				openWin({name:'shop_contact',url:'/Shop/contact/shop_id/'+ret.goods.data.shop.id});
+			});		
+			$('.page.active .shop-index').click(function(){
+				openWin({name:'shop_contact',url:'/Shop/index/shop_id/'+ret.goods.data.shop.id});
+			});	
+
+			
+			
+			// 店铺评价
+			ajax_post({
+				url:'/Api/api',
+				data:{
+					apiurl:'/Shop/shop_info',
+					shop_id:ret.goods.data.goods.shop_id,
+				}
+			},function(msg){
+				if( msg.code == 1 ){
+					$('.page.active .shop-view-name').html(msg.data.shop_name);
+					$('.page.active .shop-view-fraction').html('综合得分：' + msg.data.fraction);
+					$('.page.active .shop-view-fraction-speed').html(msg.data.fraction_speed);
+					$('.page.active .shop-view-fraction-desc').html(msg.data.fraction_desc);
+					$('.page.active .shop-view-fraction-service').html(msg.data.fraction_service);
+				}
+			});
+			
+			//如果已登录，则记录浏览记录
+			<if condition="session('user.id') gt 0">
+			ajax_post({
+				url:'/Api/api',
+				data:{apiurl:'/Visit/goods_add',is_openid:1,goods_id:ret.goods.data.goods_id}				
+			});
+			</if>
+			
+			
+		}else if(ret.goods.code==3){
+			$('.page.active section').html('<div class="nors"><h4>很抱歉，您查看的商品找不到了！</h4><div>商品已下架或商品属性已更改！</div></div>');
+		}else{
+			$('.page.active section').html('<div class="nors">'+ret.goods.msg+'</div>');
+		}
+		
+		if(ret.love_goods.code==1){
+			var html = template('guess-love-list',{data:ret.love_goods.data});
+			$('.page.active .guess-love-list-content').html(html);
+		}
+		
+		//秒杀
+		if(miaosha_activty>0){
+			$(".cart-btn-add").parent().remove();
+			$(".cart-btn-buy").parent().addClass('col-55');
+			
+			if(ret.goods.data.goods.activity.time_dif>0){
+				var twoDaysFromNow = new Date().valueOf() + ret.goods.data.goods.activity.time_dif * 1000;
+
+				$('.goods-clock').countdown(twoDaysFromNow, function(event) {
+				  var totalHours = event.offset.totalDays * 24 + event.offset.hours;
+				  $(this).html(event.strftime('<span>'+totalHours + '</span> : <span>%M</span> : <span>%S</span>'));
+				});
+				$(".cart-btn-buy").html('即将开始');
+				$(".cart-btn-buy").click(function(){return false;});
+			}else if(ret.goods.data.goods.activity.time_dif+86400>0){
+				$('.goods-clock').html("抢购中");
+			}else{
+				$(".cart-btn-buy").html('活动结束');
+				$('.goods-clock').html("秒杀活动已经结束");
+				$(".cart-btn-buy").click(function(){return false;});
+			}
+		}
+	});
+	
+	function goods_view(tag){
+		$(tag).click();
+	}
+	
+	function cart_add(obj){
+		var num=obj.closest('.line-box').find('#num').val();
+		if(num=='' || parseInt(num)<1){
+			obj.closest('.line-box').find('#num').val(1);
+			return true;
+		}
+		num=parseInt(num)+1;
+		obj.closest('.line-box').find('#num').val(num);
+	}
+	function cart_dec(obj){
+		var num=obj.closest('.line-box').find('#num').val();
+		if(num=='' || parseInt(num)<1){
+			obj.closest('.line-box').find('#num').val(1);
+			return true;
+		}
+		num=parseInt(num)-1;
+		if(num<1) num=1;
+		obj.closest('.line-box').find('#num').val(num);
+	}	
+	
+	function goods_view(tag){
+		$(tag).click();
+	}
+	
+	function attr_select(obj){
+		obj.closest('.line-box-m').find('.attr-item').removeClass('active');
+		obj.addClass('active');
+		
+		var attr=new Array();	
+		var attr_name=new Array();
+		obj.closest('.vmodal-content').find('.line-box-m').each(function(index){
+			attr[index]=$(this).find('.attr-item.active').data('attr');
+			attr_name[index]=$(this).find('.attr-item.active').html();
+		});
+		//alert(attr.join(','));
+		//alert(data.id);
+		//alert(goods_data.attr_list[attr.join(',')].id);
+		var data=goods_data.attr_list[attr.join(',')];
+		if(miaosha_activty==0){
+			$('.page.active .vmodal-content .price').html(data.price);
+		}
+		$('.page.active .vmodal-content #attr_list_id').val(data.id);
+		$('.page.active .this-selected .col-4x3').html(attr_name.join(','));
+		// 更换属性图
+		var ij = obj.data('ij');
+		ij = ij.split(',');
+		var i = parseInt(ij[0]);
+		var j = parseInt(ij[1]);
+		var goods_data_new = goods_data;
+		if(goods_data.attr[i].option[j].attr_album != undefined && goods_data.attr[i].option[j].attr_album != null){
+			goods_data_new.images_album = goods_data.attr[i].option[j].attr_album;
+		}
+		
+		var html = template('tpl_goods_attr_rs', {data:goods_data_new,attr_rs:data});
+		$('.page.active .goods_main').html(html);
+		//代购
+		if(goods_data.goods.is_daigou > 0) {
+			$(".cart-btn-add").parent().remove();
+			$(".cart-btn-buy").parent().removeClass('col-2');
+		}
+		//console.log(goods_data);
+		ajax_post({
+			url:'/Goods/goods_activity',
+			data:{
+				goods_id:goods_data.goods.id,
+				shop_id:goods_data.goods.shop_id
+			}
+		},function(rett){
+			if(rett.code==1){
+				if(rett.data.type_id != undefined) {
+					$(".cart-btn-add").parent().remove();
+					//$(".cart-btn-buy").parent().addClass('col-55');
+					$(".cart-btn-buy").parent().attr('data-spike', 'yes');
+					$(".cart-btn-buy").parent().attr('data-spm', rett.data.spm);
+					$(".a-price").html("￥ " + rett.data.full_money);
+					$(".a-score").html("奖励 "+ (rett.data.full_money*100*score_ratio).toFixed(2) +" 积分");
+					//先清除旧的的活动计时
+					var timer_val=$('body').data('timer');
+					clearInterval(timer_val);	
+					var timer	=	window.setInterval(function() {
+						countDown(rett.data.end_time);
+					},1000);
+					
+					$('body').data({timer:timer});
+					//console.log($('body').data());
+				} else {			
+					var html=template('tpl_goods_activity',{data:rett.data});
+					$('.page.active .goods-activity').html(html);
+				}
+			} else {
+
+			}
+		});
+
+		/*
+		$("#goods_album_images_new").responsiveSlides({
+			auto: true,
+			pager: false,
+			nav: true,
+			speed: 1000,
+			namespace: "slide"
+		});		
+		*/
+		$('#goods_album_images_new').bxSlider({
+			auto: true,
+			autoControls: true
+		});
+	}
+	// 猜您喜欢
+	function guess(){
+		// alert(1);
+		ajax_post({
+			url:'/Api/api',
+			data:{
+				apiurl:'/Goods/love_goods',
+				limit:4,
+				imgsize:200,
+				no_sign:'limit,imgsize'
+			}
+		},function(ret){
+			// console.log(ret);
+			var html = template('guess-love-list',{data:ret.data});
+			$('.page.active .guess-love-list-content').html(html);
+		});
+	}
+	guess();
+	
+	function countDown(eTime){
+	    var EndTime= new Date(eTime);
+	    var NowTime = new Date();
+	    var t =EndTime.getTime() - NowTime.getTime();
+	    var d=0;
+	    var h=0;
+	    var m=0;
+	    var s=0;
+	    if(t>=0){
+	      d=Math.floor(t/1000/60/60/24);
+	      h=Math.floor(t/1000/60/60%24);
+	      m=Math.floor(t/1000/60%60);
+	      s=Math.floor(t/1000%60);
+	    } else {
+	    	setInterval(timer);
+	    	$(".cart-btn-buy").parent().addClass('disabled');
+	    }
+	    var h  = '<div class="line-box noicon row md10 text_red strong text-center" style="height:auto;"><strong>活动将在'+d+'天'+h+'小时'+m+'分'+s+'秒后结束</strong></div>';
+		$('.page.active .goods-activity').html(h);
+	}
+	
+	//查运费
+	function check_express_price(tid){
+		vmodal({
+			title:'运费查询',
+			url:'__URL__/citylist/tid/'+tid,
+			is_footer:false,
+		},function(){
+				
+		});		
+	}
+</script>
+
+<include file="Public:shop_collect" />

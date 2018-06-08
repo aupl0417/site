@@ -1,0 +1,436 @@
+<extend name="Home@Public:base" />
+<block name="body">
+    <div class="centent_body">
+        <!-- to do your html codeing -->
+        <div class="revision_bg">
+            <div class="container ptb_size_lg clearfix" style="/*width: 980px;*/">
+                <div class="pd15" style="background:#fff">
+                    <notempty name="data.code">
+                        {:W('Common/Builder/nors', array('param' => array('text' => $data['msg'])))}
+                        <else />
+                        <form id="confirm" class="form-horizontal" data-url="">
+                            <input type="hidden" name="address_id" value="{$addr[0]['id']}" />
+                            <input type="hidden" name="nosign" value="{$nosign}" />
+                            <div class="clearfix revisionOrderTab" data-url="">
+                                <a class="fr btn btn-success ml10" href="javascript:;" onclick="addAddr();">添加地址</a>
+                                <a class="fr btn btn-success" href="{:DM('my', '/addr')}" target="_blank">管理地址</a>
+                                <a class="orderOption active" href="javascript:;">选择地址</a>
+                            </div>
+
+
+
+                            <div class="content addr-box" style="border-top: 0;">
+                                <notempty name="addr.code">
+                                    {:W('Common/Builder/nors', array('param' => array('text' => $addr['msg'])))}
+                                    <else />
+                                    <div class="row" style="">
+                                        <volist name="addr" id="vo">
+                                            <div onclick="selectedAddr($(this));" data-id="{$vo.id}" class="col-md-3 col-sm-3 addr-box-item <eq name="key" value="0">active</eq> <gt name="key" value="6"> gt6 dn</gt> ">
+                                                <h5>{$vo.linkname},({$vo.mobile|hiddenStr})</h5>
+                                                <p class="text-gray">
+                                                    {$vo.province_name}{$vo.city_name}{$vo.district_name}{$vo.town_name}{$vo.street}
+                                                </p>
+                                            </div>
+                                        </volist>
+                                        <div class="col-md-3 col-sm-3 addr-box-btn text-center">
+                                            <div class="mt20">
+                                            <a class="btn btn-rad btn-trans btn-danger" href="javascript:;" onclick="extAddrBox($(this));"><i class="fa fa-angle-double-down"></i> 展开地址</a>
+                                            <a class="btn btn-rad btn-trans btn-success ml10" onclick="refAddrItem();" href="javascript:;"><i class="fa fa-refresh"></i> 更新地址</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </notempty>
+                            </div>
+
+
+                            <notempty name="data.activity">
+                                <div class="bg-warning pd10 letter-spacing1">
+                                    <i class="fa fa-exclamation-circle fs16 fl text_yellow"></i>
+                                    <p class="ml20 mb0">{$data.activity}</p>
+                                </div>
+                            </notempty>
+
+                            <div class="row pt10 pb10 mt30" style="border-top: solid 1px #F8F8F8">
+                                <div class="clearfix revisionOrderTab" style="padding: 0 15px" data-url="">
+                                    <a class="orderOption active" href="javascript:;">所购商品</a>
+                                </div>
+                                <div class="col-md-12 col-sm-12">
+                                    <table class="no-border mb20 bg_f1"><!-- 类型说明 -->
+                                        <tbody class="no-border-y">
+                                        <tr class="text-center">
+                                            <td width="100%" style="padding:0">
+                                                <table class="no-border">
+                                                    <tbody class="no-border-y">
+                                                    <td width="8%">商品信息</td>
+                                                    <td width="35%"></td>
+                                                    <td width="15%">商品单价</td>
+                                                    <td width="15%">订购数量</td>
+                                                    <td width="15%">商品总额</td>
+                                                    <td width="12%">积分基数</td>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table><!-- 类型说明结束 -->
+
+                                    <volist name="data.list" id="vo">
+                                        <table class="revisionTable table"><!-- 订单信息 -->
+                                            <tbody class="bg_white">
+                                            <tr class="">
+                                                <td class="bg_f1">
+                                                    <notempty name="vo.activity">
+                                                        <a href="javascript:;" data-html="true" data-popover="popover" data-original-title="商家促销信息" data-content='<volist name="vo.activity" id="ac" key="ackey">
+                                                                <p>{$ackey}、{$ac.desc}
+                                                                    <eq name="ac.type_id" value="2">
+                                                                        <volist name="ac.goods" id="acGoods">
+                                                                            <a href="{:DM('item')}{:U('/index/index', ['id' => $acGoods['attr_list'][0]['id']])}" target="_blank"><img src="{:myurl($acGoods['images'], 20)}"></a>
+                                                                        </volist>
+                                                                    </eq>
+                                                                </p>
+                                                            </volist>' data-placement="left" data-trigger="hover" class="fr text_red"><i class="fa fa-tags"></i> 促销信息</a>
+                                                        </notempty>
+                                                    <a href="{:shop_url($vo['shop']['id'], $vo['shop']['domain'])}" class="ml5 text_blue">{$vo.shop.shop_name}</a>
+                                                    <a href="{:DM('oauth2')}{:U('Im/check',['receiver' => $vo['seller']['nick']])}" class="ml5" target="_blank">
+                                                        <img class="mr5" src="/Public/images/icon-im18.png">
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <volist name="vo.goods" id="goods">
+                                                <tr class="text-center">
+                                                    <td style="padding:0; width:75%">
+                                                        <table class="no-border table-hover">
+                                                            <tbody class="no-border-y">
+                                                            <tr><!-- 同店铺第一个商品 -->
+                                                                <td width="8%">
+                                                                    <a target="_blank" href="{:DM('item')}{:U('/index/index', ['id' => $goods['attr_list_id']])}">
+                                                                        <img src="{$goods['images']}" class="img-thumbnail" style="width: 80px;"></a>
+                                                                </td>
+                                                                <td valign="top" width="35%" class="text-left">
+                                                                    <a target="_blank" href="{:DM('item')}{:U('/index/index', ['id' => $goods['attr_list_id']])}">{$goods.goods_name}</a>
+                                                                    <div class="md5 text-gray mt5">颜色/尺码：{$goods.attr_name}</div>
+                                                                    <neq name="goods.status" value="1"><div class="md5 text-gray mt5 text_red">当前商品已下架</div></neq>
+                                                                </td>
+                                                                <td width="15%">
+                                                                    ￥ <span class="text_red">{$goods.price}</span> 元
+                                                                </td>
+                                                                <td width="15%">
+                                                                    × {$goods.num}
+                                                                </td>
+                                                                <td width="15%">
+                                                                    ￥ <span class="text_red goods_total_price">{$goods.total_price}</span> 元
+                                                                </td>
+                                                                <td width="12%">
+                                                                    × <span class="text_red">{$goods.score_ratio}</span> 倍
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </volist>
+                                            <tr>
+                                                <td>
+                                                    <div class="row">
+                                                        <div class="col-md-4 col-sm-4">
+                                                            <label>买家留言</label>
+                                                            <textarea class="form-control" name="remark_{$vo.express_tpl_id}" cols="58" placeholder="请输入你想要注明的信息..." rows="2"></textarea>
+                                                        </div>
+                                                        <div class="col-md-2 col-sm-2">
+                                                            <label>配送方式</label>
+                                                            <select data-total="{$vo.total_price}" data-reduction="{$vo.full_reduction|0}" data-seller="{$vo.seller_id}" data-free="{$vo.free_express|0}" data-express_tpl_id="{$vo.express_tpl_id}" class="form-control input-sm inline-block" name="express_type_{$vo.express_tpl_id}">
+                                                                <volist name="vo.express_type" id="express">
+                                                                    <option value="{$express.value}">{$express.name}</option>
+                                                                </volist>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-2 col-sm-2">
+                                                            <notempty name="vo.coupon">
+                                                                <label>
+                                                                优惠券：
+                                                                </label>
+                                                                <select data-total="{$vo.total_price}" data-reduction="{$vo.full_reduction|0}" data-seller="{$vo.seller_id}" data-express_tpl_id="{$vo.express_tpl_id}" class="form-control input-sm inline-block" name="coupon_{$vo.express_tpl_id}">
+                                                                    <option value="0">--请选择--</option>
+                                                                    <volist name="vo.coupon" id="ex">
+                                                                        <option data-id="{$ex.id}" data-price="{$ex.price}" data-code="{$ex.code}" value="{$ex.id}">{:$ex['type']==1?'店铺':'唐人街'}优惠券【{$ex.price}元】</option>
+                                                                    </volist>
+                                                                </select>
+                                                                <else />
+                                                                <select data-seller="{$vo.seller_id}" data-express_tpl_id="{$vo.express_tpl_id}" class="form-control input-sm w150 inline-block hide" name="coupon_{$vo.express_tpl_id}">
+                                                                    <option value="0">--请选择--</option>
+                                                                </select>
+                                                            </notempty>
+                                                        </div>
+                                                        <div class="col-md-4 col-sm-4 text-right">
+                                                            <notempty name="vo.full_reduction"><div class="pr15 shop_full_reduction_{$vo.express_tpl_id}">已优惠：<strong class="text_red">￥</strong><span data-reduction="{$vo.full_reduction}" class="text_red fs20">{$vo.full_reduction}</span></div></notempty>
+                                                            <notempty name="vo.gift">
+                                                                <div class="pr15">赠品：
+                                                                    <volist name="vo.gift" id="gift">
+                                                                        <a class="mr10" href="{:DM('item')}{:U('/index/index', ['id' => $gift['attr_list'][0]['id']])}" target="_blank"><img src="{:myurl($gift['images'], 20)}" /></a>
+                                                                    </volist>
+                                                                </div>
+                                                            </notempty>
+                                                            <div class="pr15">运费：<strong class="text_red">￥</strong><span class="text_red fs20" id="shopTotalExpressPrice_{$vo.express_tpl_id}">0.00</span></div>
+                                                            <div class="pr15">店铺合计(含运费)：<strong class="text_red">￥</strong><span class="text_red fs20 shopTotalPrice"  id="shopTotalPrice_{$vo.express_tpl_id}"> {$vo.total_price}</span></div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table><!-- 订单信息结束 -->
+                                    </volist>
+
+                                    <div class="text-right">
+                                        <div class="text-right">
+                                            <a href="{:DM('cart')}" class="mr10 text_red"><i class="fa fa-angle-double-left mr10"></i>返回购物车修改</a>
+                                            <span class="plr20">实付款：<strong class="text_red fs16 totalPrice">￥<span>0.00</span></strong></span>
+                                            <button type="button" class="btn btn-lg btn-rad btn-trans btn-danger btn-submit">提交订单</button>
+                                        </div>
+                                        <h5><img class="mr10" src="__NEW_DESIGN__images/i.png">若价格变动，请在提交订单后联系卖家改价，并查看已买到的宝贝</h5>
+                                        <h5><img class="mr10" src="__NEW_DESIGN__images/i.png">使用唐人街官方优惠券，商家发货后将不支持退款！</h5>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </form>
+                    </notempty>
+                <div class="row" style="border-top: solid 20px #F8F8F8"></div>
+                {:W('Common/Side/like')}
+                </div>
+            </div>
+        </div>
+        <!-- my codeing over -_-   -->
+    </div>
+</block>
+
+<block name="css">
+    <!--<link rel="stylesheet" type="text/css" href="/Public/CSS/flatdream/js/jquery.icheck/skins/square/_all.css">-->
+</block>
+
+<block name="script">
+    <!-- to do your javascript codeing -->
+    <script>
+        $(document).ready(function () {
+
+
+            var addressId = $('input[name="address_id"]').val();    //获取收货地址
+
+            if (addressId != undefined && addressId != '') {
+                countShopPrice(addressId);
+            }
+            writePrice();   //写入总金额
+            /**
+             * 选择收货地址
+             */
+//            $(".addr-box-item").click(function () {
+//                var addrId = $(this).data('id');
+//                if (addrId != '' && addrId != undefined) {
+//                    $("input[name='address_id']").val(addrId);
+//                    $(".addr-box-item").removeClass('active');
+//                    $(this).addClass('active');
+//                    countShopPrice(addrId);
+//                } else {
+//                    talert({status:0, msg:'收货地址不正确'})
+//                }
+//            });
+
+
+            /**
+             * 修改发货方式
+             */
+            $("select[name^='express_type_']").change(function () {
+                var addressId = $("input[name='address_id']").val();
+                if (addressId == undefined || addressId == '') return false;
+                var data = $(this).data();
+                data.addressId = addressId;
+                data.couponPrice = parseFloat($('select[name="coupon_'+data.express_tpl_id+'"]').find('option:selected').text());   //获取优惠金额
+                data.express = $(this).val();
+                if (data.free == 1) return false;
+                getExpressPriceByPost(data);
+            });
+
+
+            //使用优惠券
+            $("select[name^='coupon_']").change(function () {
+                //
+                var data = $(this).data();
+                data.couponPrice = parseFloat($(this).find('option:selected').data('price'));   //获取优惠金额
+                data.expressPrice= parseFloat($("#shopTotalExpressPrice_" + data.express_tpl_id).html()); //运费
+
+
+                //如果当前优惠券被选中则隐藏当前优惠券
+                var couonData = $("select[name='coupon_"+data.express_tpl_id+"']").find("option:selected").data();
+                if (couonData.id != undefined) {
+                    $("select[data-seller='"+data.seller+"'] option[value!='"+couonData.id+"']").not("select[name='coupon_"+data.express_tpl_id+"'] option").show();
+                    $("select[data-seller='"+data.seller+"'] option[value='"+couonData.id+"']").not("select[name='coupon_"+data.express_tpl_id+"'] option[value='"+couonData.id+"']").hide();
+                    $(".shop_full_reduction_" + data.express_tpl_id).addClass('hide');
+                } else {
+                    $(".shop_full_reduction_" + data.express_tpl_id).removeClass('hide');
+                    $("select[data-seller='"+data.seller+"'] option[value!='"+couonData.id+"']").not("select[name='coupon_"+data.express_tpl_id+"'] option").show();
+                }
+
+				console.log(data);
+                writeShopTotalPrice(data);
+            });
+
+
+            /**
+             * 提交表单
+             */
+            $(".btn-submit").click(function () {
+                var data	=	$("#confirm").serialize();
+                var retu	=	true;
+                $("select[name^='express_']").each(function() {
+                    if($(this).val() == '') {
+                        retu	=	false;
+                        return false;
+                    }
+                })
+                if(retu == false) {
+                    talert({status:'warning',msg:'请选择配送方式'});
+                    return;
+                }
+                if($("input[name='address_id']").val() == '') {
+                    talert({status:'warning',msg:'收货地址不能为空！'});
+                    return false;
+                }
+                ajax_post({
+                    url:'{:U("/run/authRun")}',
+                    data:data,
+                    headers : {Action : '{$action}'},
+                },function(ret) {
+                    if(ret.code == 1) {
+                        var url	=	'{:U("/pay")}' + '?ordersid=' + ret.data.o_no;
+                        gourl({url:url})
+                    } else {
+                        talert({status:ret.code,msg:ret.msg});
+                    }
+                })
+            });
+        });
+
+
+        function selectedAddr(obj) {
+            var addrId = obj.data('id');
+            if (addrId != '' && addrId != undefined) {
+                $("input[name='address_id']").val(addrId);
+                $(".addr-box-item").removeClass('active');
+                obj.addClass('active');
+                countShopPrice(addrId);
+            } else {
+                talert({status:0, msg:'收货地址不正确'})
+            }
+        }
+
+
+        /**
+         * 写入商家总金额
+         */
+        function writeShopTotalPrice(data) {
+            var shopPrice = parseFloat(data.total);             //商家商品总金额
+            if (data.expressPrice != undefined && data.expressPrice != '' && !isNaN(data.expressPrice)) shopPrice += parseFloat(data.expressPrice);         //商家运费
+
+            if (data.couponPrice != undefined && data.couponPrice != '' && !isNaN(data.couponPrice)) {
+                shopPrice -= parseFloat(data.couponPrice);
+                if (data.reduction != undefined && data.reduction != '' && !isNaN(data.reduction)) {
+                    shopPrice += parseFloat(data.reduction);
+                }
+            }          //商家优惠券金额
+            if (data.reduction != undefined && data.reduction != '' && !isNaN(data.reduction)) {
+                //shopPrice -= parseFloat(data.reduction);
+            }   //促销优惠金额
+            $("#shopTotalPrice_" + data.express_tpl_id).html(shopPrice.toFixed(2));
+            writePrice();
+        }
+        
+
+        /**
+         * 统计店铺总金额
+         */
+        function countShopPrice(addressId) {
+            if (addressId == undefined || addressId == '') return false;
+            $("select[name^='express_type_']").each(function() {
+                var data    = $(this).data();
+                data.express = $(this).val();
+                data.addressId = addressId;
+                if (data.free == 1) return false;
+                getExpressPriceByPost(data);
+            });
+        }
+        
+        /**
+         * 异步计算邮费
+         */
+        function getExpressPriceByPost(data) {
+            ajax_post({
+                url:'{:U("/run/authRun")}',
+                data:{address_id:data.addressId,seller_id:data.seller,express_type:data.express,express_tpl_id:data.express_tpl_id},
+                async: false,
+                headers : {Action : '{:enCryptRestUri("/Confirm/getEpressPrice")}'}
+            },function(ret) {
+                $("#shopTotalExpressPrice_" + data.express_tpl_id).html(ret.data.express_price.toFixed(2));
+                data.expressPrice = parseFloat(ret.data.express_price);
+                writeShopTotalPrice(data);
+            });
+        }
+        
+        
+        /**
+         * 写入总金额
+         */
+        function writePrice() {
+            var totalPrice = 0;
+            $(".shopTotalPrice").each(function () {
+                totalPrice += parseFloat($(this).html());
+            });
+            $(".totalPrice").html('￥ ' + totalPrice.toFixed(2));
+        }
+
+        /**
+         * 更新地址
+         */
+        function refAddrItem() {
+            ajax_get({
+                url : '{:U("/confirm/update_addr")}'
+            }, function (res) {
+                var html = '';
+                var addr = $('input[name="address_id"]').val();
+                $.each(res, function (k, v) {
+                    html += '<div onclick="selectedAddr($(this))" data-id="'+v.id+'" class="col-md-3 col-sm-3 addr-box-item '+((addr != undefined && addr != '' ? v.id == addr : k == 0) ? 'active' : '')+(k > 6 ? ' gt6 dn' : '') +' ">'+
+                                '<h5>'+v.linkname+',('+v.mobile+')</h5>'+
+                                '<p class="text-gray">' + v.province_name + v.city_name + v.district_name + v.town_name + v.street +'</p>' +
+                            '</div>';
+                });
+                html += '<div class="col-md-3 col-sm-3 addr-box-btn text-center">'+
+                            '<div class="mt20">'+
+                                '<a class="btn btn-rad btn-trans btn-danger" href="javascript:;" onclick="extAddrBox($(this));"><i class="fa fa-angle-double-down"></i> 展开地址</a>'+
+                                '<a class="btn btn-rad btn-trans btn-success ml10" onclick="refAddrItem();" href="javascript:;"><i class="fa fa-refresh"></i> 更新地址</a>'+
+                            '</div>'+
+                        '</div>';
+
+                $(".addr-box .row").html(html);
+            })
+        }
+        
+        
+        /**
+         * 展开收货地址
+         */
+        function extAddrBox(obj) {
+            if ($(".gt6").hasClass('dn')) {
+                $(".gt6").removeClass('dn');
+                obj.html('<i class="fa fa-angle-double-up"></i> 收起地址');
+                return true;
+            }
+            $(".gt6").addClass('dn');
+            obj.html('<i class="fa fa-angle-double-down"></i> 展开地址');
+        }
+
+        function addAddr() {
+            vmodal({
+                title:'添加收货地址',
+                url:'{:U("/confirm/addr")}',
+            })
+        }
+    </script>
+</block>

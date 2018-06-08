@@ -1,0 +1,77 @@
+<h4 class="text-center pd10">
+	{$data.s_no}
+</h4>
+<notempty name="data.code">
+	{:W('Common/Builder/nors', array('param' => array('text' => $data['msg'])))}
+<else />
+	<form class="form-horizontal" id="formadd" name="formadd" data-url="/run/authRun" novalidate="novalidate">
+		<input type="hidden" name="s_no" value="{$data.s_no}" />
+		<table class="table table-bordered table-advance table-hover mb30">
+			<tbody>
+				<tr style="background:#f9f9f9;">
+					<th class="col-lg-1 text-center">图片</th>
+					<th class="col-lg-2 text-center">商品</th>
+					<th class="col-lg-1 text-center">单价</th>
+					<th class="col-lg-1 text-center">数量</th>
+					<th class="col-lg-1 text-center">修改价格</th>
+					<th class="col-lg-1 text-center">运费</th>
+					<th class="col-lg-1 text-center">总额</th>
+				</tr>
+				<volist name="data.orders_goods" id="vo">
+					<tr class="count">
+						<td style="vertical-align: middle;">
+							<a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', array('id' => $vo['attr_list_id']))}" target="_blank"><img src="{$vo['images']}" class="img-thumbnail"></a>
+							<input type="hidden" name="orders_goods_id[]" value="{$vo.id}">
+						</td>
+						<td style="vertical-align: middle;"><a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', array('id' => $vo['attr_list_id']))}" target="_blank">{$vo.goods_name}<br /><span class="text_yellow">{$vo.attr_name}</span></a></td>
+						<td style="vertical-align: middle;" class="text-center">{$vo.price}</td>
+						<td style="vertical-align: middle;" class="text-center">×{$vo.num}</td>
+						<td style="vertical-align: middle;" class="text-center">
+							<input tips='价格不能为空' type="text" name="total_price_edit[]" class="form-control" value="{$vo.total_price_edit}" />
+						</td>
+						<eq name="key" value="0">
+						<td style="vertical-align: middle;" class="text-center rwospanTd">
+							<input type="text" tips='运费不能为空' name="express_price" class="form-control" value="{$data.express_price_edit}" />
+						</td>
+						<td style="vertical-align: middle;" class="text-center rwospanTd">{$data.pay_price}</td>
+						</eq>
+					</tr>
+				</volist>
+			</tbody>
+		</table>
+		<div class="text-center">
+			<button type="button" class="btn btn-primary bg-8ac mb30 border_none text_white inline-block btn-150px fs18 btn-submit ">提交</button>
+		</div>
+	</form>
+</notempty>
+<script>
+$(document).ready(function() {
+	$(".btn-submit").click(function() {
+		var result=true;
+		$("#formadd input").each(function() {
+			if($(this).val() == '') {
+				talert({status:0,msg:$(this).attr('tips')});
+				result=false;
+				return false;
+			}
+		});
+		if(!result){return false;}
+		var data	=	$("#formadd").serialize();
+		
+		ajax_post({
+			url:"{:U('/run/authRun')}",
+			headers : {Action : '{:enCryptRestUri("/Orders/priceEdit")}'},
+			data : data,
+		},function(res) {
+			talert({status:res.code,msg:res.msg});
+			if(res.code == 1) {
+			  	ref(); 
+			}
+		})
+	});
+	
+	
+	var count = $("tr.count").size();
+	$(".rwospanTd").attr('rowspan', count);
+})
+</script>

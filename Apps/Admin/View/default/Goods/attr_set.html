@@ -1,0 +1,92 @@
+<div class="attr-set">
+<volist name="list" id="vo">
+<div class="attr-group" id="{$vo.id}">
+	<div class="p10 border-d ft16 strong">{$vo.attr_name}</div>
+	<div class="p10">
+		<div class="row">
+		<volist name="vo.attr_options" id="opt">
+			<div class="col-xs-2 md20">
+				<div class="input-group">
+					<span class="input-group-addon" style="padding:0 10px;"><input type="checkbox" id="attr_id_{$vo.id}_{$key}" name="attr_id_{$vo.id}_{$key}" value="{$vo.id}:{$key}" class="i-red-square" {:in_array($vo['id'].':'.$key,$attr_value['attr'])?'checked':''}></span>
+					<input type="text" name="attr_value_{$vo.id}_{$key}" id="attr_value_{$vo.id}_{$key}" class="form-control" value="{:$attr_value[$key]['attr_value']?$attr_value[$key]['attr_value']:$opt}" placeholder="请输入{$vo.attr_name}">
+					<span class="input-group-addon cursor" data-key="{$vo.id}_{$key}" onclick="select_images($(this))">图片</span>
+					<input type="hidden" name="attr_aid_{$vo.id}_{$key}" id="attr_aid_{$vo.id}_{$key}" value="{:$attr_value[$vo['id'].':'.$key]}">
+				</div>
+				<div class="attr-images attr_images_{$vo.id}_{$key} text-center" style="height:40px">
+					<assign name="ilkey" value="$key" />
+
+					<if condition="!empty($attr_value[$key]['attr_album'])">
+					<foreach name="attr_value[$key]['attr_album']" item="il">
+						<div class="max-100 hover-shadow"><div class="img-remove" onclick="$(this).parent().remove();"><i class="fa fa-times"></i></div><a class="image-zoom" href="{$il}" title="{$il}"><img src="{$il}?imageMogr2/thumbnail/!60x60r/gravity/Center/crop/60x60" alt="主图"></a><input type="hidden" name="attr_images_{$vo.id}_{$ilkey}[]" value="{$il}"></div>
+					</foreach>
+					</if>
+				</div>
+			</div>
+		</volist>
+		</div>
+	</div>
+</div>
+</volist>
+</div>
+
+<div class="attr-lib">
+	<div class="p10 border-d ft16 strong">商品库存 <span class="ft12 text-gray ml20">多条库存时，最高价与最低相差不得超过彼此的30%;</span></div>
+	<div class="p10 attr-set-list">
+		<div class="text-center nors">请先从上面选择属性！</div>
+	</div>
+</div>	
+
+<script>
+iCheckClass('.attr-group');
+image_zoom();
+function select_images(obj){
+	var d=obj.data();
+	$('.vform-type').html('goods_attr');
+	$('.vform-action').html(d.key);
+	//alert(d.key);
+	vmodal({
+		title:'上传主图',
+		iframe:'/UploadMore',
+		width:'95%',
+		tag:'#ajax-modal2',
+	});
+}
+
+$('.attr-set input[type="checkbox"]').on('ifChanged',function(){
+	attr_create();
+});
+
+$('.attr-set input[name^="attr_value_"]').change(function(){
+	attr_create();
+});
+
+if($('.attr-set input[type="checkbox"]:checked').size()>0){
+	attr_create();
+}
+
+function attr_create(){
+	var select=new Array();
+	$('.attr-set input[type="checkbox"]:checked').each(function(i){
+		select[i]=$(this).val()+':'+$(this).closest('.input-group').find('input[type="text"]').val();
+	});
+	//查询中，让提交按钮不可点选
+	$("#formadd button[type='submit']").attr("disabled", true);
+	ajax_post({
+		url:'__URL__/attr_create_form/goods_id/{$_GET.goods_id}',
+		data:{data:select}
+	},function(ret){
+		//alert(ret.html);
+		//解除按钮不可点选
+		$("#formadd button[type='submit']").removeAttr("disabled");
+		if(ret.status=='success'){
+			$('.attr-set-list').html(ret.html);
+		}else{
+			$('.attr-set-list').html('<div class="text-center nors">请先从上面选择属性！</div>');
+		}
+	});
+}
+
+
+
+
+</script>

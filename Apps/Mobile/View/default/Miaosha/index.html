@@ -1,0 +1,89 @@
+<include file="Public:header" />
+		<div class="page-group">
+			<div id="page-miaosha-index" class="page">
+				<!-- 标题栏 -->
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left" href="/"></a>
+					<h1 class="title">限时抢购</h1>
+					<a class="icon iconfont icon-category pull-right ml5 ac-menu" onclick="top_menu()"></a>
+				</header>
+
+				<!-- 浮动导航 -->
+				<include file="Public:fixed-menu" />
+
+				<!-- 这里是页面内容区 -->		
+				<div class="content">
+					<div class="iscroll-time-bar">
+						<div id="scroller">  
+							<ul class="time-bar-scroller">
+								<volist name="times.times" id="vo">
+								<li class="{:$times['active']['daytime'] == $vo['daytime']?'active':''}" data-daytime="{$vo.daytime}">
+									<a href="/Miaosha/index/day/{$vo.day}/time/{$vo.time}" data-no-cache="true">
+										<div class="time">{$vo.time}</div>
+										<div class="status_name">{$vo.status_name}</div>
+									</a>
+								</li>
+								</volist>
+							</ul>
+						</div>
+					</div>						
+					
+					
+					<div class="miaosha-time-box2" data-time_dif="{$times.active.time_dif}" data-active="{$times.active.active}" data-daytime="{$times.active.daytime}">
+						<div class="pull-left">{$times.active.status_name}</div>
+						<div id="clock"></div>
+					</div>
+					
+					<div class="bg-white" style="height: 4.6rem;"></div>
+				
+					<!--秒杀商品-->
+					<notempty name="list">
+						<div class="list-block goods-list">						
+							<ul>		
+								<!--楼层-->
+								<volist name="list" id="floor">
+									<!--商品-->
+									<notempty name="floor.goods">
+										<volist name="floor.goods" id="vo">
+										<li class="goods-content item-link" style="min-height: 121px;">
+											<a class="goods-item" href="/Goods/view/id/{$vo.goods_attr_list.id}">
+												<div class="goods-images" style="min-width: 100px;">
+													<img class="lazyload" data-sizes="auto" data-src="{:myurl($vo['images'],320)}" alt="商品主图" src="../Public/images/nopic.gif" width="100">
+												</div>
+												<div class="goods-info">
+													<div class="goods-name">{$vo.goods.goods_name}</div>
+													<div class="pull-right">
+														<eq name="times.active.active" value="1">
+															<div class="btn btn-md btn-danger btn-trans">去秒杀</div>
+															<else />
+															<div class="btn btn-md btn-white btn-trans">即将开始</div>
+														</eq>
+													</div>
+													<div class="goods-info-more">														
+														<div class="goods-price">￥{$vo.price} <span class="ml03 text-gray ft06">原价<span class="text-overline">￥{:round($vo['goods_attr_list']['price'] * 1.2)}</span></span></div>
+														<!--<div class="score">奖励 {$vo.score} 积分，已抢 {$vo.sale_num} / 共 {$vo.num} 件</div>-->
+													</div>
+												</div>
+											</a>
+										</li>										
+										</volist>
+									</notempty>
+								</volist>
+							</ul>
+						</div>
+					<else />
+						<div class="nors text-center">
+							<div><i class="iconfont icon-miaosha1 ft3"></i></div>
+								 暂无商品！
+						</div>			
+					</notempty>
+
+				</div>		
+			
+		
+			</div>	
+		</div>
+		
+
+<include file="Public:script" />
+<include file="Public:footer" />

@@ -1,0 +1,323 @@
+<script type="text/javascript" src="/Public/Webuploader/js/webuploader.js"></script>
+<link rel="stylesheet" type="text/css" href="/Public/Webuploader/css/webuploader.css">
+<h4 class="text-center pd10">
+	{$data.r_no}
+</h4>
+<notempty name="data.code">
+	{:W('Common/Builder/nors', array('param' => array('text' => $data['msg'])))}
+<else />
+	<table class="table table-bordered table-advance table-hover mb10">
+		<tbody>
+			<tr style="background:#f9f9f9;">
+				<notempty name="data.orders_goods">
+				<th class="col-lg-1 text-center">图片</th>
+				</notempty>
+				<th class="col-lg-2 text-center">商品</th>
+				<th class="col-lg-1 text-center">申请数量</th>
+				<th class="col-lg-1 text-center">当前状态</th>
+				<th class="col-lg-1 text-center">申请时间</th>
+			</tr>
+			<tr class="count">
+				<notempty name="data.orders_goods">
+				<td style="vertical-align: middle;">
+					<a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', array('id' => $data['orders_goods']['attr_list_id']))}" target="_blank"><img src="{$data['orders_goods']['images']}" class="img-thumbnail"></a>
+				</td>
+				</notempty>
+				<td style="vertical-align: middle;">
+					<empty name="data.orders_goods">
+					运费
+					<else/>
+					<a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', array('id' => $data['orders_goods']['attr_list_id']))}" target="_blank">{$data.orders_goods.goods_name}</a></br>{$data.orders_goods.attr_name}
+					</empty>
+					
+				</td>
+				<td style="vertical-align: middle;" class="text-center">×{$data.num}</td>
+				<td style="vertical-align: middle;" class="text-center">{$data.status_name}</br>({$data.type_name})</td>
+				<td style="vertical-align: middle;" class="text-center">{$data.atime}</td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<table class="table table-bordered table-advance table-hover mb10">
+		<tbody>
+			<tr style="background:#f9f9f9;">
+				<th class="col-lg-1 text-left">申请售后理由</th>
+			</tr>
+			<tr class="count">
+				<td class="text-break-all">
+					{$data.reason}
+				</td>
+			</tr>
+			<notempty name="addr">
+				<tr class="count">
+					<td>
+						{$addr}
+					</td>
+				</tr>
+			</notempty>
+		</tbody>
+	</table>
+	<notempty name="data.images">
+		<table class="table table-bordered table-advance table-hover">
+			<tbody>
+				<tr style="background:#f9f9f9;">
+					<th class="col-lg-1 text-left">申请售后照片</th>
+				</tr>
+				<tr class="count">
+					<td>
+						<php>
+							$images	=	explode(',',rtrim($data['images'], ','));
+						</php>
+						<ul class="images-select-box">
+							<volist name="images" id="vo">
+								<li id="" data-path="{$vo}" class="text-center">
+									<div class="li-img-box">
+										<a href="javascript:;" data-url="{$vo}" onclick="bigImage($(this))" class="image-zoom" title="大图">
+											<img src="{:myurl($vo, 100)}">
+										</a>
+									</div>
+								</li>
+							</volist>
+						</ul>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</notempty>
+	<switch name="Think.get.type">
+		<case value="cancel">
+			<div class="bg-warning pd10">
+				<i class="fa fa-exclamation-circle fs16 fl text_yellow"></i>
+				<p class="ml20 mb0">您当前的操作为取消退款，<span class = "text_yellow">只有1次取消退款的机会</span>，请谨慎操作！</p>
+			</div>
+		</case>
+		<case value="express">
+			<div class="bg-warning pd10">
+				<i class="fa fa-exclamation-circle fs16 fl text_yellow"></i>
+				<p class="ml20 mb0">您当前的操作为寄回商品至卖家，请谨慎操作！{$data.address}</p>
+			</div>
+		</case>
+	</switch>
+</notempty>
+{:W('Common/Builder/form', [['data' => $keyList, 'run' => '/run/authRun']])}
+<switch name="Think.get.type">
+<case value="reject">
+<script>
+$(document).ready(function() {
+	checkform({
+		formid:"#formadd",
+		headers : {Action : '{$header}'},
+		rules:{
+			password_pay:{
+				required:true,
+				number:true,
+				minlength:6,
+				maxlength:6,
+			},
+			reason:{
+				required:true,
+				minlength:30,
+				maxlength:300,
+			}
+		},
+		messages:{
+			password_pay:{
+				required:'安全密码不能为空',
+				number:'安全密码为6位数字组成',
+				minlength:'安全密码为6位数字组成',
+				maxlength:'安全密码为6位数字组成',
+			},
+			reason:{
+				required:'拒绝原因不能为空',
+				minlength:'拒绝原因必须在30-300个汉字之间',
+				maxlength:'拒绝原因必须在30-300个汉字之间',
+			}
+		}
+	},function(res) {
+		talert({status:res.code,msg:res.msg});
+		if(res.code == 1) {
+			setTimeout("ref()", 1000);
+		}
+	});
+});
+</script>
+</case>
+<case value="appeal">
+<script>
+$(document).ready(function() {
+	checkform({
+		formid:"#formadd",
+		headers : {Action : '{$header}'},
+		rules:{
+			remark:{
+				required:true,
+				minlength:30,
+				maxlength:300,
+			}
+		},
+		messages:{
+			remark:{
+				required:'申诉原因不能为空',
+				minlength:'申诉原因必须在30-300个汉字之间',
+				maxlength:'申诉原因必须在30-300个汉字之间',
+			}
+		}
+	},function(res) {
+		talert({status:res.code,msg:res.msg});
+		if(res.code == 1) {
+			setTimeout("ref()", 1000);
+		}
+	});
+});
+</script>
+</case>
+<case value="send_express">
+<script>
+$(document).ready(function() {
+	
+	$(".btn-submit").click(function() {
+		var company = $("input[name='express_company_id']").val();
+		if(company == '' || company == undefined) {
+			talert({status:0,msg:'请选择快递公司'});
+			return false;
+		}
+	});
+	
+	if($("input[name='express_company_id_search']").size() > 0) {
+		var keyword = '';
+		$("input[name='express_company_id_search']").keyup(function() {
+			keyword = $(this).val();
+			var obj = $(this);
+			if(keyword != '') {
+				ajax_post({
+					url:'{:U("/run")}',
+					data:{q:keyword},
+					headers:{Action : '{:enCryptRestUri("/Serllser/searchExpressCompany")}'},
+				},function(res) {
+					if(res.code == 1 && res.data != '') {
+						obj.parent().find(".search-select-list-box").removeClass('hide');
+						var list = res.data;
+						var html = '';
+						for(i in list) {
+							html += '<li onclick="chooseCompany(\'express_company_id_search\', \''+list[i]['id']+'\', \''+list[i]['company']+'\');" data-id="'+list[i]['id']+'" style="padding:10px 0;border-bottom:solid 1px #b8b8b8;cursor: pointer;"><img height="30px" alt="'+list[i]['company']+'" src="'+list[i]['logo']+'"><span class="ml10">'+list[i]['company']+'</span></li>'
+						}
+						obj.parent().find(".search-select-list-box ul").html(html)
+					}
+				});
+			} else {
+				obj.parent().find(".search-select-list-box").addClass('hide');
+			}
+		});
+	}
+	
+	checkform({
+		formid:"#formadd",
+		headers : {Action : '{$header}'},
+		rules:{
+			express_company_id:{
+				required:true,
+			},
+			express_code:{
+				required:true,
+			}
+		},
+		messages:{
+			express_company_id:{
+				required:'快递公司不能为空',
+			},
+			express_code:{
+				required:'快递单号不能为空',
+			}
+		}
+	},function(res) {
+		talert({status:res.code,msg:res.msg});
+		if(res.code == 1) {
+			setTimeout("ref()", 1000);
+		}
+	});
+});
+
+function chooseCompany(doc, val, company) {
+	var obj = $("#"+doc);
+	obj.val(company);
+	obj.next().val(val);
+	obj.parent().find(".search-select-list-box").addClass('hide');
+	if(company == '无需物流') {
+		$(".f-express_code").hide();
+		$("#express_code").val('——');
+	} else {
+		if($("#express_code").val() == '——'){
+			$("#express_code").val('');
+		}
+		$(".f-express_code").show();
+	}
+}
+</script>
+</case>
+<case value="accept">
+<script>
+$(document).ready(function() {
+	checkform({
+		formid:"#formadd",
+		headers : {Action : '{$header}'},
+		rules:{
+			password_pay:{
+				required:true,
+				number:true,
+				minlength:6,
+				maxlength:6,
+			},
+		},
+		messages:{
+			password_pay:{
+				required:'安全密码不能为空',
+				number:'安全密码为6位数字组成',
+				minlength:'安全密码为6位数字组成',
+				maxlength:'安全密码为6位数字组成',
+			},
+		}
+	},function(res) {
+		talert({status:res.code,msg:res.msg});
+		if(res.code == 1) {
+			setTimeout("ref()", 1000);
+		}
+	});
+});
+function select_address_item(obj){
+	var data=obj.data();
+	obj.addClass('active').siblings().removeClass('active');
+	$('#'+data.field).val(data.id);
+}
+</script>
+</case>
+<default />
+<script>
+$(document).ready(function() {
+	checkform({
+		formid:"#formadd",
+		headers : {Action : '{$header}'},
+		rules:{
+			password_pay:{
+				required:true,
+				number:true,
+				minlength:6,
+				maxlength:6,
+			},
+		},
+		messages:{
+			password_pay:{
+				required:'安全密码不能为空',
+				number:'安全密码为6位数字组成',
+				minlength:'安全密码为6位数字组成',
+				maxlength:'安全密码为6位数字组成',
+			},
+		}
+	},function(res) {
+		talert({status:res.code,msg:res.msg});
+		if(res.code == 1) {
+			setTimeout("ref()", 1000);
+		}
+	});
+});
+</script>
+</switch>

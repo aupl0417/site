@@ -1,0 +1,41 @@
+<div class="line-box-m noicon row">
+	<div class="col-100">
+		<textarea id="refund-remark" name="remark" placeholder="请输入退款留言" maxlength="200" rows="10"></textarea>
+	</div>
+	<div class="clearfix"></div>
+</div>
+<div class="line-box  noicon row hover">
+	<div class="fl text-center text-danger col-50" onclick="logs('{$_GET.r_no}',1)">确定</div>
+	<div class="fl text-center text-danger col-50" onclick="logs('{$_GET.r_no}',0)">取消</div>
+</div>
+<script>
+function logs(r_no,is){
+	if(is == 0){
+		$('.page.active .vmodal .vmodal-footer').click();
+	}else{
+		var remark = $('#refund-remark').val();
+		if(remark == ''){
+			valert({msg:'请输入退款留言'});
+			return false;
+		}
+		ajax_post({
+			url:'/Api/api',
+			data:{
+				apiurl:'/Refund/logs',
+				is_openid:1,
+				r_no:r_no,
+				remark:remark,
+			}
+		},function(ret){
+			valert(ret);
+			$('.page.active .vmodal .vmodal-footer').click();
+			if(ret.code == 1){
+				openWin({name:'refund',url:'/Refund/view/r_no/' + r_no,ref:true});
+			}
+		});
+	}
+
+}
+
+
+</script>

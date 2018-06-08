@@ -1,0 +1,64 @@
+<table class="no-border mb20 bg_f1 mt30"><!-- 类型说明 -->
+    <tbody class="no-border-y">
+    <tr class="text-center">
+        <td width="75%" style="padding:0">
+            <table class="no-border">
+                <tbody class="no-border-y">
+                <td width="13%"></td>
+                <td width="30%">商品信息</td>
+                <td width="12%">退款金额</td>
+                <td width="10%">退货数量</td>
+                <td width="12%">可退金额</td>
+                <td width="18%">可退数量</td>
+                </tbody>
+            </table>
+        </td>
+        <td width="13%">退运费</td>
+        <td width="12%">操作</td>
+    </tr>
+    </tbody>
+</table><!-- 类型说明结束 -->
+
+<table class="revisionTable table"><!-- 订单信息 -->
+    <tbody class="bg_white">
+    <tr class="strong">
+        <td class="bg_f1" colspan="3">
+            <span class="mr20"><span class="text_f1">订单号：</span>{$vo.s_no}</span>
+        </td>
+    </tr>
+    <tr class="text-center">
+        <td style="padding:0; width:75%">
+            <table class="no-border table-hover">
+                <tbody class="no-border-y">
+                <tr><!-- 同店铺第一个商品 -->
+                    <td width="13%">
+                        <a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', array('id' => $data['orders_goods']['attr_list_id']))}">
+                            <img src="{:myurl($data['orders_goods']['images_'], 80)}" class="img-thumbnail"></a>
+                    </td>
+                    <td valign="top" width="30%" class="text-left">
+                        <a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', array('id' => $data['orders_goods']['attr_list_id']))}">{$data.orders_goods.goods_name}</a>
+                        <div class="md5 text-gray mt5">颜色/尺码：{$data.orders_goods.attr_name}</div>
+                    </td>
+                    <td width="12%">
+                        <span class="">￥ {$data.money}</span>
+                    </td>
+                    <td width="10%">× {$data.num}</td>
+                    <td width="12%">
+                        <span class="text_yellow">￥ {$data.can_price}</span>
+                    </td>
+                    <td width="18%">
+                        <span class="text_yellow">× {$data.can_num}</span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+        <td style="width:13%;vertical-align: middle" rowspan="1">
+            <span class="">￥ {$data.refund_express}</span>
+        </td>
+        <td style="width:12%;vertical-align: middle" rowspan="1">
+            <a class="text_blue" href="{:U('/orders/detail', ['id' => $data['s_no']])}">订单详情</a>
+        </td>
+    </tr>
+    </tbody>
+</table><!-- 订单信息结束 -->

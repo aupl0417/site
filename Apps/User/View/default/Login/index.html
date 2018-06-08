@@ -1,0 +1,168 @@
+<include file="Home@Public:header" />
+<header>		
+	<div class="container">
+		<div class="row mg0">
+			<div class="col-xs-2 pd0 text-right"><a href="{:DM('www')}"><img src="__NEW_DESIGN__images/dt_logo.png"></a></div>
+			<div class="col-xs-2 pr0 pt20"><div class="pt5 pl15 mt10 fs20 strong solid_l">欢迎登录</div></div>
+		</div>
+	</div>		
+</header>
+<div class="centent_body">
+		<div style="border-bottom:2px solid #fbc819">
+			<div class="container text-right pt2"></div>
+		</div>
+		<div class="login_img">
+			<div class="container pt40 pb40" >
+				<div class="row">
+					<div class="col-xs-8 text-center">
+						<div class="pt40 pb40">
+							<a href="javascript:;"><img src="__NEW_DESIGN__images/banner-img1.png" alt=""></a>
+						</div>
+					</div>
+					<div class="col-xs-4 pl0">
+						<div class="login-wbox-opactiy">
+						<div class="pd10 bg_white" id="code-icon-box">
+							<div class="pd10">
+								<form id='formadd' class="form-horizontal" data-url="{:U('/Login/login')}">
+									<div class="text-center fs18 mb30 mt10 re"><strong>用户登录</strong></div>
+									<!-- <div class="code-icon "><a href="javascript:void(0)" id="code-icon-input"><img src="__NEW_DESIGN__images/code-img-icon.png" alt="" class=""></a></div> -->
+									<div class="form-group mb30">
+										<div class="col-xs-12">
+											<div class="re">
+												<span class="user-input-icon login-input-icon"></span>
+												<input name="username" type="text" class="form-control pl45 h40 fs14" placeholder="请输入用户名">
+											</div>
+										</div>
+									</div>
+									<div class="form-group mb30">
+										<div class="col-xs-12">
+											<div class="re">
+												<span class="pass-input-icon login-input-icon"></span>
+												<input type="password" name="password" class="form-control pl45 h40 fs14" placeholder="请输入密码">
+											</div>
+										</div>
+									</div>
+									
+									<div class="form-group mb30 dn">
+										<div class="col-xs-12">
+											<div class="re">
+												<span class="pass-input-icon login-input-icon"></span>
+												<div class="row mgt0">
+													<div class="col-xs-6 pr10">
+														<div class="">
+															<input type="text" id="vcode" class="form-control pl45 h40 fs14" name="vcode" placeholder="图形验证码" value="" maxlength="5">
+														</div>
+													</div>
+													<div class="col-xs-6 pl0">
+														<a href="javascript:void(0)" data-url="{:U('/verify/index', ['h' => 40])}" class="verify" title="点击图片更换验证码">
+															<img src="{:U('/verify/index', ['h' => 40])}" alt="验证码" class="verifyimg" style="height:40px;">
+														</a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									
+									<div class="ptb10 clearfix">
+										<label class="square mr10 fl"><input name="remember" value="1" type="checkbox"><span></span></label>两周内自动登录
+										<a href="{:U('/forget')}" class="pull-right hide">忘记密码？</a>
+									</div>
+									<div class="">
+										<button class="btn btn-primary btn-block h40 line24 mg0">登录</button>
+									</div>
+									<div class="mtb20">
+										<a href="{:U('/register/supplier')}" class="btn btn-default  btn-block btn-trans h40 line24 mg0">供货商注册</a>
+									</div>
+								</form>
+							</div>
+						</div>
+						<!--正常登录-->
+						<div class="pd10 bg_white" style="display: none" id="com-icon-box">
+							<div class="pd10">
+								<form class="form-horizontal">
+									<div class="text-center fs18 mb50 mt10 re"><strong>手机扫码，安全登录</strong></div>
+									<div class="code-icon"><a href="javascript:void(0)" id="com-icon-input"><img src="__NEW_DESIGN__images/com-img-icon.png" alt=""></a></div>
+									<div class="mt20 mb50 text-center ">
+										<div class=" text-center">
+											<img src="__NEW_DESIGN__images/code-img2.jpg" alt="" width="200" height="200" class="solid-all">
+										</div>
+									</div>
+									<div class="ptb10 text-center">
+										请使用乐兑客户端扫描二维码登录
+									</div>
+								</form>
+							</div>
+						</div>
+						<!--二维码登录-->
+					</div>				
+					</div>
+				</div>
+			</div>	
+		</div>
+	</div>
+	<include file="Home@Public:footer" />
+	<include file="Home@Public:js" />
+	<script>
+		$(".verify").click(function() {
+			var d = $(this).data();
+			$('.verify img').attr('src',d.url + '?id=' +  + Math.random());
+		})
+		
+		$(function() {
+			checkform({
+				formid:"#formadd",
+				rules:{
+					username:{
+						required:true,
+						rangelength:[6,20]
+					},
+					password:{
+						required:true,
+						rangelength:[6,20]
+					},
+					vcode:{
+						required:true,
+						rangelength:[4,5],
+					},
+				},
+				messages:{
+					username:{
+						required:'用户名不能为空',
+						rangelength:'用户名不能小于6位且不能大于20位',
+					},
+					password:{
+						required:'密码不能为空',
+						rangelength:'密码长度介于8~20个字符，区分大小写！',
+					},
+					vcode:{
+						required:'验证码不能为空',
+						rangelength:'验证码长度为4~5位！'
+					},
+				}
+			}, function(ret) {
+				talert({status:ret.code,msg:ret.msg});
+				if(ret.code == 1) {
+					gourl({url:'{:DM("seller")}'});
+				} else {
+					$("input[name='vcode']").closest('.form-group').removeClass('dn');
+					var d = $('.verify').data();
+					$('.verify img').attr('src',d.url + '?id=' +  + Math.random());
+				}
+			});
+		})
+		
+		$(function(){
+			$("#code-icon-input").click(function(){
+				$("#com-icon-box").show();
+				$("#code-icon-box").hide();
+			});
+		
+			$("#com-icon-input").click(function(){
+				$("#code-icon-box").show();
+				$("#com-icon-box").hide();
+			});
+		
+		});
+		</script>
+	</body>
+</html>

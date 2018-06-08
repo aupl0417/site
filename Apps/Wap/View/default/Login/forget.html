@@ -1,0 +1,110 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			找回密码
+		</div>
+		<div class="r">
+			<div class="text" onclick="openWin({name:'login',url:'/Login/index'})">登录</div>
+		</div>
+	</div>
+</header>
+
+<section>
+	<form id="form-user-ep" data-url="/Api/api">
+	<div class="line-input row hover">
+		<div class="col-4">用户名</div>
+		<div class="col-4x3"><input class ="fl" id="username" name="username" placeholder="请输入用户名" maxlength="20"></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">手机号码</div>
+		<div class="col-4x3"><input class ="fl" id="mobile" name="mobile" placeholder="请输入您的手机号码" maxlength="11"></div>
+	</div>
+	<div class="line-input row hover" style = 'padding:0 0 0 10px'>
+		<div class="col-4">验证码</div>
+		<div class="col-4x3">
+			<input class ="fl" id="smscode" name="smscode" placeholder="填写获取的验证码" style = "width:53%" maxlength="6">
+			<div class = "fr" style = "width:45%;text-align:center;background:#cc0001;color:#fff;" onclick = 'send_smscode(this)' id = "sendButton">获取验证码</div>
+		</div>
+	</div>
+	
+	<div class="p10">
+		<div class="btn btn-lg btn-danger btn-block" onclick="next()">下一步</div>
+	</div>
+	</form>
+</section>
+
+
+<script>
+fixBar(1);
+//发送验证码
+var register_curCount = 0;
+function send_smscode(obj){
+	if(register_curCount != 0){
+		valert({msg:'180秒内只允许发送一次短信'});
+		return false;
+	}
+	mobile = $('.page.active #mobile').val();
+	if(!mobile.match(/^1[3456789]\d{9}$/)){
+		valert({msg:'手机号码格式不正确！'});
+		return false;
+	}
+	ajax_post({
+		url:'/Api/api',
+		data:{apiurl:'/Erp/sms_code',mobile:mobile},
+	},function(ret){
+		if(ret.code==1){
+			register_curCount = 180;
+			$(obj).html("" + register_curCount + "秒后重新获取");
+			InterValObj = window.setInterval(SetRemainTime, 1000);
+		}else{
+			valert(ret);
+		}
+	});
+}
+//验证码计时
+function SetRemainTime() {
+	if (register_curCount == 0) {                
+		window.clearInterval(InterValObj);//停止计时器
+		$(".page.active #sendButton").html("重新发送验证码");
+	}
+	else {
+		register_curCount--;
+		$(".page.active #sendButton").html("" + register_curCount + "秒后重新获取");
+	}
+}
+
+function next(){
+ 	var mobile = $('#mobile').val();
+ 	var smscode = $('#smscode').val();
+ 	var username = $('#username').val();
+ 	if( username == '' ){
+		valert({msg:'请输入用户名'});
+		return false;
+	}
+	if( smscode.length != 6 ){
+		valert({msg:'请输入正确的验证码'});
+		return false;
+	}
+	
+	ajax_post({
+		url:'/Api/api',
+		data:{
+			'apiurl':'/Erp/forgot_password_step1',
+			mobile:mobile,
+			username: username,
+			smscode:smscode
+		},
+	},function(ret){
+		valert(ret);
+		if( ret.code == 1 ){
+			setTimeout(function(){
+				openWin({name:'next',url:'/Login/forget_next/erp_uid/'+ ret.data.erp_uid +'/sign_code/'+ ret.data.sign_code ,ref:true});
+			},1000);
+		}
+	});
+}
+
+</script>

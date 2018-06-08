@@ -1,0 +1,117 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body">
+	<include file="Public:nav" />
+	<div class="container mb30">
+		<include file="Public:side" />
+		<div class="w980 fl">
+			<div class="bor_der">
+				<div class="bg_f1 clearfix fs14 text_44 tle_R">
+					<a class="fl plr15 line40 ml-1 active" href="javascript:;">缴纳保证金</a>
+				</div>
+				<include file="step" />
+				
+				<div class="pd30">
+					
+					<div class="bg-warning pd10">
+						<h5 class="strong"><i class="fa fa-exclamation-circle fs16 fl text_yellow"></i> 加入信用保障</h5>
+						<p class="mb0">
+							“信用保障服务”鼓励卖家以服务制胜，以个性化，多样化的服务给买家提供更好的选择，让买家能了解到除商品之外的更多的重要服务承诺，从而使消费者在购物过程中能够放心购买、快速下单、售后处理也更有保障。
+						</p>
+						<p>
+							该服务具有明显表示，用于支付违约金的代扣，作为一种信用保障，增强买家购买信心，提升浏览转化和下单转化率。<a href="{:DM('faq', '/view')}?id=863" target="_blank" class="text_blue">查看详情></a>
+						</p>
+					</div>
+				</div>
+				
+				<eq name="data.pay_status" value="0">
+					<div class="pd10">
+						<h4 class="mb20 text_yellow text-center">￥ 1000.00  元</h4>
+						<div style="width:450px;margin:0 auto;">
+							<volist name="pays" id="vo">
+								<div data-id="{$key}" class="alert alert-default alert-white rounded hover">
+									<div class="icon bg-d8d8d8"><i class="fa fa-check"></i></div>
+									<strong>{$vo.name}</strong><notempty name="vo.val"><span class="text_yellow ml10">{$vo.val}</span></notempty>
+								</div>
+							</volist>
+							<empty name="account.a_payPwd">
+								<div class="bg-warning pd10"">
+									<i class="fa fa-exclamation-circle fs16 fl text_yellow"></i>
+									<p class="ml20 mb0">您还未设置安全密码，只有在设置安全密码后才能购买商品，<a target="_blank" href="{:DM('my', '/change')}" class="text_yellow">立即设置安全密码</a></p>
+								</div>
+							<else />
+							{:W('Common/Builder/form', [['data' => $keyList, 'run' => '/run/authRun']])}
+							</empty>
+						</div>
+					</div>
+				<else />
+					{:W('Common/Builder/nors', array('param' => array('text' => '<span class="text_yellow">您已交过保证金</span>')))}
+				</eq>
+				<div class="pd10 solid_t">
+					<div class="form-group text-right" style=" margin-bottom:0;">
+						<a class="btn btn-primary btn-next mr20" href="{:U('/opens/step4')}"><i class="fa fa-reply"></i>上一步</a><a class="btn btn-primary <eq name="data.pay_status" value="0">disabled</eq> btn-next" href="{:U('/opens/step6')}"><i class="fa fa-share"></i>下一步</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</block>
+<block name="css">
+<style type="text/css">
+.alert-default .icon i{
+	color:#d8d8d8;
+}
+.hover{
+	cursor:pointer;
+}
+</style>
+						
+</block>
+<block name="script">
+<script>
+<eq name="data.pay_status" value="0">
+$(document).ready(function() {
+	checkform({
+		formid:"#formadd",
+		rules:{
+			password_pay:{
+				required:true,
+			},
+		},
+		messages:{
+			password_pay:{
+				required:'安全密码不能为空',
+			},
+		},
+	},function(ret) {
+		if(ret.code == 1) {
+			talert({status:ret.code,msg:'提交成功，即将进入下一步。'});
+			var url	=	'{:U("/opens/step6")}';
+			setTimeout(function() {
+				gourl({url:url});
+			}, 1000);
+		} else {
+			talert({status:ret.code,msg:ret.msg});
+		}
+	});
+});
+</eq>
+$(document).ready(function() {
+	var paytype	=	$(".alert-success").data('id');
+	if(paytype != undefined) {
+		$("input[name='paytype']").val(paytype);
+	} else {
+		$('.alert-default').first().addClass('alert-success');
+		$("input[name='paytype']").val($('.alert-default').first().data('id'));
+	}
+	$(".alert").click(function() {
+		paytype	=	$(this).data('id');
+		$(this).removeClass('alert-default');
+		$(this).addClass('alert-success');
+		$(".alert").not("[data-id="+paytype+"]").removeClass('alert-success').addClass('alert-default');
+		$("input[name='paytype']").val(paytype);
+	});
+})
+</script>
+</block>

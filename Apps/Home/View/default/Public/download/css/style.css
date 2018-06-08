@@ -1,0 +1,16 @@
+
+
+/*下载页开始*/
+.mall-box-12{position: relative;width: 1200px;margin: auto}
+.mall-bg-color{background-color: #e5665c;padding: 70px 0;}
+.plr35{padding-left: 35px;padding-right: 35px;}
+.mt50{margin-top: 50px;}
+.mb20{margin-bottom: 20px;}
+.mr30{margin-right: 30px;}
+.mr30 img{max-width: 100%;}
+.btn-down-box{margin-top: 5px;padding-bottom: 30px;border-bottom: 1px solid #fff;}
+.down-btn{width: 250px;border: 3px solid #fff;text-align: center;color: #fff;border-radius: 45px;line-height: 60px;display: block;font-size: 26px;}
+.down-btn img{vertical-align:middle;}
+a.down-btn:hover{color: #fff;text-decoration: none}
+.mall-text{color: #fff;font-size: 20px;margin-top: 30px;margin-bottom: 30px;}
+/*下载页结束*/

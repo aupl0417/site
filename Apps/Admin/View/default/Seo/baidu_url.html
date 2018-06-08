@@ -1,0 +1,100 @@
+<include file="Public:header" />
+<include file="nav" />
+
+
+<div class="m20 text-center">
+	<!-- <div class="m20 text-center">
+		<h1 style="font-size:8em;font-weight:800;">警告！</h1>
+		<h2 style="font-size:3em;font-weight:800;">重建索引时将会影响前端使用，且重建索引需要耗费一定的时间，<br />如必须执行此操作建议在用户少的情况下再操作！</h2>
+	</div> -->
+	<!-- <div class="alert alert-warning alert-white-alt2 rounded">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		<div class="icon"><i class="fa fa-warning"></i></div>
+		<div class="ft16"><strong>提示!</strong> 推送链接之前请先更新链接</div>
+	</div> -->
+
+
+	<div class="row text-center">
+		<!-- <div class="col-xs-4">
+			<div class="block-flat">
+				<div class="header">
+					<h3>商品索引</h3>
+				</div>
+				<div class="content text-center" style="min-height:250px">
+					<div class="btn btn-150px btn-danger btn-trans btn-lg m20" onclick="clean_index($(this))" data-url="/XsGoods/clean"><i class="fa fa-times"></i> 清除索引</div>
+					<div class="clearfix"></div>
+					<div class="btn btn-150px btn-danger btn-trans btn-lg m20" onclick="build_index($(this))" data-url="/XsGoods/build_index"><i class="fa fa-random"></i> 重建索引</div>
+					<div class="clearfix"></div>
+					<div class="btn btn-150px btn-danger btn-lg m20" onclick="update_index($(this))" data-url="/XsGoods/update_index"><i class="fa fa-refresh"></i> 更新索引</div>
+				</div>
+			</div>
+		</div> -->
+
+		<foreach name="list" item="vo" key="key">
+			<neq name="key" value="0">
+			<div class="col-xs-4">
+				<div class="block-flat">
+					<div class="header">
+						<h3>{$vo.title}</h3>
+					</div>
+					<div class="content text-center" style="height:auto">
+						<a href="{:U('/Seo/pushUrl',['type'=>$key])}" target="_blank"><div class="btn btn-150px btn-danger btn-lg m20" ><i class="fa fa-random"></i> 推送链接</div></a>
+					</div>
+				</div>
+			</div>
+			</neq>
+		</foreach>
+			<form class="form-horizontal vform" id="formzhijie" name="formzhijie" data-url="__URL__/pushUrlZhiJie">
+			<div class="col-xs-12">
+
+				<div class="block-flat">
+					<div class="header">
+						<h3>手动推送</h3>
+					</div>
+					<div class="form-group f-description">
+						<label class="control-label col-xs-3">推送链接</label>
+						<div class="col-xs-7">
+							<div class="input-group">
+								<div>
+									<textarea id="urls" name="urls" placeholder="请输入推送链接" class="form-control " style="" rows="5" maxlength="200"></textarea>
+								</div>
+							</div>
+							<div class="form-tips">多条链接请 换行填写，每行填写一条</div>
+						</div>
+					</div>
+					<div class="content text-center" style="height:auto">
+						<button type="submit" class="btn btn-lg btn-rad btn-trans btn-primary"><i class="fa fa-random"></i> 推送链接</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+
+
+<include file="Public:copyright" />
+<include file="Public:js" />
+<script>
+$(document).ready(function(){
+
+
+
+});
+checkform({
+	formid:'#formzhijie',
+},function(ret){
+	valert(ret);
+	if(ret.status=='success'){
+		return false;
+
+
+	}
+});
+
+
+
+
+
+</script>
+<include file="Public:footer" />

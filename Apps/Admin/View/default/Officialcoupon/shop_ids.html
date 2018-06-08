@@ -1,0 +1,14 @@
+<notempty name="list">
+<ul class="shop-list mt10">
+	<volist name="list" id="vo">
+	<li data-id="{$vo.id}" class="hover-shadow">
+		<div class="goods-item-box">
+			<div><a href="{:shop_url($vo['id'],$vo['domain'])}" target="_blank"><img src="{:myurl($vo['shop_logo'],150)}" class="img-circle" alt="店铺logo"></a></div>
+			<div class="shop_name"><a href="{:shop_url($vo['id'],$vo['domain'])}" target="_blank"><i class="fa fa-home"></i> {$vo.shop_name}</a></div>
+		</div>
+	</li>
+	</volist>
+</ul>
+</notempty>
+
+<div class="clearfix"></div>

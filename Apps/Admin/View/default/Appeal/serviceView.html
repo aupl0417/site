@@ -1,0 +1,121 @@
+<div class="p20 box">
+	<div class="row auth-text">
+		<div class="col-xs-7">
+			<div class="p10">
+				<div class="row">
+					<div class="col-xs-2">
+						<img src="{:myurl($rs['orders_goods']['images'],160)}">
+					</div>
+					<div class="col-xs-5">
+						<div>售后编号：<span class="ft16">{$rs.r_no}</span></div>
+						<div>订单号：{$rs.s_no}</div>
+						<div>售后类型：{:status($rs['type'],['',['换货', 'btn-danger'],['维修','btn-info']])}</div>
+						<div>售后数量数量：{$rs.num}</div>
+						
+					</div>
+					<div class="col-xs-5">
+						<div>申请时间：{$rs.atime}</div>
+						<volist name="rs.express" id="vo">
+							<div>快递信息：<a href="javascript:;" data-title="<eq name="key" value="0">买家邮寄商品<else />卖家邮寄商品</eq>" date-type="modal" data-url="{:U('/appeal/express', ['company' => $vo['express_company_id'], 'code' => $vo['express_code']])}" class="ft16 text-danger express-view"><eq name="key" value="0">买家邮寄商品<else />卖家邮寄商品</eq></a></div>
+							<div>快递公司：{$vo.express_company}</div>
+							<div>快递单号：{$vo['express_code']}</div>
+						</volist>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-xs-2">
+						
+					</div>
+					<div class="col-xs-5">
+						<div>申请原因：{$rs.reason}</div>						
+					</div>
+					<div class="col-xs-5">
+					</div>
+				</div>				
+			</div>
+			
+
+		</div>
+
+		<div class="col-xs-5">
+			<div class="box p10 md10 ft16">
+				买家：{$rs.user.nick} / {$rs.user.mobile}
+			</div>		
+			<div class="box p10 md10 ft16">
+				卖家：{$rs.seller.nick} / {$rs.seller.mobile}
+			</div>		
+			<div class="box p10">
+				<div class="ft16">店铺：<span class="strong"><a href="{:shop_url($rs['shop']['id'],$rs['shop']['domain'])}">{$rs.shop.shop_name}</a></span> (QQ：{$rs.shop.qq})</div>
+			</div>
+		</div>
+	</div>
+	<div class="ft18 strong p10 border-d md20">处理记录</div>
+	
+	<form data-url="__URL__/logs_add" data-id="#form_{$rs.id}" id="form_{$rs.id}" class="form-horizontal vform">
+		{:W('Widget/buildform',array(array(
+			'field'		=>array(
+				array(
+					'formtype'		=>'radio',
+					'name'			=>'referee',
+					'label'			=>'判决',
+					'data'			=>[[1,'维持原判'],[100,'买家胜诉'],[20,'卖家胜诉']],
+					'field'			=>array(0,1,2),
+				),	
+				array(
+					'formtype'		=>'textarea',
+					'label'			=>'备注',
+					'name'			=>'remark',
+				),
+				array(
+					'formtype'		=>'hidden',
+					'name'			=>'r_id',
+					'value'			=>$rs['id'],
+				),					
+				array(
+					'formtype'		=>'html',
+					'label'			=>' ',
+					'html'			=>'<button type="button" class="btn btn-primary btn-150px logs-add"><i class="fa fa-check"></i> 提交</button>'
+				),
+			),
+		)))}
+	</form>
+	<notempty name="rs.logs">
+	<ul class="timeline">
+		<volist name="rs.logs" id="vo">
+		<li>
+			<i class="fa fa-clock-o"></i>
+			<span class="date">
+				{$vo.atime}
+			</span>
+			<div class="content">
+				<div class="row">
+					<div class="col-xs-2 text-center">
+						<gt name="vo.a_uid" value="0">
+						<img width="60" src="{:myurl($vo['admin']['face'],60)}" class="img-circle">
+						<div>{$vo.admin.username}</div>
+						<else />
+						<img width="60" src="{:myurl($vo['user']['face'],60)}" class="img-circle">
+						<div>{$vo.user.nick}</div>
+						</gt>
+					</div>
+					<div class="col-xs-10">{$vo.remark|nl2br}
+					<br />
+					<notempty name="vo.images">
+	                	<div class="mt10">
+							<volist name="vo.images" id="vo">
+								<a href="{$vo}" class="image-zoom mr10" title="大图">
+									<img src="{:myurl($vo, 100)}">
+								</a>
+							</volist>
+						</div>
+	                </notempty>
+					</div>
+				</div>
+
+			</div>
+		</li>
+		</volist>
+	</ul>
+	</notempty>
+</div>

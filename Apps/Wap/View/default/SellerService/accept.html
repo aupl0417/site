@@ -1,0 +1,99 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			同意售后
+		</div>
+		<div class="r">
+		</div>
+	</div>
+</header>
+
+<section>	
+	<div class="load-body">数据加载中……</div>
+</section>
+
+
+<script id="tpl_sellerservice_accept" type="text/html">
+<form id="form-sellerservice-accept">
+	<div class="line-box noicon hover">
+		<div class="title">售后单号：<%= data.r_no %></div>
+	</div>
+	<div class="line-box-m row address md10" onclick="openWin({name:'sellerservice_select_address',url:'/SellerService/sellerservice_accept_select_address'})">
+		<div class="col-4">
+			<img src="../Public/Images/icon-add2.png">
+		</div>
+		<div class="col-4x3">
+			<div class="ft16" style="line-height:60px">请选择收货地址</div>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+	<div class="line-input hover row">
+		<div class="col-30">安全密码</div>
+		<div class="col-70"><input type="password" id="password_pay" name="password_pay" placeholder="请输入安全密码" maxlength="6"></div>
+	</div>
+	<input type="hidden" name="apiurl" value="/SellerRefund3/accept">
+	<input type="hidden" name="is_openid" value="1">	
+	<input type="hidden" name="s_no" value="<%= data.s_no %>">	
+	<input type="hidden" name="r_no" value="<%= data.r_no %>">
+	<input type="hidden" id="address_id" name="address_id" value="">
+	<div class="p10">
+		<div class="btn btn-lg btn-block btn-danger" onclick="accept()">确认售后</div>
+	</div>	
+</form>
+</script>
+<script id="address_default" type="text/html">
+		<div class="title"><%= data.linkname %> ，<%= data.mobile %> <% if(data.tel!=""){ %>，<%= data.tel %><% } %></div>
+		<div class="text-gray"><%= data.province_name %> <%= data.city_name %> <%= data.district_name %> <%= data.town_name %> <%= data.street %><% if(data.postcode!=""){ %>，<%= data.postcode %><% } %></div>
+</script>
+<script>
+	fixBar(1);	
+	
+	ajax_post({
+		url:'/Api/apis',
+		data:{
+				service:{apiurl:'/SellerRefund3/view',is_openid:1,r_no:'{$_GET.r_no}'},
+				address:{apiurl:'/SendAddress/default_address',is_openid:1}
+			}
+	},function(ret){
+		if(ret.service.code == 1){
+			var html=template('tpl_sellerservice_accept',{data:ret.service.data});
+			$('.page.active section').html(html);
+		}
+		
+		if(ret.address.code == 1){
+			var html = template('address_default', {data:ret.address.data});
+			$(".page.active #form-sellerservice-accept .address").html(html);
+			$(".page.active #form-sellerservice-accept #address_id").val(ret.address.data.id);
+		}
+	});
+	
+	function accept(){
+		var data=getFormJson('#form-sellerservice-accept');
+		if(data.password_pay==''){
+			valert({msg:'请输入支付密码！'});
+			$('.page.active #password_pay').focus();
+			return false;
+		}
+				
+		if(data.address_id==''){
+			valert({msg:'售后地址不能为空！'});
+			return false;
+		}
+		
+		ajax_post({
+			url:'/Api/api',
+			data:data,
+		},function(ret){
+			valert(ret);
+			if(ret.code==1){
+				setTimeout(function(){
+					closeWin({ref:true});
+				},1000);
+			}
+		});
+	}
+	
+</script>

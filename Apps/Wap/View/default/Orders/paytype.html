@@ -1,0 +1,145 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin({ref:true})"></i>
+		</div>
+		<div class="title">
+			付款
+		</div>
+		<div class="r">
+
+		</div>
+	</div>
+</header>
+<section>
+
+	<?php
+		if (C('cfg.site')['is_pay'] == 0) {
+	?>
+	<div class="load-body">{:C('cfg.site')['is_pay_tips']}</div>
+	<?php
+		} else {
+	?>
+	<form id="form-orders-pay">
+		<div class="orders-view md10">
+		</div>
+		<div class="line-box row" onclick="select_paytype()">
+			<div class="col-4">支付方式</div>
+			<div class="col-4x3 text-right ft14 paytype">现金账户</div>
+		</div>
+		<div class="line-box nobg noicon text-gray">
+			现金账户：<span class="ac_score text-danger">0</span> 元 <span class="text-danger hide" onclick="openWin({name:'tips',url:'/Index/tips_app'})">充值</span>
+		</div>
+		<div class="clearfix"></div>
+		<div class="line-box nobg noicon text-gray">
+			唐宝账户：<span class="a_tangBao text-danger">0</span> 分 <span class="text-danger hide" onclick="openWin({name:'tips',url:'/Index/tips_app'})">充值</span>
+		</div>
+		<div class="clearfix"></div>
+		<div class="pass">
+			<div class="line-input row hover">
+				<div class="col-4 ft14">安全密码</div>
+				<div class="col-4x3">
+					<input type="password" name="password_pay" id="password_pay" placeholder="请输入安全密码" maxlength="6" >
+				</div>
+			</div>
+
+			<div class="line-box nobg noicon text-gray hide no_pay_password">
+				<div class="col-100">尚未设置安全密码,&nbsp;&nbsp;<span class="text-danger" onclick="openWin({name:'user_spp',url:'/User/spp',logined:true,ref:true})">马上去设置</span></div>
+			</div>
+		</div>
+
+		<div class="p10">
+			<div class="btn btn-lg btn-block btn-danger md10" onclick="orders_pay()">支付</div>
+		</div>
+		<input type="hidden" name="apiurl" id="apiurl" value="/Erp/orders_pay">
+		<input type="hidden" name="is_openid" id="is_openid" value="1">
+		<input type="hidden" name="s_no" id="s_no" value="{$_GET.s_no}">
+		<input type="hidden" name="paytype" id="paytype" value="1">
+	</form>
+
+	<?php } ?>
+
+</section>
+
+<include file="Public:d_layer" />
+
+<script id="tpl_orders_pay_view" type="text/html">
+	<div class="line-box noicon row">
+		<div class="col-4">订单号</div>
+		<div class="col-4x3 text-right text-gray"><%= data.s_no%></div>
+	</div>
+	<div class="line-box noicon row view-money">
+		<div class="col-4">应付金额</div>
+		<div class="col-4x3 text-right text-danger ft14 b">￥<%= data.pay_price%></div>
+	</div>
+	<div class="line-box noicon row view-tang hide">
+		<div class="col-4">应付唐宝</div>
+		<div class="col-4x3 text-right text-danger ft14 b"><%= data.tangpay %></div>
+	</div>
+</script>
+
+
+<script>
+	fixBar(1);
+
+	var data={};
+	data.account={apiurl:'/Erp/account',is_openid:1};
+	data.orders={apiurl:'/Orders/orders_shop_view',is_openid:1,s_no:'{$_GET.s_no}'};
+
+	ajax_post({
+		url:'/Api/apis',
+		data:data,
+	},function(ret){
+		if(ret.account.code==1){
+			$('.page.active .ac_score').html(ret.account.data.a_freeMoney);
+			$('.page.active .a_tangBao').html(ret.account.data.a_tangBao);
+			if(ret.account.data.a_payPwd=='') $('.page.active .no_pay_password').removeClass('hide');
+		}
+
+		if(ret.orders.code==1){
+			var html = template('tpl_orders_pay_view', {data:ret.orders.data});
+			$('.page.active .orders-view').html(html);
+		}
+	});
+
+
+	//支付状态
+	var pay_status;
+
+	function orders_pay(){
+		var data=getFormJson('.page.active #form-orders-pay');
+		if(data.paytype==3){
+			location.href='/Alipay/pay/s_no/{$_GET.s_no}';
+			return false;
+		}
+
+		if(data.password_pay==''){
+			valert({msg:'请输入安全密码！'});
+			return false;
+		}
+		ajax_post({
+			url:'/Api/api',
+			data:data,
+		},function(ret){
+			if(ret.code==1){
+				openWin({name:'pay_success',url:'/Orders/pay_success',close:true});
+				//var html=template('pay_status',{data:ret.data});
+				//$('.page.active section').html(html);
+			}else{
+				valert(ret);
+			}
+		});
+
+	}
+
+	//选择付款方式
+	function select_paytype(){
+		vmodal({
+			title:'支付方式',
+			url:'__URL__/select_paytype',
+		},function(){
+
+		});
+	}
+
+</script>

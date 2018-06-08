@@ -1,0 +1,207 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			售后详情
+		</div>
+		<div class="r">
+		</div>
+	</div>
+</header>
+<section>	
+	<div class="load-body">数据加载中……</div>
+</section>
+
+<include file="Public:d_layer" />
+
+<script id="tpl_service_view" type="text/html">
+	<div class="line-box hover row noicon">
+		<div class="col-70"><div class="b">售后单号：<%= data.r_no %></div></div>
+		<div class="col-30 text-right text-danger"><%= data.status_name %></div>
+	</div>
+	
+	<% if(data.type==3){ %>
+
+	<% }else{ %>
+	<div class="line-box-m hover row md10" onclick="openWin({name:'goods_view',url:'/Goods/view/id/<%= data.orders_goods.attr_list_id %>'})">
+		<div class="col-15"><img src="<%= data.orders_goods.images %>" alt="商品图片"></div>
+		<div class="col-85">
+			<div class="pl10 pr10">
+				<div class="lh2-18px"><%= data.orders_goods.goods_name %></div>
+				<div class="row">
+					<div class="col-50 text-gray"><%= data.orders_goods.attr_name %></div>
+					
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	</div>	
+	<% } %>
+	<div class="line-box hover row" onclick="openWin({name:'orders_view',url:'/Orders/view/s_no/<%= data.s_no %>'})">
+		<div class="col-30">订单号</div>
+		<div class="col-70 text-gray"><%= data.s_no %></div>
+	</div>	
+	<div class="line-box hover noicon row">
+		<div class="col-30">售后类型</div>
+		<div class="col-70 text-gray"><%= data.type_name %></div>
+	</div>
+	<% if(data.type!=3){ %>
+	<div class="line-box hover noicon row">
+		<div class="col-30">售后数量</div>
+		<div class="col-70 text-gray"><%= data.num %></div>
+	</div>
+	<% } %>
+	<div class="line-box-m hover noicon row">
+		<div class="col-30">售后原因</div>
+		<div class="col-70 text-gray"><%= data.reason %></div>
+		<div class="clearfix"></div>
+	</div>
+	
+	<% if(data.status==1){ %>
+		<div class="p10">
+			<div class="btn btn-danger btn-block" onclick="cancel($(this))" data-s_no="<%= data.s_no %>" data-r_no="<%= data.r_no %>">取消申请</div>
+		</div>
+	<% }else if(data.status==2){ %>
+		<div class="row">
+			<div class="col-35">
+				<div class="btn btn-danger btn-block m10" onclick="cancel($(this))" data-s_no="<%= data.s_no %>" data-r_no="<%= data.r_no %>">取消申请</div>
+			</div>
+			<div class="col-35">
+				<div class="btn btn-danger btn-block m10" onclick="openWin({name:'service_edit',url:'__URL__/edit/s_no/<%= data.s_no %>/r_no/<%= data.r_no %>'})">修改申请</div>
+			</div>
+			<div class="col-30">
+				<div class="btn btn-primary btn-block m10" onclick="openWin({name:'service_appeal',url:'__URL__/appeal/s_no/<%= data.s_no %>/r_no/<%= data.r_no %>'})">申诉</div>
+			</div>
+		</div>	
+	<% }else if(data.status==3){ %>
+		<div class="row">
+			<div class="col-50">
+				<div class="btn btn-danger btn-block m10" onclick="openWin({name:'service_express',url:'__URL__/service_send_express/s_no/<%= data.s_no %>/r_no/<%= data.r_no %>'})">邮寄商品</div>
+			</div>
+			<div class="col-50">
+				<div class="btn btn-danger btn-block m10" onclick="cancel($(this))" data-s_no="<%= data.s_no %>" data-r_no="<%= data.r_no %>">取消申请</div>
+			</div>
+		</div>			
+	<% }else if(data.status==4){ %>	
+	<% }else if(data.status==5){ %>
+		<div class="p10">
+			<div class="btn btn-danger btn-block" onclick="openWin({name:'service_appeal',url:'__URL__/appeal/s_no/<%= data.s_no %>/r_no/<%= data.r_no %>'})">提出申诉</div>
+		</div>
+	<% }else if(data.status==6){ %>
+	<div class="row">
+		<div class="col-50">
+			<div class="btn btn-danger btn-block m10" onclick="receipt($(this))" data-s_no="<%= data.s_no %>" data-r_no="<%= data.r_no %>">确认收货</div>
+		</div>
+		<div class="col-50">
+			<div class="btn btn-danger btn-block m10" onclick="openWin({name:'service_appeal',url:'__URL__/appeal/s_no/<%= data.s_no %>/r_no/<%= data.r_no %>'})">未收到商品</div>
+		</div>
+	</div>	
+	<%}%>
+	
+
+	<div class="clearfix"></div>
+	<div class="line-box hover noicon nobg md10 b">
+		处理过程
+	</div>
+	
+	<ul class="timeline m10">
+		<% for (var i = 0; i < data.logs.length; i ++) { %>
+		<li>
+			<span class="date">
+				<%= data.logs[i].atime %></span>
+			<div class="content">
+				<div class="box pl10" style="">
+					<% if(data.logs[i].uid>0){ %>
+					<div class="md5"><%= data.logs[i].user.nick %></div>
+					<% }else{ %>
+					<div class="md5"><%= data.logs[i].admin.username %> (客服)</div>
+					<% } %>
+					<div class="text-gray"><%= data.logs[i].remark %></div>
+					<br/>
+					<% if(data.logs[i].images.length > 0){ %>
+						<div class="row" style="height:75px;display:bolck">
+							<% for(j = 0;j < data.logs[i].images.length; j++){ %>
+								<% if(data.logs[i].images[j] != ''){ %>
+								<img class='fl m5' width='50' height="50" src="<%= data.logs[i].images[j] %>" />
+								<% } %>
+							<% } %>
+						</div>
+					<% } %>
+				</div>
+			</div>
+		</li>
+		<% } %>
+	</ul>	
+	
+</script>
+
+<script>
+	fixBar(1);
+	template.config("escape", false);		//不直接输出html代码
+	ajax_post({
+		url:'/Api/api',
+		data:{apiurl:'/Refund3/view',is_openid:1,r_no:'{$_GET.r_no}'}
+	},function(ret){
+		if(ret.code==1){
+			var html=template('tpl_service_view',{data:ret.data});
+			$('.page.active section').html(html);
+		}else{
+			var html='<div class="load-body">'+ret.msg+'</div>';
+			$('.page.active section').html(html);
+		}
+	});
+	
+	
+	function cancel(obj){
+		var d=obj.data();
+		vmodal({
+			title:'取消申请',
+			msg:'<h4 class="text-center">真的要取消申请吗？</h4>',
+		},function(){
+			$('.page.active .vmodal-success').unbind();
+			$('.page.active .vmodal-success').click(function(){
+				ajax_post({
+					url:'/Api/api',
+					data:{apiurl:'/Refund3/cancel',is_openid:1,r_no:d.r_no,s_no:d.s_no}
+				},function(ret){
+					valert(ret);
+					if(ret.code==1){
+						winRef();
+					}
+				});							
+			});
+		});
+	}
+	
+	//确认收货
+	function receipt(obj){
+		var d=obj.data();
+		vmodal({
+			title:'确认收货',
+			url:'__URL__/accept/s_no/'+d.s_no+'/r_no/'+d.r_no,
+		},function(){
+			$('.page.active .vmodal-success').unbind();
+			$('.page.active .vmodal-success').click(function(){
+				var data=getFormJson('#form-service-accept');
+				
+				if(data.password_pay==''){
+					valert({msg:'请输入安全密码！'});
+					$('.page.active #password_pay').focus();
+					return false;
+				}
+				
+				ajax_post({
+					url:'/Api/api',
+					data:data
+				},function(ret){
+					valert(ret);
+					if(ret.code==1){
+						winRef();
+					}
+				});		
+			});			
+		});
+	}
+</script>

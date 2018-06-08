@@ -1,0 +1,57 @@
+<include file="Public:header" />
+		<div class="page-group">
+			<div id="page-trj-news" class="page" data-page_num="{$pagelist.pageinfo.page}">
+				<input type="hidden" id="p" name="p" value="2" />
+				<!-- 标题栏 -->
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left back" href="/"></a>
+					<h1 class="title">乐兑公告</h1>
+					<a class="icon iconfont icon-category pull-right ml5 ac-menu" onclick="top_menu()"></a>					
+				</header>
+
+				<!-- 浮动导航 -->
+				<include file="Public:fixed-menu" />
+				<!-- 这里是页面内容区 -->
+				<div class="content infinite-scroll" data-distance="100" data-p="1">
+					<notempty name="pagelist.list">
+					<div class="list-container">
+						<volist name="pagelist.list" id="vo">
+							<div class="list-block media-list">						
+								<ul>	
+									<li>
+										<a class="item-content" href="__URL__/view/id/{$vo.id}">
+											<div class="item-inner">
+												<div class="item-title-row">
+													<div class="item-title">{$vo.name}</div>
+													<div class="item-after">{$vo.atime}</div>
+												</div>
+											</div>
+										</a>
+									</li>
+									<li>
+										<a href="__URL__/view/id/{$vo.id}" class="item-content">
+											<div class="item-inner">											
+												{$vo.content}							
+											</div>
+										</a>
+									</li>
+								</ul>
+							</div>
+							<div class="clearfix md5"></div>
+						</volist>
+					</div>
+					<else />
+						<div class="nors text-center">
+							<div><i class="iconfont icon-sousuowujieguo ft3"></i></div>
+							 暂无通知！
+						</div>
+					</notempty>
+				</div>
+			</div>	
+
+		
+		</div>	
+		
+
+<include file="Public:script" />
+<include file="Public:footer" />

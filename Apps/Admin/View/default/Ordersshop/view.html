@@ -1,0 +1,166 @@
+<div class="clearfix">
+	<div class="pull-right text-gray" onclick="$(this).closest('tr').toggleClass('hide');"><i class="fa fa-times-circle-o fa-2x"></i></div>	
+</div>
+
+	<div class="box p20" id="{$vo.id}">
+		<div class="header">
+			<div class="pull-right">
+				<a href="__URL__/edit/id/{$rs.id}" class="btn btn-sm btn-primary btn-rad btn-trans">修改</a>
+			</div>
+			<span class="mr20 ft16">支付终端：{:status($rs['terminal'],array(array('PC'),array('WAP','btn-danger'),array('IOS','btn-info'),array('ANDROID','btn-warning')))}	</span>
+			<span class="mr20 ft16">ID:{$rs.id}</span> 
+			<span class="mr20 ft18 text-danger">订单号：{$rs.s_no}</span>
+			<span class="mr20 ft16"> 买家：{$rs.user.nick} / {$rs.user.mobile}</span>
+		</div>
+		<div class="content">
+				<div class="row md20 auth-text">
+					<div class="col-xs-3">
+						<div class="fl" width="60">
+							<img src="{:myurl($rs['shop']['shop_logo'],50)}" class="img-circle">
+						</div>
+						<div style="margin-left:70px">
+							<div>店铺：<span class="ft18 strong">{$rs.shop.shop_name}</span></div>
+							<div>卖家昵称：{$rs.seller.nick}</div>							
+							<div>手机：{$rs.seller.mobile}</div>
+							<div>QQ：{$rs.shop.qq}</div>
+							<notempty name="rs.shop.wang"><div>旺旺：{$rs.shop.wang}</div></notempty>
+						</div>
+					</div>
+
+					<div class="col-xs-3">
+						{:W('Widget/orders_activity',array($rs['s_no']))}
+						<div>商品金额：<img style="height: 16px;" src="/Public/images/icon_{$rs.orders_goods.0.score_type}.png"> {$rs.goods_price}</div>
+						<div>运费：<img style="height: 16px;" src="/Public/images/icon_{$rs.orders_goods.0.score_type}.png"> {$rs.express_price}</div>
+						<div>合计金额：<img style="height: 16px;" src="/Public/images/icon_{$rs.orders_goods.0.score_type}.png"> {$rs.total_price}</div>
+						<div>商品优惠：<img style="height: 16px;" src="/Public/images/icon_{$rs.orders_goods.0.score_type}.png"> {$rs.discount_price} {:$rs['coupon_price']>0?'(含优惠券￥'.$rs['coupon_price'].')':''}</div>
+						<div>运费优惠： <img style="height: 16px;" src="/Public/images/icon_{$rs.orders_goods.0.score_type}.png"> {:$rs['express_price']-$rs['express_price_edit']}</div>
+						<gt name="rs.daigou_cost" value="0"><div>代购手续费：<span class="text-info ft18">{$rs.daigou_cost}</span></div></gt>
+						<div>实付金额：<span class="text-danger ft18"><img style="height: 16px;" src="/Public/images/icon_{$rs.orders_goods.0.score_type}.png"> {$rs.pay_price}</span></div>
+					</div>
+					<div class="col-xs-3">
+						<div class="md10">状态：
+							{:status($rs['status'],[['已删除'],['已拍下'],['已付款','btn-success'],['已发货','btn-warning'],['已收货','btn-info'],['已评价','btn-dark'],['已归档'],10=>['已关闭'],11=>['已关闭']])}							
+							<div class="btn btn-xs btn-rad btn-trans" onclick="vmodal({title:'订单日志',url:'__URL__/orders_logs/s_no/{$rs.s_no}',width:'800px'})">日志</div>
+						</div>
+						
+						<div class="mt10">
+							<notempty name="rs.dtpay_no">
+							<div class="md5">乐兑流水号：{$rs.dtpay_no}</div>
+							</notempty>							
+							<php>if($rs['erp_status']->code == 1){</php>
+								<div>在ERP中的状态：
+									<span>{$rs['erp_status']->data->o_orderState_text} <php>echo $rs['erp_status']->data->o_isReceived==1?'，已分账':'';</php></span>
+									<in name="rs.status" value="0,1,10">
+									<div class="btn btn-xs btn-trans btn-info" onclick="orders_fix('{$rs.s_no}')">修复</div>
+									</in>
+								</div>
+							<php>}else{</php>
+								
+							<php>}</php>
+							
+						</div>
+						<!--
+							<span class="btn btn-rad btn-info" onclick="vmodal({title:'改价',url:'__URL__/edit_price/s_no/{$rs.s_no}',width:'800px'})">改价</span>
+							<div class="btn btn-danger btn-rad" onclick="vmodal({title:'关闭订单',url:'__URL__/orders_close/o_no/{$rs.s_no}',width:'800px'})">关闭</div>							
+						-->
+					</div>					
+					<div class="col-xs-3">
+						<div class="md10">发货方式：<span class="strong mr20">{$rs['express_type']==1?'快递':'EMS'}</span> 
+							<a href="__URL__/print_out_goods/id/{$rs.id}" target="_blank" class="btn btn-xs btn-rad btn-info btn-trans">打印出货单</a> 
+							<in name="rs.status" value="2,3">
+							<div class="btn btn-xs btn-rad btn-danger btn-trans" onclick="vmodal({title:'打印快递单',url:'__URL__/select_express_company/id/{$rs.id}',width:'700px'})">打印快递单</div>
+							</in>
+						</div>	
+						<notempty name="rs.express_code">
+							<div class="md5"><img src="{:myurl($rs['express']['logo'],150,40)}"></div>
+							<div class="md5">快递公司：<span class="strong">{$rs.express_company}</span></div>						
+							<div>快递单号：<span class="ft18 strong mr10">{$rs.express_code}</span> <span class="btn btn-xs btn-rad btn-info" onclick="vmodal({title:'物流跟踪',url:'__URL__/query_express/s_no/{$rs.s_no}',width:'800px'})">物流跟踪</span></div>
+							<div>发货时间：{$rs.express_time}</div>
+							<notempty name="rs.express_remark">
+								<div>发货备注：{$rs.express_remark}</div>
+							</notempty>
+						</notempty>
+						
+						
+					</div>					
+				</div>
+				
+				<table>
+					<thead>
+						<tr>
+							<th class="text-center">ID</th>
+							<th class="text-center">商品ID</th>
+							<th class="text-center">商品图片</th>
+							<th>商品标题</th>
+							<th class="text-center">商品属性</th>
+							<th class="text-center">单价</th>
+							<th class="text-center">重量</th>
+							<th class="text-center">数量</th>
+							<th class="text-center">合计重量</th>
+							<th class="text-center">合计金额</th>
+							<th class="text-center">积分类型</th>
+						</tr>
+					</thead>
+					<tbody>
+						<volist name="rs.orders_goods" id="goods">
+						<tr>
+							<td class="text-center">{$goods.id}</td>
+							<td class="text-center">{$goods.goods_id}</td>
+							<td class="text-center"><a href="javascript:;" data-url="{:C('sub_domain.item')}/goods/{$goods.attr_list_id}" target="_blank"><img src="{:myurl($goods['images'],60)}"></a></td>
+							<td>
+								<a href="javascript:;" data-url="{:C('sub_domain.item')}/goods/{$goods.attr_list_id}" target="_blank">{$goods.goods_name}</a>
+								<div class="md10"></div>
+								<notempty name="goods.activity_name"><span class="btn btn-danger btn-trans btn-xs m0">{$goods.activity_name}</span></notempty>
+							</td>
+							<td class="text-center">{$goods.attr_name}</td>
+							<td class="text-center">{$goods.price}</td>
+							<td class="text-center">{$goods.weight}</td>
+							<td class="text-center">{$goods.num}</td>
+							<td class="text-center">{$goods.total_weight}</td>
+							<td class="text-center ft16 strong">{$goods.total_price_edit}</td>
+							<td class="text-center"><img src="/Public/images/icon_{$goods.score_type}.png"></td>
+						</tr>
+						</volist>
+					</tbody>
+				</table>
+				<notempty name="rs.remark">
+				<div class="p10 text-danger">
+					买家留言：{$rs.remark|nl2br}
+				</div>
+				</notempty>
+				<div class="clearfix md20"></div>
+
+		
+		<div class="clearfix md20"></div>
+		<div class="row auth-text">
+			<div class="col-xs-4">
+				<div class="border-d ft18 p10 strong md10">收货人资料</div>
+				<div>联系人：{$rs.orders.linkname}</div>
+				<notempty name="rs.orders.tel"><div>电话：{$rs.orders.tel}</div></notempty>
+				<div>手机：{$rs.orders.mobile}</div>
+				<div>地址：{$rs.orders.province} {$rs.orders.city} {$rs.orders.district} {$rs.orders.town} {$rs.orders.street}<notempty name="rs.orders.postcode"> ({$rs.orders.postcode})</notempty></div>
+			</div>
+			<div class="col-xs-4">
+				<div class="border-d ft18 p10 strong md10">付款信息</div>
+				<div>下单时间：{$rs.atime}</div>
+				<neq name="rs.pay_time" value="0000-00-00 00:00:00"><div>付款时间：{$rs.pay_time}</div></neq>
+				<div>实付金额：<span class="srtong ft28 text-danger">{$rs.pay_price}</span></div>											
+			</div>
+			<div class="col-xs-3 hide">
+				<div class="border-d ft18 p10 strong md10">退款信息</div>
+				<gt name="rs.refund_express" value="0"><div>退运费：￥{$rs.refund_express}</div></gt>
+				<gt name="rs.refund_price" value="0"><div>退款金额：￥{$rs.refund_price}</div></gt>
+				<gt name="rs.refund_score" value="0"><div>退回积分：{$rs.refund_score}</div></gt>				
+			</div>	
+			<div class="col-xs-1 hide">
+				<div class="btn btn-info" onclick="vmodal({title:'财务退款录入',url:'__URL__/quit_money/id/{$rs.id}',width:'1200px'})">财务退款录入</div>
+			</div>				
+		</div>
+		<div class="clearfix"></div>
+		</div>		
+	</div>
+	
+
+<div class="clearfix">
+	<div class="pull-right text-gray" onclick="$(this).closest('tr').toggleClass('hide');"><i class="fa fa-times-circle-o fa-2x"></i></div>	
+</div>

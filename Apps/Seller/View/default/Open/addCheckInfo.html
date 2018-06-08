@@ -1,0 +1,136 @@
+<script src="__FLATDREAM__/js/bootstrap.datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script src="__FLATDREAM__/js/bootstrap.datetimepicker/js/bootstrap-datetimepicker.zh-CN.js"></script>
+<link rel="stylesheet" href="__FLATDREAM__/js/bootstrap.datetimepicker/css/bootstrap-datetimepicker.css" />
+<script type="text/javascript" src="/Public/Webuploader/js/webuploader.js"></script>
+<link rel="stylesheet" type="text/css" href="/Public/Webuploader/css/webuploader.css">
+{:W('Common/Builder/form', [['data' => $keyList, 'run' => '/run/authRun']])}
+<switch name="Think.get.type">
+<case value="category">
+<script>
+$(document).ready(function() {
+	checkform({
+		formid:"#formadd",
+		headers : {Action : '{$header}'},
+		rules:{
+			category_id:{
+				required:true,
+			}
+		},
+		messages:{
+			category_id:{
+				required:'一级类目不能为空',
+			}
+		},
+	},function(res) {
+		talert({status:res.code,msg:res.msg});
+		if(res.code == 1) {
+			setTimeout("ref()", 1000);
+		}
+	});
+});
+</script>
+</case>
+<case value="cert">
+<script>
+$(".btn-submit").click(function() {
+	var logo	=	$("input[name='cert_images']").val();
+	if(logo == undefined || logo == '') {
+		talert({status:0,msg:'资质证书照片不能为空'});
+		return false;
+	}
+})
+$(document).ready(function() {
+	checkform({
+		formid:"#formadd",
+		headers : {Action : '{$header}'},
+		rules:{
+			category_id:{
+				required:true,
+			},
+			cert_name:{
+				required:true,
+			},
+		},
+		messages:{
+			category_id:{
+				required:'一级类目不能为空',
+			},
+			cert_name:{
+				required:'资质名称不能为空',
+			},
+		},
+	},function(res) {
+		talert({status:res.code,msg:res.msg});
+		if(res.code == 1) {
+			setTimeout("ref()", 1000);
+		}
+	});
+});
+</script>
+</case>
+<case value="brand">
+<script>
+$(document).ready(function() {
+	$(".btn-submit").click(function() {
+		var logo	=	$("input[name='b_logo']").val();
+		if(logo == undefined || logo == '') {
+			talert({status:0,msg:'品牌logo不能为空'});
+			return false;
+		}
+		
+		var b_images	=	$("input[name='b_images']").val();
+		var b_images2	=	$("input[name='b_images2']").val();
+		var b_code		=	$("input[name='b_code']").val();
+		
+		if(b_images != '' && b_code == '') {
+			talert({status:0,msg:'品牌商标注册号不能为空'});
+			return false;
+		}else if(b_images == '' && b_code != '') {
+			talert({status:0,msg:'品牌商标证书照片不能为空'});
+			return false;
+		}else if (b_images2 == '' && b_code == '') {
+			talert({status:0,msg:'品牌商标授理书照片或品牌商标注册号必填其中一项'});
+			return false;
+		}
+	})
+	checkform({
+		formid:"#formadd",
+		headers : {Action : '{$header}'},
+		rules:{
+			b_name:{
+				required:true,
+			},
+			b_master:{
+				required:true,
+			},
+			b_type:{
+				required:true,
+			},
+			b_scope:{
+				required:true,
+			},
+		},
+		messages:{
+			b_name:{
+				required:'品牌中文名不能为空',
+			},
+			b_master:{
+				required:'品牌所有者不能为空',
+			},
+			b_type:{
+				required:'品牌类型不能为空',
+			},
+			b_scope:{
+				required:'经营类型不能为空',
+			},
+		},
+	},function(res) {
+		talert({status:res.code,msg:res.msg});
+		if(res.code == 1) {
+			setTimeout("ref()", 1000);
+		}
+	});
+});
+</script>
+</case>
+</switch>

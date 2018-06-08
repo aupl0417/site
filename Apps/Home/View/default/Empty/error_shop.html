@@ -1,0 +1,30 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="re bg-white pd20">
+	<div>
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-5 text-right"><img src="/Public/images/icon-shop2.png" alt="错误提示"></div>
+				<div class="col-xs-5">
+					<h3>您访问的店铺不存在</h3>
+					<p>店铺已停止营业或已关闭</p>
+					<!-- <p class="pt20 text-blue"><a class="text_blue" href="{:DM('faq')}">了解更多原因>></a></p> -->
+					<p class="link-blue">或者逛逛：
+						<a class="text_blue" href="{:DM('www')}">首页</a><span>|</span>
+						<a class="text_blue" href="{:DM('my')}">会员中心</a><span>|</span>
+						<a class="text_blue" href="{:DM('faq')}">帮助中心</a>
+					</p>
+				</div>
+			</div>
+			
+		</div>	
+	</div>	
+	<style type="text/css">
+	.for{margin-top:-40px; padding:10px;}	
+	.for .col-xs-7 img{max-width: 100%;padding:150px 50px;}
+	.for .col-xs-5{margin-top:200px;}
+	.for .link-blue a:hover{color:#cc0000;}
+	.for .col-xs-5 span{margin:0 5px;}
+	</style>
+</div>
+</block>

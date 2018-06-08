@@ -1,0 +1,154 @@
+<include file="Public:header" />
+
+<div id="cl-wrapper" class="login-container">
+
+	<div class="middle-login">
+		<div class="block-flat">
+			<div class="header">							
+				<h3 class="text-center">乐兑</h3>
+			</div>
+				<div class="block content ">
+
+                    <ul class="nav nav-tabs border-d">
+                        <li class="active">
+                                <a href="#tab3" data-toggle="tab">密码登录</a>
+                            </li>
+							<li class="">
+                                <a href="#tab100827592" data-toggle="tab" onclick="saoma()">扫码登录</a>
+                            </li>
+					</ul>
+
+                    <div class="tab-content tab-content-noborder" style="padding:0px">
+
+                        <div class="tab-pane active " id="tab3">
+							<form style="margin-bottom: 0px !important;" class="form-horizontal vform" id="form-login" name="form-login">
+								<div class="content">
+									
+									{:W('Widget/buildform',array(array(
+										'field'		=>array(		
+											array(
+												'formtype'		=>'text',
+												'name'			=>'username',
+												'is_need'		=>true,
+												'left'			=>'<span class="input-group-addon"><i class="fa fa-user"></i></span>',
+												'col'			=>array('','col-xs-12'),
+												'placeholder'	=>'请输入账号',
+											),
+											array(
+												'formtype'		=>'password',
+												'name'			=>'password',
+												'is_need'		=>true,
+												'left'			=>'<span class="input-group-addon"><i class="fa fa-lock"></i></span>',
+												'col'			=>array('','col-xs-12'),
+												'placeholder'	=>'请输入密码',
+											),
+											array(
+												'formtype'		=>'vcode',
+												'name'			=>'vcode',
+												'is_need'		=>true,
+												'left'			=>'<span class="input-group-addon"><i class="fa fa-lock"></i></span>',
+												'col'			=>array('','col-xs-12'),
+												'placeholder'	=>'请输入验证码',
+											),
+
+
+										),
+									)))}				
+								
+									
+
+										
+								</div>
+								<div class="foot">
+									<button type="submit" class="btn btn-lg btn-block btn-primary btn-rad btn-trans m0"><i class="fa fa-key"></i> 登录
+
+								</div>
+							</form>
+                        </div>
+							
+						<div class="tab-pane  pt20" id="tab100827592">
+							<div class="text-center" >
+								<img src="/Login/qrcode" class="img-responsive" style="margin: 0 auto;">
+							<div>
+							<h5 class="text-muted">请使用乐兑work端扫码登录</h5>
+						</div>
+
+                     </div>
+                </div>
+
+         </div>
+	</div>
+</div>
+<include file="Public:copyright" />
+<include file="Public:js" />
+<js href="__JS__/backstretch/jquery.backstretch.min.js" />
+<js href="__APP_JS__/Admin/Login/rand-bg.js" />
+<script>
+
+checkform({
+	formid:'#form-login',
+	url:'__URL__/check_login',
+	rules:{
+		username: {
+			required: !0,
+		},	
+		password: {
+			required: !0,
+			maxlength:18,
+			minlength:6
+		},
+        vcode: {
+            required: true,
+			rangelength:[4,5],
+        }			
+
+	},
+	messages:{
+		username:{
+			required:'请输入管理员账号'
+		},
+		password: {
+			required: "请输入新密码",
+			maxlength:"密码长度不能超过18个字符",
+			minlength:"密码长度至少6个字符以上"
+		},
+        vcode: {
+            required: '请输入验证码！',
+			rangelength:'验证码长度为4~5位！',
+        }			
+
+	},
+	script:'callback(ret)'
+});
+
+function callback(ret){
+	valert({status:ret.status,msg:ret.msg});
+	if(ret.status=='success'){
+		location.href='/';
+	}
+}
+
+	function saoma(){
+		$().ready(function(){
+			setInterval("mylogin()",3000);//1000为1秒钟,检查是否登录
+			setInterval("mytime()",10000);//1000为1秒钟,替换二维码
+		});
+	}
+	
+	function mytime(){
+		$(".img-responsive").attr('src','/Login/qrcode');
+	}
+		
+	function mylogin(){
+		$.ajax({
+			type: "POST",
+			url: "__URL__/checked_login",
+			success: function(data){
+				if(data.status=='success'){
+					location.href='/';
+				}
+			}
+		});
+	}
+</script>
+<include file="Public:footer" />

@@ -1,0 +1,165 @@
+<form data-url="__URL__/search_field_add_save" id="form_create" class="form-horizontal">
+<div class="vform">
+	<ul class="nav nav-tabs border-d">
+		<li class="active">
+			<a href="#tab1" data-toggle="tab">基本信息</a>
+		</li>
+		<li>
+			<a href="#tab2" data-toggle="tab">数据信息</a>
+		</li>
+		<li>
+			<a href="#tab4" data-toggle="tab">其它选项</a>
+		</li>
+	</ul>
+	<div class="tab-content tab-content-noborder">
+		<div class="tab-pane active" id="tab1">
+			{:W('Widget/buildform',array(array(
+				'field'		=>array(			
+					array(
+						'formtype'		=>'text',
+						'label'			=>'标签名称',
+						'name'			=>'label',
+						'is_need'		=>true,
+					),
+					array(
+						'formtype'		=>'text',
+						'label'			=>'字段名称',
+						'name'			=>'name',
+						'is_need'		=>true,
+					),
+					array(
+						'formtype'		=>'text',
+						'label'			=>'映射字段',
+						'name'			=>'map_field',
+					),
+					array(
+						'formtype'		=>'radio',
+						'label'			=>'状态',
+						'name'			=>'active',
+						'data'			=>array(array(1,'启用'),array(0,'停用')),
+						'field'			=>array(0,1),
+						'value'			=>1,
+					),
+					array(
+						'formtype'		=>'select',
+						'label'			=>'表单类型',
+						'name'			=>'formtype',
+						'data'			=>CURD(array('table'=>'formtpl_type','field'=>'formtype,type_name','cache_name'=>'formtpl_search_type')),
+						'field'			=>array('formtype','type_name'),
+					),
+					array(
+						'formtype'		=>'text',
+						'label'			=>'默认值',
+						'name'			=>'default',
+						'tips'			=>'当为空时默认填写的值',
+					),
+					array(
+						'formtype'		=>'radio',
+						'label'			=>'匹配方式',
+						'name'			=>'search_type',
+						'data'			=>array(array(1,'模糊匹配'),array(0,'完全匹配')),
+						'field'			=>array(0,1),
+						'value'			=>0,
+					),						
+					array(
+						'formtype'		=>'hidden',
+						'name'			=>'formtpl_id',
+						'value'			=>I('get.formtpl_id'),
+					),
+
+				),
+			),$rs))}
+		</div><!--/panel-->
+		<div class="tab-pane" id="tab2">
+			{:W('Widget/buildform',array(array(
+				'field'		=>array(
+					array(
+						'formtype'		=>'textarea',
+						'label'			=>'数据源',
+						'name'			=>'data',
+						'attr'			=>'rows="5"',
+						'tips'			=>'数组格式，主要用于选项值',
+					),
+					array(
+						'formtype'		=>'textarea',
+						'label'			=>'读取数据后执行',
+						'name'			=>'fun_read',
+						'attr'			=>'rows="5"',
+						'tips'			=>'读取后进行格式化处理',
+					),
+
+
+				),
+			),$rs))}
+		
+		</div><!--/panel-->
+		
+		
+		<div class="tab-pane" id="tab4">
+			{:W('Widget/buildform',array(array(
+				'field'		=>array(
+					array(
+						'formtype'		=>'textarea',
+						'label'			=>'提示',
+						'name'			=>'tips',
+						'attr'			=>'rows="3"',
+						'tips'			=>'提示内容',
+					),
+					array(
+						'formtype'		=>'text',
+						'label'			=>'placeholder提示',
+						'name'			=>'placeholder',
+					),
+					array(
+						'formtype'		=>'text',
+						'label'			=>'CLASS',
+						'name'			=>'class',
+					),
+					array(
+						'formtype'		=>'text',
+						'label'			=>'STYLE',
+						'name'			=>'style',
+					),
+					array(
+						'formtype'		=>'text',
+						'label'			=>'属性',
+						'name'			=>'attr',
+						'tips'			=>'标签属性，如：rows="5"',
+					),
+					array(
+						'formtype'		=>'textarea',
+						'label'			=>'前面HTML',
+						'name'			=>'prevhtml',
+						'attr'			=>'rows="3"',
+					),
+					array(
+						'formtype'		=>'textarea',
+						'label'			=>'后面HTML',
+						'name'			=>'nexthtml',
+						'attr'			=>'rows="3"',
+					),
+
+
+				),
+			)))}			
+		</div><!--/panel-->
+	</div>
+<div class="p20 text-center">
+	<button type="submit" class="btn btn-primary btn-150px"><i class="fa fa-check"></i> 提交</button>
+</div>
+<!--token-->
+</div>
+</form>
+<script>
+iCheckClass();
+checkform({
+	formid:'#form_create',
+},function(ret){
+	valert(ret);
+	if(ret.status=='success'){
+		loadurl({tag:'#vtab7-content',url:'__URL__/formtpl_search_fields/formtpl_id/{$_GET.formtpl_id}'});
+		$('#ajax-modal').modal('hide');
+	}
+});
+
+</script>

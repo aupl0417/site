@@ -1,0 +1,82 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			选择快递公司
+		</div>
+		<div class="r">
+			<div class="text" onclick="select_express_company()">确定</div>
+		</div>
+	</div>
+</header>
+
+<section>	
+	<div class="load-body">数据加载中……</div>
+</section>
+
+
+<script id="tpl_select_express_company" type="text/html">
+	<%for(i=0;i<data.length;i++){%>
+		<div class="line-box nobg noicon text-gray">
+			<b><%= data[i].category_name%></b>
+		</div>
+		<%for(j=0;j<data[i].dlist.length;j++){%>		
+			<div class="line-box-m hover row noicon" data-id="<%= data[i].dlist[j].id %>" onclick="click_express_company($(this))">
+				<div class="col-30">
+					<img src="<%= data[i].dlist[j].logo %>" alt="快递公司logo">
+				</div>
+				<div class="col-70 text-right text-gray">
+					<div style="line-height:40px;margin-right:20px;"><%= data[i].dlist[j].sub_name %></div>
+				</div>
+				<input type="hidden" name="express_company_id" id="express_company_id" value="<%= data[i].dlist[j].id %>">
+				<div class="clearfix"></div>
+			</div>		
+		<%}%>
+	<%}%>
+</script>
+
+<script>
+	fixBar(1);	
+	
+	ajax_post({
+		url:'/Api/api',
+		data:{apiurl:'/SellerExpress/express_company',no_sign:'express_company_id'}
+	},function(ret){
+		if(ret.code == 1){
+			var html=template('tpl_select_express_company',{data:ret.data});
+			$('.page.active section').html(html);
+		}		
+	});	
+	
+	function click_express_company(obj){
+		obj.closest('section').find('.line-box-m.selected').removeClass('selected');
+		obj.addClass('selected');
+	}
+	
+	function select_express_company(){
+		var id=$('.page.active .line-box-m.selected').data('id');
+		if(id==undefined){
+			valert({msg:'请选择快递公司！'});
+			return false;
+		}
+		//console.log(id);
+		//如果选择的是无需物流
+		if(id == 361){
+			$('.page#orders_send_express #express_code').parent().parent().hide();
+			$('.page#orders_send_express #express_code').val("——");
+		}else{
+			if($('.page#orders_send_express #express_code').val() == "——"){
+				$('.page#orders_send_express #express_code').val("");
+			}
+			$('.page#orders_send_express #express_code').parent().parent().show();
+		}
+		//alert($('.page#orders_send_express #express_company_id').val());
+		//$('.page#orders_send_express #express_company_id').val(id);
+		$('.page#orders_send_express .express-company').html($('.page.active .line-box-m.selected').html());
+		closeWin();
+	}
+
+	
+</script>

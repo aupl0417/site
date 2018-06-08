@@ -1,0 +1,223 @@
+<extend name="Seller@Public:base" />
+<block name="body">
+    <div class="centent_body">
+        <!-- to do your html codeing -->
+        <div class="revision_bg">
+            <div class="container ptb_size_lg clearfix">
+                <!-- 左侧导航 -->
+                <include file="Public:sideNav" />
+                <!-- 左侧导航结束 -->
+                <div class="revisionRight pd15" style="width: 1020px;"><!-- 右侧内容 -->
+
+                    <div class="clearfix revisionOrderTab sid-active" data-sid="{$Think.get.sid}">
+                        <a class="orderOption" data-sid="" href="{:U('/advisory')}">所有咨询</a>
+                        <a class="orderOption " data-sid="1" href="{:U('/advisory/index', ['sid' => 1])}">未回复</a>
+                        <a class="orderOption " data-sid="2" href="{:U('/advisory/index', ['sid' => 2])}">已回复</a>
+                        <div class="fr ml40 mb0" style="width:350px">
+                            <form class="form-horizontal" role="form" method="get">
+                                <input type="hidden" name="p" value="1"/>
+                                <div class="input-group mb0">
+                                    <input type="text" class="form-control" name="goods_name" placeholder="请输入商品名称">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-primary" type="submit">搜索</button>
+                                    </span>
+                                    <span class="input-group-btn">
+                                        <button id="hige_search" class="btn btn-default" type="button">
+                                            高级搜索<i class="fa fa-angle-down ml5"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="row mt30 dn pb20" id="search_dn" style="border-bottom: solid 1px #F8F8F8">
+                            <form class="form-horizontal" role="form" method="get">
+                                <input type="hidden" name="p" value="1"/>
+                                <div class="col-md-4 col-sm-4">
+                                    <div class="col-sm-12">
+                                        <div class="form-group mt0">
+                                            <input type="input" class="form-control" name="nick" id="nick" placeholder="请输入用户昵称">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 col-sm-8">
+                                    <div class="col-sm-4">
+                                        <select name="time_area" class="form-control fs14 fl">
+                                            <option value="">时间类型</option>
+                                            <option <eq name="Think.get.time_area" value="advisory">selected</eq> value="advisory">咨询时间</option>
+                                            <option <eq name="Think.get.time_area" value="reply">selected</eq> value="reply">回复时间</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="input-group date datetime" data-min-view="2" data-date-format="yyyy-mm-dd" style="">
+                                            <input name="sday" data-filter="gte" class="form-control form-filter" readonly="sday" id="sday" type="text" placeholder="开始时间">
+                                            <span class="input-group-addon btn default">
+                                                <span class="glyphicon glyphicon-th fa fa-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="input-group date datetime" data-min-view="2" data-date-format="yyyy-mm-dd" style="">
+                                            <input name="eday" data-filter="gte" class="form-control form-filter" readonly="eday" id="eday" type="text" placeholder="结束时间">
+                                            <span class="input-group-addon btn default">
+                                                <span class="glyphicon glyphicon-th fa fa-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <select name="type" class="form-control fs14 fl">
+                                        <option value="">咨询类型</option>
+                                        <volist name="cate" id="vo">
+                                            <option value="{$key}">{$vo}</option>
+                                        </volist>
+                                    </select>
+                                </div>
+                                <div class="col-sm-2">
+                                    <button type="submit" class="btn btn-rad btn-trans btn-primary ">搜索咨询</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <empty name="data.list">
+                        {:W('Common/Builder/nors', array('param' => array('text' => $data['msg'])))}
+                        <else />
+
+                        <table class="no-border mb20 bg_f1"><!-- 类型说明 -->
+                            <tbody class="no-border-y">
+                            <tr class="text-center">
+                                <td width="75%" style="padding:0">
+                                    <table class="no-border">
+                                        <tbody class="no-border-y">
+                                        <td width="13%"></td>
+                                        <td width="34%">商品信息</td>
+                                        <td width="16%">商品单价</td>
+                                        <td width="14%">咨询类型</td>
+                                        <td width="18%">用户</td>
+                                        </tbody>
+                                    </table>
+                                </td>
+                                <td width="13%">状态</td>
+                                <td width="12%">操作</td>
+                            </tr>
+                            </tbody>
+                        </table><!-- 类型说明结束 -->
+
+                        <table class="revisionTable table"><!-- 订单信息 -->
+                            <tbody class="bg_white">
+                            <volist name="data.list" id="vo">
+                                <tr class="text-center">
+                                    <td style="padding:0; width:75%">
+                                        <table class="no-border table-hover">
+                                            <tbody class="no-border-y">
+                                            <tr><!-- 同店铺第一个商品 -->
+                                                <td width="13%">
+                                                    <a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', ['id' => $vo['attr_list_id']])}">
+                                                        <img src="{:myurl($vo['images'], 80)}" class="img-thumbnail"></a>
+                                                </td>
+                                                <td valign="top" width="34%" class="text-left">
+                                                    <a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', ['id' => $vo['attr_list_id']])}">{$vo.goods_name}</a>
+                                                    <div class="md5 text-gray mt5">咨询时间：{$vo.atime}</div>
+                                                </td>
+                                                <td width="16%">
+                                                    <span class="text_yellow">￥ {$vo.price}</span>
+                                                </td>
+                                                <td width="14%">{$vo.type_name}</td>
+                                                <td width="18%">
+                                                    <a class="text_44" target="_blank" href="{:DM('oauth2')}{:U('Im/check',['receiver' => $vo['nick']])}"><img class="mr5" width="12" src="/Public/images/icon-im.png"> {$vo.nick}</a>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                    <td style="vertical-align: middle; width:13%" rowspan="1">
+                                        <div style="padding: 0 10px;">
+                                            <eq name="vo.status" value="1">
+                                                <a href="javascript:;" class="btn btn-sm btn-primary btn-rad btn-trans btn-block m0">{$vo.status_name}</a>
+                                                <else />
+                                                <a href="javascript:;" class="btn btn-sm btn-primary btn-rad btn-trans btn-block m0">{$vo.status_name}</a>
+                                            </eq>
+
+                                        </div>
+                                    </td>
+                                    <td style="vertical-align: middle; width:12%" rowspan="1">
+                                        <eq name="vo.status" value="1"><!-- 未回复的情况下可以删除咨询 -->
+                                            <p><a class="text_blue" href="{:U('/advisory/reply', ['id' => $vo['id']])}" data-id="{$vo.id}">回复咨询</a></p>
+                                            <else />
+                                            <p><a class="text_blue" href="{:U('/advisory/edit', ['id' => $vo['id']])}" data-id="{$vo.id}">修改回复</a></p>
+                                        </eq>
+                                        <p><a class="text_blue" href="{:U('/advisory/detail', ['id' => $vo['id']])}">详情</a></p>
+                                    </td>
+                                </tr>
+                            </volist>
+                            </tbody>
+                        </table><!-- 订单信息结束 -->
+
+                        <div class="page-box col-xs-12 text-center">
+                            {:page_html($data['pageinfo'])}
+                        </div>
+
+                    </empty>
+                </div>
+
+            </div>
+        </div>
+        <!-- my codeing over -_-   -->
+
+    </div>
+</block>
+
+<block name="css">
+    <script src="__FLATDREAM__/js/bootstrap.datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="__FLATDREAM__/js/bootstrap.datetimepicker/js/bootstrap-datetimepicker.zh-CN.js"></script>
+    <link rel="stylesheet" href="__FLATDREAM__/js/bootstrap.datetimepicker/css/bootstrap-datetimepicker.css" />
+</block>
+
+<block name="script">
+    <!-- to do your javascript codeing -->
+    <script>
+        $(document).ready(function() {
+            $(".datetime").datetimepicker({
+                format : 'yyyy-mm-dd'
+            });
+            $('.datetime').datetimepicker({
+                language:  'zh-CN',
+                weekStart : 1,
+                todayBtn : 1,
+                autoclose : 1,
+                todayHighlight : 1,
+                startView : 2,
+                forceParse : 0,
+                showMeridian : 1
+            });
+            $('#hige_search').click(function(){
+                $('#search_dn').slideToggle('slow')
+            });
+        });
+
+        function delHistory(id) {
+            vmodal({
+                title:'删除提示',
+                msg:'您真的要删除吗?',
+                class:'text-center',
+                confirm:1,
+                footer:false,
+                width:'600px',
+            },function(ret) {
+                $(".modal-ok").click(function() {
+                    ajax_post({
+                        url:'/run/authRun',
+                        data:{id:id},
+                        headers:{Action : '{$advisoryDel}'},
+                    },function(ret) {
+                        talert({status:ret.code,msg:ret.msg});
+                        if(ret.code == 1) {
+                            setTimeout("ref()", 1000);
+                        }
+                    })
+                })
+            })
+        }
+    </script>
+</block>

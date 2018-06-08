@@ -1,0 +1,104 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin({ref:true})"></i>
+		</div>
+		<div class="title">
+			提现
+		</div>
+		<div class="r">
+			<div class="text" onclick="openWin({name:'withdraw_list',url:'/Withdraw/withdraw_plist'})">提现记录</div>
+		</div>
+	</div>
+</header>
+<section>
+	<form id="form-withdraw-out">
+	<div class="line-box noicon nobg text-gray">
+		提现金额单笔大于{:C('cfg.withdraw')['min_money']}且小于{:C('cfg.withdraw')['max_money']}元，每日提现不得超过3次
+	</div>
+	<div class="line-box-m row hover" onclick="openWin({name:'withdraw_account_select',url:'/Withdraw/withdraw_account_select'})">
+		<div class="col-30">提现账户</div>
+		<div class="col-70 text-gray withdraw-account"><div class="text-right mr20">请选择提现账户</div></div>
+		<input type="hidden" name="card_id" id="card_id">
+		<div class="clearfix"></div>
+	</div>	
+	<div class="line-input row">
+		<div class="col-4">提现金额</div>
+		<div class="col-4x3"><input id="money" name="money" placeholder="请输入提现金额！"></div>
+	</div>
+	<div class="line-box nobg noicon text-gray">
+		我的现金账户：<span class="ac_cash text-success">0</span> 元 
+	</div>	
+	<div class="line-input row">
+		<div class="col-4">安全密码</div>
+		<div class="col-4x3"><input type="password" id="password_pay" name="password_pay" placeholder="请输入安全密码！" maxlength="6"></div>
+	</div>
+	<if condition="$_SESSION['user']['password_pay'] eq ''">
+		<div class="line-input row bobg">
+			<div class="col-100">尚未设置安全密码,&nbsp;&nbsp;<a class="text-success" href="javascript:openWin({name:'user_spp',url:'/User/spp',logined:true,ref:true})">马上去设置</a></div>
+		</div>
+		</if>
+	<div class="p10">
+		<div class="btn btn-lg btn-block btn-danger" onclick="withdraw_out()">提现</div>
+	</div>	
+	<input type="hidden" name="apiurl" value="/Withdraw/out">
+	<input type="hidden" name="is_openid" value="1">
+	</form>
+</section>
+
+<script>
+	fixBar(1);
+	
+	ajax_post({
+		url:'/Api/api',
+		data:{apiurl:'/Account/account',is_openid:1},
+	},function(ret){
+		if(ret.code==1){			
+			$('.page.active .ac_cash').html(ret.data.ac_cash);
+			
+		}
+	});
+	
+	
+	
+	function withdraw_out(){
+		var data=getFormJson('#form-withdraw-out');
+		if(data.card_id==''){
+			valert({msg:'请选择提现账户！'});
+			return false;
+		}
+		if(data.money==''){
+			valert({msg:'请输入提现金额！'});
+			return false;
+		}
+		if(data.password_pay==''){
+			valert({msg:'请输入安全密码！'});
+			return false;
+		}
+		
+		var min_money={:C('cfg.withdraw')['min_money']};
+		var max_money={:C('cfg.withdraw')['max_money']};
+		
+		if(parseFloat(data.money)<min_money){
+			valert({msg:'单笔提现金额不得小于'+min_money+'元！'});
+			return false;
+		}
+		if(parseFloat(data.money)>max_money){
+			valert({msg:'单笔提现金额不得大干'+max_money+'元！'});
+			return false;
+		}
+		
+		ajax_post({
+			url:'/Api/api',
+			data:data,
+		},function(ret){
+			if(ret.code==1){			
+				openWin({name:'tips',url:'__URL__/tips',close:true});				
+			}else{
+				valert(ret);
+			}
+		});		
+	}
+
+	
+</script>

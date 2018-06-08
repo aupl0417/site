@@ -1,0 +1,26 @@
+.inventory_type li.active {
+    background-color: #fffafa;
+    color: #dc143c;
+    background-image: url(../images/active-img.png);
+    background-position: right bottom;
+    background-repeat: no-repeat;
+    border: 1px solid #dc143c;
+}
+.inventory_type li {
+    display: block;
+    float: left;
+    padding: 0 20px;
+    font-size: 1.5em;
+    border: 1px solid #dcdcdc;
+    text-align: center;
+    width: 305px;
+    margin-right: 20px;
+    height: 60px;
+    line-height: 60px;
+    cursor: pointer;
+}
+ul, li {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}

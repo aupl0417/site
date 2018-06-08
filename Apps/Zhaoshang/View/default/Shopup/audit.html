@@ -1,0 +1,298 @@
+<include file="Public:header" />
+<include file="Public:menu" />
+
+<div class="w1200 mt20 md20 bg-white box">
+	<div class="box-header">
+		审核状态
+	</div>
+	
+	<div class="box-content p50">	
+		<div class="alert alert-warning alert-white-alt2 rounded" style="display: none;">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+			<div class="icon"><i class="fa fa-warning"></i></div>
+			<strong>提示!</strong> 店铺申请升级是乐兑商城为卖家提供的店铺更改服务，已开店并且一个月之内没有升级过的都可申请，完成申请后即可在乐兑商城免费售卖商品.
+			<div class="mt10 link-blue">
+				<a target="_blank" href="{:C('sub_domain.faq')}/view.html?id=864" class="text_blue">申请遇到问题？</a><br />
+				<a target="_blank" href="{:C('sub_domain.faq')}/view.html?id=865"  class="text_blue">了解开店认证需要材料</a>
+			</div>
+		</div>		
+						
+		<if condition="$info:status eq 1">
+			<div class="crow">
+				<div class="ccol-35 text-right">
+					<img src="../Public/images/icon-wait.png" alt="审核图标">
+				</div>
+				<div class="ccol-40">
+					<h2 class="mt30 md20">您的资料已提交，请等待审核！</h2>
+					<div class="md20">资料提交后我们将在3个工作日内进行审核，请耐心等待；<br />如果遇到节假日顺延，有何疑问可联系客服咨询。</div>
+					<a href="{:C('sub_domain.s')}" class="btn btn-trans btn-150px btn-danger">去挑选商品</a>
+					<a href="{:C('sub_domain.www')}" class="btn btn-trans btn-150px btn-danger">返回首页</a>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+		<elseif condition="$info:status eq 2" />
+			<div class="crow">
+				<div class="ccol-35 text-right">
+					<img src="../Public/images/icon-no.png" alt="审核图标">
+				</div>
+				<div class="ccol-40">
+					<h2 class="mt30 md20">您提交的资料未能通过审核！</h2>
+					<div class="md20"></div>
+					<div>您可根据反馈回来的原因重新提交资料进行审核；</div>
+					<div class="md10">有疑问可联系客服咨询。</div>		
+					<notempty name="logs.remark">
+						<div class="md10"><span class="b">原因：</span>{$logs.remark|nl2br}</div>	
+					</notempty>
+					<a href="__URL__/shop_type" class="btn btn-trans btn-150px btn-danger">重新提交资料</a>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+			<div class="p10 mt30 hide">
+				<div class="pull-left"><a href="__URL__/shop_info" class="btn btn-danger btn-150px btn-trans">上一步</a></div>
+				<div class="pull-right"><button type="button" class="btn btn-danger btn-150px btn-next disabled">下一步</button></div>
+			</div>	
+		<elseif condition="$info:status eq 3" />
+			<div class="crow">
+				<div class="ccol-35 text-right">
+					<img src="../Public/images/icon-express.png" alt="审核图标">
+				</div>
+				<div class="ccol-40">
+					<h2 class="mt30 md20">审核通过，请邮寄合同</h2>
+					<div class="md20 link-blue">{$zs.address|html_entity_decode}</div>
+				</div>
+			</div>
+			<div class="clearfix"></div>	
+		<elseif condition="$info:status eq 4" />
+			<!-- <div class="crow">
+				<div class="ccol-35 text-right">
+					<img src="../Public/images/icon-no.png" alt="审核图标">
+				</div>
+				<div class="ccol-40">
+					<h2 class="mt30 md20">长时间未收到合同，开店失败！</h2>
+					<div class="md20"></div>
+					<div>您可根据反馈回来的原因进行处理；</div>
+					<div class="md10">有疑问可联系客服咨询。</div>				
+					<notempty name="logs.remark">
+						<div class="md10"><span class="b">原因：</span>{$logs.remark|nl2br}</div>	
+					</notempty>
+				</div>
+			</div>
+			<div class="clearfix"></div>		 -->		
+		<elseif condition="$info:status eq 5" />
+			<div class="crow">
+				<div class="ccol-35 text-right">
+					<img src="../Public/images/icon-ok.png" alt="审核图标">
+				</div>
+				<div class="ccol-40">
+					<h2 class="mt30 md20">升级成功</h2>
+					<div>店铺名称：<span class="b">{$rs:shop_name}</span></div>
+					<div class="md20">店铺地址：<a href="{$rs:shop_url}" target="_blank">{$rs:shop_url}</a></div>
+					<a href="{$rs:shop_url}" class="btn btn-trans btn-150px btn-danger" target="_blank">浏览店铺</a>
+					<a href="{:C('sub_domain.make')}/Main" class="btn btn-trans btn-150px btn-danger" target="_blank">装修店铺</a>					
+				</div>
+			</div>
+			<div class="clearfix"></div>			
+		</if>
+
+		<div class="clearfix md30"></div>
+		
+		<table class="nobg noborder tdbg-line" style="line-height:25px">
+			<tr class="success">
+				<td width="100" class="text-center">
+					<div class="number-circle">1</div>
+				</td>
+				<td>
+					<div class="box p20 m10">
+						<div class="ft18">升级须知</div>
+						<div>告知招商类目、升级店铺须知，检测用户是否符合升级店铺资格。</div>	
+					</div>					
+				</td>
+			</tr>
+			<tr class="success">
+				<td width="100" class="text-center">
+					<div class="number-circle">2</div>
+				</td>
+				<td>
+					<div class="box p20 m10">
+						<div class="ft18">合同审阅</div>
+						<div>查阅并同意合同，合同下载</div>						
+					</div>					
+				</td>
+			</tr>
+			<tr class="<if condition=" $info:shop_type_id " >{:isset($logs['content']['step_1']) && $logs['content']['step_1']==0?'warning':'success'}</if>">
+				<td width="100" class="text-center">
+					<div class="number-circle">3</div>
+				</td>
+				<td>
+					<div class="box p20 m10">
+						<div class="crow">
+							<div class="ccol-40">
+								<div class="ft18">店铺类型、品牌、经营类目</div>
+								<div>选择开店类型、经营品牌及类目</div>									
+							</div>
+							<div class="ccol-40">
+								<if condition=" $logs['content'] and $logs['content']['step_1'] eq 0 ">
+								<span class="text-danger">资料不符合要求：</span>{$logs.content.reason_1}
+								<else />&nbsp;
+								</if>
+							</div>
+							<div class="ccol-20 text-right">
+								<in name="info:status" value="0,2">
+								<a href="__URL__/shop_type" class="btn btn-trans btn-default btn-xs">编辑</a>
+								</in>
+							</div>
+						</div>
+						<div class="clearfix"></div>
+					</div>					
+				</td>
+			</tr>
+			<tr class="<if condition=" $info:brand_cred " >{:isset($logs['content']['step_2']) && $logs['content']['step_2']==0?'warning':'success'}</if>">
+				<td width="100" class="text-center">
+					<div class="number-circle">4</div>
+				</td>
+				<td>
+					<div class="box p20 m10">
+						<div class="crow">
+							<div class="ccol-40">
+								<div class="ft18">品牌资质<small class="ft12 text-gray">（个体店铺可跳过此项）</small></div>
+								<div>完善品牌资料及上传品牌资质</div>									
+							</div>
+							<div class="ccol-40">
+								<if condition=" $info:brand_cred and $logs['content'] and $logs['content']['step_2'] eq 0 ">
+								<span class="text-danger">资料不符合要求：</span>{$logs.content.reason_2}
+								<else />&nbsp;
+								</if>
+							</div>
+							<div class="ccol-20 text-right">
+								<in name="info:status" value="0,2">
+								<a href="__URL__/brand" class="btn btn-trans btn-default btn-xs">编辑</a>
+								</in>
+							</div>
+						</div>
+						<div class="clearfix"></div>
+					</div>								
+				</td>
+			</tr>
+			<tr class="<if condition=" $info:industry_cred " >{:isset($logs['content']['step_3']) && $logs['content']['step_3']==0?'warning':'success'}</if>">
+				<td width="100" class="text-center">
+					<div class="number-circle">5</div>
+				</td>
+				<td>
+					<div class="box p20 m10">
+						<div class="crow">
+							<div class="ccol-40">
+								<div class="ft18">行业资质</div>
+								<div>提交经营品牌的行业资质</div>								
+							</div>
+							<div class="ccol-40">
+								<if condition=" $info:industry_cred and $logs['content'] and $logs['content']['step_3'] eq 0 ">
+								<span class="text-danger">资料不符合要求：</span>{$logs.content.reason_3}
+								<else />&nbsp;
+								</if>
+							</div>
+							<div class="ccol-20 text-right">
+								<in name="info:status" value="0,2">
+								<a href="__URL__/industry" class="btn btn-trans btn-default btn-xs">编辑</a>
+								</in>
+							</div>
+						</div>
+						<div class="clearfix"></div>
+					</div>								
+				</td>
+			</tr>
+			<tr class="<if condition=" $info:shop_name " >{:isset($logs['content']['step_4']) && $logs['content']['step_4']==0?'warning':'success'}</if>">
+				<td width="100" class="text-center">
+					<div class="number-circle">6</div>
+				</td>
+				<td>
+					<div class="box p20 m10">
+						<div class="crow">
+							<div class="ccol-40">
+								<div class="ft18">店铺设置</div>
+								<div>设置店铺名称、分账模式及店铺负责联系方式</div>								
+							</div>
+							<div class="ccol-40">
+								<if condition=" $logs['content'] and $logs['content']['step_4'] eq 0 ">
+								<span class="text-danger">资料不符合要求：</span>{$logs.content.reason_4}
+								<else />&nbsp;
+								</if>
+							</div>
+							<div class="ccol-20 text-right">
+								<in name="info:status" value="0,2">
+								<a href="__URL__/shop_info" class="btn btn-trans btn-default btn-xs">编辑</a>
+								</in>
+							</div>
+						</div>
+						<div class="clearfix"></div>
+					</div>								
+				</td>
+			</tr>
+			<!-- <tr class="<if condition=" $info:status egt 3 " >success</if>">
+				<td width="100" class="text-center">
+					<div class="number-circle">7</div>
+				</td>
+				<td>
+					<div class="box p20 m10">
+						<div class="crow">
+							<div class="ccol-40">
+								<div class="ft18">邮寄合同</div>
+								<div>审核通过后邮寄合同，未通审核可重新提交资料</div>								
+							</div>
+							<div class="ccol-40">&nbsp;</div>
+							<div class="ccol-20 text-right">
+								<eq name="info:status" value="3">
+								<a href="https://www.trj.cc/Public/download/trj.docx" class="btn btn-trans btn-default btn-xs" target="_blank">下载合同</a>
+								</eq>
+							</div>
+						</div>
+						<div class="clearfix"></div>
+					</div>								
+				</td>
+			</tr> -->
+			<tr class="<if condition=" $info:status eq 5 " >success</if>">
+				<td width="100" class="text-center">
+					<div class="number-circle">7</div>
+				</td>
+				<td>
+					<div class="box p20 m10">
+						<div class="crow">
+							<div class="ccol-40">
+								<div class="ft18">升级店铺成功</div>
+								<div>乐兑商城招商部已通过审核，升级成功</div>							
+							</div>
+							<div class="ccol-40">&nbsp;</div>
+							<div class="ccol-20 text-right">
+								<eq name="info:status" value="5">
+								<a href="{$rs:shop_url}" class="btn btn-trans btn-default btn-xs">浏览店铺</a>
+								</eq>
+							</div>
+						</div>
+						<div class="clearfix"></div>
+					</div>								
+				</td>
+			</tr>
+		</table>								
+			
+
+
+	</div>
+
+</div>
+
+
+
+<include file="Public:copyright" />
+<include file="Public:js" />
+
+
+<script>
+$(document).ready(function(){
+	
+});	
+
+
+
+
+</script>
+
+<include file="Public:footer" />

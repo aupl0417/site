@@ -1,0 +1,42 @@
+
+<script src="__PUBLIC__/js/echarts.min.js"></script>
+
+<div id="jiaoyi_7day" style="width: 100%;height:400px;"></div>
+<script type="text/javascript">
+    
+    var jiaoyi_7day = echarts.init(document.getElementById('jiaoyi_7day'));
+    
+    var option = {
+        title: {
+            text: {$data.title}
+        },
+        grid:{
+            containLabel:true,
+        },
+        tooltip: {
+            trigger: 'axis',
+        },
+        legend: {
+            data:{$data.legend}
+        },
+        dataZoom: [
+        {
+            type:'slider',
+            xAxisIndex: 0,
+            start:0,
+            end:100,
+        },
+        
+    ],
+        xAxis: {
+            boundaryGap : false,
+            splitLine: {show: false},
+            data: {$data.xAxis}
+        },
+        yAxis: {},
+        series: {$data.series},
+        color:{$data.color},
+    };
+
+    jiaoyi_7day.setOption(option);
+</script>

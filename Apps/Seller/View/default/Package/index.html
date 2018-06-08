@@ -1,0 +1,118 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body">
+	<include file="Public:nav" />
+	<div class="container mb30">
+		<include file="Public:side" />
+		<div class="w980 fl">
+			<div class="bor_der">
+				<div class="bg_f1 clearfix fs14 text_44 tle_R">
+					<a class="fl plr15 line40 ml-1 active" href="javascript:;">包装模板管理</a>
+				</div>
+				<!-- 主体部分 -->
+				<empty name="data">
+					{:W('Common/Builder/nors', array('param' => array('text' => '找不到记录！')))}
+				<else />
+					<div class="plr15 ptb10">
+						<div class=" mb20">
+							<div class="clearfix bg_f1 guide_tle bor_der">
+								<div class="pt10 fl">
+									<label class="square fl ml15 mr10">
+										<input id="checkedAll" type="checkbox">
+										<span></span>
+									</label>
+									<a class="mr20" href="javascript:;">全选</a>		
+									<a data-type="batch" data-id="{$vo.id}" data-title="确认批量删除" data-msg="您真的要删除选中的模板吗？" class="mr20 opreating" href="javascript:;">删除</a>
+								</div>
+							</div>
+							<table class="table-bordered bor_no hover_tr mb20">
+								<tbody class="td_borno">
+									<tr class="solid_b solid_l solid_r">
+										<td class="pl40" width="40%">标题</td>
+										<td width="13%">添加时间</td>
+										<td width="10%">操作</td>
+									</tr>
+									<volist name="data" id="vo">
+										<tr class="solid_b">
+											<td class="clearfix">
+												<label class="square fl ml7 mr10"><input name="ids[]" class="ids" value="{$vo.id}" type="checkbox"><span></span></label>
+												{$vo.package_name}
+											</td>
+											<td>
+												<div class="mt-15">
+													{$vo.atime}
+												</div>											
+											</td>
+											<td class="text_44">
+												<a class="text_blue" href="{:U('/package/add', ['id' => $vo['id']])}"><p class="mb5">编辑</p></a>
+												<a data-id="{$vo.id}" data-title="确认删除" data-msg="您真的要删除此项记录吗？" class="text_blue opreating" href="javascript:;"><p class="mb5">删除</p></a>
+											</td>
+										</tr>
+									</volist>
+								</tbody>
+							</table>
+							<div class="clearfix">
+								<div class="col-xs-12 text-center">
+								
+								</div>
+							</div>
+						</div>
+					</div>
+				</empty>
+				<div style='text-align:center;'>
+					<a href="{:U('/package/add')}" class="btn btn-primary link-white">添加包装模板</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</block>
+<block name="css"></block>
+<block name="script">
+<script>
+$(document).ready(function() {
+	//全选反选
+	$("#checkedAll").change(function() {
+		if($(this).is(":checked") == true) {
+			$(".ids").prop("checked", true);
+		} else {
+			$(".ids").prop("checked", false);
+		}
+	});
+	//操作
+	$(".opreating").click(function() {
+		var d 	=	$(this).data();
+		if(d.type == 'batch') {
+			d.id	=	'';
+			$(".ids").each(function() {
+				if($(this).is(":checked") == true) {
+					d.id	+=	$(this).val() + ',';
+				}
+			})
+		}
+		if(d.id == '') {
+			talert({status:0,msg:'请至少选择一项'});
+			return false;
+		}
+		vmodal({
+			  title:d.title,
+			  msg:d.msg,
+			  class:'text-center',
+			  confirm:1
+		  },function(ret) {
+			  $(".modal-ok").click(function() {
+				  ajax_post({
+					  url:'{:U("/package/del")}',
+					  data:{id:d.id},
+				  },function(ret) {
+					  talert({status:ret.code,msg:ret.msg});
+					  if(ret.code == 1) {
+					  	ref(); 
+					  }
+				  })
+			  })
+		  });
+	});
+});
+</script>
+</block>

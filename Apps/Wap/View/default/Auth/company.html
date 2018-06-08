@@ -1,0 +1,953 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			企业认证
+		</div>
+		<div class="r">
+			<div class="text" ></div>
+		</div>
+	</div>
+</header>
+<section>
+	<div class="load-body">数据加载中……</div>	
+</section>
+<!--未审核-->
+<script id="tpl_auth_company" type="text/html">
+	<div class="line-input row hover" onclick = 'select_is_three(this)'>
+		<div class="col-4">三证合一</div>
+		<div class="col-4x3">是</div>
+		<input type = 'hidden' id="is_three" value = "1" name="is_three" >
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">公司名称</div>
+		<div class="col-4x3"><input id="company" name="company" value = "" placeholder="请输入公司名"></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">注册地址</div>
+		<div class="col-4x3"><input id="reg_address" name="reg_address" value = "" placeholder="请输入公司注册地址"></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">经营地址</div>
+		<div class="col-4x3"><input id="business_address" name="business_address" value = "" placeholder="请输入公司经营地址"></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">法人姓名</div>
+		<div class="col-4x3"><input id="legal" name="legal" value = "" placeholder="请输入法人姓名"></div>
+	</div>
+	<div class="line-input row hover" onclick = 'select_card_type(this)'>
+		<div class="col-4">法人证件类型</div>
+		<div class="col-4x3">二代身份证</div>
+		<input type = 'hidden' id="legal_card_type" value = "0" name="legal_card_type" >
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">法人证件号码</div>
+		<div class="col-4x3"><input id="legal_card_no" name="legal_card_no" value = "" placeholder="请输入您的证件号码"></div>
+	</div>
+	<div class = 'pic-input'>
+		<table width = "100%" cellspacing = '0' >
+			<tr>
+				<td width = '25%'>法人证件正面照片</td>
+				<td>
+					<img src="../Public/Images/up_load1.jpg" onclick = "select_pic(this)">
+					<input type = "hidden" name = "legal_pic" id = "legal_pic" value = ""/>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class = 'pic-input'>
+		<table width = "100%" cellspacing = '0' >
+			<tr>
+				<td width = '25%'>法人证件背面照片</td>
+				<td>
+					<img src="../Public/Images/up_load1.jpg" onclick = "select_pic(this)">
+					<input type = "hidden" name = "legal_pic2" id = "legal_pic2" value = ""/>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class = 'pic-input'>
+		<table width = "100%" cellspacing = '0' >
+			<tr>
+				<td width = '25%'>法人手持证件照片</td>
+				<td>
+					<img src="../Public/Images/up_load1.jpg" onclick = "select_pic(this)">
+					<input type = "hidden" name = "legal_pic3" id = "legal_pic3" value = ""/>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">注册资本</div>
+		<div class="col-4x3"><input id="reg_capital" name="reg_capital" value = "" placeholder="请输入公司的注册资本"></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">实收资本</div>
+		<div class="col-4x3"><input id="paidin_capital" name="paidin_capital" value = "" placeholder="请输入公司的实收资本"></div>
+	</div>
+	<div class="line-input row hover" onclick = 'select_com_type(this)'>
+		<div class="col-4">公司类型</div>
+		<div class="col-4x3">个体户</div>
+		<input type = 'hidden' id="com_type" value = "1" name="com_type" >
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">经营范围</div>
+		<div class="col-4x3"><input id="scope" name="scope" value = "" placeholder="请输入公司的经营范围"></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">注册日期</div>
+		<div class="col-4x3"><input id="reg_day" name="reg_day" value = "" placeholder="请输入公司的注册日期"></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">到期日期</div>
+		<div class="col-4x3"><input id="end_day" name="end_day" value = "" placeholder="请输入公司的到期日期"></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">经营执照编号</div>
+		<div class="col-4x3"><input id="license_code" name="license_code" value = "" placeholder="请输入经营执照编号"></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">税务登记证编号</div>
+		<div class="col-4x3"><input id="tax_code" name="tax_code" value = "" placeholder="请输入税务登记证编号"></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">组织机构代码证编号</div>
+		<div class="col-4x3"><input id="org_code" name="org_code" value = "" placeholder="请输入组织机构代码证编号"></div>
+	</div>
+	<div class = 'pic-input'>
+		<table width = "100%" cellspacing = '0' >
+			<tr>
+				<td width = '25%'>营业执行副本照片</td>
+				<td>
+					<img src="../Public/Images/up_load1.jpg" onclick = "select_pic(this)">
+					<input type = "hidden" name = "license_pic" id = "license_pic" value = ""/>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class = 'pic-input'>
+		<table width = "100%" cellspacing = '0' >
+			<tr>
+				<td width = '25%'>机构代码证照片</td>
+				<td>
+					<img src="../Public/Images/up_load1.jpg" onclick = "select_pic(this)">
+					<input type = "hidden" name = "org_pic" id = "org_pic" value = ""/>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class = 'pic-input'>
+		<table width = "100%" cellspacing = '0' >
+			<tr>
+				<td width = '25%'>税务登记证照片</td>
+				<td>
+					<img src="../Public/Images/up_load1.jpg" onclick = "select_pic(this)">
+					<input type = "hidden" name = "tax_pic" id = "tax_pic" value = ""/>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="btn btn-danger btn-lg btn-block md20" onclick="submit_auth()">提交</div>
+</script>
+<!--已拒绝-->
+<script id="tpl_auth_company_refuse" type="text/html">
+	<div class="line-input row hover">
+		<div class="col-4">创建时间：</div>
+		<div class="col-4x3"><%= data.atime %></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">状态：</div>
+		<div class="col-4x3"><%= data.status_name %></div>
+	</div>
+	<div class="line-input row hover" onclick = 'select_is_three(this)'>
+		<div class="col-4">三证合一</div>
+		<div class="col-4x3"><% if(data.is_three == "1"){ %>是<% }else{ %>否<% } %></div>
+		<input type = 'hidden' id="is_three" value = "<%= data.is_three %>" name="is_three" >
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">公司名称</div>
+		<div class="col-4x3"><input id="company" name="company" value = "<%= data.company %>" placeholder="请输入公司名"></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">注册地址</div>
+		<div class="col-4x3"><input id="reg_address" name="reg_address" value = "<%= data.reg_address %>" placeholder="请输入公司注册地址"></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">经营地址</div>
+		<div class="col-4x3"><input id="business_address" name="business_address" value = "<%= data.business_address %>" placeholder="请输入公司经营地址"></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">法人姓名</div>
+		<div class="col-4x3"><input id="legal" name="legal" value = "<%= data.legal %>" placeholder="请输入法人姓名"></div>
+	</div>
+	<div class="line-input row hover" onclick = 'select_card_type(this)'>
+		<div class="col-4">法人证件类型</div>
+		<div class="col-4x3"><% if(data.legal_card_type == "1"){ %>护照<% }else{ %>二代身份证<% } %></div>
+		<input type = 'hidden' id="legal_card_type" value = "<%= data.legal_card_type %>" name="legal_card_type" >
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">法人证件号码</div>
+		<div class="col-4x3"><input id="legal_card_no" name="legal_card_no" value = "<%= data.legal_card_no %>" placeholder="请输入您的证件号码"></div>
+	</div>
+	<div class = 'pic-input'>
+		<table width = "100%" cellspacing = '0' >
+			<tr>
+				<td width = '25%'>法人证件正面照片</td>
+				<td>
+					<img src="<% if(data.legal_pic != ""){ %><%= data.legal_pic %><% }else{ %>../Public/Images/up_load1.jpg<% } %>" onclick = "select_pic(this)">
+					<input type = "hidden" name = "legal_pic" id = "legal_pic" value = "<%= data.legal_pic %>"/>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class = 'pic-input'>
+		<table width = "100%" cellspacing = '0' >
+			<tr>
+				<td width = '25%'>法人证件背面照片</td>
+				<td>
+					<img src="<% if(data.legal_pic2 != ""){ %><%= data.legal_pic2 %><% }else{ %>../Public/Images/up_load1.jpg<% } %>" onclick = "select_pic(this)">
+					<input type = "hidden" name = "legal_pic2" id = "legal_pic2" value = "<%= data.legal_pic2 %>"/>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class = 'pic-input'>
+		<table width = "100%" cellspacing = '0' >
+			<tr>
+				<td width = '25%'>法人手持证件照片</td>
+				<td>
+					<img src="<% if(data.legal_pic3 != ""){ %><%= data.legal_pic3 %><% }else{ %>../Public/Images/up_load1.jpg<% } %>" onclick = "select_pic(this)">
+					<input type = "hidden" name = "legal_pic3" id = "legal_pic3" value = "<%= data.legal_pic3 %>"/>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">注册资本</div>
+		<div class="col-4x3"><input id="reg_capital" name="reg_capital" value = "<%= data.reg_capital %>" placeholder="请输入公司的注册资本"></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">实收资本</div>
+		<div class="col-4x3"><input id="paidin_capital" name="paidin_capital" value = "<%= data.paidin_capital %>" placeholder="请输入公司的实收资本"></div>
+	</div>
+	<div class="line-input row hover" onclick = 'select_com_type(this)'>
+		<div class="col-4">公司类型</div>
+		<div class="col-4x3">
+			<% if(data.com_type == "1"){ %>
+				个体户
+			<% }else if(data.com_type == "2"){ %>
+				有限责任公司
+			<% }else if(data.com_type == "3"){ %>
+				股份有限公司
+			<% }else if(data.com_type == "4"){ %>
+				私营企业
+			<% }else if(data.com_type == "5"){ %>
+				港、澳、台商投资企业
+			<% } %>
+		</div>
+		<input type = 'hidden' id="com_type" value = "<%= data.com_type %>" name="com_type" >
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">经营范围</div>
+		<div class="col-4x3"><input id="scope" name="scope" value = "<%= data.scope %>" placeholder="请输入公司的经营范围"></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">注册日期</div>
+		<div class="col-4x3"><input id="reg_day" name="reg_day" value = "<%= data.reg_day %>" placeholder="请输入公司的注册日期"></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">到期日期</div>
+		<div class="col-4x3"><input id="end_day" name="end_day" value = "<%= data.end_day %>" placeholder="请输入公司的到期日期"></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">经营执照编号</div>
+		<div class="col-4x3"><input id="license_code" name="license_code" value = "<%= data.license_code %>" placeholder="请输入经营执照编号"></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">税务登记证编号</div>
+		<div class="col-4x3"><input id="tax_code" name="tax_code" value = "<%= data.tax_code %>" placeholder="请输入税务登记证编号"></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">组织机构代码证编号</div>
+		<div class="col-4x3"><input id="org_code" name="org_code" value = "<%= data.org_code %>" placeholder="请输入组织机构代码证编号"></div>
+	</div>
+	<div class = 'pic-input'>
+		<table width = "100%" cellspacing = '0' >
+			<tr>
+				<td width = '25%'>营业执行副本照片</td>
+				<td>
+					<img src="<% if(data.license_pic != ""){ %><%= data.license_pic %><% }else{ %>../Public/Images/up_load1.jpg<% } %>" onclick = "select_pic(this)">
+					<input type = "hidden" name = "license_pic" id = "license_pic" value = "<%= data.license_pic %>"/>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class = 'pic-input'>
+		<table width = "100%" cellspacing = '0' >
+			<tr>
+				<td width = '25%'>机构代码证照片</td>
+				<td>
+					<img src="<% if(data.org_pic != ""){ %><%= data.org_pic %><% }else{ %>../Public/Images/up_load1.jpg<% } %>" onclick = "select_pic(this)">
+					<input type = "hidden" name = "org_pic" id = "org_pic" value = "<%= data.org_pic %>"/>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class = 'pic-input'>
+		<table width = "100%" cellspacing = '0' >
+			<tr>
+				<td width = '25%'>税务登记证照片</td>
+				<td>
+					<img src="<% if(data.tax_pic != ""){ %><%= data.tax_pic %><% }else{ %>../Public/Images/up_load1.jpg<% } %>" onclick = "select_pic(this)">
+					<input type = "hidden" name = "tax_pic" id = "tax_pic" value = "<%= data.tax_pic %>"/>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="btn btn-danger btn-lg btn-block md20" onclick="submit_auth()">提交</div>
+</script>
+<script id="tpl_auth_company_audit" type="text/html">
+	<div class="line-input row hover">
+		<div class="col-4">创建时间：</div>
+		<div class="col-4x3"><%= data.atime %></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">状态：</div>
+		<div class="col-4x3"><%= data.status_name %></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">三证合一：</div>
+		<div class="col-4x3"><% if(data.is_three == "1"){ %>是<% }else{ %>否<% } %></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">公司名称：</div>
+		<div class="col-4x3"><%= data.company %></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">注册地址：</div>
+		<div class="col-4x3"><%= data.reg_address %></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">经营地址：</div>
+		<div class="col-4x3"><%= data.business_address %></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">法人姓名：</div>
+		<div class="col-4x3"><%= data.legal %></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">法人证件类型：</div>
+		<div class="col-4x3"><% if(data.legal_card_type == "1"){ %>护照<% }else{ %>二代身份证<% } %></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">法人证件号码：</div>
+		<div class="col-4x3"><%= data.legal_card_no %></div>
+	</div>
+	<div class = 'pic-input'>
+		<table width = "100%" cellspacing = '0' >
+			<tr>
+				<td width = '25%'>法人证件正面照片：</td>
+				<td>
+					<img src="<%= data.legal_pic %>" >
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class = 'pic-input'>
+		<table width = "100%" cellspacing = '0' >
+			<tr>
+				<td width = '25%'>法人证件背面照片：</td>
+				<td>
+					<img src="<%= data.legal_pic2 %>" >
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class = 'pic-input'>
+		<table width = "100%" cellspacing = '0' >
+			<tr>
+				<td width = '25%'>法人手持证件照片：</td>
+				<td>
+					<img src="<%= data.legal_pic3 %>" >
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">注册资本：</div>
+		<div class="col-4x3"><%= data.reg_capital %></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">实收资本：</div>
+		<div class="col-4x3"><%= data.paidin_capital %></div>
+	</div>
+	<div class="line-input row hover" onclick = 'select_com_type(this)'>
+		<div class="col-4">公司类型：</div>
+		<div class="col-4x3">
+			<% if(data.com_type == "1"){ %>
+				个体户
+			<% }else if(data.com_type == "2"){ %>
+				有限责任公司
+			<% }else if(data.com_type == "3"){ %>
+				股份有限公司
+			<% }else if(data.com_type == "4"){ %>
+				私营企业
+			<% }else if(data.com_type == "5"){ %>
+				港、澳、台商投资企业
+			<% } %>
+		</div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">经营范围：</div>
+		<div class="col-4x3"><%= data.scope %></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">注册日期：</div>
+		<div class="col-4x3"><%= data.reg_day %></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">到期日期：</div>
+		<div class="col-4x3"><%= data.end_day %></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">经营执照编号：</div>
+		<div class="col-4x3"><%= data.license_code %></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">税务登记证编号：</div>
+		<div class="col-4x3"><%= data.tax_code %></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">组织机构代码证编号：</div>
+		<div class="col-4x3"><%= data.org_code %></div>
+	</div>
+	<div class = 'pic-input'>
+		<table width = "100%" cellspacing = '0' >
+			<tr>
+				<td width = '25%'>营业执行副本照片：</td>
+				<td>
+					<img src="<%= data.license_pic %>">
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class = 'pic-input'>
+		<table width = "100%" cellspacing = '0' >
+			<tr>
+				<td width = '25%'>机构代码证照片：</td>
+				<td>
+					<img src="<%= data.org_pic %>">
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class = 'pic-input'>
+		<table width = "100%" cellspacing = '0' >
+			<tr>
+				<td width = '25%'>税务登记证照片：</td>
+				<td>
+					<img src="<%= data.tax_pic %>">
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="nav-box">审核记录</div>
+	<ul class="timeline">
+		<% for (var i = 0; i < data.logs.length; i ++) { %>
+		<li>
+			<span class="date">
+				<%= data.logs[i].atime %></span>
+			<div class="content">
+				<div class="md10">审核状态：    
+				<% if(data.logs[i].status == "0"){ %> 
+					等待审核
+				<% }else if(data.logs[i].status == "1"){ %>
+					审核通过
+				<% }else if(data.logs[i].status == "2"){ %>
+					审核拒绝
+				<% } %>						
+				</div>
+			</div>
+		</li>
+		<% } %>
+	</ul>
+</script>
+<!--已通过-->
+<script id="tpl_auth_company_pass" type="text/html">
+	<div class="line-input row hover">
+		<div class="col-4">创建时间：</div>
+		<div class="col-4x3"><%= data.atime %></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">状态：</div>
+		<div class="col-4x3"><%= data.status_name %></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">三证合一：</div>
+		<div class="col-4x3"><% if(data.is_three == "1"){ %>是<% }else{ %>否<% } %></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">公司名称：</div>
+		<div class="col-4x3"><%= data.company %></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">注册地址：</div>
+		<div class="col-4x3"><%= data.reg_address %></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">经营地址：</div>
+		<div class="col-4x3"><%= data.business_address %></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">法人姓名：</div>
+		<div class="col-4x3"><%= data.legal %></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">法人证件类型：</div>
+		<div class="col-4x3"><% if(data.legal_card_type == "1"){ %>护照<% }else{ %>二代身份证<% } %></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">法人证件号码：</div>
+		<div class="col-4x3"><%= data.legal_card_no %></div>
+	</div>
+	<div class = 'pic-input'>
+		<div class="col-4">法人证件正面照片：</div>
+		<div class="col-4x3">保密</div>
+	</div>
+	<div class = 'pic-input'>
+		<div class="col-4">法人证件背面照片：</div>
+		<div class="col-4x3">保密</div>
+	</div>
+	<div class = 'pic-input'>
+		<div class="col-4">法人手持证件照片：</div>
+		<div class="col-4x3">保密</div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">注册资本：</div>
+		<div class="col-4x3"><%= data.reg_capital %></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">实收资本：</div>
+		<div class="col-4x3"><%= data.paidin_capital %></div>
+	</div>
+	<div class="line-input row hover" onclick = 'select_com_type(this)'>
+		<div class="col-4">公司类型：</div>
+		<div class="col-4x3">
+			<% if(data.com_type == "1"){ %>
+				个体户
+			<% }else if(data.com_type == "2"){ %>
+				有限责任公司
+			<% }else if(data.com_type == "3"){ %>
+				股份有限公司
+			<% }else if(data.com_type == "4"){ %>
+				私营企业
+			<% }else if(data.com_type == "5"){ %>
+				港、澳、台商投资企业
+			<% } %>
+		</div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">经营范围：</div>
+		<div class="col-4x3"><%= data.scope %></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">注册日期：</div>
+		<div class="col-4x3"><%= data.reg_day %></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">到期日期：</div>
+		<div class="col-4x3"><%= data.end_day %></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">经营执照编号：</div>
+		<div class="col-4x3"><%= data.license_code %></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">税务登记证编号：</div>
+		<div class="col-4x3"><%= data.tax_code %></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">组织机构代码证编号：</div>
+		<div class="col-4x3"><%= data.org_code %></div>
+	</div>
+	<div class = 'pic-input'>
+		<div class="col-4">营业执行副本照片：</div>
+		<div class="col-4x3">保密</div>
+	</div>
+	<div class = 'pic-input'>
+		<div class="col-4">机构代码证照片：</div>
+		<div class="col-4x3">保密</div>
+	</div>
+	<div class = 'pic-input'>
+		<div class="col-4">税务登记证照片：</div>
+		<div class="col-4x3">保密</div>
+	</div>
+	<div class="nav-box">审核记录</div>
+	<ul class="timeline">
+		<% for (var i = 0; i < data.logs.length; i ++) { %>
+		<li>
+			<span class="date">
+				<%= data.logs[i].atime %></span>
+			<div class="content">
+				<div class="md10">审核状态：    
+				<% if(data.logs[i].status == "0"){ %> 
+					等待审核
+				<% }else if(data.logs[i].status == "1"){ %>
+					审核通过
+				<% }else if(data.logs[i].status == "2"){ %>
+					审核拒绝
+				<% } %>						
+				</div>
+			</div>
+		</li>
+		<% } %>
+	</ul>
+</script>
+
+<include file="Public:d_layer" />
+	
+
+<script>
+	fixBar(1);
+	is_auth();
+	//取得认证信息
+	function is_auth(){
+		ajax_post({
+			url:'/Api/api',
+			data:{apiurl:'/Auth/auth_status',is_openid:1},
+		},function(ret){
+			//已通过审核
+			if(ret.code==1 && ret.data.status == 1){			
+				var html = template('tpl_auth_company_pass', {data:ret.data});
+			//审核中
+			}else if(ret.code==1 && ret.data.status == 0){
+				var html = template('tpl_auth_company_audit', {data:ret.data});
+			//已拒绝
+			}else if(ret.code==1 && ret.data.status == 2){
+				var html = template('tpl_auth_company_refuse', {data:ret.data});
+			//未审核
+			}else{
+				var html = template('tpl_auth_company', {data:ret.data});
+			}
+			$('.page.active section').html(html);
+		});
+	}
+	function select_is_three(){
+		vmodal({
+			title:'是否三证合一',
+			url:'__URL__/is_three/',
+			is_footer:false,
+		},function(){
+			$('.pages .active .vmodal .vmodal-content .col-4').click(function(){
+				//this).html();
+				$("#is_three").val($(this).attr("attr")).prev().html($(this).html());
+				$('.page.active .vmodal .vmodal-footer').click();
+			});
+		});
+	}
+	function select_card_type(){
+		vmodal({
+			title:'证件类型',
+			url:'__URL__/card_type/',
+			is_footer:false,
+		},function(){
+			$('.pages .active .vmodal .vmodal-content .col-4').click(function(){
+				
+				$("#legal_card_type").val($(this).attr("attr")).prev().html($(this).html());
+				$('.page.active .vmodal .vmodal-footer').click();
+			});
+		});
+	}
+	function select_com_type(){
+		vmodal({
+			title:'请选择类型',
+			url:'__URL__/com_type/',
+			is_footer:false,
+		},function(){
+			$('.pages .active .vmodal .vmodal-content .col-4').click(function(){
+				
+				$("#com_type").val($(this).attr("attr")).prev().html($(this).html());
+				$('.page.active .vmodal .vmodal-footer').click();
+			});
+		});
+	}
+	//上传图片
+	function select_pic(obj){
+		vmodal({
+			title:'证件正面照',
+			url:'__URL__/upload_pic/',
+			is_footer:false,
+		},function(){
+			$('.page.active #imageData').click();
+			$('.page.active #imageData').change(function(){
+				ajax_post_form({
+					formid:'#form-upload',
+				},function(ret){
+					if(ret.code==1){
+						// 替换内容
+						$(obj).attr('src',ret.url);
+						$(obj).next().val(ret.url);
+						
+						$('.page.active .vmodal .vmodal-footer').click();
+					}else{
+						valert(ret);
+					}
+				});
+			});
+		});
+	}
+	//提交认证
+	function submit_auth(){
+		if($('.page.active #company').val()==''){
+			valert({msg:'请输入公司名称'});
+			$('.page.active #company').focus();
+			return false;
+		}
+		if($('.page.active #reg_address').val()==''){
+			valert({msg:'请输入注册地址'});
+			$('.page.active #reg_address').focus();
+			return false;
+		}
+		if($('.page.active #business_address').val()==''){
+			valert({msg:'请输入营业地址'});
+			$('.page.active #business_address').focus();
+			return false;
+		}
+		if($('.page.active #legal').val()==''){
+			valert({msg:'请输入法人姓名'});
+			$('.page.active #legal').focus();
+			return false;
+		}
+		if($('.page.active #legal_card_no').val()==''){
+			valert({msg:'请输入法人证件号码'});
+			$('.page.active #legal_card_no').focus();
+			return false;
+		}
+		if($('.page.active #legal_pic').val()==''){
+			valert({msg:'请上传法人证件正面照'});
+			return false;
+		}
+		if($('.page.active #legal_pic2').val()==''){
+			valert({msg:'请上传法人证件背面照'});
+			return false;
+		}
+		if($('.page.active #legal_pic3').val()==''){
+			valert({msg:'请上传法人手持证件照'});
+			return false;
+		}
+		if($('.page.active #scope').val()==''){
+			valert({msg:'请输入经营范围'});
+			$('.page.active #scope').focus();
+			return false;
+		}
+		if($('.page.active #reg_day').val()==''){
+			valert({msg:'请输入注册日期'});
+			$('.page.active #reg_day').focus();
+			return false;
+		}
+		if($('.page.active #end_day').val()==''){
+			valert({msg:'请输入到期日期'});
+			$('.page.active #end_day').focus();
+			return false;
+		}
+		if($('.page.active #license_code').val()==''){
+			valert({msg:'请输入营业执照编号'});
+			$('.page.active #license_code').focus();
+			return false;
+		}
+		if($('.page.active #license_pic').val()==''){
+			valert({msg:'请上传营业执行副本照片'});
+			return false;
+		}
+		if($('.page.active #com_type').val()== 1){
+			var no_sign = 'reg_capital,paidin_capital,org_code,tax_code,org_pic,tax_pic';
+		}else{
+			if($('.page.active #is_three').val()== 1){
+				var no_sign = 'org_pic,tax_pic';
+			}
+		}
+		ajax_post({
+			url:'/Api/api',
+			data:{
+				apiurl:'/Auth/company',
+				is_openid:1,
+				is_three:$('.page.active #is_three').val(),
+				company:$('.page.active #company').val(),
+				reg_address:$('.page.active #reg_address').val(),
+				business_address:$('.page.active #business_address').val(),
+				legal:$('.page.active #legal').val(),
+				legal_card_type:$('.page.active #legal_card_type').val(),
+				legal_card_no:$('.page.active #legal_card_no').val(),
+				legal_pic:$('.page.active #legal_pic').val(),
+				legal_pic2:$('.page.active #legal_pic2').val(),
+				legal_pic3:$('.page.active #legal_pic3').val(),
+				reg_capital:$('.page.active #reg_capital').val(),
+				paidin_capital:$('.page.active #paidin_capital').val(),
+				com_type:$('.page.active #com_type').val(),
+				scope:$('.page.active #scope').val(),
+				reg_day:$('.page.active #reg_day').val(),
+				end_day:$('.page.active #end_day').val(),
+				license_code:$('.page.active #license_code').val(),
+				org_code:$('.page.active #org_code').val(),
+				tax_code:$('.page.active #tax_code').val(),
+				license_pic:$('.page.active #license_pic').val(),
+				org_pic:$('.page.active #org_pic').val(),
+				tax_pic:$('.page.active #tax_pic').val(),
+				no_sign:"is_three,business_address,reg_capital,paidin_capital,scope,reg_day,end_day,org_code,tax_code,org_pic,tax_pic",
+			},
+		},function(ret){
+			if(ret.code==1){
+				valert(ret);
+				closeWin();
+				openWin({name:'ucenter',url:'/Ucenter/index',ref:true});
+			}else{
+				valert(ret);
+			}
+		});
+	}
+	
+	
+	var register_up_uid = '';
+	//获取分享人信息
+	function ref_user(obj){
+		if($(obj).val() != register_up_uid){
+			register_up_uid = $(obj).val();
+			if(register_up_uid.length > 0){
+				ajax_post({
+					url:'/Api/api',
+					data:{apiurl:'/User/ref_user',uid:register_up_uid},
+				},function(ret){
+					if(ret.code==1){			
+						$('.page.active #ref_user ').show().children(".col-4x3").html(ret.data.name);
+					}else{
+						$('.page.active #ref_user ').hide();
+						valert(ret);
+					}
+				});
+			}
+		}
+	}
+	var register_curCount = 0;
+	//发送验证码
+	function send_smscode(obj){
+		if(register_curCount != 0){
+			valert({msg:'60秒内只允许发送一次短信'});
+			return false;
+		}
+		mobile = $('.page.active #mobile').val();
+		if(!mobile.match(/^1[3456789]\d{9}$/)){
+			valert({msg:'手机号码不正确！'});
+			return false;
+		}
+		ajax_post({
+			url:'/Api/api',
+			data:{apiurl:'/Sms/smscode',mobile:mobile,tplid:"11"},
+		},function(ret){
+			if(ret.code==1){
+				register_curCount = 60;
+				$(obj).html("" + register_curCount + "秒后重新获取");
+				InterValObj = window.setInterval(SetRemainTime, 1000);
+			}else{
+				valert(ret);
+			}
+		});
+	}
+	//验证码计时
+	function SetRemainTime() {
+		if (register_curCount == 0) {                
+			window.clearInterval(InterValObj);//停止计时器
+			$(".page.active #sendButton").html("重新发送验证码");
+		}
+		else {
+			register_curCount--;
+			$(".page.active #sendButton").html("" + register_curCount + "秒后重新获取");
+		}
+	}
+	var register_smscode_pass = 0;
+	var register_smscode = '';
+	//检查验证码
+	function check_smscode(obj){
+		if($(obj).val() != register_smscode){
+			register_smscode = $(obj).val();
+			if(register_smscode.length>0 && $('.page.active #mobile').val().length > 0){
+				ajax_post({
+					url:'/Api/api',
+					data:{
+						apiurl:'/Sms/check_smscode',
+						tplid:"11",
+						smscode:register_smscode,
+						mobile:$('.page.active #mobile').val()
+					},
+				},function(ret){
+					if(ret.code==1){
+						register_smscode_pass = 1;
+					}else{
+						valert(ret);
+					}
+				});
+			}
+		}
+	}
+	//勾选协议
+	function is_agreement(obj){
+		$(obj).toggleClass("active");
+	}
+	//注册
+	function register(){
+		if(!$('.page.active .is_agreement').hasClass('active')){
+			valert({msg:'请勾选注册协议'});
+			return false;
+		}
+		if($('.page.active #username').val()==''){
+			valert({msg:'请输入账号'});
+			$('.page.active #username').focus();
+			return false;
+		}
+		if($('.page.active #password').val()==''){
+			valert({msg:'请输入密码'});
+			$('.page.active #password').focus();
+			return false;
+		}
+		if($('.page.active #mobile').val()==''){
+			valert({msg:'请输入手机号码'});
+			$('.page.active #mobile').focus();
+			return false;
+		}
+		if($('.page.active #smscode').val()==''){
+			valert({msg:'请输入验证码'});
+			$('.page.active #smscode').focus();
+			return false;
+		}
+		if(!register_smscode_pass){
+			valert({msg:'短信验证码错误'});
+			return false;
+		}
+		ajax_post({
+			url:'/Api/api',
+			data:{
+				apiurl:'/User/register',
+				username:$('.page.active #username').val(),
+				password:$('.page.active #password').val(),
+				up_uid:$('.page.active #up_uid').val(),
+				mobile:$('.page.active #mobile').val(),
+				smscode:$('.page.active #smscode').val(),
+				no_sign:'up_uid',
+			},
+		},function(ret){
+			if(ret.code==1){
+				closeWin();
+				openWin({name:'login',url:'/Login/index',ref:true});
+			}else{
+				valert(ret);
+			}
+		});
+	}
+	function agreement(){
+		openWin({name:'login',url:'/Login/agreement'});
+	}
+	function login(){
+		openWin({name:'login',url:'/Login/index',close:true});
+	}
+</script>

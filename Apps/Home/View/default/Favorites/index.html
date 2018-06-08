@@ -1,0 +1,77 @@
+				<div class="mg10 over">					
+				    <div class="btn-group btn-group-justified" id="hover_a">
+						<a href="#" class="btn btn-default" style="background: #ccc; color: #cc0000">宝贝</a>
+						<a href="#" class="btn btn-default">店铺</a>
+					</div>
+					<div class="hover_b" id="hover_b">
+
+						<div class="treasure hover_c pt20" style="display: block">
+
+							<notempty name="products">
+								<div class="row m0">
+								<volist name="products" id="vo">
+									<div class="col-xs-6 md20 text-center">
+										<a href="{$Think.config.sub_domain.detail}/item/{$vo.enshrine_id}.html" target="_blank">
+										<div class="img-box-90"><img src="{:myurl($vo['images'],90)}" alt="{$vo.name}"></div>
+										<div class="lh-25px">￥{$vo.price}</div>
+										</a>
+									</div>
+								</volist>
+								</div>
+								<a href="{$Think.config.sub_domain.favorites}{:U('/Index/ensh_goods')}" class="btn btn-block btn-primary">查看全部</a>
+							<else />
+								<div class="nors text-center">无收藏记录！</div>
+							</notempty>
+					
+							
+						</div>
+						<div class="over hover_c">
+
+							<notempty name="store">
+								<div class="list-rs mt20 md20">
+								<volist name="store" id="vo">
+									<div class="rs clearfix md10">
+										<div class="l-80px text-center">
+											<a href="{:user_domain($vo['memberid'],$vo['domain'])}" target="_blank" title="{$vo.shop_name}">
+											<div class="img-box-60"><img src="{:myurl(array($vo['logo'],'/Public/images/shop_logo.gif'),60)}" alt="{$vo.name}"></div>
+											</a>
+										</div>
+										<div class="r-80px">
+											<div class="ft14 md5 lh-25px">
+												<a href="{:user_domain($vo['memberid'],$vo['domain'])}" target="_blank" title="{$vo.shop_name}">{$vo.shop_name}</a>							
+											</div>
+											<div class="text-gray lh-25px">{$vo.province} {$vo.city}</div>											
+										</div>
+									</div>
+								</volist>
+								</div>
+								<a href="{$Think.config.sub_domain.favorites}" class="btn btn-block btn-primary">查看全部</a>
+							<else />
+								<div class="nors text-center">无收藏记录！</div>
+							</notempty>						
+							
+						</div>
+
+
+
+					</div>
+				</div>
+				
+<script>
+	var oHover_a = document.getElementById('hover_a').getElementsByTagName('a');
+	var oHover_b = document.getElementById('hover_b').getElementsByClassName('hover_c');
+	for(i=0; i<oHover_a.length; i++){
+		oHover_a[i].index = i;
+		oHover_a[i].onmouseover=function(){
+			for(i=0; i<oHover_b.length; i++){
+				oHover_b[i].style.display = 'none';
+				oHover_a[i].style.background = '#626262';
+				oHover_a[i].style.color = 'white'
+			}
+			oHover_b[this.index].style.display = 'block';
+			this.style.background = '#ccc';
+			this.style.color = '#cc0000'
+		}
+
+	}
+</script>				

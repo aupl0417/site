@@ -1,0 +1,39 @@
+<include file="Public:header" />
+<div class="page-group">
+    <div id="page-drawluck-item" class="page" data-id="{$data.id}" data-click="1" data-position="{$data.position}">
+        <header class="bar bar-nav">
+            <a class="icon icon-left pull-left back" href="/"></a>
+            <a class="icon icon-gift pull-right" data-no-cache="true" href="{:U('/drawluck/lists')}"></a>
+            <h1 class="title">{$data.luckdraw_name}</h1>
+        </header>
+        <div class="content infinite-scroll" style="top: 0; padding:0;">
+            <div class="draw-box-background line-h-0">
+                <img class="w-all" src="../Public/draw/images/zhuanpan_top_.png"/>
+            </div>
+            <div class="zhuanpan-body">
+                <div class="draw-box-zhuanpan line-h-0">
+                    <img class="zhuanpan w-all" src="../Public/draw/images/zhuanpan_001.png"/>
+                    <div class="draw-box-zhizhen">
+                        <img class="drawBtn w-all" src="../Public/draw/images/zhizhen.png"/>
+                    </div>
+                </div>
+                <div class="draw-box-shuoming">
+                    <div class="draw-box-shuoming-top">
+                        <img class="w-all" src="../Public/draw/images/zhuanpan_shuoming.png"/>
+                    </div>
+                    <div class="draw-box-shuoming-body">
+                        <p class="draw-box-shuoming-body-text" style="line-height: 1.5rem">
+                            {$data.rule|html_entity_decode}
+                        </p>
+                    </div>
+                    <div class="draw-box-shuoming-bottom">
+                        <img class="w-all" src="../Public/draw/images/zhuanpan_shuoming_bottom.png"/>
+                    </div>
+                </div>
+            </div>
+            <div class="alert-luckdraw-back"></div>
+        </div>
+    </div>
+</div>
+<include file="Public:script" />
+<include file="Public:footer" />

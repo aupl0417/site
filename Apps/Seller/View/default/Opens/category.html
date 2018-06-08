@@ -1,0 +1,85 @@
+<form class="form-horizontal" id="addCategory" name="addCategory" data-url="__SELF__" novalidate="novalidate">
+	<div class='vform'>
+		<volist name="data" id="vo">
+			<div class="form-group f-category_id">
+				<label class="control-label col-xs-3">{$vo.category_name}<span class="required" aria-required="true">*</span></label>
+				<div class="col-xs-7 solid_b">
+					<div class="input-group">
+						<volist name="vo.child" id="child">
+							<label class="mr20 labelInput" style="">
+								<input type="checkbox" class="i-red-square" name="category_id[]" <in name="key" value="$cate.cates">checked="checked"</in> value="{$key}"> {$child}
+							</label>
+						</volist>
+					</div>
+				</div>
+			</div>
+		</volist>
+		<div class="text-center">
+			<button type="button" class="btn btn-primary plr20 btn-submit btn-addCategory">提交</button>
+		</div>
+	</div>
+</form>
+<script>
+iCheckClass();
+$(document).ready(function() {
+	var max			=	'{$shopType.max_category}';
+	var typeName	=	'{$shopType.type_name}';
+	$(".labelInput").click(function() {
+		var i = 0;
+		var that	=	$(this);
+		$("input[name='category_id[]']").each(function() {
+			if($(this).is(":checked")) {
+				i++;
+			}
+		});
+		if(i > max) {
+			that.find('.icheckbox_square-red').attr("aria-checked", false).removeClass('checked');
+			that.find("input[name='category_id[]']").prop('checked', false);
+			talert({status:0,msg:typeName + '最多只能选'+max+'个分类'});
+			return false;
+		}
+	});
+	$(".labelInput ins").click(function() {
+		var i = 0;
+		var that	=	$(this).parent().parent();
+		$("input[name='category_id[]']").each(function() {
+			if($(this).is(":checked")) {
+				i++;
+			}
+		});
+		if(i > max) {
+			that.find('.icheckbox_square-red').attr("aria-checked", false).removeClass('checked');
+			that.find("input[name='category_id[]']").prop('checked', false);
+			talert({status:0,msg:typeName + '最多只能选'+max+'个分类'});
+			return false;
+		}
+	});
+	$(".btn-addCategory").click(function() {
+		var ids	=	'';
+		var i = 0;
+		$("input[name='category_id[]']").each(function() {
+			if($(this).is(":checked")) {
+				ids += $(this).val() + ',';
+				i++;
+			}
+		});
+		if(i > max) {
+			talert({status:0,msg:typeName + '最多只能选'+max+'个分类'});
+			return false;
+		}
+		if(ids == '') {
+			talert({status:0,msg:'请选择分类！'});
+			return false;
+		}
+		ajax_post({
+			url:'__SELF__',
+			data:{category_id:ids},
+		},function(res) {
+			talert({status:res.code,msg:res.msg});
+			if(res.code == 1) {
+				setTimeout("ref()", 1000);
+			}
+		});
+	})
+});
+</script>

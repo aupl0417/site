@@ -1,0 +1,285 @@
+<include file="Public:header" />
+<include file="nav" />
+
+<notempty name="pagelist.list">
+<div class="m20">
+	<include file="search_box" />
+	
+
+	<form id="formlist" name="formlist">
+	<volist name="pagelist.list" id="vo">
+	<div class="block-flat" id="{$vo.id}">
+		<div class="header">
+			<div class="pull-right">
+				<a href="__URL__/edit/id/{$vo.id}" class="btn btn-sm btn-primary btn-rad btn-trans">修改</a>
+			</div>
+			<span class="mr20"><input type="checkbox" class="i-red-square" name="id" id="id" value="{$vo.id}"></span>
+			<span class="mr20">支付终端：{:status($vo['terminal'],array(array('PC'),array('WAP','btn-danger'),array('IOS','btn-info'),array('ANDROID','btn-warning')))}	</span>
+			<span class="mr20 ft16">ID:{$vo.id}</span> 
+			<span class="mr20 ft18 text-danger">订单号：{$vo.o_no}</span>
+			<span class="mr20 ft16"> 买家：{$vo.buyer.nick} / {$vo.buyer.mobile}</span>
+		</div>
+		<div class="content">
+				<div class="row md20">
+					<div class="col-xs-3">
+						<div class="fl" width="60">
+							<img src="{:myurl($vo['shop']['shop_logo'],50)}">
+						</div>
+						<div style="margin-left:70px">
+							<div>店铺：<span class="ft18 strong">{$vo.shop.shop_name}</span></div>
+							<div>卖家ID：{$vo.seller_id}</div>
+							<div>昵称：{$vo.seller.nick}</div>							
+							<div>手机：{$vo.shop.mobile}</div>
+							<div>QQ：{$vo.shop.qq}</div>
+							<div>旺旺：{$vo.shop.wang}</div>						
+						</div>
+					</div>
+
+					<div class="col-xs-3">
+
+						<div class="strong">商家订单号：{$vo.s_no}</div>
+						<div>商品金额：{$vo.goods_price}</div>
+						<div>优惠券金额：{$vo.coupon_price}</div>
+						<div>运费：{$vo.express_price}</div>
+						<div>合计金额：{$vo.total_price}</div>
+						<div>实付金额：<span class="text-danger ft18 strong">{$vo.pay_price}</span></div>
+					</div>
+					<div class="col-xs-3">
+						<div>状态：
+							{:status($vo['status'],array(array('删除'),array('待付款','btn-default'),array('已付款','btn-success'),array('已发货','btn-info'),array('已收货','btn-primary'),array('已评价','btn-success'),6=>array('已归档','btn-default'),10=>array('已关闭','btn-default'),11=>array('退款并关闭','btn-default')))}						
+							<div class="btn btn-xs btn-rad btn-trans" data-type="vmodal" data-url="__URL__/orders_logs/s_no/{$vo.s_no}" data-title="订单日志" data-width="800px">日志</div>
+						</div>
+									
+					</div>					
+					<div class="col-xs-3">
+						<div class="md5"><img src="{:myurl($vo['express']['logo'],150,40)}"></div>
+						<div class="md5">快递公司：<span class="strong">{$vo.express_company}</span></div>
+						<notempty name="vo.express_code">
+						<div>快递单号：<span class="ft18 strong mr10">{$vo.express_code}</span> <span class="btn btn-xs btn-rad btn-info" data-type="vmodal" data-url="__URL__/query_express/s_no/{$vo.s_no}" data-title="物流跟踪" data-width="800px">物流跟踪</span></div>
+						<div>发货时间：{$vo.express_time}</div>
+						</notempty>
+						<eq name="vo.status" value="2">
+							<div class="btn btn-xs btn-rad btn-info btn-150px" data-type="vmodal" data-url="__URL__/send_express/s_no/{$vo.s_no}" data-title="发货" data-width="800px">发货</div>
+						</eq>
+					</div>					
+				</div>
+				
+				<table>
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>商品ID</th>
+							<th>商品图片</th>
+							<th>商品标题</th>
+							<th>商品属性</th>
+							<th>单价</th>
+							<th>重量</th>
+							<th>数量</th>
+							<th>合计重量</th>
+							<th>合计金额</th>
+						</tr>
+					</thead>
+					<tbody>
+						<volist name="vo.orders_goods" id="goods">
+						<tr>
+							<td>{$goods.id}</td>
+							<td>{$goods.goods_id}</td>
+							<td><img src="{:myurl($goods['images'],60)}"></td>
+							<td>{$goods.goods_name}</td>
+							<td>{$goods.attr_name}</td>
+							<td>{$goods.price}</td>
+							<td>{$goods.weight}</td>
+							<td>{$goods.num}</td>
+							<td>{$goods.total_weight}</td>
+							<td>{$goods.total_price}</td>
+						</tr>
+						</volist>
+					</tbody>
+				</table>
+				<notempty name="vo.remark">
+				<div class="p10 text-danger">
+					买家留言：{$vo.remark|nl2br}
+				</div>
+				</notempty>
+				<div class="clearfix md20"></div>
+		
+		<div class="clearfix md20"></div>
+		<div class="row ">
+			<div class="col-xs-6">
+				<div class="border-d ft18 p10 strong md10">收货人资料</div>
+				<div>联系人：{$vo.orders.linkname}</div>
+				<div>电话：{$vo.orders.tel}</div>
+				<div>手机：{$vo.orders.mobile}</div>
+				<div>地址：{$vo.orders.province} {$vo.orders.city} {$vo.orders.district} {$vo.orders.town} {$vo.orders.street}</div>
+				<div>邮编：{$vo.orders.postcode}</div>
+			</div>
+			<div class="col-xs-6">
+				<div class="border-d ft18 p10 strong md10">付款信息</div>
+				<div>下单时间：{$vo.atime}</div>
+				<neq name="vo.pay_time" value="0000-00-00 00:00:00"><div>付款时间：{$vo.pay_time}</div></neq>
+				<div>实付金额：<span class="srtong ft28 text-danger">{$vo.pay_price}</span></div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+		</div>		
+	</div>
+	</volist>
+	
+	<div class="row">
+		<div class="col-xs-10 text-center">
+			{$pagelist.page.page}
+		</div>
+		<div class="col-xs-2 text-right">
+			<div class="page-total">共 {$pagelist.allnum} 条记录，共 {$pagelist.allpage} 页</div>
+		</div>
+	</div>	
+	<div class="clearfix"></div>
+	</form><!--/form-->
+
+	<div class="clearfix h50px"></div>
+	
+</div>
+
+
+<div class="navbar-fixed-bottom border-t">
+	<div class="buttom-bar bg-white-50">
+
+		<div class="row">
+			<div class="col-xs-3 hide">
+				<button type="button" class="btn btn-info btn-rad btn-trans select-all"><i class="fa fa-location-arrow"></i> 全选 / 反选</button>
+				<button type="button" class="btn btn-primary btn-rad btn-trans delete-select"><i class="fa fa-times"></i> 删除选中记录</button>
+			</div>
+			<div class="col-xs-2 hide">				
+				<div class="input-group">
+					<select id="toactive" name="toactive" class="form-control" >
+						<option value="0">锁定</option>
+						<option value="1">正常</option>
+					</select>
+					<div class="input-group-btn">
+						<div class="btn btn-rad btn-trans btn-default active-change">修改</div>
+					</div>
+				</div>				
+			</div>
+			<div class="col-xs-2 pull-right">
+				<div class="input-group pull-right">
+					<select id="gopage" name="gopage" class="form-control">
+						<option value="1">跳转</option>
+						{$pagelist.page.gopage}
+					</select>					
+				</div>			
+			</div>
+
+					
+		</div>
+			
+	</div>
+</div>	
+
+<else />
+<div class="m20">
+	<div class="text-center nors">
+		<div class="nors-tips md20">暂无记录！</div>
+		<a href="__URL__/add" class="btn btn-trans btn-lg btn-rad btn-primary"><i class="fa fa-plus"></i> 新增记录</a>		
+	</div>
+</div>
+</notempty>
+
+
+
+<include file="Public:copyright" />
+<include file="Public:js" />
+<script>
+$(document).ready(function(){
+	$('.delete-select').click(function(){
+		if($('input[type="checkbox"]:checked').size()==0){
+			valert({status:'warning',msg:'请至少选择一项！'})
+			return false;
+		}else {
+			confirm_form({
+				formid:'#formlist',
+				furl:'__URL__/delete_select',
+				script:'callback(ret)',
+				title:'删除记录',
+				msg:'真的要删除吗？',
+				class:'text-center',
+				confirm:1
+			});
+		}
+	});
+
+	$('.active-change').click(function(){
+		if($('input[type="checkbox"]:checked').size()==0){
+			valert({status:'warning',msg:'请至少选择一项！'})
+			return false;
+		}else {
+			confirm_form({
+				formid:'#formlist',
+				furl:'__URL__/active_change_select/toactive/'+$('#toactive').val(),
+				script:'activeCall(ret)',
+				title:'批量更改记录状态',
+				msg:'真的要改记录状态吗？',
+				class:'text-center',
+				confirm:1
+			});
+		}
+	});
+	
+	$('.sid-change').click(function(){
+		if($('input[type="checkbox"]:checked').size()==0){
+			valert({status:'warning',msg:'请至少选择一项！'})
+			return false;
+		}else if($('#tosid').val()==''){
+			valert({status:'warning',msg:'请选择一个分类'})
+			return false;			
+		}else {
+			confirm_form({
+				formid:'#formlist',
+				furl:'__URL__/sid_change_select/tosid/'+$('#tosid').val(),
+				script:'activeCall(ret)',
+				title:'批量记录归类',
+				msg:'真的要批量记录归类吗？',
+				class:'text-center',
+				confirm:1
+			});
+		}
+	});	
+	
+	$('#gopage').change(function(){
+		var url=$('#gopage').val();
+		location.href=url;
+	});
+	$('.go-page').click(function(){
+		var url=$('#gopage').val();
+		location.href=url;
+	});	
+	
+
+});
+
+function callback(ret){
+	valert({status:ret.status,msg:ret.msg});
+	if(ret.status=='success'){
+		$('input[type="checkbox"]:checked').each(function(){
+			$('#'+$(this).val()).remove();
+		});
+		$('#ajax-modal').modal('hide');
+	}
+}
+
+function delCall(ret,tag){
+	valert({status:ret.status,msg:ret.msg});
+	if(ret.status=='success'){
+		$(tag).remove();
+		$('#ajax-modal').modal('hide');
+	}
+}
+function activeCall(ret){
+	valert({status:ret.status,msg:ret.msg});
+	if(ret.status=='success'){
+		setTimeout(function(){
+			ref();
+		},500);
+	}
+}
+</script>
+<include file="Public:footer" />

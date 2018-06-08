@@ -1,0 +1,348 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			个人认证
+		</div>
+		<div class="r">
+			<div class="text" ></div>
+		</div>
+	</div>
+</header>
+<section>
+	<div class="load-body">数据加载中……</div>
+</section>
+<!--未审核-->
+<script id="tpl_auth_person" type="text/html">
+	
+	<div class="line-input row hover">
+		<div class="col-4">姓名</div>
+		<div class="col-4x3"><input id="name" name="name" value = "" placeholder="请输入您的真实姓名"></div>
+	</div>
+	<div class="line-input row hover" onclick = 'select_card_type(this)'>
+		<div class="col-4">证件类型</div>
+		<div class="col-4x3">二代身份证</div>
+		<input type = 'hidden' id="card_type" value = "0" name="card_type" >
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">证件号码</div>
+		<div class="col-4x3"><input id="card_no" name="card_no" value = "" placeholder="请输入您的证件号码"></div>
+	</div>
+	<div class = 'pic-input'>
+		<table width = "100%" cellspacing = '0' >
+			<tr>
+				<td width = '25%'>证件正面照</td>
+				<td>
+					<img src="../Public/Images/up_load1.jpg" onclick = "select_pic(this)">
+					<input type = "hidden" name = "card_pic" id = "card_pic" value = ""/>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class = 'pic-input'>
+		<table width = "100%" cellspacing = '0' >
+			<tr>
+				<td width = '25%'>证件背面照</td>
+				<td>
+					<img src="../Public/Images/up_load1.jpg" onclick = "select_pic(this)">
+					<input type = "hidden" name = "card_pic2" id = "card_pic2" value = ""/>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class = 'pic-input'>
+		<table width = "100%" cellspacing = '0' >
+			<tr>
+				<td width = '25%'>手持证件照</td>
+				<td>
+					<img src="../Public/Images/up_load1.jpg" onclick = "select_pic(this)">
+					<input type = "hidden" name = "card_pic3" id = "card_pic3" value = ""/>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="btn btn-danger btn-lg btn-block md20" onclick="submit_auth()">完成</div>
+</script>
+<!--已拒绝-->
+<script id="tpl_auth_person_refuse" type="text/html">
+	<div class="line-input row hover">
+		<div class="col-4">姓名</div>
+		<div class="col-4x3"><input id="name" name="name" value = "<%= data.name %>" placeholder="请输入您的真实姓名"></div>
+	</div>
+	<div class="line-input row hover" onclick = 'select_card_type(this)'>
+		<div class="col-4">证件类型</div>
+		<div class="col-4x3"><% if(data.card_type == "1"){ %>护照<% }else{ %>二代身份证<% } %></div>
+		<input type = 'hidden' id="card_type" value = "<%= data.card_type %>" name="card_type" >
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">证件号码</div>
+		<div class="col-4x3"><input id="card_no" name="card_no" value = "<%= data.card_no %>" placeholder="请输入您的证件号码"></div>
+	</div>
+	<div class = 'pic-input'>
+		<table width = "100%" cellspacing = '0' >
+			<tr>
+				<td width = '25%'>证件正面照</td>
+				<td>
+					<img src="<% if(data.card_pic != ""){ %><%= data.card_pic %><% }else{ %>../Public/Images/up_load1.jpg<% } %>" onclick = "select_pic(this)">
+					<input type = "hidden" name = "card_pic" id = "card_pic" value = "<%= data.card_pic %>"/>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class = 'pic-input'>
+		<table width = "100%" cellspacing = '0' >
+			<tr>
+				<td width = '25%'>证件背面照</td>
+				<td>
+					<img src="<% if(data.card_pic2 != ""){ %><%= data.card_pic2 %><% }else{ %>../Public/Images/up_load1.jpg<% } %>" onclick = "select_pic(this)">
+					<input type = "hidden" name = "card_pic2" id = "card_pic2" value = "<%= data.card_pic2 %>"/>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class = 'pic-input'>
+		<table width = "100%" cellspacing = '0' >
+			<tr>
+				<td width = '25%'>手持证件照</td>
+				<td>
+					<img src="<% if(data.card_pic3 != ""){ %><%= data.card_pic3 %><% }else{ %>../Public/Images/up_load1.jpg<% } %>" onclick = "select_pic(this)">
+					<input type = "hidden" name = "card_pic3" id = "card_pic3" value = "<%= data.card_pic3 %>"/>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="btn btn-danger btn-lg btn-block md20" onclick="submit_auth()">提交</div>
+</script>
+<!--审核中-->
+<script id="tpl_auth_person_audit" type="text/html">
+	<div class="line-input row hover">
+		<div class="col-4">创建时间：</div>
+		<div class="col-4x3"><%= data.atime %></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">状态：</div>
+		<div class="col-4x3"><%= data.status_name %></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">姓名：</div>
+		<div class="col-4x3"><%= data.name %></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">证件类型：</div>
+		<div class="col-4x3"><% if(data.card_type == "1"){ %>护照<% }else{ %>二代身份证<% } %></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">证件号码：</div>
+		<div class="col-4x3"><%= data.card_no %></div>
+	</div>
+	<div class="pic-input row hover">
+		<div class="col-4">证件正面：</div>
+		<img src = "<%= data.card_pic %>" class = "fl"/>
+		<div class = "clearfix"></div>
+	</div>
+	<div class="pic-input row hover">
+		<div class="col-4">证件背面：</div>
+		<img src = "<%= data.card_pic2 %>" class = "fl"/>
+		<div class = "clearfix"></div>
+	</div>
+	<div class="pic-input row hover">
+		<div class="col-4">手持证件照：</div>
+		<img src = "<%= data.card_pic3 %>" class = "fl"/>
+		<div class = "clearfix"></div>
+	</div>
+	
+	<div class="nav-box">审核记录</div>
+	<ul class="timeline">
+		<% for (var i = 0; i < data.logs.length; i ++) { %>
+		<li>
+			<span class="date">
+				<%= data.logs[i].atime %></span>
+			<div class="content">
+				<div class="md10">审核状态：    
+				<% if(data.logs[i].status == "0"){ %> 
+					等待审核
+				<% }else if(data.logs[i].status == "1"){ %>
+					审核通过
+				<% }else if(data.logs[i].status == "2"){ %>
+					审核拒绝
+				<% } %>						
+				</div>
+			</div>
+		</li>
+		<% } %>
+	</ul>
+</script>
+<!--已通过-->
+<script id="tpl_auth_person_pass" type="text/html">
+	<div class="line-input row hover">
+		<div class="col-4">创建时间：</div>
+		<div class="col-4x3"><%= data.atime %></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">状态：</div>
+		<div class="col-4x3"><%= data.status_name %></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">姓名：</div>
+		<div class="col-4x3"><%= data.name %></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">证件类型：</div>
+		<div class="col-4x3"><% if(data.card_type == "1"){ %>护照<% }else{ %>二代身份证<% } %></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">证件号码：</div>
+		<div class="col-4x3"><%= data.card_no %></div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">证件正面：</div>
+		<div class="col-4x3">保密</div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">证件背面：</div>
+		<div class="col-4x3">保密</div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">手持证件照：</div>
+		<div class="col-4x3">保密</div>
+	</div>
+	<div class="nav-box">审核记录</div>
+	<ul class="timeline">
+		<% for (var i = 0; i < data.logs.length; i ++) { %>
+		<li>
+			<span class="date">
+				<%= data.logs[i].atime %></span>
+			<div class="content">
+				<div class="md10">审核状态：    
+				<% if(data.logs[i].status == "0"){ %> 
+					等待审核
+				<% }else if(data.logs[i].status == "1"){ %>
+					审核通过
+				<% }else if(data.logs[i].status == "2"){ %>
+					审核拒绝
+				<% } %>						
+				</div>
+			</div>
+		</li>
+		<% } %>
+	</ul>
+</script>
+
+<include file="Public:d_layer" />
+	
+
+<script>
+	fixBar(1);
+	is_auth();
+	//取得认证信息
+	function is_auth(){
+		ajax_post({
+			url:'/Api/api',
+			data:{apiurl:'/Auth/auth_status',is_openid:1},
+		},function(ret){
+			//已通过审核
+			if(ret.code==1 && ret.data.status == 1){			
+				var html = template('tpl_auth_person_pass', {data:ret.data});
+			//审核中
+			}else if(ret.code==1 && ret.data.status == 0){
+				var html = template('tpl_auth_person_audit', {data:ret.data});
+			//已拒绝
+			}else if(ret.code==1 && ret.data.status == 2){
+				var html = template('tpl_auth_person_refuse', {data:ret.data});
+			//未提交
+			}else{
+				var html = template('tpl_auth_person', {data:ret.data});
+			}
+			$('.page.active section').html(html);
+		});
+	}
+	//选择证件类型
+	function select_card_type(){
+		vmodal({
+			title:'证件类型',
+			url:'__URL__/card_type/',
+			is_footer:false,
+		},function(){
+			$('.pages .active .vmodal .vmodal-content .col-4').click(function(){
+				//this).html();
+				$("#card_type").val($(this).attr("attr")).prev().html($(this).html());
+				$('.page.active .vmodal .vmodal-footer').click();
+			});
+		});
+	}
+	//上传图片
+	function select_pic(obj){
+		vmodal({
+			title:'证件正面照',
+			url:'__URL__/upload_pic/',
+			is_footer:false,
+		},function(){
+			$('.page.active #imageData').click();
+			$('.page.active #imageData').change(function(){
+				ajax_post_form({
+					formid:'#form-upload',
+				},function(ret){
+					if(ret.code==1){
+						// 替换内容
+						$(obj).attr('src',ret.url);
+						$(obj).next().val(ret.url);
+						
+						$('.page.active .vmodal .vmodal-footer').click();
+					}else{
+						valert(ret);
+					}
+				});
+			});
+		});
+	}
+	
+	
+	//提交认证
+	function submit_auth(){
+		if($('.page.active #name').val()==''){
+			valert({msg:'请输入真实姓名'});
+			$('.page.active #name').focus();
+			return false;
+		}
+		if($('.page.active #card_no').val()==''){
+			valert({msg:'请输入证件号码'});
+			$('.page.active #card_no').focus();
+			return false;
+		}
+		if($('.page.active #card_pic').val()==''){
+			valert({msg:'请上传证件正面照'});
+			return false;
+		}
+		if($('.page.active #card_pic2').val()==''){
+			valert({msg:'请上传证件背面照'});
+			return false;
+		}
+		if($('.page.active #card_pic3').val()==''){
+			valert({msg:'请上传手持证件照'});
+			return false;
+		}
+		ajax_post({
+			url:'/Api/api',
+			data:{
+				apiurl:'/Auth/person',
+				is_openid:1,
+				name:$('.page.active #name').val(),
+				card_type:$('.page.active #card_type').val(),
+				card_no:$('.page.active #card_no').val(),
+				card_pic:$('.page.active #card_pic').val(),
+				card_pic2:$('.page.active #card_pic2').val(),
+				card_pic3:$('.page.active #card_pic3').val(),
+			},
+		},function(ret){
+			if(ret.code==1){
+				valert(ret);
+				closeWin();
+				openWin({name:'ucenter',url:'/Ucenter/index',ref:true});
+			}else{
+				valert(ret);
+			}
+		});
+	}
+</script>

@@ -1,0 +1,100 @@
+<extend name="Home@Public:base" />
+<block name="body">
+
+<div class="centent_body mt10">
+
+    <include file="Public:nav_statistic" />
+
+    <div class="container">
+
+        <include file="Public:side_statistic" />
+
+        <div class="w960 fl">
+            <ol class="breadcrumb pd10 bor_der bor_r0 mt0 mb20">
+                <li><a href="/">数据统计 </a> </li>
+                <li><a href="">报表导出</a></li>
+                <li><a href="">我的报表</a></li>
+            </ol>
+
+            <div class="mb35">
+                <div class="ptb10 solid_b mb20">
+                    <span class="fs16">我的报表</span>
+                </div>
+			
+				<volist name="data.data" id="va">
+                <div class="mb10">
+                    <strong class="fs14 text_black fl">生成时间：</strong>
+                    <div style="margin-left: 108px;">{$va.atime}</div>
+                </div>
+                <div class="mb10">
+                    <strong class="fs14 text_black fl">选择时间：</strong>
+					<if condition = "$va.time_type eq 1">
+						<div style="margin-left: 108px;">昨天</div>
+					<elseif condition = "$va.time_type eq 7"/>
+						<div style="margin-left: 108px;">最近一周</div>
+					<elseif condition = "$va.time_type eq 30"/>
+						<div style="margin-left: 108px;">最近一个月</div>
+					<elseif condition = "$va.time_type eq 90"/>
+						<div style="margin-left: 108px;">最近三个月</div>
+					</if>
+                   
+                </div>
+                <div class="mb10">
+                    <strong class="fs14 text_black fl mr25">查询指标：</strong>
+                    <div class="row mt10">
+                        <div class="col-xs-10 mt5 generate">
+                            <div class="mb30 clearfix generate_btn">
+								<volist name="va.fields" id="val">
+									<span> {$val}</span>
+								</volist>
+                                
+                            </div>
+                            <div class="mb30 text-right">
+                                <div class="btn btn-primary plr20" onclick = "export_file('{$va.time_type}','{$va.quota_fields}')">导出报表</div>   
+                            </div>
+                        </div>
+                    </div>
+                </div>
+				</volist>
+				
+
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<form action="{:U('/statistic/exportReport')}" target="_blank" method="post" class="preview_choice hide">
+	<input type="hidden" name="time_type" value = "1"/>
+	<input type="hidden" name="fields" value = ""/>
+</form>
+
+</block>
+
+<block name="css"></block>
+<block name="script">
+
+<script src="__NEW_DESIGN__flatdream/js/jquery.js"></script>
+<script src="__NEW_DESIGN__flatdream/js/jquery.pushmenu/js/jPushMenu.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.nanoscroller/jquery.nanoscroller.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.sparkline/jquery.sparkline.min.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.ui/jquery-ui.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.gritter/js/jquery.gritter.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/behaviour/core.js"></script>
+<script src="__NEW_DESIGN__flatdream/js/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.flot/jquery.flot.js"></script>
+
+<script src="__NEW_DESIGN__js/amcharts.js" type="text/javascript"></script>
+<script src="__NEW_DESIGN__js/serial.js" type="text/javascript"></script>
+<script src="__NEW_DESIGN__js/pie.js"></script>
+<script>
+	function export_file(time_type,fields){
+		$("input[name='time_type']").val(time_type);
+		$("input[name='fields']").val(fields);
+		$(".preview_choice").submit();
+	}
+	
+</script>
+</block>

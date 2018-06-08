@@ -1,0 +1,36 @@
+<div class="p20">
+	<div class="row">
+		<div class="col-xs-6 auth-text">
+			<div>快递公司：{$rs.data.company}</div>
+			<div>快递单号：<span class="strong ft18">{$rs.data.express_code}</span></div>
+			<div>发货时间：{$rs.data.express_time}</div>
+		</div>
+		<div class="col-xs-6 auth-text">
+			<div><img src="{:myurl($rs['data']['logo'],200,50)}"></div>		
+			<div>网址：{$rs.data.website}</div>
+			<div>服务热线：{$rs.data.tel}</div>			
+		</div>
+	</div>
+	
+	
+
+	<notempty name="rs.data.express">
+	<div class="ft18 strong p10 border-d md20">物流跟踪记录</div>
+	<ul class="timeline express">
+		<volist name="rs.data.express" id="vo">
+		<li>
+			<span class="date">
+				{$vo->time}
+			</span>
+			<div class="content">
+				{$vo->context}
+			</div>
+		</li>
+		</volist>
+	</ul>
+	<else />
+	<div class="text-center nors p20">暂无跟踪记录！</div>
+	</notempty>
+	
+</div>
+

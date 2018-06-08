@@ -1,0 +1,30 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body">
+	<include file="Public:nav" />
+	<div class="container mb30">
+		<include file="Public:side" />
+		<div class="w980 bor_der mb20 fl">
+			<gt name="data.orders_status" value="3">
+				<include file="serviceDetail" />
+			<else />
+				<include file="refundDetail" />
+			</gt>
+		</div>
+	</div>
+</div>
+</block>
+<block name="css"></block>
+<block name="script">
+<script>
+$(document).ready(function() {
+	$(".opreating").click(function() {
+		var d 	=	$(this).data();
+		vmodal({
+			title:d.title,
+			url:d.url,
+		});
+	})
+})
+</script>
+</block>

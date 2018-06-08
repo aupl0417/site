@@ -1,0 +1,86 @@
+<h4 class="text-center pd10">
+	{$data.s_no}
+</h4>
+<notempty name="data.code">
+	{:W('Common/Builder/nors', array('param' => array('text' => $data['msg'])))}
+<else />
+	<table class="table table-bordered table-advance table-hover mb30">
+		<tbody>
+			<tr style="background:#f9f9f9;">
+				<th class="col-lg-1 text-center">图片</th>
+				<th class="col-lg-2 text-center">商品</th>
+				<th class="col-lg-1 text-center">单价</th>
+				<th class="col-lg-1 text-center">数量</th>
+				<th class="col-lg-1 text-center">成本</th>
+				<th class="col-lg-1 text-center">附加费用</th>
+				<th class="col-lg-1 text-center">操作</th>
+			</tr>
+			<volist name="data.orders_goods" id="vo">
+				<tr class="count">
+					<td style="vertical-align: middle;"><a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', array('id' => $vo['attr_list_id']))}" target="_blank"><img src="{$vo['images']}" class="img-thumbnail"></a></td>
+					<td style="vertical-align: middle;"><a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', array('id' => $vo['attr_list_id']))}" target="_blank">{$vo.goods_name}</a></br>{$vo.attr_name}</td>
+					<td style="vertical-align: middle;" class="text-center">{$vo.price}</td>
+
+					<td style="vertical-align: middle;" class="text-center">×{$vo.num}</td>
+					<td style="vertical-align: middle;" class="text-center rwospanTd">
+						<empty  name="vo.purchase_price">
+							<input type="text" class="form-control text-center" name="purchase_price" placeholder="单件采购价格">
+						<else /> 
+							<input type="text" class="form-control text-center" name="purchase_price" value="{$vo.purchase_price}">
+						</empty >
+					</td>
+					<td style="vertical-align: middle;" class="text-center rwospanTd">
+						<empty  name="vo.other_price">
+							<input type="text" class="form-control text-center" name="other_price" placeholder="此单运费">
+						<else /> 
+							<input type="text" class="form-control text-center" name="other_price" value="{$vo.other_price}">
+						</empty >
+						<input type="hidden" class="form-control" name="id" value="{$vo.id}">
+						<input type="hidden" class="form-control" name="total_price_edit" value="{$vo.total_price_edit}">
+						<input type="hidden" class="form-control" name="num" value="{$vo.num}">
+					</td>
+					<td style="vertical-align: middle;"  class="text-center rwospanTd">
+						<div class="btn btn-info btn-ml text-center btn_m w100" onclick="scm($(this))">确认修改</div>
+					</td>
+				</tr>
+			</volist>
+		</tbody>
+	</table>
+</notempty>
+
+<script>
+
+function scm(obj){
+	var tr=obj.closest('tr');
+	var order_id = tr.find('input[name="id"]').val();//ID
+	var price = tr.find('input[name="total_price_edit"]').val();//售价
+	var purchase = tr.find('input[name="purchase_price"]').val();//成本
+	var other = tr.find('input[name="other_price"]').val();//附加费用
+	var goods_num = tr.find('input[name="num"]').val();//数量
+	if(!purchase){
+		talert({status:'warning',msg:'采购价格不能为空！'});
+		return false;
+	}
+	if(isNaN(purchase)){
+		talert({status:'warning',msg:'采购价格只能是数字！'});
+		return false;
+	}
+	
+	ajax_post({
+		url : '/Orders/scm_save',
+		data : {
+			profit_price : price,
+			purchase_price : purchase,
+			id : order_id,
+			other_price : other,	
+			num : goods_num,			
+		},
+	}, function(ret) {
+		talert({status:ret.code,msg:ret.msg});
+		if(ret.code == 1) {
+			$('#ajax-modal').modal('hide');
+		}
+	})
+}
+
+</script>

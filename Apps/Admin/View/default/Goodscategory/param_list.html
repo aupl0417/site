@@ -1,0 +1,61 @@
+<notempty name="list">
+<div style="margin-left:<php>echo $param['depth']*100;</php>px;" id="sort-us">
+<volist name="list" id="vo">
+	<div class="mt10 md10" id="{$vo.id}" data-key="{$vo.id}">
+		<table class="no-border">
+			<tr>
+				<td width="100"><input type="checkbox" class="i-grey-square" name="id[]" id="id[]" value="{$vo.id}"> {$vo.id}</td>
+				<td>{$vo['status']?'<div class="btn btn-xs btn-rad btn-trans btn-success">正常</div>':'<div class="btn btn-xs btn-rad btn-trans btn-default">锁定</div>'} {$vo.group_name}</td>
+
+				<td width="300" class="">
+					<eq name="vo.sid" value="0">
+					<div class="btn btn-rad btn-trans btn-primary btn-sm" data-type="vmodal" data-title="添加参数" data-url="__URL__/param_add/group_id/{$vo.id}" data-width="800"><i class="fa fa-plus"></i>添加参数</div>
+					</eq>
+					<div class="btn btn-rad btn-trans btn-success btn-sm" data-type="vmodal" data-title="修改分组" data-url="__URL__/param_group_edit/id/{$vo.id}" data-width="800"><i class="fa fa-check"></i>修改</div>
+					<div class="btn btn-rad btn-trans btn-danger btn-sm" data-type="delete" data-title="删除" data-msg="真的要删除吗？" data-class="text-center ft14" data-url="__URL__/param_group_delete/id/{$vo.id}" data-script="delCall(ret,'#{$vo.id}')"><i class="fa fa-times"></i> 删除</div>				
+				</td>
+			</tr>
+		</table>
+		<div class="border-d mt10 md10"></div>
+		
+		<notempty name="vo.param_option">
+		<div style="margin-left:100px;" id="sort-ds">
+		<volist name="vo.param_option" id="vl">
+			<div class="mt10 md10" id="{$vl.id}" data-key="{$vl.id}">
+				<table class="no-border">
+					<tr>
+						<td width="100"><input type="checkbox" class="i-grey-square" name="id[]" id="id[]" value="{$vl.id}"> {$vl.id}</td>
+						<td width="200">{$vl['status']?'<div class="btn btn-xs btn-rad btn-trans btn-success">正常</div>':'<div class="btn btn-xs btn-rad btn-trans btn-default">锁定</div>'} {$vl.param_name}</td>
+						<td width="80" class="text-center">{$vl['is_need']?'<div class="btn btn-xs btn-rad btn-trans btn-success">必填</div>':''}</td>
+						<td width="100" class="text-center">
+							<switch name="vl.type">
+								<case value="1">单选</case>
+								<case value="2">多选</case>
+								<case value="3">文本</case>
+							</switch>
+						</td>
+						<td>{$vl.options}</td>
+						<td width="300" class="">
+							<div class="btn btn-rad btn-trans btn-success btn-sm" data-type="vmodal" data-title="修改参数" data-url="__URL__/param_edit/id/{$vl.id}" data-width="800"><i class="fa fa-check"></i>修改</div>
+							<div class="btn btn-rad btn-trans btn-danger btn-sm" data-type="delete" data-title="删除" data-msg="真的要删除吗？" data-class="text-center ft14" data-url="__URL__/param_delete/id/{$vl.id}" data-script="delCall(ret,'#{$vl.id}')"><i class="fa fa-times"></i> 删除</div>				
+						</td>
+					</tr>
+				</table>
+				<div class="border-d mt10 md10"></div>		
+				
+			</div>
+		</volist>
+		</div>
+		</notempty>	
+		
+		
+	</div>
+</volist>
+</div>
+<else />
+	<eq name="arr.depth" value="0">
+		<div class="nors text-center">
+			<div class="nors-tips">暂无记录！</div>
+		</div>
+	</eq>
+</notempty>

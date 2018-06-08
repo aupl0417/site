@@ -1,0 +1,54 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			用户信息
+		</div>
+	</div>
+</header>
+<section>
+	<div class="line-box hover row" onclick="openWin({name:'setting_userinfo',url:'/Setting/userinfo',logined:true})">
+        <div class="col-100">个人信息</div>
+        <!-- <div class="fr text-success ft16"></div> -->
+    </div>
+    <div class="line-box hover row" onclick="openWin({name:'address',url:'/Address/index',logined:true})">
+        <div class="col-100">收货地址</div>
+        <!-- <div class="fr text-success ft16"></div> -->
+    </div>
+    <div class="line-box hover row" onclick="openWin({name:'user',url:'/User/safe',logined:true})">
+        <div class="col-100">账户安全</div>
+        <!-- <div class="fr text-success ft16"></div> -->
+    </div>
+    <div class="p10">
+        <!--<div class="btn btn-lg btn-danger btn-block" onclick="window.location.href='/Login/logout'">退出登录</div>-->
+        <div class="btn btn-lg btn-danger btn-block" onclick="logout()">退出登录</div>
+    </div>
+</section>
+<script>
+fixBar(1);
+
+	function logout(){
+		ajax_post({
+			url:'/Login/logout',
+			data:data,
+		},function(ret){
+			if(ret.code==1) {
+				//清空计时器
+				if(typeof(InterValObj) != 'undefined'){clearInterval(InterValObj);console.log('清除InterValObj');}
+				//关闭除了首页的其他页面
+				$(".pages .page").each(function(k,v){
+					if($(this).attr('id') == 'home' || $(this).hasClass('active')){
+					}else{
+						closeWin({name:$(this).attr('id')});
+					}
+				});
+				openWin({name:'login',url:'/Login/index',close:true,ref:true});
+			}
+		});
+		
+	}
+	
+
+</script>

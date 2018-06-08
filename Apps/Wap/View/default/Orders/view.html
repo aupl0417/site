@@ -1,0 +1,183 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin({ref:true})"></i>
+		</div>
+		<div class="title">
+			订单详情
+		</div>
+		<div class="r">
+		</div>
+	</div>
+</header>
+<section>	
+	<div class="load-body">数据加载中……</div>
+</section>
+<script id="tpl_orders_view" type="text/html">
+	<div class="line-box noicon hover md10">
+		<div class="title">订单号：<%= data.s_no %></div>
+	</div>
+	
+	<div class="line-box-m noicon hover md10">
+		<div><span class="b mr10"><%= data.orders.linkname %></span> <%= data.orders.mobile %> <% if(data.orders.postcode!=""){ %>，<%= data.orders.tel %><% } %></div>
+		<div class="text-gray"><%= data.orders.province %> <%= data.orders.city %> <%= data.orders.district %> <%= data.orders.town %> <%= data.orders.street %> <% if(data.orders.postcode!=""){ %>(<%= data.orders.postcode %>)<% } %> </div>
+	</div>
+	
+	<div class="line-box hover row" onclick="openWin({name:'shop',url:'/Shop/index/shop_id/<%= data.shop_id %>'})">
+		<div class="col-70"><div class="b"><%= data.shop.shop_name %></div></div>
+		<div class="col-30 text-right text-danger"><%= data.status_name %></div>
+	</div>
+	<% for(i=0;i<data.orders_goods.length;i++){ %>
+	<div class="line-box-m hover row" onclick="openWin({name:'goods_view',url:'/Goods/view/id/<%= data.orders_goods[i].attr_list_id %>'})">
+		<div class="col-15"><img src="<%= data.orders_goods[i].images %>" alt="商品图片"></div>
+		<div class="col-85">
+			<div class="pl10 pr10">
+				<div class="lh2-18px"><%= data.orders_goods[i].goods_name %></div>
+				<div class="row">
+					<div class="col-50 text-gray"><%= data.orders_goods[i].attr_name %></div>
+					<div class="col-50 text-right"><%= data.orders_goods[i].price %> x <span class="text-success b"><%= data.orders_goods[i].num %></span> 件</div>
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+	<% } %>
+	<div class="clearfix md10"></div>
+	
+	<!--优惠券-->
+	<% if(data.coupon){ %>
+	<div class="line-box hover row md10 noicon">
+		<div class="col-30">优惠券</div>
+		<div class="col-70 text-right text-gray"><%= data.coupon.price %> 元</div>
+	</div>
+	<% } %>
+	
+	<!--快递-->
+	<div class="line-box hover row noicon">
+		<div class="col-30">发货方式</div>
+		<div class="col-70 text-right text-gray">
+			<%= data.express_type==1?"快递":"EMS" %>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+	<div class="line-box hover row noicon">
+		<div class="col-30">运费</div>
+		<div class="col-70 text-right text-gray">
+			<%= data.express_price_edit %> 元
+		</div>
+		<div class="clearfix"></div>
+	</div>	
+	<% if(data.express_code!=""){ %>
+		<% if(data.express_code != "——"){ %>
+		<div class="line-box hover row" onclick="openWin({name:'query_express',url:'/Orders/query_express/s_no/<%= data.s_no %>'})">
+			<div class="col-30">快递单号</div>
+			<div class="col-70 text-right text-gray">
+				<%= data.express_code %>
+			</div>
+		</div>
+		<% }else{ %>
+		<div class="line-box hover row noicon">
+			<div class="col-30">无需物流</div>
+			<div class="col-70 text-right text-gray">
+				
+			</div>
+		</div>
+		<% } %>
+	<% } %>
+	
+	<div class="clearfix md10"></div>
+	
+	<div class="line-box noicon row hover">
+		<div class="col-30">下单时间</div>
+		<div class="col-70 text-right text-gray"><%= data.atime %></div>
+	</div>
+	<% if(data.pay_time != "0000-00-00 00:00:00"){ %>
+	<div class="line-box noicon row hover">
+		<div class="col-30">付款方式</div>
+		<div class="col-70 text-right text-gray"><%= data.pay_typename %></div>
+	</div>	
+	<div class="line-box noicon row hover">
+		<div class="col-30">付款时间</div>
+		<div class="col-70 text-right text-gray"><%= data.pay_time %></div>
+	</div>
+	<% } %>
+	<% if(data.express_time != "0000-00-00 00:00:00"){ %>
+	<div class="line-box noicon row hover">
+		<div class="col-30">发货时间</div>
+		<div class="col-70 text-right text-gray"><%= data.express_time %></div>
+	</div>
+	<% } %>
+	<% if(data.receipt_time != "0000-00-00 00:00:00"){ %>
+	<div class="line-box noicon row hover">
+		<div class="col-30">收货时间</div>
+		<div class="col-70 text-right text-gray"><%= data.receipt_time %></div>
+	</div>
+	<% } %>	
+	<div class="line-box nobg noicon">
+		<div class="text-center">
+			共 <%= data.goods_num %> 款商品，合计 <%= data.pay_price %> 元，奖励 <%= data.score %> 积分
+		</div>
+	</div>
+	
+	<%if(data.refund>0){%>
+	<% if(data.status > 3) { %>
+	<div class="line-box nobg noicon" onclick="openWin({name:'service_index',url:'/Service/index/s_no/<%= data.s_no %>'})">
+		<div class="text-center text-gray">
+			<span class="text-danger">查看售后详情</span>
+		</div>
+	</div>
+	<% } else { %>
+	<div class="line-box nobg noicon" onclick="openWin({name:'refund_item_list',url:'/Refund/item_list/s_no/<%= data.s_no %>'})">
+		<div class="text-center text-gray">
+			<%if(data.refund_price>0){%><span class="mr20">商品退款 <%= data.refund_price%> 元</span><%}%>
+			<%if(data.refund_express>0){%><span class="mr20">退运费 <%= data.refund_express%> 元</span><%}%>
+			<span class="text-danger">查看退款详情</span>
+		</div>
+	</div>
+	<% } %>
+	<%}%>
+	
+	<% if(data.status==1){ %>
+		<div class="row">
+			<div class="col-50">
+				<div class="btn btn-block btn-primary m10" onclick="openWin({name:'orders_close',url:'/Orders/close/s_no/<%= data.s_no %>'})">关闭</div>
+			</div>
+			<div class="col-50">
+				<div class="btn btn-block btn-danger m10" onclick="openWin({name:'orders_pay',url:'/Orders/paytype/s_no/<%= data.s_no %>'})">付款</div>
+			</div>
+		</div>
+	<% }else if (data.status==2){ %>
+		<div class="p10">
+			<div class="btn btn-block btn-danger" onclick="openWin({name:'refund_goods',url:'/Refund/goods/s_no/<%= data.s_no %>',ref:true})">退款</div>
+		</div>
+	<% }else if (data.status==3){ %>
+		<div class="row">
+			<div class="col-50">
+				<div class="btn btn-block btn-danger m10" onclick="openWin({name:'orders_pay',url:'/Orders/confirm/s_no/<%= data.s_no %>'})">收货</div>
+			</div>
+			<div class="col-50">
+				<div class="btn btn-block btn-danger m10" onclick="openWin({name:'refund_goods2',url:'/Refund/goods2/s_no/<%= data.s_no %>',ref:true})">退款</div>
+			</div>			
+		</div>
+		
+	<% }else if (data.status==4){ %>
+		<div class="p10">
+			<div class="btn btn-block btn-danger" onclick="openWin({name:'orders_rate',url:'/Orders/rate/s_no/<%= data.s_no %>'})">评价</div>
+		</div>		
+	<% } %>
+	
+</script>
+
+<script>
+	fixBar(1);
+	
+	ajax_post({
+		url:'/Api/api',
+		data:{apiurl:'/Orders/orders_shop_view',is_openid:1,s_no:'{$_GET.s_no}'}
+	},function(ret){
+		var html=template('tpl_orders_view',{data:ret.data});
+		$('.page.active section').html(html);
+	});
+
+	
+</script>

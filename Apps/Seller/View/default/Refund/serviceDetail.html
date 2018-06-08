@@ -1,0 +1,150 @@
+<div class="bg_f1 clearfix fs14 text_44 tle_R">
+	<a class="fl plr15 line40 ml-1 active" href="javascript:;">售后详情</a>
+</div>
+<div class="pd15">
+	<table class="table table-bordered table-advance table-hover mb10">
+		<tbody>
+			<tr style="background: #f9f9f9;">
+				<th class="col-lg-2 text-center">图片</th>
+				<th class="col-lg-2 text-center">商品</th>
+				<th class="col-lg-1 text-center">售后数量</th>
+				<th class="col-lg-1 text-center">当前状态</th>
+				<th class="col-lg-1 text-center">申请时间</th>
+				<th class="col-lg-1 text-center">操作</th>
+			</tr>
+			<tr class="count">
+				<td style="vertical-align: middle;">
+					<a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', array('id' => $data['orders_goods']['attr_list_id']))}" target="_blank"><img src="{$data['orders_goods']['images']}" class="img-thumbnail"></a>
+				</td>
+				<td style="vertical-align: middle;"><empty
+						name="data.orders_goods"> 运费 <else /> <a
+                        href="javascript:;" data-url="{:DM('item')}{:U('/index/index', array('id' => $data['orders_goods']['attr_list_id']))}">{$data.orders_goods.goods_name}</a>
+					</br>
+					{$data.orders_goods.attr_name} </empty></td>
+				<td style="vertical-align: middle;" class="text-center"><notempty
+						name="data.orders_goods">×{$data.num}</notempty></td>
+				<td style="vertical-align: middle;" class="text-center">{$data.status_name}</br>({$data.type_name})
+				</td>
+				<td style="vertical-align: middle;" class="text-center">{$data.atime}</td>
+				<td style="vertical-align: middle;" class="text-center">
+					<switch name="data.status">
+						<case value="1">
+							<div data-type="modal" data-url="{:U('/service/opreat', ['type' => 'accept', 'id' => $data['r_no']])}" data-title="同意售后" class="btn btn-success btn-ml text-center btn_m w100 opreating">同意售后</div>
+							<div data-type="modal" data-url="{:U('/service/opreat', ['type' => 'reject', 'id' => $data['r_no']])}" data-title="拒绝售后" class="btn btn-primary btn-ml text-center btn_m mt10 opreating w100">拒绝售后</div>
+						</case>
+						<case value="2">
+							<div class="btn btn-primary btn-ml text-center btn_m w100">等待买家操作</div>
+							<!-- 拒绝退款 --> 
+						</case>
+						<case value="3">
+							<div class="btn btn-primary btn-ml text-center btn_m w100">等待买家操作</div>
+						</case>
+						<case value="4">
+							<div data-type="modal" data-url="{:U('/service/opreat', ['type' => 'accept1', 'id' => $data['r_no']])}" data-title="已收到货" class="btn btn-success btn-ml text-center btn_m w100 opreating">已收到货</div>
+							<div data-type="modal" data-url="{:U('/service/appeal', ['id' => $data['r_no']])}" data-title="未收到货" class="btn btn-primary btn-ml text-center btn_m mt10 opreating w100">未收到货</div>
+						</case> 
+						<case value="5">
+							<div data-type="modal" data-url="{:U('/service/opreat', ['type' => 'send_express', 'id' => $data['r_no']])}" data-title="寄出商品" class="btn btn-success btn-ml text-center btn_m w100 opreating">寄出商品</div>
+						</case> 
+						<case value="6">
+							<div class="btn btn-primary btn-ml text-center btn_m w100">卖家寄出商品</div>
+						</case> 
+						<case value="10">
+							<div class="btn btn-primary btn-ml text-center btn_m w100">等待仲裁</div>
+						</case> 
+						<case value="11">
+							<div class="btn btn-primary btn-ml text-center btn_m w100">卖家未收到商品申诉</div>
+						</case> 
+						<case value="12">
+							<div class="btn btn-primary btn-ml text-center btn_m w100">买家未收到商品申诉</div>
+						</case> 
+						<case value="20">
+							<div class="btn btn-success btn-ml text-center btn_m w100">售后已取消</div>
+						</case> 
+						<case value="100">
+							<div class="btn btn-success btn-ml text-center btn_m w100">售后已完成</div>
+						</case> 
+					</switch> 
+					<a href="{:U('/orders/detail', ['id' => $data['s_no']])}" class="btn btn-info btn-ml text-center btn_m mt10 w100">查看订单</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<table class="table table-bordered table-advance table-hover">
+		<tbody>
+			<tr style="background: #f9f9f9;">
+				<th class="col-lg-1 text-left">申请售后理由</th>
+			</tr>
+			<tr>
+				<td class="text-break-all">{$data.reason}</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<notempty name="data.images">
+	<table class="table table-bordered table-advance table-hover">
+		<tbody>
+			<tr style="background: #f9f9f9;">
+				<th class="col-lg-1 text-left">申请售后照片</th>
+			</tr>
+			<tr class="count">
+				<td><php> $images = explode(',',rtrim($data['images'],
+					',')); </php>
+					<ul class="images-select-box">
+						<volist name="images" id="vo">
+						<li id="" data-path="{$vo}" class="text-center">
+							<div class="li-img-box">
+								<a href="{$vo}" class="image-zoom" title="大图"> <img
+									src="{:myurl($vo, 100)}">
+								</a>
+							</div>
+						</li>
+						</volist>
+					</ul></td>
+			</tr>
+		</tbody>
+	</table>
+	</notempty>
+</div>
+<div class="pd20 solid_t">
+	<div class="ml40 pl20">
+		<div class="block-transparent">
+			<div class="header">
+				<h4>申请售后日志</h4>
+			</div>
+			<ul class="timeline">
+				<volist name="data.logs" id="vo">
+				<li><i class="fa fa-angle-double-down"></i> <span class="date">{$vo.atime}</span>
+					<div class="content text-break-all">
+						<p>
+							<strong><notempty name="vo.user.nick">{$vo.user.nick}<else />雇员操作</notempty></strong>
+						</p>
+						<p>{$vo.remark}</p>
+						<notempty name="vo.images">
+						<div class="mt10">
+							<volist name="vo.images" id="vo"> <a href="{$vo}"
+								class="image-zoom mr10" title="大图"> <img
+								src="{:myurl($vo, 100)}">
+							</a> </volist>
+						</div>
+						</notempty>
+					</div></li>
+				</volist>
+			</ul>
+		</div>
+	</div>
+</div>
+<notempty name="data.express">
+	<div class="pd20 solid_t" id="express">
+		<h4>物流信息</h4>
+		<div class="ml40 pl20">
+			<volist name="data.express" id="vo">
+				<eq name="i" value="1">
+					<div data-type="modal" data-url="{:U('/tool/express', ['company' => $vo['express_company_id'], 'code' => $vo['express_code']])}" data-title="买家寄回商品物流信息" class="btn btn-primary btn-ml plr20 mr20 opreating">买家寄回商品物流信息</div>
+				<else />
+					<div data-type="modal" data-url="{:U('/tool/express', ['company' => $vo['express_company_id'], 'code' => $vo['express_code']])}" data-title="卖家寄回商品物流信息" class="btn btn-primary btn-ml plr20 mr20 opreating">卖家寄回商品物流信息</div>
+				</eq>
+			</volist>
+		</div>
+	</div>
+</notempty>

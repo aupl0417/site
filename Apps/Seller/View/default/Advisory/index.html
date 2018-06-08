@@ -1,0 +1,164 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<link rel="stylesheet" type="text/css" href="/Public/new_design/flatdream/js/jquery.icheck/skins/all.css">
+<div class="centent_body">
+	<include file="Public:nav" />
+	<div class="container mb30">
+		<include file="Public:side" />
+		<div class="w980 bor_der mb20 fl">
+			<form method="get">
+				<input type="hidden" name="p" value="1"/>
+				<div class="">
+					<div class="bg_f1 clearfix fs14 text_44 tle_R orders-tab" data-url="__SELF__">
+						<a class="fl plr15 line40 ml-1" href="{:U('/advisory')}">所有咨询</a>
+						<a class="fl plr15 line40 ml-1" href="{:U('/advisory/index', ['status' => 1])}">等待回复</a>
+						<notempty name="cate">
+							<volist name="cate" id="vo">
+								<a class="fl plr15 line40 ml-1" href="{:U('/advisory/index', ['type' => $key])}">{$vo}</a>
+							</volist>
+						</notempty>
+						<div class="fl ml40 mt5 mb0" style="width:300px">
+							<div class="input-group input-group-sm mb0">
+								<input type="text" class="form-control" value="{$_GET['goods']}"  name="goods" placeholder="商品名称">
+								<span class="input-group-btn">
+									<button class="btn btn-primary" type="submit">搜索</button>
+								</span>
+								<span class="input-group-btn">
+									<button id="hige_search" class="btn btn-default plr20" type="button">
+										高级搜索<i class="fa fa-angle-down ml5"></i>
+									</button>
+								</span>
+							</div>
+						</div>
+					</div>
+					<div class="solid_t mt-1">
+						
+					</div>
+					<form method="get" class="form-inline">
+					<input type="hidden" name="p" value="1"/>
+					<div class="pd15 form-body">
+						<div id="search_dn" class="plr15 pb10 clearfix dn">
+							<div class="form-group">
+								<input class="form-control fs14 fl" style="width:120px" type="text" value="{$_GET['nick']}" name="nick" placeholder="用户昵称">
+								<div class="fl ml10 mr10" style="width:180px;">
+								<select name="time_area" class="form-control fs14 fl">
+									<option value="">请选择筛选时间类型</option>
+									<option <eq name="Think.get.time_area" value="advisory">selected</eq> value="advisory">咨询时间</option>
+									<option <eq name="Think.get.time_area" value="reply">selected</eq> value="reply">回复时间</option>
+								</select>
+								</div>
+								<div class="input-group date datetime fl" data-min-view="2" data-date-format="yyyy-mm-dd" style="width:120px">
+										<input name="sday" data-filter="gte" value="{$_GET['sday']}"  class="form-control form-filter" readonly="sday" id="sday" type="text" placeholder="开始时间">
+										<span class="input-group-addon btn default"><span class="glyphicon glyphicon-th fa fa-calendar"></span>
+									</span>
+								</div>
+								<span class="fl plr5 mt7">-</span>
+								<div class="input-group fl date datetime" data-min-view="2" data-date-format="yyyy-mm-dd" style="width:120px">
+										<input name="eday" data-filter="lte" value="{$_GET['eday']}" class="form-control form-filter" readonly="eday" id="eday" type="text" placeholder="结束时间">
+										<span class="input-group-addon btn default"><span class="glyphicon glyphicon-th fa fa-calendar"></span>
+									</span>
+								</div>
+								<button class="btn btn-primary" type="submit">搜索</button>
+							</div>
+						</div>
+					</form>
+				</div>
+				<empty name="data.list">
+					{:W('Common/Builder/nors', array('param' => array('text' => '没有任何咨询！')))}
+				<else />
+						<div class="pd15">
+							<div class="row mg0 test_black fs14 strong">
+								<div class="col-xs-5 text-center">商品信息</div>
+								<div class="col-xs-2 text-center">咨询类型</div>
+								<div class="col-xs-2 text-center">咨询时间</div>
+								<div class="col-xs-2 text-center">状态</div>
+								<div class="col-xs-1 text-center">操作</div>
+							</div>
+						</div>
+		
+						<div class="solid_t pd15">
+							<table class="table table-bordered table-advance table-hover mb30">
+								<tbody>
+									<volist name="data.list" id="vo">
+										<tr>
+											<td class="col-xs-2" style="vertical-align: middle;" class="text-center col-xs-2"><a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', array('id' => $vo['attr_list_id']))}"><img src="{:myurl($vo['images'], 120)}" class="img-thumbnail" style="width:120px;"></a></td>
+											<td class="col-xs-3">
+											<a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', array('id' => $vo['attr_list_id']))}">{$vo.goods_name}</a>
+											</td>
+											<td style="vertical-align: middle;" class="text-center col-xs-2">{$vo.type_name}</td>
+											<td style="vertical-align: middle;" class="text-center col-xs-2">{$vo.atime}</td>
+											<td style="vertical-align: middle;" class="text-center col-xs-2">
+											{$vo.status_name}
+											<br />
+											(<span class="text_yellow">{$vo.nick}</span>)
+											</td>
+											<td style="vertical-align: middle;" class="text-center col-xs-1" >
+												<eq name="vo.status" value="1"><!-- 未回复的情况下可以删除咨询 -->
+													<a class="text_blue reply-btn" href="javascript:;" data-id="{$vo.id}">回复咨询</a>
+												<else />
+													<a class="text_blue reply-edit-btn" href="javascript:;" data-id="{$vo.id}">修改回复</a>
+												</eq>
+												<br />
+												<a class="text_blue" href="{:U('/advisory/detail', ['id' => $vo['id']])}">查看详情</a>
+											</td>
+										</tr>
+									</volist>
+								</tbody>
+							</table>
+							
+							<div class="text-right">
+								<div class="col-xs-12 text-center">
+									{:paresePageAction($data['page']['page'], '/SellerGoodsAdvisory/index')}
+								</div>
+							</div>
+						</div>
+					</div>
+				</empty>
+			</form>
+		</div>
+	</div>
+</div>
+</block>
+<block name="css">
+<script src="__FLATDREAM__/js/bootstrap.datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script src="__FLATDREAM__/js/bootstrap.datetimepicker/js/bootstrap-datetimepicker.zh-CN.js"></script>
+<link rel="stylesheet" href="__FLATDREAM__/js/bootstrap.datetimepicker/css/bootstrap-datetimepicker.css" />
+</block>
+<block name="script">
+<script>
+$(document).ready(function() {
+	$(".datetime").datetimepicker({
+		format : 'yyyy-mm-dd'
+	});
+	$('.datetime').datetimepicker({
+		language:  'zh-CN',
+		weekStart : 1,
+		todayBtn : 1,
+		autoclose : 1,
+		todayHighlight : 1,
+		startView : 2,
+		forceParse : 0,
+		showMeridian : 1
+	});
+	$('#hige_search').click(function(){
+		$('#search_dn').slideToggle('slow')
+	});
+	
+	$(".reply-btn").click(function() {
+		var id = $(this).data('id');
+		vmodal({
+			url:'{:U("/advisory/reply")}?id=' + id,
+			title:'回复咨询',
+		});
+	});
+	
+	$(".reply-edit-btn").click(function() {
+		var id = $(this).data('id');
+		vmodal({
+			url:'{:U("/advisory/edit")}?id=' + id,
+			title:'修改咨询',
+		});
+	});
+})
+</script>
+</block>

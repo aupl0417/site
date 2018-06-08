@@ -1,0 +1,19 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body">
+	<div class="container" style="margin:170px auto;">
+		<h1 class="text-center mb20">支付失败！</h1>
+		<div class="text-center">
+			<a href="{:DM('my', '/orders')}" class="btn btn-success">查看订单</a><a href="{:DM('www')}" class="btn btn-info ml20">继续购买</a>
+		</div>
+	</div>
+</div>
+</block>
+<block name="css"></block>
+<block name="script">
+<script>
+$(document).ready(function(){
+	//setInterval("gourl({url:'{:DM('my', '/orders')}'})",3000);
+});
+</script>
+</block>

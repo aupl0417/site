@@ -1,0 +1,89 @@
+<include file="Public:header" />
+<include file="Public:menu" />
+
+<div class="w1200 mt20 md20 bg-white box">
+	<div class="box-header">
+		升级须知
+	</div>
+
+	<div class="box-content p50">
+		<div class="ft18 md10">店铺资质</div>
+		<table class="nobg md30">
+			<thead class="strong">
+				<tr>
+					<th width="150" class="text-center">条件</th>
+					<th width="100" class="text-center">状态</th>
+					<th>描述</th>
+					<th width="150" class="text-center">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td class="text-center">实名认证</td>
+					<td class="text-center">{:$rs->is_auth==1?'<i class="fa fa-check text-success fa-2x"></i>':'<i class="fa fa-times text-danger fa-2x"></i>'}</td>
+					<td>须通过实名认证</td>
+					<td class="text-center">{:$rs->is_auth==1?'-':'<a href="'.erp_url(C('cfg.erp')['domain']['u'].'/auth').'" target="_blank">去认证</a>'}</td>
+				</tr>
+				<tr>
+					<td class="text-center">店铺等级</td>
+					<td class="text-center">{:$rs->level_id>1?'<i class="fa fa-check text-success fa-2x"></i>':'<i class="fa fa-times text-danger fa-2x"></i>'}</td>
+					<td>必须是“创客”或“创投”，您当前为“<span class="b text-danger">{$rs->level->level_name}</span>”</td>
+					<td class="text-center">{:$rs->level_id>1?'-':'<a href="'.erp_url(C('cfg.erp')['domain']['u'].'/upgrade').'" target="_blank">升级</a>'}</td>
+				</tr>
+				<tr>
+					<td class="text-center">是否企业认证</td>
+					<td class="text-center"><if condition="$rs:level_id gt 1 and $rs:is_auth eq 1"><i class="fa fa-check text-success fa-2x"></i><else/><i class="fa fa-times text-danger fa-2x"></i></if></td>
+					<td>企业认证才可以升级个体店铺</td>
+					<td class="text-center">-</td>
+				</tr>
+			</tbody>
+		</table>
+		
+		<div class="ft18 md10">店铺类型</div>
+		<table class="nobg md30">
+			<thead class="strong">
+				<tr>
+					<th width="150" class="text-center">类型</th>
+					<th width="100" class="text-center">状态</th>
+					<th>可升级为</th>
+					<th width="150" class="text-center">分账模式</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!--  
+					<tr>
+						<td class="text-center">个体店铺</td>
+						<td class="text-center"><i class="fa fa-check text-success fa-2x"></i></td>
+						<td>旗舰店、专卖店、专营店</td>
+						<td class="text-center">分账</td>
+					</tr>
+				-->
+				<tr>
+					<td class="text-center">个人店铺</td>
+					<td class="text-center"><i class="fa fa-check text-success fa-2x"></i></td>
+					<td>旗舰店、专卖店、专营店、个体店铺</td>
+					<td class="text-center">分账</td>
+				</tr>
+			</tbody>
+		</table>	
+
+		<div class="p10 text-center">
+			<a href="__URL__/agreement" class="btn btn-danger btn-150px {:$status!=1?'disabled':''}">下一步</a>
+		</div>
+	</div>
+
+</div>
+
+
+<include file="Public:copyright" />
+<include file="Public:js" />
+
+
+<script>
+$(document).ready(function(){
+
+
+});	
+</script>
+
+<include file="Public:footer" />

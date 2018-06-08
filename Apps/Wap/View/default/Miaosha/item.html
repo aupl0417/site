@@ -1,0 +1,34 @@
+<if condition="$thisDay egt '2017-01-16'">
+	<div class="row_block miaosha-list-item clear_fix bg_white mg0" style="position:relative;" >
+		<div class="text-center nors">秒杀活动已结束</div>
+	</div>
+<else />
+	<notempty name="floor">
+		<volist name="floor" id="vo">
+			<volist name="vo.goods" id="gl">
+				<div class="row_block miaosha-list-item clear_fix bg_white mg0" style="position:relative;" onclick="openWin({name:'goods_view',url:'/Goods/view/id/{$gl.goods_attr_list.id|default="0"}'})">
+			        <notempty name="gl">
+				        <div class="col_2 amg">
+				            <a href="javascript:;"><img style="min-height:85px" src="{:myurl($gl['images'][0],480,295)}"></a>
+				        </div>
+				        <div class="col_2 pd7">
+				            <p class="line_tow mg0">{$gl.goods.goods_name}</p>
+				        </div>
+				        <div style="width:50%; position: absolute; right: 0; bottom: 0; padding: 7px;">
+				            <span class="text-danger">秒杀价:<span class="fs20">{$gl.price}</span>元</span></br>
+				            <del>原价:{$gl.goods.price}元</del>
+				            <img width="35" style="position: absolute; right: 7px; bottom: 7px;"  src="../Public/Images/activity/20170101/shoping.jpg">
+				        </div>
+				    <else/>
+				    	<div class="text-center nors">暂无活动商品！</div>
+			        </notempty>
+			    </div>
+			</volist>
+		</volist>
+	<else />
+		<div class="row_block miaosha-list-item clear_fix bg_white mg0" style="position:relative;" >
+			<div class="text-center nors">暂无活动商品！</div>
+		</div>
+	</notempty>
+</if>
+

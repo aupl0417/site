@@ -1,0 +1,164 @@
+<include file="Public:header" />
+<include file="nav" />
+<div class="m20">
+	<div class="block-flat">
+		<form method="post" action="" role="form" class="p10 md10" id="export_set" target="_blank">
+			<input type="hidden" name="id" value="{$info.id}"/>
+			<input type="hidden" name="category_id" value="{$res.id}"/>
+
+			<table class="no-bordered no-bg">
+				<tr>
+					<td width="20%" class="text-right strong">方案分类</td>
+					<td><b class="strong">{$res.name}</b></td>
+				</tr>
+				<tr>
+					<td width="20%" class="text-right strong">方案名称</td>
+					<td>
+						<div class="row">
+							<div class="col-xs-5">
+								<input type="text" id="name" name="name" placeholder="请输入方案名称" value="{$info.name}" class="form-control" style="">
+							</div>
+						</div>
+					</td>
+				</tr>
+				<volist name="res.condition" id="vo">
+					<if condition="$vo.is_open eq 1">
+					<tr>
+						<td width="20%" class="text-right strong">{$vo.label}</td>
+
+						<if condition="$vo.formtype eq 'checkbox'">
+							<td>
+								<foreach name="vo.value" item="v" key="k">
+									<label class="mr10"><input type="checkbox" class="i-red-square" name="{$vo.name}[]" id="{$vo.name}[]" value="{$k}"  {:in_array($k,$info['condition_select'][$vo[name]])?'checked':''}> {$v}</label>
+								</foreach>
+							</td>
+						<elseif condition="$vo.formtype eq 'radio'"/>
+							<td>
+								<foreach name="vo.value" item="v" key="k">
+									<label class="mr10"><input type="radio" class="i-red-square" name="{$vo.name}" id="{$vo.name}" value="{$k}" {$info['condition_select'][$vo[name]]==$k?'checked':''}> {$v}</label>
+								</foreach>
+							</td>
+						<elseif condition="$vo.formtype eq 'date'"/>
+							<td>
+								<div class="row">
+									<div class="col-xs-4">
+										<input type="text" id="{$vo.name}" name="{$vo.name}" placeholder="请输入{$vo.label}" value="{$info['condition_select'][$vo[name]]}" class="form-control datepicker " style="" data-date-format="yyyy-mm-dd">
+									</div>
+									<div class="col-xs-3">
+										<div class="btn btn-default" onclick="$('#export_set #{$vo.name}').val('');"><i class="fa fa-times"></i>清除时间</div>
+									</div>
+								</div>
+							</td>
+						<elseif condition="$vo.formtype eq 'text'"/>
+							<td>
+								<div class="row">
+									<div class="col-xs-5">
+										<input type="text" id="{$vo.name}" name="{$vo.name}" placeholder="请输入{$vo.label}" value="{$info['condition_select'][$vo[name]]}" class="form-control" style="">
+									</div>
+								</div>
+							</td>
+						</if>
+
+					</tr>
+					</if>
+				</volist>
+				<!--
+				<tr>
+					<td width="20%" class="text-right strong">方案导出字段</td>
+					<td>
+						<div style="max-height:300px;overflow:auto" class="box p20">
+							<div class="row export_field">
+
+							</div>
+						</div>
+						<div class="text-gray p10">拖动字段可进行排序</div>
+					</td>
+				</tr>
+				-->
+				<tr>
+					<td width="20%" class="text-right strong">可选导出字段</td>
+					<td>
+						<div style="max-height:300px;overflow:auto" class="box p20">
+							<div class="row can_export_field">
+								<volist name="info.field_select" id="vo">
+									<div class="col-xs-3">
+										<label class="mr10"><input type="checkbox" class="i-red-square" name="field_select[]" id="field_select[]" value="{$vo.field_value}" checked/> {$vo.field_label}</label>
+									</div>
+								</volist>
+							<volist name="res.field" id="vo">
+
+										<div class="col-xs-3">
+											<label class="mr10"><input type="checkbox" class="i-red-square" name="field_select[]" id="field_select[]" value="{$vo.field_value}"/> {$vo.field_label}</label>
+										</div>
+
+
+
+							</volist>
+							
+
+							</div>
+						</div>
+
+					</td>
+				</tr>			
+			</table>
+			
+
+			
+			<div class="p10 text-center">
+				<button type="button" class="btn btn-lg btn-rad btn-trans btn-default" onclick="back()"><i class="fa fa-mail-reply"></i> 返回</button>
+				<button type="submit" class="btn btn-primary btn-150px hide">保存设置</button>
+				<button type="button" class="btn btn-primary  btn-lg" onclick = "export_file()">保存设置</button>
+			</div>
+			
+
+		</form>
+	</div>
+</div>
+<div class="clearfix"></div>
+
+<include file="Public:copyright" />
+<include file="Public:js" />
+
+<script>
+
+iCheckClass('#export_set');
+$('#export_set .datepicker').datetimepicker({
+	format:'Y-m-d',
+	timepicker:false,
+});
+
+//排序
+$('#export_set .can_export_field').sortable({
+	stop: function(event, ui) {}
+});
+//保存
+function export_file(){
+	var data = getFormJson('#export_set');
+	<volist name="res.condition" id="vo">
+        <if condition="$vo.formtype eq 'checkbox'">
+        	var num = $('#export_set input[name="{$vo.name}[]"]:checked').length;
+			var label = '{$vo.label}';
+			if(num==0){valert({'status':'warning','msg':label+'请至少勾选1个'});return false;}
+		<elseif condition="$vo.formtype eq 'radio'"/>
+			var num = $('#export_set input[name="{$vo.name}"]:checked').length;
+			var label = '{$vo.label}';
+			if(num==0){valert({'status':'warning','msg':label+'必须选择1个'});return false;}
+		</if>
+	</volist>
+
+	ajax_post({
+		url:'__URL__/save_programme',
+		data:data,
+	},function(ret){
+	    if(ret.status == 'success'){
+            window.location.href="__URL__/programme";
+		}
+        valert(ret);
+
+	});
+	
+	return false;
+}
+
+</script>

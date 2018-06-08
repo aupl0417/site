@@ -1,0 +1,26 @@
+<div class="line-input row">
+	<div class="col-50" onclick="sure_delete()">是</div>
+	<div class="col-50" onclick="$('.page.active .vmodal .vmodal-footer').click();">否</div>
+</div>
+
+
+<script>
+function sure_delete(){
+	ajax_post({
+		url:'/Api/api',
+		data:{
+			apiurl:'/Address/delete',
+			is_openid:1,
+			id:{$_GET['id']},
+		},
+	},function(ret){
+		valert(ret);
+		if( ret.code == 1 ){
+			setTimeout(function(){
+				openWin({name:'address',url:'/Address/index',ref:true});
+			},1000);
+		}
+	});
+}
+
+</script>

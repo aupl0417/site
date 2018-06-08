@@ -1,0 +1,61 @@
+<include file="Public:header" />
+<include file="nav" />
+<css href="__FLATDREAM__/js/jquery.magnific-popup/dist/magnific-popup.css" />
+<div class="m20">
+	<form id="formlist" name="formlist">
+	<ul class="upload-images-list">
+		<volist name="list.0" id="vo">
+		<li>
+			
+			<div class="upload-images-item" data-images="{:C('qiniu.domain')}/{$vo.key}"><a class="image-zoom" href="{:C('qiniu.domain')}/{$vo.key}" title="{$vo.key}"><img src="{:C('qiniu.domain')}/{$vo.key}?imageView2/2/w/180/h/150"></a></div>
+			<div class="upload-images-title">
+				<div class="pull-right"><a class="image-zoom" href="{:C('qiniu.domain')}/{$vo.key}" title="{$vo.key}"><i class="fa fa-eye"></i> {$vo.fsize|fsize} KB</a></div>
+				<label><input type="checkbox" class="i-red-square" id="id[]" name="id[]" value="{$vo.key}"></label> 				
+			</div>
+		</li>
+		</volist>
+	</ul>
+	</form>
+	<div class="md70 clearfix"></div>
+</div>
+
+<div class="navbar-fixed-bottom">
+	<div class="p20 bg-white-50">
+		<button type="button" class="btn btn-info btn-rad btn-trans select-all"><i class="fa fa-location-arrow"></i> 全选 / 反选</button>
+		<button type="button" class="btn btn-primary btn-rad btn-trans delete-select"><i class="fa fa-times"></i> 删除图片</button>
+		
+		<span class="pull-right">{$pages}</span>
+	</div>
+</div>
+
+<include file="Public:copyright" />
+<include file="Public:js" />
+<js href="__FLATDREAM__/js/jquery.magnific-popup/dist/jquery.magnific-popup.min.js" />
+<script>
+$(document).ready(function(){
+	$('.delete-select').click(function(){
+		if($('input[type="checkbox"]:checked').size()==0){
+			valert({status:'warning',msg:'请至少选择一项！'})
+			return false;
+		}else {
+			confirm_form({
+				formid:'#formlist',
+				furl:'__URL__/delete',
+				script:'callback(ret)',
+				title:'删除图片',
+				msg:'真的要删除吗？',
+				class:'text-center',
+				confirm:1
+			});
+		}
+	});
+});
+
+function callback(ret){
+	$('input[type="checkbox"]:checked').each(function(){
+		$('[data-key="'+$(this).val()+'"]').remove();
+	});
+	$('#ajax-modal').modal('hide');
+}
+</script>
+<include file="Public:footer" />

@@ -1,0 +1,205 @@
+<include file="Public:header" />
+	<div class="navbar-fixed-top">
+		<div class="pull-right">
+			<div class="btn btn-primary btn-rad btn-trans m10" onclick="ref()"><i class="fa fa-refresh"></i> 刷新</div>
+		</div>
+		
+		<ul class="nav-box2" data-page="__SELF__">
+			<li><a href="__URL__">商品类目</a></li>
+			<li><a href="__SELF__">证书管理</a></li>
+		</ul>
+	</div>
+<notempty name="data">
+<div class="m20">
+	<div class="btn btn-trans btn-rad btn-primary" data-type="vmodal" data-title="新增参数分组" data-url="__URL__/certAdd/sid/{$_GET.sid}" data-width="800"><i class="fa fa-plus"></i> 新增证书</div>
+	<div class="md10"></div>
+	<form id="formlist" name="formlist">
+	<div class="block-flat">
+		<div class="content">		
+			<include file="cert_list" />	
+			
+			<div class="clearfix"></div>
+			<div class="row">
+				<div class="col-xs-10 text-center">
+					{$data.page.page}
+				</div>
+				<div class="col-xs-2 text-right">
+					<div class="page-total">{$data.page.total}</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+	
+	</form><!--/form-->
+
+	<div class="clearfix h50px"></div>
+	
+</div>
+
+
+<div class="navbar-fixed-bottom border-t">
+	<div class="buttom-bar bg-white-50">
+
+		<div class="row">
+			<div class="col-xs-3">
+				<button type="button" class="btn btn-info btn-rad btn-trans select-all"><i class="fa fa-location-arrow"></i> 全选 / 反选</button>
+				<button type="button" class="btn btn-primary btn-rad btn-trans delete-select"><i class="fa fa-times"></i> 删除选中记录</button>
+			</div>
+			<div class="col-xs-2 hide">				
+				<div class="input-group">
+					<select id="toactive" name="toactive" class="form-control" >
+						<option value="0">锁定</option>
+						<option value="1">正常</option>
+					</select>
+					<div class="input-group-btn">
+						<div class="btn btn-rad btn-trans btn-default active-change">修改</div>
+					</div>
+				</div>				
+			</div>
+			<div class="col-xs-2 hide">
+				<div class="input-group">
+					<select id="tosid" name="tosid" class="form-control">
+						<option value="">请选择一个分类</option>
+						
+					</select>					
+					<div class="input-group-btn">
+						<div class="btn btn-rad btn-trans btn-default sid-change">转移</div>
+					</div>
+				</div>			
+			</div>			
+
+
+					
+		</div>
+			
+	</div>
+</div>	
+
+<else />
+<div class="m20">
+	<div class="text-center nors">
+		<div class="nors-tips md20">暂无记录！</div>
+		<div class="btn btn-trans btn-rad btn-primary" data-type="vmodal" data-title="新增参数分组" data-url="__URL__/certAdd/sid/{$_GET.sid}" data-width="800"><i class="fa fa-plus"></i> 新增证书</div>
+	</div>
+</div>
+</notempty>
+
+
+
+<include file="Public:copyright" />
+<include file="Public:js" />
+<script>
+$(document).ready(function(){
+	$('#sort-0,#sort-1,#sort-2').sortable({
+		stop: function(event, ui) {
+			var data = $('#sort-0 tr,#sort-1 tr,#sort-2 tr').map(function() { return $(this).attr("id"); }).get();
+			ajax_post({
+				data:{ids:data},
+				url:'__URL__/setsort',
+			});
+		}	
+	});	
+
+	$('.delete-select').click(function(){
+		if($('input[type="checkbox"]:checked').size()==0){
+			valert({status:'warning',msg:'请至少选择一项！'})
+			return false;
+		}else {
+			confirm_form({
+				formid:'#formlist',
+				furl:'__URL__/certDel',
+				script:'callback(ret)',
+				title:'删除记录',
+				msg:'真的要删除吗？',
+				class:'text-center',
+				confirm:1
+			});
+		}
+	});
+
+	$('.active-change').click(function(){
+		if($('input[type="checkbox"]:checked').size()==0){
+			valert({status:'warning',msg:'请至少选择一项！'})
+			return false;
+		}else {
+			confirm_form({
+				formid:'#formlist',
+				furl:'__URL__/active_change_select/toactive/'+$('#toactive').val(),
+				script:'activeCall(ret)',
+				title:'批量更改记录状态',
+				msg:'真的要改记录状态吗？',
+				class:'text-center',
+				confirm:1
+			});
+		}
+	});
+	
+	$('.sid-change').click(function(){
+		if($('input[type="checkbox"]:checked').size()==0){
+			valert({status:'warning',msg:'请至少选择一项！'})
+			return false;
+		}else if($('#tosid').val()==''){
+			valert({status:'warning',msg:'请选择一个分类'})
+			return false;			
+		}else {
+			confirm_form({
+				formid:'#formlist',
+				furl:'__URL__/sid_change_select/tosid/'+$('#tosid').val(),
+				script:'activeCall(ret)',
+				title:'批量记录归类',
+				msg:'真的要批量记录归类吗？',
+				class:'text-center',
+				confirm:1
+			});
+		}
+	});	
+	
+	$('body #sort-us').sortable({
+		stop: function(event, ui) {
+			var data = $('body #sort-us >div').map(function() { return $(this).attr("id"); }).get();
+			ajax_post({
+				data:{ids:data},
+				url:'__URL__/param_group_setsort',
+			});
+		}
+	});	
+	
+	$('body #sort-ds').sortable({
+		stop: function(event, ui) {
+			var data = $('body #sort-ds >div').map(function() { return $(this).attr("id"); }).get();
+			ajax_post({
+				data:{ids:data},
+				url:'__URL__/param_setsort',
+			});
+		}
+	});	
+});
+
+function callback(ret){
+	valert({status:ret.status,msg:ret.msg});
+	if(ret.status=='success'){
+		$('input[type="checkbox"]:checked').each(function(){
+			$('#'+$(this).val()).remove();
+		});
+		$('#ajax-modal').modal('hide');
+	}
+}
+
+function delCall(ret,tag){
+	valert({status:ret.status,msg:ret.msg});
+	if(ret.status=='success'){
+		$(tag).remove();
+		$('#ajax-modal').modal('hide');
+	}
+}
+function activeCall(ret){
+	valert({status:ret.status,msg:ret.msg});
+	if(ret.status=='success'){
+		setTimeout(function(){
+			ref();
+		},500);
+	}
+}
+</script>
+<include file="Public:footer" />

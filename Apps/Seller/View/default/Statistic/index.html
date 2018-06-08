@@ -1,0 +1,765 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body mt10">
+    <include file="Public:nav_statistic" />
+    <div class="container">
+		<include file="Public:side_statistic" />
+
+        <div class="w960 fl">
+            <ol class="breadcrumb pd10 bor_der bor_r0 mt0 mb20">
+                <li><a href="/">数据统计 </a> </li>
+                <li><a href="">流量分析</a></li>
+                <li><a href="">流量概况</a></li>
+            </ol>
+            <div class="ptb10 solid_b mb35">
+                <span class="fs16">实时指标</span>
+                <span class="pull-right text_77 mt5 mr10">更新时间：{:date('Y-m-d H:i:s',time())}</span>
+            </div>
+            <div class="mb35">
+               
+
+                <table class="bg_white">
+                    <tbody class="solid_t">
+						<tr>
+							<td rowspan="2" style="width:500px;">
+								<p class="mb15 fs16">
+									支付金额 
+									<small class="fa fa-question-circle ml10 text_yellow" data-toggle="tooltip" title="付款的总金额"></small>
+								</p>
+								<strong class="text_yellow">￥{$payPrice.todayNum}</strong>
+								<h6 class="text_77 mt15">手机端占比 <span class="pull-right">{$payPrice.wapPercen}</span></h6>
+								<div id="site_statistics2" style="height: 150px;width:100%; position: relative; padding: 0px;"></div>
+							</td>
+							<td class="fs14 pd20">
+                                <p class="mb15 fs16">
+									访客数 
+									<small class="fa fa-question-circle ml10 text_yellow" data-placement="top" data-toggle="tooltip" data-original-title="全店各页面的访问人数"></small>
+								</p>
+								<strong class="text_yellow">{$uv.todayNum}</strong>
+								<h6 class="text_77 mt15">手机端占比 <span class="pull-right">{$uv.wapPercen}</span></h6>
+                            
+                            </td>
+                            <td class="fs14 pd20">
+                                <p class="mb15 fs16">
+									支付买家数 
+									<small class="fa fa-question-circle ml10 text_yellow" data-toggle="tooltip" title="成功拍下并完成支付的人数"></small>
+								</p>
+								<strong class="text_yellow">{$orderBuyer.todayNum}</strong>
+								<h6 class="text_77 mt15">手机端占比 <span class="pull-right">{$orderBuyer.wapPercen}</span></h6>
+                            </td>
+						</tr>
+                        <tr>
+                            
+                            <td class="fs14 pd20">
+                                <p class="mb15 fs16">
+									浏览量 
+									<small class="fa fa-question-circle ml10 text_yellow" data-toggle="tooltip" title="店铺各页面被查看的次数"></small>
+								</p>
+								<strong class="text_yellow">{$pv.todayNum}</strong>
+								<h6 class="text_77 mt15">手机端占比 <span class="pull-right">{$pv.wapPercen}</span></h6>
+                            </td>
+                            <td class="fs14 pd20">
+                                <p class="mb15 fs16">
+									支付订单数 
+									<small class="fa fa-question-circle ml10 text_yellow" data-toggle="tooltip" title="宝贝被拍下的总次数"></small>
+								</p>
+								<strong class="text_yellow">{$payOrder.todayNum}</strong>
+								<h6 class="text_77 mt15">手机端占比 <span class="pull-right">{$payOrder.wapPercen}</span></h6>
+								
+                            </td>
+                            
+                        </tr>
+
+                    </tbody>
+                </table>    
+            </div>
+
+            
+			<div class="ptb10 solid_b mb35">
+                <span class="fs16">核心指标</span>
+            </div>
+
+            <div class="mb35">
+                <table class="bg_white">
+                    <tbody class="solid_t">
+                        <tr>
+                            <td class="fs14 pd20">
+                                <p class="mb15 fs16">
+                                    访客数 
+                                    <small class="fa fa-question-circle ml10 text_yellow" data-placement="top" data-toggle="tooltip" data-original-title="店铺各页面被查看的次数"></small>
+                                </p>
+                                <strong class="text_yellow">{$flow_basic.uv}</strong>
+                                <h6 class="text_77 mt15">
+                                    环比增幅 
+                                    <span class="pull-right <if condition="$flow_basic.uv_type eq 1">text_yellow<else/>text_green</if>"><i class="fa <if condition="$flow_basic.uv_type eq 1">fa-long-arrow-up<else/>fa-long-arrow-down</if> mr5"></i>{$flow_basic.uv_percen}%</span>
+                                </h6>
+                            </td>
+                            <td class="fs14 pd20">
+                                 <p class="mb15 fs16">
+                                    浏览量 
+                                    <small class="fa fa-question-circle ml10 text_yellow" data-toggle="tooltip" title="全店各页面的访问人数"></small>
+                                </p>
+                                <strong class="text_yellow">{$flow_basic.pv}</strong>
+                                <h6 class="text_77 mt15">
+                                    环比增幅 
+									<span class="pull-right <if condition="$flow_basic.pv_type eq 1">text_yellow<else/>text_green</if>"><i class="fa <if condition="$flow_basic.pv_type eq 1">fa-long-arrow-up<else/>fa-long-arrow-down</if> mr5"></i>{$flow_basic.pv_percen}%</span>
+                                </h6>
+                            </td>
+                            <td class="fs14 pd20">
+                                 <p class="mb15 fs16">
+                                    支付金额 
+                                    <small class="fa fa-question-circle ml10 text_yellow" data-toggle="tooltip" title="表示顾客通过相应入口进入，只访问了一个页面就离开的访问次数"></small>
+                                </p>
+                                <strong class="text_yellow">{$trans_basic.buy_money_total}</strong>
+                                <h6 class="text_77 mt15">
+                                    环比增幅 
+									<span class="pull-right <if condition="$trans_basic.buy_money_total_type eq 1">text_yellow<else/>text_green</if>"><i class="fa <if condition="$trans_basic.buy_money_total_type eq 1">fa-long-arrow-up<else/>fa-long-arrow-down</if> mr5"></i>{$trans_basic.buy_money_total_percen}%</span>
+                                </h6>
+                            </td>
+                            <td class="fs14 pd20">
+                                 <p class="mb15 fs16">
+                                    支付买家数
+                                    <small class="fa fa-question-circle ml10 text_yellow" data-toggle="tooltip" title=""></small>
+                                </p>
+                                <strong class="text_yellow">{$trans_basic.buy_user_total}</strong>
+                                <h6 class="text_77 mt15">
+                                    环比增幅 
+									<span class="pull-right <if condition="$trans_basic.buy_user_total_type eq 1">text_yellow<else/>text_green</if>"><i class="fa <if condition="$trans_basic.buy_user_total_type eq 1">fa-long-arrow-up<else/>fa-long-arrow-down</if> mr5"></i>{$trans_basic.buy_user_total_percen}%</span>
+                                </h6>
+                            </td>
+                            <td class="fs14 pd20">
+                                <p class="mb15 fs16">
+                                    客单价 
+                                    <small class="fa fa-question-circle ml10 text_yellow" data-toggle="tooltip" title=""></small>
+                                </p>
+                                <strong class="text_yellow">{$trans_basic.avg_buy_money}</strong>
+                                <h6 class="text_77 mt15">
+                                    环比增幅 
+									<span class="pull-right <if condition="$trans_basic.avg_buy_money_type eq 1">text_yellow<else/>text_green</if>"><i class="fa <if condition="$trans_basic.avg_buy_money_type eq 1">fa-long-arrow-up<else/>fa-long-arrow-down</if> mr5"></i>{$trans_basic.avg_buy_money_percen}%</span>
+                                </h6>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>  
+                <div class="mb10">
+                    <div id="chartdiv" style="width: 100%; height: 400px;"></div>
+                </div>
+            </div>
+
+			<div class="ptb10 solid_b mb35">
+                <span class="fs16">流量分析</span>
+            </div>
+            <div class="mb35">
+                <table class="bg_white">
+                    <tbody class="solid_t">
+                        <tr>
+							<td class="fs14 pd20">
+                                <p class="mb15 fs16">
+                                    访客数 
+                                    <small class="fa fa-question-circle ml10 text_yellow" data-toggle="tooltip" title=""></small>
+                                </p>
+                                <strong class="text_yellow">{$flow_basic.avg_pv}</strong>
+                                <h6 class="text_77 mt15">
+                                    环比增幅 
+									<span class="pull-right <if condition="$flow_basic.avg_pv_type eq 1">text_yellow<else/>text_green</if>"><i class="fa <if condition="$flow_basic.avg_pv_type eq 1">fa-long-arrow-up<else/>fa-long-arrow-down</if> mr5"></i>{$flow_basic.avg_pv_percen}%</span>
+                                </h6>
+                            </td>
+                            <td class="fs14 pd20">
+                                <p class="mb15 fs16">
+                                    跳失率 
+                                    <small class="fa fa-question-circle ml10 text_yellow" data-toggle="tooltip" title="表示顾客通过相应入口进入，只访问了一个页面就离开的访问次数"></small>
+                                </p>
+                                <strong class="text_yellow">{$flow_basic.jump}</strong>
+                                <h6 class="text_77 mt15">
+                                    环比增幅 
+									<span class="pull-right <if condition="$flow_basic.jump_type eq 1">text_yellow<else/>text_green</if>"><i class="fa <if condition="$flow_basic.jump_type eq 1">fa-long-arrow-up<else/>fa-long-arrow-down</if> mr5"></i>{$flow_basic.jump_percen}%</span>
+                                </h6>
+                            </td>
+                            <td class="fs14 pd20">
+                                <p class="mb15 fs16">
+                                    人均浏览量 
+                                    <small class="fa fa-question-circle ml10 text_yellow" data-toggle="tooltip" title=""></small>
+                                </p>
+                                <strong class="text_yellow">{$flow_basic.avg_pv}</strong>
+                                <h6 class="text_77 mt15">
+                                    环比增幅 
+									<span class="pull-right <if condition="$flow_basic.avg_pv_type eq 1">text_yellow<else/>text_green</if>"><i class="fa <if condition="$flow_basic.avg_pv_type eq 1">fa-long-arrow-up<else/>fa-long-arrow-down</if> mr5"></i>{$flow_basic.avg_pv_percen}%</span>
+                                </h6>
+                            </td>
+                            <td class="fs14 pd20">
+                                <p class="mb15 fs16">
+                                    平均停留时间（秒) 
+                                    <small class="fa fa-question-circle ml10 text_yellow" data-toggle="tooltip" title=""></small>
+                                </p>
+                                <strong class="text_yellow">{$flow_basic.avg_residence_time}</strong>
+                                <h6 class="text_77 mt15">
+                                    环比增幅 
+									<span class="pull-right <if condition="$flow_basic.avg_residence_time_type eq 1">text_yellow<else/>text_green</if>"><i class="fa <if condition="$flow_basic.avg_residence_time_type eq 1">fa-long-arrow-up<else/>fa-long-arrow-down</if> mr5"></i>{$flow_basic.avg_residence_time_percen}%</span>
+                                </h6>
+                            </td>
+                            
+                        </tr>
+
+                    </tbody>
+                </table>    
+            </div>
+			
+            <div class="mb35">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <blockquote class="pd0 pl10 mt10 mb10 fs14 strong">店内搜索词排行TOP5</blockquote>
+                        <table class="bg_white no-border  hover">
+                            <thead class="no-border">
+                                <tr class="text_77">
+                                    <th>搜索词</th>
+                                    <th class="text-center">搜索次数</th>
+                                    <th class="text-center">下单转化率</th>
+                                </tr>
+                            </thead>
+                            <tbody class="no-border-y solid_b text-center">
+								<volist name="flow_search.data" id="vo">
+                                <tr>
+                                    <td class="ptb15 text-left">{$vo.keyword}</td>
+                                    <td class="ptb15">{$vo.num}</td>
+                                    <td class="ptb15">{$vo.uv_order_percen}%</td>
+                                </tr>
+								</volist>
+                            </tbody>
+                         </table>
+                    </div>
+                    <div class="col-xs-6">
+                        <blockquote class="pd0 pl10 mt10 mb10 fs14 strong">入店来源排行TOP5</blockquote>
+                        <table class="bg_white hover no-border">
+                            <thead class="no-border">
+                                <tr class="text_77">
+                                    <th>来源名称</th>
+                                    <th class="text-center">浏览次数</th>
+                                    <th class="text-center">成交转化率</th>
+                                </tr>
+                            </thead>
+                            <tbody class="no-border-y solid_b text-center">
+                                <volist name="flow_source.all_list" id="vo">
+                                <tr>
+                                    <td class="ptb15 text-left">{$vo.source_title}</td>
+                                    <td class="ptb15">{$vo.pv}</td>
+                                    <td class="ptb15">{$vo.buy_percen}%</td>
+                                </tr>
+								</volist>
+								
+                            </tbody>
+                         </table> 
+                    </div>
+                </div>
+            </div>
+			<div class="ptb10 solid_b mb35">
+                <span class="fs16">商品分析</span>
+            </div>
+            <div class="mb35">
+                <table class="bg_white">
+                    <tbody class="solid_t">
+                        <tr>
+                            <td class="fs14 pd20">
+                                <p class="mb15 fs16">
+                                    加购件数 
+                                    <small class="fa fa-question-circle ml10 text_yellow" data-placement="top" data-toggle="tooltip" data-original-title="店铺各页面被查看的次数"></small>
+                                </p>
+                                <strong class="text_yellow">{$goods_basic.into_cart}</strong>
+                                <h6 class="text_77 mt15">
+                                    环比增幅 
+                                    <span class="pull-right <if condition="$goods_basic.into_cart_type eq 1">text_yellow<else/>text_green</if>"><i class="fa <if condition="$goods_basic.into_cart_type eq 1">fa-long-arrow-up<else/>fa-long-arrow-down</if> mr5"></i>{$goods_basic.into_cart_percen}%</span>
+                                </h6>
+                            </td>
+                            <td class="fs14 pd20">
+                                 <p class="mb15 fs16">
+                                    商品收藏次数 
+                                    <small class="fa fa-question-circle ml10 text_yellow" data-toggle="tooltip" title="全店各页面的访问人数"></small>
+                                </p>
+                                <strong class="text_yellow">{$goods_basic.fav}</strong>
+                                <h6 class="text_77 mt15">
+                                    环比增幅 
+									<span class="pull-right <if condition="$goods_basic.fav_type eq 1">text_yellow<else/>text_green</if>"><i class="fa <if condition="$goods_basic.fav_type eq 1">fa-long-arrow-up<else/>fa-long-arrow-down</if> mr5"></i>{$goods_basic.fav_percen}%</span>
+                                </h6>
+                            </td>
+                            <td class="fs14 pd20">
+                                 <p class="mb15 fs16">
+                                    详情页跳出率 
+                                    <small class="fa fa-question-circle ml10 text_yellow" data-toggle="tooltip" title="表示顾客通过相应入口进入，只访问了一个页面就离开的访问次数"></small>
+                                </p>
+                                <strong class="text_yellow">{$goods_basic.jump}</strong>
+                                <h6 class="text_77 mt15">
+                                    环比增幅 
+									<span class="pull-right <if condition="$goods_basic.jump_type eq 1">text_yellow<else/>text_green</if>"><i class="fa <if condition="$goods_basic.jump_type eq 1">fa-long-arrow-up<else/>fa-long-arrow-down</if> mr5"></i>{$goods_basic.jump_percen}%</span>
+                                </h6>
+                            </td>
+                            <td class="fs14 pd20">
+                                 <p class="mb15 fs16">
+                                    商品访客数 
+                                    <small class="fa fa-question-circle ml10 text_yellow" data-toggle="tooltip" title=""></small>
+                                </p>
+                                <strong class="text_yellow">{$goods_basic.uv}</strong>
+                                <h6 class="text_77 mt15">
+                                    环比增幅 
+									<span class="pull-right <if condition="$goods_basic.uv_type eq 1">text_yellow<else/>text_green</if>"><i class="fa <if condition="$goods_basic.uv_type eq 1">fa-long-arrow-up<else/>fa-long-arrow-down</if> mr5"></i>{$goods_basic.uv_percen}%</span>
+                                </h6>
+                            </td>
+							<td class="fs14 pd20">
+                                 <p class="mb15 fs16">
+                                    商品浏览量 
+                                    <small class="fa fa-question-circle ml10 text_yellow" data-toggle="tooltip" title=""></small>
+                                </p>
+                                <strong class="text_yellow">{$goods_basic.pv}</strong>
+                                <h6 class="text_77 mt15">
+                                    环比增幅 
+									<span class="pull-right <if condition="$goods_basic.pv_type eq 1">text_yellow<else/>text_green</if>"><i class="fa <if condition="$goods_basic.pv_type eq 1">fa-long-arrow-up<else/>fa-long-arrow-down</if> mr5"></i>{$goods_basic.pv_percen}%</span>
+                                </h6>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>    
+            </div>
+			<div class="ptb10 solid_b mb35">
+                <span class="fs16">异常商品</span>
+            </div>
+            <div class="mb35">
+                <table class="bg_white">
+                    <tbody class="solid_t">
+                        <tr>
+                            <td class="fs14 pd20">
+                                <p class="mb15 fs16">
+                                   当前全店有异常商品数
+                                    
+                                </p>
+                                <strong class="text_yellow">{$goods_basic.abnormal}</strong>
+                               
+                            </td>
+                            <td class="fs14 pd20">
+                                 <p class="mb15 fs16">
+                                    流量下跌
+                                    <small class="fa fa-question-circle ml10 text_yellow" data-toggle="tooltip" title=""></small>
+                                </p>
+                                <strong class="text_yellow">{$goods_abnormal_count.pv_down}</strong>
+                                
+                            </td>
+                            <td class="fs14 pd20">
+                                 <p class="mb15 fs16">
+                                    支付下跌
+                                    <small class="fa fa-question-circle ml10 text_yellow" data-toggle="tooltip" title=""></small>
+                                </p>
+                                <strong class="text_yellow">{$goods_abnormal_count.buy_down}</strong>
+                                
+                            </td>
+                            <td class="fs14 pd20">
+                                 <p class="mb15 fs16">
+                                    零支付
+                                    <small class="fa fa-question-circle ml10 text_yellow" data-toggle="tooltip" title=""></small>
+                                </p>
+                                <strong class="text_yellow">{$goods_abnormal_count.zero}</strong>
+                                
+                            </td>
+							
+                        </tr>
+
+                    </tbody>
+                </table>    
+            </div>
+	
+			<div class="mb35">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <blockquote class="pd0 pl10 mt10 mb10 fs14 strong">商品访问TOP5</blockquote>
+                        <table class="bg_white hover no-border">
+                            <thead class="no-border">
+                                <tr class="text_77">
+                                    <th width="60%">商品信息 </th>
+                                    <th class="text-center">访客数</th>
+                                    <th class="text-center">下单转化率</th>
+                                </tr>
+                            </thead>
+                            <tbody class="no-border-y solid_b text-center">
+								<volist name="goods_uv_list.list" id="vo">
+                                <tr>
+                                    <td class="ptb10 text-left">
+                                        <img class="fl mr10" width="60" height="60" src="{$vo.images}" style="max-width: 945px;">
+                                        <div class="text_44 mb0 w190 h34 over">{$vo.goods_name}</div>
+                                        <h6 class="mb0 text_over text_yellow">￥ {$vo.price}</h6>
+                                    </td>
+                                    <td class="ptb10">{$vo.uv}</td>
+                                    <td class="ptb10">{$vo.uv_buy_percen}%</td>
+                                </tr>
+								</volist>
+                                
+                            </tbody>
+                         </table>
+                    </div>
+                    <div class="col-xs-6">
+                        <blockquote class="pd0 pl10 mt10 mb10 fs14 strong">商品成交TOP5</blockquote>
+                        <table class="bg_white hover no-border">
+                            <thead class="no-border">
+                                <tr class="text_77">
+                                    <th width="60%">商品信息 </th>
+                                    <th class="text-center">成交买家数</th>
+                                    <th class="text-center">成交金额</th>
+                                </tr>
+                            </thead>
+                            <tbody class="no-border-y solid_b text-center">
+								<volist name="goods_buy_list.list" id="vo">
+                                <tr>
+                                    <td class="ptb10 text-left">
+                                        <img class="fl mr10" width="60" height="60" src="{$vo.images}" style="max-width: 945px;">
+                                        <div class="text_44 mb0 w190 h34 over">{$vo.goods_name}</div>
+                                        <h6 class="mb0 text_over text_yellow">￥ {$vo.price}</h6>
+                                    </td>
+                                    <td class="ptb10">{$vo.buyer}</td>
+                                    <td class="ptb10">{$vo.buy_money}%</td>
+                                </tr>
+								</volist>
+                                
+                            </tbody>
+                         </table>
+                    </div>
+                </div>
+            </div>
+			
+        </div>
+
+    </div>
+</div>
+<form action="" method="post" class="hide page_select">
+	<foreach name="con" item="vo" key="key">
+		<input type="hidden" name="{$key}" value="{$vo}"/>
+	</foreach>	
+</form>
+</block>
+
+<block name="css"></block>
+<block name="script">
+
+<script src="__NEW_DESIGN__flatdream/js/jquery.js"></script>
+<script src="__NEW_DESIGN__flatdream/js/jquery.pushmenu/js/jPushMenu.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.nanoscroller/jquery.nanoscroller.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.sparkline/jquery.sparkline.min.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.ui/jquery-ui.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.gritter/js/jquery.gritter.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/behaviour/core.js"></script>
+<script src="__NEW_DESIGN__flatdream/js/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.flot/jquery.flot.js"></script>
+
+<script src="__NEW_DESIGN__js/amcharts.js" type="text/javascript"></script>
+<script src="__NEW_DESIGN__js/serial.js" type="text/javascript"></script>
+<script src="__NEW_DESIGN__js/pie.js"></script>
+
+
+<script>
+
+	
+
+   var chart;
+   var chartData = [];
+
+
+   AmCharts.ready(function () {
+       // generate some random data first
+       generateChartData();
+       // SERIAL CHART
+       chart = new AmCharts.AmSerialChart();
+
+       chart.dataProvider = chartData;
+       chart.categoryField = "date";
+
+       // listen for "dataUpdated" event (fired when chart is inited) and call zoomChart method when it happens
+       chart.addListener("dataUpdated", zoomChart);
+
+       chart.synchronizeGrid = true; // this makes all axes grid to be at the same intervals
+
+       // AXES
+       // category
+       var categoryAxis = chart.categoryAxis;
+       categoryAxis.parseDates = true; // as our data is date-based, we set parseDates to true
+       categoryAxis.minPeriod = "DD"; // our data is daily, so we set minPeriod to DD
+       categoryAxis.minorGridEnabled = true;
+       categoryAxis.axisColor = "#DADADA";
+       categoryAxis.twoLineMode = true;
+       categoryAxis.dateFormats = [{
+            period: 'fff',
+            format: 'JJ:NN:SS'
+        }, {
+            period: 'ss',
+            format: 'JJ:NN:SS'
+        }, {
+            period: 'mm',
+            format: 'JJ:NN'
+        }, {
+            period: 'hh',
+            format: 'JJ:NN'
+        }, {
+            period: 'DD',
+            format: 'DD'
+        }, {
+            period: 'WW',
+            format: 'DD'
+        }, {
+            period: 'MM',
+            format: 'MMM'
+        }, {
+            period: 'YYYY',
+            format: 'YYYY'
+        }];
+
+       // first value axis (on the left)
+       var valueAxis1 = new AmCharts.ValueAxis();
+       valueAxis1.axisColor = "#FF6600";
+       valueAxis1.axisThickness = 2;
+       chart.addValueAxis(valueAxis1);
+	   
+		var graph1 = new AmCharts.AmGraph();
+		graph1.valueAxis = valueAxis1; // we have to indicate which value axis should be used
+		graph1.title = "访客数";
+		graph1.valueField = "uv";	
+		graph1.bullet = "round";
+		graph1.hideBulletsCount = 30;
+		graph1.bulletBorderThickness = 1;
+		chart.addGraph(graph1);
+
+		// second value axis (on the right)
+		var valueAxis2 = new AmCharts.ValueAxis();
+		valueAxis2.axisColor = "#FCD202";
+		valueAxis2.gridAlpha = 0;
+		valueAxis2.axisThickness = 2;
+		chart.addValueAxis(valueAxis2);
+
+		// second graph
+		var graph2 = new AmCharts.AmGraph();
+		//graph2.valueAxis = valueAxis2; // we have to indicate which value axis should be used
+		graph2.title = "浏览量";
+		graph2.valueField = "pv";
+		graph2.bullet = "square";
+		graph2.hideBulletsCount = 30;
+		graph2.bulletBorderThickness = 1;
+		chart.addGraph(graph2);
+		
+		
+		// third value axis (on the left, detached)
+		var valueAxis3 = new AmCharts.ValueAxis();
+		valueAxis3.offset = 100; // this line makes the axis to appear detached from plot area
+		valueAxis3.gridAlpha = 0;
+		valueAxis3.axisColor = "#B0DE09";
+		valueAxis3.axisThickness = 2;
+		chart.addValueAxis(valueAxis3);
+
+		// third graph
+		var graph3 = new AmCharts.AmGraph();
+		//graph3.valueAxis = valueAxis3; // we have to indicate which value axis should be used
+		graph3.title = "支付金额";
+		graph3.valueField = "buy_money_total";
+		graph3.bullet = "round";
+		graph3.hideBulletsCount = 30;
+		graph3.bulletBorderThickness = 1;
+		chart.addGraph(graph3);
+		
+		// third value axis (on the left, detached)
+		var valueAxis4 = new AmCharts.ValueAxis();
+
+		valueAxis4.gridAlpha = 0;
+		valueAxis4.axisColor = "#B0DE09";
+		valueAxis4.axisThickness = 2;
+		chart.addValueAxis(valueAxis4);
+
+		// third graph
+		var graph4 = new AmCharts.AmGraph();
+		//graph4.valueAxis = valueAxis4; // we have to indicate which value axis should be used
+		graph4.title = "支付转化率";
+		graph4.valueField = "uv_buy_percen";
+		graph4.bullet = "round";
+		graph4.hideBulletsCount = 30;
+		graph4.bulletBorderThickness = 1;
+		chart.addGraph(graph4);
+		
+		
+		
+		// third value axis (on the left, detached)
+		var valueAxis5 = new AmCharts.ValueAxis();
+		valueAxis5.offset = 100; // this line makes the axis to appear detached from plot area
+		valueAxis5.gridAlpha = 0;
+		valueAxis5.axisColor = "#B0DE09";
+		valueAxis5.axisThickness = 2;
+		chart.addValueAxis(valueAxis5);
+
+		// third graph
+		var graph5 = new AmCharts.AmGraph();
+		graph5.valueAxis = valueAxis5; // we have to indicate which value axis should be used
+		graph5.title = "客单价";
+		graph5.valueField = "avg_buy_money";
+		graph5.bullet = "round";
+		graph5.hideBulletsCount = 30;
+		graph5.bulletBorderThickness = 1;
+		chart.addGraph(graph5);
+
+       // CURSOR
+       var chartCursor = new AmCharts.ChartCursor();
+       chartCursor.cursorAlpha = 0.1;
+       chartCursor.fullWidth = true;
+       chartCursor.valueLineBalloonEnabled = true;
+       chart.addChartCursor(chartCursor);
+
+       // SCROLLBAR
+       var chartScrollbar = new AmCharts.ChartScrollbar();
+       chart.addChartScrollbar(chartScrollbar);
+
+       // LEGEND
+       var legend = new AmCharts.AmLegend();
+       legend.marginLeft = 110;
+       legend.useGraphSettings = true;
+       chart.addLegend(legend);
+
+       // WRITE
+       chart.write("chartdiv");
+   });
+
+   // generate some random data, quite different range
+   function generateChartData() {
+       var firstDate = new Date();
+       firstDate.setDate(firstDate.getDate() - 50);
+	
+	
+		<volist name="core_list" id="vo">
+			var newDate = '{$vo.year}-{$vo.month}-{$vo.day}';
+			var pv = '{$vo.pv}';
+			var uv = '{$vo.uv}';
+			var buy_money_total = '{$vo.buy_money_total}';
+			var uv_buy_percen = '{$vo.uv_buy_percen}';
+			var avg_buy_money = '{$vo.avg_buy_money}';
+			
+			 chartData.push({
+               date: newDate,
+               pv: pv,
+               uv: uv,
+               buy_money_total: buy_money_total,
+               uv_buy_percen: uv_buy_percen,
+               avg_buy_money: avg_buy_money,
+           });
+		</volist>
+		
+/*
+       for (var i = 0; i < 50; i++) {
+           // we create date objects here. In your data, you can have date strings
+           // and then set format of your dates using chart.dataDateFormat property,
+           // however when possible, use date objects, as this will speed up chart rendering.
+		   
+           var newDate = new Date(firstDate);
+           newDate.setDate(newDate.getDate() + i);
+		   
+		   
+           var pv = Math.round(Math.random() * 40) + 100;
+           var uv = Math.round(Math.random() * 80) + 500;
+           //var views = Math.round(Math.random() * 6000);
+
+
+           chartData.push({
+               date: newDate,
+               pv: pv,
+               uv: uv,
+               //views: views
+           });
+       }
+	   */
+	   
+   }
+   // this method is called when chart is first inited as we listen for "dataUpdated" event
+   function zoomChart() {
+       // different zoom methods can be used - zoomToIndexes, zoomToDates, zoomToCategoryValues
+       chart.zoomToIndexes(10, 20);
+   }
+</script>
+<script>
+/*
+	var pageviews = [
+		[0,100],
+		[1,150],
+		[2,50],
+		[3,200],
+		[4,200],
+		[5,200],
+		[6,200],
+		[7,200],
+		[8,200],
+    ];
+	*/
+	<volist name="hourData" id="v">
+    var pageviews = [
+		<volist name="v.data" id="vo" key="ke">
+		[{$ke-1}, {$vo}],
+		</volist>
+    ];
+	</volist>
+    if ($('#site_statistics2').size() != 0) {
+      $('#site_statistics_loading').hide();
+      $('#site_statistics_content').show();
+      var plot_statistics2 = $.plot($("#site_statistics2"), [{
+        data: pageviews,
+        label: "Unique Visits"
+      }
+      ], {
+        series: {
+          bars: {
+            show: true,
+            barWidth: 0.6,
+            lineWidth: 0,
+            fill: true,
+            hoverable: true,
+            fillColor: {
+              colors: [{
+                opacity: 1
+              }, {
+                opacity: 1
+              }
+              ]
+            } 
+          },
+          shadowSize: 2
+        },
+        legend:{
+          show: false
+        },
+        grid: {
+        labelMargin: 10,
+			axisMargin: 500,
+			hoverable: true,
+			clickable: true,
+			tickColor: "rgba(0,0,0,0.15)",
+			borderWidth: 0
+        },
+        colors: ["#c81623", "#FFFFFF", "#52e136"],
+        xaxis: {
+          ticks: 11,
+          tickDecimals: 0
+        },
+        yaxis: {
+          ticks: 6,
+          tickDecimals: 0
+        }
+      });
+            
+      $("#site_statistics2").bind("plothover", function (event, pos, item) {
+      
+        var str = "(" + pos.x.toFixed(2) + ", " + pos.y.toFixed(2) + ")";
+
+        if (item) {
+          if (previousPoint != item.dataIndex) {
+            previousPoint = item.dataIndex;
+            $("#tooltip").remove();
+            var x = item.datapoint[0],
+            y = item.datapoint[1];
+            showTooltip(item.pageX, item.pageY,
+            item.series.label + "" + x + " = " + y + "%");
+          }
+        } else {
+          $("#tooltip").remove();
+          previousPoint = null;
+        }
+      }); 
+    }
+</script>
+</block>

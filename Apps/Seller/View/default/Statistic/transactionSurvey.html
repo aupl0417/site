@@ -1,0 +1,467 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body mt10">
+
+    <include file="Public:nav_statistic" />
+
+    <div class="container">
+
+        <include file="Public:side_statistic" />
+
+        <div class="w960 fl">
+            <ol class="breadcrumb pd10 bor_der bor_r0 mt0 mb20">
+                <li><a href="/">数据统计 </a> </li>
+                <li><a href="">交易分析</a></li>
+                <li><a href="">交易概况</a></li>
+            </ol>
+
+            <div class="mb35">
+                <div class="ptb10 solid_b mb20">
+                    <span class="fs16">交易总览</span>
+                </div>
+                <div class="mb10">
+                    <strong class="fs14 text_black mr20">选择时间</strong>
+                    <a class="text_yellow plr20 <if condition='$con[total_type] eq 1'>btn btn-primary btn-xs </if>" onclick = "select_change('total','type',1)">昨天</a>
+                    <a class="text_yellow plr20 <if condition='$con[total_type] eq 2'>btn btn-primary btn-xs </if>" onclick = "select_change('total','type',2)">最近一周</a>
+                    <a class="text_yellow plr20 <if condition='$con[total_type] eq 3'>btn btn-primary btn-xs </if>" onclick = "select_change('total','type',3)">最近一个月</a>
+                    <a class="text_yellow plr20 <if condition='$con[total_type] eq 4'>btn btn-primary btn-xs </if>" onclick = "select_change('total','type',4)">最近三个月</a>
+                    <div class="pull-right btn-group btn-group-sm mt-5">
+                        <button type="button" class="btn btn-primary plr20 <if condition='$con[total_terminal] neq 1'> btn-trans</if>" onclick = "select_change('total','terminal',1)">全部</button>
+                        <button type="button" class="btn btn-primary plr20 <if condition='$con[total_terminal] neq 2'> btn-trans</if>" onclick = "select_change('total','terminal',2)">pc端</button>
+                        <button type="button" class="btn btn-primary plr20 <if condition='$con[total_terminal] neq 3'> btn-trans</if>" onclick = "select_change('total','terminal',3)">手机端</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-8 disting">
+                        <div class="pd20 solid_b disting_a">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <h6 class="mg0">访客数<i class="fa <if condition="$trans_data.uv_type eq 1">fa-long-arrow-up text_yellow<else/>fa-long-arrow-down text_green</if>  pl15 pr5"></i> {$trans_data.uv_percen}%</h6>
+                                    {$trans_data.uv}
+                                </div>
+                            </div>
+                            <div class="triangle"style="width:140px">
+                                <span class="fs16 text_white"> <i class="fa fa-male fs14 mr8"></i>访客</span>
+                                <div class="triangle_left"style="border-top-color:#8bcfce"></div>
+                                <div class="triangle_right"style="border-top-color:#8bcfce"></div>
+                            </div>
+                        </div>
+                        <div class="pd20 solid_b disting_b">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <h6 class="mg0">下单卖家数<i class="fa <if condition="$trans_data.order_user_total_type eq 1">fa-long-arrow-up text_yellow<else/>fa-long-arrow-down text_green</if>  pl15 pr5"></i> {$trans_data.order_user_total_percen}%</h6>
+                                    {$trans_data.order_user_total}
+                                </div>
+                                <div class="col-xs-4">
+                                    <h6 class="mg0">下单金额<i class="fa <if condition="$trans_data.order_money_total_type eq 1">fa-long-arrow-up text_yellow<else/>fa-long-arrow-down text_green</if>  pl15 pr5"></i> {$trans_data.order_money_total_percen}%</h6>
+                                    {$trans_data.order_money_total}
+                                </div>
+                            </div>
+                            <div class="triangle"style="width:100px">
+                                <span class="fs16 text_white"> <i class="fa fa-legal fs14 mr5"></i>下单</span>
+                                <div class="triangle_left"style="border-top-color:#97ca58"></div>
+                                <div class="triangle_right"style="border-top-color:#97ca58"></div>
+                            </div>
+                        </div>
+                        <div class="pd20 disting_c">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <h6 class="mg0">支付买家数<i class="fa <if condition="$trans_data.buy_user_total_type eq 1">fa-long-arrow-up text_yellow<else/>fa-long-arrow-down text_green</if>  pl15 pr5"></i> {$trans_data.buy_user_total_percen}%</h6>
+                                    {$trans_data.buy_user_total}
+                                </div>
+                                <div class="col-xs-4">
+                                    <h6 class="mg0">支付金额<i class="fa <if condition="$trans_data.buy_money_total_type eq 1">fa-long-arrow-up text_yellow<else/>fa-long-arrow-down text_green</if>  pl15 pr5"></i> {$trans_data.buy_money_total_percen}%</h6>
+                                    {$trans_data.buy_money_total}
+                                </div>
+                                <div class="col-xs-3">
+                                    <h6 class="mg0">客单价<i class="fa <if condition="$trans_data.avg_buy_money_type eq 1">fa-long-arrow-up text_yellow<else/>fa-long-arrow-down text_green</if>  pl15 pr5"></i> {$trans_data.avg_buy_money_percen}%</h6>
+                                    {$trans_data.avg_buy_money}
+                                </div>
+                            </div>
+                            <div class="triangle"style="width:60px">
+                                <span class="fs16 text_white"> <i class="fa fa-credit-card fs14 mr5"></i>支付</span>
+                                <div class="triangle_left"style="border-top-color:#f29e00"></div>
+                                <div class="triangle_right"style="border-top-color:#f29e00"></div>
+                            </div>
+                        </div>
+                        <div class="disting_d">
+                            <div class="disting_e">
+                                <i class="fa fa-caret-left ab arrow" style="color:#8bcfce"></i>
+                                <div class="ab" style="width:100px;right:-110px">
+                                   <p class="mt5 mb5">下单转化率</p> 
+                                   <span>{$trans_data.uv_order_percen}%</span>
+                                </div>
+                            </div>
+                            <div class="disting_f">
+                                <i class="fa fa-caret-left ab arrow" style="color:#97ca58"></i>
+                                <div class="ab" style="width:100px;right:-110px">
+                                   <p class="mt5 mb5">下单-支付转化率</p> 
+                                   <span>{$trans_data.order_buy_percen}%</span>
+                                </div>
+                            </div>
+                            <i class="fa fa-caret-left ab arrow"></i>
+                            <div class="ab" style="width:100px;top:60px;right:-110px">
+                               <p class="mt5 mb5">支付转化率</p> 
+                               <span>{$trans_data.uv_buy_percen}%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+
+            <div class="mb35">
+                <div class="ptb10 solid_b mb20">
+                    <span class="fs16">交易趋势</span>
+                </div>
+                <div class="mb10">
+                    <strong class="fs14 text_black mr20">选择时间</strong>
+                    <a class="text_yellow plr20 <if condition='$con[trend_type] eq 1'>btn btn-primary btn-xs </if>" onclick = "select_change('trend','type',1)">昨天</a>
+                    <a class="text_yellow plr20 <if condition='$con[trend_type] eq 2'>btn btn-primary btn-xs </if>" onclick = "select_change('trend','type',2)">最近一周</a>
+                    <a class="text_yellow plr20 <if condition='$con[trend_type] eq 3'>btn btn-primary btn-xs </if>" onclick = "select_change('trend','type',3)">最近一个月</a>
+                    <a class="text_yellow plr20 <if condition='$con[trend_type] eq 4'>btn btn-primary btn-xs </if>" onclick = "select_change('trend','type',4)">最近三个月</a>
+                    <div class="pull-right btn-group btn-group-sm mt-5">
+                        <button type="button" class="btn btn-primary plr20 <if condition='$con[trend_terminal] neq 1'> btn-trans</if>" onclick = "select_change('trend','terminal',1)">全部</button>
+                        <button type="button" class="btn btn-primary plr20 <if condition='$con[trend_terminal] neq 2'> btn-trans</if>" onclick = "select_change('trend','terminal',2)">pc端</button>
+                        <button type="button" class="btn btn-primary plr20 <if condition='$con[trend_terminal] neq 3'> btn-trans</if>" onclick = "select_change('trend','terminal',3)">手机端</button>
+                    </div>
+                </div>
+                <div class="mb10">
+                    <div class="clearfix ">
+                        <span class="pull-left mr15">查看指标</span>
+
+                        <label class="square mr10 fl list-checkbox">
+                            <input type="checkbox" <if condition="$con['field_buy_user_total'] eq 1">checked="checked"</if> onchange="field_change(this,'buy_user_total')"><span class="pull-left"></span>
+                            <span class="fl ml2 small_xs">支付买家数</span>
+                        </label>
+                        <label class="square mr10 fl list-checkbox">
+                            <input type="checkbox" <if condition="$con['field_buy_money_total'] eq 1">checked="checked"</if> onchange="field_change(this,'buy_money_total')"><span class="pull-left"></span>
+                            <span class="fl ml2 small_xs">支付金额</span>
+                        </label>
+                        <label class="square mr10 fl list-checkbox">
+                            <input type="checkbox" <if condition="$con['field_avg_buy_money'] eq 1">checked="checked"</if> onchange="field_change(this,'avg_buy_money')"><span class="pull-left"></span>
+                            <span class="fl ml2 small_xs">客单价</span>
+                        </label>
+                        <label class="square mr10 fl list-checkbox">
+                            <input type="checkbox" <if condition="$con['field_uv_order_percen'] eq 1">checked="checked"</if> onchange="field_change(this,'uv_order_percen')"><span class="pull-left"></span>
+                            <span class="fl ml2 small_xs">下单转化率</span>
+                        </label>
+                        <label class="square mr10 fl list-checkbox">
+                            <input type="checkbox" <if condition="$con['field_uv_buy_percen'] eq 1">checked="checked"</if> onchange="field_change(this,'uv_buy_percen')"><span class="pull-left"></span>
+                            <span class="fl ml2 small_xs">下单-支付转化率</span>
+                        </label>
+                        <label class="square mr10 fl list-checkbox">
+                            <input type="checkbox" <if condition="$con['field_order_buy_percen'] eq 1">checked="checked"</if> onchange="field_change(this,'order_buy_percen')"><span class="pull-left"></span>
+                            <span class="fl ml2 small_xs">支付转化率</span>
+                        </label>
+                    </div>
+                    <div id="chartdiv" style="width: 100%; height: 400px;"></div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+<form action="" method="post" class="hide page_select">
+	<foreach name="con" item="vo" key="key">
+		<input type="hidden" name="{$key}" value="{$vo}"/>
+	</foreach>	
+</form>
+</block>
+
+<block name="css"></block>
+<block name="script">
+
+<script src="__NEW_DESIGN__flatdream/js/jquery.js"></script>
+<script src="__NEW_DESIGN__flatdream/js/jquery.pushmenu/js/jPushMenu.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.nanoscroller/jquery.nanoscroller.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.sparkline/jquery.sparkline.min.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.ui/jquery-ui.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.gritter/js/jquery.gritter.js"></script>
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/behaviour/core.js"></script>
+<script src="__NEW_DESIGN__flatdream/js/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="__NEW_DESIGN__flatdream/js/jquery.flot/jquery.flot.js"></script>
+
+<script src="__NEW_DESIGN__js/amcharts.js" type="text/javascript"></script>
+<script src="__NEW_DESIGN__js/serial.js" type="text/javascript"></script>
+<script src="__NEW_DESIGN__js/pie.js"></script>
+<script>
+   var chart;
+   var chartData = [];
+
+   AmCharts.ready(function () {
+       // generate some random data first
+       generateChartData();
+
+       // SERIAL CHART
+       chart = new AmCharts.AmSerialChart();
+
+       chart.dataProvider = chartData;
+       chart.categoryField = "date";
+
+       // listen for "dataUpdated" event (fired when chart is inited) and call zoomChart method when it happens
+       chart.addListener("dataUpdated", zoomChart);
+
+       chart.synchronizeGrid = true; // this makes all axes grid to be at the same intervals
+
+       // AXES
+       // category
+       var categoryAxis = chart.categoryAxis;
+       categoryAxis.parseDates = true; // as our data is date-based, we set parseDates to true
+       categoryAxis.minPeriod = "DD"; // our data is daily, so we set minPeriod to DD
+       categoryAxis.minorGridEnabled = true;
+       categoryAxis.axisColor = "#DADADA";
+       categoryAxis.twoLineMode = true;
+       categoryAxis.dateFormats = [{
+            period: 'fff',
+            format: 'JJ:NN:SS'
+        }, {
+            period: 'ss',
+            format: 'JJ:NN:SS'
+        }, {
+            period: 'mm',
+            format: 'JJ:NN'
+        }, {
+            period: 'hh',
+            format: 'JJ:NN'
+        }, {
+            period: 'DD',
+            format: 'DD'
+        }, {
+            period: 'WW',
+            format: 'DD'
+        }, {
+            period: 'MM',
+            format: 'MMM'
+        }, {
+            period: 'YYYY',
+            format: 'YYYY'
+        }];
+		//支付买家数
+		<if condition="$con['field_buy_user_total'] eq 1">
+		// first value axis (on the left)
+		var valueAxis1 = new AmCharts.ValueAxis();
+		valueAxis1.axisColor = "#FF6600";
+		valueAxis1.axisThickness = 2;
+		chart.addValueAxis(valueAxis1);
+
+		var graph1 = new AmCharts.AmGraph();
+		graph1.valueAxis = valueAxis1; // we have to indicate which value axis should be used
+		graph1.title = "支付买家数";
+		graph1.valueField = "order_user_total";
+		graph1.bullet = "round";
+		graph1.hideBulletsCount = 30;
+		graph1.bulletBorderThickness = 1;
+		chart.addGraph(graph1);
+		</if>
+		
+		//支付金额
+		<if condition="$con['field_buy_user_total'] eq 1">
+		// second value axis (on the right)
+		var valueAxis2 = new AmCharts.ValueAxis();
+		valueAxis2.offset = 50; // this line makes the axis to appear detached from plot area
+		valueAxis2.axisColor = "#FCD202";
+		valueAxis2.gridAlpha = 0;
+		valueAxis2.axisThickness = 2;
+		chart.addValueAxis(valueAxis2);
+
+		// second graph
+		var graph2 = new AmCharts.AmGraph();
+		graph2.valueAxis = valueAxis2; // we have to indicate which value axis should be used
+		graph2.title = "支付金额";
+		graph2.valueField = "order_money_total";
+		graph2.bullet = "round";
+		graph2.hideBulletsCount = 30;
+		graph2.bulletBorderThickness = 1;
+		chart.addGraph(graph2);
+		</if>
+		
+		//客单价
+		<if condition="$con['field_avg_buy_money'] eq 1">
+		// third value axis (on the left, detached)
+		var valueAxis3 = new AmCharts.ValueAxis();
+		valueAxis3.offset = 100; // this line makes the axis to appear detached from plot area
+		valueAxis3.gridAlpha = 0;
+		valueAxis3.axisColor = "#B0DE09";
+		valueAxis3.axisThickness = 2;
+		chart.addValueAxis(valueAxis3);
+
+		// third graph
+		var graph3 = new AmCharts.AmGraph();
+		graph3.valueAxis = valueAxis3; // we have to indicate which value axis should be used
+		graph3.title = "客单价";
+		graph3.valueField = "avg_buy_money";
+		graph3.bullet = "round";
+		graph3.hideBulletsCount = 30;
+		graph3.bulletBorderThickness = 1;
+		chart.addGraph(graph3);
+		</if>
+
+		//下单转化率
+		<if condition="$con['field_uv_order_percen'] eq 1">
+		// third value axis (on the left, detached)
+		/*
+		var valueAxis4 = new AmCharts.ValueAxis();
+		valueAxis4.position = 'right'; // this line makes the axis to appear detached from plot area
+		valueAxis4.gridAlpha = 0;
+		valueAxis4.axisColor = "#B0DE09";
+		valueAxis4.axisThickness = 2;
+		chart.addValueAxis(valueAxis4);
+*/
+		// third graph
+		var graph4 = new AmCharts.AmGraph();
+		//graph4.valueAxis = valueAxis4; // we have to indicate which value axis should be used
+		graph4.valueField = "uv_order_percen";
+		graph4.title = "下单转化率";
+		graph4.bullet = "triangleUp";
+		graph4.hideBulletsCount = 30;
+		graph4.bulletBorderThickness = 1;
+		chart.addGraph(graph4);
+		</if>
+		
+		//下单-支付转化率
+		<if condition="$con['field_uv_buy_percen'] eq 1">
+		// third value axis (on the left, detached)
+		/*
+		var valueAxis5 = new AmCharts.ValueAxis();
+		valueAxis5.gridAlpha = 0;
+		valueAxis5.axisColor = "#B0DE09";
+		valueAxis5.axisThickness = 2;
+		chart.addValueAxis(valueAxis5);
+*/
+		// third graph
+		var graph5 = new AmCharts.AmGraph();
+		//graph5.valueAxis = valueAxis5; // we have to indicate which value axis should be used
+		graph5.valueField = "uv_buy_percen";
+		graph5.title = "下单-支付转化率";
+		graph5.bullet = "triangleUp";
+		graph5.hideBulletsCount = 30;
+		graph5.bulletBorderThickness = 1;
+		chart.addGraph(graph5);
+		</if>
+		
+		//支付转化率
+		<if condition="$con['field_order_buy_percen'] eq 1">
+		// third value axis (on the left, detached)
+		/*
+		var valueAxis6 = new AmCharts.ValueAxis();
+		valueAxis6.gridAlpha = 0;
+		valueAxis6.axisColor = "#B0DE09";
+		valueAxis6.axisThickness = 2;
+		chart.addValueAxis(valueAxis6);
+*/
+		// third graph
+		var graph6 = new AmCharts.AmGraph();
+		//graph6.valueAxis = valueAxis6; // we have to indicate which value axis should be used
+		graph6.valueField = "order_buy_percen";
+		graph6.title = "支付转化率";
+		graph6.bullet = "triangleUp";
+		graph6.hideBulletsCount = 30;
+		graph6.bulletBorderThickness = 1;
+		chart.addGraph(graph6);
+		</if>
+
+       // CURSOR
+       var chartCursor = new AmCharts.ChartCursor();
+       chartCursor.cursorAlpha = 0.1;
+       chartCursor.fullWidth = true;
+       chartCursor.valueLineBalloonEnabled = true;
+       chart.addChartCursor(chartCursor);
+
+       // SCROLLBAR
+       var chartScrollbar = new AmCharts.ChartScrollbar();
+       chart.addChartScrollbar(chartScrollbar);
+
+       // LEGEND
+       var legend = new AmCharts.AmLegend();
+       legend.marginLeft = 110;
+       legend.useGraphSettings = true;
+       chart.addLegend(legend);
+
+       // WRITE
+       chart.write("chartdiv");
+   });
+
+   // generate some random data, quite different range
+   function generateChartData() {
+       var firstDate = new Date();
+       firstDate.setDate(firstDate.getDate() - 50);
+
+	   <volist name="trans_list.data" id="vo">
+			var newDate = '{$vo.year}-{$vo.month}-{$vo.day}';
+			var order_user_total = '{$vo.order_user_total}';
+			var order_money_total = '{$vo.order_money_total}';
+			var avg_buy_money = '{$vo.avg_buy_money}';
+			var uv_order_percen = '{$vo.uv_order_percen}';
+			var uv_buy_percen = '{$vo.uv_buy_percen}';
+			var order_buy_percen = '{$vo.order_buy_percen}';
+			
+			chartData.push({
+				date: newDate,
+				order_user_total: order_user_total,
+				order_money_total: order_money_total,
+				avg_buy_money: avg_buy_money,
+				uv_order_percen: uv_order_percen,
+				uv_buy_percen: uv_buy_percen,
+				order_buy_percen: order_buy_percen,
+			});
+		</volist>
+		/*
+	   
+       for (var i = 0; i < 50; i++) {
+           // we create date objects here. In your data, you can have date strings
+           // and then set format of your dates using chart.dataDateFormat property,
+           // however when possible, use date objects, as this will speed up chart rendering.
+           var newDate = new Date(firstDate);
+           newDate.setDate(newDate.getDate() + i);
+
+           var visits = Math.round(Math.random() * 40) + 100;
+           var hits = Math.round(Math.random() * 80) + 500;
+           var views = Math.round(Math.random() * 6000);
+           var aa = Math.round(Math.random() * 6000);
+
+
+           chartData.push({
+               date: newDate,
+               visits: visits,
+               hits: hits,
+               views: views,
+               aa: aa
+           });
+       }
+	   */
+   }
+
+   // this method is called when chart is first inited as we listen for "dataUpdated" event
+   function zoomChart() {
+       // different zoom methods can be used - zoomToIndexes, zoomToDates, zoomToCategoryValues
+       chart.zoomToIndexes(10, 20);
+   }
+</script>
+<script>
+	//页面页码切换
+	function select_change(type,name,new_val){
+		var old_val = $('.page_select input[name="'+type+'_'+name+'"]').val();
+		if(old_val != new_val){
+			$('.page_select input[name="'+type+'_'+name+'"]').val(new_val);
+			
+			if(name !== 'page'){
+				$('.page_select input[name="'+type+'_page"]').val(1);
+			}
+			$('.page_select').submit();
+		}
+	}
+	function field_change(obj,name){
+		if($(obj).is(':checked')){
+			console.log(1);
+			$('.page_select input[name="field_'+name+'"]').val(1);
+		}else{
+			console.log(0);
+			$('.page_select input[name="field_'+name+'"]').val(0);
+		}
+	}
+</script>
+</block>

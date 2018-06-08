@@ -1,0 +1,413 @@
+<include file="Public:header" />
+<include file="nav" />
+<js href="__JS__/ECharts/echarts.min.js" />
+	<div class="pd20">
+		<div class="bor_der pd15 m20 block-flat">
+			<h5 class="fs16 mt0">基础数据统计</h5>
+			<table class="bg_white table_dotted">
+				<tbody class="solid_t">
+					<tr>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">活动累计成交笔数</p>
+							<strong>{$result.activity_total_num}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">活动累计成交总金额(元)</p>
+							<strong>{$result.activity_total_money}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">累计广告投放笔数</p>
+							<strong>{$result.ad_total_num}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">累计广告投放总金额(元)</p>
+							<strong>{$result.ad_total_money}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">当前素材总数(已审核通过)</p>
+							<strong>{$result.sucai_total_num}</strong>
+						</td>
+					</tr>
+					<tr>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">累计被领优惠券数量</p>
+							<strong>{$result.coupon_total_num}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">累计被领优惠券面值总额(元)</p>
+							<strong>{$result.coupon_total_money}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">累计被使用优惠券数量</p>
+							<strong>{$result.use_coupon_total_num}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">累计被使用优惠券面值总额(元)</p>
+							<strong>{$result.use_coupon_total_money}</strong>
+						</td>
+						<td class="fs14 pd30"></td>
+					</tr>
+				</tbody>
+			</table>	
+		</div>
+		
+		<div class="bor_der pd15 m20 block-flat">
+			<h5 class="fs16 mt0">实时新增</h5>
+			<table class="bg_white table_dotted">
+				<tbody class="solid_t">
+					<tr>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日参与活动下单笔数</p>
+							<strong>{$totals.0.activity_num}</strong>
+							<h5 class="text_77">较前一日 <span class="{$rate.activity_num_color}">{$rate.activity_num}%  {$rate.activity_num_sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日参与活动成交笔数</p>
+							<strong>{$totals.0.activity_pay_num}</strong>
+							<h5 class="text_77">较前一日 <span class="{$rate.activity_pay_num_color}">{$rate.activity_pay_num}%  {$rate.activity_pay_num_sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日活动成交总金额</p>
+							<strong>
+								<empty name="totals[0].day_activity_money">
+								0
+								<else/>
+								{$totals.0.day_activity_money}
+								</empty>
+							</strong>
+							<h5 class="text_77">较前一日 <span class="{$rate.day_activity_money_color}">{$rate.day_activity_money}%  {$rate.day_activity_money_sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日活动成交平均单价</p>
+							<strong>
+								<empty name="totals[0].day_average_activity">
+								0
+								<else/>
+								{$totals.0.day_average_activity}
+								</empty>
+							</strong>
+							<h5 class="text_77">较前一日 <span class="{$rate.day_average_activity_color}">{$rate.day_average_activity}%  {$rate.day_average_activity_sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日被领取优惠券数量</p>
+							<strong>{$totals.0.coupon_num}</strong>
+							<h5 class="text_77">较前一日 <span class="{$rate.coupon_num_color}">{$rate.coupon_num}%  {$rate.coupon_num};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日被领取优惠券面值总额</p>
+							<strong>
+								<empty name="totals[0].day_coupon_total">
+								0
+								<else/>
+								{$totals.0.day_coupon_total}
+								</empty>
+							</strong>
+							<h5 class="text_77">较前一日 <span class="{$rate.day_coupon_total_color}">{$rate.day_coupon_total}%  {$rate.day_coupon_total_sign};</span></h5>
+						</td>
+					</tr>
+					<tr>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日被使用优惠券数量</p>
+							<strong>{$totals.0.use_coupon_num}</strong>
+							<h5 class="text_77">较前一日 <span class="{$rate.use_coupon_num_color}">{$rate.use_coupon_num}%  {$rate.use_coupon_num_sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日被使用优惠券面值总额</p>
+							<strong>
+								<empty name="totals[0].use_coupon_money">
+								0
+								<else/>
+								{$totals.0.use_coupon_money}
+								</empty>
+							</strong>
+							<h5 class="text_77">较前一日 <span class="{$rate.use_coupon_money_color}">{$rate.use_coupon_money}%  {$rate_use_coupon_money_sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日新增广告投放笔数(已付款)</p>
+							<strong>{$totals.0.ad_num}</strong>
+							<h5 class="text_77">较前一日 <span class="{$rate.ad_num_color}">{$rate.ad_num}%  {$rate.ad_num_sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日新增广告投放金额(已付款)</p>
+							<strong>
+								<empty name="totals[0].ad_money">
+								0
+								<else/>
+								{$totals.0.ad_money}
+								</empty>
+							</strong>
+							<h5 class="text_77">较前一日 <span class="{$rate.ad_money_color}">{$rate.ad_money}%  {$rate.ad_money_sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日新增广告投放平均单价</p>
+							<strong>
+								<empty name="totals[0].ad_price_unit">
+								0
+								<else/>
+								{$totals.0.ad_price_unit}
+								</empty>
+							</strong>
+							<h5 class="text_77">较前一日 <span class="{$rate.ad_price_unit_color}">{$rate.ad_price_unit}%  {$rate.ad_price_unit_sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日新增投放素材(审核通过)</p>
+							<strong>{$totals.0.sucai_num}</strong>
+							<h5 class="text_77">较前一日 <span class="{$rate.sucai_num_color}">{$rate.sucai_num}%  {$rate.sucai_num_sign};</span></h5>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<style>
+				.table_dotted tbody,.table_dotted tr,.table_dotted td{border:1px dashed #ccc !important;}
+			</style>	
+		</div>
+		
+		<div class="row mt30">
+			<div class="col-xs-6">
+					<div class="box p20 m20">
+			<div id="main" style="width: 100%;height:400px;"></div>
+		</div>
+		<script type="text/javascript">
+			// 基于准备好的dom，初始化echarts实例
+			var myChart = echarts.init(document.getElementById('main'));
+				option = {
+				    title : {
+				        text: '上一日付款类型支付笔数占比',
+				        x:'left'
+				    },
+				    tooltip : {
+				        trigger: 'item',
+				        formatter: "{a} <br/>{b} : {c} ({d}%)"
+				    },
+				    legend: {
+				        orient: 'vertical',
+				        left: 'left',
+				        data: ['支付宝','现金','唐宝']
+				    },
+				    series : [
+				        {
+				            name: '访问来源',
+				            type: 'pie',
+				            radius : '55%',
+				            center: ['50%', '60%'],
+				            data:[
+				                {value:{$totals.0.alipay_num}, name:'支付宝'},
+				                {value:{$totals.0.money_num}, name:'现金'},
+				                {value:{$totals.0.tangbao_num}, name:'唐宝'},
+				            ],
+				            itemStyle: {
+				                emphasis: {
+				                    shadowBlur: 10,
+				                    shadowOffsetX: 200,
+				                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+				                }
+				            }
+				        }
+				    ]
+				};
+
+			// 使用刚指定的配置项和数据显示图表。
+			myChart.setOption(option);
+		</script>	
+				</div>
+				<div class="col-xs-6">
+					<div class="box p20 m20">
+			<div id="main1" style="width: 100%;height:400px;"></div>
+		</div>
+		<script type="text/javascript">
+			// 基于准备好的dom，初始化echarts实例
+			var myChart = echarts.init(document.getElementById('main1'));
+			option = {
+				    title : {
+				        text: '上一日付款类型支付金额占比',
+// 				        subtext: '唐宝换算成现金计算', 
+				        x:'left'
+				    },
+				    tooltip : {
+				        trigger: 'item',
+				        formatter: "{a} <br/>{b} : {c} ({d}%)"
+				    },
+				    legend: {
+				        orient: 'vertical',
+				        left: 'left',
+				        data: ['支付宝','现金','唐宝']
+				    },
+				    series : [
+				        {
+				            name: '访问来源',
+				            type: 'pie',
+				            radius : '55%',
+				            center: ['50%', '60%'],
+				            data:[
+				                {value:{$totals[0]['day_alipay_total']}, name:'支付宝'},
+				                {value:{$totals[0]['day_money_total']}, name:'现金'},
+				                {value:{$totals[0]['day_tangbao_total']}, name:'唐宝'},
+				            ],
+				            itemStyle: {
+				                emphasis: {
+				                    shadowBlur: 10,
+				                    shadowOffsetX: 0,
+				                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+				                }
+				            }
+				        }
+				    ]
+				};
+
+
+			// 使用刚指定的配置项和数据显示图表。
+			myChart.setOption(option);
+		</script>	
+				</div>
+			</div>
+
+	</div>
+
+<notempty name="pagelist.list">
+<div class="m20">
+<!-- 	<include file="search_box" /> -->
+	
+
+	<form id="formlist" name="formlist">
+	<div class="block-flat">
+		<div class="content">		
+			<include file="widget_pagelist" />			
+			
+			<div class="clearfix"></div>
+			<div class="row">
+				<div class="col-xs-10 text-center">
+					{$pagelist.page.page}
+				</div>
+				<div class="col-xs-2 text-right">
+					<div class="page-total">共 {$pagelist.allnum} 条记录，共 {$pagelist.allpage} 页</div>
+				</div>
+			</div>
+
+		</div>
+		
+	</div>
+	
+	</form><!--/form-->
+
+	<div class="clearfix h50px"></div>
+	
+</div>
+
+<else />
+<div class="m20">
+	<include file="search_box" />
+	<div class="text-center nors">
+		<div class="nors-tips md20">暂无记录！</div>
+		<a href="__URL__/add" class="btn btn-trans btn-lg btn-rad btn-primary"><i class="fa fa-plus"></i> 新增记录</a>		
+	</div>
+</div>
+</notempty>
+
+
+
+<include file="Public:copyright" />
+<include file="Public:js" />
+<script>
+$(document).ready(function(){
+	$('.delete-select').click(function(){
+		if($('input[type="checkbox"]:checked').size()==0){
+			valert({status:'warning',msg:'请至少选择一项！'})
+			return false;
+		}else {
+			confirm_form({
+				formid:'#formlist',
+				furl:'__URL__/delete_select',
+				script:'callback(ret)',
+				title:'删除记录',
+				msg:'真的要删除吗？',
+				class:'text-center',
+				confirm:1
+			});
+		}
+	});
+
+	$('.active-change').click(function(){
+		if($('input[type="checkbox"]:checked').size()==0){
+			valert({status:'warning',msg:'请至少选择一项！'})
+			return false;
+		}else {
+			confirm_form({
+				formid:'#formlist',
+				furl:'__URL__/active_change_select/toactive/'+$('#toactive').val(),
+				script:'activeCall(ret)',
+				title:'批量更改记录状态',
+				msg:'真的要改记录状态吗？',
+				class:'text-center',
+				confirm:1
+			});
+		}
+	});
+	
+	$('.sid-change').click(function(){
+		if($('input[type="checkbox"]:checked').size()==0){
+			valert({status:'warning',msg:'请至少选择一项！'})
+			return false;
+		}else if($('#tosid').val()==''){
+			valert({status:'warning',msg:'请选择一个分类'})
+			return false;			
+		}else {
+			confirm_form({
+				formid:'#formlist',
+				furl:'__URL__/sid_change_select/tosid/'+$('#tosid').val(),
+				script:'activeCall(ret)',
+				title:'批量记录归类',
+				msg:'真的要批量记录归类吗？',
+				class:'text-center',
+				confirm:1
+			});
+		}
+	});	
+	
+	$('#gopage').change(function(){
+		var url=$('#gopage').val();
+		location.href=url;
+	});
+	$('.go-page').click(function(){
+		var url=$('#gopage').val();
+		location.href=url;
+	});	
+	
+	$('.btn-view').click(function(){
+		var d=$(this).data();
+		//alert(d.tag);
+		var tag='#view-'+d.id;
+		var item='#item-'+d.id;
+
+		$(tag).toggleClass('hide');
+		if($(item).html()=='') loadurl({tag:item,url:d.url});
+	});
+
+});
+
+function callback(ret){
+	valert({status:ret.status,msg:ret.msg});
+	if(ret.status=='success'){
+		$('input[type="checkbox"]:checked').each(function(){
+			$('#'+$(this).val()).remove();
+		});
+		$('#ajax-modal').modal('hide');
+	}
+}
+
+function delCall(ret,tag){
+	valert({status:ret.status,msg:ret.msg});
+	if(ret.status=='success'){
+		$(tag).remove();
+		$('#ajax-modal').modal('hide');
+	}
+}
+function activeCall(ret){
+	valert({status:ret.status,msg:ret.msg});
+	if(ret.status=='success'){
+		setTimeout(function(){
+			ref();
+		},500);
+	}
+}
+</script>
+<include file="Public:footer" />

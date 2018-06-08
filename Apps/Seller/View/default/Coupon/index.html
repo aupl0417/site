@@ -1,0 +1,105 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body">
+	<include file="Public:nav" />
+	<div class="container mb30">
+		<include file="Public:side" />
+		<div class="w980 fl">
+			<div class="bor_der">
+				<div class="bg_f1 clearfix fs14 text_44 tle_R orders-tab" data-url="__SELF__">
+					<a class="fl plr15 line40 ml-1" href="javascript:void(0);">{$seo['title']}</a>
+				</div>
+				<!-- 主体部分 -->
+				<notempty name="data.list">
+					<div class="pd10">
+						<table class="table table-bordered table-advance table-hover" style="margin-bottom:0;">
+							<tbody>
+								<tr>
+									<th class="col-xs-2 text-center" style="vertical-align: middle;">生效时间</th>
+									<th class="col-xs-2 text-center" style="vertical-align: middle;">失效时间</th>
+									<th class="col-xs-1 text-center" style="vertical-align: middle;">发行数量</th>
+									<th class="col-xs-1 text-center" style="vertical-align: middle;">可领数量</th>
+									<th class="col-xs-1 text-center" style="vertical-align: middle;">已领数量</th>
+									<th class="col-xs-1 text-center" style="vertical-align: middle;">使用数量</th>
+									<th class="col-xs-1 text-center" style="vertical-align: middle;">需消费金额</th>
+									<th class="col-xs-1 text-center" style="vertical-align: middle;">面值</th>
+									<th class="col-xs-2 text-center" style="vertical-align: middle;">操作</th>
+								</tr>
+								<volist name="data.list" id="vo">
+									<tr>
+										<td class="text-center" style="vertical-align: middle;">{$vo.sday}</td>
+										<td class="text-center" style="vertical-align: middle;">{$vo.eday}</td>
+										<td class="text-center" style="vertical-align: middle;">
+											<gt name="vo.num" value="0">
+												{$vo.num}
+											<else />
+												不限
+											</gt>
+										</td>
+										<td class="text-center" style="vertical-align: middle;">
+											<gt name="vo.max_num" value="0">
+												{$vo.max_num}
+											<else />
+												不限
+											</gt>
+										</td>
+										<td class="text-center" style="vertical-align: middle;">{$vo.get_num}</td>
+										<td class="text-center" style="vertical-align: middle;">{$vo.use_num}</td>
+										<td class="text-center" style="vertical-align: middle;"><span class="text_yellow">{$vo.min_price} 元</span></td>
+										<td class="text-center" style="vertical-align: middle;"><span class="text_yellow">{$vo.price} 元</span></td>
+										<td class="text-center" style="vertical-align: middle;">
+											<a class="text_blue" href="{:U('/coupon/detail', ['id' => $vo['id']])}">查看详情</a>
+											<eq name="vo.status" value="1">
+												<a class="text_blue ml10" href="{:U('/coupon/create', ['id' => $vo['id']])}">修改</a>
+											<else />
+												<span class="text_yellow ml10">已过期</span>
+											</eq>
+										</td>
+									</tr>
+								</volist>
+							</tbody>
+						</table>
+						<notempty name="data['page']['page']">
+							<div class="clearfix text-center">
+								<div class="col-xs-12 text-center">
+									{$data['page']['page']}
+								</div>
+							</div>
+						</notempty>
+					</div>
+				<else />
+					{:W('Common/Builder/nors', array('param' => array('text' => '<span>你还未发布优惠券，<a class="text_yellow" href="/coupon/create">立即发布</a></span>')))}
+				</notempty>
+			</div>
+		</div>
+	</div>
+</div>
+</block>
+<block name="css"></block>
+<block name="script">
+<script>
+$(document).ready(function() {
+	$(".activity-cancel").click(function() {
+		var d	=	$(this).data();
+		vmodal({
+			  title:d.title,
+			  msg:'取消活动后，活动将立即停止！',
+			  class:'text-center',
+			  confirm:1
+		  },function(ret) {
+			  $(".modal-ok").click(function() {
+				  ajax_post({
+					  url:d.url,
+					  data:{id:d.id},
+				  },function(ret) {
+					  talert({status:ret.code,msg:ret.msg});
+					  if(ret.code == 1) {
+						  setTimeout("ref()", 1000);
+					}
+				  })
+			 })
+		})
+	})
+});
+</script>
+</block>

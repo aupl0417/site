@@ -1,0 +1,116 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body">
+	<include file="Public:nav" />
+	<div class="container mb30">
+		<include file="Public:side" />
+		<div class="w980 fl">
+			<div class="bor_der">
+				<include file="nav" />
+				{:W('Common/Builder/form', [['data' => $keyList, 'run' => '/run/authRun']])}
+				<!-- 主体部分 -->
+			</div>
+		</div>
+	</div>
+</div>
+</block>
+<block name="css">
+<script type="text/javascript" src="/Public/Webuploader/js/webuploader.js"></script>
+<link rel="stylesheet" type="text/css" href="/Public/Webuploader/css/webuploader.css">
+</block>
+<block name="script">
+<script type="text/javascript">
+	$(document).ready(function(){
+		$(".btn-submit").click(function() {
+			if($("input[name='shop_logo']").val() == '') {
+				talert({status:0,msg:'logo不能为空'});
+				return false;
+			}
+		});
+		checkform({
+			formid:"#formadd",
+			rules:{
+				mobile:{
+					required:true,
+					isMobile:true,
+				},
+				qq:{
+					required:true,
+					number:true,
+					rangelength:[5,13],
+				},
+				about:{
+					required:true,
+					rangelength:[30,150],
+				},
+				huoyan:{
+					required:true,
+				},
+				street:{
+					required:true,
+					rangelength:[2,120],
+				},
+				province:{
+					required:true,
+				},
+				city:{
+					required:true,
+				},
+				district:{
+					required:true,
+				},
+				/*town:{
+					required:true,
+				},
+				inventory_type:{
+					required:true,
+				}
+				*/
+			},
+			messages:{
+				mobile:{
+					required:'店铺名称不能为空',
+					isMobile:'手机号码格式不正确'
+				},
+				qq:{
+					required:'腾讯QQ不能为空',
+					number:'腾讯QQ为数字类型',
+					rangelength:'腾讯QQ一般为5-13位',
+				},
+				about:{
+					required:'店铺描述不能为空',
+					rangelength:'店铺描述应在30-150个汉字之间',
+				},
+				huoyan:{
+					required:'货源不能为空',
+				},
+				street:{
+					required:'详细地址不能为空',
+					rangelength:'详细地址应在2-120个汉字之间',
+				},
+				province:{
+					required:'省份不能为空',
+				},
+				city:{
+					required:'城市不能为空',
+				},
+				district:{
+					required:'地区不能为空',
+				},
+				town:{
+					required:'乡镇不能为空',
+				},
+				/*
+				inventory_type:{
+					required:'结算方式不能为空',
+				},*/
+			},
+		},function(res) {
+			talert({status:res.code,msg:res.msg});
+			if(res.code == 1) {
+				setTimeout("ref()", 1000);
+			}
+		});
+	});
+</script>
+</block>

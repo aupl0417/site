@@ -1,0 +1,94 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			提现详情
+		</div>
+		<div class="r">
+			
+		</div>
+	</div>
+</header>
+<section>
+	<div class="load-body">数据加载中……</div>
+</section>
+
+
+<script id="tpl_withdraw_view" type="text/html">
+	<div class="line-box noicon fr-70 hover">
+		<div class="fl title">提现金额</div>
+		<div class="fr ft14 text-success"><%= data.money %></div>
+	</div>
+	<div class="line-box noicon fr-gray fr-70 hover">
+		<div class="fl title">流水号</div>
+		<div class="fr"><%= data.w_no %></div>
+	</div>
+	<div class="line-box noicon fr-gray fr-70 hover">
+		<div class="fl title">提现银行</div>
+		<div class="fr"><%= data.bank.bank_name %></div>
+	</div>
+	<div class="line-box noicon fr-gray fr-70 hover">
+		<div class="fl title">提现账户</div>
+		<div class="fr"><%= data.master %> <%= data.account%></div>
+	</div>
+	<div class="line-box noicon fr-gray fr-70 hover">
+		<div class="fl title">提现时间</div>
+		<div class="fr"><%= data.atime %></div>
+	</div>
+	<% if(data.status==1){ %>
+	<div class="line-box noicon fr-gray fr-70 hover">
+		<div class="fl title">到账时间</div>
+		<div class="fr"><%= data.pay_time %></div>
+	</div>
+	<% } %>
+	<div class="line-box noicon fr-gray fr-70 hover">
+		<div class="fl title">现金余额</div>
+		<div class="fr"><%= data.ac_cash %></div>
+	</div>	
+	<div class="line-box noicon fr-gray fr-70 hover">
+		<div class="fl title">状态</div>
+		<div class="fr"><%= data.status_name %></div>
+	</div>
+	<div class="nav-box">审核记录</div>
+	<ul class="timeline">
+		<% for (var i = 0; i < data.logs.length; i ++) { %>
+		<li>
+			<span class="date">
+				<%= data.logs[i].atime %></span>
+			<div class="content">
+				<div class="md10">审核状态：    
+				<% if(data.logs[i].status == "0"){ %> 
+					在途
+				<% }else if(data.logs[i].status == "1"){ %>
+					到账
+				<% }else if(data.logs[i].status == "2"){ %>
+					驳回
+				<% } %>	
+					<%= data.logs[i].reason %>	
+				</div>
+			</div>
+		</li>
+		<% } %>
+	</ul>
+</script>
+
+<script>
+	fixBar(1);
+	
+	ajax_post({
+		url:'/Api/api',
+		data:{apiurl:'/Withdraw/view',is_openid:1,id:'{$_GET.id}'},
+	},function(ret){
+		if(ret.code==1){			
+			var html = template('tpl_withdraw_view', {data:ret.data});
+			$('.page.active section').html(html);
+			hover('.page.active section');
+		}else if(ret.code==3){
+			$('.page.active section').html(no_data_text);
+		}
+	});	
+
+	
+</script>

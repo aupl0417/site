@@ -1,0 +1,126 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin({ref:true})"></i>
+		</div>
+		<div class="title">
+			申诉
+		</div>
+		<div class="r">
+			
+		</div>
+	</div>
+</header>
+<section>
+	
+</section>
+
+
+<script id="tpl_refund_appeal" type="text/html">
+	<form class="md10" id="form-refund-appeal">
+		<div class="line-box noicon hover">
+			<div class="title">退款单号：<%= data.r_no %></div>
+		</div>
+		<div class="line-box-m noicon row">
+			<div class="col-30">申诉原因</div>
+			<div class="col-70">
+				<textarea id="reason" name="remark" placeholder="请输入申诉原因" maxlength="100" rows="3"></textarea>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="line-box-m hover row noicon">
+			<div class="col-30">图片</div>
+			<div class="col-70">
+				<div class="chooseImages" style="position: relative;display: inline-block;">
+					<input type="file" onclick="chooseImg('/refund/upload', '#form-refund-appeal', 0)" id="images_0" name="images_0" style="width: 100px;height: 100px;opacity: 0.0;border: solid 1px #000;position: absolute;z-index: 9;" />
+					<img src="../Public/Images/up_load.jpg" data-url="" class="upload_images mr20" alt="" width="100" height="100">
+				</div>
+				<img src="../Public/Images/icon+.png" onclick="rateImagesAdd('/refund/upload', '#form-refund-appeal',$(this))" class="mr20" alt="" width="100" height="100">
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="p10">
+			<div class="btn btn-lg btn-block btn-danger" onclick="appeal()">提交</div>
+		</div>
+		<input type="hidden" name="apiurl" value="/Appeal/index">
+		<input type="hidden" name="is_openid" value="1">
+		<input type="hidden" name="r_no" value="<%= data.r_no %>">
+		<input type="hidden" name="s_no" value="<%= data.s_no %>">
+		<input type="hidden" name="no_sign" value="images">
+	</form>
+</script>
+
+<include file="Public:d_layer" />
+
+
+<script>
+	fixBar(1);
+	
+	ajax_post({
+		url:'/Api/api',
+		data:{apiurl:'/Refund/view',is_openid:1,r_no:'{$_GET.r_no}'}
+	},function(ret){
+		if(ret.code==1){
+			var html=template('tpl_refund_appeal',{data:ret.data});
+			$('.page.active section').html(html);
+		}
+	});
+	
+	
+	//商品退款
+	function appeal(){
+		var data=getFormJson('#form-refund-appeal');
+		
+		if(data.remark==''){
+			valert({msg:'请输入申请原因！'});
+			return false;
+		}
+		var images = new Array;
+		$('#form-refund-appeal').find('.upload_images').each(function (x,y){
+			
+			var url = $(this).data('url');
+			if(url != undefined && url != ''){
+				images.push(url);
+			}
+		});
+		
+		images = images.join();
+		if(images != ''){
+			data.images = images;
+		}
+		ajax_post({
+			url:'/Api/api',
+			data:data
+		},function(ret){
+			valert(ret);			
+			if(ret.code==1){
+				closeWin({ref:true});
+			}
+		});
+	}
+	
+	
+	
+	// 拍照晒单
+	function refundImages(sort){
+		
+		vmodal({
+			title:'上传图片',
+			url:'__URL__/refund_upload_images/sort/' + sort + '/form/' + 'form-refund-appeal',
+			is_footer:false,
+		});
+	}
+	// 增加一个图片位置
+	function refundImagesAdd(obj){
+		var len = obj.prevAll().length;
+		if(len == 5){
+			return false;
+		}
+
+		var html = '<img src="../Public/Images/up_load.jpg" onclick="refundImages(' + len + ');" data-url="" class="upload_images mr20" alt="" width="100" height="100">';
+		obj.before(html);
+		if(len == 4){
+			obj.remove();
+		}
+	}
+</script>

@@ -1,0 +1,22 @@
+<include file="Public:header" />
+	<div class="page-group">
+		<div id="page-cnews-views" class="page">
+			<!-- 标题栏 -->
+			<if condition="$is_header eq 0">
+			<header class="bar bar-nav">
+				<a class="icon icon-left pull-left back" href="/"></a>
+				<h1 class="title">公告详情</h1>
+			</header>
+			</if>
+			<!-- 这里是页面内容区 -->		
+			<div class="content">
+				<div class="content-padded">
+					{$data.n_content1}
+					<p class="color-gray">收件时间 {$data.n_createTime}</p>
+				</div>	
+			</div>	
+		</div>		
+	</div>	
+
+<include file="Public:script" />
+<include file="Public:footer" />

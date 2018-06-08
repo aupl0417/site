@@ -1,0 +1,80 @@
+<css href="__PUBLIC__/Jquery/DateTimePicker/jquery.datetimepicker.css" />
+<div class="container fs14">
+	<div class="mt40"><strong><a href="javascript:;" onclick="back()">我的广告</a> > 付款</strong></div>
+	<div class="mt10 bor_der bg-white">
+		<div class="fs14 p10">
+			<div class="fl"><strong>订单信息</strong></div>
+			<div class="fr">
+				<switch name="data['status']">
+					<case value="0">
+						<strong><i class="layui-icon" style="color: red;vertical-align: middle;font-size: 24px;">&#xe60b;</i></strong>
+						<strong>状态：未付款</strong>
+					</case>
+					<case value="1">
+						<strong><i class="layui-icon" style="color: green;vertical-align: middle;font-size: 24px;">&#x1005;</i></strong>
+						<strong>状态：已付款</strong>
+					</case>
+					<case value="2">
+						<strong><i class="layui-icon" style="color: red;vertical-align: middle;font-size: 24px;">&#xe60b;</i></strong>
+						<strong>状态：强制下架</strong>
+					</case>
+					<case value="3">
+						<strong><i class="layui-icon" style="color: green;vertical-align: middle;font-size: 24px;">&#x1005;</i></strong>
+						<strong>状态：投放中</strong>
+					</case>
+					<case value="4">
+						<strong><i class="layui-icon" style="color: red;vertical-align: middle;font-size: 24px;">&#xe60b;</i></strong>
+						<strong>状态：待投放</strong>
+					</case>
+					<case value="5">
+						<strong><i class="layui-icon" style="color: red;vertical-align: middle;font-size: 24px;">&#xe60b;</i></strong>
+						<strong>状态：已过期</strong>
+					</case>
+				</switch>
+			</div>
+			<div class="clearfix"></div>
+			<div class="row mt30 p10">
+				<div class="col-xs-6">
+					<div class="mb15">投放素材：<a href="{$data.images}" class="image-zoom"><img src="{:myurl($data['images'],['w' => 150,'h' => 85])}" class="bor_der" style="vertical-align: text-top"/></a></div>
+					<div class="mb15">投放天数：<strong>{$data.num}</strong> 天</div>
+					<div>创建时间：{$data.atime}</div>
+				</div>
+				<div class="col-xs-6">
+					<div class="mb25">订单编号：{$data.a_no}</div>
+					<div class="mb25">投放类型：{$data.type_name}</div>
+					<div class="mb25">投放位置：位置{$data['sort']+1}</div>
+					<div class="">投放日期：{$data.sday} 到 {$data.eday}</div>
+				</div>
+			</div>
+			<hr/>
+			<div class="fs14 p10">
+				<strong>广告信息</strong>
+			</div>
+			<div class="row mt30 p10">
+				<div class="col-xs-6">
+					<div class="mb30">位&#12288;&#12288;置：<a href="{$position.images}" class="image-zoom"><img src="{:myurl($position['images'],['w' => 150,'h' => 85])}" class="bor_der" style="vertical-align: text-top"/></a></div>
+					<div class="">价&#12288;&#12288;格：<strong>{$data.price}元/日</strong></div>
+				</div>
+				<div class="col-xs-6">
+					<div class="mb20">名&#12288;&#12288;称：{$data.name}</div>
+					<div class="mb20">尺&#12288;&#12288;寸：{$position.width}x{$position.height} （px）</div>
+					<div class="mb20">平&#12288;&#12288;台：
+						<switch name="position.device">
+	                        <case value="1">PC端</case>
+	                        <case value="2">移动端</case>
+	                        <default />未知
+	                    </switch>
+	                </div>
+					<div class="">类&#12288;&#12288;型：
+						<switch name="position.type">
+	                        <case value="1">图片</case>
+	                        <case value="2">焦点图</case>
+	                        <case value="3">文本</case>
+	                        <default />未知
+	                    </switch>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

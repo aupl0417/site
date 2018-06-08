@@ -1,0 +1,183 @@
+<include file="Public:header" />
+<include file="nav" />
+
+<notempty name="pagelist.list">
+<div class="p20">
+	<form id="formlist" name="formlist">
+	
+	<ul class="upload-images-list">
+		<volist name="pagelist.list" id="vo">
+		<li class="ttip" title="双击即可选择图片" data-key="{$vo.fkey}">
+			<div class="upload-images-selected"><div class="selected-icon"><i class="fa fa-check"></i></div></div>
+			<div class="upload-images-item" data-images="{$vo.url}"><img src="{:myurl($vo['url'],180,150)}"></div>
+			<div class="upload-images-title">
+				<div class="pull-right"><a class="image-zoom" href="{$vo.url}" title="{$vo.name}"><i class="fa fa-eye"></i> {$vo.fsize|fsize} KB</a></div>
+				<label><input type="checkbox" class="i-red-square" id="id[]" name="id[]" value="{$vo.fkey}"></label> 				
+			</div>
+		</li>
+		</volist>
+	</ul>
+
+	</form>
+
+	
+	<div class="clearfix md20"></div>
+	
+	<div class="row">
+		<div class="col-xs-8 text-center">
+				{$pagelist.page.page}
+		</div>
+		<div class="col-xs-4 text-center">
+			共 {$pagelist.allnum} 条记录，共 {$pagelist.allpage} 页
+		</div>
+	</div>
+</div>
+<else />
+	<div class="nors text-center ft16">
+		还没有上传图片！
+	</div>
+</notempty>	
+	
+<div class="md90 clearfix"></div>
+
+<div class="navbar-fixed-bottom">
+	<div class="p20 bg-white-50 border-t">
+		<button type="button" class="btn btn-info btn-rad btn-trans select-all"><i class="fa fa-location-arrow"></i> 全选 / 反选</button>
+		<button type="button" class="btn btn-primary btn-rad btn-trans delete-select"><i class="fa fa-times"></i> 删除图片</button>
+		<button type="button" class="btn btn-primary btn-rad select-one"><i class="fa fa-picture-o"></i> 选择图片，确定</button>
+		<span class="select-images ml20"></span>
+		<span class="pull-right">
+					<select id="gopage" name="gopage" class="form-control" style="width:100px">
+						{$pagelist.page.gopage}
+					</select>		
+		</span>
+	</div>
+</div>
+
+<include file="Public:copyright" />
+<include file="Public:js" />
+
+<script>
+$(document).ready(function(){
+	$('#gopage').change(function(){
+		var url=$('#gopage').val();
+		location.href=url;
+	});
+	$('.upload-images-list li').click(function(){
+		$(this).closest('li').toggleClass('active');
+		
+		var size=$('.upload-images-list li.active').size();
+		if(size>5){
+			valert({status:'warning',msg:'最多只能选择5张图片！'})
+			$(this).closest('li').removeClass('active');
+		}
+		
+		var html='';
+		$('.upload-images-list li.active').each(function(){
+			html+='<img src="'+$(this).find('.upload-images-item').attr('data-images')+'" class="select-images-box-80px mr10">';
+		});
+		
+		$('.select-images').html(html);
+	});
+	
+	$('.upload-images-list li').dblclick(function(){
+		$(this).closest('li').toggleClass('active');
+		
+		var size=$('.upload-images-list li.active').size();
+		if(size>5){
+			valert({status:'warning',msg:'最多只能选择5张图片！'})
+			$(this).closest('li').removeClass('active');
+		}
+		
+		var html='';
+		$('.upload-images-list li.active').each(function(){
+			html+='<img src="'+$(this).find('.upload-images-item').attr('data-images')+'" class="select-images-box-80px mr10">';
+		});
+		
+		$('.select-images').html(html);
+		select_images();
+	});	
+
+	$('.delete-select').click(function(){
+		if($('input[type="checkbox"]:checked').size()==0){
+			valert({status:'warning',msg:'请至少选择一项！'})
+			return false;
+		}else {
+			confirm_form({
+				formid:'#formlist',
+				furl:'__URL__/delete',
+				script:'callback(ret)',
+				title:'删除图片',
+				msg:'真的要删除吗？',
+				class:'text-center',
+				confirm:1
+			});
+		}
+	});
+	
+	$('.select-one').click(function(){
+		select_images();
+	});
+});
+
+function callback(ret){
+	$('input[type="checkbox"]:checked').each(function(){
+		$('[data-key="'+$(this).val()+'"]').remove();
+	});
+	$('#ajax-modal').modal('hide');
+}
+
+function select_images(){
+		var field=parent.$('.vform-action').html();
+		var tag='#'+field+'-list';
+
+		
+		if($('.select-images').html()==''){
+			valert({status:'warning',msg:'请选择图片！'})
+			return false;
+		}else{
+			var type=parent.$('.vform-type').html();
+			var html='';
+
+			switch(type){
+				case 'goods_attr':
+					var size=parent.$('.attr_images_'+field+' > div').size();
+					$('.select-images img').each(function(i){
+						var img=$(this).attr('src');
+						if(parent.$('.attr_images_'+field+' > div').size()>=5){
+							//valert({status:'warning',msg:'主图不得超过5张图片！'});
+							//return;
+						}else if(parent.$('.attr_images_'+field+' a[href="'+img+'"]').size()==0){
+							html+='<div class="max-100 hover-shadow"><div class="img-remove" onclick="$(this).parent().remove();"><i class="fa fa-times"></i></div><a class="image-zoom" href="'+img+'" title="'+img+'"><img src="'+img+'?imageMogr2/thumbnail/!60x60r/gravity/Center/crop/60x60" alt="主图"></a><input type="hidden" name="attr_images_'+field+'[]" value="'+img+'"></div>';
+						}						
+					});					
+					if(size>0) parent.$('.attr_images_'+field).append(html);
+					else parent.$('.attr_images_'+field).html(html);
+					parent.image_zoom();
+					parent.$('#ajax-modal2').modal('hide');					
+				break;
+
+				default:
+					$('.select-images img').each(function(){
+						var img=$(this).attr('src');
+						if(parent.$(tag+' li[data-path="'+img+'"]').size()==0){
+							html+='<li id="" data-path="'+img+'" class="text-center">'+
+									'<div class="li-img-box">'+
+									'	<a class="image-zoom" href="'+img+'" title="'+img+'"><img src="'+img+'?imageView2/2/w/250/h/250"></a>'+
+									'</div>'+													
+									'<div class="delete-images" onclick="$(this).parent(\'li\').remove();"><div class="selected-icon"><i class="fa fa-times"></i></div></div>'+
+									'<input type="hidden" id="'+field+'[]" name="'+field+'[]" value="'+img+'">'+
+								'</li>';
+						}				
+					});
+
+					parent.$(tag).append(html);
+					parent.image_zoom();
+					parent.$('#ajax-modal2').modal('hide');
+				break;
+			}
+
+		}
+}
+</script>
+<include file="Public:footer" />

@@ -1,0 +1,101 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body">
+	<include file="Public:nav" />
+	<div class="container mb30">
+		<include file="Public:side" />
+		<div class="w980 fl">
+			<div class="bor_der">
+				<div class="bg_f1 clearfix fs14 text_44 tle_R orders-tab">
+					<a class="fl plr15 line40 ml-1 <if condition="$_GET['status'] neq 0">active</if>" href="{:U('/brand/my_brand/status/1')}">已审核</a>
+					<a class="fl plr15 line40 ml-1 <if condition="$_GET['status'] eq 0">active</if>" href="{:U('/brand/my_brand/status/0')}">未审核</a>
+				</div>
+				<!-- 主体部分 -->
+				<notempty name="data.code">
+					{:W('Common/Builder/nors', array('param' => array('text' => '没有品牌！')))}
+					
+				<else />
+					<div class="plr15 ptb10">
+						<div class="clearfix bg_f1 guide_tle" style="border-bottom:1px solid #ddd;"></div>
+						<table class="table-bordered bor_no hover_tr mb20">
+							<tbody class="td_borno">
+								<tr class="solid_b solid_l solid_r">
+									<td class="pl40" width="40%">品牌名称</td>
+									<td width="13%"></td>
+									<td width="10%">操作</td>
+								</tr>
+								<volist name="data" id="vo">
+								<tr class="solid_b">
+									<td class="clearfix">
+										&nbsp&nbsp&nbsp&nbsp
+										{$vo.b_name}
+									</td>
+									<td>
+										<div class="mt-15"></div>											
+									</td>
+									<td class="text_44">
+										<if condition="$_GET['status'] neq 0">
+										<a class="text_blue" href="{:U('brand/view/',array('id'=>$vo['id']))}"><p class="mb5">申请推广</p></a>
+										<else/>
+										<a class="text_blue" href="{:U('brand/brand_edit/',array('id'=>$vo['id']))}"><p class="mb5">修改</p></a>
+										</if>
+									</td>
+								</tr>
+								<!--
+								<div class="col-xs-3 mb30" style = 'width:329px;'>
+									<div class="bor_hover over text-center hover_p">
+										<div class="amg">
+											<img src="{:myurl($vo['b_logo'],297)}" style = 'width:297px;height:297px;'>
+										</div>
+										<p class="fs18 text_44 mb5" style='margin-top:10px;'>{$vo.b_name}</p>
+										<p class="fs14 text_77 mb20">{$vo.b_ename}</p>
+										<h6>
+											<a href="{:U('brand/view/',array('id'=>$vo['id']))}" class="btn btn-primary link-white">修改</a>
+										</h6>
+									</div>
+								</div>-->
+								</volist>
+							</tbody>
+						</table>
+					</div>
+				</notempty>
+			</div>
+		</div>
+	</div>
+</block>
+<block name="css"></block>
+<block name="script"> <script type="text/javascript">
+	$(document).ready(function() {
+		$(".del-addr").click(function() {
+			var d = $(this).data();
+			vmodal({
+				title : '删除提示',
+				msg : '您真的要删除吗?',
+				class : 'text-center',
+				confirm : 1,
+			    footer:false,
+		        width:'600px',
+			}, function(ret) {
+				$(".modal-ok").click(function() {
+					ajax_post({
+						url : '/run/authRun',
+						data : {
+							id : d.id
+						},
+						headers : {
+							Action : '{:enCryptRestUri("/Addr/del")}'
+						},
+					}, function(ret) {
+						talert({
+							status : ret.code,
+							msg : ret.msg
+						});
+						if (ret.code == 1) {
+							setTimeout("ref()", 1000);
+						}
+					})
+				})
+			})
+		})
+	});
+</script> </block>

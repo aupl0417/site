@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>唐人街</title>
+		<meta name="keywords" content="唐人街" />
+		<meta name="description" content="唐人街" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<link href="../Public/Css/style.css" media="screen" rel="stylesheet" type="text/css">
+		<link href="../Public/Css/Animate/animate.min.css" media="screen" rel="stylesheet" type="text/css">
+		<link href="../Public/Js/Banner/css/styles.css" media="screen" rel="stylesheet" type="text/css">
+		
+		<link href="../Public/Js/alertPopShow/common.css" media="screen" rel="stylesheet" type="text/css">
+		<link href="../Public/Css/custom.css" media="screen" rel="stylesheet" type="text/css">
+		
+	
+		
+		<script src="../Public/Js/jquery-2.1.1.min.js"></script>		
+		<script src="../Public/Js/template-native.js"></script>
+		<script src="../Public/Js/jquery.form.js"></script>
+		<script src="../Public/Js/alertPopShow/alertPopShow.js"></script>
+		<script src="../Public/Js/iscroll-probe.js"></script>
+		<script src="../Public/Js/jquery.countdown.min.js"></script>
+		<script src="../Public/Js/global.js"></script>
+		
+
+	</head>
+
+<!--
+<script type="text/javascript" src="../Public/Js/jquery-1.7.2.min.js"></script>-->
+<!--抽奖js-->
+<script type="text/javascript" src="../Public/Js/luckDraw/jQueryRotate.2.2.js"></script>
+<script type="text/javascript" src="../Public/Js/luckDraw/jquery.easing.min.js"></script>
+<!--抽奖样式-->
+<link href="../Public/Js/luckDraw/style.css" media="screen" rel="stylesheet" type="text/css">
+
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="history.go(-1)"></i>
+		</div>
+		<div class="title">
+			转盘送壕礼
+		</div>
+		<if condition =" $_SESSION['user'] neq ''">
+		<div class="r" style="width:60px">
+			<div onclick = "window.location.href='{:U('Luckdraw/luck_list')}'">中奖列表</div>
+		</div>
+		<else/>
+		<div class="r">
+			<div onclick = "user_login()">登录</div>
+		</div>
+		</if>
+	</div>
+</header>
+
+<div id = "zhezhao" onclick = "tips_cancel()"></div>
+<div id = "no_chance_tips" class = "tips">
+	<div class = "tips_body">
+		<img src = "../Public/Js/luckDraw/tips.png" style="width:100%;"/>
+		<p class = "tips_head">没有抽奖次数了！</p>
+		<p class = "tips_content">是否要使用{:C('CFG.luckdraw')['luckdraw_tangbao']}唐宝来兑换1次抽奖机会？</p>
+		<div class = "tips_button"><p class = "f_l" onclick = "exchange()" style="color:#cc0000">确定</p><p class = "f_r" onclick = "tips_cancel()">取消</p></div>
+	</div>
+</div>
+<div id = "luck_tips" class = "tips">
+	<div class = "tips_body" >
+		<img src = "../Public/Js/luckDraw/luck_tips.png" style="width:100%;"/>
+		<p class = "tips_content" id ="luck_tips_name">奖品名称</p>
+		<p class = "tips_content" style="padding-top:20%;padding-left:5%;padding-right:5px;color:#999;font-size:14px">奖品在我的奖品中查看</p>
+		<div class = "tips_button"><p class = "f_l" onclick = "receive()" style="color:#cc0000">查看奖品信息</p><p class = "f_r" onclick = "tips_cancel('奖品还可以在我的奖品中查看')">关闭</p></div>
+	</div>
+</div>
+
+<div class = "body_a">
+	<div class = "ad clear">
+		<img src = "../Public/Js/luckDraw/ad.jpg"/>
+	</div>
+
+	
+	<div class = "luck">
+		<!--
+		<if condition =" $_SESSION['user'] neq ''">
+			<p class="luck_msg">你有 <span id = "chance_num">0</span> 次中奖机会</p>
+		<else />
+			<p class="luck_msg">请登录</p>
+		</if>
+		-->
+		<img class = "f_l" src = "../Public/Js/luckDraw/disk20170313.jpg" style="width:100%; margin-bottom:-1px" />
+		<div id="disk">
+			<!--
+			<img id = "goods_1" src = "../Public/Js/luckDraw/disk.jpg" style="top: 62%;left: 38%;"/>
+			<img id = "goods_2" src = "../Public/Js/luckDraw/disk.jpg" style="top: 50%;left: 26%;"/>
+			<img id = "goods_3" src = "../Public/Js/luckDraw/disk.jpg" style="top: 37%;left: 26%;"/>
+			<img id = "goods_4" src = "../Public/Js/luckDraw/disk.jpg" style="top: 24%;left: 38%;"/>
+			<img id = "goods_5" src = "../Public/Js/luckDraw/disk.jpg" style="top: 24%;left: 52%;"/>
+			<img id = "goods_6" src = "../Public/Js/luckDraw/disk.jpg" style="top: 37%;left: 63%;"/>
+			<img id = "goods_7" src = "../Public/Js/luckDraw/disk.jpg" style="top: 50%;left: 63%;"/>
+			<img id = "goods_8" src = "../Public/Js/luckDraw/disk.jpg" style="top: 62%;left: 52%;"/>
+			-->
+		</div>
+		<div id="start"><img src="../Public/Js/luckDraw/start.png" id="startbtn"></div>
+	</div>
+	<div class = "luck_list">
+		<div class = "luck_list_a">
+			<div class = "luck_list_choice clear">
+				<div class = "f_l active">中奖信息</div>
+				<div class = "f_r">我的奖品</div>
+			</div>
+			<div class="luck_list_body">
+				<div id="list_a">
+					<ul>
+						<p class = "text-center">暂无中奖信息</p>
+					</ul>
+				</div>
+				<div id="list_b" style="display:none;">
+					<ul>
+						
+						<p class = "text-center">暂无中奖信息</p>
+					</ul>
+					<p class = "text-center"><a href = "{:U('Luckdraw/luck_list')}" style="color:#9e130c;">我的中奖列表</a></p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class = "luck_list">
+		<div class = "luck_list_a">
+			<div class = "luck_list_choice clear">
+				<div class = "f_l active" style="background:#fb595a;box-shadow:0px -3px 8px #E24444;color:white">抽奖细则</div>
+			</div>
+			<div class="luck_list_body" style="background:#fb595a;box-shadow:0px 0px 8px #D23F3F;color:white;padding:10px 15px">
+				<div class="mb15" style="height:auto">
+					<h6 class="small_xs">活动奖品：</h6>
+					<h6 class="small_xs">价值7000元手机</h6>
+					<h6 class="small_xs">大唐专用手机健康枕</h6>
+					<h6 class="small_xs">大唐专用旅行旅行袋</h6>
+					<h6 class="small_xs">大唐专用纯棉毛巾</h6>
+					<h6 class="small_xs">1000积分</h6>
+					<h6 class="small_xs">2000积分</h6>
+					<h6 class="small_xs">100积分</h6>	
+				</div>	
+
+				<div class="mb15" style="height:auto">
+					<h6 class="small_xs">奖品发放：</h6>
+					<h6 class="small_xs">1. 抽奖成功系统会有站内短信通知，确认获得奖品</h6>
+					<h6 class="small_xs">2. 7个工作日内，大唐客服会通过电话等方式与会员取得联系，核实中奖结果，请参与抽奖的会员保持通话畅通，以免耽误奖品的正常发放</h6>
+					<h6 class="small_xs">3. 实物奖品获得者，大唐会核实结果时一并获取邮寄地址、收件人等信息，并将在中奖后7个工作日内寄出，敬请查收</h6>
+					<h6 class="small_xs">4. 唐宝积分获得者，积分将直接发放到个人积分帐户</h6>	
+				</div>
+				
+				<div class="mb15" style="height:auto">
+					<h6 class="small_xs">注意事项：</h6>
+					<h6 class="small_xs">本次活动的最终解释权归唐人街商城所有，与Apple Inc.无关。</h6>	
+				</div>
+			</div>
+		</div>
+		<!--<p class = "pt10 text-center ft12" style="color:#fff;">大唐天下在此声明，您通过本软件参加的商业活动与Apple Inc.无关</p>-->
+	</div>
+	
+	
+</div>
+<script id="tpl_winner_list" type="text/html">
+	<% for(i=0;i<data.length;i++){ %>
+		<li class = "clear"><p class = "f_l"><%= data[i].mobile %></p> <p class = "f_r"><%= data[i].prize_name %></p></li>
+	<% } %>
+</script>
+<script id="tpl_my_winner" type="text/html">
+	<% for(i=0;i<data.length;i++){ %>
+		<li class = "clear"><p class = "f_l"><%= data[i].day %></p> <p class = "f_r"><%= data[i].prize_name %></p></li>
+	<% } %>
+</script>
+<script>
+	fixBar();
+	
+	$(function(){
+		ajax_post({
+			url:'/Api/apis',
+			data:{
+				goods_list:{apiurl:'/Luckdraw/get_goods_list'},
+				winner_list:{apiurl:'/Luckdraw/get_winner'},
+				user_chance:{apiurl:'/Luckdraw/get_user_chance',is_openid:1},
+				my_winner:{apiurl:'/Luckdraw/get_my_winner',is_openid:1,pagesize:4,p:1}
+			}			
+		},function(ret){
+			if(ret.user_chance.code == 1){
+				$("#chance_num").html(ret.user_chance.data.chance_num);
+			}
+			if(ret.goods_list.code ==1){
+				$("#goods_1").attr('src',ret.goods_list.data[0]['images']);
+				$("#goods_2").attr('src',ret.goods_list.data[1]['images']);
+				$("#goods_3").attr('src',ret.goods_list.data[2]['images']);
+				$("#goods_4").attr('src',ret.goods_list.data[3]['images']);
+				$("#goods_5").attr('src',ret.goods_list.data[4]['images']);
+				$("#goods_6").attr('src',ret.goods_list.data[5]['images']);
+				$("#goods_7").attr('src',ret.goods_list.data[6]['images']);
+				$("#goods_8").attr('src',ret.goods_list.data[7]['images']);
+			}
+			if(ret.winner_list.code ==1){
+				var html = template('tpl_winner_list', {data:ret.winner_list.data});
+				$("#list_a ul").html(html);
+				//大于5条开启滚动
+				if(ret.winner_list.data.length>5){
+					scroll_list.hover(function() {
+						clearInterval(scrollTimer); 
+					}, function() { 
+						scrollTimer = setInterval(function() { 
+						scrollNews(scroll_list); 
+						}, 2000); 
+
+					}).trigger("mouseleave");
+				}	
+			}
+			if(ret.my_winner.code == 1){
+				var html = template('tpl_my_winner', {data:ret.my_winner.data.list});
+				$("#list_b ul").html(html);
+			}else if(ret.my_winner.msg=='请先登录后再操作！'){
+				//user_login();
+			}
+		});
+		$(".tips").css('margin-left','-'+($(".tips").width()/2)+'px');
+		$("#user_login").css('margin-left','-'+($("#user_login").width()/2)+'px');
+		$("#user_login").css('margin-top','-'+($("#user_login").height()/2)+'px');
+	});
+	//取消
+	function tips_cancel(str){
+		if(str != null){
+			valert({msg:str});
+		}
+		
+		$("#zhezhao").hide();
+		$("#no_chance_tips").hide();
+		$("#luck_tips").hide();
+		$("#user_login").hide();
+	}
+	var lock = 0;
+	var luckmsg = '';
+	var is_luck = 0;
+	var timeOut;
+	var award_url = '';
+	var award_result = '';
+	$("#startbtn").click(function(){
+		if(lock){return;}
+		lock = 1;
+		var obj = $(this);
+		
+		
+		ajax_post({
+			url:'/Api/api',
+			data:{apiurl:'/Luckdraw/luckDraw',is_openid:1}
+		},function(ret){
+			if(ret.code == 1){
+				var new_chance_num = parseInt($("#chance_num").html()) - 1;
+				if(new_chance_num < 0){
+					new_chance_num = 0;
+				}
+				$("#chance_num").html(new_chance_num);
+				
+				var a = ret.data.yes_angle;	//中奖角度
+				obj.rotate({
+					duration:5000,//转动时间间隔（转动速度）
+					angle: 0,  //开始角度 
+					animateTo:2520+a,//转动角度
+					easing: $.easing.easeOutSine,//动画扩展 
+					callback:luckdraw_result(ret)
+				});
+			}else if(ret.code == 4){
+				$("#zhezhao").show();
+				$("#no_chance_tips").show();
+				lock = 0;
+			}else{
+				lock = 0;
+				valert(ret);
+			}
+		});
+		
+	});
+	//判断是否中奖
+	function luckdraw_result(ret){
+		timeOut = setTimeout('show_result()',5500);
+		if(ret.data.yes_is_luck == 1){
+			is_luck = 1;
+			//获取奖品名称
+			$("#luck_tips_name").html(ret.data.yes);
+			award_url = ret.data.yes_award_url;
+			//自动领奖
+			if(ret.data.yes_prize_type == 2){
+			
+				ajax_post({
+					url:'/Api/api',
+					data:{apiurl:'/Luckdraw/award_winning',is_openid:1,uid:'{$_SESSION[user][id]}',no:ret.data.no}
+				},function(rett){
+					//valert(rett)
+					award_result = rett.msg;
+				});
+			}
+		}else{
+			is_luck = 0;
+			luckmsg = ret.data.yes;
+		}
+	}
+	//显示中奖信息
+	function show_result(){
+		if(is_luck == 1){
+			$("#zhezhao").show();
+			$("#luck_tips").show();
+			if(award_result != ''){
+				valert({msg:award_result});
+			}
+			//刷新我的中奖列表
+			ajax_post({
+				url:'/Api/api',
+				data:{apiurl:'/Luckdraw/get_my_winner',is_openid:1,pagesize:4,p:1}
+			},function(ret){
+				var html = template('tpl_my_winner', {data:ret.data.list});
+				$("#list_b ul").html(html);
+			});
+			
+		}else{
+			valert({msg:luckmsg});
+		}
+		lock = 0;
+	}
+
+	$('.luck_list_choice div').click(function(){
+		var Index = $(this).index();
+		//给菜单添加选择样式
+		$(this).addClass('active').siblings().removeClass('active');
+		//显示对应的div
+		$('.luck_list_body').children('div').eq(Index).fadeIn().siblings('div').hide();
+	});
+	
+
+	var scroll_list = $("#list_a"); 
+	var scrollTimer; 
+	
+
+	function scrollNews(obj) { 
+		var $self = obj.find("ul"); 
+		var lineHeight = $self.find("li:first").height(); 
+		$self.animate({ 
+		"marginTop": -lineHeight + "px" 
+		}, 600, function() { 
+		$self.css({ 
+		marginTop: 0 
+		}).find("li:first").appendTo($self); 
+		}) 
+	} 
+	
+	var is_exchange = 1;
+	//兑换
+	function exchange(){
+		if(is_exchange){
+			is_exchange = 0;
+			ajax_post({
+				url:'/Api/api',
+				data:{apiurl:'/Luckdraw/give_tangbao_chance',is_openid:1}
+			},function(ret){
+				if(ret.code == 1){
+					tips_cancel();
+					$("#startbtn").click();
+					var new_chance_num = parseInt($("#chance_num").html()) + 1;
+					$("#chance_num").html(new_chance_num);
+				}else{
+					valert(ret);
+				}
+				is_exchange = 1;
+			});
+		}
+		
+	}
+	
+	//领取奖品
+	function receive(){
+		tips_cancel();
+		window.location.href=award_url;
+	}
+	
+	
+</script>
+<if condition =" $_SESSION['user'] neq ''">
+<else/>
+	<div id = "user_login">
+		<form id="form-login" class="p10">
+			<div class="login-box">
+				<input name="username" id="username" placeholder="昵称/手机号码">
+
+				<input type="password" name="password" id="password" placeholder="登录密码">
+				
+				<div class="btn btn-danger btn-lg btn-block md20" onclick="login()">登录</div>
+				<div class="fl" onclick="window.location.href='{$url}/Login/register'">
+					还没有账号，去注册
+				</div>
+				<div class="fr" onclick="window.location.href='{$url}/Login/forget'">
+					忘记密码
+				</div>	
+			</div>
+			<input type="hidden" name="apiurl" value="/Erp/check_login">
+		</form>
+	</div>
+	<script>
+		function user_login(){
+			$("#zhezhao").show();
+			$("#user_login").show();
+		}
+		function login(){
+			var data=getFormJson('#form-login');
+			ajax_post({
+				url:'/Api/api',
+				data:data,
+			},function(ret){
+				if(ret.code==1) {
+					location.reload(true);
+				}else{
+					valert(ret);
+				}
+			});
+		}
+		
+	</script>
+</if>

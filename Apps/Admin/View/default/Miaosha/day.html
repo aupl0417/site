@@ -1,0 +1,383 @@
+<include file="Public:header" />
+<div class="m20">
+	<if condition="empty($_GET['day']) or empty($_GET['time'])">
+		<div class="text-center nors ft18">请从上面选择日期</div>
+	<else />
+		<div class="block-flat">
+			<div class="header">
+				<div class="pull-right">
+					<switch name="schedule.status">
+						<case value="1">
+							<div class="btn btn-trans btn-sm btn-primary">活动倒计时中</div>
+						</case>
+						<case value="2">
+							<div class="btn btn-trans btn-sm btn-default">活动已结束</div>
+						</case>
+						<default />
+							<div class="btn btn-trans btn-sm btn-info">活动筹备中</div>
+					</switch>
+					<div class="btn btn-sm btn-trans btn-primary" onclick="vmodal({title:'创建楼层',url:'__URL__/floor_add/day/{$_GET.day}/time/{$_GET.time}',width:'800px'})">添加楼层</div>
+					<div class="btn btn-sm btn-trans btn-default" onclick="ref()"><i class="fa fa-refresh"></i> 刷新</div>
+				</div>
+				<h3>{$_GET.day} {$_GET.time}</h3>
+			</div>
+			<div class="content">
+				<empty name="floor">
+					<div class="text-center nors ft18">
+						还未创建楼层，<div class="btn btn-sm btn-trans btn-primary" onclick="vmodal({title:'创建楼层',url:'__URL__/floor_first_add/day/{$_GET.day}/time/{$_GET.time}',width:'800px'})">创建楼层</div>
+					</div>
+				<else />
+					<ul class="nav nav-tabs border-d">
+						<li class="active">
+							<a href="{:U('/Miaosha/day',array_merge(I('get.'),array('index'=>0)))}">楼层设置</a>
+						</li>						
+						<li class="">
+							<a href="{:U('/Miaosha/day',array_merge(I('get.'),array('index'=>1)))}">活动商品</a>
+						</li>
+						<li class="">
+							<a href="{:U('/Miaosha/day',array_merge(I('get.'),array('index'=>2)))}">活动状态</a>
+						</li>						
+					</ul>	
+					
+					<div class="tab-content tab-content-noborder">
+						<div class="tab-pane active" id="tab1">	
+							<div class="alert alert-info alert-white-alt2 rounded">
+								<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+								<div class="icon"><i class="fa fa-info-circle"></i></div>
+								<strong>提示!</strong> 拖动下面方格可对楼层进行排序
+							 </div>						
+						
+							<div class="row floor-sort">
+								<volist name="floor" id="vo">
+								<div class="col-xs-3 md20" id="{$vo.id}">
+									<div class="box p20 text-center hover-shadow">
+										<div class="action" style="cursor:pointer">
+											<i class="fa fa-gear fa-2x mr10 text-info" onclick="vmodal({title:'楼层设置',width:'800px',url:'__URL__/floor_edit/id/{$vo.id}'})"></i>
+											<i class="fa fa-times fa-2x text-danger" onclick="delete_floor({$vo.id})"></i>
+										</div>
+										<h4>{$vo.floor_name}</h4>
+										<div class="text-gray">该楼层最多显示{$vo.num}个商品</div>
+									</div>
+								</div>
+								</volist>
+							</div>
+						</div>						
+						<div class="tab-pane" id="tab2">	
+							<volist name="floor" id="vo">
+							<div class="w1200">
+								<div class="floor-title">
+									{$vo.floor_name}
+								</div>
+							</div>
+
+							<div class="w1200 md20">
+								<div class="row floor-goods">
+									<volist name="vo.goods" id="gl">
+									<empty name="gl">
+									<div class="col-xs-3" id="">
+										<div class="box goods" data-floor_id="{$vo.id}" data-schedule_id="{$vo.schedule_id}" data-i="{$key}" data-id="">
+											<div class="m20">
+												<a href="" target="_blank"><img src="/Public/images/nopic.png" alt=""></a>
+											</div>
+											
+											<div class="text">
+												<div class="title"><a href="" target="_blank">商品标题，商品活动标题，描述商品的卖点，字数不超过30个字</a></div>
+												<div class="clearfix md10">
+													<div class="fl">抢购价：<span class="price">￥0.00</span></div>
+													<div class="fr text-gray">原价：<span class="market_price">￥0.00</span></div>
+												</div>
+												<div class="clearfix crow">
+													<div class="ccol-50 text-gray" style="line-height:34px">已抢 0 件</div>
+													<div class="ccol-50">
+														<a href="" target="_blank" class="btn btn-trans btn-danger btn-block">立即抢购</a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div><!--item-->
+									<else />
+									<div class="col-xs-3" id="{$gl.id}">
+										<div class="box goods" data-floor_id="{$vo.id}" data-schedule_id="{$vo.schedule_id}" data-i="{$key}" data-id="{$gl.id}">
+											<div class="m20">
+												<a href="" target="_blank"><img src="{:myurl($gl['images'][0],250)}" alt=""></a>
+											</div>
+											
+											<div class="text">
+												<div class="title"><a href="" target="_blank">{$gl.goods.goods_name}</a></div>
+												<div class="clearfix md10">
+													<div class="fl">抢购价：<span class="price">￥{$gl.price}</span></div>
+													<div class="fr text-gray">原价：<span class="market_price">￥{$gl.goods.price}</span></div>
+												</div>
+												<div class="clearfix crow">
+													<div class="ccol-50 text-gray" style="line-height:34px">已抢 0 件</div>
+													<div class="ccol-50">
+														<a href="" target="_blank" class="btn btn-trans btn-danger btn-block">立即抢购</a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div><!--item-->
+									</empty>
+									</volist>
+									
+								</div>
+							</div><!-- floor-->
+							<div class="clearfix"></div>
+							</volist>
+							
+							
+						</div>	
+						<div class="tab-pane" id="tab3">	
+							<div class="box p20 md20">
+								<gt name="time_dif" value="0">
+								<div class="ft16"><div class="btn btn-trans btn-sm btn-info" onclick="vmodal({title:'发送短信通知卖家提前做好准备',url:'__URL__/sms_send/id/{$schedule.id}/day/{$schedule.day}/time/{$schedule.time}',width:'800px'})">发送短信通知卖家提前做好准备</div></div>
+								<hr class="mt10 md20" />
+								</gt>
+								
+								<div>本次活动名额：<span class="ft18 text-danger">{$schedule.num}</span></div>
+								<div>已确定名额：<span class="ft18 text-danger">{$schedule.goods_num}</span></div>
+								
+								
+								<switch name="schedule.status">
+									<case value="1">
+										<gt name="time_dif" value="-86400">
+											<div>活动状态：<span class="ft18 text-danger">活动倒计时中</span></div>
+										<else />
+											<div>活动状态：<span class="ft18 text-danger">活动已结束</span></div>
+										</gt>
+											<lt name="time_dif" value="-86400">
+												秒杀活动已结束（时长为24小时）<div class="btn btn-trans btn-sm btn-primary" onclick="set_recovery()">将商品撤出活动并恢复原状态</div>
+											</lt>	
+										
+									</case>
+									<case value="2">
+										<div>活动状态：<span class="ft18 text-danger">活动已结束</span></div>
+									</case>
+									<default />
+										<gt name="time_dif" value="0">
+											<div class="md10">活动状态：<span class="ft18 text-danger">活动筹备中</span></div>												
+											<if condition="$time_dif lt 86400 and $schedule['num'] eq $schedule['goods_num']">
+											活动筹备完成后可在活动开始的前24个小时将<div class="btn btn-trans btn-sm btn-primary" onclick="set_dectime()">活动商品设置进入倒计时</div>，进行倒计时到活动结束这段时间商品将被锁定不可修改
+											</if>
+										<else />
+											<gt name="time_dif" value="-86400">
+												<div class="md10">活动状态：<span class="ft18">活动未筹备完成</span></div>
+											<else />
+												<div class="md10">活动状态：<span class="ft18">活动已过期</span></div>
+											</gt>
+										</gt>
+										
+										
+								</switch>
+								
+								
+							</div>
+
+						</div>
+					</div>
+
+				
+				</empty>
+			</div>
+		</div>
+	</if>
+</div>
+
+<form id="form-hide" class="hide">
+<input type="hidden" id="day" name="day" value="{$_GET.day}">
+<input type="hidden" id="time" name="time" value="{$_GET.time}">
+<input type="hidden" id="schedule_id" name="schedule_id" value="">
+<input type="hidden" id="sort" name="sort" value="">
+<input type="hidden" id="floor_id" name="floor_id" value="">
+<input type="hidden" id="join_id" name="join_id" value="">
+</form>
+
+
+
+<include file="Public:copyright" />
+<include file="Public:js" />
+<script>
+$(document).ready(function(){
+	$('.floor-sort').sortable({
+		stop: function(event, ui) {
+			var data = $('.floor-sort > div').map(function() { return $(this).attr("id"); }).get();
+			ajax_post({
+				data:{ids:data},
+				url:'__URL__/floor_sort',
+			});
+		}	
+	});
+	
+	var index = '{$_GET.index}';
+	if(index=='') index=0;
+	$('.nav-tabs li').eq(index).addClass('active').siblings().removeClass('active');
+	$('.tab-content .tab-pane').eq(index).addClass('active').siblings().removeClass('active');
+	
+	
+	$('.goods').mouseover(function(){
+		var width=$(this).width();
+		var height=$(this).height();
+		
+		var d=$(this).data();
+		//alert(d.id);
+
+		if($(this).find('.mask').size()>0){
+			$(this).find('.mask').css({width:width+'px',height:height+'px'});
+			$(this).find('.mask').removeClass('hide');
+		}else{
+			var html='<div class="mask" style="width:'+width+'px;height:'+height+'px">';
+			html +='<div class="mod-ac">';
+			if(d.id!='') html+='<div class="btn btn-default" onclick="goods_delete($(this))"><i class="fa fa-times"></i> 删除商品</div>';
+			else html +='<div class="btn btn-primary" onclick="goods_add($(this))"><i class="fa fa-location-arrow"></i> 选择商品</div>';
+			
+			html +='</div>';
+			$(this).append(html);
+
+
+		}	
+	}).mouseleave(function(){
+		$(this).find('.mask').addClass('hide');
+	});
+	
+	/*
+	$('.floor-goods').sortable({
+		stop: function(event, ui) {
+			//var data = $('.floor-goods > div').map(function() { return $(this).attr("id"); }).get();
+			//alert(data);
+			alert($(this).html());
+		}	
+	});	
+	*/
+	$('.floor-goods').each(function(){
+		var obj=$(this);
+		obj.sortable({
+			stop: function(event, ui) {
+				var data = $(this).find('.goods').map(function() { return $(this).attr("data-id"); }).get();
+				var floor_id =$(this).find('.goods').attr('data-floor_id');
+				//alert(floor_id);
+				ajax_post({
+					url:'__URL__/floor_goods_sort',
+					data:{ids:data,floor_id,floor_id}
+				});
+			}		
+		});
+	});
+	
+
+});
+
+function set_dectime(){
+	vmodal({
+		title:'活动商品设置',
+		msg:'<h4>确定设置活动商品进入倒计时？</h4>',
+		class:'text-center',
+		confirm:1,
+		width:'650px',
+		footer:false,
+	},function(){
+		$('#ajax-modal .modal-ok').click(function(){
+			ajax_post({
+				url:'__URL__/set_dectime',
+				data:{schedule_id:'{$schedule.id}'}
+			},function(ret){
+				valert(ret);
+				if(ret.status=='success'){
+					//alert(ret.html);
+					ref();
+					$('#ajax-modal').modal('hide');
+				}
+			});
+		});
+	});		
+}
+
+function set_recovery(){
+	vmodal({
+		title:'活动商品设置',
+		msg:'<h4>确定结束秒杀活动吗？</h4>',
+		class:'text-center',
+		confirm:1,
+		width:'650px',
+		footer:false,
+	},function(){
+		$('#ajax-modal .modal-ok').click(function(){
+			ajax_post({
+				url:'__URL__/set_recovery',
+				data:{schedule_id:'{$schedule.id}'}
+			},function(ret){
+				valert(ret);
+				if(ret.status=='success'){
+					//alert(ret.html);
+					ref();
+					$('#ajax-modal').modal('hide');
+				}
+			});
+		});
+	});		
+}
+
+function goods_delete(obj){
+	var obj;
+	var d=obj.closest('.goods').data();
+	vmodal({
+		title:'删除活动商品',
+		msg:'<h4>确定要删除活动商品吗？</h4>',
+		class:'text-center',
+		confirm:1,
+		width:'650px',
+		footer:false,
+	},function(){
+		$('#ajax-modal .modal-ok').click(function(){
+			ajax_post({
+				url:'__URL__/floor_goods_delete',
+				data:d
+			},function(ret){
+				valert(ret);
+				if(ret.status=='success'){
+					//alert(ret.html);
+					obj.closest('.goods').html(ret.html).data({id:''});
+					$('#ajax-modal').modal('hide');
+				}
+			});
+		});
+	});	
+}
+function goods_add(obj){
+	var d=obj.closest('.goods').data();
+	$('#form-hide #sort').val(d.i);
+	$('#form-hide #schedule_id').val(d.schedule_id);
+	$('#form-hide #floor_id').val(d.floor_id);
+	vmodal({
+		title:'选择活动商品',
+		url:'__URL__/select_goods/day/{$_GET.day}/time/{$_GET.time}',
+		width:'800px',
+	});
+}
+
+
+function delete_floor(id){
+	vmodal({
+		title:'删除楼层',
+		msg:'<h4>确定要删除该楼层吗？</h4>',
+		class:'text-center',
+		confirm:1,
+		width:'650px',
+		footer:false,
+	},function(){
+		$('#ajax-modal .modal-ok').click(function(){
+			ajax_post({
+				url:'__URL__/floor_delete',
+				data:{id:id}
+			},function(ret){
+				valert(ret);
+				if(ret.status=='success'){
+					//$('.floor-sort #'+id).remove();
+					//$('#ajax-modal').modal('hide');
+					ref();
+				}
+			});
+		});
+	});
+}
+</script>
+<include file="Public:footer" />

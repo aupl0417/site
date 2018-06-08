@@ -1,0 +1,101 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			添加银行卡
+		</div>
+		<div class="r">
+			<div class="text" onclick="card_add()">保存</div>
+		</div>
+	</div>
+</header>
+<section>
+	<form id="form-card-add">
+	<div class="line-box row hover" onclick="vmodal({title:'选择银行',url:'__URL__/select_bank'})">
+		<div class="col-4">银行名称</div>
+		<div class="col-4x3 text-right text-gray bank_name">请选择银行</div>
+	</div>
+	<div class="line-box row hover" onclick="vmodal({title:'选择银行卡类别',url:'__URL__/select_type'})">
+		<div class="col-4">银行卡类别</div>
+		<div class="col-4x3 text-right text-gray type">请选择银行卡类别</div>
+	</div>
+	<div class="line-box row hover">
+		<div class="col-4">所在城市</div>
+		<div class="col-4x3 text-right text-gray city" onclick="openWin({name:'select_province',url:'__URL__/province/page/card_add/field/province'})">请选择开户行所在城市</div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">分行名称</div>
+		<div class="col-4x3"><input id="address" name="address" placeholder="请输入分行名称"></div>
+	</div>
+	<div class="line-box noicon row hover">
+		<div class="col-4">开户名</div>
+		<div class="col-4x3 text-gray">{$_SESSION['user']['name']}</div>
+	</div>
+	<div class="line-input row hover">
+		<div class="col-4">银行账号</div>
+		<div class="col-4x3"><input id="account" name="account" placeholder="请输入银行账号"></div>
+	</div>
+
+	<input type="hidden" name="bank_id" id="bank_id">
+	<input type="hidden" name="province" id="province">
+	<input type="hidden" name="city" id="city">
+	<input type="hidden" name="type" id="type">
+	<input type="hidden" name="master" id="master" value="{$_SESSION['user']['name']}">
+	<input type="hidden" name="apiurl" value="/Withdraw/card_add">
+	<input type="hidden" name="is_openid" value="1">
+	</form>
+</section>
+
+<include file="Public:d_layer" />
+
+<script>
+	fixBar(1);
+
+	
+	function card_add(){
+		var data=getFormJson('#form-card-add');
+		if(data.bank_id==''){
+			valert({msg:'请选择银行！'});
+			return false;
+		}
+		if(data.type==''){
+			valert({msg:'请选择账号类别！'});
+			return false;
+		}		
+		if(data.province==''){
+			valert({msg:'请选择开户行所在省份！'});
+			return false;
+		}
+		if(data.city==''){
+			valert({msg:'请选择开户行所在城市！'});
+			return false;
+		}
+		if(data.address==''){
+			valert({msg:'请输入分行名称！'});
+			return false;
+		}
+		if(data.account==''){
+			valert({msg:'请输入银行账号！'});
+			return false;
+		}
+		
+		ajax_post({
+			url:'/Api/api',
+			data:data,
+		},function(ret){
+			if(ret.code==1){			
+				openWin({name:'wallet',url:'/Wallet/index',ref:true,close:true});
+			}else{
+				valert(ret);
+			}
+		});		
+	}
+	
+
+	
+
+
+	
+</script>

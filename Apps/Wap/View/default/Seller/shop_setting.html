@@ -1,0 +1,163 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			店铺设置
+		</div>
+		<div class="r">
+		</div>
+	</div>
+</header>
+<section>	
+	<div class="load-body">数据加载中……</div>
+</section>
+
+<form enctype="multipart/form-data" id="form-upload" data-url="__URL__/upload_save" class="hide">
+	<input id="imageData" name="imageData" type="file" value="" />
+</form>
+
+<script id="tpl_shop_setting" type="text/html">
+	<form id="form_shop_setting">
+		<div class="line-box hover noicon row">
+			<div class="col-30">店铺名称</div>
+			<div class="col-70 text-gray text-right"><%= data.shop_name %></div>
+		</div>
+		<div class="line-box-m hover row" onclick="shop_logo()">
+			<div class="col-30">店铺logo</div>
+			<div class="col-70 text-gray text-right shop_logo">
+				<img src="<%= data.logo%>" alt="logo" width="50" height="50" class="img-circle mr20">
+			</div>
+			<input type="hidden" id="shop_logo" name="shop_logo" value="<%= data.shop_logo %>">
+			<div class="clearfix"></div>
+		</div>	
+		<div class="line-box hover row" onclick="openWin({name:'select_province',url:'__URL__/province/page/shop_setting'})">
+			<div class="col-30">所在地区</div>
+			<div class="col-70 text-gray text-right city">
+				<%= data.province_name %> <%= data.city_name %> <%= data.district_name %> <%= data.town_name %>
+			</div>
+			<input type="hidden" id="province" name="province" value="<%= data.province %>">
+			<input type="hidden" id="city" name="city" value="<%= data.city %>">
+			<input type="hidden" id="district" name="district" value="<%= data.district %>">
+			<input type="hidden" id="town" name="town" value="<%= data.town %>">
+		</div>	
+		<div class="line-input row">
+			<div class="col-30">详细地址</div>
+			<div class="col-70">
+				<input name="street" id="street" placeholder="请输入详细地址" value="<%= data.street %>" >
+			</div>
+		</div>			
+		<div class="line-input row">
+			<div class="col-30">客服QQ</div>
+			<div class="col-70">
+				<input name="qq" id="qq" placeholder="请输入客服QQ" value="<%= data.qq %>" maxlength="13">
+			</div>
+		</div>			
+		<div class="line-input row">
+			<div class="col-30">手机号码</div>
+			<div class="col-70">
+				<input name="mobile" id="mobile" placeholder="请输入手机号码" value="<%= data.mobile %>" maxlength="15">
+			</div>
+		</div>			
+		<div class="line-input row">
+			<div class="col-30">电话号码</div>
+			<div class="col-70">
+				<input name="tel" id="tel" placeholder="请输入电话号码" value="<%= data.tel %>" maxlength="20">
+			</div>
+		</div>			
+		<div class="line-input row">
+			<div class="col-30">电子邮箱</div>
+			<div class="col-70">
+				<input name="email" id="email" placeholder="请输入电子邮箱" value="<%= data.email %>" maxlength="60">
+			</div>
+		</div>			
+		<div class="line-box-m row">
+			<div class="col-30">店铺介绍</div>
+			<div class="col-70">
+				<textarea name="about" id="about" placeholder="请输入店铺介绍，100个字以内" maxlength="100" rows="5"><%= data.about%></textarea>
+			</div>
+			<div class="clearfix"></div>
+		</div>	
+		<div class="p10">
+			<div class="btn btn-lg btn-block btn-danger" onclick="shop_setting()">提交</div>
+		</div>
+		
+		<input type="hidden" name="apiurl" value="/ShopSetting/shop_info_save">
+		<input type="hidden" name="is_openid" value="1">
+		<input type="hidden" name="no_sign" value="shop_logo,town,tel,email">		
+	</form>	
+</script>
+
+<script>
+	fixBar(1);
+	
+	ajax_post({
+		url:'/Api/api',
+		data:{apiurl:'/ShopSetting/shop_info',is_openid:1}
+	},function(ret){
+		if(ret.code == 1){
+			var html=template('tpl_shop_setting',{data:ret.data});
+			$('.page.active section').html(html);
+		}else{
+			$('.page.active section').html('<div class="load-body">'+ret.msg+'</div>');
+		}
+	});
+	
+	function shop_setting(){
+		var data=getFormJson('#form_shop_setting');
+		if(data.province=='' || data.city=='' || data.district==''){
+			valert({msg:'请选择店铺所在塔地区！'});
+			return false;
+		}		
+		if(data.street==''){
+			valert({msg:'请填写详细地址！'});
+			$('.page.active #street').focus();
+			return false;
+		}		
+		if(data.qq==''){
+			valert({msg:'请填写客服QQ！'});
+			$('.page.active #qq').focus();
+			return false;
+		}
+		if(data.mobile==''){
+			valert({msg:'请填写手机号码！'});
+			$('.page.active #mobile').focus();
+			return false;
+		}
+		if(data.about==''){
+			valert({msg:'请填写店铺介绍！'});
+			$('.page.active #about').focus();
+			return false;
+		}
+		
+		ajax_post({
+			url:'/Api/api',
+			data:data
+		},function(ret){
+			valert(ret);
+			if(ret.code==1){
+				setTimeout(function(){
+					closeWin();
+				},1000);
+			}
+		});	
+	}
+	
+	$('.page.active #imageData').change(function(){
+		ajax_post_form({
+			formid:'.page.active #form-upload',
+		},function(ret){
+			if(ret.code==1){
+				$(".page.active #imageData").val('');
+				$('.page.active #shop_logo').val(ret.url);
+				$('.page.active .shop_logo img').attr('src',ret.url);
+			}
+		});	
+	});
+		
+	function shop_logo(){
+		$('.page.active #imageData').click();
+	}
+	
+</script>

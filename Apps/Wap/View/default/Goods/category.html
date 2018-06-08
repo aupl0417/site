@@ -1,0 +1,74 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			商品分类
+		</div>
+		<div class="r">
+		</div>
+	</div>
+</header>
+<section>
+	<div class="input-search-box">
+		<input type="text" id="q" name="q" placeholder="搜索商品/店铺" onclick="openWin({name:'search',url:'/Goods/search'})" />
+	</div>	
+	<div class="category">
+		<div class="load-body">数据加载中……</div>
+	</div>
+</section>
+
+<script id="tpl_goods_category" type="text/html">
+<div class="row">
+	<div class="col-5">
+		<ul class="us">
+		<% for (var i = 0; i < data.length; i ++) { %>
+			<li onclick="sub_category(<%= i %>)"><%= data[i].category_name %></li>
+		<% } %>
+		</ul>
+	</div>
+	<div class="col-5x4">
+		<div class="p10 sub-category">
+
+		</div>
+	</div>
+</script>
+
+<script id="tpl_goods_category2" type="text/html">
+	<% for (var i = 0; i < data.dlist.length; i ++) { %>
+		<div class="ft14 md5" onclick="openWin({name:'goods',url:'/Goods/index/category_id/<%= data.dlist[i].id %>',close:true})"><%= data.dlist[i].category_name %></div>
+		<ul class="ds">
+			<% for (var j = 0; j <data.dlist[i].dlist.length; j ++) { %>
+				<li onclick="openWin({name:'goods',url:'/Goods/index/category_id/<%= data.dlist[i].dlist[j].id %>',close:true})"><%= data.dlist[i].dlist[j].category_name %></li>
+			<% } %>
+			<div class="clearfix"></div>
+		</ul>
+	<% } %>
+</script>
+
+<script>
+	fixBar(1);
+	
+	var category={};
+	ajax_post({
+		url:'/Api/api',
+		data:{apiurl:'/Goods/category'},
+	},function(ret){
+		if(ret.code==1){	
+			category=ret.data;
+			var html = template('tpl_goods_category', {data:ret.data});			
+			$('.page.active .category').html(html);
+			sub_category(0);
+		}else if(ret.code==3){
+			$('.page.active .category').html(no_data_text);
+		}
+	});
+	
+	function sub_category(i){
+		var html = template('tpl_goods_category2', {data:category[i]});
+		$('.page.active .sub-category').html(html);
+	}
+
+	
+</script>

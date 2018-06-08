@@ -1,0 +1,77 @@
+<include file="Public:header" />
+<include file="nav" />
+
+<div class="m20">
+	<form id="formlist" name="formlist">
+	<div class="block-flat">
+
+		<div class="p10 ft16">
+			<div class="btn btn-default btn-rad btn-trans"><a href="__URL__/fileList">返回列表</a></div>
+			<h3>{$Think.GET.controller}更新接口</h3>
+			<span class="mr20">提示：如果接口没有找到，请先导入接口</span>
+		</div>
+		<div class="clearfix"></div>
+		<div class="row p10">
+			<div class="col-xs-3 text-left">
+				<div class="page-total">共找到 <span style="color:red">{$apis|count}</span> 条接口</div>
+			</div>
+		</div>
+		<div class="content">
+			<notempty name="apis">
+				<table>
+					<thead>
+						<tr>
+							<th nowrap="nowrap"><strong>ID</strong></th>
+							<th nowrap="nowrap"><strong>标题</strong></th>
+							<th nowrap="nowrap"><strong>接口地址</strong></th>
+							<th nowrap="nowrap"><strong>接口所属类目</strong></th>
+							<th nowrap="nowrap"><strong>操作</strong></th>
+						</tr>
+					</thead>
+					<tbody class="ui-sortable">
+						<foreach name="apis" item="value">
+							<tr class="api-list">
+								<td style="word-break:break-all"><span>{$value.id}</span></td>
+								<td style="word-break:break-all"><span>{$value.title}</span></td>
+								<td style="word-break:break-all"><span>{$value.api_url}</span></td>
+								<td style="word-break:break-all"><span><?php echo $category[$category[$value['sid']]['sid']]['category_name'],' - ',$category[$value['sid']]['category_name'] ?></span></td>
+								<td style="text-align:center">
+									
+									<div style="margin:auto;width:150px" onclick="updateApi({$value.id})" class="btn btn-sm btn-info btn-rad btn-trans btn-block">点击更新类目</div>
+									
+								</td>
+							</tr>
+						</foreach>
+					</tbody>
+				</table>
+			</notempty>
+			<div class="clearfix"></div>
+					
+		</div>
+		
+	</div>
+	
+	</form>
+
+	<div class="clearfix h50px"></div>
+</div>
+
+
+
+<include file="Public:copyright" />
+<include file="Public:js" />
+<script>
+$(document).ready(function(){
+	
+});
+
+function updateApi(id){
+	vmodal({
+		title:'更新接口',
+		url:'__URL__/update_set/id/' + id,
+		width:'1500px',
+	});
+}
+</script>
+
+<include file="Public:footer" />

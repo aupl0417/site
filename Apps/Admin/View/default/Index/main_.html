@@ -1,0 +1,58 @@
+<include file="Public:header" />
+<include file="nav" />
+<js href="__JS__/ECharts/echarts.min.js" />
+
+<div class="m20">
+	<div class="box p20">
+		<!-- <div id="renmai" style="width: 100%;height:400px;"></div> -->
+		{:W('Totals/flow_7day')}{:W('Totals/jiaoyi_7day')}
+	</div>
+			<script type="text/javascript">
+				// // 基于准备好的dom，初始化echarts实例
+				// var myChart = echarts.init(document.getElementById('renmai'));
+
+				// // 指定图表的配置项和数据
+				// {:W('Widget/renmai',array('uid'=>5))}
+
+
+				// // 使用刚指定的配置项和数据显示图表。
+				// myChart.setOption(option);
+			</script>	
+
+	<div class="box p20 md20">
+		<div id="main" style="width: 100%;height:400px;"></div>
+	</div>
+			<script type="text/javascript">
+				// 基于准备好的dom，初始化echarts实例
+				var myChart = echarts.init(document.getElementById('main'));
+
+				// 指定图表的配置项和数据
+				{:W('Widget/echart_total')}
+
+
+				// 使用刚指定的配置项和数据显示图表。
+				myChart.setOption(option);
+			</script>	
+	
+	<div class="box p20">
+		<div id="money" style="width: 100%;height:400px;"></div>
+	</div>
+			<script type="text/javascript">
+				// 基于准备好的dom，初始化echarts实例
+				var myChart = echarts.init(document.getElementById('money'));
+
+				// 指定图表的配置项和数据
+				{:W('Widget/echart_money')}
+
+
+				// 使用刚指定的配置项和数据显示图表。
+				myChart.setOption(option);
+			</script>
+			
+		
+</div>
+
+
+<include file="Public:copyright" />
+<include file="Public:js" />
+<include file="Public:footer" />

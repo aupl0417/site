@@ -1,0 +1,141 @@
+<include file="Public:header" />
+<div class="container">
+    
+    <div class="mt30 mb20 bg_white pd0">
+        <div class="layui-tab layui-tab-card">
+            <ul class="layui-tab-title">
+                <foreach name="status" key="ko" item='vo'>
+                <li class="{$vo.class}"><a href="{:U('My/index',['status' => $ko])}">{$vo.name}({$tongji.status.$ko|default='0'})</a></li>                
+                </foreach>
+            </ul>
+            <div class="layui-tab-content pd0" style="padding:0">
+                <!-- 内容 -->
+                <notempty name="data.list">
+                <div class="" >
+                    <table class="mb30 td_ptb20 bor_no">
+                        <thead class=" bg_white">
+	                        <tr class="h50 lh50">
+	                            <th class="text-center fs16" width="150">素材</th>
+	                            <th class=" fs16" width="300">名称</th>
+	                            <th class="text-center fs16" width="180">投放时间</th>
+	                            <th class="text-center fs16" width="100">时长(天)</th>
+	                            <th class="text-center fs16" width="100">金额(元)</th>
+	                            <th class="text-center fs16" width="70">状态</th>
+	                            <th class="text-center fs16" width="180">操作</th>
+	                        </tr>
+                        </thead>
+
+                        <tbody class="bg_white">
+                        
+                        <!-- list -->
+                        <foreach name="data.list" item="vo">
+	                        <tr class="">
+	                            <td class="text-center">
+	                                <a href="{$vo.images}" title="大图" class="image-zoom">
+	                                    <img width="150" height="85" src="{:myurl($vo['images'],['w' => 150,'h' => 80])}" />
+	                                </a>
+	                            </td>
+	                            <td >
+	                                <div class="text_77">广告标题：{$vo.name}</div>
+	                                <div class="text_77">广告编号：{$vo.a_no}</div>
+	                                <div class="text_77">推广类型：{$vo.type_name}</div>
+	                                
+	                                <if condition="$vo['ad_position']['device'] eq '1'">
+	                                    <div class="text_77">推广设备：PC端</div>
+	                                    <div class="text_77" data-original-title="{$vo.url}">推广链接：
+	                                        <a class="text_black" href="{$vo.url}" target="_blank">{$vo.url}</a>
+	                                    </div>
+	                                </if>
+	                                <if condition="$vo['ad_position']['device'] eq '2'">
+	                                    <div class="text_77">推广设备：移动端</div>
+	                                    <div class="text_77" data-original-title="{:DM('www')}/Index/index?url={$vo.url}">推广链接：
+	                                        <a class="text_black" href="{:DM('www')}/Index/index?url={$vo.url}" target="_blank">{:DM('www')}/Index/index?url={$vo.url}</a>
+	                                    </div>
+	                                </if>
+	                            </td>
+	                            
+	                            <td class="text-center text_44 fs14">{$vo.sday} ~ {$vo.eday}</td>
+	                            <td class="text-center fs14">{$vo.num}</td>
+	                            <td class="text-center strong fs18 text_red">￥{$vo.money}</td>
+	
+	                            <td class="text-center  fs14">
+	                            	{$vo.status_name}
+	                            </td>
+	                            <td class="text-center">
+	                                <if condition="$vo['status'] eq 0">
+	                                	<div class="mb5">
+	                                		<a href="{:U('/My/pay',['a_no' => $vo['a_no']])}" class="layui-btn layui-btn-small layui-btn-primary w100">付款</a>
+	                                	</div>
+	                                	<div class="mb5">
+	                                    	<a onclick="delPosition('{$vo.a_no}')" class="layui-btn layui-btn-small layui-btn-primary w100" >删除</a>
+	                                    </div>
+	                                </if>
+	                                <if condition="$vo['status'] eq 5">
+		                                <div class="mb5">
+		                                	<a href="{:U('/Source/create_defer_orders',['a_no' => $vo['a_no']])}" class="layui-btn layui-btn-small layui-btn-primary w100">重新投放</a>
+		                                </div>
+	                                </if>
+	                                <div>
+	                                	<a href="{:U('/My/orders_view',['a_no' => $vo['a_no']])}" class="layui-btn layui-btn-small layui-btn-primary w100">详情</a>
+	                                </div>
+	                            </td>
+	                        </tr>
+                        </foreach>
+                        <!-- list -->
+                        </tbody>
+                    </table>
+                    <div class="pd10">
+                       <div class="row">
+                        <div class="col-xs-10 text-right">
+                            {:paresePageAction($data['page']['page'], '/SellerAd/orders_list', isset($params) ? $params : "__ACTION__")}
+                        </div>
+                        <div class="col-xs-2 text-center mt25"> {$data.page.total}</div>
+
+                    </div>
+                    </div>
+                    
+                    <else/>
+                        <div class="pt40 text-center text_red lh150">未找到广告记录！</div>
+                    
+                </div>
+                </notempty>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+function delPosition(a_no){
+    vmodal({
+        title:"删除广告",
+        // url:'{:U("/freightTemplate/create_area",array("express_id"=>$data["id"]))}',
+        msg:"您真的要删除吗？",
+        class:'text-center',
+        confirm:1,
+    },function(ret){
+        $(".modal-ok").click(function(){
+            var ac = '{:enCryptResturi("/Ad/ordersDelete")}';
+            ajax_post({
+                url: '/run/authRun',
+                headers:{Action:ac},
+                data:{
+                    a_no:a_no,
+                }
+            },function(ret){
+                ret.status = ret.code;
+                if(ret.code == 1){
+                    layerMsg(ret.msg,{skin:'my-layer-success'},function(){
+                        ref();
+                    });
+                }else{
+                    layerMsg(ret.msg,{skin:'my-layer-error'});
+                }
+            });
+        });
+    });
+}
+
+</script>
+
+<include file="Public:footer" />

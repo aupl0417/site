@@ -1,0 +1,96 @@
+<form class="form-horizontal vform" id="form_edit_express" name="form_edit_express" data-url="__URL__/edit_express_save" onsubmit="return edit_express()">
+			{:W('Common/Builder/buildform',array(array(
+				'field'		=>array(
+					array(
+						'formtype'		=>'select_images',
+						'label'			=>'快递公司',
+						'name'			=>'express_company_id',
+						'is_need'		=>1,
+						'level'			=>2,
+						'field'			=>array(
+								'category_name'	=>'category_name',
+								'images'		=>'logo',
+								'width'			=>150,
+								'height'		=>50,
+								'dlist'			=>'company',
+								'value'			=>'id',
+								'name'			=>'sub_name',
+							),	
+						'data'	=>CURD(array('table'=>'Admin/ExpressCategoryRelation','do'=>'D','relation'=>true,'field'=>'id,category_name'))
+					),			
+					array(
+						'formtype'		=>'text',
+						'label'			=>'快递单号',
+						'name'			=>'express_code',
+						'is_need'		=>1,
+						'placeholder'	=>'请输入快递单号！',
+						'attr'			=>'maxlength="50"',
+					),	
+								
+					array(
+						'formtype'		=>'textarea',
+						'label'			=>'备注内容',
+						'name'			=>'express_remark',
+						'placeholder'	=>'请输入备注内容，不得超过200个字！',
+						'attr'			=>'maxlength="200" rows="8"',
+					),		
+
+					array(
+						'formtype'		=>'hidden',
+						'name'			=>'s_no',
+					),					
+				),
+			),$rs))}								
+		
+			<div class="text-center p10">
+				<button type="submit" class="btn btn-primary btn-150px">提交</button>
+			</div>
+
+</form>
+
+<script>
+setInterval('check_company()',300);
+
+function check_company(){
+	//console.log(1);
+	//console.log($("#form_edit_express #express_company_id").val());
+	var express_company_id = $("#form_edit_express #express_company_id").val();
+	if(express_company_id == 361){
+		$("#form_edit_express .f-express_code").hide();
+		$("#form_edit_express #express_code").val('——');
+	}else{
+		if($("#form_edit_express #express_code").val() == '——'){
+			$("#form_edit_express #express_code").val('');
+		}
+		$("#form_edit_express .f-express_code").show();
+	}
+}
+
+function edit_express(){
+	var data=getFormJson('#form_edit_express');
+	
+	if(data.express_company_id==''){
+		valert({status:'warning',msg:'请选择快递公司！'});
+		return false;
+	}
+
+	if(data.express_code==''){
+		valert({status:'warning',msg:'请输入快递单号！'});
+		return false;
+	}
+	
+	ajax_post({
+		url:'__URL__/edit_express_save',
+		data:data,
+	},function(ret){
+		valert({status:ret.code==1?'success':'warning',msg:ret.msg});
+		if(ret.code==1){
+			setTimeout(function(){
+				ref();
+			},1000);
+		}
+	});	
+	return false;
+}
+
+</script>

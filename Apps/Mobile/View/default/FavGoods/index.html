@@ -1,0 +1,60 @@
+<include file="Public:header" />
+		<div class="page-group">
+			<div id="page-fav-goods" class="page" data-url="__URL__/goods_page" data-page_num="{$pagelist.pageinfo.page}" data-tpl="tpl_fav_goods">
+				<input type="hidden" name="p" id="p" value="2" />
+				<!-- 标题栏 -->
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left back" href="/"></a>
+					<h1 class="title">我关注的商品</h1>
+				</header>
+
+				<!-- 浮动导航 -->
+				<include file="Public:fixed-menu" />
+		
+				<!-- 这里是页面内容区 -->		
+				<div class="content infinite-scroll" data-distance="100" data-p="1">
+					<notempty name="pagelist.list">
+					<div class="list-block goods-list">						
+						<ul class="list-container">							
+							<volist name="pagelist.list" id="vo">
+							<li class="goods-content item-link" id="fav_goods_{$vo.id}">
+								<div class="goods-item">
+									<div class="goods-images">
+										<a href="/Goods/view/id/{$vo.attr_list.0.id}">
+											<img class="lazyload" data-sizes="auto" data-src="{:myurl($vo['goods']['images'],100)}" src="../Public/images/nopic.gif" width="100" alt="商品主图">
+										</a>
+									</div>
+									<div class="goods-info" onclick="cancel_fav_goods($(this))" data-id="{$vo.id}">
+										<div class="goods-name">{$vo.goods.goods_name}</div>										
+										<div class="goods-info-more">
+											<div class="goods-price">￥{$vo.goods.price}</div>
+											<div class="score hide">奖励 {:$vo['goods']['score_ratio'] * $vo['goods']['price'] * 100} 积分，已售出 {$vo.goods.sale_num} 件</div>
+										</div>
+									</div>
+								</div>
+							</li>
+							</volist>
+						</ul>
+
+					</div>
+					<!-- 加载提示符 -->
+					<div class="infinite-scroll-preloader">
+						<div class="preloader">
+						</div>
+					</div>
+					<else />
+							<div class="nors text-center">
+								<div><i class="iconfont icon-sousuowujieguo ft3"></i></div>
+								 找不到记录！
+							</div>
+					</notempty>					
+				</div>			
+				
+			</div>
+		
+		
+		</div>	
+		
+
+<include file="Public:script" />
+<include file="Public:footer" />

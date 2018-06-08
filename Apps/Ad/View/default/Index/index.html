@@ -1,0 +1,291 @@
+<include file="Public:header" />
+<!-- 主体 -->
+<div class="container">
+    <div class="mb50 mt30">
+        <div class="clearfix mt20 mb5">
+            <div class="fl fs16">信息总揽</div>
+        </div>
+        <div class="bor_der pd30 mt-1 mb10 bg-white">
+            <div class="row">
+                <div class="col-xs-3 pt10">
+                    <div class="mb5 text-center">
+                        <div class="fs16">广告累计消费</div>
+                        <div class="mt15">	<strong class="fs18">￥{$tongji.money|default='0'}</strong>
+                        </div>
+                        <div class="mt15">	<a href="{:U('/source')}" class="layui-btn layui-btn-normal" target="_blank">投放广告</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-3 pt10 solid_l pb10">
+                    <div class="mb5 text-center">
+                        <div class="fs16">广告投放</div>
+                        <br/>
+                        <div class="mt25">
+                            <a href="{:U('My/index',['status'=>0])}" class="layui-btn layui-btn-primary" style="height: auto;">
+                                <p class="mt10">未付款</p>
+                                <p class="mb10">{$tongji.status.0|default='0'}</p>
+                            </a>
+                            <a href="{:U('My/index',['status'=>3])}" class="layui-btn layui-btn-primary" style="height: auto;">
+                                <p class="mt10">投放中</p>
+                                <p class="mb10">{$tongji.status.3|default='0'}</p>
+                            </a>
+                            <a href="{:U('My/index',['status'=>5])}" class="layui-btn layui-btn-primary" style="height: auto;">
+                                <p class="mt10">已过期</p>
+                                <p class="mb10">{$tongji.status.5|default='0'}</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-3 pt10 solid_l pb10">
+                    <div class="mb5 text-center">
+                        <div class="fs16">素材投放</div>
+                        <br/>
+                        <div class="mt25">
+                            <a href="{:U('Sucai/index')}" class="layui-btn layui-btn-primary" style="height: auto;">
+                                <p class="mt10">已上传</p>
+                                <p class="mb10">{$tongji.sucai.all|default='0'}</p>
+                            </a>
+                            <a href="{:U('Sucai/index',['t'=>1])}" class="layui-btn layui-btn-primary" style="height: auto;">
+                                <p class="mt10">已审核</p>
+                                <assign name="ysh" value="$tongji['sucai'][1]+$tongji['sucai'][2]" />
+                                <p class="mb10">{$ysh|default='0'}</p>
+                            </a>
+                            <a href="{:U('Sucai/index',['t'=>0])}" class="layui-btn layui-btn-primary" style="height: auto;">
+                                <p class="mt10">待审核</p>
+                                <p class="mb10">{$tongji.sucai.0|default='0'}</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-3 pt10 solid_l">
+                    <div class="mb5 text-center">
+                        <div class="mt-15">
+                            <img width="90" height="90" src="{:myurl(session('user.face'),null, 90, 90)}" class="bor_der" />
+                        </div>
+                        <div class="fs14 pt6 pb6">	<strong>{$Think.session.user.nick}</strong>
+                        </div>
+                        <p class="mb10">上次登录：{$Think.session.user.last_login_time|default="未知"}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 广告统计信息简单展示 -->
+    <div class="mb50 mt50">
+        <div class="clearfix mt20 mb5">
+            <div class="fl fs16">实时投放效果</div>
+            <div class="fr mt5"><a href="{:U('Tj/index')}">更多数据>></a>
+            </div>
+        </div>
+        <table class="layui-table bg-white bor_der" lay-skin="nob">
+            <tr>
+                <th class="text-left text-gray" style="border: 0;">&nbsp;</th>
+                <th class="text-left text-gray" style="border: 0;">展现量</th>
+                <th class="text-left text-gray" style="border: 0;">点击量</th>
+                <th class="text-left text-gray" style="border: 0;">点击率（%）</th>
+                <th class="text-left text-gray" style="border: 0;">成交笔数</th>
+                <th class="text-left text-gray" style="border: 0;">成交金额（元）</th>
+                <th class="text-left text-gray" style="border: 0;">转化率（%）</th>
+            </tr>
+            <tr style="font-weight: normal;">
+                <td class="text-center h50 text-gray" style="border: 0;">昨日</td>
+                <td class="text-left" style="border: 0;">	<strong class="fs18 pl5">{$tjTwoDay[0].show|default='0'}</strong>
+                   	<php>
+                   		$show=$tjTwoDay[0]['show']-$tjTwoDay[1]['show'];
+                   		if($show==0||!$tjTwoDay[1]['show']){
+                   			
+                   		}elseif($show>0){
+                   			echo '<strong class="fs12" style="color: red;">↑';
+                   			echo round($show/$tjTwoDay[1]['show']*100,2).'%</strong>';
+                   		}else{
+                   			echo '<strong class="fs12" style="color: green;">↓';
+                   			echo round($show/$tjTwoDay[1]['show']*100,2).'%</strong>';
+                   		}
+                   	</php>
+                </td>
+                <td class="text-left" style="border: 0;">	<strong class="fs18 pl5">{$tjTwoDay[0].hit|default='0'}</strong>
+                   	<php>
+                   		$hit=$tjTwoDay[0]['hit']-$tjTwoDay[1]['hit'];
+                   		if($hit==0||!$tjTwoDay[1]['hit']){
+                   			
+                   		}elseif($hit>0){
+                   			echo '<strong class="fs12" style="color: red;">↑';
+                   			echo round($hit/$tjTwoDay[1]['hit']*100,2).'%</strong>';
+                   		}else{
+                   			echo '<strong class="fs12" style="color: green;">↓';
+                   			echo round($hit/$tjTwoDay[1]['hit']*100,2).'%</strong>';
+                   		}
+                   	</php>
+                </td>
+                <td class="text-left" style="border: 0;">	<strong class="fs18 pl5"><php>echo round($tjTwoDay[0]['hit']/$tjTwoDay[0]['show']*100,2);</php>%</strong>
+                    <php>
+                   		$hitc=($tjTwoDay[0]['hit']/$tjTwoDay[0]['show'])-($tjTwoDay[1]['hit']/$tjTwoDay[1]['show']);
+                   		if($hitc==0||!($tjTwoDay[1]['hit']/$tjTwoDay[1]['show'])){
+                   			
+                   		}elseif($hitc>0){
+                   			echo '<strong class="fs12" style="color: red;">↑';
+                   			echo round($hitc/($tjTwoDay[1]['hit']/$tjTwoDay[1]['show'])*100,2).'%</strong>';
+                   		}else{
+                   			echo '<strong class="fs12" style="color: green;">↓';
+                   			echo round($hitc/($tjTwoDay[1]['hit']/$tjTwoDay[1]['show'])*100,2).'%</strong>';
+                   		}
+                   	</php>
+                </td>
+                <td class="text-left" style="border: 0;">	<strong class="fs18 pl5">{$tjTwoDay[0].orders|default='0'}</strong>
+                    <php>
+                   		$orders=$tjTwoDay[0]['orders']-$tjTwoDay[1]['orders'];
+                   		if($orders==0||!$tjTwoDay[1]['orders']){
+                   			
+                   		}elseif($orders>0){
+                   			echo '<strong class="fs12" style="color: red;">↑';
+                   			echo round($orders/$tjTwoDay[1]['orders']*100,2).'%</strong>';
+                   		}else{
+                   			echo '<strong class="fs12" style="color: green;">↓';
+                   			echo round($orders/$tjTwoDay[1]['orders']*100,2).'%</strong>';
+                   		}
+                   	</php>
+                </td>
+                <td class="text-left" style="border: 0;">	<strong class="fs18 pl5">{$tjTwoDay[0].orders_price|default='0'}</strong>
+                    <php>
+                   		$orders_price=$tjTwoDay[0]['orders_price']-$tjTwoDay[1]['orders_price'];
+                   		if($orders_price==0||!$tjTwoDay[1]['orders_price']){
+                   			
+                   		}elseif($orders_price>0){
+                   			echo '<strong class="fs12" style="color: red;">↑';
+                   			echo round($orders_price/$tjTwoDay[1]['orders_price']*100,2).'%</strong>';
+                   		}else{
+                   			echo '<strong class="fs12" style="color: green;">↓';
+                   			echo round($orders_price/$tjTwoDay[1]['orders_price']*100,2).'%</strong>';
+                   		}
+                   	</php>
+                </td>
+                <td class="text-left" style="border: 0;">	<strong class="fs18 pl5"><php>echo round($tjTwoDay[0]['orders']/$tjTwoDay[0]['hit']*100,2);</php>%</strong>
+                    <php>
+                   		$hitd=($tjTwoDay[0]['orders']/$tjTwoDay[0]['hit'])-($tjTwoDay[1]['orders']/$tjTwoDay[1]['hit']);
+                   		if($hitd==0||!($tjTwoDay[1]['orders']/$tjTwoDay[1]['hit'])){
+                   			
+                   		}elseif($hitd>0){
+                   			echo '<strong class="fs12" style="color: red;">↑';
+                   			echo round($hitd/($tjTwoDay[1]['orders']/$tjTwoDay[1]['hit'])*100,2).'%</strong>';
+                   		}else{
+                   			echo '<strong class="fs12" style="color: green;">↓';
+                   			echo round($hitd/($tjTwoDay[1]['orders']/$tjTwoDay[1]['hit'])*100,2).'%</strong>';
+                   		}
+                   	</php>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-center h50 text-gray" style="border: 0;">前日</td>
+                <td class="text-left" style="border: 0;"><span class="fs16 pl8">{$tjTwoDay[1].show|default='0'}</span>
+                </td>
+                <td class="text-left" style="border: 0;"><span class="fs16 pl8">{$tjTwoDay[1].hit|default='0'}</span>
+                </td>
+                <td class="text-left" style="border: 0;"><span class="fs16 pl8"><php>echo round($tjTwoDay[1]['hit']/$tjTwoDay[1]['show']*100,2);</php>%</span>
+                </td>
+                <td class="text-left" style="border: 0;"><span class="fs16 pl8">{$tjTwoDay[1].orders|default='0'}</span>
+                </td>
+                <td class="text-left" style="border: 0;"><span class="fs16 pl8">{$tjTwoDay[1].orders_price|default='0'}</span>
+                </td>
+                <td class="text-left" style="border: 0;"><span class="fs16 pl8"><php>echo round($tjTwoDay[1]['orders']/$tjTwoDay[1]['hit']*100,2);</php>%</span>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="mb50 row">
+        <div class="col-xs-6">
+            <div class="fs16">热门广告Top5</div>
+            <table class="layui-table bg-white bor_der" lay-skin="nob">
+                <tr style="border-bottom: 1px solid #ccc;" class="h60">
+                    <th class="text-center" style="border: 0;width: 50px;">&nbsp;</th>
+                    <th class="text-center w225" style="border: 0;"><strong>广告详情</strong>
+                    </th>
+                    <th class="text-center" style="border: 0;"><strong>展示量</strong>
+                    </th>
+                    <th class="text-center" style="border: 0;"><strong>点击量</strong>
+                    </th>
+                    <th class="text-center" style="border: 0;"><strong>点击率</strong>
+                    </th>
+                    <th class="text-center" style="border: 0;"><strong>转化率</strong>
+                    </th>
+                </tr>
+                <tr><td colspan="6" style="border: 0;line-height: 0;">&nbsp;</td></tr>
+                <volist name="topAd" id="vo" key="key">
+	                <tr>
+	                    <td class="text-center" style="border: 0;"><strong>{$key}</strong>
+	                    </td>
+	                    <td class="text-center" style="border: 0;">
+	                        <div class="fl">
+	                        	<a href="{$vo['images']}" class="image-zoom">
+	                            	<img src="{:myurl($vo['images'],80)}" class="mr5 bor_der" />
+	                            </a>
+	                        </div>
+	                        <div class="">
+	                        	<a href="{$vo.url}" target="_blank">
+	                            	<p class="text-left fs14 pb5 over" style="height: 37px;">{$vo.name}</p>
+	                            </a>
+	                            <p class="text-left fs14 pb5">
+	                            	<switch name="vo['type']">
+	                            		<case value="0">商品</case>
+	                            		<case value="1">店铺</case>
+	                            		<case value="2">站外链接</case>
+	                            	</switch>
+	                            </p>
+	                            <p class="text-left fs14">
+	                            	<switch name="vo['device']">
+	                            		<case value="1">PC</case>
+	                            		<case value="2">WAP</case>
+	                            	</switch>
+	                            </p>
+	                        </div>
+	                    </td>
+	                    <td class="text-center" style="border: 0;">{$vo.show}</td>
+	                    <td class="text-center" style="border: 0;">{$vo.hit}</td>
+	                    <td class="text-center" style="border: 0;"><php>echo round($vo['hit']/$vo['show']*100,2);</php>%</td>
+	                    <td class="text-center" style="border: 0;"><php>echo round($vo['orders']/$vo['hit']*100,2);</php>%</td>
+	                </tr>
+                </volist>
+            </table>
+        </div>
+        <div class="col-xs-6">
+            <div class="fs16">热门宝贝Top5</div>
+            <table class="layui-table bg-white bor_der" lay-skin="nob">
+                <tr class="h60" style="border-bottom: 1px solid #ccc;">
+                    <th class="text-center" style="border: 0;width: 50px;">&nbsp;</th>
+                    <th class="text-center" style="border: 0;width: 250px;"><strong>广告详情</strong>
+                    </th>
+                    <th class="text-center" style="border: 0;"><strong>浏览量</strong>
+                    </th>
+                    <th class="text-center" style="border: 0;"><strong>成交量</strong>
+                    </th>
+                    <th class="text-center" style="border: 0;"><strong>成交金额（元）</strong>
+                    </th>
+                </tr>
+                <tr><td colspan="6" style="border: 0;line-height: 0;">&nbsp;</td></tr>
+                <volist name="topGoods" id="vo" key="key">
+	                <tr>
+	                    <td class="text-center" style="border: 0;"><strong>{$key}</strong>
+	                    </td>
+	                    <td class="text-center" style="border: 0;">
+	                        <div class="fl">
+	                        	<a href="{$vo['images']}" class="image-zoom">
+	                            	<img src="{:myurl($vo['images'],80)}" class="mr5 bor_der" />
+	                            </a>
+	                        </div>
+	                        <div class="">
+	                        	<a href="{$vo.url}" target="_blank">
+	                            	<p class="text-left fs14 pb5 over" style="height: 37px;">{$vo.goods_name}</p>
+	                            </a>
+	                            <p class="text-left fs14" style="color: red;">￥{$vo.price}元</p>
+	                        </div>
+	                    </td>
+	                    <td class="text-center" style="border: 0;">{$vo.show}</td>
+	                    <td class="text-center" style="border: 0;">{$vo.orders}</td>
+	                    <td class="text-center" style="border: 0;border-right: 1px solid #ddd;">{$vo.orders_price}</td>
+	                </tr>
+                </volist>
+            </table>
+        </div>
+    </div>
+    <!-- 广告统计信息简单展示 -->
+</div>
+<include file="Public:footer" />

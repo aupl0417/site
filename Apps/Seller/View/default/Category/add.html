@@ -1,0 +1,24 @@
+{:W('Common/Builder/form', [['data' => $keyList, 'run' => '/run/authRun']])}
+<script>
+$(document).ready(function() {
+	checkform({
+		formid:"#formadd",
+		headers : {Action : '{$header}'},
+		rules:{
+			category_name:{
+				required:true,
+			},
+		},
+		messages:{
+			category_name:{
+				required:'分类名称不能为空',
+			},
+		}
+	},function(res) {
+		talert({status:res.code,msg:res.msg});
+		if(res.code == 1) {
+			setTimeout("ref()", 1000);
+		}
+	});
+});
+</script>

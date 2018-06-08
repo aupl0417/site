@@ -1,0 +1,3 @@
+<?php if (!defined('THINK_PATH')) exit(); if(!empty($data["ads"])): if(is_array($data["ads"])): $i = 0; $__LIST__ = $data["ads"];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><a target="_blank" href="<?php echo DM('click');?>?act=<?php echo enCryptRestUri($vo['id']);?>" class=" db" style="text-center">
+			<img class="re" style="<?php echo ($style); ?>" src="<?php echo ($vo["images"]); ?>">
+		</a><?php endforeach; endif; else: echo "" ;endif; endif; ?>

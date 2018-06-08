@@ -1,0 +1,169 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin({ref:true})"></i>
+		</div>
+		<div class="title">
+			我的通知
+		</div>
+		<div class="r">
+			
+		</div>
+	</div>
+</header>
+<section>	
+	<!--主菜单-->
+	<div class="row tabs">
+		<div class="col-33">
+			<div class="tabs-item active" data-active="1">
+				所有通知
+				<div></div>
+			</div>
+		</div>	
+		<div class="col-33">
+			<div class="tabs-item" data-active="1">
+				未查看
+				<div></div>
+			</div>
+		</div>
+		<div class="col-33">
+			<div class="tabs-item">
+				已查看
+				<div></div>
+			</div>
+		</div>
+	</div>	
+	<div class="clearfix"></div>
+	<div class="tabs-content">
+		<div class="tabs-pane active" data-status="">
+			<div class="pagelist"></div>
+			<div class="p10 load-more" onclick="notice_pagelist($(this).closest('.tabs-pane'))">
+				<div class="btn btn-lg btn-block btn-danger btn-trans">加载更多……</div>
+			</div>	
+		</div>
+		<div class="tabs-pane" data-status="0">
+			<div class="pagelist 0"></div>
+			<div class="p10 load-more" onclick="notice_pagelist($(this).closest('.tabs-pane'),1)">
+				<div class="btn btn-lg btn-block btn-danger btn-trans">加载更多……</div>
+			</div>			
+		</div>
+		<div class="tabs-pane" data-status="1">
+			<div class="pagelist 1"></div>
+			<div class="p10 load-more" onclick="notice_pagelist($(this).closest('.tabs-pane'),2)">
+				<div class="btn btn-lg btn-block btn-danger btn-trans">加载更多……</div>
+			</div>			
+		</div>
+	</div>
+</section>
+<script id="tpl_my_notice" type="text/html">
+<% for(i=0;i<data.length;i++){ %>
+	<% if(data[i].is_read == 1) { %>
+	<div class="line-box hover row" onclick="noticeDel(<%= data[i].id %>)">
+		<div class="col-70"><span class="b">系统通知</span></div>
+		<div class="col-30 text-right text-danger">删除</div>	
+	</div>
+	<% } else { %>
+	<div class="line-box hover row" onclick="noticeRead(<%= data[i].id %>)">
+		<div class="col-70"><span class="b">系统通知</span></div>
+		<div class="col-30 text-right text-info">标为已读</div>	
+	</div>
+	<% } %>
+	<div class="line-box-m hover row noicon md10">
+		<div><%= data[i].content %></div>
+		<% if(data[i].is_read == 1) { %>
+			<div style="color:#777">阅读时间：<%= data[i].rtime %></div>
+		<% } else { %>
+			<div style="color:#777">发送时间：<%= data[i].atime %></div>
+		<% } %>
+		<div class="clearfix"></div>
+	</div>
+<% } %>
+</script>
+<script>
+	fixBar(1);
+	template.config("escape", false);		//不直接输出html代码
+	var daigou_data={apiurl:'/NoticeMsg/index',is_openid:1,status:'{$_GET.status}',no_sign:'p,pagesize,status,action'};
+
+	function notice_pagelist(obj,status){
+		var obj;
+		if(status!==undefined) daigou_data.status=status;
+		pagelist({
+			obj:obj,
+			data:daigou_data,
+			success:function(ret){
+				var html=template('tpl_my_notice',{data:ret.data.list});
+				if(obj.data('p')==1){
+					obj.find('.pagelist').html(html);
+				}else if(ret.data.list == '') {
+					obj.find('.pagelist').html(no_data_text);
+				}else{
+					obj.find('.pagelist').append(html);
+				}
+			},
+			error:function(ret){
+				obj.find('.pagelist').html(no_data_text);
+			},
+		});	
+	}
+
+
+	$('.page.active .tabs .tabs-item').each(function(index){
+		var obj=$(this);
+		var index;
+		
+		obj.click(function(){	
+			$(this).closest('.tabs').find('.tabs-item').removeClass('active');
+			$(this).addClass('active');
+			$('.page.active .tabs-content .tabs-pane').removeClass('active').eq(index).addClass('active');
+			
+
+			var tag=$('.page.active .tabs-content .tabs-pane').eq(index);
+			notice_pagelist(tag,tag.data('status'));
+		});
+	});
+
+	$('.page.active .tabs .tabs-item').eq({$_GET['status']?$_GET['status']:0}).click();
+	
+	//删除
+	function noticeDel(id) {
+		vmodal({
+			title:'删除通知',
+			url:'__URL__/del/id/'+id,
+		},function(){
+			$('.page.active .vmodal-success').unbind();
+			$('.page.active .vmodal-success').click(function(){
+				ajax_post({
+					url:'/Api/api',
+					data:{apiurl:'/NoticeMsg/del', is_openid:1, id:id}
+				},function(ret){
+					valert(ret);
+					if(ret.code==1){
+						winRef();
+					}
+				});		
+			});			
+		});
+	}
+	
+	//设为阅读
+	function noticeRead(id) {
+		vmodal({
+			title:'标记为已阅读',
+			url:'__URL__/read/id/'+id,
+		},function(){
+			$('.page.active .vmodal-success').unbind();
+			$('.page.active .vmodal-success').click(function(){
+				ajax_post({
+					url:'/Api/api',
+					data:{apiurl:'/NoticeMsg/saveRead', is_openid:1, id:id}
+				},function(ret){
+					valert(ret);
+					if(ret.code==1){
+						winRef();
+					}
+				});		
+			});			
+		});
+	}
+</script>
+<include file="Public:d_layer" />

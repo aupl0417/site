@@ -1,0 +1,395 @@
+<div class="clearfix">
+	<div class="pull-right text-gray" onclick="$(this).closest('tr').toggleClass('hide');"><i class="fa fa-times-circle-o fa-2x"></i></div>	
+</div>
+	<style>
+		.b_button div{border-bottom:none;border-radius:5px 5px 0 0; -moz-border-radius:5px 5px 0 0; -webkit-border-radius:5px 5px 0 0;cursor:pointer;}
+		.b_button .active{background:rgb(242,242,242)}
+		.b_list{margin-top:20px;}
+	</style>
+	<div class="box p20">
+		<div class="b_button flex flex-fdr border-b">
+			<div class = "p10 mr10 border active" onclick="page_switch(this)"><strong class="ft14">付款渠道统计</strong></div>
+			<div class = "p10 mr10 border" onclick="page_switch(this)"><strong class="ft14">交易类型统计</strong></div>
+			<div class = "p10 mr10 border" onclick="page_switch(this)"><strong class="ft14">交易平台统计</strong></div>
+		</div>
+		<div class = "b_list">
+			<div class="flex flex-fdr">
+				<div class="flex-f1" id="main_{$id}" style="height:400px;"></div>
+				<div class="flex-f1" id="main_{$id}_2" style="height:400px;"></div>
+				<div class="flex-f1 hide" id="main_{$id}_3" style="height:400px;"></div>
+			</div>
+			<div class = "flex flex-fdr border p20" style="height:400px;">
+				<div class = "flex-f1 flex flex-fdc mr10 border">
+					<div class = "flex-f1 flex flex-fdr border-b">
+						<div class = "flex-f1 p20 flex flex-aic">
+							<div>
+								<p>下单笔数</p>
+								<strong>{$rs.order_num}</strong>
+							</div>
+						</div>
+						<div class = "flex-f1 p20 flex flex-aic">
+							<div>
+								<p>下单总金额</p>
+								<strong>{$rs.day_order_total}</strong>
+							</div>
+						</div>
+						<div class = "flex-f1 p20 flex flex-aic">
+							<div>
+								<p>下单平均价</p>
+								<strong>{$rs.day_average_order}</strong>
+							</div>
+						</div>
+						<div class = "flex-f1-half flex flex-aic flex-jcc">
+							<strong style="color:rgb(171,236,171)">下单</strong>
+						</div>
+					</div>
+					<div class = "flex-f1 flex flex-fdr border-b">
+						<div class = "flex-f1 p20 flex flex-aic">
+							<div>
+								<p>成交笔数</p>
+								<strong>{$rs.order_success}</strong>
+							</div>
+						</div>
+						<div class = "flex-f1 p20 flex flex-aic">
+							<div>
+								<p>成交总金额</p>
+								<strong>{$rs.day_order_success_total}</strong>
+							</div>
+						</div>
+						<div class = "flex-f1 p20 flex flex-aic">
+							<div>
+								<p>成交平均单价</p>
+								<strong>{$rs.day_average_success_order}</strong>
+							</div>
+						</div>
+						<div class = "flex-f1-half flex flex-aic flex-jcc">
+							<strong style="color:rgb(0,204,51)">成交</strong>
+						</div>
+					</div>
+					<div class = "flex-f1 flex flex-fdr">
+						<div class = "flex-f1 p20 flex flex-aic">
+							<div>
+								<p>确认收货笔数</p>
+								<strong>{$rs.accept_num}</strong>
+							</div>
+						</div>
+						<div class = "flex-f1 p20 flex flex-aic">
+							<div>
+								<p>确认收货总金额</p>
+								<strong>{$rs.day_accept_total}</strong>
+							</div>
+						</div>
+						<div class = "flex-f1 p20 flex flex-aic">
+							<div>
+								<p>确认收货平均单价</p>
+								<strong>{$rs.day_average_accept}</strong>
+							</div>
+						</div>
+						<div class = "flex-f1-half flex flex-aic flex-jcc">
+							<strong style="color:rgb(0,153,0)">确认收货</strong>
+						</div>
+					</div>
+				</div>
+				<div class = "flex-f1 flex flex-fdc ml10 border">
+					<div class = "flex-f1 flex flex-fdr border-b">
+						<div class = "flex-f1 p20 flex flex-aic">
+							<div>
+								<p>申请退款笔数</p>
+								<strong>{$rs.refund_num}</strong>
+							</div>
+						</div>
+						<div class = "flex-f1 p20 flex flex-aic">
+							<div>
+								<p>申请退款总金额</p>
+								<strong>{$rs.day_refund_money}</strong>
+							</div>
+						</div>
+						<div class = "flex-f1 p20 flex flex-aic">
+							<div>
+								<p>申请退款平均单价</p>
+								<strong>{$rs.day_average_refund}</strong>
+							</div>
+						</div>
+						<div class = "flex-f1-half flex flex-aic flex-jcc">
+							<strong style="color:rgb(225,140,222)">申请退款</strong>
+						</div>
+					</div>
+					<div class = "flex-f1 flex flex-fdr">
+						<div class = "flex-f1 p20 flex flex-aic">
+							<div>
+								<p>退款成功笔数</p>
+								<strong>{$rs.refund_success_num}</strong>
+							</div>
+						</div>
+						<div class = "flex-f1 p20 flex flex-aic">
+							<div>
+								<p>退款成功总金额</p>
+								<strong>{$rs.refund_success_money}</strong>
+							</div>
+						</div>
+						<div class = "flex-f1 p20 flex flex-aic">
+							<div>
+								<p>退款成功平均单价</p>
+								<strong>{$rs.refund_success_average}</strong>
+							</div>
+						</div>
+						<div class = "flex-f1-half flex flex-aic flex-jcc">
+							<strong style="color:rgb(153,0,204)">退款成功</strong>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+			<div class="flex flex-fdr" >
+				<div class="flex-f1" id="main_{$id}_4" style="height:400px;"></div>
+				<div class="flex-f1" id="main_{$id}_5" style="height:400px;"></div>
+				<div class="flex-f1" id="main_{$id}_6" style="height:400px;"></div>
+			</div>
+		</div>
+		<script>
+			// 基于准备好的dom，初始化echarts实例
+			var myChart_{$id} = echarts.init(document.getElementById('main_{$id}'));
+			option_{$id} = {
+				title : {
+					text: '当日付款笔数统计',
+					x:'center'
+				},
+				tooltip : {
+					trigger: 'item',
+					formatter: "{a} <br/>{b} : {c} ({d}%)"
+				},
+				legend: {
+					orient: 'vertical',
+					left: 'left',
+					data: ['支付宝','现金','唐宝',]
+				},
+				series : [
+					{
+						name: '付款类型',
+						type: 'pie',
+						radius : '55%',
+						center: ['50%', '60%'],
+						data:[
+							{value:{$rs.alipay_num}, name:'支付宝'},
+							{value:{$rs.money_num}, name:'现金'},
+							{value:{$rs.tangbao_num}, name:'唐宝'},
+						],
+						itemStyle: {
+							emphasis: {
+								shadowBlur: 10,
+								shadowOffsetX: 0,
+								shadowColor: 'rgba(0, 0, 0, 0.5)'
+							}
+						}
+					}
+				]
+			};
+			// 使用刚指定的配置项和数据显示图表。
+			myChart_{$id}.setOption(option_{$id});
+			
+			// 基于准备好的dom，初始化echarts实例
+			var myChart_{$id}_2 = echarts.init(document.getElementById('main_{$id}_2'));
+			option_{$id}_2 = {
+				title : {
+					text: '当日付款总额统计',
+					x:'center'
+				},
+				tooltip : {
+					trigger: 'item',
+					formatter: "{a} <br/>{b} : {c} ({d}%)"
+				},
+				legend: {
+					orient: 'vertical',
+					left: 'left',
+					data: ['支付宝','现金','唐宝',]
+				},
+				series : [
+					{
+						name: '付款类型',
+						type: 'pie',
+						radius : '55%',
+						center: ['50%', '60%'],
+						data:[
+							{value:{$rs.day_alipay_total}, name:'支付宝'},
+							{value:{$rs.day_money_total}, name:'现金'},
+							{value:{$rs.day_tangbao_total}, name:'唐宝'},
+						],
+						itemStyle: {
+							emphasis: {
+								shadowBlur: 10,
+								shadowOffsetX: 0,
+								shadowColor: 'rgba(0, 0, 0, 0.5)'
+							}
+						}
+					}
+				]
+			};
+			// 使用刚指定的配置项和数据显示图表。
+			myChart_{$id}_2.setOption(option_{$id}_2);
+			
+			// 基于准备好的dom，初始化echarts实例
+			var myChart_{$id}_3 = echarts.init(document.getElementById('main_{$id}_3'));
+			option_{$id}_3 = {
+				title : {
+					text: '上一天付款类型支付笔数占比',
+					x:'center'
+				},
+				tooltip : {
+					trigger: 'item',
+					formatter: "{a} <br/>{b} : {c} ({d}%)"
+				},
+				legend: {
+					orient: 'vertical',
+					left: 'left',
+					data: ['支付宝','现金','唐宝',]
+				},
+				series : [
+					{
+						name: '付款类型',
+						type: 'pie',
+						radius : '55%',
+						center: ['50%', '60%'],
+						data:[
+							{value:11, name:'支付宝'},
+							{value:22, name:'现金'},
+							{value:33, name:'唐宝'},
+						],
+						itemStyle: {
+							emphasis: {
+								shadowBlur: 10,
+								shadowOffsetX: 0,
+								shadowColor: 'rgba(0, 0, 0, 0.5)'
+							}
+						}
+					}
+				]
+			};
+			// 使用刚指定的配置项和数据显示图表。
+			myChart_{$id}_3.setOption(option_{$id}_3);
+			
+			// 基于准备好的dom，初始化echarts实例
+			var myChart_{$id}_4 = echarts.init(document.getElementById('main_{$id}_4'));
+			option_{$id}_4 = {
+				title : {
+					text: '交易平台下单数量',
+					x:'center'
+				},
+				tooltip : {
+					trigger: 'item',
+					formatter: "{a} <br/>{b} : {c} ({d}%)"
+				},
+				legend: {
+					orient: 'vertical',
+					left: 'left',
+					data: ['PC','WAP']
+				},
+				series : [
+					{
+						name: '付款类型',
+						type: 'pie',
+						radius : '55%',
+						center: ['50%', '60%'],
+						data:[
+							{value:{$rs.pc_order_num}, name:'PC'},
+							{value:{$rs.wap_order_num}, name:'WAP'},
+						],
+						itemStyle: {
+							emphasis: {
+								shadowBlur: 10,
+								shadowOffsetX: 0,
+								shadowColor: 'rgba(0, 0, 0, 0.5)'
+							}
+						}
+					}
+				]
+			};
+			// 使用刚指定的配置项和数据显示图表。
+			myChart_{$id}_4.setOption(option_{$id}_4);
+			
+			// 基于准备好的dom，初始化echarts实例
+			var myChart_{$id}_5 = echarts.init(document.getElementById('main_{$id}_5'));
+			option_{$id}_5 = {
+				title : {
+					text: '交易平台支付数量',
+					x:'center'
+				},
+				tooltip : {
+					trigger: 'item',
+					formatter: "{a} <br/>{b} : {c} ({d}%)"
+				},
+				legend: {
+					orient: 'vertical',
+					left: 'left',
+					data: ['PC','WAP']
+				},
+				series : [
+					{
+						name: '付款类型',
+						type: 'pie',
+						radius : '55%',
+						center: ['50%', '60%'],
+						data:[
+							{value:{$rs.pc_order_success}, name:'PC'},
+							{value:{$rs.wap_order_success}, name:'WAP'},
+						],
+						itemStyle: {
+							emphasis: {
+								shadowBlur: 10,
+								shadowOffsetX: 0,
+								shadowColor: 'rgba(0, 0, 0, 0.5)'
+							}
+						}
+					}
+				]
+			};
+			// 使用刚指定的配置项和数据显示图表。
+			myChart_{$id}_5.setOption(option_{$id}_5);
+			
+			// 基于准备好的dom，初始化echarts实例
+			var myChart_{$id}_6 = echarts.init(document.getElementById('main_{$id}_6'));
+			option_{$id}_6 = {
+				title : {
+					text: '交易平台付款率',
+					x:'center'
+				},
+				tooltip : {
+					trigger: 'item',
+					formatter: "{a} <br/>{b} : {c} ({d}%)"
+				},
+				legend: {
+					orient: 'vertical',
+					left: 'left',
+					data: ['PC','WAP']
+				},
+				series : [
+					{
+						name: '付款类型',
+						type: 'pie',
+						radius : '55%',
+						center: ['50%', '60%'],
+						data:[
+							{value:{$rs.pc_pay_rate}, name:'PC'},
+							{value:{$rs.wap_pay_rate}, name:'WAP'},
+						],
+						itemStyle: {
+							emphasis: {
+								shadowBlur: 10,
+								shadowOffsetX: 0,
+								shadowColor: 'rgba(0, 0, 0, 0.5)'
+							}
+						}
+					}
+				]
+			};
+			// 使用刚指定的配置项和数据显示图表。
+			myChart_{$id}_6.setOption(option_{$id}_6);
+	
+			
+		</script>
+			
+	</div>
+	
+
+<div class="clearfix">
+	<div class="pull-right text-gray" onclick="$(this).closest('tr').toggleClass('hide');"><i class="fa fa-times-circle-o fa-2x"></i></div>	
+</div>

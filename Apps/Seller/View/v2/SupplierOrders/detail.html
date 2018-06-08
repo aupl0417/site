@@ -1,0 +1,417 @@
+<extend name="Seller@Public:base" />
+<block name="body">
+    <div class="centent_body">
+        <!-- to do your html codeing -->
+        <div class="revision_bg">
+            <div class="container ptb_size_lg clearfix">
+                <!-- 左侧导航 -->
+                <include file="Supplier:sideNav" />
+                <!-- 左侧导航结束 -->
+                <div class="revisionRight pd15" style="width: 1020px"><!-- 右侧内容 -->
+                    <div class="clearfix revisionOrderTab" data-url="">
+                        <a class="orderOption active" href="javascript:;">订单详情</a>
+                    </div>
+
+
+                    <div class="row pd30" style="border-bottom: solid 1px #F0F0F0">
+                        <div class="col-md-12 col-sm-6">
+                            <div class="row mg0 text-center flow_down">
+                                <switch name="data.status">
+                                    <case value="11">
+                                        <!-- 退款关闭 -->
+                                        <div class="col_3 order_flow">
+                                            <div class="h30 <egt name="data.status" value="1">active</egt>">
+                                                <div class="ab_l"></div>
+                                                <strong class="re"><span>1</span></strong>
+                                                <div class="ab_r"></div>
+                                            </div>
+                                            <p class="mt5 mb0">拍下商品</p>
+                                            <p class="text_77 mb0"><notempty name="data.atime"><if condition="$data['atime'] neq '0000-00-00 00:00:00'">{$data.atime}</if></notempty></p>
+                                        </div>
+
+                                        <div class="col_3 order_flow">
+                                            <div class="h30 <egt name="data.status" value="2">active</egt>">
+                                                <div class="ab_l"></div>
+                                                <strong class="re"><span>2</span></strong>
+                                                <div class="ab_r"></div>
+                                            </div>
+                                            <p class="mt5 mb0">付款</p>
+                                            <p class="text_77 mb0"><notempty name="data.pay_time"><if condition="$data['pay_time'] neq '0000-00-00 00:00:00'">{$data.pay_time}</if></notempty></p>
+                                        </div>
+                                        <div class="col_3 order_flow">
+                                            <div class="h30 <egt name="data.status" value="11">active</egt>">
+                                                <div class="ab_l"></div>
+                                                <strong class="re"><span>3</span></strong>
+                                                <div class="ab_r"></div>
+                                            </div>
+                                            <p class="mt5 mb0">退款完成</p>
+                                            <p class="text_77 mb0"><notempty name="data.etime"><if condition="$data['etime'] neq '0000-00-00 00:00:00'">{$data.etime}</if></notempty></p>
+                                        </div>
+                                    </case>
+                                <case value="10">
+                                    <!-- 未支付超时关闭 -->
+                                    <div class="col_2 order_flow">
+                                        <div class="h30 <egt name="data.status" value="1">active</egt>">
+                                            <div class="ab_l"></div>
+                                            <strong class="re"><span>1</span></strong>
+                                            <div class="ab_r"></div>
+                                        </div>
+                                        <p class="mt5 mb0">拍下商品</p>
+                                        <p class="text_77 mb0"><notempty name="data.atime"><if condition="$data['atime'] neq '0000-00-00 00:00:00'">{$data.atime}</if></notempty></p>
+                                    </div>
+                                    <div class="col_2 order_flow">
+                                        <div class="h30 <egt name="data.status" value="2">active</egt>">
+                                            <div class="ab_l"></div>
+                                            <strong class="re"><span>2</span></strong>
+                                            <div class="ab_r"></div>
+                                        </div>
+                                        <p class="mt5 mb0">订单关闭</p>
+                                        <p class="text_77 mb0"><notempty name="data.etime"><if condition="$data['etime'] neq '0000-00-00 00:00:00'">{$data.etime}</if></notempty></p>
+                                    </div>
+                                </case>
+                                <default />
+                                    <!-- 正常流程 -->
+                                    <div class="col_4 order_flow">
+                                        <div class="h30 <egt name="data.status" value="1">active</egt>">
+                                            <div class="ab_l"></div>
+                                            <strong class="re"><span>1</span></strong>
+                                            <div class="ab_r"></div>
+                                        </div>
+                                        <p class="mt5 mb0">拍下商品</p>
+                                        <p class="text_77 mb0"><notempty name="data.atime"><if condition="$data['atime'] neq '0000-00-00 00:00:00'">{$data.atime}</if></notempty></p>
+                                    </div>
+                                    <div class="col_4 order_flow">
+                                        <div class="h30 <egt name="data.status" value="2">active</egt>">
+                                            <div class="ab_l"></div>
+                                            <strong class="re"><span>2</span></strong>
+                                            <div class="ab_r"></div>
+                                        </div>
+                                        <p class="mt5 mb0">付款</p>
+                                        <p class="text_77 mb0"><notempty name="data.pay_time"><if condition="$data['pay_time'] neq '0000-00-00 00:00:00'">{$data.pay_time}</if></notempty></p>
+                                    </div>
+                                    <div class="col_4 order_flow">
+                                        <div class="h30 <egt name="data.status" value="3">active</egt>">
+                                            <div class="ab_l"></div>
+                                            <strong class="re"><span>3</span></strong>
+                                            <div class="ab_r"></div>
+                                        </div>
+                                        <p class="mt5 mb0">卖家发货</p>
+                                        <p class="text_77 mb0"><notempty name="data.express_time"><if condition="$data['express_time'] neq '0000-00-00 00:00:00'">{$data.express_time}</if></notempty></p>
+                                    </div>
+                                    <div class="col_4 order_flow">
+                                        <div class="h30 <egt name="data.status" value="4">active</egt>">
+                                            <div class="ab_l"></div>
+                                            <strong class="re"><span>4</span></strong>
+                                            <div class="ab_r"></div>
+                                        </div>
+                                        <p class="mt5 mb0">确认收货</p>
+                                        <p class="text_77 mb0"><notempty name="data.receipt_time"><if condition="$data['receipt_time'] neq '0000-00-00 00:00:00'">{$data.receipt_time}</if></notempty></p>
+                                    </div>
+                                    <!--<div class="col_5 order_flow hide">-->
+                                        <!--<div class="h30 <egt name="data.status" value="5">active</egt>">-->
+                                            <!--<div class="ab_l"></div>-->
+                                            <!--<strong class="re"><span>5</span></strong>-->
+                                            <!--<div class="ab_r"></div>-->
+                                        <!--</div>-->
+                                        <!--<p class="mt5 mb0">评价</p>-->
+                                        <!--<p class="text_77 mb0"><notempty name="data.rate_time"><if condition="$data['rate_time'] neq '0000-00-00 00:00:00'">{$data.rate_time}</if></notempty></p>-->
+                                    <!--</div>-->
+                                </switch>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" style="border-bottom: solid 1px #F0F0F0; padding: 30px 0">
+                        <div class="col-md-4 col-sm-6 text-center">
+                            <h4>&nbsp;</h4>
+                            <switch name="data.status">
+                                <case value="1">
+                                    <div class="btn btn-sm btn-primary btn-rad btn-trans">等待买家付款</div>
+                                    <!--
+                                    <div class="mt5">
+                                        <a href="{:U('/SupplierOrders/editPrice', ['id' => $data['s_no']])}" title="修改价格" class="btn btn-sm btn-primary btn-rad btn-trans">修改价格</a>
+                                    </div>
+                                    -->
+                                    <div class="mt5">
+                                        <a href="{:U('/SupplierOrders/close', ['id' => $data['s_no']])}" title="订单关闭" class="btn btn-sm btn-warning btn-rad btn-trans">关闭订单</a>
+                                    </div>
+                                    <div class="mt5 text-gray countdown-box" data-remark="自动关闭" data-time="{:str_replace('-', '/', $data['next_time'])}"></div>
+                                </case>
+                                <case value="2">
+                                    <div class="btn btn-sm btn-primary btn-rad btn-trans">买家已付款</div>
+                                    <div class="mt5">
+                                        <a href="{:U('/SupplierOrders/express', ['id' => $data['s_no']])}" title="立即发货" class="btn btn-sm btn-primary btn-rad btn-trans">立即发货</a>
+                                    </div>
+                                </case>
+                                <case value="3">
+                                    <div class="btn btn-sm btn-primary btn-rad btn-trans">等待买家收货</div>
+                                    <div class="mt5">
+                                        <a href="{:U('/SupplierOrders/editExpress', ['id' => $data['s_no']])}" title="立即发货" class="btn btn-sm btn-primary btn-rad btn-trans">修改发货信息</a>
+                                    </div>
+                                    <div class="mt5 text-gray countdown-box" data-remark="自动收货" data-time="{:str_replace('-', '/', $data['next_time'])}"></div>
+                                </case>
+                                <case value="4">
+                                    <div class="btn btn-sm btn-primary btn-rad btn-trans">买家已收货</div>
+                                    <div class="mt5 text-gray countdown-box hide" data-remark="自动评价" data-time="{:str_replace('-', '/', $data['next_time'])}"></div>
+                                </case>
+                                <case value="5">
+                                    <div class="btn btn-sm btn-primary btn-rad btn-trans">买家已评价</div>
+                                </case>
+                                <case value="10">
+                                    <div class="btn btn-sm btn-primary btn-rad btn-trans">订单已关闭</div>
+                                </case>
+                                <case value="11">
+                                    <div class="btn btn-sm btn-primary btn-rad btn-trans">退款完成</div>
+                                </case>
+                                <case value="20">
+                                    <div class="btn btn-sm btn-primary btn-rad btn-trans">退款订单</div>
+                                </case>
+                                <case value="30">
+                                    <div class="btn btn-sm btn-primary btn-rad btn-trans">售后订单</div>
+                                </case>
+                                <default /><a href="javascript:;" class="btn btn-sm btn-default btn-rad btn-trans">未知状态</a>
+                            </switch>
+                        </div>
+                        <div class="col-md-4 col-sm-6" style="border-right: solid 1px #F0F0F0; border-left: solid 1px #F0F0F0">
+                            <h4>支付信息</h4>
+                            <p>
+                                商品总额：<img class="icon-price" src="/Public/images/icon_{$data.orders_goods.0.score_type}.png"> <span class="text_yellow strong">{$data.goods_price_edit}</span>
+                            </p>
+                            <p>
+                                优惠金额：<img class="icon-price" src="/Public/images/icon_{$data.orders_goods.0.score_type}.png"> <span class="text_yellow strong">{$data.coupon_price}</span>
+                            </p>
+                            <p>
+                                运费金额：<img class="icon-price" src="/Public/images/icon_{$data.orders_goods.0.score_type}.png"> <span class="text_yellow strong">{$data.express_price_edit}</span>
+                            </p>
+                            <p>
+                                应付金额：<img class="icon-price" src="/Public/images/icon_{$data.orders_goods.0.score_type}.png"> <span class="text_yellow text-d-lt">{$data.total_price}</span>
+                            </p>
+                            <neq name="data.pay_time" value="0000-00-00 00:00:00">
+                                <p>
+                                    实付金额：<img class="icon-price" src="/Public/images/icon_{$data.orders_goods.0.score_type}.png"> <span class="text_yellow strong">{$data.pay_price}</span>
+                                </p>
+                                <p class="hide">
+                                    支付类型： {$data.pay_typename}
+                                </p>
+                                <p>
+                                    支付时间： {$data.pay_time}
+                                </p>
+                            </neq>
+                        </div>
+                        <div class="col-md-4 col-sm-6">
+                            <h4>物流信息</h4>
+                            <notempty name="data.express_company_id">
+                                <div class="text-center mt30">
+                                    <eq name="data.express_company_id" value="361">
+                                        <a href="javascript:;" class="btn btn-sm btn-primary btn-rad btn-trans">无需物流</a>
+                                        <else />
+                                        <a data-type="modal" data-url="{:U('/SupplierTool/express', ['company' => $data['express_company_id'], 'code' => $data['express_code']])}" data-title="物流信息"  href="javascript:;" class="btn btn-sm btn-primary btn-rad btn-trans opreating">查看物流信息</a>
+                                    </eq>
+                                </div>
+                                <else />
+                                {:W('Common/Builder/nors', array('param' => array('text' => '暂无物流信息！')))}
+                            </notempty>
+                        </div>
+                    </div>
+
+                    <div class="row" style="border-bottom: solid 1px #F0F0F0; padding: 30px 0">
+                        <div class="col-md-4 col-sm-6">
+                            <h4>订单信息</h4>
+                            <p>
+                                订单编号：{$data.s_no}
+                            </p>
+                            <p>
+                                下单时间：{$data.atime}
+                            </p>
+                            <p>
+                                买家信息：{$data.buyer.nick}
+                            </p>
+                            <p>
+                                备注信息：{$data.remark|default='暂无备注信息'}
+                            </p>
+                        </div>
+                        <div class="col-md-8 col-sm-6" style="border-left: solid 1px #F0F0F0;">
+                            <h4>订单日志</h4>
+                            <div  style="padding-left: 50px">
+                                <ul class="timeline">
+                                    <volist name="logs" id="vo">
+                                        <li>
+                                            <i class="fa fa-angle-double-down"></i>
+                                            <span class="date">{$vo.atime}</span>
+                                            <div class="content">
+                                                <p><strong>{$vo.remark}</strong></p>
+                                                <notempty name="vo.reason">
+                                                    <p>{$vo.reason}</p>
+                                                </notempty>
+                                            </div>
+                                        </li>
+                                    </volist>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" style="border-bottom: solid 1px #F0F0F0; padding: 30px 0">
+                        <div class="col-md-4 col-sm-6">
+                            <h4>收货人信息</h4>
+                            <p>
+                                收货人姓名：{$data.orders.linkname}
+                            </p>
+                            <p>
+                                收货人手机：{$data.orders.mobile}
+                            </p>
+                            <p>
+                                收货人地址：{$data.orders.province}{$data.orders.city}{$data.orders.district}{$data.orders.town}{$data.orders.street}
+                            </p>
+                        </div>
+                        <div class="col-md-4 col-sm-4" style="border-left: solid 1px #F0F0F0;border-right: solid 1px #F0F0F0;">
+                            <h4>配送信息</h4>
+                            <notempty name="data.express_code">
+                                <p>
+                                    快递公司：{$data.express_company}
+                                </p>
+                                <p>
+                                    快递单号：{$data.express_code}
+                                </p>
+                                <p>
+                                    发货时间：{$data.express_time}
+                                </p>
+                                <p>
+                                    发货备注：{$data.express_remark|default='暂无备注信息'}
+                                </p>
+                                <else />
+                                {:W('Common/Builder/nors', array('param' => array('text' => $data['msg'])))}
+                            </notempty>
+                        </div>
+                        <div class="col-md-4">
+                            <h4>促销信息</h4>
+                            <notempty name="data.activity">
+                                <volist name="data.activity" id="ac">
+                                    <p>
+                                        <switch name="ac.type_id">
+                                            <case value="2">
+                                                {$key + 1}、<span class="text_yellow">满 {$ac.full_money} 送 </span>
+                                                <volist name="ac.goods" id="ag">
+                                                    <a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', ['id' => $ag['attr_list'][0]['id']])}">
+                                                        <img src="{$ag.images}" width="40px" />
+                                                    </a>
+                                                </volist>
+                                            </case>
+                                            <default />
+                                            {$key + 1}、<span class="text_yellow mr10">{$ac.remark}</span>
+                                        </switch>
+                                    </p>
+                                </volist>
+                                <else />
+                                {:W('Common/Builder/nors', array('param' => array('text' => $data['msg'])))}
+                            </notempty>
+                        </div>
+                    </div>
+
+
+                    <div class="content mt30">
+                        <table class="no-border mb20 bg_f1"><!-- 类型说明 -->
+                            <tbody class="no-border-y">
+                            <tr class="text-center">
+                                <td width="100%" style="padding:0">
+                                    <table class="no-border">
+                                        <tbody class="no-border-y">
+                                        <td width="13%"></td>
+                                        <td width="35%">商品信息</td>
+                                        <td width="18%">单价</td>
+                                        <td width="16%">数量</td>
+                                        <td width="18%">实付款</td>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table><!-- 类型说明结束 -->
+
+
+                        <table class="revisionTable table"><!-- 订单信息 -->
+                            <tbody class="bg_white">
+                            <volist name="data.orders_goods" id="vo">
+                                <tr class="text-center">
+                                    <td style="padding:0; width:75%">
+                                        <table class="no-border table-hover">
+                                            <tbody class="no-border-y">
+                                            <tr><!-- 同店铺第一个商品 -->
+                                                <td width="13%">
+                                                    <a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', ['id' => $vo['attr_list_id']])}">
+                                                        <img src="{:myurl($vo['images_'], 80)}" class="img-thumbnail"></a>
+                                                </td>
+                                                <td valign="top" width="35%" class="text-left">
+                                                    <a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', ['id' => $vo['attr_list_id']])}">{$vo.goods_name}</a>
+                                                    <div class="md5 text-gray mt5">颜色/尺码：{$vo.attr_name}</div>
+													<eq name="vo.officialactivity_id" value="250">
+														<span class="btn btn-primary btn-trans btn-xs m0">限时秒杀</span>
+                                                    </eq>
+                                                </td>
+                                                <td width="18%">
+                                                    <img class="icon-price" src="/Public/images/icon_{$vo.score_type}.png"> <span class="text_yellow">{$vo.price}</span> 元
+                                                </td>
+                                                <td width="16%">×{$vo.num}</td>
+                                                <td width="18%">
+                                                    <img class="icon-price" src="/Public/images/icon_{$vo.score_type}.png"> <span class="text_yellow"> {$vo.total_price_edit}</span> 元
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </volist>
+                            </tbody>
+                        </table><!-- 订单信息结束 -->
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <!-- my codeing over -_-   -->
+
+    </div>
+</block>
+
+<block name="css">
+
+</block>
+
+<block name="script">
+    <!-- to do your javascript codeing -->
+    <script>
+        $(document).ready(function() {
+            $(".opreating").click(function() {
+                var d 	=	$(this).data();
+                vmodal({
+                    title:d.title,
+                    url:d.url,
+                });
+            });
+
+            if ($('.countdown-box').size() > 0) {
+                var data = $('.countdown-box').data();
+                var timer	=	setInterval(function countDown(){
+                    var EndTime= new Date(data.time);
+                    var NowTime = new Date();
+                    var t =EndTime.getTime() - NowTime.getTime();
+                    var d=0;
+                    var h=0;
+                    var m=0;
+                    var s=0;
+                    if(t>=0){
+                        d=Math.floor(t/1000/60/60/24);
+                        h=Math.floor(t/1000/60/60%24);
+                        m=Math.floor(t/1000/60%60);
+                        s=Math.floor(t/1000%60);
+                    } else {
+                        setInterval(timer);
+                    }
+                    var html = d+"天"+h+"小时"+m+"分"+s+"秒后" + data.remark;
+                    $('.countdown-box').html(html);
+                },0);
+            }
+        })
+    </script>
+</block>

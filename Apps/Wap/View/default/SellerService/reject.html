@@ -1,0 +1,122 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin({ref:true})"></i>
+		</div>
+		<div class="title">
+			拒绝售后
+		</div>
+		<div class="r">
+		</div>
+	</div>
+</header>
+<section>	
+	<form id="form-seller-service-reject">
+		<div class="line-box hover row" onclick="openWin({name:'seller_refund_view',url:'/SellerService/view/r_no/{$_GET.r_no}'})">
+			<div class="col-30">
+				售后单号
+			</div>
+			<div class="col-70 text-right b">
+				{$_GET.r_no}
+			</div>
+		</div>
+		<div class="line-box hover row" onclick="openWin({name:'seller_orders_view',url:'/SellerOrders/view/s_no/{$_GET.s_no}'})">
+			<div class="col-30">
+				订单号
+			</div>
+			<div class="col-70 text-gray text-right">
+				{$_GET.s_no}
+			</div>
+		</div>
+		<div class="line-box-m noicon row">
+			<div class="col-30">拒绝原因</div>
+			<div class="col-70">
+				<textarea id="reason" name="reason" placeholder="请输入拒绝原因" maxlength="100" rows="5"></textarea>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="line-box-m hover row noicon">
+			<div class="col-30">图片</div>
+			<div class="col-70">
+				<div class="chooseImages" style="position: relative;display: inline-block;">
+					<input type="file" onclick="chooseImg('/SellerService/upload', '#form-seller-service-reject', 0)" id="images_0" name="images_0" style="width: 100px;height: 100px;opacity: 0.0;border: solid 1px #000;position: absolute;z-index: 9;" />
+					<img src="../Public/Images/up_load.jpg" data-url="" class="upload_images mr20" alt="" width="100" height="100">
+				</div>
+				<img src="../Public/Images/icon+.png" onclick="rateImagesAdd('/SellerService/upload', '#form-seller-service-reject',$(this))" class="mr20" alt="" width="100" height="100">
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="p10">
+			<div class="btn btn-lg btn-danger btn-block" onclick="service_reject()">提交</div>
+		</div>
+		<input type="hidden" name="apiurl" value="/SellerRefund3/reject">
+		<input type="hidden" name="is_openid" value="1">
+		<input type="hidden" name="s_no" value="{$_GET.s_no}">		
+		<input type="hidden" name="r_no" value="{$_GET.r_no}">
+		<input type="hidden" name="no_sign" value="images">	
+	</form>
+</section>
+
+<include file="Public:d_layer" />
+
+<script>
+	fixBar(1);
+	
+	function service_reject(){
+		var data=getFormJson('#form-seller-service-reject');
+		if(data.reason==''){
+			valert({msg:'请输入拒绝原因！'});
+			$('.page.active #reason').focus();
+			return false;
+		}
+		
+		var images = new Array;
+		$('#form-seller-service-reject').find('.upload_images').each(function (x,y){
+			
+			var url = $(this).data('url');
+			if(url != undefined && url != ''){
+				images.push(url);
+			}
+		});
+		
+		images = images.join();
+		if(images != ''){
+			data.images = images;
+		}
+		
+		ajax_post({
+			url:'/Api/api',
+			data:data
+		},function(ret){
+			if(ret.code==1){
+				closeWin({ref:true});
+			}else{
+				valert(ret);
+			}
+		});		
+	}
+
+	// 拍照晒单
+	function refundImages(sort){
+		
+		vmodal({
+			title:'上传图片',
+			url:'__URL__/refund_upload_images/sort/' + sort + '/form/' + 'form-seller-service-reject',
+			is_footer:false,
+		});
+	}
+	// 增加一个图片位置
+	function refundImagesAdd(obj){
+		var len = obj.prevAll().length;
+		if(len == 5){
+			return false;
+		}
+
+		var html = '<img src="../Public/Images/up_load.jpg" onclick="refundImages(' + len + ');" data-url="" class="upload_images mr20" alt="" width="100" height="100">';
+		obj.before(html);
+		if(len == 4){
+			obj.remove();
+		}
+	}
+
+</script>

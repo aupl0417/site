@@ -1,0 +1,74 @@
+<extend name="Seller@Public:base" />
+<block name="body">
+    <div class="centent_body">
+        <!-- to do your html codeing -->
+        <div class="revision_bg">
+            <div class="container ptb_size_lg clearfix">
+                <!-- 左侧导航 -->
+                <include file="Public:sideNav" />
+                <!-- 左侧导航结束 -->
+
+                <div class="revisionRight pd15" style="width: 1020px"><!-- 右侧内容 -->
+                    <div class="clearfix revisionOrderTab" data-url="">
+                        <a class="fr btn btn-primary" href="{:U('/luckdraw/lists')}">已报名</a>
+                        <a class="orderOption active" href="javascript:;">抽奖列表</a>
+                    </div>
+                    <!-- 表单 -->
+                    <notempty name="list.list">
+                        <table class="revisionTable table">
+                            <tbody class="bg_white">
+                            <volist name="list.list" id="vo">
+                                <tr class="text-center">
+                                    <td style="padding:0; width:90%">
+                                        <table class="no-border table-hover">
+                                            <tbody class="no-border-y">
+                                            <tr><!-- 同店铺第一个商品 -->
+                                                <td width="10%">
+                                                    <a href="javascript:;">
+                                                        <img src="{:myurl($vo['images'], 80)}" class="img-thumbnail"></a>
+                                                </td>
+                                                <td valign="top" width="90%" class="text-left">
+                                                    <a href="javascript:;">{$vo.luckdraw_name}</a>
+                                                    <div class="md5 text-gray mt5 hide">{$vo.start_time} - {$vo.end_time}</div>
+                                                    <!--<div class="md5 text-gray mt5">{:html_entity_decode($vo['rule'])}</div>-->
+                                                    <div class="md5 text-gray mt5">可选面值：{$vo['coupons']}</div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                    <td style="vertical-align: middle; width:10%">
+                                        <div>
+                                            <notempty name="vo.is_apply">
+                                                <p><a href="{:U('/luckdraw/lists')}" class="btn btn-sm btn-primary btn-rad btn-trans m0">已报名</a></p>
+                                                <else />
+                                                <p><a href="{:U('/luckdraw/apply', ['id' => $vo['id']])}" class="btn btn-sm btn-primary btn-rad btn-trans m0">立即报名</a></p>
+                                            </notempty>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </volist>
+                            </tbody>
+                        </table>
+                        <div class="page-box col-xs-12 text-center">
+                            {:page_html($list['pageinfo'])}
+                        </div>
+                        <else />
+                        {:W('Common/Builder/nors', array('param' => array('text' => $data['msg'])))}
+                    </notempty>
+                </div>
+
+            </div>
+        </div>
+        <!-- my codeing over -_-   -->
+
+    </div>
+</block>
+
+<block name="css">
+
+</block>
+
+<block name="script">
+    <!-- to do your javascript codeing -->
+</block>

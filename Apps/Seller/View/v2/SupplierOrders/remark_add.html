@@ -1,0 +1,75 @@
+<form class="form-horizontal vform" id="remark_add" name="remark_add" data-url="__URL__/remark_add_save">
+			{:W('Common/Builder/buildform',array(array(
+				'field'		=>array(
+		
+					array(
+						'formtype'		=>'radio',
+						'label'			=>'标记颜色',
+						'name'			=>'seller_remark_color',
+						'is_need'		=>true,
+						'data'			=>array(
+											array('text-gray','<i class="fa fa-flag text-gray"></i>'),
+											array('text-success','<i class="fa fa-flag text-success"></i>'),
+											array('text-warning','<i class="fa fa-flag text-warning"></i>'),
+											array('text-danger','<i class="fa fa-flag text-danger"></i>'),
+											array('text-info','<i class="fa fa-flag text-info"></i>'),
+										),
+						'field'			=>array(0,1),
+						'value'			=>'text-danger',
+					),
+								
+					array(
+						'formtype'		=>'textarea',
+						'label'			=>'备注内容',
+						'name'			=>'seller_remark',
+						'is_need'		=>true,
+						'placeholder'	=>'请输入备注内容，不得超过250个字！',
+						'attr'			=>'maxlength="250" rows="4"',
+					),		
+
+					array(
+						'formtype'		=>'hidden',
+						'name'			=>'s_no',
+					),					
+				),
+			),$rs))}								
+		
+			<div class="text-center p10">
+				<button type="submit" class="btn btn-lg btn-rad btn-trans btn-primary">提交标记</button>
+			</div>
+
+</form>
+
+<script>
+iCheckClass();
+checkform({
+	formid:'#remark_add',
+	rules:{
+        seller_remark_color:{
+			required:true,
+		},
+        seller_remark:{
+			required:true,
+		}		
+	},
+	messages:{
+        seller_remark_color:{
+			required:'请选择标记颜色！',
+		},
+		seller_remark:{
+			required:'请输入备注内容！',
+		}		
+	},	
+},function(ret){
+    talert({
+        status:ret.code,msg:ret.msg
+    })
+	if(ret.code==1){
+		$('#ajax-modal').modal('hide');
+		setTimeout(function(){
+			ref();
+		},1000);
+	}
+});
+
+</script>

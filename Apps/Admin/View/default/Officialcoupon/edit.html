@@ -1,0 +1,161 @@
+<include file="Public:header" />
+<include file="nav" title="修改记录" />
+<div class="m20 p20 bg-white">
+
+	<form class="form-horizontal vform" id="formadd" name="formadd" data-url="__URL__/edit_save">
+		{:W('Widget/form',array($fcfg['id'],$rs))}
+
+		<input type="hidden" name="id" value="{$rs.id}">
+        <div class="clearfix md70"></div>
+		<div class="navbar-fixed-bottom border-t">
+			<div class="p10 bg-white-50 text-center">
+				<button type="button" class="btn btn-lg btn-rad btn-trans btn-default" onclick="back()"><i class="fa fa-mail-reply"></i> 返回</button>
+				<button type="submit" class="btn btn-lg btn-rad btn-trans btn-primary"><i class="fa fa-check"></i> 提交</button>					
+			</div>
+		</div>		
+		<div class="hide vform-action"></div>
+	</form>
+	<div class="clearfix"></div>
+</div>
+
+
+<include file="Public:copyright" />
+<include file="Public:js" />
+
+<script>
+$('.f-category_ids,.f-shop_ids,.f-goods_ids').addClass('hide');
+var use_type = parseInt($('input[name="use_type"]:checked').val());
+switch(use_type){
+  	case 2:
+  		$('.f-shop_ids').removeClass('hide');
+  	break;
+  	case 3:
+  		$('.f-goods_ids').removeClass('hide');
+  	break;
+  	case 4:
+  		$('.f-category_ids').removeClass('hide');
+  	break;
+}
+
+
+$('input[name="use_type"]').on('ifChecked', function(event){
+  	var val = parseInt($(this).val());
+  	switch(val){
+  		case 2:
+  			$('.f-category_ids,.f-goods_ids').addClass('hide');
+  			$('.f-shop_ids').removeClass('hide');
+  		break;
+  		case 3:
+  			$('.f-category_ids,.f-shop_ids').addClass('hide');
+  			$('.f-goods_ids').removeClass('hide');
+  		break;
+  		case 4:
+  			$('.f-shop_ids,.f-goods_ids').addClass('hide');
+  			$('.f-category_ids').removeClass('hide');
+  		break;
+  		default:
+  			$('.f-category_ids,.f-shop_ids,.f-goods_ids').addClass('hide');
+  	}
+});	
+
+
+function select_goods(obj){
+	var field=obj.attr('name');
+	$('.vform-action').html(field);
+	vmodal({
+		title:'选择商品',
+		url:'/SelectItem/goods/tpl/goods_checkbox',
+		width:'95%',
+	});
+}
+
+function select_shop(obj){
+	var field=obj.attr('name');
+	$('.vform-action').html(field);
+	vmodal({
+		title:'选择店铺',
+		url:'/SelectItem/shop/tpl/shop_checkbox',
+		width:'95%',
+	});
+}
+
+function select_category(obj){
+	var field=obj.attr('name');
+	$('.vform-action').html(field);
+	vmodal({
+		title:'选择类目',
+		url:'/SelectItem/category/tpl/category_checkbox',
+		width:'95%',
+	});
+}
+
+
+var goods_ids = $('#goods_ids').val();
+if(goods_ids!=''){
+	ajax_post({
+		url:'/SelectItem/goods_ids',
+		data:{ids:goods_ids},
+	},function(ret){
+		$('.f-goods_ids .col-xs-7').append(ret.html);
+	});
+}
+
+var shop_ids = $('#shop_ids').val();
+if(shop_ids!=''){
+	ajax_post({
+		url:'/SelectItem/shop_ids',
+		data:{ids:shop_ids},
+	},function(ret){
+		$('.f-shop_ids .col-xs-7').append(ret.html);
+	});
+}
+
+var category_ids = $('#category_ids').val();
+if(category_ids!=''){
+	ajax_post({
+		url:'/SelectItem/category_ids',
+		data:{ids:category_ids},
+	},function(ret){
+		$('.f-category_ids .col-xs-7').append(ret.html);
+	});
+}
+
+
+checkform({
+	formid:'#formadd',
+},function(ret){
+	valert(ret);
+	if(ret.status=='success'){
+		setTimeout(function(){
+			back();
+		},1000);
+
+	}	
+});
+
+
+function delete_item(obj){
+	vmodal({
+		title:'删除提示',
+		msg:'<h3>是否真的要删除！</h3>',
+		confirm:1,
+		class:'text-center',
+		width:'650px',
+	},function(){
+		$('.modal-ok').click(function(){
+			var ul = obj.closest('ul');
+			obj.closest('li').remove();
+			var ids = new Array;
+			ul.find('li').each(function(){
+				ids.push($(this).data('id'));
+			});
+			
+			ul.closest('.form-group').find('textarea').val(ids.join(','));
+			
+			$('#ajax-modal').modal('hide');
+		});
+	});
+}
+
+</script>
+<include file="Public:footer" />

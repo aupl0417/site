@@ -1,0 +1,177 @@
+<div class="clearfix">
+	<div class="pull-right text-gray" onclick="$(this).closest('tr').toggleClass('hide');"><i class="fa fa-times-circle-o fa-2x"></i></div>	
+</div>
+	<style>
+		.b_button div{border-bottom:none;border-radius:5px 5px 0 0; -moz-border-radius:5px 5px 0 0; -webkit-border-radius:5px 5px 0 0;cursor:pointer;}
+		.b_button .active{background:rgb(242,242,242)}
+		.b_list{margin-top:20px;}
+	</style>
+	<div class="box p20">
+		<div class = "b_list">
+			<div class="flex flex-fdr" >
+				<div class="flex-f1" id="main_4_{$rs.id}" style="height:400px;"></div>
+				<div class="flex-f1" id="main_6_{$rs.id}" style="height:400px;"></div>
+				<div class="flex-f1" id="main_5_{$rs.id}" style="height:400px;"></div>
+			</div>
+			<div class="flex flex-fdr" >
+				<div class="flex-f1" id="main_7_{$rs.id}" style="height:400px;"></div>
+				<div class="flex-f1" id="main_8_{$rs.id}" style="height:400px;"></div>
+				<div class="flex-f1" id="main_9_{$rs.id}" style="height:400px;"></div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			// 基于准备好的dom，初始化echarts实例
+			var myChart1 = echarts.init(document.getElementById("main_4_{$rs.id}"));
+			// 指定图表的配置项和数据
+			{:W('Echart/pie_echart',array('param' => $type1))}
+			// 使用刚指定的配置项和数据显示图表。
+			myChart1.setOption(option);
+		</script>
+		<script type="text/javascript">
+			// 基于准备好的dom，初始化echarts实例
+			var myChart2 = echarts.init(document.getElementById("main_5_{$rs.id}"));
+			// 指定图表的配置项和数据
+			{:W('Echart/pie_echart',array('param' => $type2))}
+			// 使用刚指定的配置项和数据显示图表。
+			myChart2.setOption(option);
+		</script>
+		<script type="text/javascript">
+			// 基于准备好的dom，初始化echarts实例
+			var myChart3 = echarts.init(document.getElementById("main_6_{$rs.id}"));
+			// 指定图表的配置项和数据
+			{:W('Echart/pie_echart',array('param' => $type3))}
+			// 使用刚指定的配置项和数据显示图表。
+			myChart3.setOption(option);
+		</script>
+		<script type="text/javascript">
+			// 基于准备好的dom，初始化echarts实例
+			var myChart1 = echarts.init(document.getElementById("main_7_{$rs.id}"));
+			// 指定图表的配置项和数据
+			{:W('Echart/pie_echart',array('param' => $type4))}
+			// 使用刚指定的配置项和数据显示图表。
+			myChart1.setOption(option);
+		</script>
+		<script type="text/javascript">
+			// 基于准备好的dom，初始化echarts实例
+			var myChart2 = echarts.init(document.getElementById("main_8_{$rs.id}"));
+			// 指定图表的配置项和数据
+			{:W('Echart/pie_echart',array('param' => $type5))}
+			// 使用刚指定的配置项和数据显示图表。
+			myChart2.setOption(option);
+		</script>
+		<script type="text/javascript">
+			// 基于准备好的dom，初始化echarts实例
+			var myChart3 = echarts.init(document.getElementById("main_9_{$rs.id}"));
+			// 指定图表的配置项和数据
+			{:W('Echart/pie_echart',array('param' => $type6))}
+			// 使用刚指定的配置项和数据显示图表。
+			myChart3.setOption(option);
+		</script>		
+	</div>
+	<div class="md10"></div>
+	<div class="box p20">
+		<div class="bor_der pd15 m20">
+			<h5 class="fs16 mt0">数据详情</h5>
+			<table class="bg_white table_dotted">
+				<tbody class="solid_t">
+					<tr>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">充值总笔数</p>
+							<strong>{$rs.num_totals}</strong>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">充值总金额</p>
+							<strong>{$rs.money_totals}</strong>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">充值总奖励积分</p>
+							<strong>{$rs.score_totals}</strong>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">充值成功总笔数</p>
+							<strong>{$rs.recharge_success_num}</strong>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">充值成功总金额</p>
+							<strong>{$rs.recharge_success_money}</strong>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">充值成功平均金额</p>
+							<strong>{$rs.recharge_success_avg}</strong>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">充值成功奖励积分</p>
+							<strong>{$rs.recharge_success_score}</strong>
+						</td>
+					</tr>
+					<tr>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">话费充值总笔数</p>
+							<strong>{$rs.fare_totals_num}</strong>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">话费充值总金额</p>
+							<strong>{$rs.fare_totals_money}</strong>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">话费充值奖励积分</p>
+							<strong>{$rs.fare_totals_score}</strong>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">话费充值成功总笔数</p>
+							<strong>{$rs.fare_success_num}</strong>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">话费充值成功总金额</p>
+							<strong>{$rs.fare_success_money}</strong>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">话费充值成功平均金额</p>
+							<strong>{$rs.fare_success_avg}</strong>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">话费充值成功奖励积分</p>
+							<strong>{$rs.fare_success_score}</strong>
+						</td>
+					</tr>
+					<tr>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">流量充值总笔数</p>
+							<strong>{$rs.flow_totals_num}</strong>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">流量充值总金额</p>
+							<strong>{$rs.flow_totals_money}</strong>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">流量充值奖励积分</p>
+							<strong>{$rs.flow_totals_score}</strong>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">流量充值成功总笔数</p>
+							<strong>{$rs.flow_success_num}</strong>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">流量充值成功总金额</p>
+							<strong>{$rs.flow_success_money}</strong>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">流量充值成功平均金额</p>
+							<strong>{$rs.flow_success_avg}</strong>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">流量充值成功奖励积分</p>
+							<strong>{$rs.flow_success_score}</strong>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<style>
+				.table_dotted tbody,.table_dotted tr,.table_dotted td{border:1px dashed #ccc !important;}
+			</style>	
+		</div>
+</div>	
+
+<div class="clearfix">
+	<div class="pull-right text-gray" onclick="$(this).closest('tr').toggleClass('hide');"><i class="fa fa-times-circle-o fa-2x"></i></div>	
+</div>

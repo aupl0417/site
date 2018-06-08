@@ -1,0 +1,357 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			春季活动页
+		</div>
+		<div class="r">
+			<div class="text" ></div>
+		</div>
+	</div>
+</header>
+<section>
+	<style>
+		body{font-family: 'Arial','Times New Roman','Microsoft YaHei','SimHei' ;padding: 0;margin: 0;}
+		*{margin: 0;padding: 0;}
+		img{margin: 0;padding: 0;border: 0; outline-width:0px;vertical-align:top; }
+		a:hover,a{text-decoration: none}
+		.mallWap-box{max-width: 640px;margin: auto}
+		.mallWap-bg img{max-width: 100%;}
+		.cont-mid{margin: auto}
+		
+
+
+		/*公共样式开始*/
+		.pt10{padding-top: 0.241rem;}
+		.pt20{padding-top: 0.483rem;}
+		.pb10{padding-bottom: 0.241rem;}
+		.pb20{padding-bottom: 0.483rem;}
+		.bg-f91{background: url(../images/bg-img.png) 0 0 repeat #f91173;}
+		.bg-069{background: url(../images/bg-img.png) 0 0 repeat #0697fc;}
+		.bg-2fe{background: url(../images/bg-img.png) 0 0 repeat #2fe1bd;}
+		.c-white{color: white}
+		
+		.fs16{font-size: 0.386rem}
+		.text-center{text-align: center}
+		.pull-right{float: right}
+		.pull-left{float: left}
+		/*.amg img {max-width: 100%;max-height: 100%;vertical-align: middle;border: none;}*/
+		/*公共样式结束*/
+		
+		
+		/*******************/
+		
+		.flex{display: -webkit-flex;display: flex;}
+		.flex-fw-w{flex-wrap: wrap}
+		.flex-jc-sb{justify-content:space-between}
+		.flex-ai-c{align-items:center }
+		.flex-f1{flex:1}
+		.flex-f1-half{flex:1.5}
+		
+		.clss-Wapbox,.wzyh-Wapbox,.jjbb-Wapbox,.jkmr-Wapbox,.xpzk-Wapbox,.hwzp-Wapbox,.qtzk-Wapbox{padding:0 20px 0 20px}
+		
+		.amg{width:70%;padding:15px 0;}
+		.amg img{width:70%}
+		
+		.list-li{flex-basis:50%;padding:0 5px 0 5px;margin-bottom:10px;}
+		.list-img img{width:100%;}
+		.list-text{background:#fff;padding-top:10px;}
+		.list-name{color:#5f5f5f;padding:0 10px 0;margin:0 0 10px;line-height:17px;height:34px;overflow:hidden;}
+		
+		.list-price{padding:10px;}
+		.list-price .list-price-left{flex:1.5}
+		.list-price .list-price-left strong{font-size:20px;flex:1.5}
+		.list-price .list-price-right{text-align:right; border-radius: 5px;padding: 0px 4px;flex:0.5;text-align:center;}
+		
+		.chunji_msg{color:#fff;font-size:16px;}
+		.chunji_msg strong{font-size:18px;}
+		
+		/*文字边框颜色*/
+		.clss-Wapbox .list-price{border-top:1px dashed #E7005C}
+		.clss-Wapbox .list-price .list-price-left{color:#e7005c;}
+		.clss-Wapbox .list-price .list-price-right{border: 1px solid #E7005C;color:#e7005c;}
+		
+		.wzyh-Wapbox .list-price{border-top:1px dashed #fe0113}
+		.wzyh-Wapbox .list-price .list-price-left{color:#fe0113;}
+		.wzyh-Wapbox .list-price .list-price-right{border: 1px solid #fe0113;color:#fe0113;}
+		
+		.jjbb-Wapbox .list-price{border-top:1px dashed #b87a03}
+		.jjbb-Wapbox .list-price .list-price-left{color:#b87a03;}
+		.jjbb-Wapbox .list-price .list-price-right{border: 1px solid #b87a03;color:#b87a03;}
+		
+		.jkmr-Wapbox .list-price{border-top:1px dashed #0697fc}
+		.jkmr-Wapbox .list-price .list-price-left{color:#0697fc;}
+		.jkmr-Wapbox .list-price .list-price-right{border: 1px solid #0697fc;color:#0697fc;}
+		
+		.xpzk-Wapbox .list-price{border-top:1px dashed #a61ef5}
+		.xpzk-Wapbox .list-price .list-price-left{color:#a61ef5;}
+		.xpzk-Wapbox .list-price .list-price-right{border: 1px solid #a61ef5;color:#a61ef5;}
+		
+		.hwzp-Wapbox .list-price{border-top:1px dashed #be9302}
+		.hwzp-Wapbox .list-price .list-price-left{color:#be9302;}
+		.hwzp-Wapbox .list-price .list-price-right{border: 1px solid #be9302;color:#be9302;}
+		
+		.qtzk-Wapbox .list-price{border-top:1px dashed #24b402}
+		.qtzk-Wapbox .list-price .list-price-left{color:#24b402;}
+		.qtzk-Wapbox .list-price .list-price-right{border: 1px solid #24b402;color:#24b402;}
+		
+	</style>
+	
+	<div class="mallWap-box">
+        <div class="mallWap-bg">
+            <img src="../Public/chunji/images/title-bg.jpg" alt="" id="top">
+        </div>
+        <div class="bg-f91">
+            <div class="cont-mid">
+                <div class="clss-Wapbox">
+                    <div class="text-center pt10 pb10 amg">
+                        <img src="../Public/chunji/images/clss-img.png" alt="" id="clss"/>
+                    </div>
+					<div class="flex flex-fw-w flex-jc-sb festival_size">
+						<volist name="goods_urls" id="vo" key="k" offset="0" length='16'>
+							<div class="list-li">
+								<a onclick = "openWin({name:'goods_view',url:'{$vo.goods_url}'})">
+									<div class="list-img">
+										<img src="../Public/chunji/images/clss-img{$k}.jpg" alt="" />
+									</div>
+									<div class="list-text">
+										<div class="list-name">
+											{$vo.goods_name}
+										</div>
+										<div class="list-price flex flex-jc-sb flex-ai-c">
+											<b class="list-price-left">活动价<strong>{$vo.price}</strong></b>
+											
+											<span class="list-price-right">立即抢购</span>
+										</div>
+									</div>
+								</a>
+							</div>
+						</volist>
+					</div>
+                   
+                </div>
+                <!--潮流时尚结束-->
+
+                <div class="wzyh-Wapbox">
+                    <div class="text-center pt10 pb10 amg">
+                        <img src="../Public/chunji/images/wzyh-img.png" alt="" id="wzyh"/>
+                    </div>
+					<div class="flex flex-fw-w flex-jc-sb festival_size">
+						<volist name="goods_urls" id="vo" key="k" offset="16" length='16'>
+							<div class="list-li">
+								<a onclick = "openWin({name:'goods_view',url:'{$vo.goods_url}'})">
+									<div class="list-img">
+										<img src="../Public/chunji/images/wzyh-img{$k}.jpg" alt="" />
+									</div>
+									<div class="list-text">
+										<div class="list-name">
+											{$vo.goods_name}
+										</div>
+										<div class="list-price flex flex-jc-sb flex-ai-c">
+											<b class="list-price-left">活动价<strong>{$vo.price}</strong></b>
+											
+											<span class="list-price-right">立即抢购</span>
+										</div>
+									</div>
+								</a>
+							</div>
+						</volist>
+                        
+					</div>
+                    <div style="clear: both;"></div>
+                </div>
+                <!--味之诱惑结束-->
+
+                <div class="jjbb-Wapbox">
+                    <div class="pt10 pb10 text-center amg">
+                        <img src="../Public/chunji/images/jjbb-img.png" alt="" id="jjbb"/>
+                    </div>
+					<div class="flex flex-fw-w flex-jc-sb festival_size">
+						<volist name="goods_urls" id="vo" key="k" offset="32" length='8'>
+							<div class="list-li">
+								<a onclick = "openWin({name:'goods_view',url:'{$vo.goods_url}'})">
+									<div class="list-img">
+										<img src="../Public/chunji/images/bbjj-img{$k}.jpg" alt="" />
+									</div>
+									<div class="list-text">
+										<div class="list-name">
+											{$vo.goods_name}
+										</div>
+										<div class="list-price flex flex-jc-sb flex-ai-c">
+											<b class="list-price-left">活动价<strong>{$vo.price}</strong></b>
+											
+											<span class="list-price-right">立即抢购</span>
+										</div>
+									</div>
+								</a>
+							</div>
+						</volist>
+                    </div>
+                    <div style="clear: both;"></div>
+                </div>
+                <!--居家必备结束-->
+
+                <div class="jkmr-Wapbox">
+                    <div class="pt10 pb10 text-center amg">
+                        <img src="../Public/chunji/images/jkmr-img.png" alt="" id="jkmr"/>
+                    </div>
+					<div class="flex flex-fw-w flex-jc-sb festival_size">
+						<volist name="goods_urls" id="vo" key="k" offset="40" length='8'>
+							<div class="list-li">
+								<a onclick = "openWin({name:'goods_view',url:'{$vo.goods_url}'})">
+									<div class="list-img">
+										<img src="../Public/chunji/images/jkmr-img{$k}.jpg" alt="" />
+									</div>
+									<div class="list-text">
+										<div class="list-name">
+											{$vo.goods_name}
+										</div>
+										<div class="list-price flex flex-jc-sb flex-ai-c">
+											<b class="list-price-left">活动价<strong>{$vo.price}</strong></b>
+											
+											<span class="list-price-right">立即抢购</span>
+										</div>
+									</div>
+								</a>
+							</div>
+						</volist>
+                    </div>
+                    <div style="clear: both;"></div>
+                </div>
+
+                <div class="pt20 pb20"></div>
+                <!--健康美容结束-->
+
+            </div>
+        </div>
+
+        <div class="bg-069">
+            <div class="cont-mid">
+                <div class="xpzk-Wapbox">
+                    <div class="pt10 pb10 text-center amg">
+                        <img src="../Public/chunji/images/xpzk-img.png" alt="" id="xpzk"/>
+                    </div>
+					<div class="flex flex-fw-w flex-jc-sb festival_size">
+						<volist name="goods_urls" id="vo" key="k" offset="48" length='8'>
+							<div class="list-li">
+								<a onclick = "openWin({name:'goods_view',url:'{$vo.goods_url}'})">
+									<div class="list-img">
+										<img src="../Public/chunji/images/xpzk-img{$k}.jpg" alt="" />
+									</div>
+									<div class="list-text">
+										<div class="list-name">
+											{$vo.goods_name}
+										</div>
+										<div class="list-price flex flex-jc-sb flex-ai-c">
+											<b class="list-price-left">活动价<strong>{$vo.price}</strong></b>
+											
+											<span class="list-price-right">立即抢购</span>
+										</div>
+									</div>
+								</a>
+							</div>
+						</volist>
+					</div>
+                   
+                    <div style="clear: both;"></div>
+                </div>
+                <!--健康美容结束-->
+
+                <div class="hwzp-Wapbox">
+                    <div class="pt10 pb10 text-center amg">
+                        <img src="../Public/chunji/images/hwzp-img.png" alt="" id="hwzp"/>
+                    </div>
+					
+					<div class="flex flex-fw-w flex-jc-sb festival_size">
+						<volist name="goods_urls" id="vo" key="k" offset="56" length='8'>
+							<div class="list-li">
+								<a onclick = "openWin({name:'goods_view',url:'{$vo.goods_url}'})">
+									<div class="list-img">
+										<img src="../Public/chunji/images/hwzp-img{$k}.jpg" alt="" />
+									</div>
+									<div class="list-text">
+										<div class="list-name">
+											{$vo.goods_name}
+										</div>
+										<div class="list-price flex flex-jc-sb flex-ai-c">
+											<b class="list-price-left">活动价<strong>{$vo.price}</strong></b>
+											
+											<span class="list-price-right">立即抢购</span>
+										</div>
+									</div>
+								</a>
+							</div>
+						</volist>
+                        
+					</div>
+                    <div style="clear: both;"></div>
+                </div>
+                <!--海外珍品结束-->
+
+                <div class="qtzk-Wapbox">
+                    <div class="pt10 pb10 text-center amg">
+                        <img src="../Public/chunji/images/qtzk-img.png" alt="" id="qtzk"/>
+                    </div>
+					<div class="flex flex-fw-w flex-jc-sb festival_size">
+						<volist name="goods_urls" id="vo" key="k" offset="64" length='8'>
+							<div class="list-li">
+								<a onclick = "openWin({name:'goods_view',url:'{$vo.goods_url}'})">
+									<div class="list-img">
+										<img src="../Public/chunji/images/qtzk-img{$k}.jpg" alt="" />
+									</div>
+									<div class="list-text">
+										<div class="list-name">
+											{$vo.goods_name}
+										</div>
+										<div class="list-price flex flex-jc-sb flex-ai-c">
+											<b class="list-price-left">活动价<strong>{$vo.price}</strong></b>
+											
+											<span class="list-price-right">立即抢购</span>
+										</div>
+									</div>
+								</a>
+							</div>
+						</volist>
+					</div>
+                    <div style="clear: both;"></div>
+                    <div class="pb20 pt20"></div>
+
+                </div>
+
+                <!--其他折扣结束-->
+
+            </div>
+        </div>
+
+        <div class="bg-2fe">
+            <div class="cont-mid">
+				<div style="padding:0 20px;">
+					<div class="pt10 pb10 text-center amg">
+						<img src="../Public/chunji/images/hdgz-img.png" alt="" />
+					</div>
+					<p class="c-white chunji_msg">
+						<strong>双倍积分消费规则及注意事项：</strong><br>
+						1、所有消费者在此活动专区内进行消费，都可以享受到双倍积分的奖励；<br>
+						2、消费者在此活动专区内消费后，所获得的消费积分奖励结算方式与平常购物时的结算方式一致（在点击确认收货后及时到账）。
+					</p>
+					
+					<div class="text-center" style="padding:20px 0;">
+						<a href="#top">
+							<img src="../Public/chunji/images/fhdb-img.png" alt="" />
+						</a>
+					</div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</section>
+
+
+<script>
+	fixBar(1);
+
+</script>

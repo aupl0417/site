@@ -1,0 +1,205 @@
+<link rel="stylesheet" type="text/css" href="/Public/CSS/flatdream/js/jquery.icheck/skins/square/_all.css">
+<div class="pd10">
+	<form method="get" action="/Coupon/goods_checkbox" id="ajax_search" role="form" class="hover-shadow hover-search p10 md10">
+		<div class="over form-horizontal">
+			<div class="form-group">
+				<div class="col-xs-2">
+					<select id="status" name="status" class="form-control" style="">
+						<option value="">请选择状态</option>
+						<option value="0">删除</option>
+						<option value="1" selected>上架</option>
+						<option value="2">仓库</option>
+						<option value="3">主图缺失</option>
+						<option value="4">违规</option>
+						<option value="5">异常</option>
+					</select>
+				</div>
+				<div class="col-xs-2">
+					<select id="is_self" name="is_self" class="form-control " style="">
+						<option value="">请选择是否自营</option>
+						<option value="0">否</option>
+						<option value="1">是</option>
+					</select>
+				</div>
+				<div class="col-xs-2">
+					<select id="is_love" name="is_love" class="form-control " style="">
+						<option value="">请选择首页猜您喜欢</option>
+						<option value="0">否</option>
+						<option value="1">是</option>
+					</select>
+				</div>
+				<div class="col-xs-3">
+					<input type="text" id="goods_name" name="goods_name" placeholder="请输入宝贝标题" value="" class="form-control " style="">
+				</div>
+				<div class="col-xs-2">
+					<button type="button" class="btn btn-primary btn-trans btn-rad" onclick="ajax_search()">点击搜索</button>
+				</div>
+			</div>
+		</div>
+	</form>
+
+    <notempty name="pagelist.list">
+        <table class="table table-bordered table-advance table-hover mb30">
+            <tbody>
+            <tr>
+                <th class="col-xs-1 text-center" style="vertical-align: middle;">
+                    
+                    <input type="checkbox" name="all_choice" class="i-red-square" id="all_choice">
+                </th>
+                <th class="col-xs-2 text-center" style="vertical-align: middle;">ID</th>
+                <th class="col-xs-2 text-center" style="vertical-align: middle;">图片</th>
+                <th class="col-xs-2 text-center" style="vertical-align: middle;">商品标题</th>
+                <th class="col-xs-1 text-center" style="vertical-align: middle;">价格</th>
+                <th class="col-xs-1 text-center" style="vertical-align: middle;">库存</th>
+                <th class="col-xs-1 text-center" style="vertical-align: middle;">销量</th>
+                <th class="col-xs-1 text-center" style="vertical-align: middle;">卖家昵称</th>
+                <th class="col-xs-1 text-center" style="vertical-align: middle;">店铺名称</th>
+            </tr>
+            <volist name="pagelist.list" id="vo">
+                <tr class="countBrand">
+                    <td class="text-center" style="vertical-align: middle;">
+						<input type="checkbox" name="ids" class="i-red-square" value="{$vo.id}" />
+                    </td>
+					<td style="vertical-align: middle;" class="text-center col-xs-1">{$vo.id}</td>
+                    <td class="text-center img">
+                        <a class="image-zoom" href="javascript:;" onclick="bigImage($(this))" data-url="{$vo['images']}" title="大图">
+                            <img src="{$vo['images']}" width="60" />
+                        </a>
+                    </td>
+                    <td style="vertical-align: middle;" class="text-center col-xs-1">{$vo.goods_name}</td>
+                    <td style="vertical-align: middle;" class="text-center col-xs-1">{$vo.price}</td>
+                    <td style="vertical-align: middle;" class="text-center col-xs-1">{$vo.num}</td>
+                    <td style="vertical-align: middle;" class="text-center col-xs-1">{$vo.sale_num}</td>
+                    <td style="vertical-align: middle;" class="text-center col-xs-1">{$vo.seller.nick}</td>
+                    <td style="vertical-align: middle;" class="text-center col-xs-1">{$vo.shop.shop_name}</td>
+                </tr>
+            </volist>
+            </tbody>
+        </table>
+        <div class="page-box text-center">
+            {:page_html($pagelist['pageinfo'])}
+        </div>
+        <div class="text-center mt30">
+			
+            <a href="javascript:;" class="btn btn-lg btn-rad btn-trans btn-primary " id="selectAll">全选/反选</a>
+            <a href="javascript:;" class="btn btn-lg btn-rad btn-trans btn-primary " id="submitCheckbox">确定选择</a>
+        </div>
+        <else />
+        {:W('Common/Builder/nors', array('param' => array('text' => $data['msg'])))}
+    </notempty>
+</div>
+<script>
+	iCheckClass();
+    $(document).ready(function () {
+		
+        var inputName = '{$Think.get.inputName}' ? '{$Think.get.inputName}' : 'goods';
+        var company = $("input[name='"+inputName+"']").val();
+        //var url = '__SELF__';
+		//console.log(gids);
+
+		
+		//将记录的商品勾上
+		$('input[name="ids"]').each(function(k,v){
+			var id = $(this).val();
+			if(gids.indexOf(id) != -1){
+				$(this).iCheck('check');
+			}
+		})
+		
+		
+		/**
+         *  全选
+         */
+		$('#all_choice').on('ifChanged', function(event){
+			$('input[name="ids"]').iCheck('toggle');
+		});
+		$('input[name="ids"]').on('ifChecked', function(){
+			if(gids.length >= 20){
+				talert({status:0,msg:'最多只能选择20个商品'});
+			}else{
+				remark_goods_ids($(this).val(),1);
+			}
+		})
+		$('input[name="ids"]').on('ifUnchecked', function(){
+			remark_goods_ids($(this).val(),2);
+		})
+		
+        /**
+         *  确定选择
+         */
+		$("#submitCheckbox").click(function(){
+			var goods_ids = gids.join(',');
+			$("input[name='goods_ids']").val(goods_ids);
+			show_goods();
+			$('#ajax-modal').modal('hide');
+			
+		});
+		
+		/*记录选中的goods_id*/
+		function remark_goods_ids(val,type){
+			console.log(val);
+			var position = $.inArray(val, gids);
+			if(type == 1){
+				
+				if(position == -1){
+					gids.push(val);
+				}
+			}else if(type == 2){
+				if(position != -1){
+					gids.splice(position,1);
+				}
+			}
+		}
+	
+		
+	
+		
+		/**
+		* 分页
+         */
+        $(".page-box a").click(function (e) {
+            var url = $(this).attr('href');
+            $(".modal-body").load(url);
+            //stopDefault(e);
+            return false;
+        });
+
+        /**
+         *  预选中
+         */
+        if (company != '') {
+            $('input[type="radio"]').each(function () {
+                if (($(this).val() == company)) {
+                    //$(this).iCheck('check');
+                }
+            });
+        }
+    });
+
+    /**
+     *
+     * 搜索
+     *
+     */
+    function ajax_search() {
+		var status = $("#ajax_search #status").val();
+		var is_self = $("#ajax_search #is_self").val();
+		var is_love = $("#ajax_search #is_love").val();
+		var goods_name = $("#ajax_search #goods_name").val();
+		var url = '/Coupon//goods_checkbox?';
+		
+		if(status != ''){
+			url = url + '&status=' + encodeURI(status);
+		}
+		if(is_self != ''){
+			url = url + '&is_self=' + encodeURI(is_self);
+		}
+		if(is_love != ''){
+			url = url + '&is_love=' + encodeURI(is_love);
+		}
+		if(goods_name != ''){
+			url = url + '&goods_name=' + encodeURI(goods_name);
+		}
+		$(".modal-body").load(url);
+    }
+</script>

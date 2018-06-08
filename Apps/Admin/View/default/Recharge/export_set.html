@@ -1,0 +1,142 @@
+<form method="post" action="__URL__/export_file" role="form" class="p10 md10" id="export_set" target="_blank">
+	<div class="alert alert-warning alert-white-alt2 rounded">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		<div class="icon"><i class="fa fa-warning"></i></div>
+		<strong>提示：</strong> 单次最多可导出1000条记录。如果没有弹出下载窗口，请检查浏览器是否屏蔽了窗口弹出。
+	</div>
+	
+	<table class="no-bordered no-bg">
+		<tr>
+			<td width="20%" class="text-right strong">状态</td>
+			<td>
+				<label class="mr10"><input type="checkbox" class="i-red-square" name="status[]" id="status[]" value="0" {:in_array(0,$rs['status'])?'checked':''}> 未付款</label>
+				<label class="mr10"><input type="checkbox" class="i-red-square" name="status[]" id="status[]" value="1" {:in_array(1,$rs['status'])?'checked':''}> 已付款</label>
+				
+			</td>
+		</tr>
+		<tr>
+			<td width="20%" class="text-right strong">支付方式</td>
+			<td>
+				<label class="mr10"><input type="checkbox" class="i-red-square" name="pay_type[]" id="pay_type[]" value="1" {:in_array(1,$rs['pay_type'])?'checked':''}> 支付宝</label>
+				<label class="mr10"><input type="checkbox" class="i-red-square" name="pay_type[]" id="pay_type[]" value="2" {:in_array(2,$rs['pay_type'])?'checked':''}> 微信</label>
+			</td>
+		</tr>
+		<tr>
+			<td width="20%" class="text-right strong">时间类型</td>
+			<td>
+				<label class="mr10"><input type="radio" class="i-red-square" name="day_field" id="day_field" value="pay_time" {$rs['day_field']=='pay_time'?'checked':''}> 支付时间</label>
+				<label class="mr10"><input type="radio" class="i-red-square" name="day_field" id="day_field" value="atime" {$rs['day_field']=='atime'?'checked':''}> 新增时间</label>
+				
+			</td>
+		</tr>
+		<tr>
+			<td width="20%" class="text-right strong">时间区间</td>
+			<td>
+				<div class="row">
+					<div class="col-xs-3">
+						<input type="text" id="sday" name="sday" placeholder="请输入时间从" value="{$rs.sday}" class="form-control datepicker " style="" data-date-format="yyyy-mm-dd">					
+					</div>
+					<div class="col-xs-3">
+						<input type="text" id="eday" name="eday" placeholder="请输入时间至" value="{$rs.eday}" class="form-control datepicker " style="" data-date-format="yyyy-mm-dd">					
+					</div>
+					<div class="col-xs-3">
+						<div class="btn btn-default" onclick="$('#export_set #sday,#export_set #eday').val('');"><i class="fa fa-times"></i>清除时间</div>
+					</div>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td width="20%" class="text-right strong">金额类型</td>
+			<td>
+				<label class="mr10"><input type="radio" class="i-red-square" name="num_field" id="num_field" value="money" {$rs['num_field']=='money'?'checked':''}> 支付金额</label>
+				
+			</td>
+		</tr>
+		<tr>
+			<td width="20%" class="text-right strong">金额区间</td>
+			<td>
+				<div class="row">
+					<div class="col-xs-3">
+						<input type="text" id="snum" name="snum" placeholder="请输入金额从" value="{$rs.snum}" class="form-control " style="">					
+					</div>
+					<div class="col-xs-3">
+						<input type="text" id="enum" name="enum" placeholder="请输入金额至" value="{$rs.enum}" class="form-control " style="">					
+					</div>
+				</div>			
+			</td>
+		</tr>
+		<tr>
+			<td width="20%" class="text-right strong">用户昵称</td>
+			<td>
+				<input type="text" id="nick" name="nick" placeholder="请输入用户昵称" value="{$rs.nick}" class="form-control " style="width:400px">
+			</td>
+		</tr>
+		<tr>
+			<td width="20%" class="text-right strong">导出字段</td>
+			<td>
+				<div style="max-height:300px;overflow:auto" class="box p20">
+					<div class="row export_field">
+					<volist name="rs.field" id="fid">
+						<volist name="fcfg.allfields" id="vo">
+							<eq name="vo.id" value="$fid">
+							<div class="col-xs-2">
+							<label class="mr10"><input type="checkbox" class="i-red-square" name="field[]" id="field[]" value="{$vo.id}" checked> {$vo.label}</label>
+							</div>
+							</eq>
+						</volist>					
+					</volist>
+					
+					<volist name="fcfg.allfields" id="vo">
+						<notin name="vo.id" value="$rs.field">
+						<div class="col-xs-2">
+						<label class="mr10"><input type="checkbox" class="i-red-square" name="field[]" id="field[]" value="{$vo.id}"> {$vo.label}</label>
+						</div>
+						</notin>
+					</volist>
+					</div>
+				</div>
+				<div class="text-gray p10">拖动字段可进行排序</div>
+			</td>
+		</tr>			
+	</table>
+	
+
+	
+	<div class="p10 text-center">
+		<button type="submit" class="btn btn-primary btn-150px hide">保存设置并导出</button>
+		<button type="button" class="btn btn-primary btn-150px" onclick = "export_file()">保存设置并导出</button>
+	</div>
+	
+
+</form>
+<div class="clearfix"></div>
+
+<script>
+iCheckClass('#export_set');
+$('#export_set .datepicker').datetimepicker({
+	format:'Y-m-d',
+	timepicker:false,
+});
+
+//排序
+$('#export_set .export_field').sortable({
+	stop: function(event, ui) {}
+});
+
+function export_file(){
+	var data = getFormJson('#export_set');
+	ajax_post({
+		url:'__URL__/export_set_save',
+		data:data,
+	},function(ret){
+		if(ret.status == 'success'){
+			$("#export_set").submit();
+		}else{
+			valert(ret);
+		}
+		
+	});
+	
+	return false;
+}
+</script>

@@ -1,0 +1,31 @@
+<include file="Index/header" />
+<div class="bg-gray content-wrap" style="height: 100%; width: 100%; overflow: scroll;">
+
+    <div class="content pd15">
+        <div class="bg-warning pd10 letter-spacing1">
+            <i class="fa fa-exclamation-circle fs16 fl text_yellow"></i>
+            <p class="ml20 mb0">小提示，您还未添加售后模板、快递模板或包装模板的时候才会显示当前页面。</p>
+        </div>
+        <div class="row mt30">
+            <div class="col-md-8">
+                <div class="">
+                    <eq name="bool.package" value="0">
+                        <div class="alert alert-danger">
+                            <i class="fa fa-times-circle sign"></i> 您还未添加包装模板，<a href="{:DM('seller', '/package/create')}" class="strong text_white">立即添加</a>
+                        </div>
+                    </eq>
+                    <eq name="bool.protection" value="0">
+                        <div class="alert alert-danger">
+                            <i class="fa fa-times-circle sign"></i> 您还未添加售后模板，<a href="{:DM('seller', '/protection/create')}" class="strong text_white">立即添加</a>
+                        </div>
+                    </eq>
+                    <eq name="bool.express" value="0">
+                        <div class="alert alert-danger">
+                            <i class="fa fa-times-circle sign"></i> 您还未添加快递模板，<a href="{:DM('seller', '/express/add')}" class="strong text_white">立即添加</a>
+                        </div>
+                    </eq>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

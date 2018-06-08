@@ -1,0 +1,101 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			提成明细
+		</div>
+		<div class="r">
+			<div class="text" onclick="openWin({name:'my_agent',url:'/Upgrade/my_agent'})">我的代理</div>
+		</div>
+	</div>
+</header>
+<section>
+	<div class="row tabs tabs-fixed-top">
+		<div class="col-2">
+			<div class="tabs-item active">现金奖励</div>
+		</div>
+		<div class="col-2">
+			<div class="tabs-item">积分奖励</div>
+		</div>
+	</div>
+	
+	<div class="tabs-content" style="margin-top:35px;">
+		<div class="tabs-pane active cash-list">
+			<div class="load-body">数据加载中……</div>	
+		</div>
+		<div class="tabs-pane score-list">
+			<div class="load-body">数据加载中……</div>	
+		</div>
+	</div>
+</section>
+
+<script id="agent_reward_cash" type="text/html">
+    <% for (var i = 0; i < data.length; i ++) { %>
+		<div class="line-box-m hover row" onclick="openWin({name:'case_view',url:'/Account/cash_view/a_no/<%=data[i].a_no%>'})">
+			<div class="col-4x3" style="max-width:70%">
+				<div><%= data[i].category %></div>
+				<div class="text-gray">下级用户：<%= data[i].d_nick %></div>
+				<div class="text-gray"><%= data[i].atime %></div>
+			</div>
+			<div class="col-4 text-right">
+				<div class="text-success ft14">+<%= data[i].money %></div>
+				<div class="text-gray">现金</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+    <% } %>
+
+</script>
+
+<script id="agent_reward_score" type="text/html">
+    <% for (var i = 0; i < data.length; i ++) { %>
+		<div class="line-box-m hover row" onclick="openWin({name:'score_view',url:'/Score/score_view/c_no/<%=data[i].c_no%>'})">
+			<div class="col-4x3" style="max-width:70%">
+				<div><%= data[i].category %></div>				
+				<div class="text-gray"><%= data[i].atime %></div>
+			</div>
+			<div class="col-4 text-right">
+				<div class="text-success ft14">+<%= data[i].money %></div>
+				<div class="text-gray">积分</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+    <% } %>
+
+</script>
+
+<script>
+	fixBar(1);
+	tabs();
+	ajax_post({
+		url:'/Api/api',
+		data:{apiurl:'/Account/change_cash',is_openid:1,type_id:'1,2',no_sign:'type_id'},
+	},function(ret){
+		if(ret.code==1){			
+			var html = template('agent_reward_cash', {data:ret.data.list});
+			$('.page.active .cash-list').html(html);
+			hover('.page.active .cash-list');
+		}else if(ret.code==3){
+			$('.page.active .cash-list').html(no_data_text);
+		}
+	});
+	
+	ajax_post({
+		url:'/Api/api',
+		data:{apiurl:'/Account/change_score',is_openid:1,type_id:'6,7',no_sign:'type_id'},
+	},function(ret){
+		if(ret.code==1){			
+			var html = template('agent_reward_score', {data:ret.data.list});
+			$('.page.active .score-list').html(html);
+			hover('.page.active .score-list');
+		}else if(ret.code==3){
+			$('.page.active .score-list').html(no_data_text);
+		}
+	});
+	
+	
+
+	
+</script>

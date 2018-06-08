@@ -1,0 +1,66 @@
+<include file="Public:header" />
+		<div class="page-group">
+			<div id="page-search" class="page">
+				<!-- 标题栏 -->
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left back" href="/"></a>
+					<h1 class="title">搜索</h1>
+					<a class="icon iconfont icon-category pull-right ml5 ac-menu" onclick="top_menu()"></a>
+				</header>
+
+				<!-- 浮动导航 -->
+				<include file="Public:fixed-menu" />
+		
+				<!-- 这里是页面内容区 -->		
+				<div class="content">
+					<div class="content-padded">
+						<div class="searchbar row">
+							<div class="search-input col-80">
+								<label class="icon icon-search" for="search"></label>
+								<input type="search" id="search" name="q" placeholder="输入关键字...">
+							</div>
+							<a class="button button-fill button-primary col-20 btn-search">搜索</a>
+						</div>
+					</div>
+					
+					<notempty name="keywords.history">
+					<div class="p5 block">搜索历史</div>
+					<div class="p5">
+						<volist name="keywords.history" id="vo">
+						<a href="/Search/goods/q/{$vo}" class="btn btn-md btn-white mr03">{$vo}</a>
+						</volist>
+					</div>
+					</notempty>
+					
+					<div class="p5 block">热门搜索</div>
+					<div class="list-block">
+						<ul>
+							<volist name="keywords.keywords" id="vo">
+							<li>
+								<a class="item-link item-content" href="/Search/goods/q/{$vo}">
+									<div class="item-inner">
+										<div class="item-title">{$vo}</div>
+									</div>
+								</a>
+							</li>
+							</volist>
+						</ul>
+					</div>				
+					
+					
+					
+					
+					
+					
+					
+					
+				</div>			
+				
+			</div>		
+
+		
+		</div>	
+		
+
+<include file="Public:script" />
+<include file="Public:footer" />

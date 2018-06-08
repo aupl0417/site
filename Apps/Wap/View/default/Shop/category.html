@@ -1,0 +1,48 @@
+<div class="shop-goods-category" data-shop_id="{$_GET.shop_id}"></div>
+
+<script id="tpl_shop_goods_category" type="text/html">
+	<div class="btn-category" onclick="shop_category(0)">全部</div>
+	<% for(i=0;i<data.length;i++){ %>
+		<div class="btn-category" onclick="shop_category(<%= data[i].id %>)"><%= data[i].category_name %></div>
+		<% for(j=0;j<data[i].dlist.length;j++){ %>
+			<div class="btn-category btn-xs" onclick="shop_category(<%= data[i].dlist[j].id %>)"><%= data[i].dlist[j].category_name %></div>
+		<% } %>
+	<% } %>
+</script>
+
+
+
+
+<script>
+fixBar(1);
+// 获取店铺商品列表
+ajax_post({
+	url:'/Api/api',
+	data:{apiurl:'/Shop/category',shop_id:'{$_GET.shop_id}'}
+},function(ret){	
+	if(ret.code==1){
+		var html=template('tpl_shop_goods_category',{data:ret.data});
+		$('.page.active .shop-goods-category').html(html);
+
+	}
+});	
+
+function shop_category(id){
+
+	$('.page.active .search-menu').data({sid:id});
+	$('.page.active section').data({p:'',allpage:''});
+	$('.page.active .tabs-content .tabs-pane').eq(1).find('.pagelist').html('');
+	$('.page.active .tabs-content .tabs-pane').eq(1).find('.load-more').removeClass('active');
+	
+	if($('.page.active .tabs .tabs-item').eq(1).hasClass('active'))	{
+		shop_goods_pagelist($('.page.active .tabs-content .tabs-pane').eq(1).find('.pagelist'));
+	}
+	else $('.page.active .tabs .tabs-item').eq(1).click();
+	
+	$('.page.active .layer .layer-mask').click();
+	fixBar();
+}
+
+	
+	
+</script>

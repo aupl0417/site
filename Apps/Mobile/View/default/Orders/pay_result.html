@@ -1,0 +1,44 @@
+<include file="Public:header" />
+		<div class="page-group">
+			<div id="page-error" class="page">
+				<!-- 标题栏 -->
+				<neq name="_GET.nobar" value="1">
+				<header class="bar bar-nav">
+					<a href="/Orders/view/s_no/{$_GET.s_no}" class="icon icon-left pull-left" data-no-cache="true"></a>
+					<h1 class="title">支付提示</h1>
+					<a class="icon iconfont icon-category pull-right ml5 ac-menu" onclick="top_menu()"></a>
+				</header>
+
+				<!-- 浮动导航 -->
+				<include file="Public:fixed-menu" />
+
+				</neq>
+				<!-- 这里是页面内容区 -->		
+				<div class="content">
+					<eq name="res.code" value="1">
+						<div class="nors text-center text-success">
+							<div><i class="iconfont icon-yifukuan ft3"></i></div>
+							<div id="result">{$res.msg}</div>
+						</div>	
+					<else />
+						<div class="nors text-center text-red">
+							<div><i class="iconfont icon-jinyong ft3"></i></div>
+							<div id="result">{$res.msg}</div>
+						</div>						
+					</eq>
+					<div class="row md2 pd05">
+						<div class="col-50">
+							<a href="{:U('/orders')}" class="button button-danger">查看订单</a>
+						</div>
+						<div class="col-50">
+							<a href="/" class="button button-danger">继续购物</a>
+						</div>
+					</div>
+				</div><!--/content-->
+				
+			</div>
+		</div>	
+		
+
+<include file="Public:script" />
+<include file="Public:footer" />

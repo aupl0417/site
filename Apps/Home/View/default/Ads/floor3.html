@@ -1,0 +1,122 @@
+<div class="mb20 floor3 floor-public">
+	<h4 id="3f" class="text_red">3F 美妆个护
+		<div class="fr text_44 fs14 pt5">
+			<volist name="threeCate" id="vo">
+				<a target="_blank" href="{:DM('s')}{:U('/index/index', ['id' => $vo['id']])}">{$vo.category_name}</a><span class="pl7 pr5"> </span>
+			</volist>
+			<a target="_blank" href="{:DM('s')}{:U('/index/index', ['id' => 100845564])}">more</a>
+		</div>
+	</h4>
+	<div class="tab-container index_tab">
+		<ul class="nav nav-tabs plr5">
+			<li class="active"><a onmouseover="($(this).click())" class="" href="#threeFreatured" data-toggle="tab">精选热卖</a></li>
+			<li><a onmouseover="($(this).click())" href="#threeLike" data-toggle="tab">猜你喜欢</a></li>
+		</ul>							
+
+				<div class="w190 fl re">
+					<volist name="threeBrandOne.ads" id="vo">
+						<a target="_blank" class="db index_img_cl" href="{:DM('click')}?act={:enCryptRestUri($vo['id'])}"><img data-original="{$vo.images}"></a>
+					</volist>
+					<div class="w190 pd10 ab" style="bottom:0">
+						<div class="text-center rgba_red_8 text_white">
+							<volist name="threeBrandAds.ads" id="vo">
+								<a target="_blank" class="db" href="{:DM('click')}?act={:enCryptRestUri($vo['id'])}"><img src="{$vo.images}" width="170px" height="51px" /></a>
+							</volist>
+						</div>
+						<table class="bg_white table mb0">
+							<tbody class="tbody_td text-center">
+								<tr>
+									<volist name="threeBrandTwo.ads" id="vo" offset="0" length='2'>
+										<td><a target="_blank" href="{:DM('click')}?act={:enCryptRestUri($vo['id'])}"><img src={$vo.images}></a></td>
+									</volist>
+								</tr>
+								<tr>
+									<volist name="threeBrandTwo.ads" id="vo" offset="2" length='2'>
+										<td><a target="_blank" href="{:DM('click')}?act={:enCryptRestUri($vo['id'])}"><img src={$vo.images}></a></td>
+									</volist>
+								</tr>
+								<tr>
+									<volist name="threeBrandTwo.ads" id="vo" offset="4" length='2'>
+										<td><a target="_blank" href="{:DM('click')}?act={:enCryptRestUri($vo['id'])}"><img src={$vo.images}></a></td>
+									</volist>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				
+		<div class="tab-content bor_no pd0 mb20">
+			<div class="tab-pane clearfix active" id="threeFreatured">				
+				<table class="w1000  bg_white">
+					<tbody class="text-center">
+						<tr>
+							<td style="border-left:none" rowspan="2">
+								<volist name="threeFeaturedOne.ads" id="vo">
+									<a target="_blank" class="db index_img_cc" href="{:DM('click')}?act={:enCryptRestUri($vo['id'])}"><img data-original="{$vo.images}"></a>
+								</volist>
+							</td>
+							
+							<volist name="threeFeaturedTwo.ads" id="vo" offset="0" length='2'>
+								<td class="pd0 over hover_img_cr">
+									<a target="_blank" class="db index_img_cr re" href="{:DM('click')}?act={:enCryptRestUri($vo['id'])}">
+										<!-- <div class="ab">
+											<h5 class="strong text_44 text_over">一台能教会你弹琴的钢琴</h5>
+											<h6 class="text_over">1元购琴凳耳机</h6>
+										</div> -->
+										<img data-original="{$vo.images}">
+									</a>
+								</td>
+							</volist>
+							<td class="pd0 solid_a_last" rowspan="2">
+								<volist name="threeFeaturedThree.ads" id="vo">
+									<a target="_blank" class="db index_img_cs" href="{:DM('click')}?act={:enCryptRestUri($vo['id'])}">
+										<!-- <div class="ab text-left">
+											<h5 class="strong text_44 text_over">满799减100</h5>
+											<h6 class="text_over">柯玛妮克旗舰店</h6>
+										</div> -->
+										<img data-original="{$vo.images}">
+									</a>
+								</volist>
+							</td>
+						</tr>
+						<tr>
+							<volist name="threeFeaturedTwo.ads" id="vo" offset="2" length='2'>
+								<td class="pd0 over hover_img_cr">
+									<a target="_blank" class="db index_img_cr re" href="{:DM('click')}?act={:enCryptRestUri($vo['id'])}">
+										<!-- <div class="ab">
+											<h5 class="strong text_44 text_over">快乐运动 健康生活</h5>
+											<h6 class="text_over">运动装备一站购</h6>
+										</div> -->
+										<img data-original="{$vo.images}">
+									</a>
+								</td>
+							</volist>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="tab-pane clearfix" id="threeLike">
+				<div class="w1000 fl clearfix mt-1 ml-1">
+					<volist name="love_goods.makeup" id="vo">
+					<div class="my_love">
+						<a href="{:DM('item','/goods/'.$vo['attr_list'][0]['id'])}" target="_blank">
+							<div class="text-center"><img src="{$vo.images}" alt="{$vo.goods_name}"></div>
+							<div class="text-left plr10 mt5">
+								<p class="text_over mb0 text_44">{$vo.goods_name}</p>
+								<span class="fs16 text_red mt3">￥{$vo.price}</span> 
+							</div>
+						</a>
+					</div>
+					</volist>
+				
+				</div>	
+									
+			</div>
+		</div>
+		<notempty name="threeBottomAds.ads">
+			<volist name="threeBottomAds.ads" id="vo">
+				<a target="_blank" href="{:DM('click')}?act={:enCryptRestUri($vo['id'])}"><img title="{$vo.name}" data-original="{$vo.images}"></a>
+			</volist>
+		</notempty>
+	</div>
+</div>

@@ -1,0 +1,147 @@
+<extend name="Home@Public:base" />
+<block name="body">
+	<div class="centent_body">
+		<div class="bg_red mt5 mb10">
+	        <div class="container content_tle fs16">
+	            <a href="{:DM('my')}">我是买家<span class="ab fs30 fl">◆</span></a>
+	            <a href="{:DM('seller')}">我是卖家<span class="ab fs30 fl">◆</span></a>
+	            <a href="{:DM('my','/assets')}">账户管理<span class="ab fs30 fl">◆</span></a>
+	            <a href="{:U('/redirect')}?domain=u&action=/auth" target="_blank">认证中心<span class="ab fs30 fl">◆</span></a>
+	            <a class="alert" href="{:DM('www','/service')}">客服中心<span class="ab fs30 fl">◆</span></a>
+	            <a href="{:U('/redirect')}?domain=www" target="_blank">C<sup>+</sup>消费系统<span class="ab fs30 fl">◆</span></a>
+		
+	        </div>
+	    </div>
+	    <div class="container pt40 mb20">
+	    	<div class="bor_der text-center re pd30 mb40">
+	    		<img class="ab" style="left:0;bottom:0" src="__NEW_DESIGN__images/service.png">
+	    		<h4 class="">
+	    			客服电话：
+	    			<span class="text_red mr40">95083</span>
+	    			在线时间：
+	    			<span class="text_red mr40">09:00-18:00</span>
+					QQ：
+	    			<a href="http://crm2.qq.com/page/portalpage/wpa.php?uin=800180777&f=1&ty=1&aty=0&a=&from=6" target="_blank"><span class="text_red">800180777</span></a>
+	    		</h4>
+	    		<h6 class="text-muted">*客服为您解答经常遇到的资讯性问题，如找回账户密码，投诉维权，意见反馈等问题，无需等待。商品类问题请咨询卖家</h6>
+	    	</div>
+	    	<div class="row">
+	    		<div class="col-xs-6 mb40 text-right">
+		    		<div><span class="bor_der" style="padding:12px 78px;border-color:#c81623"></span></div>
+		    		<div class="mt-10"><span class="bg_white" style="padding:20px 45px;"></span></div>
+		    		<a target="_blank" href="{:U('/redirect/im')}" class="btn btn-danger btn_m imUrl-btn" style="width:150px;margin-top:-52px">在线客服</a>
+		    	</div>
+		    	<div class="col-xs-6 mb40">
+		    		<div><span class="bor_der" style="padding:12px 78px;border-color:#c81623"></span></div>
+		    		<div class="mt-10"><span class="bg_white" style="padding:20px 45px;"></span></div>
+		    		<a href="{:DM('faq')}" class="btn btn-danger btn_m" style="width:150px;margin-top:-52px">自助服务</a>
+		    	</div>
+	    	</div>
+	    	<div class="row mlr_10 service_h">
+	    		<div class="col-xs-4 plr10">
+	    			<div class="bor_der text-center pd20">
+	    				<img src="__NEW_DESIGN__images/service_1.png">
+	    				<h4>订单百事通</h4>
+	    				<div class="row text-left mt20">
+	    					<a class="col-xs-4 mb10 text_blue" target="_blank" href="{:DM('faq')}/view.html?id=933">
+	    						<span class="db pd2 bor_r4 bg_blue fl mt6"></span>
+	    						<div class="ml10">提交订单</div>
+	    					</a>
+	    					<a class="col-xs-4 mb10 text_blue" target="_blank" href="{:DM('faq')}/view.html?id=935">
+	    						<span class="db pd2 bor_r4 bg_blue fl mt6"></span>
+	    						<div class="ml10">查询订单</div>
+	    					</a>
+	    					<a class="col-xs-4 mb10 text_blue" target="_blank" href="{:DM('faq')}/view.html?id=936">
+	    						<span class="db pd2 bor_r4 bg_blue fl mt6"></span>
+	    						<div class="ml10">订单修改</div>
+	    					</a>
+	    					<a class="col-xs-4 mb10 text_blue" target="_blank" href="{:DM('faq')}/view.html?id=938">
+	    						<span class="db pd2 bor_r4 bg_blue fl mt6"></span>
+	    						<div class="ml10">取消订单</div>
+	    					</a>
+							<a class="col-xs-4 mb10 text_blue" target="_blank" href="{:DM('faq')}/view.html?id=940">
+	    						<span class="db pd2 bor_r4 bg_blue fl mt6"></span>
+	    						<div class="ml10">商品评价</div>
+	    					</a>
+	    					
+	    				</div>
+	    			</div>
+	    		</div>
+	    		<div class="col-xs-4 plr10">
+	    			<div class="bor_der text-center pd20">
+	    				<img src="__NEW_DESIGN__images/service_2.png">
+	    				<h4>售后服务</h4>
+	    				<div class="row text-left mt20">
+	    					<a class="col-xs-4 mb10 text_blue" target="_blank" href="{:DM('faq')}/view.html?id=908">
+	    						<span class="db pd2 bor_r4 bg_blue fl mt6"></span>
+	    						<div class="ml10">售后政策</div>
+	    					</a>
+							<a class="col-xs-4 mb10 text_blue" target="_blank" href="{:DM('faq')}/view.html?id=914">
+	    						<span class="db pd2 bor_r4 bg_blue fl mt6"></span>
+	    						<div class="ml10">退换货流程</div>
+	    					</a>
+							<a class="col-xs-4 mb10 text_blue" target="_blank" href="{:DM('faq')}/view.html?id=911">
+	    						<span class="db pd2 bor_r4 bg_blue fl mt6"></span>
+	    						<div class="ml10">退换货申请</div>
+	    					</a>
+	    					<a class="col-xs-4 mb10 text_blue" target="_blank" href="{:DM('faq')}/view.html?id=941">
+	    						<span class="db pd2 bor_r4 bg_blue fl mt6"></span>
+	    						<div class="ml10">退款说明</div>
+	    					</a>
+							<a class="col-xs-4 mb10 text_blue" target="_blank" href="{:DM('faq')}/view.html?id=910">
+	    						<span class="db pd2 bor_r4 bg_blue fl mt6"></span>
+	    						<div class="ml10">退换货运费说明</div>
+	    					</a>
+	    				</div>
+	    			</div>
+	    		</div>
+	    		<div class="col-xs-4 plr10">
+	    			<div class="bor_der text-center pd20">
+	    				<img src="__NEW_DESIGN__images/service_3.png">
+	    				<h4>购物指南</h4>
+	    				<div class="row text-left mt20">
+	    					<a class="col-xs-4 mb10 text_blue" target="_blank" href="{:DM('faq')}/view.html?id=882">
+	    						<span class="db pd2 bor_r4 bg_blue fl mt6"></span>
+	    						<div class="ml10">商品查找</div>
+	    					</a>
+	    					<a class="col-xs-4 mb10 text_blue" target="_blank" href="{:DM('faq')}/view.html?id=749">
+	    						<span class="db pd2 bor_r4 bg_blue fl mt6"></span>
+	    						<div class="ml10">购物流程</div>
+	    					</a>
+	    					<a class="col-xs-4 mb10 text_blue" target="_blank" href="{:DM('faq')}/view.html?id=944">
+	    						<span class="db pd2 bor_r4 bg_blue fl mt6"></span>
+	    						<div class="ml10">交易条款</div>
+	    					</a>
+	    					<a class="col-xs-4 mb10 text_blue" target="_blank" href="{:DM('faq')}/view.html?id=946">
+	    						<span class="db pd2 bor_r4 bg_blue fl mt6"></span>
+	    						<div class="ml10">促销咨询</div>
+	    					</a>
+	    				</div>
+	    			</div>
+	    		</div>
+	    	</div>
+			
+
+	    </div>
+	</div>
+</block>
+
+<block name="script">
+<script>
+$(document).ready(function() {
+	//顶部，静态化时需要用到
+	ajax_topbar();
+
+//	ajax_post({
+//		url:'{:U("/service/imUrl")}',
+//	}, function (res) {
+//		if (res.code == 1) {
+//			$(".imUrl-btn").attr('href', res.data);
+//		}
+//	});
+});	
+
+</script>
+</block>
+
+<block name="css"></block>

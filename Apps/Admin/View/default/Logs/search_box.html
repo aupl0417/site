@@ -1,0 +1,48 @@
+<form method="get" action="__URL__/" role="form" class="hover-shadow hover-search p10 md10">
+
+	<table class="no-bordered">
+		<tr>
+			<td class="p0">
+				<table>
+					<tr>
+						
+						<td>	
+							<select id="type" name="type" class="form-control">
+								<option value="">操作类型</option>
+								<option value="LOGIN">登录</option>
+								<option value="UPDATE">修改</option>
+								<option value="INSERT">新增</option>
+								<option value="DELETE">删除</option>
+							</select>						
+						</td>
+						<td>	
+							<input id="name" name="name" value="{$_GET.name}" class="form-control" placeholder="请输入雇员账号" />					
+						</td>					
+						<td><input id="sday" name="sday" value="{$_GET.sday}" class="form-control" placeholder="时间(从)" data-type="between-datepick" data-var="maxDate" data-tag="#eday" />							
+						</td>
+						<td><input id="eday" name="eday" value="{$_GET.eday}" class="form-control" placeholder="时间(至)" data-type="between-datepick"data-var="minDate" data-tag="#sday" /></td>
+						<td>
+							<select id="field" name="field" class="form-control">
+								<option value="sql">搜索字段(默认搜SQL)</option>
+								<option value="table">table操作数据表</option>
+								<option value="sql">SQL</option>
+								<option value="res">res操作结果</option>
+								<option value="insid">insid插入数据ID</option>
+								<option value="url">url操作的URL</option>
+							</select>
+						
+						</td>
+						<td><input id="q" name="q" value="{$_GET.q}" class="form-control" placeholder="请输入搜索关键词" /></td>
+						
+					<tr>
+				</table>
+			</td>
+			<td width="100" class="p0"><button type="submit" class="btn btn-rad btn-trans btn-primary btn-block"><i class="fa fa-search"></i> 搜索</button></td>
+		</tr>
+	</table>
+
+	
+	
+
+</form>
+<div class="clearfix"></div>

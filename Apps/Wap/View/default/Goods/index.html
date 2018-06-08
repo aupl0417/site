@@ -1,0 +1,143 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			<div class="row">
+				<div class="col-20">&nbsp;</div>
+				<div class="col-60">
+					<div class="input-search-box" >
+						<input type="text" id="q" name="q" placeholder="搜索商品/店铺" onclick="openWin({name:'search',url:'/Goods/search'})" />
+					</div>				
+				</div>
+				<div class="col-20"></div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="r">
+			<div class="text" onclick="openWin({name:'goods',url:'/Goods/index',ref:true})">全部</div>		
+		</div>
+	</div>
+</header>
+<?php
+	$url = '/Goods/index';
+	if(isset($_GET['category_id']) && !empty($_GET['category_id'])){
+		$url .= '/category_id/'.$_GET['category_id'];
+	}
+	if(isset($_GET['q']) && !empty($_GET['q'])){
+		$url .= '/q/'.$_GET['q'];
+	}
+	$is_self_url = $url.'/is_self/1';
+	$score_ratio_url = $url.'/score_ratio/2';
+	if(isset($_GET['sort'])){
+		$sort_array = explode('-',$_GET['sort']);
+		$sort = $sort_array[1]=='desc' ? 'asc' : 'desc' ;
+
+		$price_url = $url.'/sort/price-'.$sort;
+		$sale_num_url = $url.'/sort/sale_num-'.$sort;
+	}else{
+		$price_url = $url.'/sort/price-asc';
+		$sale_num_url = $url.'/sort/sale_num-desc';
+	}
+?>
+<section>
+	<div class="row tabs">
+		
+		<div class="col-25">
+			<div class="tabs-item <if condition='$sort_array[0] eq "price"'>active</if>" onclick="openWin({name:'goods',url:'{$price_url}',ref:true})">价格</div>
+		</div>
+			
+		<div class="col-25">
+			<div class="tabs-item <if condition='$sort_array[0] eq "sale_num"'>active</if>" onclick="openWin({name:'goods',url:'{$sale_num_url}',ref:true})">销量</div>
+		</div>
+		
+		<div class="col-25">
+			<div class="tabs-item  <if condition='$_GET.is_self eq 1'>active</if>" onclick="openWin({name:'goods',url:'{$is_self_url}',ref:true})">自营</div>
+		</div>	
+		<div class="col-25">
+			<div class="tabs-item  <if condition='$_GET.score_ratio eq 2'>active</if>" onclick="openWin({name:'goods',url:'{$score_ratio_url}',ref:true})">双倍积分</div>
+		</div>
+		
+	</div>	
+	<div class="clearfix"></div>
+	<div class="pagelist">
+		<div class="load-body">数据加载中……</div>
+	</div>
+	<div class="p10 load-more" onclick="goods_loadmore()">
+		<div class="btn btn-lg btn-block btn-danger btn-trans">加载更多……</div>
+	</div>
+</section>
+
+
+
+<script id="goods_list" type="text/html">
+	
+    <% for (var i = 0; i < data.length; i ++) { %>
+		<% if(data[i].attr_list.length>0){ %>
+		<div class="line-box-m row hover noicon" onclick="openWin({name:'goods_view',url:'<%= data[i].attr_list[0].url %>'})">
+			<div class="col-5"><img src="<%= data[i].images %>" alt="<%= data[i].goods_name %>"></div>
+			<div class="col-5x4">
+				<div class="pl10">
+					<div class="goods_name lh2-20px"><% if(data[i].is_self==1){ %><span class="is_self">自营</span><% } %> <%= data[i].goods_name %></div>
+					<div class="text-gray">累计售出：<%= data[i].sale_num %></div>
+					<div><span class="text-danger">￥<%= data[i].price %></span><span class="text-gray">，奖励 <%= data[i].score %> 积分</span></div>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<% } %>
+    <% } %>
+
+</script>
+
+
+<script>
+	fixBar(1);
+	
+	
+	var datas={apiurl:'/Goods/goods_list',category_id:'{$_GET.category_id}',q:'{$_GET.q}',score_ratio:'{$_GET.score_ratio}',is_self:'{$_GET.is_self}',sort:'{$_GET.sort}',shop_id:'{$_GET.shop_id}',imgsize:160,no_sign:'is_self,p,pagesize,category_id,q,imgsize,sort,score_ratio,shop_id'};
+	goods_pagelist(datas);
+	
+	function goods_pagelist(data,param){
+		var d=$('.page.active section').data();
+		var p=1;
+		if(d.p!=undefined){
+			p=d.p;
+		}
+		
+		if(d.allpage!=undefined && d.p>d.allpage){
+			$('.page.active .load-more').html('已无记录可加载！');
+			return false;
+		}
+		
+		data.p=p;		
+		ajax_post({
+			url:'/Api/api',
+			data:data,
+		},function(ret){
+			if(ret.code==1){			
+				var html = template('goods_list', {data:ret.data.list});			
+		
+				if(p==1){
+					$('.page.active .pagelist').html(html);
+				}else{
+					$('.page.active .pagelist').append(html);
+				}
+				p++;
+				$('.page.active section').data({p:p,allpage:ret.data.allpage});
+				
+				if(ret.data.allpage>1){
+					$('.page.active .load-more').addClass('active');
+				}
+			}else if(ret.code==3){
+				$('.page.active .pagelist').html(no_data_text);
+			}
+		});	
+	}
+	
+	function goods_loadmore(){
+		goods_pagelist(datas);
+	}
+	
+</script>

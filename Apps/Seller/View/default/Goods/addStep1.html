@@ -1,0 +1,154 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body">
+	<include file="Public:nav" />
+	<div class="container mb30">
+		<include file="Public:side" />
+		<div class="w980 fl">
+			<div class="bor_der">
+				<div class="bg_f1 clearfix fs14 text_44 tle_R">
+					<a class="fl plr15 line40 ml-1 active" href="javascript:;">添加商品</a>
+				</div>
+				
+				<!-- 主体部分 -->
+					<div class="solid_t mt-1 pd15 pb0 hide">
+						<form class="row form-horizontal group-border-dashed">
+							<div class="col-xs-6">
+								<div class="input-group">
+									<input type="text" class="form-control">
+									<span class="input-group-btn">
+										<button class="btn btn-primary plr20" type="button">快速搜索类目</button>
+									</span>
+								</div>
+							</div>
+							<div class="col-xs-6">
+								<div class="form-group">
+									<label class="col-sm-3 pd0 control-label fs14">最近使用类目</label>
+									<div class="col-sm-9">
+										<select class="form-control">
+											<option>1</option>
+											<option>2</option>
+										</select>									
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="md20"></div>
+					<div class="row mg0 mb20 goods-select-category">
+						<div class="col-xs-4">							
+							<div class="bor_der drop_auto plr10 mt-1 cid-1">
+								<volist name="cate" id="vo">
+									<h5 data-id="{$vo.id}" onclick="first_cid($(this))"><span>{$vo.category_name}</span> <i class="fa fa-angle-down fr"></i></h5>
+								</volist>
+							</div>
+						</div>
+						<div class="col-xs-4">							
+							<div class="bor_der drop_auto plr10 mt-1 cid-2">
+								
+							</div>
+						</div>
+						<div class="col-xs-4">							
+							<div class="bor_der drop_auto plr10 mt-1 cid-3">
+								
+							</div>							
+						</div>
+					</div>
+
+					<div class="bg_f1 ptb10 plr15 mg15 mb20">您当前选择的是：
+						<span class="selected"></span>
+					</div>
+
+
+					<div class="bor_der bg_f1 pd15 mg15">
+						<h4 class="text-center strong mb20">乐兑平台发布商品协议 </h4>
+						<p class="mb5">如您成为乐兑卖家，并使用乐兑商城平台所提供的卖家平台服务，您应当阅读并遵守《乐兑商城平台个人卖家服务协议》（以下简称“本协议”）、《平台服务协议》等相关协议</p>
+						<p class="mb5">乐兑平台所实时发布的平台规则。请您务必审慎阅读、充分理解各条款内容，特别是免除或者限制责任的条款，以及开通或使用某项服务的单独协议。限制、免责条款可能以黑体加粗形</p>
+						<p class="mb5">式提示您注意。除非您已阅读并接受本协议所有条款，否则您无权使用本协议所约定提供的平台服务。您申请开通或使用本服务即视为您已阅读并同意上述协议的约束。</p>
+					</div>
+
+					<div class="mg15 text-center mb40">
+						<div class="btn btn-primary plr20" onclick="goods_next()">同意协议并发布商品</div>
+					</div>
+
+					<div class="pt40">
+						<div class="solid_b plr15 pb5">
+							<blockquote class="pd0 pl10 mb0 fs14 strong">商品列表</blockquote>
+						</div>
+						<div class="row pd15">
+							<a class="col-xs-3 mb10">如何发布商品？</a>
+							<a class="col-xs-3 mb10">我能发布多少个商品？</a>
+							<a class="col-xs-3 mb10">我的商品该发布在哪个类目下？</a>
+							<a class="col-xs-3 mb10">禁发商品名录 ？</a>
+							<a class="col-xs-3 mb10">商品属性、数量设置方法？</a>
+							<a class="col-xs-3 mb10">发布的商品在哪里编辑？</a>
+							<a class="col-xs-3 mb10">违规处理名单 ？ </a>
+							<a class="col-xs-3 mb10">属性里没有找到我的商品 ？ </a>
+						</div>
+					</div>
+			</div>
+		</div>
+	</div>
+	<!-- {:W('Common/Side/sellerBottom')} -->
+</div>
+		
+</block>
+<block name="css"></block>
+<block name="script">
+
+<script>
+	
+	function first_cid(obj){
+		$('.cid-2,.cid-3,.selected').html('');
+		obj.closest('.drop_auto').find('h5.active').removeClass('active');
+		obj.addClass('active');
+		ajax_get({
+			url:'__URL__/sub_category/sid/'+obj.data('id'),
+		},function(ret){
+			if(ret.code==1){
+				var html='';
+				for(i=0;i<ret.data.length;i++){
+					html+='<h5 data-id="'+ret.data[i].id+'" onclick="second_cid($(this))"><span>'+ret.data[i].category_name+'</span> <i class="fa fa-angle-down fr"></i></h5>';
+				}
+				
+				$('.cid-2').html(html);
+			}
+		});		
+	}	
+	
+	function second_cid(obj){
+		$('.cid-3').html('');
+		obj.closest('.drop_auto').find('h5.active').removeClass('active');
+		obj.addClass('active');
+		ajax_get({
+			url:'__URL__/sub_category/sid/'+obj.data('id'),
+		},function(ret){
+			if(ret.code==1){
+				var html='';
+				for(i=0;i<ret.data.length;i++){
+					html+='<h5 data-id="'+ret.data[i].id+'" onclick="three_cid($(this))"><span>'+ret.data[i].category_name+'</span> <i class="fa fa-angle-down fr"></i></h5>';
+				}
+				
+				$('.cid-3').html(html);
+			}
+		});		
+	}
+	
+	function three_cid(obj){
+		obj.closest('.drop_auto').find('h5.active').removeClass('active');
+		obj.addClass('active');		
+		
+		var html=$('.cid-1 h5.active span').html()+' > '+$('.cid-2 h5.active span').html()+' > '+$('.cid-3 h5.active span').html();
+		$('.selected').html(html);
+	}
+	
+	function goods_next(){
+		var id=$('.cid-3 h5.active').data('id');
+		if(id==undefined){
+			valert({msg:'请选择类目！'});
+		}else{
+			window.location.href='__URL__/add/cid/'+id;
+		}
+	}
+</script>
+</block>

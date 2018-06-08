@@ -1,0 +1,79 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin({ref:true})"></i>
+		</div>
+		<div class="title">
+			理财
+		</div>
+		<div class="r">
+			<div class="text" onclick="openWin({name:'finance_orders',url:'/Finance/orders'})">账单</div>
+			<div class="text" onclick="openWin({name:'finance_list',url:'/Finance/finance_list'})">明细</div>
+		</div>
+	</div>
+</header>
+<section>
+	<div class="cash-box">
+		<div class="all_money">
+			0
+		</div>
+		<div>理财账户（元）</div>	
+	</div>
+	<div class="box row border-d account-win">
+		<div class="col-2 hover" onclick="openWin({name:'finance_orders',url:'/Finance/orders/status/4/month/{:date('Y-m')}'})">
+			<div>
+			<div class="money t-month-win">0</div>
+			<div class="text-gray">本月收益（元）</div>
+			</div>
+		</div>
+		<div class="col-2 hover" onclick="openWin({name:'finance_orders',url:'/Finance/orders/status/4'})">
+			<div>
+			<div class="money t-win">0</div>
+			<div class="text-gray">累计收益（元）</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	</div>	
+	<div class="box row border-d account-win" onclick="openWin({name:'finance_orders',url:'/Finance/orders/status/1'})">
+		<div class="col-2 hover">
+			<div>
+			<div class="money t-finance-in">0</div>
+			<div class="text-gray">理财中（笔）</div>
+			</div>
+		</div>
+		<div class="col-2 hover">
+			<div>
+			<div class="money t-finance-out">0</div>
+			<div class="text-gray">可转出（笔）</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	</div>	
+	<div class="line-box nobg noicon">
+		我的积分账户：<span class="text-success t-score">0</span> 分
+	</div>
+	<div class="p10">
+		<div class="btn btn-lg btn-block btn-danger md10" onclick="openWin({name:'finance_add',url:'/Finance/add'})">我要投资理财</div>
+	</div>
+</section>
+
+<script>
+	fixBar(1);
+	
+	ajax_post({
+		url:'/Api/api',
+		data:{apiurl:'/Account/account',is_openid:1},
+	},function(ret){
+		if(ret.code==1){			
+			$('.page.active .all_money').html(ret.data.ac_finance);
+			$('.page.active .t-score').html(ret.data.ac_score);
+			$('.page.active .t-month-win').html(ret.data.finance_win_this_month);
+			$('.page.active .t-win').html(ret.data.finance_win);			
+			$('.page.active .t-finance-in').html(ret.data.finance_in);			
+			$('.page.active .t-finance-out').html(ret.data.finance_out);			
+		}
+	});
+	
+
+	
+</script>

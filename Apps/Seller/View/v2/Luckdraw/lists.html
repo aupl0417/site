@@ -1,0 +1,87 @@
+<extend name="Seller@Public:base" />
+<block name="body">
+    <div class="centent_body">
+        <!-- to do your html codeing -->
+        <div class="revision_bg">
+            <div class="container ptb_size_lg clearfix">
+                <!-- 左侧导航 -->
+                <include file="Public:sideNav" />
+                <!-- 左侧导航结束 -->
+
+                <div class="revisionRight pd15" style="width: 1020px"><!-- 右侧内容 -->
+                    <div class="clearfix revisionOrderTab sid-active" data-sid="{$Think.get.sid}">
+                        <!--<a class="fr btn btn-primary" href="{:U('/luckdraw/index', ['sid' => 1])}">查看可报名</a>-->
+                        <a class="orderOption" data-sid="" href="{:U('/luckdraw/lists')}">所有</a>
+                        <a class="orderOption" data-sid="1" href="{:U('/luckdraw/lists', ['sid' => 1])}">待审核</a>
+                        <a class="orderOption" data-sid="2" href="{:U('/luckdraw/lists', ['sid' => 2])}">已通过</a>
+                        <a class="orderOption" data-sid="3" href="{:U('/luckdraw/lists', ['sid' => 3])}">被拒绝</a>
+                    </div>
+                    <!-- 表单 -->
+                    <notempty name="list.list">
+                        <table class="revisionTable table">
+                            <tbody class="bg_white">
+                            <volist name="list.list" id="vo">
+                                <tr class="text-center">
+                                    <td style="padding:0; width:90%">
+                                        <table class="no-border table-hover">
+                                            <tbody class="no-border-y">
+                                            <tr><!-- 同店铺第一个商品 -->
+                                                <td width="10%">
+                                                    <a href="javascript:;">
+                                                        <img src="{:myurl($vo['images'], 80)}" class="img-thumbnail"></a>
+                                                </td>
+                                                <td valign="top" width="90%" class="text-left">
+                                                    <a href="javascript:;">{$vo.luckdraw_name}</a>
+                                                    <div class="md5 text-gray mt5 hide">{$vo.start_time} - {$vo.end_time}</div>
+                                                    <!--<div class="md5 text-gray mt5">{:html_entity_decode($vo['rule'])}</div>-->
+                                                    <div class="md5 text-gray mt5">已选优惠券：
+                                                        <volist name="vo.coupons" id="co">
+                                                            满 <strong class="text_yellow">{$co.min_price}</strong> 减 <strong class="text_yellow">{$co.price}</strong>，
+                                                        </volist>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                    <td style="vertical-align: middle; width:10%">
+                                        <div>
+                                            <switch name="vo.status">
+                                                <case value="1">
+                                                    <p><a href="javascript:" class="btn btn-sm btn-warning btn-rad btn-trans m0">{$vo.statusName}</a></p>
+                                                </case>
+                                                <case value="2">
+                                                    <p><a href="javascript:" class="btn btn-sm btn-primary btn-rad btn-trans m0">{$vo.statusName}</a></p>
+                                                </case>
+                                                <case value="3">
+                                                    <p><a title="点击修改" href="{:U('/luckdraw/edit', ['id' => $vo['id']])}" class="btn btn-sm btn-primary btn-rad btn-trans m0">{$vo.statusName}</a></p>
+                                                </case>
+                                            </switch>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </volist>
+                            </tbody>
+                        </table>
+                        <div class="page-box col-xs-12 text-center">
+                            {:page_html($list['pageinfo'])}
+                        </div>
+                        <else />
+                        {:W('Common/Builder/nors', array('param' => array('text' => $data['msg'])))}
+                    </notempty>
+                </div>
+
+            </div>
+        </div>
+        <!-- my codeing over -_-   -->
+
+    </div>
+</block>
+
+<block name="css">
+
+</block>
+
+<block name="script">
+    <!-- to do your javascript codeing -->
+</block>

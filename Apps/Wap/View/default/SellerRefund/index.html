@@ -1,0 +1,103 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin({ref:true})"></i>
+		</div>
+		<div class="title">
+			退款订单
+		</div>
+		<div class="r">
+		</div>
+	</div>
+</header>
+<section>	
+	<div class="pagelist">
+		<div class="load-body">数据加载中……</div>
+	</div>
+	<div class="p10 load-more" onclick="refund_loadmore()">
+		<div class="btn btn-lg btn-block btn-danger btn-trans">加载更多……</div>
+	</div>
+</section>
+<script id="tpl_refund_list" type="text/html">
+<% for(i=0;i<data.length;i++){ %>
+	<div class="line-box hover row" onclick="openWin({name:'seller_refund_view',url:'/SellerRefund/view/r_no/<%= data[i].r_no %>'})">
+		<div class="col-70"><div class="b">退款单号：<%= data[i].r_no %></div></div>
+		<div class="col-30 text-right text-danger"><%= data[i].status_name %></div>
+	</div>
+	
+	<% if(data[i].type==3){ %>
+	<div class="line-box hover noicon">
+		退运费
+	</div>	
+	<% }else{ %>
+	<div class="line-box-m hover row" onclick="openWin({name:'goods_view',url:'/Goods/view/id/<%= data[i].orders_goods.attr_list_id %>'})">
+		<div class="col-15"><img src="<%= data[i].orders_goods.images %>" alt="商品图片"></div>
+		<div class="col-85">
+			<div class="pl10 pr10">
+				<div class="lh2-18px"><%= data[i].orders_goods.goods_name %></div>
+				<div class="row">
+					<div class="col-50 text-gray"><%= data[i].orders_goods.attr_name %></div>
+					
+				</div>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	</div>	
+	<% } %>
+
+	<div class="clearfix md10"></div>
+<% } %>
+	
+</script>
+
+<script>
+	fixBar(1);
+	
+	var refund_data={apiurl:'/SellerRefund/refund_list',is_openid:1,imgsize:160,no_sign:'p,pagesize,imgsize'};
+	
+	refund_pagelist(refund_data);
+	
+	function refund_pagelist(data,param){
+		var d=$('.page.active section').data();
+		var p=1;
+		if(d.p!=undefined){
+			p=d.p;
+		}
+		
+		if(d.allpage!=undefined && d.p>d.allpage){
+			$('.page.active .load-more').html('已无记录可加载！');
+			return false;
+		}
+		
+		data.p=p;		
+		ajax_post({
+			url:'/Api/api',
+			data:data,
+		},function(ret){
+			if(ret.code==1){			
+				var html = template('tpl_refund_list', {data:ret.data.list});			
+		
+				if(p==1){
+					$('.page.active .pagelist').html(html);
+				}else{
+					$('.page.active .pagelist').append(html);
+				}
+				p++;
+				$('.page.active section').data({p:p,allpage:ret.data.allpage});
+				
+				if(ret.data.allpage>1){
+					$('.page.active .load-more').addClass('active');
+				}
+			}else if(ret.code==3){
+				$('.page.active .pagelist').html(no_data_text);
+			}else{
+				$('.page.active section').html('<div class="load-body">'+ret.msg+'</div>');
+			}
+		});	
+	}
+
+	//更多
+	function refund_loadmore(){
+		refund_pagelist(refund_data);
+	}	
+</script>

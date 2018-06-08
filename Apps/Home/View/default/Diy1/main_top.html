@@ -1,0 +1,8 @@
+<div class="row mt20 mb20 ad-box">
+	<if condition="session('admin.id') gt 0 && $_GET['diy'] eq 'yes'">
+	<div class="ad-edit-box hide"><a data-type="modal" data-url="{:U('/ad/add', ['id' => $mainTop['id']])}" data-title="{$mainTop['position_name']}" href="javascript:;" class="btn btn-danger btn-ad">编辑广告位</a></div>
+	</if>
+	<volist name="mainTop.ads" id="ads">
+	<a class="col-xs-3" target="_blank" href="{:DM('click')}?act={:enCryptRestUri($ads['id'])}"><div class="amg"><img class="tion_top" data-original="{$ads.images}" src="{$ads.images}"></div></a>
+	</volist>
+</div>

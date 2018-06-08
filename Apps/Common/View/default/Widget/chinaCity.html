@@ -1,0 +1,109 @@
+<notempty name="name.province">
+	<div class="col-sm-3" style="padding-left:0">
+		<div class="form-group" style="margin:0;">
+		<div class="col-xs-12" style="padding-right:0;padding-left:0;">
+		<select data-child="2" data-level="1" id="{$name['province']}" name="{$name['province']}"
+			class="select2_category form-control form-filter btn-sm chinaCity" data-placeholder="">
+			<option value="">--请选择--</option>
+			<volist name="data" id="vo">
+				<option <eq name="val.province" value="$vo.id">selected</eq> value="{$vo.id}">{$vo.a_name}</option>
+			</volist>
+		</select>
+		</div>
+		</div>
+	</div>
+</notempty>
+<notempty name="name.city">
+	<div class="col-sm-3" style="padding-left:0">
+		<div class="form-group" style="margin:0;">
+		<div class="col-xs-12" style="padding-right:0;padding-left:0;">
+			<select data-child="3" data-level="2" id="{$name['city']}" name="{$name['city']}"
+				class="select2_category form-control form-filter btn-sm chinaCity"
+				data-placeholder="请选择省市区">
+				<option value="">--请选择--</option>
+				<notempty name="city">
+					<volist name="city" id="vo">
+						<option <eq name="val.city" value="$vo.id">selected</eq> value="{$vo.id}">{$vo.a_name}</option>
+					</volist>
+				</notempty>
+			</select>
+			</div>
+		</div>
+	</div>
+</notempty>
+<notempty name="name.district">
+	<div class="col-sm-3" style="padding-left:0">
+	<div class="form-group" style="margin:0;">
+	<div class="col-xs-12" style="padding-right:0;padding-left:0;">
+		<select data-child="4" data-level="3" id="{$name['district']}" name="{$name['district']}"
+			class="select2_category form-control form-filter btn-sm chinaCity"
+			data-placeholder="请选择省市区">
+			<option value="">--请选择--</option>
+			<notempty name="district">
+				<volist name="district" id="vo">
+					<option <eq name="val.district" value="$vo.id">selected</eq> value="{$vo.id}">{$vo.a_name}</option>
+				</volist>
+			</notempty>
+		</select>
+		</div>
+		</div>
+	</div>
+</notempty>
+<notempty name="name.town">
+	<div class="col-sm-3" style="padding-left:0">
+	<div class="form-group" style="margin:0;">
+	<div class="col-xs-12" style="padding-right:0;padding-left:0;">
+		<select data-level="4" id="{$name['town']}" name="{$name['town']}"
+			class="select2_category form-control form-filter btn-sm chinaCity"
+			data-placeholder="请选择省市区">
+			<option value="">--请选择--</option>
+			<notempty name="town">
+				<volist name="town" id="vo">
+					<option <eq name="val.town" value="$vo.id">selected</eq> value="{$vo.id}">{$vo.a_name}</option>
+				</volist>
+			</notempty>
+		</select>
+		</div>
+		</div>
+	</div>
+</notempty>
+<div style="clear:both"></div>
+<script>
+	$(document).ready(function(){
+		var res = '';
+		$(".chinaCity").change(function() {
+			var data	=	$(this).data();
+			var val		=	$(this).val();
+			var html = '<option value="">--请选择--</option>';
+			
+			
+			//清除当前选择以下的下拉菜单
+			for(var l = data.child; l < 5; l ++) {
+				$('select[data-level="'+l+'"]').html(html);
+			}
+			//如果已在最底级或者当前选择值为0时，则不再执行下面的代码
+			if(data.level == 4 || val == 0) {
+				return;
+			}
+			//请求服务器返回下级数据
+			ajax_post({
+				url:'{:U("/run")}',
+				data:{sid:val},
+				headers : {Action : '{:enCryptRestUri("/City")}'},
+			},function(ret) {
+				if(ret.code == 1 && ret.data != '') {
+					res	 = ret.data;
+					for(i in res) {
+						html += '<option value="'+res[i]['id']+'">'+res[i]['a_name']+'</option>';
+					}
+					$("select[data-level='"+data.child+"']").removeClass('hide').html(html);
+					$(this).unbind();
+				} else {
+					$("select[data-level='"+data.child+"']").addClass('hide');
+					$("select[data-level='"+data.child+"']").empty();
+					$("select[data-level='"+data.child+"']").parent().find(".help-block").empty();
+				}
+			})
+		})
+	})
+</script>

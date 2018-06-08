@@ -1,0 +1,431 @@
+<include file="Public:header" />
+		<div class="page-group">
+			<div id="page-refund-view" class="page">
+				<!-- 标题栏 -->
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left back" data-no-cache="true"></a>
+					<h1 class="title">退款详情</h1>
+					<a class="icon iconfont icon-category pull-right ml5 ac-menu" onclick="top_menu()"></a>
+				</header>
+
+				<!-- 浮动导航 -->
+				<include file="Public:fixed-menu" />
+				
+			
+		
+				<!-- 这里是页面内容区 -->		
+				<div class="content">		
+					<div class="orders-status-box md5">
+						<if condition="$rs['orders_status'] eq 2">
+						<switch name="rs.status">
+							<case value="1">
+								<div class="row">
+									<div class="col-70">
+										<div class="status-name">买家申请退款</div>
+										<div class="sub-text">{$rs.limit_time_name}</div>
+									</div>
+									<div class="col-30 text-center">
+										<i class="iconfont icon-tuihuo01"></i>
+									</div>
+								</div>	
+							</case>		
+							<case value="20">
+								<div class="row">
+									<div class="col-70">
+										<div class="status-name">退款关闭</div>
+										<div class="sub-text">买家取消退款</div>
+									</div>
+									<div class="col-30 text-center">
+										<i class="iconfont icon-tuihuoyuanyin"></i>
+									</div>
+								</div>	
+							</case>		
+							<case value="100">
+								<div class="row">
+									<div class="col-70">
+										<div class="status-name">退款成功</div>
+										<div class="sub-text">卖家同意退款</div>
+									</div>
+									<div class="col-30 text-center">
+										<i class="iconfont icon-yifukuan1"></i>
+									</div>
+								</div>	
+							</case>								
+						</switch>	
+						<elseif condition="$rs['orders_status'] eq 3"/>
+						<switch name="rs.status">
+							<case value="1">
+								<div class="row">
+									<div class="col-70">
+										<div class="status-name">买家申请退款</div>
+										<div class="sub-text">{$rs.limit_time_name}</div>
+									</div>
+									<div class="col-30 text-center">
+										<i class="iconfont icon-tuihuo01"></i>
+									</div>
+								</div>	
+							</case>		
+							<case value="2">
+								<div class="row">
+									<div class="col-70">
+										<div class="status-name">卖家拒绝退款</div>
+										<div class="sub-text">{$rs.limit_time_name}</div>
+									</div>
+									<div class="col-30 text-center">
+										<i class="iconfont icon-sousuowujieguo"></i>
+									</div>
+								</div>	
+							</case>		
+							<case value="3">
+								<div class="row">
+									<div class="col-70">
+										<div class="status-name">买家修改退款</div>
+										<div class="sub-text">{$rs.limit_time_name}</div>
+									</div>
+									<div class="col-30 text-center">
+										<i class="iconfont icon-xiugai"></i>
+									</div>
+								</div>	
+							</case>		
+							<case value="4">
+								<div class="row">
+									<div class="col-70">
+										<div class="status-name">卖家同意退货</div>
+										<div class="sub-text">{$rs.limit_time_name}</div>
+									</div>
+									<div class="col-30 text-center">
+										<i class="iconfont icon-tuihuodizhi"></i>
+									</div>
+								</div>	
+							</case>		
+							<case value="5">
+								<div class="row">
+									<div class="col-70">
+										<div class="status-name">买家已寄回商品</div>
+										<div class="sub-text">{$rs.limit_time_name}</div>
+									</div>
+									<div class="col-30 text-center">
+										<i class="iconfont icon-fahuo"></i>
+									</div>
+								</div>	
+							</case>		
+							<case value="10">
+								<div class="row">
+									<div class="col-70">
+										<div class="status-name">发起申诉</div>
+										<div class="sub-text">等待乐兑客服介入处理</div>
+									</div>
+									<div class="col-30 text-center">
+										<i class="iconfont icon-shouhouguanli"></i>
+									</div>
+								</div>	
+							</case>		
+							<case value="20">
+								<div class="row">
+									<div class="col-70">
+										<div class="status-name">退款关闭</div>
+										<div class="sub-text">买家取消退款</div>
+									</div>
+									<div class="col-30 text-center">
+										<i class="iconfont icon-tuihuoyuanyin"></i>
+									</div>
+								</div>	
+							</case>		
+							<case value="100">
+								<div class="row">
+									<div class="col-70">
+										<div class="status-name">退款成功</div>
+										<div class="sub-text">卖家同意退款/退货</div>
+									</div>
+									<div class="col-30 text-center">
+										<i class="iconfont icon-yifukuan1"></i>
+									</div>
+								</div>	
+							</case>								
+						</switch>						
+						</if>
+					</div>
+					
+					<!--操作-->
+					<div class="clearfix">		
+						<if condition="$rs['orders_status'] eq 2">
+							<eq name="rs.status" value="1">
+								<div class="p5 md5">
+									<div class="btn btn-white btn-lg btn-block refund-cancel" data-s_no="{$rs.s_no}" data-r_no="{$rs.r_no}">取消退款</div>
+								</div>
+							</eq>
+						<elseif condition="$rs['orders_status'] eq 3"/>
+							<if condition="$rs['status'] eq 1">
+							<div class="p5 md5">
+								<div class="btn btn-white btn-lg btn-block refund-cancel2" data-s_no="{$rs.s_no}" data-r_no="{$rs.r_no}">取消退款</div>
+							</div>
+							<elseif condition="$rs['status'] eq 2"/>
+							<div class="p5 md5">
+								<div class="row">								
+									<div class="col-33">
+										<a href="/Refund2/refund_appeal/r_no/{$rs.r_no}" class="btn btn-white btn-lg btn-block">申诉</a>
+									</div>
+									<div class="col-33">
+										<div class="btn btn-white btn-lg btn-block refund-cancel2" data-s_no="{$rs.s_no}" data-r_no="{$rs.r_no}">取消退款</div>
+									</div>
+									<div class="col-33">
+										<a href="/Refund2/refund_edit/r_no/{$rs.r_no}" class="btn btn-danger btn-trans btn-lg btn-block">修改退款</a>
+									</div>
+								</div>	
+							</div>
+							<elseif condition="$rs['status'] eq 3"/>
+								<div class="p5 md5">
+									<div class="btn btn-white btn-lg btn-block refund-cancel2" data-s_no="{$rs.s_no}" data-r_no="{$rs.r_no}">取消退款</div>
+								</div>
+							<elseif condition="$rs['status'] eq 4"/>
+							<div class="p5 md5">
+								<div class="row">
+									<div class="col-50">
+										<div class="btn btn-white btn-lg btn-block refund-cancel2" data-s_no="{$rs.s_no}" data-r_no="{$rs.r_no}">取消退款</div>
+									</div>
+									<div class="col-50">
+										<a href="/Refund2/express_goods/r_no/{$rs.r_no}" class="btn btn-danger btn-trans btn-lg btn-block" data-no-cache="true">寄回商品</a>
+									</div>
+								</div>
+							</div>
+							<elseif condition="$rs['status'] eq 5"/>
+								<div class="p5 md5">
+									<div class="btn btn-white btn-lg btn-block refund-cancel2" data-s_no="{$rs.s_no}" data-r_no="{$rs.r_no}">取消退款</div>
+								</div>
+							<elseif condition="$rs['status'] eq 10"/>
+								<div class="p5 md5">
+									<div class="btn btn-white btn-lg btn-block refund-cancel2" data-s_no="{$rs.s_no}" data-r_no="{$rs.r_no}">取消退款</div>
+								</div>
+							</if>	
+						</if>					
+					</div>						
+					
+					
+					<div class="list-block media-list">
+						<ul>
+							<li>
+								<a href="/Refund/logs/r_no/{$rs.r_no}" class="item-content item-link" data-no-cache="true">
+									<div class="item-media"><i class="iconfont icon-weixin1 text-info"></i></div>
+									<div class="item-inner">
+										<div class="item-title-row">
+											<div class="item-title">协商详情</div>
+											<div class="item-after">更多</div>
+										</div>
+									</div>
+								</a>
+							</li>
+							
+							<gt name="rs.logs.0.uid" value="0">
+								<if condition="$rs['logs'][0]['uid'] eq $_SESSION['user']['id']">
+								<li>
+									<div class="item-content">
+										<div class="item-media"><i class="iconfont icon-wode text-info"></i></div>
+										<div class="item-inner">
+											<div class="item-title-row">
+												<div class="item-title"><strong>自己</strong></div>
+												<div class="item-after">{$rs.logs.0.atime}</div>
+											</div>
+										</div>
+									</div>
+								</li>
+								<else />
+								<li>
+									<div class="item-content">
+										<div class="item-media"><i class="iconfont icon-dianpu text-yellow"></i></div>
+										<div class="item-inner">
+											<div class="item-title-row">
+												<div class="item-title"><strong>商家</strong></div>
+												<div class="item-after">{$rs.logs.0.atime}</div>
+											</div>
+										</div>
+									</div>
+								</li>
+								</if>
+							<else />
+								<li>
+									<div class="item-content">
+										<div class="item-media"><i class="iconfont icon-kefu text-red"></i></div>
+										<div class="item-inner">
+											<div class="item-title-row">
+												<div class="item-title"><strong>乐兑客服</strong></div>
+												<div class="item-after">{$rs.logs.0.atime}</div>
+											</div>
+										</div>
+									</div>
+								</li>
+							</gt>
+							
+							<li class="bg-gray2">
+								<div class="item-content2">
+									<div class="md5">
+										<div class="status-name">{$rs.logs.0.status_name}</div>
+									</div>
+									<div class="text">
+										描述：<span class="text-gray">{$rs.logs.0.remark}</span>
+									</div>
+									
+									<notempty name="rs.logs.0.images">
+										<div class="mt05"></div>
+										<div class="row">
+											<volist name="rs.logs.0.images" id="img">
+												<div class="col-20">
+													<img class="lazyload" data-sizes="auto" data-src="{:myurl($img,200)}" alt="晒图" src="../Public/images/nopic.gif" width="100%">
+												</div>
+											</volist>
+										</div>
+									</notempty>									
+									
+									
+									<if condition="$rs['logs'][0]['express_code'] neq '' or $rs['logs'][0]['address'] neq '' or $rs['logs'][0]['num'] gt 0 or $rs['logs'][0]['money'] gt 0 or $rs['logs'][0]['refund_express'] gt 0">
+									<div class="logs-sys-box">
+										<notempty name="rs.logs.0.express_code"><div>物流公司：{$rs.logs.0.express_company.company}，运单号：{$rs.logs.0.express_code}</div></notempty>
+										<notempty name="rs.logs.0.address"><div>退货地址：{$rs.logs.0.address}</div></notempty>
+										<div>
+											<gt name="rs.logs.0.num" value="0">退{$rs.logs.0.num}件商品；</gt>
+											<gt name="rs.logs.0.money" value="0">退商品金额￥{$rs.logs.0.money}；</gt>
+											<gt name="rs.logs.0.refund_express" value="0">退运费￥{$rs.logs.0.refund_express}；</gt>
+										</div>
+									</div>
+									</if>
+								</div>
+							</li>
+						</ul>
+					</div>
+					
+					<div class="clearfix md5"></div>
+					<div class="list-block media-list">
+						<ul>
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title-row">
+											<div class="item-title">退款编号</div>
+											<div class="item-after">{$rs.r_no}</div>
+										</div>
+									</div>
+								</div>
+							</li>							
+							<li class="bg-gray2">
+								<a href="/Goods/view/id/{$rs.orders_goods.attr_list_id}" class="item-content">
+									<div class="item-media">
+										<img class="lazyload" data-sizes="auto" data-src="{:myurl($rs['orders_goods']['images'],150)}" alt="商品主图" src="../Public/images/nopic.gif" width="60">
+									</div>
+									<div class="item-inner">
+										<div class="item-title-row">
+											<div class="item-title">{$rs.orders_goods.goods_name}</div>
+										</div>
+										<div class="item-subtitle">
+											<div class="ft05">{$rs.orders_goods.attr_name}</div>
+										</div>
+									</div>
+								</a>
+							</li>
+							
+							<li>
+								<a href="javascript:;" data-url="/Shop/index/shop_id/{$rs.shop_id}" class="item-content item-link">
+									<div class="item-inner">
+										<div class="item-title-row">
+											<div class="item-title">店铺</div>
+											<div class="item-after">{$rs.shop.shop_name}</div>
+										</div>
+									</div>
+								</a>
+							</li>							
+							<li>
+								<a href="/Orders/view/s_no/{$rs.s_no}" class="item-content item-link" data-no-cache="true">
+									<div class="item-inner">
+										<div class="item-title-row">
+											<div class="item-title">订单号</div>
+											<div class="item-after">{$rs.s_no}</div>
+										</div>
+									</div>
+								</a>
+							</li>
+							<gt name="rs.num" value="0">
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title-row">
+											<div class="item-title">退回数量</div>
+											<div class="item-after">{$rs.num} 件</div>
+										</div>
+									</div>
+								</div>
+							</li>
+							</gt>
+							<gt name="rs.money" value="0">
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title-row">
+											<div class="item-title">退款金额</div>
+											<div class="item-after">￥{$rs.money}</div>
+										</div>
+									</div>
+								</div>
+							</li>
+							</gt>
+							<gt name="rs.refund_express" value="0">
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title-row">
+											<div class="item-title">退运费</div>
+											<div class="item-after">￥{$rs.refund_express}</div>
+										</div>
+									</div>
+								</div>
+							</li>
+							</gt>
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title-row">
+											<div class="item-title" style="min-width:2.5rem;">原因</div>
+											<div class="item-text">{$rs.reason}</div>
+										</div>
+									</div>
+								</div>
+							</li>		
+							<notempty name="rs.images">
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title-row">
+											<div class="item-title" style="min-width:2.5rem;">照片</div>
+											<div class="item-text" style="min-height: 56px;">
+												<volist name="rs.images" id="vo">
+												<img src="{:myurl($vo,50)}" class="m03">	
+												</volist>												
+											</div>
+										</div>
+									</div>
+								</div>
+							</li>
+							</notempty>
+							
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title-row">
+											<div class="item-title">
+											</div>
+											<div class="item-after">{$rs.type_name}，退款金额  <span class="text-red">￥{$rs.refund_money}</span></div>
+										</div>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+					
+
+				</div><!--/content-->
+				
+			</div>
+			
+			
+		</div>	
+		
+
+<include file="Public:script" />
+<include file="Public:footer" />

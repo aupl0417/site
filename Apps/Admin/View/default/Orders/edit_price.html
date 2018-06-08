@@ -1,0 +1,41 @@
+<form class="p10 vform form-horizontal" data-url="__URL__/edit_price_save" id="edit_price_save">
+	<div class="box md20 p10">
+		更改价格不得超过订单金额的50%;即不得低于{:$rs["total_price"] * 0.5}且不得高于{:$rs["total_price"] * 1.5}
+	</div>
+	{:W('Widget/buildform',array(array(
+		'field'		=>array(
+			array(
+				'formtype'		=>'text',
+				'label'			=>'新的价格',
+				'name'			=>'pay_price',
+				'is_need'		=>true,
+			),
+			
+			array(
+				'formtype'		=>'hidden',
+				'name'			=>'seller_id',
+			),		
+			array(
+				'formtype'		=>'hidden',
+				'name'			=>'s_no',
+			),
+		),
+	),$rs))}
+<div class="p20 text-center">
+	<button type="submit" class="btn btn-primary btn-150px"><i class="fa fa-check"></i> 提交</button>
+</div>
+	
+	
+
+</form>
+<script>
+checkform({
+	formid:'#edit_price_save',
+},function(ret){
+	valert(ret);
+	if(ret.status=='success'){
+		ref();
+	}
+});
+
+</script>

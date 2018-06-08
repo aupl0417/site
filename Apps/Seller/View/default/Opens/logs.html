@@ -1,0 +1,82 @@
+<div class="pd10 solid_b">
+	<h5 class="strong">开店说明</h5>
+	<div class="bg-warning pd10">
+		<i class="fa fa-exclamation-circle fs16 fl text_yellow"></i>
+		<p class="ml20 mb0">开店申请是乐兑商城考察卖家入驻资格与诚信级别的过程，年满18岁的大陆居民均可申请，完成申请后即可在乐兑商城免费售卖商品.</p>
+	</div>
+	<div class="mt10">
+		<p>
+			<a target="_blank" href="{:DM('faq', '/view')}?id=864" class="text_blue">申请遇到问题？</a>
+		</p>
+		<p>
+			<a target="_blank" href="{:DM('faq', '/view')}?id=865"  class="text_blue">了解开店认证需要材料</a>
+		</p>
+	</div>
+</div>
+
+<div class="pd10">
+	<h5 class="strong">申请状态</h5>
+	<eq name="logs.current" value="8">
+	<div class="bg_blue pd10">
+		<i class="fa fa-exclamation-circle fs16 fl text_white"></i>
+		<p class="ml20 mb0 text_white">您的资料已提交，我们的工作人员将在7个工作日内完成审核，请耐心等待.</p>
+	</div>
+	<else />
+		<eq name="logs.current" value="9">
+			<div class="bg_red pd10">
+				<i class="fa fa-exclamation-circle fs16 fl text_white"></i>
+				<p class="ml20 mb0 text_white">
+					审核未通过！原因是：{$notPass.reason}
+				</p>
+			</div>
+		<else />
+			<div class="bg_yellow pd10">
+				<i class="fa fa-exclamation-circle fs16 fl text_white"></i>
+				<p class="ml20 mb0 text_white">
+					您上次提交至  <strong>{$logs['step'][$logs['current']]['title']}</strong>，<a href="{$logs['step'][$logs['current']]['url']}" class="text_blue">立即去完善资料。</a>
+				</p>
+			</div>
+		</eq>
+	</eq>
+	<div class="mt30" style="padding:0 50px;">
+		<div class="block-transparent">
+			<ul class="timeline">
+				<volist name="logs.step" id="vo">
+					<li><i class="fa 
+						<gt name="key" value="$logs.current">fa-times red<else />
+						<eq name="vo.status" value="-1">
+							fa-times red
+						<else />
+							fa-check green
+						</eq>
+						</gt>
+					"></i>
+						<div class="content">
+							<h4>
+								{$vo.title}
+							</h4>
+							<p>
+								<lt name="key" value="8">
+									<gt name="key" value="$logs.current">
+										<a class="fr text_yellow" href="{$vo.url}">当前步骤未完成，现在去完成</a>
+									<else />
+										<eq name="vo.status" value="-1">
+											<span class="fr"><a class="text_yellow" href="{$vo.url}">未通过审核？立即修改！</a> 或者  <a data-id="{$key}" data-title="确认已修复" date-type="modal" class="text_blue clearError" href="javascript:;">已全部修复</a></span>
+										<else />
+											<eq name="key" value="$logs.current">
+											<a class="fr text_blue" href="{$vo.url}">您已奔跑至此~</a>
+											<else />
+											<a class="fr text_blue" href="javascript:void(0);">当前步骤已完成。</a>
+											</eq>
+										</eq>
+									</gt>
+								</lt>
+								{$vo.intro}
+							</p>
+						</div>
+					</li>
+				</volist>
+			</ul>
+		</div>
+	</div>
+</div>

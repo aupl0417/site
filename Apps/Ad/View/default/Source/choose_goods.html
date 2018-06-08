@@ -1,0 +1,114 @@
+<link rel="stylesheet" type="text/css" href="/Public/CSS/flatdream/js/jquery.icheck/skins/square/_all.css">
+<div class="pd10">
+	<div class="over form-horizontal">
+		<div class="form-group">
+			<div class="col-xs-3">
+		        <input type="text" value="{$q}" id="search-q" maxlength="15" class="form-control" placeholder="搜索商品，请输入商品关键字">
+		    </div>						
+			<div class="col-xs-2">
+				<button type="button" class="btn btn-danger btn-trans btn-rad" onclick="searchQ()">点击搜索</button>
+			</div>
+		</div>
+	</div>
+
+	
+	<empty name="data.code">
+		<table class="table table-bordered table-advance table-hover mb30 mt10">
+			<tbody>
+				<tr>
+					<th class="col-xs-1 text-center" style="vertical-align: middle;">
+						<!-- <input type="checkbox" class="i-red-square checkedAll" id="checkAll"><label style="padding:0 5px;" id="labelCheckAll" for="checkAll">全选</label> -->
+					</th>
+					<th class="col-xs-2 text-center" style="vertical-align: middle;">商品图片</th>
+					<th class="col-xs-5 text-center" style="vertical-align: middle;">商品名称</th>
+					<th class="col-xs-1 text-center" style="vertical-align: middle;">商品价格</th>
+					<th class="col-xs-1 text-center" style="vertical-align: middle;">奖励积分</th>
+					<th class="col-xs-1 text-center" style="vertical-align: middle;">库存数量</th>
+				</tr>
+				<volist name="data.list" id="vo">
+					<tr class="countBrand">
+						<td class="text-center" style="vertical-align: middle;">
+							
+							<label class="square" style="">
+								<if condition="$_GET.device eq 1">
+									<input type="radio" value="{$vo.id}" name="chooseGoods" />
+								</if>
+								<if condition="$_GET.device eq 2">
+									<input type="radio" value="{$vo.id}" name="chooseGoods" />
+								</if>
+								<span></span>
+							</label>
+						</td>
+						<td class="text-center img">
+							<a class="image-zoom" href="#" onclick="bigImage($(this))" data-url="{$vo['images']}" title="大图">
+								<img src="{$vo['images']}" width="60" />
+							</a>
+						</td>
+						<td style="vertical-align: middle;" class="text-center col-xs-1">{$vo.goods_name}</td>
+						<td style="vertical-align: middle;" class="text-center col-xs-1">
+							{$vo.price}
+						</td>
+						<td style="vertical-align: middle;" class="text-center col-xs-1">{$vo['score_ratio'] * $vo['price'] * 100}</td>
+						<td style="vertical-align: middle;" class="text-center col-xs-1">{$vo.num}</td>
+					</tr>
+				</volist>
+			</tbody>
+		</table>
+		<div class="text-center">
+			{:paresePageActionAjax($data['page']['page'], 'href="', 'href="#" onclick="gonextpage($(this))" data-url="')}
+		</div>
+		<div class="text-center">
+			<a href="javascript:;" class="btn btn-danger" id="submitRadio">确定选择</a>
+		</div>
+	<else />
+		<div class="text-center">
+		<h4 class="" style="margin:20px auto;">没有找到符合条件的<span class="text_red">在售商品</span>，去<a href="{:DM('seller')}" class="text_blue" target="_blank">卖家中心</a>上架商品</h4>
+		</div>
+	</empty>
+</div>
+<script>
+iCheckClass();
+
+
+	
+	$("#submitRadio").on('click',function() {
+		
+		var isChoose = false;
+		var Goods = '';
+		var html = '';
+		$("input[name='chooseGoods']").each(function(){
+			if($(this).prop('checked') == true){
+				Goods = $(this).attr('value');
+				isChoose = true;
+				html = $(this).parent().parent().parent().html();
+			}
+		});
+		if(isChoose == false) {
+			layerMsg('请至少选择一款商品!');
+			return false;
+		}
+		
+		
+		
+		$('#choose-goods').html(html);
+		$('#choose-goods td').eq(0).remove();
+		$("#goods_id").val(Goods);
+		$(".modal").modal('hide');
+
+		
+		
+	});
+
+function gonextpage(obj) {
+	var url = obj.data('url');
+	$(".modal-body").load(url);
+}
+function searchQ(){
+	
+	var device = '{$_GET.device}';
+	var q = $('#search-q').val();
+	var url = '/Source/choose_goods/device/' + device + '/q/' + q;
+	
+	$('.modal-body').load(url);
+}
+</script>

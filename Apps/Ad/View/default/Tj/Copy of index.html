@@ -1,0 +1,179 @@
+<include file="Public:header" />
+
+<div class="container">
+    <div class="mb10 lh30">
+        <div class="clearfix">
+            <include file="nav" />
+            <div class="fr"><a href="{:U('Tj/index')}"                      class="layui-btn layui-btn-small <if condition="$_GET['device'] neq 'pc' and $_GET['device'] neq 'wap'">layui-btn-danger<else/>layui-btn-primary</if> mt20 mr5">全部</a></div>
+            <div class="fr"><a href="{:U('Tj/index',['device' => 'wap'])}"  class="layui-btn layui-btn-small <if condition="$_GET['device'] eq 'wap'">layui-btn-danger<else/>layui-btn-primary</if> mt20 mr5">移动端</a></div>            
+            <div class="fr"><a href="{:U('Tj/index',['device' => 'pc'])}"   class="layui-btn layui-btn-small <if condition="$_GET['device'] eq 'pc'">layui-btn-danger<else/>layui-btn-primary</if> mt20 mr5">PC</a></div>
+            
+        </div>
+    </div>
+    <div class="bor_der td_ptb20 solid_b">
+        <table class="no-border td_ptb20">
+            <thead class="no-border">
+                <tr class="solid_b">
+                    <th class="text-center">展现量</th>
+                    <th class="text-center">点击量</th>
+                    <th class="text-center">点击率%</th>
+                    <th class="text-center">下单量（笔）</th>
+                    <th class="text-center">下单金额（元）</th>
+                    <th class="text-center">转化率（%）</th>
+                    <th class="text-center">日期</th>
+                </tr>
+            </thead>
+            <tbody class="no-border-y bg_white text-center">
+                <notempty name="adtj.list">
+                    <foreach name="adtj.list" item="vo">
+                        <tr>
+                            <td class="fs14">{$vo.show|default=0}</td>
+                            <td class="fs14">{$vo.hit|default=0}</td>
+                            <td class="fs14"><php> echo round(($vo['hit']/$vo['show']) * 100, 2); </php>%</td>
+                            <td class="fs14">{$vo.orders|default=0}</td>
+                            <td class="fs14">{$vo.orders_price|default=0}</td>
+                            <td class="fs14"><php> echo round(($vo['order_user_num']/$vo['visit_user_num']) * 100, 2); </php>%</td>
+                            <td class="small_xs">{$vo.date}</td>
+                        </tr>
+                    </foreach>
+                        <tr class="">
+                            <td colspan="7" class="pd0">
+                                <div>
+                                    <div class="row">
+                                        <div class="col-xs-10 text-right">
+                                            {:paresePageAction($adtj['page']['page'], '/Tj/getAdtjads', isset($params) ? $params : "__ACTION__")}
+                                        </div>
+                                        <div class="col-xs-2 text-center mt25"> {$adtj.page.total}</div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                <else/>
+                    <tr>
+                        <td colspan="7" class="text-center lh100"><span class="text_red">暂无数据</span></td>
+                    </tr>
+                </notempty>
+                
+            </tbody>
+        </table>
+        
+    </div>
+    
+    <!-- <div class="mb20">
+        <h5>地域分布</h5>
+
+        <div class="bor_der pd10">
+            <empty name="areaTj.list"><span class="text_red">无数据</span></empty>
+        </div>
+    </div> -->
+
+    <div class="bor_der pd20 bg_white mt50 solid_b">
+        <div class="row">
+
+            <!-- <div class="col-xs-4">
+                <h5 class="mb20">地区TOP10</h5>
+                <div class="bor_der plr15 solid_last" style="height:auto;">
+                    <notempty name="areaTop10.list">
+                    <foreach name="areaTop10.list" item="vo">
+                        <div class="row ptb10 solid_b">
+                            <div class="col-xs-9">
+                                <p class="mb0 fs14 text_44">{$vo.area|default="未知地区"}</p>
+                                <div class="row text_77">
+                                    <div class="col-xs-6">
+                                        <p class="mb0 mt4">展现：{$vo.show}</p>
+                                        <p class="mb0 mt4">点击率：<php> echo round(($vo['hit']/$vo['show']) * 100, 3); </php>%</p>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <p class="mb0 mt4">点击：{$vo.hit}</p>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </foreach>
+                    <else/>
+                        <div class="row ptb10 solid_b">
+                            <div class="col-xs-12">
+                                <p class="mb0 fs14 text_44 text-center"><span class="text_red">暂无数据</span></p>
+                            </div>
+                        </div>
+                    </notempty>
+                    
+                </div>
+            </div> -->
+
+            <div class="col-xs-6">
+                <h5 class="mb20">素材TOP5</h5>
+                <div class="bor_der plr15 <if condition="count($sucaiTop5['list']) eq 5">solid_last</if>" style="min-height:406px;">
+                    <notempty name="sucaiTop5.list">
+                    <foreach name="sucaiTop5.list" item="vo">
+                        <div class="row ptb10 solid_b">
+                            <div class="col-xs-3 pr0">
+                                <div class="amg" style="width:78px;height:60px">
+                                    <img src="{:myurl($vo['ad_sucai']['images'],78,60)}">  
+                                </div>
+                            </div>
+                            <div class="col-xs-9">
+                                <p class="mb0 fs16 text_44" title="{$vo.ad_sucai.name}">{$vo.ad_sucai.name}</p>
+                                <div class="row text_77">
+                                    
+                                    <div class="col-xs-12 mt20">
+                                        <span class="w100 pull-left">展现：{$vo.show}</span>
+                                        <span class="w100 ml30 pull-left">点击：{$vo.hit}</span>
+                                        <span class="ml30 pull-left">点击率：<php> echo round(($vo['hit']/$vo['show']) * 100, 2); </php>%</span>
+                                        <p class="mb0 mt4"><!-- 转化率：0.05% --></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </foreach>
+                    <else/>
+						<div class="row" style="height:80px;">
+							<div class="col-xs-12">
+								<p class="mb0 fs14 text_44 text-center" style="line-height:406px;"><span class="text_red">暂无数据</span></p>
+							</div>
+						</div>
+                    </notempty>
+                    
+                </div>
+            </div>
+
+            <div class="col-xs-6">
+                <h5 class="mb20">宝贝TOP5</h5>
+                <div class="bor_der plr15 <if condition="count($goodsTop5['list']) eq 5">solid_last</if>" style="min-height:406px;">
+                    <notempty name="goodsTop5.list">
+                    <foreach name="goodsTop5.list" item="vo">
+                        <div class="row ptb10 solid_b">
+                            <div class="col-xs-2 pr0">
+                                <div class="amg" style="width:47px;height:60px">
+                                    <img src="{:myurl($vo['goods_images'],47,60)}">
+                                </div>
+                            </div>
+                            <div class="col-xs-10">
+                                <p class="mb0 fs14 text_44 text_over" title="{$vo.goods_name}">{$vo.goods_name|default="未知商品名称"}</p>
+                                <div class="row text_77">
+                                    <div class="col-xs-12 mt20">
+                                        <span class="w100 pull-left">浏览：{$vo.show}</span>
+                                        <span class="w100 ml30 pull-left">成交：{$vo.orders}笔</span>
+                                        <span class="ml30 pull-left">成交额：￥{$vo.orders_price}</span>
+                                    </div>
+                                </div>   
+                            </div>
+                        </div>
+                    </foreach>
+                    <else/>
+                        <div class="row" style="height:80px;">
+                            <div class="col-xs-12">
+                                <p class="mb0 fs14 text_44 text-center" style="line-height:406px;"><span class="text_red">暂无数据</span></p>
+                            </div>
+                        </div>
+                    </notempty>
+                </div>
+            </div>
+
+        </div>
+    </div>
+        
+</div>
+
+<include file="Public:footer" />

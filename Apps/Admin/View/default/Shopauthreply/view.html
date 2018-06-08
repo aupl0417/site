@@ -1,0 +1,89 @@
+<div class="p20 box">
+	<div class="row">
+		<div class="col-xs-6 auth-text">
+			<div class="row">
+				<div class="col-xs-2 text-center">
+					<img src="{:myurl($rs['shop_logo'],100)}">
+				</div>
+				<div class="col-xs-10">
+					<div class="ft16 md20">{$rs['shop_name']}</div>
+					<div>申请数量：{$rs['num']}</div>
+					<div>申请理由：{$rs.reason}</div>
+					<div>申请时间：{$rs.atime}</div>
+					<div>修改时间：{$rs.etime}</div>
+					<div>申请用户：{$rs.nick}</div>
+					<div>当前状态：{:status($rs['status'],array(0=>array('已删除'),1=>array('待审核','btn-danger'),2=>array('已通过','btn-success'),3=>array('已拒绝','btn-danger')))}</div>
+					<notempty name="rs.reason2">
+						<div>操作时间：{$rs.dotime}</div>
+						<div>回复内容：{$rs.reason2}</div>
+					</notempty>
+				</div>
+			</div>
+			
+
+		</div>
+		<div class="col-xs-6">
+		</div>
+	</div>
+	<eq name="rs.status" value="1">
+		<div class="ft18 strong p10 border-d md20">审核</div>
+			<form data-url="__URL__/post" data-id="#form_{$rs.id}" id="form_{$rs.id}" class="form-horizontal vform">
+					{:W('Widget/buildform',array(array(
+						'field'		=>array(
+							array(
+								'formtype'		=>'radio',
+								'label'			=>'处理',
+								'name'			=>'status',
+								'data'			=>array(array(0,'删除'),array(1,'待审核'),array(2,'通过'),array(3,'拒绝通过')),
+								'field'			=>array(0,1),
+								'value'			=>$rs['status'],
+								'is_need'		=>1,
+								'tips'			=>'请慎重',
+							),
+							array(
+								'formtype'		=>'textarea',
+								'label'			=>'回复内容',
+								'name'			=>'reason2',
+								'is_need'		=>1,
+							),
+							array(
+								'formtype'		=>'hidden',
+								'name'			=>'id',
+								'value'			=>$rs['id'],
+							),
+							array(
+								'formtype'		=>'html',
+								'label'			=>' ',
+								'html'			=>'<button type="button" class="btn btn-primary btn-150px logs-add"><i class="fa fa-check"></i> 提交</button>'
+							),
+
+
+						),
+					)))}
+			</form>
+		</div>
+	</eq>
+</div>
+<div class="clearfix">
+	<div class="pull-right text-gray" onclick="$(this).closest('tr').toggleClass('hide');"><i class="fa fa-times-circle-o fa-2x"></i></div>	
+</div>
+
+<script>
+image_zoom();
+$('.logs-add').click(function(){
+	var d=$(this).closest('form').data();
+	ajax_post_form({
+		formid:d.id
+	},function(ret){
+		valert(ret);
+		if(ret.status=='success'){
+			var tag='#item-{$rs.id}';
+			var url='__URL__/view/id/{$rs.id}';
+			var from_goods='{$_GET.from_goods}';
+			if(from_goods!='') loadurl({tag:'#item-'+from_goods,url:url});
+			else loadurl({tag:tag,url:url});
+		}
+	});
+
+});
+</script>

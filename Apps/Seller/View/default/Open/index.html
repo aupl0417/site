@@ -1,0 +1,47 @@
+<extend name="Home@Public:base" />
+<block name="body">
+<div class="centent_body">
+	<include file="Public:nav" />
+	<div class="container mb30">
+		<include file="Public:side" />
+		<div class="w980 fl">
+			<div class="bor_der">
+				<div class="bg_f1 clearfix fs14 text_44 tle_R">
+					<a class="fl plr15 line40 ml-1 active" href="javascript:;">我要开店</a>
+				</div>
+				<!-- 主体部分 -->
+				<eq name="data.code" value="1">
+					{:W('Common/Builder/nors', array('param' => array('text' => '<a class="btn btn-success" href="/open/step1">立即开店</a>')))}
+					<empty name="msg">
+						{//:W('Common/Builder/nors', array('param' => array('text' => '<a class="btn btn-success" href="/open/step1">立即开店</a>')))}
+					<else />
+						{//:W('Common/Builder/nors', array('param' => array('text' => $msg)))}
+						{//:W('Common/Builder/nors', array('param' => array('text' => '<a class="btn btn-success" href="/open/step1">修改资料</a>')))}
+					</empty>
+				<else />
+					<php>
+						$url	=	erp_url($cfg['erp']['domain']['u'].'/upgrade');
+						$faq	=	DM('faq', '/view');
+					</php>
+					{:W('Common/Builder/nors', array('param' => array('text' => $data['msg'] . '？ <a target="_blank" class="text_yellow" href="'.$faq.'?id=834">开店资格</a><br /><br /><a target="_blank" class="btn btn-success alert-check" href="'.$url.'">立即升级</a>')))}
+				</eq>
+			</div>
+		</div>
+	</div>
+</div>
+</block>
+<block name="css"></block>
+<block name="script">
+<script>
+$(document).ready(function() {
+	$(".alert-check").click(function() {
+		vmodal({
+			msg:'<h4>升级提示</h4><a onclick="ref();" href="javascript:;" class="btn btn-rad btn-trans btn-primary">已升级</a> <div class="btn btn-rad btn-trans btn-default" data-dismiss="modal">未升级</div>',
+			class:'text-center',
+			width:'600px',
+			footer:false,
+		});
+	})
+});
+</script>
+</block>

@@ -1,0 +1,89 @@
+	<form data-url="__URL__/floor_add_save" id="form_floor_add" class="form-horizontal vform">
+			{:W('Widget/buildform',array(array(
+				'field'		=>array(	
+					array(
+						'formtype'		=>'text',
+						'label'			=>'楼层名称',
+						'name'			=>'floor_name[]',
+						'right'			=>'<span class="input-group-addon" onclick="clear_input($(this))" title="清除"><i class="fa fa-times"></i></span>',
+					),
+					array(
+						'formtype'		=>'text',
+						'label'			=>'楼层名称',
+						'name'			=>'floor_name[]',
+						'right'			=>'<span class="input-group-addon" onclick="clear_input($(this))" title="清除"><i class="fa fa-times"></i></span>',
+					),
+					array(
+						'formtype'		=>'text',
+						'label'			=>'楼层名称',
+						'name'			=>'floor_name[]',
+						'right'			=>'<span class="input-group-addon" onclick="clear_input($(this))" title="清除"><i class="fa fa-times"></i></span>',
+					),
+					array(
+						'formtype'		=>'text',
+						'label'			=>'楼层名称',
+						'name'			=>'floor_name[]',
+						'right'			=>'<span class="input-group-addon" onclick="clear_input($(this))" title="清除"><i class="fa fa-times"></i></span>',
+					),
+					array(
+						'formtype'		=>'text',
+						'label'			=>'楼层名称',
+						'name'			=>'floor_name[]',
+						'right'			=>'<span class="input-group-addon" onclick="clear_input($(this))" title="清除"><i class="fa fa-times"></i></span>',
+					),
+					array(
+						'formtype'		=>'text',
+						'label'			=>'楼层名称',
+						'name'			=>'floor_name[]',
+						'right'			=>'<span class="input-group-addon" onclick="clear_input($(this))" title="清除"><i class="fa fa-times"></i></span>',
+					),
+					array(
+						'formtype'		=>'text',
+						'label'			=>'楼层名称',
+						'name'			=>'floor_name[]',
+						'right'			=>'<span class="input-group-addon" onclick="clear_input($(this))" title="清除"><i class="fa fa-times"></i></span>',
+					),
+					array(
+						'formtype'		=>'text',
+						'label'			=>'楼层名称',
+						'name'			=>'floor_name[]',
+						'right'			=>'<span class="input-group-addon" onclick="clear_input($(this))" title="清除"><i class="fa fa-times"></i></span>',
+					),
+					array(
+						'formtype'		=>'hidden',
+						'name'			=>'day',
+					),					
+					array(
+						'formtype'		=>'hidden',
+						'name'			=>'time',
+					),					
+				),
+			),$_GET))}
+	
+			<div class="p10 text-center">
+				<button type="submit" class="btn btn-primary btn-150px">提交</button>
+			</div>
+	</form>
+
+<script>
+	$(document).ready(function(){
+
+		checkform({
+			formid:"#form_floor_add",
+		}, function(ret) {
+			valert(ret);
+			if(ret.status=='success'){
+				setTimeout(function(){
+					ref();
+				},1000);
+			}
+
+		});
+			
+	});
+	
+
+	function clear_input(obj){
+		obj.closest('.input-group').find('input').val('');
+	}
+</script>	

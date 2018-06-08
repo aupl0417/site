@@ -1,0 +1,507 @@
+<include file="Public:header" />
+<include file="nav" />
+<js href="__JS__/ECharts/echarts.common.min.js" />
+	<div class="pd20">
+		<div class="bor_der pd15 m20 block-flat">
+			<h5 class="fs16 mt0">手机充值数据统计</h5>
+			<table class="bg_white table_dotted">
+				<tbody class="solid_t">
+					<tr>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">充值总笔数</p>
+							<strong>{$result.num_totals}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">充值总金额</p>
+							<strong>{$result.money_totals}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">充值奖励总积分</p>
+							<strong>{$result.score_totals}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">充值成功总笔数</p>
+							<strong>{$result.recharge_success_num}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">充值付款总笔数</p>
+							<strong>{$result.pay_totals}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">充值成功支付金额</p>
+							<strong>{$result.recharge_success_money}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">充值成功平均金额</p>
+							<strong>{$result.recharge_success_avg}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">充值成功奖励总积分</p>
+							<strong>{$result.recharge_success_score}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">充值成功率</p>
+							<strong>{$success_rate.totals_rate}% </strong>
+						</td>
+					</tr>
+					<tr>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">话费充值总笔数</p>
+							<strong>{$result.fare_totals_num}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">话费充值总支付金额</p>
+							<strong>{$result.fare_totals_money}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">话费充值奖励总积分</p>
+							<strong>{$result.fare_totals_score}</strong>
+						</td>					
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">话费充值成功总笔数</p>
+							<strong>{$result.fare_success_num}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">话费充值付款总笔数</p>
+							<strong>{$result.fare_pay_num}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">话费充值成功支付金额</p>
+							<strong>{$result.fare_success_money}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">话费充值成功平均金额</p>
+							<strong>{$result.fare_success_avg}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">话费充值成功奖励总积分</p>
+							<strong>{$result.fare_success_score}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">充值成功率</p>
+							<strong>{$success_rate.fare_rate}% </strong>
+						</td>
+					</tr>
+					<tr>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">流量充值总笔数</p>
+							<strong>{$result.flow_totals_num}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">流量充值总支付金额</p>
+							<strong>{$result.flow_totals_money}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">流量充值奖励总积分</p>
+							<strong>{$result.flow_totals_score}</strong>
+						</td>					
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">流量充值成功总笔数</p>
+							<strong>{$result.flow_success_num}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">流量充值付款总笔数</p>
+							<strong>{$result.flow_pay_num}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">流量充值成功支付金额</p>
+							<strong>{$result.flow_success_money}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">流量充值成功平均金额</p>
+							<strong>{$result.flow_success_avg}</strong>
+						</td>
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">流量充值成功奖励总积分</p>
+							<strong>{$result.flow_success_score}</strong>
+						</td>	
+						<td class="fs14 pd30">
+							<p class="mb20 fs14 text_77">充值成功率</p>
+							<strong>{$success_rate.flow_rate}% </strong>
+						</td>
+					</tr>
+				</tbody>
+			</table>	
+		</div>
+		
+		<div class="bor_der pd15 m20 block-flat">
+			<h5 class="fs16 mt0">实时新增</h5>
+			<table class="bg_white table_dotted">
+				<tbody class="solid_t">
+					<tr>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日话费充值总笔数</p>
+							<strong>{$last1.fare_totals_num}</strong>
+							<h5 class="text_77">较前一日 <span class="{$ratio.fare_totals_num.color}">{$ratio.fare_totals_num.value}%  {$ratio.fare_totals_num.sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日话费充值总金额(元)</p>
+							<strong>{$last1.fare_totals_money}</strong>
+							<h5 class="text_77">较前一日 <span class="{$ratio.fare_totals_money.color}">{$ratio.fare_totals_money.value}%  {$ratio.fare_totals_money.sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日话费充值奖励总积分</p>
+							<strong>{$last1.fare_totals_score}</strong>
+							<h5 class="text_77">较前一日 <span class="{$ratio.fare_totals_score.color}">{$ratio.fare_totals_score.value}%  {$ratio.fare_totals_score.sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日话费充值成功总笔数</p>
+							<strong>{$last1.fare_success_num}</strong>
+							<h5 class="text_77">较前一日 <span class="{$ratio.fare_success_num.color}">{$ratio.fare_success_num.value}%  {$ratio.fare_success_num.sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日话费充值成功总金额(元)</p>
+							<strong>{$last1.fare_success_money}</strong>
+							<h5 class="text_77">较前一日 <span class="{$ratio.fare_success_money.color}">{$ratio.fare_success_money.value}%  {$ratio.fare_success_money.sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日话费充值奖励成功总积分</p>
+							<strong>{$last1.fare_success_score}</strong>
+							<h5 class="text_77">较前一日 <span class="{$ratio.fare_success_score.color}">{$ratio.fare_success_score.value}%  {$ratio.fare_success_score.sign};</span></h5>
+						</td>
+					</tr>
+					<tr>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日流量充值总笔数</p>
+							<strong>{$last1.flow_totals_num}</strong>
+							<h5 class="text_77">较前一日 <span class="{$ratio.success_open.color}">{$ratio.flow_totals_num.value}%  {$ratio.flow_totals_num.sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日流量充值总金额(元)</p>
+							<strong>{$last1.flow_totals_money}</strong>
+							<h5 class="text_77">较前一日 <span class="{$ratio.flow_totals_money.color}">{$ratio.flow_totals_money.value}%  {$ratio.flow_totals_money.sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日流量充值奖励总积分</p>
+							<strong>{$last1.flow_totals_score}</strong>
+							<h5 class="text_77">较前一日 <span class="{$ratio.flow_totals_score.color}">{$ratio.flow_totals_score.value}%  {$ratio.flow_totals_score.sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日流量充值成功总笔数</p>
+							<strong>{$last1.flow_success_num}</strong>
+							<h5 class="text_77">较前一日 <span class="{$ratio.flow_success_num.color}">{$ratio.flow_success_num.value}%  {$ratio.flow_success_num.sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日流量充值成功总金额(元)</p>
+							<strong>{$last1.flow_success_money}</strong>
+							<h5 class="text_77">较前一日 <span class="{$ratio.flow_success_money.color}">{$ratio.flow_success_money.value}%  {$ratio.flow_success_money.sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日流量充值奖励成功总积分</p>
+							<strong>{$last1.flow_success_score}</strong>
+							<h5 class="text_77">较前一日 <span class="{$ratio.flow_success_score.color}">{$ratio.flow_success_score.value}%  {$ratio.flow_success_score.sign};</span></h5>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<style>
+				.table_dotted tbody,.table_dotted tr,.table_dotted td{border:1px dashed #ccc !important;}
+			</style>	
+		</div>
+		
+		<div class="clearfix"></div>
+		
+		<div class="box p20 m20">
+			<div id="main" style="width: 100%;height:400px;"></div>
+		</div>
+		<script type="text/javascript">
+			// 基于准备好的dom，初始化echarts实例
+			var myChart = echarts.init(document.getElementById("main"));
+			// 指定图表的配置项和数据
+			{:W('Echart/bar_echart',array('param' => $day))}
+			// 使用刚指定的配置项和数据显示图表。
+			myChart.setOption(option);
+		</script> 
+		
+			<div class="bor_der pd15 m20 block-flat">
+			<h5 class="fs16 mt0">实时新增</h5>
+			<table class="bg_white table_dotted ">
+				<tbody class="solid_t">
+					<tr>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日话费余额支付笔数</p>
+							<strong>{$last1.fare_balance_pay_num}</strong>
+							<h5 class="text_77">较前一日 <span class="{$ratio.fare_balance_pay_num.color}">{$ratio.fare_balance_pay_num.value}%  {$ratio.fare_balance_pay_num.sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日话费余额支付金额(元)</p>
+							<strong>{$last1.fare_balance_pay_money}</strong>
+							<h5 class="text_77">较前一日 <span class="{$ratio.fare_balance_pay_money.color}">{$ratio.fare_balance_pay_money.value}%  {$ratio.fare_balance_pay_money.sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日话费支付宝支付笔数</p>
+							<strong>{$last1.fare_alipay_pay_num}</strong>
+							<h5 class="text_77">较前一日 <span class="{$ratio.fare_alipay_pay_num.color}">{$ratio.fare_alipay_pay_num.value}%  {$ratio.fare_alipay_pay_num.sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日话费支付宝支付金额(元)</p>
+							<strong>{$last1.fare_alipay_pay_money}</strong>
+							<h5 class="text_77">较前一日 <span class="{$ratio.fare_alipay_pay_money.color}">{$ratio.fare_alipay_pay_money.value}%  {$ratio.fare_alipay_pay_money.sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日话费微信支付笔数</p>
+							<strong>{$last1.fare_weixin_pay_num}</strong>
+							<h5 class="text_77">较前一日 <span class="{$ratio.fare_weixin_pay_num.color}">{$ratio.fare_weixin_pay_num.value}%  {$ratio.fare_weixin_pay_num.sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日话费微信支付金额(元)</p>
+							<strong>{$last1.fare_weixin_pay_money}</strong>
+							<h5 class="text_77">较前一日 <span class="{$ratio.fare_weixin_pay_money.color}">{$ratio.fare_weixin_pay_money.value}%  {$ratio.fare_weixin_pay_money.sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日话费银联支付笔数</p>
+							<strong>{$last1.fare_bank_pay_num}</strong>
+							<h5 class="text_77">较前一日 <span class="{$ratio.fare_bank_pay_num.color}">{$ratio.fare_bank_pay_num.value}%  {$ratio.fare_bank_pay_num.sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日话费银联支付金额(元)</p>
+							<strong>{$last1.fare_bank_pay_money}</strong>
+							<h5 class="text_77">较前一日 <span class="{$ratio.fare_bank_pay_money.color}">{$ratio.fare_bank_pay_money.value}%  {$ratio.fare_bank_pay_money.sign};</span></h5>
+						</td>
+					</tr>
+					<tr>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日流量余额支付笔数</p>
+							<strong>{$last1.flow_balance_pay_num}</strong>
+							<h5 class="text_77">较前一日 <span class="{$ratio.flow_balance_pay_num.color}">{$ratio.flow_balance_pay_num.value}%  {$ratio.flow_balance_pay_num.sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日流量余额支付金额(元)</p>
+							<strong>{$last1.flow_balance_pay_money}</strong>
+							<h5 class="text_77">较前一日 <span class="{$ratio.flow_balance_pay_money.color}">{$ratio.flow_balance_pay_money.value}%  {$ratio.flow_balance_pay_money.sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日流量支付宝支付笔数</p>
+							<strong>{$last1.flow_alipay_pay_num}</strong>
+							<h5 class="text_77">较前一日 <span class="{$ratio.flow_alipay_pay_num.color}">{$ratio.flow_alipay_pay_num.value}%  {$ratio.flow_alipay_pay_num.sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日流量支付宝支付金额(元)</p>
+							<strong>{$last1.flow_alipay_pay_moeny}</strong>
+							<h5 class="text_77">较前一日 <span class="{$ratio.flow_alipay_pay_moeny.color}">{$ratio.flow_alipay_pay_moeny.value}%  {$ratio.flow_alipay_pay_moeny.sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日流量微信支付笔数</p>
+							<strong>{$last1.flow_weixin_pay_num}</strong>
+							<h5 class="text_77">较前一日 <span class="{$ratio.flow_weixin_pay_num.color}">{$ratio.flow_weixin_pay_num.value}%  {$ratio.flow_weixin_pay_num.sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日流量微信支付金额(元)</p>
+							<strong>{$last1.flow_weixin_pay_money}</strong>
+							<h5 class="text_77">较前一日 <span class="{$ratio.flow_weixin_pay_money.color}">{$ratio.flow_weixin_pay_money.value}%  {$ratio.flow_weixin_pay_money.sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日流量银联支付笔数</p>
+							<strong>{$last1.flow_bank_pay_num}</strong>
+							<h5 class="text_77">较前一日 <span class="{$ratio.flow_bank_pay_num.color}">{$ratio.flow_bank_pay_num.value}%  {$ratio.flow_bank_pay_num.sign};</span></h5>
+						</td>
+						<td class="fs14 pd20">
+							<p class="mb20 text_77">上一日流量银联支付金额(元)</p>
+							<strong>{$last1.flow_bank_pay_money}</strong>
+							<h5 class="text_77">较前一日 <span class="{$ratio.flow_bank_pay_money.color}">{$ratio.flow_bank_pay_money.value}%  {$ratio.flow_bank_pay_money.sign};</span></h5>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<style>
+				.flex-start{display: -webkit-flex; /* Safari */	display: flex;}
+				.flex-jcsb{justify-content:space-between;}
+				.flex-fb50{flex-basis:50%}
+			</style>
+			<div class="row mt30 flex-start flex-jcsb">
+				<div class="flex-fb50">
+					<div class="box p20 m20">
+						<div id="fare_pay_type" style="width: 100%;height:400px;"></div>
+					</div>
+				</div>
+				<script type="text/javascript">
+					// 基于准备好的dom，初始化echarts实例
+					var myChart1 = echarts.init(document.getElementById("fare_pay_type"));
+					// 指定图表的配置项和数据
+					{:W('Echart/pie_echart',array('param' => $fare_pay))}
+					// 使用刚指定的配置项和数据显示图表。
+					myChart1.setOption(option);
+				</script>
+
+				<div class="flex-fb50">
+					<div class="box p20 m20">
+						<div id="flow_pay_type" style="width: 100%;height:400px;"></div>
+					</div>
+				</div>
+				<script type="text/javascript">
+					// 基于准备好的dom，初始化echarts实例
+					var myChart1 = echarts.init(document.getElementById("flow_pay_type"));
+					// 指定图表的配置项和数据
+					{:W('Echart/pie_echart',array('param' => $flow_pay))}
+					// 使用刚指定的配置项和数据显示图表。
+					myChart1.setOption(option);
+				</script>
+			</div>
+			<div class="row mt30 flex-start flex-jcsb">
+				<div class="flex-fb50">
+					<div class="box p20 m20">
+						<div id="fare_type" style="width: 100%;height:400px;"></div>
+					</div>
+				</div>
+				<script type="text/javascript">
+					// 基于准备好的dom，初始化echarts实例
+					var myChart2 = echarts.init(document.getElementById("fare_type"));
+					// 指定图表的配置项和数据
+					{:W('Echart/pie_echart',array('param' => $fare_type))}
+					// 使用刚指定的配置项和数据显示图表。
+					myChart2.setOption(option);
+				</script>
+				<div class="flex-fb50">
+					<div class="box p20 m20">
+						<div id="flow_type" style="width: 100%;height:400px;"></div>
+					</div>
+				</div>
+				<script type="text/javascript">
+					// 基于准备好的dom，初始化echarts实例
+					var myChart2 = echarts.init(document.getElementById("flow_type"));
+					// 指定图表的配置项和数据
+					{:W('Echart/pie_echart',array('param' => $flow_type))}
+					// 使用刚指定的配置项和数据显示图表。
+					myChart2.setOption(option);
+				</script>
+			</div>
+			<div class="row mt30 flex-start flex-jcsb">
+				<div class="flex-fb50">
+					<div class="box p20 m20">
+						<div id="fare" style="width: 100%;height:400px;"></div>
+					</div>
+				</div>
+				<script type="text/javascript">
+					// 基于准备好的dom，初始化echarts实例
+					var myChart1 = echarts.init(document.getElementById("fare"));
+					// 指定图表的配置项和数据
+					{:W('Echart/pie_echart',array('param' => $fare))}
+					// 使用刚指定的配置项和数据显示图表。
+					myChart1.setOption(option);
+				</script>
+				<div class="flex-fb50">
+					<div class="box p20 m20">
+						<div id="flow" style="width: 100%;height:400px;"></div>
+					</div>
+				</div>
+				<script type="text/javascript">
+					// 基于准备好的dom，初始化echarts实例
+					var myChart2 = echarts.init(document.getElementById("flow"));
+					// 指定图表的配置项和数据
+					{:W('Echart/pie_echart',array('param' => $flow))}
+					// 使用刚指定的配置项和数据显示图表。
+					myChart2.setOption(option);
+				</script>
+			</div>
+	</div>
+
+
+
+
+
+<include file="Public:copyright" />
+<include file="Public:js" />
+<script>
+$(document).ready(function(){
+	$('.delete-select').click(function(){
+		if($('input[type="checkbox"]:checked').size()==0){
+			valert({status:'warning',msg:'请至少选择一项！'})
+			return false;
+		}else {
+			confirm_form({
+				formid:'#formlist',
+				furl:'__URL__/delete_select',
+				script:'callback(ret)',
+				title:'删除记录',
+				msg:'真的要删除吗？',
+				class:'text-center',
+				confirm:1
+			});
+		}
+	});
+
+	$('.active-change').click(function(){
+		if($('input[type="checkbox"]:checked').size()==0){
+			valert({status:'warning',msg:'请至少选择一项！'})
+			return false;
+		}else {
+			confirm_form({
+				formid:'#formlist',
+				furl:'__URL__/active_change_select/toactive/'+$('#toactive').val(),
+				script:'activeCall(ret)',
+				title:'批量更改记录状态',
+				msg:'真的要改记录状态吗？',
+				class:'text-center',
+				confirm:1
+			});
+		}
+	});
+	
+	$('.sid-change').click(function(){
+		if($('input[type="checkbox"]:checked').size()==0){
+			valert({status:'warning',msg:'请至少选择一项！'})
+			return false;
+		}else if($('#tosid').val()==''){
+			valert({status:'warning',msg:'请选择一个分类'})
+			return false;			
+		}else {
+			confirm_form({
+				formid:'#formlist',
+				furl:'__URL__/sid_change_select/tosid/'+$('#tosid').val(),
+				script:'activeCall(ret)',
+				title:'批量记录归类',
+				msg:'真的要批量记录归类吗？',
+				class:'text-center',
+				confirm:1
+			});
+		}
+	});	
+	
+	$('#gopage').change(function(){
+		var url=$('#gopage').val();
+		location.href=url;
+	});
+	$('.go-page').click(function(){
+		var url=$('#gopage').val();
+		location.href=url;
+	});	
+	
+	$('.btn-view').click(function(){
+		var d=$(this).data();
+		//alert(d.tag);
+		var tag='#view-'+d.id;
+		var item='#item-'+d.id;
+
+		$(tag).toggleClass('hide');
+		if($(item).html()=='') loadurl({tag:item,url:d.url});
+	});
+});
+
+function callback(ret){
+	valert({status:ret.status,msg:ret.msg});
+	if(ret.status=='success'){
+		$('input[type="checkbox"]:checked').each(function(){
+			$('#'+$(this).val()).remove();
+		});
+		$('#ajax-modal').modal('hide');
+	}
+}
+
+function delCall(ret,tag){
+	valert({status:ret.status,msg:ret.msg});
+	if(ret.status=='success'){
+		$(tag).remove();
+		$('#ajax-modal').modal('hide');
+	}
+}
+function activeCall(ret){
+	valert({status:ret.status,msg:ret.msg});
+	if(ret.status=='success'){
+		setTimeout(function(){
+			ref();
+		},500);
+	}
+}
+</script>
+<include file="Public:footer" />

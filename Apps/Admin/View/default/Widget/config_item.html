@@ -1,0 +1,46 @@
+<volist name="list" id="vo">
+	<div class="row" id="{$vo.id}">
+	<div class="form-group">
+		<div class="col-xs-2">
+			<div class="input-group">
+				<span class="input-group-addon">状态</span>
+				<div class="">
+					<input type="text" class="form-control " name="active" value="<if condition="$vo.active == 1">激活<else /> 锁定</if>"/>
+				</div>
+			</div>
+			<div class="tips-form text-gray fs12 link-blue"></div>
+		</div>
+		<div class="col-xs-3">
+			<div class="input-group">
+				<span class="input-group-addon">名称</span>
+				<div class="">
+					<input type="text" class="form-control " name="name" value="{$vo.title}" />
+				</div>
+			</div>
+			<div class="tips-form text-gray fs12 link-blue"></div>
+		</div>
+		<div class="col-xs-3">
+			<div class="input-group">
+				<span class="input-group-addon">变量</span>
+				<div class="">
+					<input type="text" class="form-control " name="name" value="{$vo.name}"/>
+				</div>
+			</div>
+			<div class="tips-form text-gray fs12 link-blue"></div>
+		</div>
+		<div class="col-xs-2">
+			<div class="input-group">
+				<span class="input-group-addon">类型</span>
+				<div class="">
+					<input type="text" class="form-control " name="name" value="{$vo.type}" />
+				</div>
+			</div>
+			<div class="tips-form text-gray fs12 link-blue"></div>
+		</div>
+		<div class="col-xs-2 text-right">
+			<div class="btn btn-rad btn-trans btn-success btn-sm" data-type="vmodal" data-title="修改参数" data-url="__URL__/item_edit/id/{$vo.id}"><i class="fa fa-check"></i>修改</div>
+			<div class="btn btn-rad btn-trans btn-danger btn-sm" data-type="delete" data-title="删除" data-msg="真的要删除吗？" data-class="text-center ft14" data-url="__URL__/item_delete/id/{$vo.id}" data-script="delCall(ret,'#{$vo.id}')"><i class="fa fa-times"></i> 删除</div>
+		</div>
+	</div>
+	</div>
+</volist>

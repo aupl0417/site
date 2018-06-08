@@ -1,0 +1,99 @@
+<header class="header fixed-top">
+	<div>
+		<div class="l">
+			<i class="icons i-back" onclick="closeWin()"></i>
+		</div>
+		<div class="title">
+			验证新手机号
+		</div>
+	</div>
+</header>
+<section>
+	<form id="form-user-ep" data-url="/Api/api">
+	
+
+	<div class="line-input row hover" style = 'padding:0 0 0 10px'>
+		<div class="col-20">验证码</div>
+		<div class="col-80"><input type="text" id="mobile" name="mobile" placeholder="请输入手机号码" maxlength="11"></div>
+	</div>
+	
+	<div class="line-input row hover" style = 'padding:0 0 0 10px'>
+		<div class="col-20">验证码</div>
+		<div class="col-50">
+			<input type="text" id="code" name="code" placeholder="请输入验证码" maxlength="6" >
+		</div>
+		<div class="col-30" style = "text-align:center;background:#cc0001;color:#fff;" id="send_code_new" onclick="send_code()">获取验证码</div>
+	</div>
+	<div class="p10">
+		<div class="btn btn-lg btn-danger btn-block" onclick="next()">提交</div>
+	</div>
+	<!-- 隐藏域 -->
+	<input id="can_send_new" type="hidden" value="1" />
+	</form>
+</section>
+<script>
+fixBar(1);
+function send_code(){
+	if( $('.page.active #can_send_new').val() == 0 ){
+		return false;
+	}
+	if( $('#mobile').val() == '' ){
+		valert({msg:'请输入手机号'});
+		return false;
+	}
+	var mobile = $('#mobile').val();
+	ajax_post(
+		{
+			url:'/Api/api',
+			data:{'apiurl':'/User/wap_mobile_smscode_new','is_openid':1,mobile:mobile},
+		},
+		function(ret){
+			valert(ret);
+			if( ret.code == 1 ){
+				$('.page.active #can_send_new').val(0);
+				loading(false);
+				var t = 180;
+				var time = setInterval(function(){
+					if($('.page.active #can_send').length==0){
+						clearInterval(time);
+					}
+					if( t == 0 ){
+						ct = '重新发送';
+						$('.page.active #can_send_new').val(1);
+						clearInterval(time);
+					}else{
+						ct = '重新发送('+ t +')';
+					}
+					$('.page.active #send_code_new').html(ct);
+					t--;
+				}, 1000);
+			}
+		}
+	);
+}
+
+function next(){
+	var code = $('.page.active #code').val();
+	if( code.length != 6 ){
+		valert({msg:'请输入验证码'});
+		return false;
+	}
+
+	ajax_post({
+		url:'/Api/api',
+		data:{'code':code,'is_openid':1,apiurl:'/User/wap_change_mobile_save'},
+	},function(ret){
+		valert(ret);
+		// alert(JSON.stringify(ret));
+		if( ret.code == 1 ){
+			setTimeout(function(){
+				closeToWin({name:'ucenter',url:'/Ucenter/index',ref:true});
+			},1000);
+		}
+	});
+
+}
+
+
+
+</script>

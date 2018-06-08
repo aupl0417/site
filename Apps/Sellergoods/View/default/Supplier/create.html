@@ -1,0 +1,234 @@
+<include file="header" />
+
+    <div class="centent_body">
+        <div class="ticket-main-wrap service-ticket-create">
+    
+            <ul class="sidebar">
+                <li class="menu-header">我的工单</li>
+                <li class="menu-item">
+                    <i class="fa fa-list-ul fl"></i><a href="{:U('/Workorder/index')}">工单列表</a>
+                </li>
+                <li class="menu-item  sidebar-current">
+                    <i class="fa fa-plus-circle fl"></i><a href="{:U('/Workorder/create')}">创建工单</a>
+                </li>
+
+            </ul><!-- left over -->
+
+            <div class="content-wrap">
+                <p class="breadcrumb pd0 plr20">
+                    <span>我的工单</span>
+                    <span class="divider">/</span>
+                    <span class="active">创建工单</span>
+                </p>
+                <div class="create-content">
+                    <!-- <div class="ui-ctrl ui-viewstep">
+                        <ul>
+                            <li bind-for="null" class="ui-viewstep-item-active"><i>1</i><span>新建工单</span></li>
+                            <li bind-for="null"><i>2</i><span>处理中</span></li>
+                            <li bind-for="null" class="ui-viewstep-last-item"><i>3</i><span>已完成</span></li>
+                        </ul>
+                    </div> -->
+                    <div class="main-card">
+                        <div class="main-card-title">
+                            <p>创建工单</p>
+                        </div>
+
+                        <div class="main-card-content">
+                            <form class="ui-ctrl ui-form" id="workorder-create">                        
+                                <div class="row form-horizontal group-border-dashed">
+                                    <div class="form-group">
+                                        <label class="col-sm-2 col-sm-offset-1 fs14 pt0 text-right"><span class="text_red">*</span>工单类型：</label>
+                                        <div class="col-sm-3 pl0">
+                                            <select name="type" onchange="selectType($(this))" class="form-control">
+                                                <option value="">请选择工单类型</option>
+                                                <foreach name="ts" item="vo">
+                                                <option value="{$vo.id}">{$vo.name}</option>
+                                                </foreach>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 col-sm-offset-1 fs14 pt0 text-right"><span class="text_red">*</span>工单详细类型：</label>
+                                        <div class="col-sm-3 pl0">
+
+                                            <select id="select-type2" name="type2" class="form-control">
+                                                <option value="">请选择工单详细类型</option>
+                                                <foreach name="ts" item="vo">
+                                                    <foreach name="vo.child" item="v">
+                                                        <option style="display:none" pid="{$vo.id}" value="{$v.id}">{$v.name}</option>
+                                                    </foreach>
+                                                </foreach>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 col-sm-offset-1 fs14 pt0 text-right"><span class="text_red">*</span>标题：</label>
+                                        <div class="col-sm-4 pl0">
+                                            <input name="title" class="form-control datetime" size="16" type="text" value="">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 col-sm-offset-1 fs14 pt0 text-right"><span class="text_red">*</span>描叙内容：</label>
+                                        <div class="col-sm-5 pl0">
+                                            <textarea name="content" rows="10" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 col-sm-offset-1 fs14 pt0 text-right"><span class="text_red">*</span>手机：</label>
+                                        <div class="col-sm-3 pl0">
+                                            <input name="mobile" class="form-control datetime" size="15" type="text" value="{$Think.session.user.mobile}">
+                                        </div>
+                                        <!-- <div class="col-sm-2 pl0">
+                                            <div class="btn btn-info btn-trans btn_m text-right" onclick="defaultMobile()">使用默认手机号码</div>
+                                        </div> -->
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 col-sm-offset-1 fs14 pt0 text-right">邮箱：</label>
+                                        <div class="col-sm-3 pl0">
+                                            <input name="email" class="form-control datetime" size="16" type="text" value="">
+                                        </div>
+                                        <!-- <div class="col-sm-2 pl0">
+                                            <div class="btn btn-info btn-trans btn_m text-right">使用默认邮箱</div>
+                                        </div> -->
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 col-sm-offset-1 fs14 pt0 text-right"><span class="text_red">*</span>手机接收短信：</label>
+                                        <!--  -->
+                                        <foreach name="sms_list" key="ko" item="vo">
+                                        <label class="square mr10 fs12 fl mt8">
+                                            <input type="radio" name="smstime"  value="{$ko}"><span></span>
+                                        </label>
+                                        <span class="fl mr10">{$vo}</span>
+                                        </foreach>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 col-sm-offset-1 fs14 pt0 text-right">上传附件：</label>
+                                        <div class="col-sm-9 pl0">
+                                            <div class="btn btn-primary btn-trans btn_m" onclick="uploadFile()">上传附件</div>
+                                            <span class="ml20" id="accessory-text"></span>
+                                            <input name="accessory" type="hidden" value=""  />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 col-sm-offset-1 fs14 pt0 text-right"></label>
+                                        <div class="col-sm-9 pl0">
+                                            <p><span class="">(可上传3个附件，每个附件大小不得超过2M)</span></p>
+                                        </div>
+                                    </div>
+                                    
+
+                                     <div class="form-group">
+                                        <div class="col-sm-1 col-sm-offset-3 pd0">
+                                            <div class="btn btn-primary btn_m btn-block" onclick="subForm()">提交</div>
+                                        </div>
+                                    </div>     
+                                </div>
+                                
+                            </form>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div><!-- right over -->
+            
+
+
+
+        </div>
+    </div>
+
+<script>
+function defaultMobile(){
+    var mobile = '{$Think.session.user.mobile}';
+    $('#workorder-create').find('input[name="mobile"]').val(mobile);
+}
+
+function selectType(obj){
+    var type = obj.val();
+    $('#select-type2 option').each(function(x,y){
+        if(y.value != ''){
+            if(type == ''){
+                $(this).hide();
+            }else{
+                if($(this).attr('pid') == type){
+                    $(this).show();
+                }else{
+                    $(this).hide();
+                }
+            }
+        }else{
+            $(this).prop('selected',true);
+        }
+    });
+}
+
+function subForm(){
+
+    var data = getFormJson('#workorder-create');
+    if(data.type == undefined || data.type == ''){
+        talert({msg:'请选择工单类型'});
+        return false;
+    }
+    if(data.type2 == undefined || data.type2 == ''){
+        talert({msg:'请选择工单详细类型'});
+        return false;
+    }
+    if(data.title == undefined || data.title == ''){
+        talert({msg:'请填写标题'});
+        return false;
+    }
+    if(data.content == undefined || data.content == ''){
+        talert({msg:'请填写描述内容'});
+        return false;
+    }
+    if(data.mobile == undefined || data.mobile == ''){
+        talert({msg:'请填写手机'});
+        return false;
+    }
+    if(data.smstime == undefined || data.smstime == ''){
+        talert({msg:'请选择手机接收短信时间'});
+        return false;
+    }
+
+    if(data.accessory == ''){
+        data.accessory = undefined;
+        data.accessory_name = undefined;
+    }
+    ajax_post({
+        url:'/run/authRun',
+        data:data,
+        headers:{Action:'{:enCryptResturi("/Workorder/create")}'},
+    },function(ret){
+        // console.log(ret);
+        talert({status:ret.code,msg:ret.msg});
+        if(ret.code == 1) {
+            setTimeout(function(){
+                gourl({url:'{:U("Workorder/index")}'});
+            }, 1000);
+        }
+    });
+}
+
+
+function uploadFile(){
+    vmodal({
+        title:"上传文件",
+        url:'{:U("/Workorder/create_upload")}',
+        // msg:"您真的要删除吗？",
+        class:'text-center',
+        // confirm:1,
+    });
+}
+
+
+
+
+
+
+
+</script>
+
+
+</body>
+</html>

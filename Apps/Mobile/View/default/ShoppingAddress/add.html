@@ -1,0 +1,198 @@
+<include file="Public:header" />
+		<div class="page-group">
+			<div id="page-shopping-address-add" class="page">
+				<!-- 标题栏 -->
+				<header class="bar bar-nav">
+					<a class="icon icon-left pull-left back" href="/"></a>
+					<h1 class="title">新增地址</h1>
+				</header>
+				<!-- 浮动导航 -->
+				<include file="Public:fixed-menu" />
+				<!-- 这里是页面内容区 -->		
+				<div class="content native-scroll">
+					<form onsubmit="return false" id="form-shopaddress-add" action="__URL__/add_save">
+					<div class="list-block">
+						<ul>
+							<!-- Text inputs -->
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title label">联系人</div>
+										<div class="item-input">
+											<input type="text" name="linkname" placeholder="请输入联系人" maxlength="60">
+										</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title label">手机号码</div>
+										<div class="item-input">
+											<input type="text" name="mobile" placeholder="请输入手机号码" maxlength="17">
+										</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title label">电话号码</div>
+										<div class="item-input">
+											<input type="text" name="tel" placeholder="请输入电话号码" maxlength="15">
+										</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="item-content open-popup" data-popup=".popup-province">
+									<div class="item-inner">
+										<div class="item-title label">所在城市</div>
+										<div class="item-input">
+											<input type="text" name="city_name" placeholder="请选择城市" readonly="true">
+										</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title label">详细地址</div>
+										<div class="item-input">
+											<input type="text" name="street" placeholder="格式：xx街道 xx路 xx号 xx房" maxlength="100">
+										</div>
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title label">邮政编码</div>
+										<div class="item-input">
+											<input type="text" name="postcode" placeholder="请输入邮编" maxlength="6">
+										</div>
+									</div>
+								</div>
+							</li>							
+							<!-- Switch (Checkbox) -->
+							<li>
+								<div class="item-content">
+									<div class="item-inner">
+										<div class="item-title label">设为默认</div>
+										<div class="item-input">
+											<label class="label-switch">
+					                  <input type="checkbox" name="is_default" value="1">
+					                  <div class="checkbox"></div>
+					                </label>
+										</div>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>	
+					
+					<input type="hidden" name="province">
+					<input type="hidden" name="city">
+					<input type="hidden" name="district">
+					<input type="hidden" name="town">
+					
+					<div class="button button-big button-fill button-danger m5 btn-submit">提交</div>
+				</div>	
+				</form>		
+				
+			</div>		
+
+
+				<!-- 省份 -->
+				<div class="popup popup-province">
+					<header class="bar bar-nav">
+						<a class="icon icon-left pull-left back close-popup"></a>
+						<h1 class="title">选择省份</h1>
+					</header>
+					<div class="content">
+						<div class="content-inner">
+							<div class="list-block" >
+								<ul>
+									<volist name="city" id="vo">
+										<li>
+											<div class="item-link item-content open-popup" data-popup=".popup-city" data-id="{$vo.id}">
+												<div class="item-inner">
+													<div class="item-title">{$vo.sub_name}</div>
+												</div>
+											</div>
+										</li>
+									</volist>
+								</ul>
+							</div>		
+								
+						</div>
+					</div>
+				</div>	
+		
+				<!-- 城市 -->
+				<div class="popup popup-city">
+					<header class="bar bar-nav">
+						<a class="icon icon-left pull-left back close-popup" data-popup=".popup-city"></a>				
+
+						<h1 class="title">选择城市</h1>
+					</header>
+					<div class="content">
+						<div class="content-inner">
+							<div class="list-block">
+								<ul>
+								</ul>
+							</div>		
+								
+						</div>
+					</div>
+				</div>	
+				
+				<!-- 区县 -->
+				<div class="popup popup-district">
+					<header class="bar bar-nav">
+						<a class="icon icon-left pull-left back close-popup" data-popup=".popup-district"></a>
+					
+						<a class="button button-link button-nav pull-right" onclick="select_city_ok()">
+							确定
+						</a>
+						<h1 class="title">选择区县</h1>
+					</header>
+					<div class="content">
+						<div class="content-inner">
+							<div class="list-block">
+								<ul>
+								</ul>
+							</div>
+							<a class="btn-submit-address" onclick="select_city_ok()">确定选择</a>
+						</div>
+					</div>
+				</div>		
+				
+				<!-- 街道 -->
+				<div class="popup popup-town">
+					<header class="bar bar-nav">
+						<a class="icon icon-left pull-left back close-popup" data-popup=".popup-town"></a>
+					
+						<a class="button button-link button-nav pull-right" onclick="select_city_ok()">
+							确定
+						</a>
+						<h1 class="title">选择街道</h1>
+					</header>
+					<div class="content">
+						<div class="content-inner">
+							<div class="list-block">
+								<ul>
+								</ul>
+							</div>
+							<a class="btn-submit-address" onclick="select_city_ok()">确定选择</a>
+						</div>
+					</div>
+				</div>					
+		</div>	
+		
+
+
+
+
+<include file="Public:script" />
+<include file="Public:footer" />

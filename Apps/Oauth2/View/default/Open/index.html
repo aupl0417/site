@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>授权登陆 - 唐人街</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>唐人街 - 引领全球消费全新模式的电商平台</title>
+    <meta name="keywords" content="唐人街,网上购物,积分购物,唐宝购物,男女服饰,男鞋女鞋,箱包皮具,美妆洗护,钟表,珠宝,配饰,母婴玩具">
+    <meta name="description" content="唐人街-引领全球消费的电商平台,提供数万个品牌优质商品，便捷、诚信服务，为您提供愉悦的网上购物体验。">
+    <meta name="author" content="Mercury">
+    <link rel="shortcut icon" href="/Public/new_design/images/favicon.ico"/>
+    <style>
+        html,body,* {
+            padding:0;
+            margin: 0;
+            border:0;
+            box-sizing: border-box;
+            font-family: 微软雅黑;
+        }
+        a {
+            font-size: 12px;
+            color: #666;
+            text-decoration: none;
+        }
+        .header {
+            background: #c81623;
+            height: 50px;
+            line-height: 50px;
+        }
+        .main {
+            width: 700px;
+            margin: 0 auto;
+        }
+        .box-left {
+            width: 400px;
+            float: left;
+            padding: 10px;
+            border-right: solid 1px #F0F0F0;
+        }
+        .box-right {
+            width: 300px;
+            float: left;
+            padding: 10px 20px;
+            color: #666;
+        }
+        .clear {
+            clear: both;
+        }
+        .mt10 {
+            margin-top: 10px;
+        }
+        .text-center {
+            text-align: center;
+        }
+        h3 {
+            font-weight: 100;
+            color: #333;
+        }
+        .text-span {
+            color: #666;
+            margin: 0 5px;
+            font-size: 10px;
+        }
+        .face {
+            width: 106px;
+            height: 106px;
+            margin:10px auto;
+            padding: 2px;
+            border: solid 1px #F0F0F0;
+            cursor: pointer;
+        }
+
+        .face img {
+            width: 100px;
+        }
+
+        .fs12 {
+            font-size: 12px;
+        }
+
+        .nick {
+            font-size: 14px;
+            color: #333;
+        }
+        
+        .color-red {
+            color: #c81623;
+        }
+
+        .box-right p {
+            padding: 10px 0;
+            border-bottom: dashed 1px #F0F0F0;
+        }
+
+        .text-middle {
+            vertical-align: middle;
+        }
+
+        .color-white {
+            color: #ffffff;
+        }
+
+        .open-form {
+            width: 300px;
+            margin: 10px auto;
+        }
+
+        .open-form p {
+            padding:10px 5px;
+        }
+
+        .open-form input {
+            padding:5px;
+            height: 35px;
+            line-height:35px;
+            border: solid 1px #F0F0F0;
+            width: 100%;
+        }
+
+        .open-form button {
+            height: 35px;
+            line-height: 35px;
+            border: 1px #c81623 solid;
+            background: #c81623;
+            color: #ffffff;
+            width:100%;
+        }
+        .open-form label {
+            color: #666;
+            font-size: 14px;
+            text-align: left;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .hide {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="header">
+        <div class="main color-white">
+            <div class="box-left" style="border: 0;padding:0;">
+                <h3 class="color-white"><img class="text-middle" width="40" src="/Public/images/logo_login.png">唐人街登陆</h3>
+            </div>
+            <div class="box-right text-center" style="border: 0;padding:0;">
+                <div class="color-white">
+                    <a class="color-white" href="javascript:;">唐人街登陆</a>
+                    <span class="text-span color-white">|</span>
+                    <a class="color-white" href="javascript:;">授权管理</a>
+                    <span class="text-span color-white">|</span>
+                    <a class="color-white" href="javascript:;">申请接入</a>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</header>
+<main>
+    <section>
+        <div class="main mt10">
+            <div class="box-left text-center">
+
+                        <div id="quickLogin" <empty name="Think.session.user">class="hide"</empty>>
+                            <h3>快速登陆</h3>
+                            <p onclick="quickLogin();" class="face" title="同意授权">
+                                <img src="{$Think.session.user.face}">
+                            </p>
+                            <p class="fs12 nick">
+                                {$Think.session.user.nick}
+                            </p>
+                        </div>
+                        <div id="otherLogin" <notempty name="Think.session.user">class="hide"</notempty>>
+                            <h3>账号密码登陆</h3>
+                            <form class="open-form">
+                                <p>
+                                    <!--<label>用户名/手机号码</label>-->
+                                    <input type="text" name="username" placeholder="用户名/手机号码">
+                                </p>
+                                <p>
+                                    <input type="password" name="password" placeholder="登陆密码">
+                                </p>
+                                <p>
+                                    <button class="btn-submit">授权并登陆</button>
+                                </p>
+                            </form>
+                        </div>
+                <div class="mt10">
+                    <notempty name="Think.session.user">
+                        <a id="changeUser" href="javascript:;">其他账号登陆</a>
+                        <span class="text-span">|</span>
+                    </notempty>
+                    <a href="{:DM('user', '/register')}">注册新账号</a>
+                    <span class="text-span">|</span>
+                    <a href="javascript:;">意见反馈</a>
+                </div>
+            </div>
+            <div class="box-right fs12">
+                <p>
+                    <span class="color-red">{$data.app.name}</span> 将获得以下权限：
+                </p>
+                <p>
+                    <input type="checkbox" checked disabled class="text-middle"> 获取您的昵称
+                </p>
+                <p>
+                    <input type="checkbox" checked disabled class="text-middle"> 获取您的头像
+                </p>
+                <p>
+                    <input type="checkbox" checked disabled class="text-middle"> 获取您的性别
+                </p>
+                <div class="" style="margin-top: 20px">
+                    授权后表明你已同意 <a class="color-red" href="javascript:;">唐人街登录服务协议</a>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </section>
+</main>
+<script src="/Public/Jquery/jquery-2.1.1.min.js"></script>
+<script>
+    $(function () {
+        $(".btn-submit").click(function () {
+            var username,password;
+            username = $("input[name='username']").val();
+            password = $("input[name='password']").val();
+            if (username == '') {
+                alert('用户名不能为空');
+                return false;
+            }
+
+            if (password == '') {
+                alert('密码不能为空');
+                return false;
+            }
+
+            if (username.length < 6) {
+                alert('用户名不正确');
+                return false;
+            }
+
+            if (password.length < 6) {
+                alert('密码不正确');
+                return false;
+            }
+
+            $.post('{:U("/open/login")}', {username:username,password:password}, function (ret) {
+                if (ret.code == 1) {
+                    window.location.reload();
+                    //window.location.href = "{:U('/open/code')}?{$codeUrl}";
+                } else {
+                    alert(ret.msg);
+                }
+            }, 'json');
+            return false;
+        });
+
+        $("#changeUser").click(function () {
+            if ($("#otherLogin").hasClass('hide')) {
+                $(this).html('快捷登陆');
+                $("#otherLogin").removeClass('hide');
+                $("#quickLogin").addClass('hide');
+            } else {
+                $(this).html('其他账号登陆');
+                $("#otherLogin").addClass('hide');
+                $("#quickLogin").removeClass('hide');
+            }
+        });
+
+    });
+
+    function quickLogin() {
+        window.location.href = "{:U('/open/code')}?{$codeUrl}";
+    }
+</script>
+</body>
+</html>

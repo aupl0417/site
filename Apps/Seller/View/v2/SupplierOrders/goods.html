@@ -1,0 +1,83 @@
+<div class="content mt30">
+    <table class="no-border mb20 bg_f1"><!-- 类型说明 -->
+        <tbody class="no-border-y">
+        <tr class="text-center">
+            <td width="75%" style="padding:0">
+                <table class="no-border">
+                    <tbody class="no-border-y">
+                    <td width="13%"></td>
+                    <td width="30%">商品信息</td>
+                    <td width="18%">单价</td>
+                    <td width="16%">数量</td>
+                    <td width="18%">实付款</td>
+                    </tbody>
+                </table>
+            </td>
+            <td width="12%">操作</td>
+        </tr>
+        </tbody>
+    </table><!-- 类型说明结束 -->
+
+
+    <table class="revisionTable table"><!-- 订单信息 -->
+        <tbody class="bg_white">
+        <volist name="data.orders_goods" id="vo">
+            <tr class="text-center">
+                <td style="padding:0; width:88%">
+                    <table class="no-border table-hover">
+                        <tbody class="no-border-y">
+                        <tr><!-- 同店铺第一个商品 -->
+                            <td width="13%">
+                                <a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', ['id' => $vo['attr_list_id']])}">
+                                    <img src="{:myurl($vo['images_'], 80)}" class="img-thumbnail"></a>
+                            </td>
+                            <td valign="top" width="30%" class="text-left">
+                                <a href="javascript:;" data-url="{:DM('item')}{:U('/index/index', ['id' => $vo['attr_list_id']])}">{$vo.goods_name}</a>
+                                <div class="md5 text-gray mt5">颜色/尺码：{$vo.attr_name}</div>
+                            </td>
+                            <td width="18%">
+                                ￥ <span class="text_yellow">{$vo.price}</span>
+                            </td>
+                            <td width="16%">
+                                ×{$vo.num}
+                            </td>
+                            <td width="18%">
+                                ￥ <span class="text_yellow">{$vo.total_price_edit}</span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </td>
+                <td style="vertical-align: middle; width:12%" rowspan="1">
+                    <p><a class="text_blue" href="{:U('/SupplierOrders/detail', ['id' => $data['s_no']])}">详情</a></p>
+                </td>
+            </tr>
+        </volist>
+        </tbody>
+    </table><!-- 订单信息结束 -->
+</div>
+
+<div class="row" style="border-top: solid 1px #F8F8F8;border-bottom: solid 1px #F8F8F8;">
+    <div class="col-sm-4">
+        <h4>买家信息</h4>
+        <p>联系姓名：{$data.orders.linkname}</p>
+        <p>联系手机：{$data.orders.mobile}&nbsp;&nbsp;{$data.orders.tel}</p>
+        <p>收货地址：{$data.orders.province}{$data.orders.city}{$data.orders.district}{$data.orders.town}{$data.orders.street}{$data.orders.postcode}</p>
+    </div>
+    <div class="col-sm-4">
+        <h4>快递信息</h4>
+        <p>邮寄方式：
+            <switch name="data.express_type">
+                <case value="1">快递</case>
+                <case value="2">EMS</case>
+                <default/>未知运送方式
+            </switch>
+        </p>
+    </div>
+    <div class="col-sm-4">
+        <h4>订单信息</h4>
+        <p>创建时间：{$data.atime}</p>
+        <p>订单编号：{$data.s_no}</p>
+        <p>备注：<span class="text_yellow"><empty name="data.remark">未备注<else />{$data.remark}</empty></span></p>
+    </div>
+</div>
